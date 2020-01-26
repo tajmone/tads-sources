@@ -1,0 +1,51 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>PendingCommandMarker</title></head><body>
+<table class=ban><tr><td align=left><span class=title>PendingCommandMarker</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#10566">10566</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A pending command marker.  This is not an actual pending command;   rather, it's just a queue marker.  We sometimes want to synchronize   some other activity with an actor's progress through its command   queue; for example, we might want one actor to wait until another   actor has executed a particular pending action.  These markers can be   used for this kind of synchronization; they move through the queue   like ordinary pending commands, so we can tell if an actor has reached   a particular command by observing the marker's progress through the   queue.
+<p>
+<code>class
+<b>PendingCommandMarker</b> :  &nbsp; <a href="../object/PendingCommandInfo.html">PendingCommandInfo</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>PendingCommandMarker</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PendingCommandInfo.html">PendingCommandInfo</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#hasCommand">hasCommand</a>&nbsp;
+</code><p>
+<p>Inherited from <code>PendingCommandInfo</code> :<br>
+<code>
+<a href="../object/PendingCommandInfo.html#issuer_">issuer_</a>&nbsp;
+<a href="../object/PendingCommandInfo.html#startOfSentence_">startOfSentence_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+</code><p>
+<p>Inherited from <code>PendingCommandInfo</code> :<br>
+<code>
+<a href="../object/PendingCommandInfo.html#construct">construct</a>&nbsp;
+<a href="../object/PendingCommandInfo.html#executePending">executePending</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="hasCommand"></a>
+<table class=decl><tr><td><code>hasCommand</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#10568">10568</a>]</table><div class=desc>I have no command to execute<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<i>(none)</i>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Hidden</title><meta name="keywords" content="Hidden,discover,discovered,addToScore,canBeSensed"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Hidden : <a href="thing-introduction.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="sightpresence+islisted.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="presentlater.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The Hidden class provides a very convenient means of temporarily hiding something you want discovered later by some action by the player. It's a subclass of Thing that adds a <b>discovered</b> property and a <b>discover</b> method. By default, a Hidden starts with its <b>discovered</b> property set to nil. The overridden <b>canBeSensed</b> method then hides the object from the player (making it effectively invisible) until <b>discovered</b><b><i> </i></b>is set to true, which is what calling the <b>discover</b> method does.
+<br>
+
+<br>
+Suppose we want to hide the brass key under the rug in the roundCave. One way we can do this is simply to add Hidden to brassKey's class list and then override rug.actionDobjForLookUnder [ = the action method in dobjFor(LookUnder)] to call brassKey.discover if the brass key has not yet been discovered:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">brassKey&nbsp;:&nbsp;<b>Hidden</b>,&nbsp;Key&nbsp;'small&nbsp;brass&nbsp;key'&nbsp;'brass&nbsp;key'&nbsp;@roundCave
+<br>
+&nbsp;&nbsp;"It&lt;&lt;isBent&nbsp;?&nbsp;'&nbsp;looks&nbsp;slightly&nbsp;bent'&nbsp;:&nbsp;'\'s&nbsp;been&nbsp;straightened'&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;isBent&nbsp;=&nbsp;true
+<br>
+;
+<br>
+
+<br>
+rug&nbsp;:&nbsp;Immovable&nbsp;'large&nbsp;rectangular&nbsp;chinese&nbsp;rug/pattern/leaves/dragons'&nbsp;'Chinese&nbsp;rug'
+<br>
+&nbsp;&nbsp;&nbsp;@roundCave
+<br>
+&nbsp;&nbsp;"The&nbsp;rectangular&nbsp;rug&nbsp;is&nbsp;patterned&nbsp;in&nbsp;pastel&nbsp;colours,&nbsp;mainly&nbsp;turquoise&nbsp;round&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;edge&nbsp;and&nbsp;principally&nbsp;golds&nbsp;and&nbsp;browns&nbsp;within.&nbsp;The&nbsp;patterns&nbsp;consists&nbsp;mainly
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;leaves&nbsp;and&nbsp;dragons.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;Chinese&nbsp;rug&nbsp;covers&nbsp;the&nbsp;centre&nbsp;of&nbsp;the&nbsp;floor.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"The&nbsp;Chinese&nbsp;rug&nbsp;has&nbsp;been&nbsp;pulled&nbsp;over&nbsp;to&nbsp;one&nbsp;side&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'You&nbsp;probably&nbsp;could&nbsp;roll&nbsp;the&nbsp;carpet&nbsp;up&nbsp;and&nbsp;drag&nbsp;it&nbsp;around,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;you&nbsp;don\'t&nbsp;want&nbsp;to&nbsp;be&nbsp;encumbered&nbsp;with&nbsp;it.&nbsp;'
+<br>
+&nbsp;&nbsp;dobjFor(Pull)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(moved)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;can't&nbsp;pull&nbsp;the&nbsp;rug&nbsp;any&nbsp;further,&nbsp;it's&nbsp;already&nbsp;at&nbsp;the&nbsp;edge&nbsp;of&nbsp;the&nbsp;cave.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Pulling&nbsp;the&nbsp;rug&nbsp;over&nbsp;to&nbsp;the&nbsp;edge&nbsp;of&nbsp;the&nbsp;cave&nbsp;reveals&nbsp;a&nbsp;square&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moved&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>actionDobjLookUnder()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(brassKey.discovered)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;find{s}&nbsp;nothing&nbsp;else&nbsp;under&nbsp;the&nbsp;rug.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Under&nbsp;the&nbsp;rug&nbsp;{you/he}&nbsp;find{s}&nbsp;a&nbsp;small&nbsp;brass&nbsp;key.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;brassKey.discover();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(1,&nbsp;'finding&nbsp;the&nbsp;brass&nbsp;key&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Although it's not strictly necessary here, I've taken the opportunity to slip in an example of the <b>addToScore()</b> function. As defined here, it will add one point to the player's score together with the explanation (should the player issue a FULL SCORE command) that the award is for finding the brass key. You should be aware that this function will increase the score every time it's called, so you want to make sure it can only be called once if you only want the score to be increased once (or use the addToScoreOnce method instead). Since in this case we can be sure that the else clause will only be executed once, it's safe to use addToScore here. We'll come to a full discussion of <a href="scoring-overview.htm">scoring</a> later.
+<br>
+
+<br>
+Another (and in this case, simpler and easier) way of hiding something under something else is to put it in an <a href="underside.htm">Underside</a>, normally the subUnderside of a <a href="complexcontainer.htm">ComplexContainer</a>. We could so this with the book of matches we defined earlier, then they won't be revealed until the player specifically orders LOOK UNDER DRESSING TABLE, at which point they'll automatically be revealed. To do this, all we need to do is to add Hidden to the matchbook's class list:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">matchbook&nbsp;:&nbsp;<b>Hidden,</b>&nbsp;Matchbook&nbsp;'book&nbsp;matches'&nbsp;'book&nbsp;of&nbsp;matches'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;@(dressingTable.subUnderside)
+<br>
+&nbsp;&nbsp;"The&nbsp;matchbook&nbsp;bears&nbsp;a&nbsp;picture&nbsp;of&nbsp;a&nbsp;banana&nbsp;and&nbsp;the&nbsp;words
+<br>
+&nbsp;&nbsp;&nbsp;CABAL&nbsp;LIGHTING&nbsp;CO.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,283 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>SystemAction</title></head><body>
+<table class=ban><tr><td align=left><span class=title>SystemAction</span><span class=type>class</span><td align=right><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6612">6612</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   System action.  These actions are for out-of-game meta-verbs (save,   restore, undo).  These verbs take no objects, must be performed by   the player (thus by the player character, not an NPC), and consume no   game clock time.
+<p>
+<code>class
+<b>SystemAction</b> :  &nbsp; <a href="../object/IAction.html">IAction</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>SystemAction</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/IAction.html">IAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Action.html">Action</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>SystemAction</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AboutAction.html">AboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(About).html">predicate(About)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CreditsAction.html">CreditsAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Credits).html">predicate(Credits)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ExitsModeAction.html">ExitsModeAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ExitsMode).html">predicate(ExitsMode)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FileOpAction.html">FileOpAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RecordAction.html">RecordAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Record).html">predicate(Record)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RecordEventsAction.html">RecordEventsAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(RecordEvents).html">predicate(RecordEvents)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RecordStringAction.html">RecordStringAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(RecordString).html">predicate(RecordString)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RecordEventsStringAction.html">RecordEventsStringAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(RecordEventsString).html">predicate(RecordEventsString)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ReplayAction.html">ReplayAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ReplayStringAction.html">ReplayStringAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ReplayQuiet).html">predicate(ReplayQuiet)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ReplayString).html">predicate(ReplayString)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SaveAction.html">SaveAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Save).html">predicate(Save)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SaveStringAction.html">SaveStringAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(SaveString).html">predicate(SaveString)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ScriptAction.html">ScriptAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Script).html">predicate(Script)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ScriptStringAction.html">ScriptStringAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ScriptString).html">predicate(ScriptString)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FootnoteAction.html">FootnoteAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Footnote).html">predicate(Footnote)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FootnotesAction.html">FootnotesAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FootnotesFullAction.html">FootnotesFullAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(FootnotesFull).html">predicate(FootnotesFull)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FootnotesMediumAction.html">FootnotesMediumAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(FootnotesMedium).html">predicate(FootnotesMedium)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FootnotesOffAction.html">FootnotesOffAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(FootnotesOff).html">predicate(FootnotesOff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FootnotesStatusAction.html">FootnotesStatusAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(FootnotesStatus).html">predicate(FootnotesStatus)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FullScoreAction.html">FullScoreAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(FullScore).html">predicate(FullScore)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HintAction.html">HintAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Hint).html">predicate(Hint)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HintsOffAction.html">HintsOffAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(HintsOff).html">predicate(HintsOff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InstructionsAction.html">InstructionsAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(instructions).html">predicate(instructions)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NotifyAction.html">NotifyAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Notify).html">predicate(Notify)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NotifyOffAction.html">NotifyOffAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(NotifyOff).html">predicate(NotifyOff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NotifyOnAction.html">NotifyOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(NotifyOn).html">predicate(NotifyOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PauseAction.html">PauseAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Pause).html">predicate(Pause)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/QuitAction.html">QuitAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Quit).html">predicate(Quit)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RecordOffAction.html">RecordOffAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(RecordOff).html">predicate(RecordOff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RestartAction.html">RestartAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Restart).html">predicate(Restart)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RestoreAction.html">RestoreAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Restore).html">predicate(Restore)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RestoreStringAction.html">RestoreStringAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(RestoreString).html">predicate(RestoreString)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RestoreDefaultsAction.html">RestoreDefaultsAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(RestoreDefaults).html">predicate(RestoreDefaults)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SaveDefaultsAction.html">SaveDefaultsAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(SaveDefaults).html">predicate(SaveDefaults)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ScoreAction.html">ScoreAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Score).html">predicate(Score)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ScriptOffAction.html">ScriptOffAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ScriptOff).html">predicate(ScriptOff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TerseAction.html">TerseAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Terse).html">predicate(Terse)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TipModeAction.html">TipModeAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TipsOff).html">predicate(TipsOff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TipsOn).html">predicate(TipsOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicsAction.html">TopicsAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Topics).html">predicate(Topics)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UndoAction.html">UndoAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Undo).html">predicate(Undo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/VerboseAction.html">VerboseAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Verbose).html">predicate(Verbose)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/VersionAction.html">VersionAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Version).html">predicate(Version)</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#actionTime">actionTime</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>Action</code> :<br>
+<code>
+<a href="../object/Action.html#afterActionMainList">afterActionMainList</a>&nbsp;
+<a href="../object/Action.html#beforeAfterObjs">beforeAfterObjs</a>&nbsp;
+<a href="../object/Action.html#defaultForRecursion">defaultForRecursion</a>&nbsp;
+<a href="../object/Action.html#extraMessageParams">extraMessageParams</a>&nbsp;
+<a href="../object/Action.html#implicitMsg">implicitMsg</a>&nbsp;
+<a href="../object/Action.html#includeInUndo">includeInUndo</a>&nbsp;
+<a href="../object/Action.html#isImplicit">isImplicit</a>&nbsp;
+<a href="../object/Action.html#isRepeatable">isRepeatable</a>&nbsp;
+<a href="../object/Action.html#iterationCanceled">iterationCanceled</a>&nbsp;
+<a href="../object/Action.html#originalAction">originalAction</a>&nbsp;
+<a href="../object/Action.html#parentAction">parentAction</a>&nbsp;
+<a href="../object/Action.html#preCond">preCond</a>&nbsp;
+<a href="../object/Action.html#predicateNounPhrases">predicateNounPhrases</a>&nbsp;
+<a href="../object/Action.html#pronounOverride">pronounOverride</a>&nbsp;
+<a href="../object/Action.html#remappedFrom">remappedFrom</a>&nbsp;
+<a href="../object/Action.html#showDefaultReports">showDefaultReports</a>&nbsp;
+<a href="../object/Action.html#synthParamID">synthParamID</a>&nbsp;
+<a href="../object/Action.html#verbFlags">verbFlags</a>&nbsp;
+<a href="../object/Action.html#verifiedOkay">verifiedOkay</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#execAction">execAction</a>&nbsp;
+<a href="#execSystemAction">execSystemAction</a>&nbsp;
+<a href="#getInputFile">getInputFile</a>&nbsp;
+</code><p>
+<p>Inherited from <code>IAction</code> :<br>
+<code>
+<a href="../object/IAction.html#doActionMain">doActionMain</a>&nbsp;
+<a href="../object/IAction.html#resolveNouns">resolveNouns</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Action</code> :<br>
+<code>
+<a href="../object/Action.html#actionOfKind">actionOfKind</a>&nbsp;
+<a href="../object/Action.html#addBeforeAfterObj">addBeforeAfterObj</a>&nbsp;
+<a href="../object/Action.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/Action.html#afterActionMain">afterActionMain</a>&nbsp;
+<a href="../object/Action.html#announceActionObject">announceActionObject</a>&nbsp;
+<a href="../object/Action.html#announceAllDefaultObjects">announceAllDefaultObjects</a>&nbsp;
+<a href="../object/Action.html#announceDefaultObject">announceDefaultObject</a>&nbsp;
+<a href="../object/Action.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/Action.html#beforeActionMain">beforeActionMain</a>&nbsp;
+<a href="../object/Action.html#cacheMultiObjectAnnouncements">cacheMultiObjectAnnouncements</a>&nbsp;
+<a href="../object/Action.html#callAfterActionMain">callAfterActionMain</a>&nbsp;
+<a href="../object/Action.html#callCatchAllProp">callCatchAllProp</a>&nbsp;
+<a href="../object/Action.html#callPreConditions">callPreConditions</a>&nbsp;
+<a href="../object/Action.html#callVerifyPreCond">callVerifyPreCond</a>&nbsp;
+<a href="../object/Action.html#callVerifyProp">callVerifyProp</a>&nbsp;
+<a href="../object/Action.html#cancelIteration">cancelIteration</a>&nbsp;
+<a href="../object/Action.html#checkAction">checkAction</a>&nbsp;
+<a href="../object/Action.html#checkPreConditions">checkPreConditions</a>&nbsp;
+<a href="../object/Action.html#checkRemapping">checkRemapping</a>&nbsp;
+<a href="../object/Action.html#combineRemappedVerifyResults">combineRemappedVerifyResults</a>&nbsp;
+<a href="../object/Action.html#createActionFrom">createActionFrom</a>&nbsp;
+<a href="../object/Action.html#createActionInstance">createActionInstance</a>&nbsp;
+<a href="../object/Action.html#createTopicQualifierResolver">createTopicQualifierResolver</a>&nbsp;
+<a href="../object/Action.html#doAction">doAction</a>&nbsp;
+<a href="../object/Action.html#doActionOnce">doActionOnce</a>&nbsp;
+<a href="../object/Action.html#filterAmbiguousWithVerify">filterAmbiguousWithVerify</a>&nbsp;
+<a href="../object/Action.html#filterFacets">filterFacets</a>&nbsp;
+<a href="../object/Action.html#filterPluralWithVerify">filterPluralWithVerify</a>&nbsp;
+<a href="../object/Action.html#finishResolveList">finishResolveList</a>&nbsp;
+<a href="../object/Action.html#getAnaphoricBinding">getAnaphoricBinding</a>&nbsp;
+<a href="../object/Action.html#getCurrentObjects">getCurrentObjects</a>&nbsp;
+<a href="../object/Action.html#getDefaultWithVerify">getDefaultWithVerify</a>&nbsp;
+<a href="../object/Action.html#getEnteredVerbPhrase">getEnteredVerbPhrase</a>&nbsp;
+<a href="../object/Action.html#getImplicitPhrase">getImplicitPhrase</a>&nbsp;
+<a href="../object/Action.html#getInfPhrase">getInfPhrase</a>&nbsp;
+<a href="../object/Action.html#getMatchForRole">getMatchForRole</a>&nbsp;
+<a href="../object/Action.html#getMessageParam">getMessageParam</a>&nbsp;
+<a href="../object/Action.html#getNotifyTable">getNotifyTable</a>&nbsp;
+<a href="../object/Action.html#getObjectForRole">getObjectForRole</a>&nbsp;
+<a href="../object/Action.html#getObjPreCondDescList">getObjPreCondDescList</a>&nbsp;
+<a href="../object/Action.html#getObjPreConditions">getObjPreConditions</a>&nbsp;
+<a href="../object/Action.html#getObjResponseProd">getObjResponseProd</a>&nbsp;
+<a href="../object/Action.html#getOriginalAction">getOriginalAction</a>&nbsp;
+<a href="../object/Action.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/Action.html#getOtherObjectRole">getOtherObjectRole</a>&nbsp;
+<a href="../object/Action.html#getParticiplePhrase">getParticiplePhrase</a>&nbsp;
+<a href="../object/Action.html#getPreCondDescList">getPreCondDescList</a>&nbsp;
+<a href="../object/Action.html#getPreCondPropForRole">getPreCondPropForRole</a>&nbsp;
+<a href="../object/Action.html#getPredicate">getPredicate</a>&nbsp;
+<a href="../object/Action.html#getPronounOverride">getPronounOverride</a>&nbsp;
+<a href="../object/Action.html#getQuestionInf">getQuestionInf</a>&nbsp;
+<a href="../object/Action.html#getRemappedFrom">getRemappedFrom</a>&nbsp;
+<a href="../object/Action.html#getRemapPropForRole">getRemapPropForRole</a>&nbsp;
+<a href="../object/Action.html#getResolvedObjList">getResolvedObjList</a>&nbsp;
+<a href="../object/Action.html#getResolveInfo">getResolveInfo</a>&nbsp;
+<a href="../object/Action.html#getRoleFromIndex">getRoleFromIndex</a>&nbsp;
+<a href="../object/Action.html#getSimpleSynonymRemap">getSimpleSynonymRemap</a>&nbsp;
+<a href="../object/Action.html#getSortedVerifyResults">getSortedVerifyResults</a>&nbsp;
+<a href="../object/Action.html#getVerbPhrase">getVerbPhrase</a>&nbsp;
+<a href="../object/Action.html#getVerifyPropForRole">getVerifyPropForRole</a>&nbsp;
+<a href="../object/Action.html#initTentative">initTentative</a>&nbsp;
+<a href="../object/Action.html#isConversational">isConversational</a>&nbsp;
+<a href="../object/Action.html#isNestedIn">isNestedIn</a>&nbsp;
+<a href="../object/Action.html#isPartOf">isPartOf</a>&nbsp;
+<a href="../object/Action.html#isRemapped">isRemapped</a>&nbsp;
+<a href="../object/Action.html#makeResolveInfo">makeResolveInfo</a>&nbsp;
+<a href="../object/Action.html#makeResolveInfoList">makeResolveInfoList</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceDefaultObject">maybeAnnounceDefaultObject</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceImplicit">maybeAnnounceImplicit</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceMultiObject">maybeAnnounceMultiObject</a>&nbsp;
+<a href="../object/Action.html#noMatch">noMatch</a>&nbsp;
+<a href="../object/Action.html#notifyBeforeAfter">notifyBeforeAfter</a>&nbsp;
+<a href="../object/Action.html#objListPronoun">objListPronoun</a>&nbsp;
+<a href="../object/Action.html#preAnnounceActionObject">preAnnounceActionObject</a>&nbsp;
+<a href="../object/Action.html#recalcSenseContext">recalcSenseContext</a>&nbsp;
+<a href="../object/Action.html#repeatAction">repeatAction</a>&nbsp;
+<a href="../object/Action.html#resetAction">resetAction</a>&nbsp;
+<a href="../object/Action.html#resolveAction">resolveAction</a>&nbsp;
+<a href="../object/Action.html#resolvedObjectsInScope">resolvedObjectsInScope</a>&nbsp;
+<a href="../object/Action.html#runBeforeNotifiers">runBeforeNotifiers</a>&nbsp;
+<a href="../object/Action.html#saveActionForAgain">saveActionForAgain</a>&nbsp;
+<a href="../object/Action.html#setCurrentObjects">setCurrentObjects</a>&nbsp;
+<a href="../object/Action.html#setImplicit">setImplicit</a>&nbsp;
+<a href="../object/Action.html#setMessageParam">setMessageParam</a>&nbsp;
+<a href="../object/Action.html#setMessageParams">setMessageParams</a>&nbsp;
+<a href="../object/Action.html#setNested">setNested</a>&nbsp;
+<a href="../object/Action.html#setObjectMatches">setObjectMatches</a>&nbsp;
+<a href="../object/Action.html#setOriginalAction">setOriginalAction</a>&nbsp;
+<a href="../object/Action.html#setPronounOverride">setPronounOverride</a>&nbsp;
+<a href="../object/Action.html#setRemapped">setRemapped</a>&nbsp;
+<a href="../object/Action.html#setResolvedObjects">setResolvedObjects</a>&nbsp;
+<a href="../object/Action.html#spPrefix">spPrefix</a>&nbsp;
+<a href="../object/Action.html#spSuffix">spSuffix</a>&nbsp;
+<a href="../object/Action.html#synthMessageParam">synthMessageParam</a>&nbsp;
+<a href="../object/Action.html#verifyAction">verifyAction</a>&nbsp;
+<a href="../object/Action.html#verifyHandlersExist">verifyHandlersExist</a>&nbsp;
+<a href="../object/Action.html#whatObj">whatObj</a>&nbsp;
+<a href="../object/Action.html#whatTranslate">whatTranslate</a>&nbsp;
+<a href="../object/Action.html#withVerifyResults">withVerifyResults</a>&nbsp;
+<a href="../object/Action.html#zeroActionTime">zeroActionTime</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="actionTime"></a>
+<table class=decl><tr><td><code>actionTime</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6661">6661</a>]</table><div class=desc>system actions consume no game time<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="execAction"></a>
+<table class=decl><tr><td><code>execAction ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6614">6614</a>]</table><div class=desc>execute the action<p>
+</div>
+<a name="execSystemAction"></a>
+<table class=decl><tr><td><code>execSystemAction ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6648">6648</a>]</table><div class=desc>each subclass must override this to perform its actual action<p>
+</div>
+<a name="getInputFile"></a>
+<table class=decl><tr><td><code>getInputFile (prompt, dialogType, fileType, flags)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6655">6655</a>]</table><div class=desc>   Ask for an input file.  We call the input manager, which freezes   the real-time clock, displays the appropriate local file selector   dialog, and restarts the clock. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

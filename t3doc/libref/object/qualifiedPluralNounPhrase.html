@@ -1,0 +1,24 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>qualifiedPluralNounPhrase</title></head><body>
+<table class=ban><tr><td align=left><span class=title>qualifiedPluralNounPhrase</span><span class=type>GrammarProd</span></table><p>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedPluralNounPhrase(all).html">qualifiedPluralNounPhrase(all)</a></span> :  &nbsp; <a href="../object/AllPluralProd.html">AllPluralProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5888">5888</a>]</code></table><div class=gramrule>    'all' detPluralNounPhrase-&gt;np_<br>    | 'all' 'of' explicitDetPluralNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedPluralNounPhrase(allNum).html">qualifiedPluralNounPhrase(allNum)</a></span> :  &nbsp; <a href="../object/ExactQuantifiedPluralProd.html">ExactQuantifiedPluralProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5874">5874</a>]</code></table><div class=gramrule>    'all' numberPhrase-&gt;quant_ indetPluralNounPhrase-&gt;np_<br>    | 'all' numberPhrase-&gt;quant_ 'of' explicitDetPluralNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedPluralNounPhrase(anyNum).html">qualifiedPluralNounPhrase(anyNum)</a></span> :  &nbsp; <a href="../object/QuantifiedPluralProd.html">QuantifiedPluralProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5867">5867</a>]</code></table><div class=gramrule>    ('any' | ) numberPhrase-&gt;quant_ indetPluralNounPhrase-&gt;np_<br>    | ('any' | ) numberPhrase-&gt;quant_ 'of' explicitDetPluralNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedPluralNounPhrase(both).html">qualifiedPluralNounPhrase(both)</a></span> :  &nbsp; <a href="../object/BothPluralProd.html">BothPluralProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5881">5881</a>]</code></table><div class=gramrule>    'both' detPluralNounPhrase-&gt;np_<br>    | 'both' 'of' explicitDetPluralNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedPluralNounPhrase(determiner).html">qualifiedPluralNounPhrase(determiner)</a></span> :  &nbsp; <a href="../object/LayeredNounPhraseProd.html">LayeredNounPhraseProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5861">5861</a>]</code></table><div class=gramrule>    ('any' | ) detPluralOnlyNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedPluralNounPhrase(theOnesIn).html">qualifiedPluralNounPhrase(theOnesIn)</a></span> :  &nbsp; <a href="../object/AllInContainerNounPhraseProd.html">AllInContainerNounPhraseProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5895">5895</a>]</code></table><div class=gramrule>    ('the' 'ones' ('that' ('are' | 'were') | )<br>     | ('everything' | 'all')<br>       ('that' ('is' | 'was') | 'that' tokApostropheS | ))<br>    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')<br>    completeNounPhraseWithoutAll-&gt;cont_<br></div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

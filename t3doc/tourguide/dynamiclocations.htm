@@ -1,0 +1,416 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Dynamic Locations</title><meta name="keywords" content="Dynamic Locations,Button,SecretFixture,PreinitObject,LookupTable,execute,construct,Constructor"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Dynamic Locations
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="numbereddial.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="lever.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We now come to the complicated part, writing the code that will move the Tardis into a variety of locations (including dynamically-created ones) depending on the setting of the slider and the dial we've just defined. We'll start by defining the button the player has to press to set the Tardis in motion.  Two rules will be enforced before the Tardis is moved: first the outer door to the Tardis must be closed, and secondly the fluid link must be in place inside its compartment. If the fluid link is not full, the slider will be treated as being set to 'A' regardless of its actual setting. We then query another object (to be defined below) to determine the Tardis's destination based on the setting of its two controls, and move the Tardis into its new location. Again, remember to place this definition in your code so that it's a Component of tardisConsole:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;tardisButton&nbsp;:&nbsp;Button,&nbsp;Component&nbsp;'big&nbsp;red&nbsp;button'&nbsp;'big&nbsp;red&nbsp;button'
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Push)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(tardisDoorInside.isOpen)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&nbsp;red&nbsp;warning&nbsp;message&nbsp;flashes&nbsp;up&nbsp;on&nbsp;the&nbsp;console:\n
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;FONT&nbsp;COLOR=RED&gt;DOOR&nbsp;OPEN&nbsp;-&nbsp;TRAVEL&nbsp;ABORTED&lt;/FONT&gt;&lt;.p&gt;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!fluidLink.isIn(tardisPanelCompartment))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Nothing&nbsp;happens.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;central&nbsp;control&nbsp;column&nbsp;pumps&nbsp;up&nbsp;and&nbsp;down&nbsp;with&nbsp;the&nbsp;strange&nbsp;wheezing
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sound&nbsp;that&nbsp;only&nbsp;a&nbsp;superannuated&nbsp;TARDIS&nbsp;can&nbsp;make,&nbsp;and&nbsp;you&nbsp;feel&nbsp;the&nbsp;weird
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sensation&nbsp;of&nbsp;being&nbsp;translated&nbsp;along&nbsp;unfamiliar&nbsp;dimensions.&nbsp;After&nbsp;about
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;half&nbsp;a&nbsp;minute,&nbsp;it&nbsp;all&nbsp;stops.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;destcode&nbsp;=&nbsp;(fluidLink.full&nbsp;?&nbsp;tardisSlider.curSetting&nbsp;:&nbsp;'A'&nbsp;)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;tardisDial.curSetting;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;dest&nbsp;=&nbsp;tardisDestinations.destination(destcode);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tardis.moveInto(dest);&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dest&nbsp;==&nbsp;outsideCave)&nbsp;entranceTunnel.blocked&nbsp;=&nbsp;true;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The reason for the final line of code is to ensure that the tunnel is blocked when the Tardis arrives outside the cave, even if the player hasn't previously triggered the rockfall by climbing the ladder up from the main cave. Otherwise, the game could become unwinnable (since if the player character left the Tardis outside, entered the cave and climbed down the ladder, climbing the ladder again would trigger the rockfall, rendering the game unwinnable).
+<br>
+
+<br>
+
+<br>
+At this point, you might want to add a full property to the fluid link:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;fluidLink&nbsp;:&nbsp;Thing&nbsp;'fluid&nbsp;link'&nbsp;'fluid&nbsp;link'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;long&nbsp;transparent&nbsp;tube,&nbsp;half&nbsp;full&nbsp;of&nbsp;mercury.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;<b>full&nbsp;=&nbsp;true</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We'll change this definition in due course, but having the fluid link always full for now will give you access to all the possible Tardis destinations while you're testing the Tardis drive.
+<br>
+
+<br>
+Next we need to define the tardisDestinations object that will work out where to send the Tardis based on the settings of the dial and the slider. There are potentially 260 locations keyed by a combination of letter and digit (e.g. A0, A2, C9, T5). We shan't actually want to fill all these potential slots, but we do want an easy way of knowing what destination corresponds to what slot (defined by a letter and digit combination). This is a good job for a <b>LookupTable</b>. A LookupTable contains a set of pairs of arbitrary values, one of which is the key, and the other the value corresponding to the key. To add such pair to the table (or modify the value corresponding to an existing key) you simply use a statement of the form </font><font face="Courier New" size="2" color="#000000">myTable[key]&nbsp;=&nbsp;value</font><font face="Arial" size="2" color="#000000">; To find the value corresponding to a given key you use </font><font face="Courier New" size="2" color="#000000">value&nbsp;=&nbsp;myTable[key];</font><font face="Arial" size="2" color="#000000">. We want the Tardis to start with a number of preset destinations, so we make tardisDestinations a PreinitObject, which means that its <b>execute</b> method will be called during preinitialization. We use that execute method to define our preset destinations with statements like </font><font face="Courier New" size="2" color="#000000">destinations['A0']&nbsp;=&nbsp;hold;</font><font face="Arial" size="2" color="#000000"> (the starting location of the Tardis).
+<br>
+
+<br>
+If all the Tardis was going to do was visit these preset destinations, then all we'd need to do is to return destinations[destcode] to any calling routine wanting to know the destination corresponding to destcode. But the player will probably try several destcodes for which there is no entry in the destinations LookupTable (e.g. 'K2'), and for which destinations[destcode] would therefore be nil. We have to decide how we will handle these cases. We could just disallow travel in these instances, but we'll attempt something much more interesting: we'll create a new location on the fly and add it to the table. However (just to complicate things still further!) we may want to limit the number of dynamically-created locations that can be spawned by this means. To achieve this we'll add a destinationsCreated property to keep track of how many we've created and a maxDestinationsToCreate property to hold the maximum number of destinations we'll let be created. Rather than imposing a sharp cut-off when destinationsCreated reached maxDestinationsToCreate, however, we'll gradually reduce the probability of creating a new locations till it falls to zero when destinationsCreated hits the maximum. To achieve this we compare rand(101) (which returns a random number between 0 and 100 inclusive) with destinations as a percentage of maxDestinationsToCreate. If rand(101) is less than or equal to this percentage, we abort the creation of a new location and simply return nil. Clearly, once this percentage reaches 100, we'll always abort, but when it's very low, we'll nearly always go ahead and create a new location.
+<br>
+
+<br>
+Before we get there, however, we should check whether there's an existing location corresponding to destcode. If there is, we simply return it. If there isn't, and we pass the probability test, we create a new destination, add it to the table of destinations, and return it to the calling routine (in tardisButton.actionDobjPush). To create the new location we simply do what we'd do to create any new object dynamically, call new plus the classname, in this case new TardisDestination. We'll leave TardisDestination the job of defining itself:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;tardisDestinations&nbsp;:&nbsp;SecretFixture,&nbsp;PreinitObject
+<br>
+&nbsp;&nbsp;destinations&nbsp;=&nbsp;static&nbsp;new&nbsp;LookupTable
+<br>
+&nbsp;&nbsp;execute()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;destinations['A0']&nbsp;=&nbsp;hold;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;destinations['A2']&nbsp;=&nbsp;spaceStation;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;destinations['C9']&nbsp;=&nbsp;redDesert;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;destinations['T5']&nbsp;=&nbsp;outsideCave;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;maxDestinationsToCreate&nbsp;=&nbsp;50
+<br>
+&nbsp;&nbsp;destinationsCreated&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;destination(destcode)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;dest&nbsp;=&nbsp;destinations[destcode];
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(dest&nbsp;!=&nbsp;nil)&nbsp;return&nbsp;dest;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(rand(101)&nbsp;&lt;=&nbsp;(destinationsCreated&nbsp;*&nbsp;100)/maxDestinationsToCreate&nbsp;)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dest&nbsp;=&nbsp;new&nbsp;TardisDestination;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destinationsCreated&nbsp;++;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tardisDestinations.destinations[destcode]&nbsp;=&nbsp;dest;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;dest;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There was strictly speaking no need to make tardisDestinations a SecretFixture as well as a PreinitObject here, but it is convenient to fit it into the containment hierarchy (notionally as another part of the tardisConsole). An alternative would have been to have made tardisDestinations purely a SecretFixture, and to have defined its destinations (or called a custom method which did so) within its initializeThing method.
+<br>
+
+<br>
+We next need to go on to define the TardisDestination class. This will be a subclass of OutdoorRoom. All we'll create with it is a set of fairly barren and boring outdoor locations, but it would be good to provide some superficial variation between them. To do this we'll use TardisDestination's <b>construct</b> method, which is called whenever a dynamic object is created with the new statement. In this particular construct method we'll randomly assign an epithet, a colour and a terrain which in combination will make up the name of the room, and use those together with a randomized sky description and a random synonym of  'stretches' to vary the room description. Finally, we'll want to give the player the illusion of being able to wander around, so we'll point the cardinal direction properties to a series of FakeConnectors (which we'll define separately rather than trying to create dynamically). The definition of the TardisDestination then becomes:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;TardisDestination&nbsp;:&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;construct()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;epithet&nbsp;=&nbsp;rand('vast','barren',&nbsp;'desolate',&nbsp;'empty',&nbsp;'lonely'&nbsp;,&nbsp;'spooky',&nbsp;'dead',&nbsp;'grim');
+<br>
+&nbsp;&nbsp;&nbsp;colour&nbsp;=&nbsp;rand('ochre'&nbsp;,&nbsp;'red',&nbsp;'green'&nbsp;,&nbsp;'black'&nbsp;,&nbsp;'brown',&nbsp;'blue'&nbsp;,&nbsp;'grey',&nbsp;'white');
+<br>
+&nbsp;&nbsp;&nbsp;terrain&nbsp;=&nbsp;rand('plain',&nbsp;'forest',&nbsp;'wilderness',&nbsp;'swamp',&nbsp;'jungle',&nbsp;'tundra',&nbsp;'desert',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'grassland'&nbsp;,&nbsp;'wasteland',&nbsp;'prairie');
+<br>
+&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'\^'+&nbsp;epithet&nbsp;+&nbsp;'&nbsp;\^'+&nbsp;colour&nbsp;+&nbsp;'&nbsp;\^'&nbsp;+&nbsp;terrain;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;stretches&nbsp;=&nbsp;rand('stretches',&nbsp;'extends',&nbsp;'rolls',&nbsp;'ranges',&nbsp;'spreads',&nbsp;'reaches');
+<br>
+&nbsp;&nbsp;&nbsp;sky&nbsp;=&nbsp;rand('clear&nbsp;blue&nbsp;sky',&nbsp;'threatening&nbsp;dark&nbsp;clouds',&nbsp;'weird&nbsp;orange&nbsp;sky',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'lurid&nbsp;green&nbsp;heavens',&nbsp;'fluffy&nbsp;white&nbsp;clouds',&nbsp;'black&nbsp;thunderclouds',&nbsp;'reddening&nbsp;sky');
+<br>
+&nbsp;&nbsp;&nbsp;inherited();
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"This&nbsp;&lt;&lt;epithet&gt;&gt;&nbsp;&lt;&lt;colour&gt;&gt;&nbsp;&lt;&lt;terrain&gt;&gt;&nbsp;&lt;&lt;stretches&gt;&gt;&nbsp;as&nbsp;far&nbsp;as&nbsp;the&nbsp;eye&nbsp;can&nbsp;see
+<br>
+&nbsp;&nbsp;&nbsp;in&nbsp;all&nbsp;directions,&nbsp;one&nbsp;direction&nbsp;looking&nbsp;much&nbsp;like&nbsp;another&nbsp;under&nbsp;the&nbsp;&lt;&lt;sky&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;destName&nbsp;=&nbsp;('the&nbsp;'&nbsp;+&nbsp;epithet&nbsp;+&nbsp;'&nbsp;'&nbsp;+&nbsp;colour&nbsp;+&nbsp;'&nbsp;'&nbsp;+&nbsp;terrain)
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;wanderNorth
+<br>
+&nbsp;&nbsp;east&nbsp;=&nbsp;wanderEast
+<br>
+&nbsp;&nbsp;south&nbsp;=&nbsp;wanderSouth
+<br>
+&nbsp;&nbsp;west&nbsp;=&nbsp;wanderWest
+<br>
+&nbsp;&nbsp;epithet&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;colour&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;terrain&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;stretches&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;sky&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+One point to note here is the use of the <b>construct</b> method; this is a special method that's called on any object created dynamically through a new statement at the point of creation. Note that a constructor can take parameters like any other method, in which case you would include them in the new  statement. For example, instead of having TardisDestination constructor randomly choose an epithet, colour and terrain for itself, we could have these passed as parameters to the constructor:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;TardisDestination&nbsp;:&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;construct(myEpithet,&nbsp;myColour,&nbsp;myTerrain)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;epithet&nbsp;=&nbsp;myEpithet;
+<br>
+&nbsp;&nbsp;&nbsp;colour&nbsp;=&nbsp;myColour;
+<br>
+&nbsp;&nbsp;&nbsp;terrain&nbsp;=&nbsp;myTerrain;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;...
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then you could have set up a particular kind of dynamic TardisDestination with a statement like:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">new&nbsp;TardisDestination('broad',&nbsp;'purple',&nbsp;'steppe');
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+However, in this game, we shall stick with the way we've done it. Of course it would be possible to elaborate this to add further variety still, but the above definition suffices to show the principle. Next we need to define the four FakeConnectors that all members of the TardisDestination will use:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">wanderNorth&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You&nbsp;wander&nbsp;off&nbsp;to&nbsp;the&nbsp;north&nbsp;for&nbsp;a&nbsp;while,&nbsp;but&nbsp;finding
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nothing&nbsp;of&nbsp;interest&nbsp;you&nbsp;eventually&nbsp;turn&nbsp;round&nbsp;and&nbsp;come&nbsp;back.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+wanderEast&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You&nbsp;stride&nbsp;confidently&nbsp;off&nbsp;to&nbsp;the&nbsp;east,&nbsp;but&nbsp;the&nbsp;further
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;go,&nbsp;the&nbsp;more&nbsp;it&nbsp;all&nbsp;looks&nbsp;the&nbsp;same,&nbsp;so&nbsp;after&nbsp;a&nbsp;while&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retrace&nbsp;your&nbsp;steps.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+wanderSouth&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"The&nbsp;further&nbsp;south&nbsp;you&nbsp;go,&nbsp;the&nbsp;more&nbsp;you&nbsp;wish&nbsp;you&nbsp;hadn't
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bothered,&nbsp;so&nbsp;in&nbsp;the&nbsp;end&nbsp;you&nbsp;give&nbsp;it&nbsp;up&nbsp;as&nbsp;a&nbsp;bad&nbsp;job&nbsp;and&nbsp;head&nbsp;back.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+wanderWest&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You&nbsp;carry&nbsp;on&nbsp;westwards&nbsp;as&nbsp;far&nbsp;as&nbsp;your&nbsp;legs&nbsp;will&nbsp;carry&nbsp;you,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;eventually&nbsp;you&nbsp;are&nbsp;forced&nbsp;to&nbsp;rest.&nbsp;Having&nbsp;rested,&nbsp;you&nbsp;decide&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;really&nbsp;don't&nbsp;want&nbsp;to&nbsp;go&nbsp;any&nbsp;further&nbsp;that&nbsp;way,&nbsp;so&nbsp;you&nbsp;return&nbsp;the&nbsp;way
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;came.&nbsp;"&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Again, these really all say the same thing in slightly different words, but some illusion of variety may be created thereby.
+<br>
+
+<br>
+Two of the preset destinations have already been created, the hold (in which the Tardis starts) and outsideCave (where we need to return to win the game - having completed various other tasks). We need to define the other two (we'll eventually be adding more than two, but two will do for now, just to demonstrate the principle). First, we'll add the space station just as a stub to be filled in later:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">spaceStation&nbsp;:&nbsp;Room&nbsp;'Space&nbsp;Station&nbsp;-&nbsp;Observation&nbsp;Deck'&nbsp;'the&nbsp;observation&nbsp;deck'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then we'll add the redDesert, which we'll teasingly make resemble the randomly generated locations. We'll reward the player who bothers to explore with another of the mysterious tablets, however, although we'll make it the least valuable one so that players who don't find it won't miss too much.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">/*&nbsp;The&nbsp;Red&nbsp;Desert&nbsp;World*/
+<br>
+
+<br>
+redDesert&nbsp;:&nbsp;Room&nbsp;'Vast&nbsp;Red&nbsp;Desert'&nbsp;'the&nbsp;vast&nbsp;red&nbsp;desert'
+<br>
+&nbsp;&nbsp;"This&nbsp;huge&nbsp;red&nbsp;desert&nbsp;stretches&nbsp;to&nbsp;the&nbsp;horizon&nbsp;in&nbsp;all&nbsp;directions,&nbsp;all&nbsp;directions
+<br>
+&nbsp;&nbsp;&nbsp;looking&nbsp;much&nbsp;the&nbsp;same&nbsp;under&nbsp;the&nbsp;brassy&nbsp;sky,&nbsp;except&nbsp;that&nbsp;a&nbsp;faint&nbsp;trail&nbsp;leads&nbsp;east.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;wanderNorth
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;wanderWest
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;=&nbsp;wanderSouth
+<br>
+&nbsp;&nbsp;&nbsp;east&nbsp;=&nbsp;redRavine
+<br>
+;
+<br>
+
+<br>
+redRavine&nbsp;:&nbsp;Room&nbsp;'Narrow&nbsp;Red&nbsp;Ravine'&nbsp;'the&nbsp;narrow&nbsp;red&nbsp;ravine'
+<br>
+&nbsp;&nbsp;"The&nbsp;faint&nbsp;trail&nbsp;from&nbsp;the&nbsp;west&nbsp;comes&nbsp;to&nbsp;the&nbsp;end&nbsp;in&nbsp;this&nbsp;narrow&nbsp;red&nbsp;ravine.&nbsp;Apart
+<br>
+&nbsp;&nbsp;&nbsp;from&nbsp;the&nbsp;narrow&nbsp;path&nbsp;leading&nbsp;east,&nbsp;rocky&nbsp;hillsides&nbsp;tower&nbsp;up&nbsp;on&nbsp;every&nbsp;side.&nbsp;On
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;south&nbsp;side&nbsp;is&nbsp;a&nbsp;narrow&nbsp;hole,&nbsp;which&nbsp;perhaps&nbsp;leads&nbsp;into&nbsp;a&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;redDesert
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;=&nbsp;redCave
+<br>
+&nbsp;&nbsp;&nbsp;in&nbsp;asExit(south)
+<br>
+;
+<br>
+
+<br>
++&nbsp;Enterable&nbsp;-&gt;redCave&nbsp;'narrow&nbsp;(south)&nbsp;hole/cave/rockface'&nbsp;'narrow&nbsp;hole'
+<br>
+&nbsp;&nbsp;"The&nbsp;narrow&nbsp;hole&nbsp;in&nbsp;the&nbsp;south&nbsp;rockface&nbsp;looks&nbsp;just&nbsp;big&nbsp;enough&nbsp;to&nbsp;squeeze&nbsp;through.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+redCave&nbsp;:&nbsp;DarkRoom&nbsp;'Red&nbsp;Cave'&nbsp;'the&nbsp;red&nbsp;cave'
+<br>
+&nbsp;&nbsp;&nbsp;"There&nbsp;is&nbsp;just&nbsp;enough&nbsp;room&nbsp;to&nbsp;stand&nbsp;in&nbsp;this&nbsp;small&nbsp;cave;&nbsp;the&nbsp;dark,&nbsp;rough&nbsp;red
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;walls&nbsp;press&nbsp;in&nbsp;on&nbsp;every&nbsp;side,&nbsp;and&nbsp;the&nbsp;roof&nbsp;rapidly&nbsp;dips&nbsp;to&nbsp;meet&nbsp;the&nbsp;floor
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;the&nbsp;rear.&nbsp;The&nbsp;only&nbsp;way&nbsp;out&nbsp;is&nbsp;through&nbsp;a&nbsp;narrow&nbsp;exit&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;redRavine
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;asExit(north)
+<br>
+;
+<br>
+
+<br>
+plasticTablet&nbsp;:&nbsp;Tablet&nbsp;'plastic&nbsp;tablet*tablets'&nbsp;'plastic&nbsp;tablet'&nbsp;@redCave
+<br>
+&nbsp;&nbsp;inscription&nbsp;=&nbsp;"S&nbsp;M&nbsp;I&nbsp;L&nbsp;E\nP&nbsp;I&nbsp;P&nbsp;E&nbsp;R\nR&nbsp;O&nbsp;X&nbsp;L&nbsp;N\nA&nbsp;N&nbsp;T&nbsp;L&nbsp;E\nT&nbsp;R&nbsp;U&nbsp;S&nbsp;S"
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;plastic&nbsp;tablet&nbsp;lies&nbsp;on&nbsp;the&nbsp;floor&nbsp;towards&nbsp;the&nbsp;rear&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">There's still one more task we need to perform before recompiling the game and trying all this out. The way we have defined tardisDestinations.destination means that it could return nil, especially if a lot of dynamic destinations have been created already. This in turn means that pressing the big red button could end up sending the Tardis into nil (via the tardis.moveInto(dest) statement in tardisButton.actionDobjFor(Press)). This in itself is not too problematic - unless the player tries to leave the Tardis while it's in nil, which he or she could very well try to do. This <i>does</i> need to be prevented, since once the player character is moved into nil, there is nothing the player character can do to get out it, other than type UNDO, which is a bit mimesis-breaking. What we need to do is to prevent the player leaving the Tardis if it's in nil, providing a convincing (or at least reasonably plausible) reason for doing so. This is quite easy to do, since leaving the Tardis requires travel via a Door, and a Door is a type of TravelConnector, and we can simply override its canTravelerPass and explainTravelBarrier methods to disallow travel when the Tardis is in nil and explain why we're doing so:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;tardisDoorInside&nbsp;:&nbsp;Lockable,&nbsp;Door&nbsp;-&gt;tardisDoor&nbsp;'outer&nbsp;white&nbsp;door*doors'&nbsp;'white&nbsp;door'
+<br>
+&nbsp;&nbsp;<b>canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;tardis.location&nbsp;!=&nbsp;nil;&nbsp;}
+<br>
+&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;"You&nbsp;can't&nbsp;go&nbsp;out:&nbsp;the&nbsp;Tardis&nbsp;hasn't&nbsp;materialized&nbsp;properly&nbsp;and&nbsp;there's&nbsp;nothing
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;there&nbsp;but&nbsp;the&nbsp;grey&nbsp;limbo,&nbsp;where&nbsp;nothing&nbsp;can&nbsp;exist.&nbsp;";&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Now at last you should be in a position to recompile the game and take your Tardis for a spin.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,24 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ExternalEventList</title><meta name="keywords" content="ExternalEventList,doScript,advanceState"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ExternalEventList : <a href="eventlist.htm">EventList</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="shuffledeventlist.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="synceventlist.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An "external" event list is one whose state is driven externally to the script. Specifically, the state is <i>not</i> advanced by invoking the script; the state is advanced exclusively by some external process (for example, by a daemon that invokes the event list's <b>advanceState() </b>method). In order words, each time you call the doScript() method of an ExternalEventList, the same event will fire (or the same string display), until you make an explicit call to advanceState().
+<br>
+
+<br>
+A possible use for this would be for a list of strings/events where what happens/is displayed depends on some external event. Before that event occurs, you see the message/event relating to the earlier state of affairs; when the event occurs it can call the ExternalEventList's advanceState() method thereby causing the next event to be repeatedly fired, until another call to advanceState moves it on to the next, and so on.
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font>
+
+</body></html>

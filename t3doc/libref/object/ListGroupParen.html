@@ -1,0 +1,68 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ListGroupParen</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ListGroupParen</span><span class=type>class</span><td align=right><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#2116">2116</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   List Group implementation: parenthesized sublist.  Displays the   number of items collectively, then displays the list of items in   parentheses. <p>   Note that this is a ListGroupSorted subclass.  If our subclass   defines a compareGroupItems() method, we'll show the list in the   order specified by compareGroupItems().
+<p>
+<code>class
+<b>ListGroupParen</b> :  &nbsp; <a href="../object/ListGroupSorted.html">ListGroupSorted</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ListGroupParen</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ListGroupSorted.html">ListGroupSorted</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ListGroup.html">ListGroup</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#groupDisplaysSublist">groupDisplaysSublist</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ListGroup</code> :<br>
+<code>
+<a href="../object/ListGroup.html#minGroupSize">minGroupSize</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#showGroupCountName">showGroupCountName</a>&nbsp;
+<a href="#showGroupList">showGroupList</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ListGroupSorted</code> :<br>
+<code>
+<a href="../object/ListGroupSorted.html#compareGroupItems">compareGroupItems</a>&nbsp;
+<a href="../object/ListGroupSorted.html#sortListGroup">sortListGroup</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ListGroup</code> :<br>
+<code>
+<a href="../object/ListGroup.html#createGroupSublister">createGroupSublister</a>&nbsp;
+<a href="../object/ListGroup.html#groupCardinality">groupCardinality</a>&nbsp;
+<a href="../object/ListGroup.html#groupNounPhraseCount">groupNounPhraseCount</a>&nbsp;
+<a href="../object/ListGroup.html#showGroupItem">showGroupItem</a>&nbsp;
+<a href="../object/ListGroup.html#showGroupItemCounted">showGroupItemCounted</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="groupDisplaysSublist"></a>
+<table class=decl><tr><td><code>groupDisplaysSublist</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#2167">2167</a>]</table><div class=desc>we don't add a sublist, since we enclose our list in parentheses<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="showGroupCountName"></a>
+<table class=decl><tr><td><code>showGroupCountName (lst)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#2160">2160</a>]</table><div class=desc>   Show the collective count for the list of objects.  By default,   we'll simply display the countName of the first item in the list,   on the assumption that each object has the same plural   description.  However, in most cases this should be overridden to   provide a more general collective name for the group. <p>
+</div>
+<a name="showGroupList"></a>
+<table class=decl><tr><td><code>showGroupList (pov, lister, lst, options, indent, infoTab)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#2120">2120</a>]</table><div class=desc>   show the group list <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

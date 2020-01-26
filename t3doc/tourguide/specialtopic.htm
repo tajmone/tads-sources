@@ -1,0 +1,189 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SpecialTopic</title><meta name="keywords" content="SpecialTopic,keywordList,maxEntries,specialTopicHistory"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SpecialTopic : <a href="topicentry.htm">TopicEntry</a>, <a href="suggestedtopictree.htm">SuggestedTopicTree</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="notopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="initiateconversation.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">So far we have seen how we can allow the player to respond YES or NO to Sarah's question, but what if we want to respond with something else that doesn't fit into the ASK/TELL/GIVE/SHOW paradigm?
+<br>
+
+<br>
+The answer is to use a SpecialTopic, which can respond to any string we care to define. Basically this works by providing the SpecialTopic with a keywordList containing a list of the words you want it to match. The special topic will match user input if the user input consists exclusively of words from this keyword list. The user input doesn't have to include all of the words defined here, but all of the words in the user's input have to appear here to match. So for example, if we defined:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">keywordList&nbsp;=&nbsp;['lie',&nbsp;'through',&nbsp;'thru'&nbsp;,'your',&nbsp;'teeth']</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+The SpecialTopic would match LIE THROUGH YOUR TEETH or LIE THRU TEETH or simply LIE.</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that you can have more than one SpecialTopic in the same ConvNode that shares some of the same vocabulary, e.g.:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">keywordList&nbsp;=&nbsp;['gnash',&nbsp;'your',&nbsp;'teeth']</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+And both topics would work fine provided the player types enough words to determine which one is meant (e.g. LIE TEETH or GNASH TEETH), but if the only words typed are common to both SpecialTopics (in this case a command consisting of just TEETH) neither SpecialTopic will be matched and the game will treat what the player typed as a standard command. So if you do devise multiple SpecialTopics under the same ConvNode you need to treat overlapping wording with some care. In the example just given it would be rather perverse for the player to type simply TEETH, so you'd probably be okay; what you do need to avoid is any ambiguity in a SpecialTopic response a player might reasonably type.
+<br>
+
+<br>
+Of course players can't be expected to <i>guess</i> the special phrasing you've devised for your SpecialTopics, so the library automatically treats every SpecialTopic as a SuggestedTopic and displays its name property as a prompt to the player, following the phrase "You could ". For example, for the two cases above you might define:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">name&nbsp;=&nbsp;'lie&nbsp;through&nbsp;your&nbsp;teeth'</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+and
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">name&nbsp;=&nbsp;'gnash&nbsp;your&nbsp;teeth'
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then when the ConvNode is entered, the player will be prompted with:
+<br>
+
+<br>
+"(You could lie through your teeth, or gnash your teeth.)
+<br>
+
+<br>
+It follows that you want the name property to contain something that makes sense after "You could "
+<br>
+
+<br>
+The SpecialTopic template simplifies these definitions by allowing you to define a SpecialTopic as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">SpecialTopic&nbsp;'name'&nbsp;[keywordList]
+<br>
+&nbsp;&nbsp;"topicReponse"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+So you could define these two SpecialTopics thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;SpecialTopic&nbsp;'lie&nbsp;through&nbsp;your&nbsp;teeth'&nbsp;['lie',&nbsp;'through',&nbsp;'thru',&nbsp;'your',&nbsp;'teeth']
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;I've&nbsp;never&nbsp;even&nbsp;set&nbsp;eyes&nbsp;on&nbsp;Mabel!&lt;/q&gt;&nbsp;you&nbsp;declare.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I&nbsp;don't&nbsp;believe&nbsp;you!&lt;/q&gt;&nbsp;he&nbsp;snarls.
+<br>
+;
+<br>
+
+<br>
+++&nbsp;SpecialTopic&nbsp;'gnash&nbsp;your&nbsp;teeth'&nbsp;&nbsp;['gnash',&nbsp;'your',&nbsp;'teeth']
+<br>
+&nbsp;&nbsp;"You&nbsp;gnash&nbsp;your&nbsp;teeth&nbsp;in&nbsp;frustration&nbsp;at&nbsp;his&nbsp;wild&nbsp;accusations
+<br>
+&nbsp;&nbsp;&nbsp;while&nbsp;he&nbsp;glowers&nbsp;at&nbsp;you&nbsp;in&nbsp;mounting&nbsp;fury.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Answer&nbsp;my&nbsp;question,&nbsp;damn&nbsp;you!&lt;/q&gt;&nbsp;he&nbsp;cries&nbsp;&lt;.convstay&gt;&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+But since these aren't relevant to our game, we'll define one that is. Suppose that in addition to replying 'yes' or 'no' to Sarah's question about cutting open the glass case, we want to allow the player to ask her what she thinks. In this case we <i>could</i> define an adviceTopic: Topic with vocabulary such as 'advice/opinion' and then use an AskForTopic @adviceTopic. And in this case it might even be a simpler way of doing it! But to show how SpecialTopic works we'll do it the hard way with a SpecialTopic (which should be put in the same ConvNode as the NoTopic and YesTopic we've just defined; incidentally it's because a SpecialTopic always acts like a SuggestedTopic that we have made the NoTopic and YesTopic SuggestedTopics as well, so that the player can see that saying YES or NO are also valid options at this point):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;SpecialTopic,&nbsp;StopEventList&nbsp;'ask&nbsp;what&nbsp;she&nbsp;thinks'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;['ask',&nbsp;'her',&nbsp;'sarah',&nbsp;'what',&nbsp;'she',&nbsp;'thinks',&nbsp;'do'&nbsp;,&nbsp;'you',&nbsp;'think']
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;What&nbsp;do&nbsp;you&nbsp;think?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{The&nbsp;sarah/she}&nbsp;walks&nbsp;over&nbsp;to&nbsp;the&nbsp;case,&nbsp;raises&nbsp;her&nbsp;hand&nbsp;as&nbsp;if&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;cutting&nbsp;it&nbsp;with&nbsp;her&nbsp;ring,&nbsp;but&nbsp;then&nbsp;pauses,&nbsp;peering&nbsp;down&nbsp;at&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;plinth&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;running&nbsp;her&nbsp;hand&nbsp;along&nbsp;its&nbsp;carved&nbsp;decorative&nbsp;slat.&nbsp;She&nbsp;turns&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;with&nbsp;a&nbsp;worried&nbsp;frown&nbsp;and&nbsp;says,&nbsp;&lt;q&gt;I&nbsp;think&nbsp;something\'s&nbsp;wrong.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Are&nbsp;you&nbsp;sure&nbsp;you&nbsp;want&nbsp;me&nbsp;to&nbsp;go&nbsp;ahead&nbsp;with&nbsp;this?&lt;/q&gt;&lt;.convstay&gt;&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;What&nbsp;do&nbsp;you&nbsp;think&nbsp;is&nbsp;wrong?&lt;/q&gt;&nbsp;you&nbsp;wonder,\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I\'m&nbsp;not&nbsp;sure,&lt;/q&gt;&nbsp;she&nbsp;admits,&nbsp;&lt;q&gt;Just&nbsp;&lt;i&gt;something&lt;/i&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about&nbsp;this&nbsp;case.&nbsp;But&nbsp;maybe&nbsp;I\'m&nbsp;just&nbsp;being&nbsp;silly.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;So,&nbsp;do&nbsp;you&nbsp;want&nbsp;me&nbsp;to&nbsp;go&nbsp;ahead&nbsp;and&nbsp;cut&nbsp;it&nbsp;open?&lt;/q&gt;&lt;.convstay&gt;&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;What&nbsp;is&nbsp;it&nbsp;about&nbsp;the&nbsp;case&nbsp;that\'s&nbsp;worrying&nbsp;you?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I&nbsp;can\'t&nbsp;quite&nbsp;put&nbsp;my&nbsp;finger&nbsp;on&nbsp;it,&lt;/q&gt;&nbsp;she&nbsp;frowns,&nbsp;absently
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;running&nbsp;her&nbsp;hand&nbsp;along&nbsp;the&nbsp;decorative&nbsp;slat&nbsp;round&nbsp;the&nbsp;polished&nbsp;oak
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;plinth,&nbsp;&lt;q&gt;So&nbsp;shall&nbsp;I&nbsp;just&nbsp;go&nbsp;ahead&nbsp;and&nbsp;cut&nbsp;it&nbsp;open&nbsp;anyway?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;.convstay&gt;'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic,&nbsp;StopEventList
+<br>
+&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Do&nbsp;you&nbsp;think&nbsp;we&nbsp;should?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes,&nbsp;let\'s&nbsp;go&nbsp;for&nbsp;it!&lt;/q&gt;&nbsp;she&nbsp;enthuses,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;So,&nbsp;shall&nbsp;I?&lt;/q&gt; &lt;.convstay&gt;',&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Do&nbsp;you&nbsp;really&nbsp;think&nbsp;we&nbsp;should?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes,&nbsp;I&nbsp;just&nbsp;said&nbsp;so!&lt;/q&gt;&nbsp;she&nbsp;reminds&nbsp;you,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;So&nbsp;what&nbsp;do&nbsp;you&nbsp;say?&lt;/q&gt;&lt;.convstay&gt;'
+<br>
+&nbsp;]
+<br>
+&nbsp;isActive&nbsp;=&nbsp;(microphone.attachedObjects.indexOf(stickingPlaster))
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that although players will see the prompt "(You could ask what she thinks.)" the chances are that at least half of them won't suppose they have to follow the exact wording of the prompt, so we have to make sure our list of words in our keywordList covers all the things they're likely to type, including ASK HER WHAT SHE THINKS, ASK SARAH WHAT SHE THINKS and WHAT DO YOU THINK? Hence the list of keywords we supply here (though we don't need to worry about players ending the command with, say, a question-mark, since that's taken care of automatically).
+
+<br>
+
+<br>
+The idea of the example above is that if the player does ask Sarah what she thinks, she gives a fairly good hint whether it's safe to proceed, and even a bit of a hint why it isn't if it isn't. The test in the topicResponse() method is for whether the sticking plaster is attached to the microphone. The idea is that, if it is, it will stop the microphone picking up the sound of the glass being cut, which will otherwise sound the alarm and bring the curator running in to investigate, which is why we set the objects up the way we did when <a href="collectivegroup.htm">we first created the Benefactors' Room</a>.
+<br>
+
+<br>
+One point that may occur to you (or that you may in time discover) about SpecialTopics is that at least some players will be tempted to use them in inappropriate ways. That is, having once seen a prompt "ask what she thinks" as a possible response to a question, they may try to use it in other contexts as well, when it is no longer valid. Prior to version 3.0.8 TADS's response to this was potentially quite misleading, along the lines of "The word 'thinks' is not necessary in this game" or "The story doesn't understand that command." TADS 3.0.8 improves on this considerably by displaying the rather more accurate and informative message "That command can't be used right now." In order to do this the parser keeps track of a number of the most recent SpecialTopics command phrases displayed, and shows the "That command can't be used right now" if the inappropriate command matches one of these. The number of such SpecialTopic command phrases to be retained is held in the <b>maxEntries</b> property of the <b>specialTopicHistory</b> object. By default this number is set to 20, which will normally suffice for most games (since few players will remember more than the last 20 SpecialTopic command phrases displayed, while the number is not so large as to make a significant impact on performance). But if you like, you can set it to some other value; if you set it to nil, instead of checking against the most recent list the parser will scan <i>all</i> the SpecialTopics in the game (regardless of whether they've yet been suggested or not).
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,68 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ConvType</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ConvType</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1950">1950</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A conversational action type descriptor.  This descriptor is used in   handleConversation() in Actor and ActorState to describe the type of   conversational action we're performing.  The type descriptor object   encapsulates a set of information that tells us how to handle the   action.
+<p>
+<code>class
+<b>ConvType</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ConvType</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/askAboutConvType.html">askAboutConvType</a>&nbsp;
+<a href="../object/askForConvType.html">askForConvType</a>&nbsp;
+<a href="../object/byeConvType.html">byeConvType</a>&nbsp;
+<a href="../object/commandConvType.html">commandConvType</a>&nbsp;
+<a href="../object/consultConvType.html">consultConvType</a>&nbsp;
+<a href="../object/giveConvType.html">giveConvType</a>&nbsp;
+<a href="../object/helloConvType.html">helloConvType</a>&nbsp;
+<a href="../object/initiateConvType.html">initiateConvType</a>&nbsp;
+<a href="../object/noConvType.html">noConvType</a>&nbsp;
+<a href="../object/showConvType.html">showConvType</a>&nbsp;
+<a href="../object/tellAboutConvType.html">tellAboutConvType</a>&nbsp;
+<a href="../object/yesConvType.html">yesConvType</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#defaultResponseProp">defaultResponseProp</a>&nbsp;
+<a href="#topicListProp">topicListProp</a>&nbsp;
+<a href="#unknownMsg">unknownMsg</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#afterResponse">afterResponse</a>&nbsp;
+<a href="#defaultResponse">defaultResponse</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="defaultResponseProp"></a>
+<table class=decl><tr><td><code>defaultResponseProp</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1969">1969</a>]</table><div class=desc>the default response property for this action<p>
+</div>
+<a name="topicListProp"></a>
+<table class=decl><tr><td><code>topicListProp</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1966">1966</a>]</table><div class=desc>   The TopicDatabase topic-list property.  This is the property of   the TopicDatabase object that we evaluate to get this list of   topic entries to search for a match to the topic. <p>
+</div>
+<a name="unknownMsg"></a>
+<table class=decl><tr><td><code>unknownMsg</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1959">1959</a>]</table><div class=desc>   The unknown interlocutor message property.  This is used when we   try this conversational action without knowing whom we're talking   to.  For example, if we just say HELLO, and there's no one around   to talk to, we'll use this as the default response.  This can be a   library message property, or simply a single-quoted string to   display. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="afterResponse"></a>
+<table class=decl><tr><td><code>afterResponse (actor, otherActor)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1984">1984</a>]</table><div class=desc>   Perform any special follow-up action for this type of   conversational action. <p>
+</div>
+<a name="defaultResponse"></a>
+<table class=decl><tr><td><code>defaultResponse (db, otherActor, topic)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1978">1978</a>]</table><div class=desc>   Call the default response property on the given topic database.   This invokes the property given by defaultResponseProp().  We have   both the property and the method to call the property because this   allows us to test for the existence of the property and to call it   with the appropriate argument list. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

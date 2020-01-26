@@ -1,0 +1,277 @@
+<html>
+<title>HTML TADS Table Layout Rules</title>
+
+<h1>HTML TADS Table Layout Rules</h1>
+
+<p>The &lt;TABLE&gt; tag is probably the most powerful feature in
+HTML for controlling visual layout.  The HTML specifications are
+intentionally vague about table layout, because the designers of HTML
+wanted to leave a lot of the details up to each implementation for
+maximum flexibility.  HTML TADS is essentially an individual HTML
+implementation, though, so we can fill in some of the details that
+the generic HTML specifications leave out.  Understanding the table
+layout rules can be helpful when trying to achieve particular effects.
+
+<p>The layout rules are fairly complicated, so we'll start with a
+simplified summary.  To lay out a table, we start by finding the
+width of the table, then we find the width of its columns, then we
+let the chosen width determine the table's height.  To find the width
+of the table and its columns, we try to satisfy any WIDTH attributes
+exactly if possible, giving precedence to the WIDTH attribute of the
+table itself if present.  However, we never allow a table to be
+smaller than its contents, and we try to keep a table from exceeding
+the viewable width of the window, to avoid horizontal scrolling.
+
+<p>Now we'll describe the layout rules in detail.
+
+<p><b>Minimum and maximum column widths.</b> Many of the layout rules
+involve the "minimum" and "maximum" width of a column.  This is
+terminology from the HTML standard, so we'll use the same terms to
+describe the HTML TADS rules - but note that they're not always what
+you'd expect, so we'd better define them before now, before we
+get to the layout rules.
+
+<p>The <i>minimum width of a column</i> is the narrowest the column
+can be to fit all of its contents with the harshest possible
+word-wrapping; so, it's the width of the widest single word (or
+picture or other element) that can't be split across lines with
+word-wrapping.
+
+<p>The <i>maximum width of a column</i> is the largest of the maximum
+widths of the cells in the column.  The maximum width of a cell is
+simply the total width of all of the contents of the cell with
+<i>no</i> word-wrapping; so it's the width of the cell with all of its
+contents on a single line.  Note that this term can be a little
+misleading, because it isn't a maximum in the sense of a limit on how
+big the cell can get; rather, it's just a measurement of the most
+space a cell would need to display all of its contents without any
+word-wrapping.  A cell (or a column) can always be made arbitrarily
+wider than this "maximum" by padding it with blank space.
+
+<p><b>Column WIDTH specifications.</b> Some of the rules involve
+columns with explicitly specified widths.  Column widths are
+specified using the WIDTH attribute of the &lt;TD&gt; and &lt;TH&gt;
+tags.  When a column contains a &lt;TD&gt; or &lt;TH&gt; tag with a
+WIDTH attribute, then that column is given that specified width.  If
+a single column contains multiple cells with WIDTH specifications, we
+only pay attention to the widest one.
+
+<p>A column width can be specified in pixels or as a percentage of
+the table's overall width.  If the WIDTH value ends with a "%" sign,
+then it's a percentage width; otherwise, it's a pixel width.
+
+<p>When multiple columns specify percentage widths, we limit the
+total requested percentage to 100%; if the total exceeds 100%, we
+ignore the amount over 100%.  For example, if there are two columns,
+and each specifies a width of 80%, we treat the second column as
+though it requested only 20%.  Note that we don't apply the limit
+proportionally; we simply cut off the request for the first column
+that pushes the total over 100%.
+
+<p><b>Multi-column cells.</b> If a cell has a COLSPAN greater than 1,
+we treat it specially.  The simple summary: when a column spans
+multiple columns, we allocate its width to the columns it spans in
+proportion to the widths the columns would otherwise have based on the
+other cells in the columns.
+
+<p>To be more precise, let's look at the full algorithm.
+
+<p>First, we calculate the entire table's column widths for
+single-column cells (COLSPAN=1) only.  Let's call these results the
+"current" column widths.  We now make a second pass over the entire
+table, looking for multi-column cells.
+
+<p>For each multi-column cell, we calculate the cell's minimum and
+maximum widths as normal.  We then add up the "current" minimum widths
+for the columns, and we add up the current maximum widths for the
+spanned columns; let's call these the "total current" minimum and
+maximum widths for the spanned columns.  For example, if we have a
+cell that starts in column 2 and has COLSPAN=3, we add up the current
+minimum widths of columns 2, 3, and 4, and call this the total current
+minimum width; likewise for the total current maximum width.
+
+<p>Next, we compare the cell's minimum and maximum widths to the
+corresponding total current widths.  If the cell's widths are smaller,
+we do nothing further, because the spanned columns <i>in aggregate</i>
+are big enough for the cell.  If the cell's widths are bigger, we
+calculate the <i>excess</i> of the cell's widths over the
+corresponding total current widths.  We then distribute this excess
+width to each spanned column in proportion to the column's share of
+the total current width.  For example, if the current minimum widths
+of columns 2, 3, and 4 are 100, 200, and 300 respectively, and we have
+60 pixels of excess width to distribute, we distribute one-sixth
+(100/(100+200+300)) to column 2, two-sixths to column 3, and
+three-sixths to column 4.
+
+<p>When we say we "distribute the excess widths," we simply mean that
+we increase the current column widths by the proportional share of
+the excess amount.  So, after the example above, the new current
+minimum widths of columns 2, 3, and 4 become 110, 220, and 330.
+
+<p>Finally, we go back and repeat the process for the next
+multi-column cell we find in the table.
+
+<p><b>Figuring the table's width.</b>  The first step in laying out
+a table is determining the overall width of the table.  The rules
+for choosing the width are:
+
+<ul>
+
+<li>Above all else, the table must be <i>at least</i> as wide as the
+sum of the minimum widths of all of its columns.  This means that a
+table must be large enough to accomodate all of its columns without
+any clipping or overlapping.  If any other rule would choose a table
+size below this minimum, we always override that decision and use
+this minimum table size instead.
+
+<li>If the &lt;TABLE&gt; tag specifies a WIDTH attribute, then we
+use that value (except that the minimum table size above overrides
+this if the WIDTH value is below the minimum).
+
+<li>In the absence of a WIDTH attribute, the largest we'll make the
+table is the full available space in the display window (except, as
+always, that we'll never go below the minimum table size).  We set
+this upper limit so that the table fits in the window without any
+horizontal scrolling, since horizontal scrolling would make the table
+much harder to read.  (It might seem that we're just replacing
+horizontal scrolling with vertical scrolling, but in many cases
+a table won't become tall enough to need vertical scrolling even
+after being forced to fit the window's width.  Even when a table
+is very tall, vertical scrolling is preferable to horizontal for
+most users, since text games tend to display enough sequential
+information that vertical scrolling occurs anyway.)
+
+<li>If any column has an explicit pixel width specified, we'll try
+to make the table big enough to accomodate that pixel width.
+
+<li>For any column that doesn't have any explicit width specified,
+we'll try to make the table big enough to accomodate the maximum
+width of the column.
+
+<li>If any column has a percentage width specified, we'll try to make
+the table big enough that, at the column's maximum width, the column
+would have the requested percentage of the total table width.  (For
+example, if a column specifies a width of 10%, we try to make sure
+that the table is big enough that the column would only take up 10%
+of the total table size if the column were at its maximum size.)
+
+<li>If some columns have percentage widths and some don't, we try to
+make the table big enough that the non-percentage columns would only
+take up the left-over percentage at their maximum sizes.  (For
+example, if we have three columns in the table, and the first two
+specify widths of 20% and 50% respectively, we try to make sure that
+the table is big enough that the third column, at its maximum width,
+would take up only 30% of the total table width.)
+
+</ul>
+
+<p><b>Determining the column widths.</b> Once we know the overall
+width of the table, we figure the widths of the individual columns.
+Since we choose the overall table width before determining the column
+widths, our job at this point is to determine how the table width is
+divided among the columns.  We use the following rules, in order
+of priority:
+
+<ul>
+
+<li>The first overriding requirement is that the sum of all of the
+column widths equals the table width.  That is, a table's columns
+must exactly fill the table's overall width.  Columns cannot overlap.
+
+<li>The second overriding requirement is that a column can never be
+smaller than its minimum width.  (Note that these first two column
+constraints could contradict one another if it weren't for the table
+constraint that says that a table can never be narrow than the sum of
+the minimum widths of its columns.  That table constraint guarantees
+that we'll always be able to satisfy both of these column
+constraints.)
+
+<li>If any columns specify percentage widths, we try to accomodate
+the requests.  If this pushes us over the table size, then we
+proportionally reduce the widths of the percentage columns until they
+fit the table size (but we never reduce a column below its minimum
+width, of course).
+
+<li>If there's any more space after satisfying percentage width requests,
+we try to satisfy pixel width requests.  If there's enough space to
+satisfy all pixel width requests, we set each pixel-width column to
+its exact requested width; otherwise, we distribute the remaining
+space among the pixel-width columns in proportion to the requested
+widths.
+
+<li>If there's still any extra space after satisfying percentage and
+column width requests, we distribute the extra space among the
+columns.  If there are any columns without any width requests at all,
+we distribute all of the extra space to those columns; otherwise, we
+distribute the space to all columns.  We distribute space as follows:
+
+<ul>
+
+<li>We first distribute space to eligible columns that are below
+their maximum column widths.  We distribute this space proportionally
+to the difference between maximum and minimum widths for these columns.
+(This odd basis was chosen because it causes the columns to expand out
+to their maximum widths evenly as the table width increases.)
+
+<li>Once all eligible columns are at their maximum widths, we
+distribute any remaining space to the eligible columns in proportion
+to their maximum widths.  (This keeps the amount of whitespace in each
+column balanced with the amount of content in that column.)
+
+</ul>
+
+</ul>
+
+<p>Note that percentage width requests have higher priority than
+pixel widths.  This means we'll satisfy any percentage requests (as
+closely as possible) before sastifying any pixel width requests;
+so, if there's not room to satisfy both kinds of requests, any
+pixel-width columns will be set to their minimum size to make as
+much room as possible for percentage-width columns.
+
+<p>When the table is so wide that there's extra space to distribute
+beyond explicit WIDTH requests, note that we preferentially distribute
+the space to unconstrained columns (columns without any WIDTH requests).
+We prefer to distribute space to unconstrained columns because this
+allows columns with explicit WIDTH requests to stay at the exact
+size requested.
+
+<p><b>Figuring the table's height.</b>  Once the column widths are
+chosen, the renderer performs word-wrapping on the contents of each
+cell to fit the contents to the final size of the cell's column.
+This process determines the minimum height of a cell, which is the
+height required to hold the word-wrapped contents of the cell at its
+final width.  The minimum height of a row is the largest of the
+minimum heights of the row's cells.
+
+<p>If a cell or a row has a HEIGHT attribute, then we'll use the
+larger of the minimum height and the explicit HEIGHT attribute value.
+
+<p>If the &lt;TABLE&gt; tag has a HEIGHT attribute, and the height is
+larger than the sum of the minimum heights of the rows, then the
+table's height is the explicitly given HEIGHT; otherwise, the table's
+height is the sum of the minimum row heights.  If the explicit HEIGHT
+is larger, then we distribute the extra vertical space (the difference
+between the explicit HEIGHT and the actual minimum height of the
+rows) among the rows as follows:
+
+<ul>
+
+<li>If there are any rows (&lt;TR&gt; tags) with "HEIGHT=*" settings,
+then we distribute the extra space evenly among the "HEIGHT=*" rows.
+
+<li>Otherwise, we distribute the space to the rows in proportion to
+their minimum heights.  (For example, if there are two rows, and the
+first row's minimum height is twice that of the second row, then we
+distribute 2/3 of the extra vertical space to the first row and 1/3
+to the second row.)
+
+</ul>
+
+<p>If a cell has a ROWSPAN greater than 1, we distribute its height
+among the rows it spans in proportion to the heights of the rows as
+they would be if we considered only the cells with ROWSPAN=1.  The
+detailed algorithm is almost exactly the same as the one described
+above for multi-column (COLSPAN) cells.
+
+</html>

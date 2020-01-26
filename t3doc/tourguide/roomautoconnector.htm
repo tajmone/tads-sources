@@ -1,0 +1,72 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>RoomAutoConnector</title><meta name="keywords" content="RoomAutoConnector"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>RoomAutoConnector : <a href="roomconnector.htm">RoomConnector</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="travelmessage.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="door.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">RoomAutoConnector is not a class that you're ever likely to use explicitly, but implicitly you'll probably use it a great deal, since it is one of the classes from which Room inherits. It is RoomAutoConnector that provides the behaviour that allows a Room to be used as a connector to itself. This may sound a little arcane, but in practice this is what allows us to define travel between rooms without explicitly having to define any explicit TravelConnector objects unless we need them for their side-effects. Since a Room is also a RoomAutoConnector, we can use as the value of another Room's direction properties to implement direct travel between rooms. For example:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">anotherCave:&nbsp;Room&nbsp;'Another&nbsp;Cave'
+<br>
+&nbsp;&nbsp;"There's&nbsp;something&nbsp;artificial&nbsp;about&nbsp;this&nbsp;cave.&nbsp;It's&nbsp;almost&nbsp;as&nbsp;if&nbsp;it's&nbsp;trying
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;a&nbsp;room.&nbsp;The&nbsp;floor&nbsp;is&nbsp;suspiciously&nbsp;level,&nbsp;the&nbsp;walls&nbsp;are&nbsp;almost
+<br>
+&nbsp;&nbsp;&nbsp;smooth,&nbsp;and&nbsp;there's&nbsp;a&nbsp;smart&nbsp;new&nbsp;door&nbsp;set&nbsp;into&nbsp;the&nbsp;south&nbsp;wall,&nbsp;with&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;bright&nbsp;electric&nbsp;light&nbsp;mounted&nbsp;above&nbsp;it.&nbsp;The&nbsp;rougher,&nbsp;larger&nbsp;central
+<br>
+&nbsp;&nbsp;&nbsp;cave&nbsp;lies&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;mainCave
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+To make anotherCave reachable from mainCave, we must similarly add
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">south&nbsp;=&nbsp;anotherCave</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+to the definition of mainCave, which should now look like:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">mainCave:&nbsp;Room&nbsp;'Large&nbsp;Cave'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;flickering&nbsp;orange&nbsp;light&nbsp;from&nbsp;the&nbsp;blazing&nbsp;torch&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accentuates&nbsp;the&nbsp;naturally&nbsp;ruddy&nbsp;hues&nbsp;of&nbsp;this&nbsp;large,&nbsp;irregular&nbsp;cave,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;seems&nbsp;to&nbsp;be&nbsp;something&nbsp;of&nbsp;a&nbsp;major&nbsp;hub&nbsp;in&nbsp;the&nbsp;cave&nbsp;system.&nbsp;<b>A
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;large&nbsp;rock&nbsp;rests&nbsp;against&nbsp;the&nbsp;wall&nbsp;to&nbsp;the&nbsp;north,&nbsp;other&nbsp;caves&nbsp;lie
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;through&nbsp;exits&nbsp;to&nbsp;east&nbsp;and&nbsp;south,&nbsp;while&nbsp;the&nbsp;way&nbsp;west&nbsp;is&nbsp;blocked&nbsp;by
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;huge&nbsp;boulder.</b>&nbsp;A&nbsp;sturdy&nbsp;steel&nbsp;ladder&nbsp;leads&nbsp;up&nbsp;<b>through&nbsp;a&nbsp;hole&nbsp;in&nbsp;the&nbsp;roof</b>."
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>north&nbsp;=&nbsp;rock
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;south&nbsp;=&nbsp;anotherCave
+<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;upLadder
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

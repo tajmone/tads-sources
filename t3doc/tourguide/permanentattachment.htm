@@ -1,0 +1,94 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PermanentAttachment</title><meta name="keywords" content="PermanentAttachment,baseCannotDetachMsg,attachedObjects,PermabentAttachmentChild"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PermanentAttachment : <a href="attachable.htm">Attachable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="plugattachable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="nestedroomoverview.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The PermanentAttachment class can be used for objects that are permanently attached to each other, and are described as being mutually attached. Since they're described as being attached the player may attempt to detach them, and the permanent attachment relationship basically provides a means of displaying an appropriate message in response.
+<br>
+
+<br>
+One way of setting up a PermanentAttachment relationship is to make both the objects PermamentAttachments and add one to the attachedObjects property of the other, for example:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000"><b>PermanentAttachment,</b>&nbsp;FireSource,&nbsp;Fixture&nbsp;'flaming&nbsp;torch&nbsp;torch/flame/flames'&nbsp;'torch'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"The&nbsp;torch,&nbsp;which&nbsp;is&nbsp;fixed&nbsp;firmly&nbsp;to&nbsp;wall&nbsp;by&nbsp;a&nbsp;steel&nbsp;bracket,&nbsp;is&nbsp;blazing&nbsp;merrily,
+<br>
+&nbsp;&nbsp;&nbsp;its&nbsp;flames&nbsp;casting&nbsp;a&nbsp;bright&nbsp;but&nbsp;flickering&nbsp;light&nbsp;over&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'It\'s&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;preCondIobjBurnWith&nbsp;=&nbsp;static&nbsp;inherited&nbsp;-&nbsp;objHeld
+<br>
+&nbsp;&nbsp;&nbsp;isLit&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'flaming&nbsp;torch'
+<br>
+&nbsp;&nbsp;&nbsp;<b>attachedObjects&nbsp;=&nbsp;[bracket]
+<br>
+&nbsp;&nbsp;&nbsp;baseCannotDetachMsg&nbsp;=&nbsp;'It\'s&nbsp;too&nbsp;firmly&nbsp;fixed.&nbsp;'&nbsp;&nbsp;&nbsp;
+<br>
+</b>;
+<br>
+
+<br>
+bracket&nbsp;:&nbsp;RoomPartItem, <b>PermanentAttachment,</b>&nbsp;Decoration&nbsp;'steel&nbsp;bracket'&nbsp;'steel&nbsp;bracket'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"The&nbsp;steel&nbsp;bracket&nbsp;is&nbsp;fixed&nbsp;securely&nbsp;to&nbsp;the&nbsp;wall;&nbsp;there&nbsp;doesn't&nbsp;appear&nbsp;to&nbsp;be
+<br>
+&nbsp;&nbsp;&nbsp;any&nbsp;way&nbsp;it&nbsp;could&nbsp;be&nbsp;detached.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;specialNominalRoomPartLocation&nbsp;=&nbsp;defaultNorthWall
+<br>
+&nbsp;&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;steel&nbsp;bracket&nbsp;containing&nbsp;a&nbsp;flaming&nbsp;torch&nbsp;is&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we can override <b>baseCannotDetachMsg</b> to provide a customized response.
+<br>
+
+<br>
+The other way of setting up this relationship is where one object is located inside another, for example because it's a Component of the first object. If the child object is given the PermanentAttachmentChild class, then the attachment relationship between the two objects is set up automatically; for example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000"><b>PermanentAttachment,</b>&nbsp;Fixture&nbsp;'wooden&nbsp;(deck)&nbsp;rail'&nbsp;'deck&nbsp;rail'&nbsp;@quarterDeck
+<br>
+&nbsp;&nbsp;"The&nbsp;wooden&nbsp;deck&nbsp;rail&nbsp;runs&nbsp;along&nbsp;the&nbsp;forward&nbsp;edge&nbsp;of&nbsp;the&nbsp;Quarterdeck,
+<br>
+&nbsp;&nbsp;separating&nbsp;it&nbsp;from&nbsp;the&nbsp;main&nbsp;deck,&nbsp;although&nbsp;it&nbsp;is&nbsp;possible&nbsp;to&nbsp;get&nbsp;round
+<br>
+&nbsp;&nbsp;the&nbsp;rail&nbsp;either&nbsp;to&nbsp;starboard&nbsp;or&nbsp;port&nbsp;to&nbsp;go&nbsp;foreward.&nbsp;A&nbsp;large&nbsp;wooden
+<br>
+&nbsp;&nbsp;panel&nbsp;is&nbsp;fixed&nbsp;to&nbsp;the&nbsp;centre&nbsp;of&nbsp;the&nbsp;rail.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>baseCannotDetachMsg&nbsp;=&nbsp;'You&nbsp;can\'t;&nbsp;it\'s&nbsp;permanently&nbsp;fixed&nbsp;to&nbsp;the&nbsp;rail.&nbsp;'
+<br>
+</b>;
+<br>
+
+<br>
++&nbsp;<b>PermanentAttachmentChild,</b>&nbsp;Component&nbsp;'large&nbsp;wooden&nbsp;panel'&nbsp;'panel'
+<br>
+&nbsp;&nbsp;"The&nbsp;panel&nbsp;seems&nbsp;to&nbsp;have&nbsp;something&nbsp;to&nbsp;do&nbsp;with&nbsp;sailing&nbsp;the&nbsp;ship.&nbsp;A&nbsp;wheel&nbsp;and&nbsp;a&nbsp;lever
+<br>
+&nbsp;&nbsp;&nbsp;are&nbsp;mounted&nbsp;on&nbsp;it,&nbsp;and&nbsp;between&nbsp;them&nbsp;is&nbsp;a&nbsp;hexagonal&nbsp;aperture.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;&nbsp;&nbsp;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that with this setup, the baseCannotDetachMsg must be overridden on the parent object, not the child, to have any effect.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

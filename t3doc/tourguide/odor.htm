@@ -1,0 +1,264 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Odor</title><meta name="keywords" content="Odor,sourceDesc,descWithSource,descWithoutSource,hereWithSource,hereWithoutSource,noLongerHere,emanationHereDesc,endEmanation,isAmbient,displaySchedule,isMasked,isEmanating"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Odor : SensoryEmanation
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="simplenoise.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="noise.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The Odor class is the big brother of the <a href="simpleodor.htm">SimpleOdor</a> class we met just a little earlier. It's function is to represent a smell emanating an object or pervading a location, but in a way that gives the author more control than does the SimpleOdor. To make an object the source of an odour (or noise), simply locate the odour (or noise) within that object.
+<br>
+
+<br>
+An Odor (or a <a href="noise.htm">Noise</a> for that matter) provides several properties for customisation:
+<br>
+
+<br>
+<b>sourceDesc</b> - The description of the odour (or noise) that's added to the description of the source of the odour (or noise) when the source is examined.
+<br>
+
+<br>
+<b>descWithSource</b> - The description of the odour/noise given when the source is visible and we EXAMINE or SMELL the odour (or listen to the noise).
+<br>
+
+<br>
+<b>descWithOutSource</b> - The description of the odour/noise when the source is not visible (e.g. because it's in a closed container or hidden under something else)
+<br>
+
+<br>
+<b>hereWithSource</b> - The message displayed in the room description to describe this smell or sound when its source is visible.
+<br>
+
+<br>
+<b>hereWithoutSource</b> - The message displayed in the room description to describe this smell or sound when its source is not visible.
+<br>
+
+<br>
+<b>noLongerHere</b> - The message displayed when the source of the sound or smell goes out of scope (e.g. because the player character leaves the location of its source)
+<br>
+
+<br>
+<b>isAmbient</b> - As with SimpleNoise, this is a true/nil property that decides whether the smell mentions itself in room descriptions etc. (if isAmbient is nil) or only in response to an explicit SMELL/EXAMINE command (if isAmbient is true). The only difference from simpleOdor (or SimpleNoise) is that on Odor (and Noise) isAmbient is nil by default.
+<br>
+
+<br>
+<b>displaySchedule</b> - This can contain a list of numbers defining the frequency with which the smell (or noise) is mentioned spontaneously. This can be used to emulate the fact that once someone becomes used to a sound or smell it tends to fade into the background of their awareness, and to avoid the repetitiveness that might come from displaying the same message about the smell (or noise) each turn. For example, if displaySchedule were set to [1, 2, 4] a message describing the smell would be displayed for two successive turns, then again after two turns, then every four turns thereafter. If the list of numbers end with nil the spontaneous display of messages about the smell ceases when the end of the list is reached.
+<br>
+
+<br>
+<b>isEmanating</b> - This is a boolean flag (true or nil) that can be used to turn the odor (or sound) on or off. The default value is true (i.e. the SensoryEmanation is on). For SensoryEmanations belonging to dynamic objects such as actors, it can be useful to turn the emanation on or off; e.g. an actor might stop humming or hammering when the player character converses with him, but resume making humming or hammering noises once the conversation is over.
+<br>
+
+<br>
+So much for the theory, now let's put it into practice. First we'll create another location:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">hellFireCavern&nbsp;:&nbsp;Room&nbsp;'Hell&nbsp;Fire&nbsp;Cavern'&nbsp;'Hell&nbsp;Fire&nbsp;Cavern'
+<br>
+&nbsp;&nbsp;"This&nbsp;narrow&nbsp;shelf&nbsp;of&nbsp;rock&nbsp;ends&nbsp;at&nbsp;a&nbsp;round&nbsp;hole&nbsp;to&nbsp;the&nbsp;west,&nbsp;and&nbsp;a&nbsp;sheer
+<br>
+&nbsp;&nbsp;&nbsp;drop&nbsp;to&nbsp;the&nbsp;east.&nbsp;It&nbsp;overlooks&nbsp;a&nbsp;bleak&nbsp;and&nbsp;&nbsp;barren&nbsp;plain&nbsp;several&nbsp;hundred&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;feet&nbsp;below,&nbsp;on&nbsp;the&nbsp;far&nbsp;side&nbsp;of&nbsp;which&nbsp;an&nbsp;ugly&nbsp;volcano,&nbsp;the&nbsp;aptly-named&nbsp;Mount&nbsp;Gloom,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;belches&nbsp;fire&nbsp;and&nbsp;smoke&nbsp;and&nbsp;ash&nbsp;in&nbsp;constant&nbsp;rotation,&nbsp;shedding&nbsp;a&nbsp;hellish&nbsp;red&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;light&nbsp;over&nbsp;the&nbsp;entire&nbsp;infernal&nbsp;scene.&nbsp;A&nbsp;rough&nbsp;staircase&nbsp;of&nbsp;sorts,&nbsp;in&nbsp;places&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;little&nbsp;more&nbsp;than&nbsp;a&nbsp;slippery&nbsp;stone&nbsp;pathway&nbsp;and&nbsp;in&nbsp;others&nbsp;a&nbsp;jumble
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;rocks,&nbsp;leads&nbsp;northwards&nbsp;down&nbsp;to&nbsp;the&nbsp;lava-strewn&nbsp;plain.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;cavernExit
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;asExit(west)
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;roughStaircase
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;asExit(north)
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;:&nbsp;NoTravelMessage&nbsp;{&nbsp;"That&nbsp;way&nbsp;is&nbsp;solid&nbsp;rock.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;east&nbsp;:&nbsp;NoTravelMessage&nbsp;{&nbsp;"There's&nbsp;a&nbsp;sheer&nbsp;drop&nbsp;of&nbsp;several&nbsp;hundred&nbsp;feet&nbsp;that&nbsp;way.&nbsp;"&nbsp;}
+<br>
+;
+<br>
+
+<br>
++&nbsp;cavernExit&nbsp;:&nbsp;ThroughPassage&nbsp;-&gt;cavernEntrance&nbsp;'round&nbsp;hole'&nbsp;'round&nbsp;hole'
+<br>
+&nbsp;&nbsp;"The&nbsp;large&nbsp;round&nbsp;hole&nbsp;piercing&nbsp;the&nbsp;cavern&nbsp;wall&nbsp;is&nbsp;easily&nbsp;large&nbsp;enough&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;walk&nbsp;through."&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;roughStaircase&nbsp;:&nbsp;StairwayDown&nbsp;'rough&nbsp;stone&nbsp;slippery&nbsp;staircase/pathway'&nbsp;'rough&nbsp;staircase'
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;a&nbsp;rough&nbsp;descent,&nbsp;possibly&nbsp;treacherous&nbsp;in&nbsp;places,&nbsp;but&nbsp;probably
+<br>
+&nbsp;&nbsp;&nbsp;passable&nbsp;with&nbsp;care.&nbsp;"
+<br>
+&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;traveler.isMasked;&nbsp;}
+<br>
+&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"The&nbsp;sulphurous&nbsp;fumes&nbsp;become&nbsp;too&nbsp;overpowering&nbsp;and&nbsp;drive&nbsp;you&nbsp;back.&nbsp;";&nbsp;}
+<br>
+;
+<br>
+
+<br>
+MultiLoc,&nbsp;Distant&nbsp;'mount&nbsp;volcano/gloom'&nbsp;'volcano'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;volcano&nbsp;rises&nbsp;up&nbsp;from&nbsp;the&nbsp;basalt&nbsp;plain&nbsp;like&nbsp;an&nbsp;angry&nbsp;sore,&nbsp;belching&nbsp;fumes,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;smoke&nbsp;and&nbsp;occasional&nbsp;balls&nbsp;of&nbsp;lava,&nbsp;which&nbsp;spit&nbsp;from&nbsp;the&nbsp;summit&nbsp;and&nbsp;ooze
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pus-like&nbsp;down&nbsp;its&nbsp;rugged&nbsp;slopes.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;locationList&nbsp;=&nbsp;[hellFireCavern]
+<br>
+;
+<br>
+
+<br>
++&nbsp;Vaporous&nbsp;'hellish&nbsp;red&nbsp;light'&nbsp;'hellish&nbsp;red&nbsp;light'
+<br>
+&nbsp;&nbsp;"It's&nbsp;the&nbsp;sole&nbsp;source&nbsp;of&nbsp;light&nbsp;for&nbsp;the&nbsp;great&nbsp;cavern,&nbsp;enough&nbsp;to&nbsp;see&nbsp;by,&nbsp;but
+<br>
+&nbsp;&nbsp;&nbsp;only&nbsp;in&nbsp;a&nbsp;gloomy,&nbsp;bloodshot&nbsp;sort&nbsp;of&nbsp;way.&nbsp;"
+<br>
+&nbsp;&nbsp;smellDesc&nbsp;=&nbsp;"You&nbsp;can't&nbsp;exactly&nbsp;smell&nbsp;the&nbsp;light,&nbsp;but&nbsp;you&nbsp;can&nbsp;sure
+<br>
+&nbsp;&nbsp;&nbsp;smell&nbsp;the&nbsp;sulphur!&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's nothing new here, but note the use of another Vaporous object to represent the hellish red light. We make the volcano a MultiLoc since it will be visible from more than one location, but we can't add the other locations to its locationList until we've created them. For now, we'll concentrate on making it the source of the sulphurous smells by adding:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;Odor&nbsp;'strong&nbsp;smell&nbsp;sulphur/sulfur'&nbsp;'smell&nbsp;of&nbsp;sulphur'
+<br>
+&nbsp;&nbsp;descWithSource&nbsp;=&nbsp;"The&nbsp;sulphurous&nbsp;fumes&nbsp;are&nbsp;almost&nbsp;certainly&nbsp;coming&nbsp;from
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;volcano.&nbsp;"
+<br>
+&nbsp;&nbsp;hereWithSource&nbsp;=&nbsp;"There's&nbsp;a&nbsp;strong&nbsp;smell&nbsp;of&nbsp;sulphur,&nbsp;almost&nbsp;enough&nbsp;to&nbsp;choke&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;displaySchedule&nbsp;=&nbsp;[2,&nbsp;3,&nbsp;3,&nbsp;5]
+<br>
+&nbsp;&nbsp;noLongerHere&nbsp;=&nbsp;"The&nbsp;smell&nbsp;of&nbsp;sulphur&nbsp;diminishes&nbsp;a&nbsp;little.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In order to descend the rough staircase the player character needs to be wearing a gas mask, which we'll provide in the next section. In anticipation of that, we have to consider what happens to all the odours when the player character is wearing the gas mask; presumably none of them should be reported. This is actually a little tricky to achieve.
+<br>
+
+<br>
+We can start by preventing any actor from smelling an object if that actor is wearing the gas mask:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Actor
+<br>
+&nbsp;&nbsp;canSmell(obj)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isMasked)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;inherited(obj);
+<br>
+&nbsp;&nbsp;}
+<br><br>
+&nbsp;&nbsp;isMasked = nil // We'll change this in the next section
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+That deals with the transitive form of the smell command, such as SMELL SULPHUR, but we also need to deal with the intransitive form, the simple SMELL command:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;SmellImplicitAction
+<br>
+&nbsp;&nbsp;execAction()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gActor.isMasked)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;can't&nbsp;smell&nbsp;anything&nbsp;with&nbsp;that&nbsp;gas&nbsp;mask&nbsp;on.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Finally, if the player character is wearing the gas mask we also have to block the messages that will be displayed in the room description or according to the display schedule, and the message that's displayed when an Odor goes out of scope:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Odor
+<br>
+&nbsp;&nbsp;emanationHereDesc
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gPlayerChar.isMasked)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;endEmanation
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gPlayerChar.isMasked)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Note that so far we have not referred to any specific gas mask object; we have simply referred throughout to as yet undefined Actor property isMasked. This not only lets us compile the code before defining any gas mask object (isMasked will simply return nil), it means that when we come to define what counts as wearing a gas mask, we need only do so in one place (Actor.isMasked); moreover, if we subsequently want to change what counts as wearing a gas mask, we need only change it in one place.
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

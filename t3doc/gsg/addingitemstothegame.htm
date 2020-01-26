@@ -1,0 +1,78 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Adding Items to the Game</title><meta name="keywords" content="name,noun,adjective,location,vocabWords"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="averysimplegame.htm">[Previous] </a>&nbsp;&nbsp;<a href="makingtheitemsdosomething.htm">[Next] </a></I></FONT></P>
+<h2>Adding Items to the Game</h2>
+
+<p>Now let's add a few items to the game that can be manipulated by the player, so he can do something besides walk back and forth between our two rooms. We'll add a solid gold skull, and a pedestal for it to sit upon.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;pedestal:&nbsp;Surface,&nbsp;Fixture
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'pedestal'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;noun&nbsp;=&nbsp;'pedestal'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;cave
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;goldSkull:&nbsp;Thing
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'gold&nbsp;skull'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;noun&nbsp;=&nbsp;'skull'&nbsp;'head'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;adjective&nbsp;=&nbsp;'gold'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;pedestal
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Here we've defined two objects, </font><font face="Courier New" size="2" color="#000000">pedestal</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">pedestal</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> belongs to two classes, </font><font face="Courier New" size="2" color="#000000">Surface</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">Fixture</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This means that it has attributes of both classes; when there's a conflict, the </font><font face="Courier New" size="2" color="#000000">Surface</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class takes precedence, because it's first in the list of classes. Objects of the </font><font face="Courier New" size="2" color="#000000">Surface</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class can have other objects placed on top of them; objects of the </font><font face="Courier New" size="2" color="#000000">Fixture</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class can't be carried. The </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> belongs to the </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, which is the generic class for portable objects without any special properties.
+<br>
+
+<br>
+Since these objects can be manipulated directly by the player, the player needs words to refer to them. This is what the </font><font face="Courier New" size="2" color="#000000">noun</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">adjective</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> properties define. All objects that the player can manipulate must have at least one </font><font face="Courier New" size="2" color="#000000">noun</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Note that the </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> has two nouns; they are simply listed with a space between them. Objects can also have adjectives; these serve to distinguish between objects which have the same noun, but are otherwise optional. A good game will recognize all of the words it uses to describe an object, so if you describe the skull as a "gold skull," you should understand it when the player says "take the gold skull."
+<br>
+
+<br>
+Although here we have defined noun and adjective as separate properties, as indeed they are, the English-language part of the TADS 3 library allows a short cut: we can instead define an object's vocabulary - its nouns and adjectives - in the single property </font><font face="Courier New" size="2" color="#000000">vocabWords</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, like so:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">vocabWords&nbsp;=&nbsp;'gold&nbsp;skull/head'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This brings us to a subtlety. Notice that the </font><font face="Courier New" size="2" color="#000000">desc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property uses <i>double</i> quotes around its strings, but the other properties have <i>single</i> quotes. The distinction is that a string enclosed in double quotes is displayed immediately every time it is evaluated, while a string enclosed in single quotes is a string value that can be manipulated internally. Double-quoted strings are displayed automatically as a convenience, since most strings in text adventures are displayed without further processing. (Note that the double quote mark is a separate character on the keyboard, and is not simply two single quote marks.) We'll discuss this distinction further at the end of the next chapter.
+<br>
+
+<br>
+These two objects have another new property, </font><font face="Courier New" size="2" color="#000000">location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This simply defines the object that contains the object being defined. In the case of the </font><font face="Courier New" size="2" color="#000000">pedestal</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the containing object is the </font><font face="Courier New" size="2" color="#000000">cave</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> room; since the </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is on the </font><font face="Courier New" size="2" color="#000000">pedestal</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, its location is </font><font face="Courier New" size="2" color="#000000">pedestal</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Note that the internal workings of the containment model make no distinction between an object being <i>inside</i> another object and the object being <i>on</i> another object. This means that an object can't (usefully) be both a </font><font face="Courier New" size="2" color="#000000">Surface</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and a </font><font face="Courier New" size="2" color="#000000">Container</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="averysimplegame.htm">[Previous] </a>&nbsp;&nbsp;<a href="makingtheitemsdosomething.htm">[Next] </a></I></FONT></P>
+</body></html>

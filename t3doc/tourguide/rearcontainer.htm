@@ -1,0 +1,272 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>RearContainer</title><meta name="keywords" content="RearContainer,allowPutBehind"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>RearContainer : <a href="spaceoverlay.htm">SpaceOverlay</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="underside.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="rearsurface.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A rear container represents the space behind an object. The principal additional property it defines is <b>allowPutBehind</b>; if this is true, objects may be placed in the RearContainer with a PUT BEHIND command; if it is nil, they may not.
+<br>
+
+<br>
+For the most part, a RearContainer will be most useful as the ComplexComponent of a <a href="complexcontainer.htm">ComplexContainer</a>, since it is hard to think of something that only has a rear. A RearContainer can, however, quite successfully be used for an object like a painting or a mirror hanging on a wall, for example:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">mirror&nbsp;:&nbsp;RearContainer&nbsp;'large&nbsp;gilt-framed&nbsp;gilt&nbsp;framed&nbsp;mirror'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'mirror'&nbsp;@anotherCave
+<br>
+&nbsp;&nbsp;"The&nbsp;mirror&nbsp;is&nbsp;about&nbsp;three&nbsp;foot&nbsp;tall&nbsp;by&nbsp;eighteen&nbsp;inches&nbsp;wide.&nbsp;It&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;brightly&nbsp;silvered,&nbsp;so&nbsp;that&nbsp;your&nbsp;reflection&nbsp;in&nbsp;it&nbsp;is&nbsp;no&nbsp;more&nbsp;flattering
+<br>
+&nbsp;&nbsp;&nbsp;than&nbsp;you&nbsp;would&nbsp;expect.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;gilt-framed&nbsp;mirror&nbsp;hangs&nbsp;on&nbsp;the&nbsp;wall&nbsp;opposite
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;dressing&nbsp;table.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;8
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;4&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;allowPutBehind&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+
+<br>
++&nbsp;smallHoleInWall&nbsp;:&nbsp;Hidden,&nbsp;Container,&nbsp;Fixture&nbsp;'small&nbsp;hole'&nbsp;'small&nbsp;hole'
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;just&nbsp;a&nbsp;couple&nbsp;of&nbsp;inches&nbsp;square,&nbsp;and&nbsp;about&nbsp;as&nbsp;deep.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"There's&nbsp;a&nbsp;small&nbsp;hole&nbsp;in&nbsp;the&nbsp;wall
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;opposite&nbsp;the&nbsp;dressing&nbsp;table.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"Behind&nbsp;the&nbsp;mirror&nbsp;is&nbsp;a&nbsp;small&nbsp;hole&nbsp;in&nbsp;the&nbsp;wall.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;2&nbsp;&nbsp;
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Once again it has been necessary to anticipate the introduction of the <a href="hidden.htm">Hidden</a> class, but it's virtually impossible to illustrate the use of a RearContainer (or other SpaceOverlay) without it, so it'll just have to be taken on trust for now. The effect is that the small hole in the wall will be revealed only when the player looks behind the mirror or takes it for the first time. Also, when the mirror is moved, the small hole is moved from the mirror to the mirror's former location, which paradoxically has the effect of leaving it behind in the same place. This occurs even though the small hole is a fixture, so that after the mirror is moved, the hole ends up being a Fixture in the room, which is what we want.
+<br>
+
+<br>
+Note that we have set allowPutBehind to nil to prevent anything being put behind the mirror; which would normally make sense (since it would normally not be that easy to put sundry objects behind a mirror hanging on the wall). In this case, however, we might feel that while the mirror is still hanging on the wall, putting something behind the mirror is equivalent to putting it in the hole, but that it should not be possible to put anything behind the mirror once it's been moved. We can implement this like so:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">mirror&nbsp;:&nbsp;RearContainer&nbsp;'large&nbsp;gilt-framed&nbsp;gilt&nbsp;framed&nbsp;mirror'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'mirror'&nbsp;@anotherCave
+<br>
+&nbsp;&nbsp;"The&nbsp;mirror&nbsp;is&nbsp;about&nbsp;three&nbsp;foot&nbsp;tall&nbsp;by&nbsp;eighteen&nbsp;inches&nbsp;wide.&nbsp;It&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;brightly&nbsp;silvered,&nbsp;so&nbsp;that&nbsp;your&nbsp;reflection&nbsp;in&nbsp;it&nbsp;is&nbsp;no&nbsp;more&nbsp;flattering
+<br>
+&nbsp;&nbsp;&nbsp;than&nbsp;you&nbsp;would&nbsp;expect.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;gilt-framed&nbsp;mirror&nbsp;hangs&nbsp;on&nbsp;the&nbsp;wall&nbsp;opposite
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;dressing&nbsp;table.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;8
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;4&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;<b>allowPutBehind&nbsp;=&nbsp;(!moved)
+<br>
+&nbsp;&nbsp;&nbsp;iobjFor(PutBehind)&nbsp;maybeRemapTo(!moved,&nbsp;PutIn,&nbsp;DirectObject,&nbsp;smallHoleInWall)
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In due course, we'll hide a small piece of black wire in the small hole, but we'll wait till we get to the point when this bit of wire is needed and we've covered the ground we need to implement it properly. In the meantime, there's one further detail to attend to. As things are at the moment, when you take the mirror the transcript goes something like this:
+<br>
+
+<br>
+&gt;<b>take mirror</b>
+<br>
+Behind the mirror is a small hole in the wall. Taken.
+<br>
+
+<br>
+In this case it's reasonably obvious that 'Taken' must refer to the mirror and not the small hole, but it's not as clear as it might be, and in other  circumstances, where what lay behind or beneath something was a portable object that easily could be taken, the 'Taken' message might be downright misleading. We can make the message clearer by making the following modification to SpaceOverlay:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;SpaceOverlay
+<br>
+&nbsp;&nbsp;okayTakeMsg&nbsp;=&nbsp;'{You/he}&nbsp;take{s}&nbsp;{the&nbsp;dobj/him}.&nbsp;'
+<br>
+;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Now, to return to our ship, since the chair in the main cabin is described as being behind the desk, it may be tempting to try this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">cabinDesk&nbsp;:&nbsp;Heavy,&nbsp;Surface&nbsp;'large&nbsp;solid&nbsp;oak&nbsp;desk'&nbsp;'desk'&nbsp;@greatCabin
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large,&nbsp;solid&nbsp;oak&nbsp;desk,&nbsp;with&nbsp;a&nbsp;single&nbsp;drawer.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;oak&nbsp;desk&nbsp;sits&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cabin.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDescOrder&nbsp;=&nbsp;50
+<br>
+&nbsp;&nbsp;dobjFor(LookUnder)&nbsp;remapTo(LookUnder,&nbsp;underDesk)
+<br>
+&nbsp;&nbsp;iobjFor(PutUnder)&nbsp;remapTo(PutUnder,&nbsp;DirectObject,&nbsp;underDesk)
+<br>
+&nbsp;&nbsp;<b>dobjFor(LookBehind)&nbsp;remapTo(LookBehind,&nbsp;deskRear)
+<br>
+&nbsp;&nbsp;iobjFor(PutBehind)&nbsp;remapTo(PutBehind,&nbsp;DirectObject,&nbsp;deskRear)
+<br>
+</b>;
+<br>
+
+<br>
+
+<br>
++&nbsp;deskRear&nbsp;:&nbsp;NameAsOther,&nbsp;RearContainer,&nbsp;Component
+<br>
+&nbsp;&nbsp;targetObj&nbsp;=&nbsp;cabinDesk
+<br>
+;
+<br>
+
+<br>
+cabinChair&nbsp;:&nbsp;Chair&nbsp;'padded&nbsp;chair/cushion'&nbsp;'chair'&nbsp;@deskRear
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;fine&nbsp;wooden&nbsp;chair&nbsp;with&nbsp;a&nbsp;round&nbsp;back&nbsp;and&nbsp;a&nbsp;padded&nbsp;cushion.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;wooden&nbsp;chair&nbsp;sits&nbsp;behind&nbsp;the&nbsp;desk.&nbsp;"
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;10
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;7
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+This appears to work well enough, in that you can look behind the desk and be told that the chair is there, or take the chair, subsequently put it behind the desk and find that it's described as being there once more, but you'll quickly discover that it all goes horribly wrong if you try to sit on the chair while it's behind the desk.
+<br>
+
+<br>
+It takes quite a bit of work to fix this, which will involve classes and concepts we haven't met yet (particularly the <a href="platform.htm">Platform</a> class) . But to show what we need to do, here it is:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">cabinDesk&nbsp;:&nbsp;Heavy,&nbsp;Surface&nbsp;'large&nbsp;solid&nbsp;oak&nbsp;desk'&nbsp;'desk'&nbsp;@greatCabin
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large,&nbsp;solid&nbsp;oak&nbsp;desk,&nbsp;with&nbsp;a&nbsp;single&nbsp;drawer.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;oak&nbsp;desk&nbsp;sits&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cabin.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDescOrder&nbsp;=&nbsp;50
+<br>
+&nbsp;&nbsp;dobjFor(LookUnder)&nbsp;remapTo(LookUnder,&nbsp;underDesk)
+<br>
+&nbsp;&nbsp;iobjFor(PutUnder)&nbsp;remapTo(PutUnder,&nbsp;DirectObject,&nbsp;underDesk)
+<br>
+&nbsp;&nbsp;dobjFor(LookBehind)&nbsp;remapTo(LookBehind,&nbsp;deskRear)
+<br>
+&nbsp;&nbsp;iobjFor(PutBehind)&nbsp;remapTo(PutBehind,&nbsp;DirectObject,&nbsp;deskRear)
+<br>
+&nbsp;&nbsp;<b>dobjFor(GoBehind)&nbsp;remapTo(GoBehind,&nbsp;deskRear)
+<br>
+</b>;
+<br>
+
+<br>
+deskRear&nbsp;:&nbsp;&nbsp;RearContainer,&nbsp;Platform,&nbsp;SecretFixture
+<br>
+&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'desk'
+<br>
+&nbsp;&nbsp;&nbsp;actorInPrep&nbsp;=&nbsp;'behind'
+<br>
+&nbsp;&nbsp;&nbsp;actorIntoPrep&nbsp;=&nbsp;'behind'
+<br>
+&nbsp;&nbsp;&nbsp;actorOutOfPrep&nbsp;=&nbsp;'from&nbsp;behind'
+<br>
+&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;greatCabin
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(GoBehind)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;logicalRank(140,&nbsp;'rear');&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gActor.moveIntoForTravel(self);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultReport('{You/he}&nbsp;go{es}&nbsp;behind&nbsp;{the&nbsp;dobj/him}&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;tryMovingIntoNested()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;tryImplicitAction(GoBehind,&nbsp;self);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+DefineTAction(GoBehind)
+<br>
+;
+<br>
+
+<br>
+VerbRule(GoBehind)
+<br>
+&nbsp;&nbsp;('go'&nbsp;|&nbsp;'stand'&nbsp;|&nbsp;'walk')&nbsp;'behind'&nbsp;singleDobj
+<br>
+&nbsp;&nbsp;:&nbsp;GoBehindAction
+<br>
+&nbsp;&nbsp;verbPhrase&nbsp;=&nbsp;'go/going&nbsp;(behind&nbsp;what)'
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;dobjFor(GoBehind)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;illogical('{You/he}&nbsp;can\'t&nbsp;go&nbsp;behind&nbsp;{that&nbsp;dobj/him}.&nbsp;');&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This seems a quite a lot of work to be able to put a chair behind a desk (and even then one or two the messages displayed may be less than ideal); but if you really <i>want</i> a chair behind the desk, it may be worthwhile.
+<br>
+</font></font>
+
+</body></html>

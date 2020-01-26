@@ -1,0 +1,114 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DelayedAgendaItem</title><meta name="keywords" content="DelayedAgendaItem,isReady,readyTime,setDelay"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DelayedAgendaItem : <a href="agendaitem.htm">AgendaItem</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="convagendaitem.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="moreagendaitemexamples.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A DelayedAgendaItem, as its name suggests, is an <a href="agendaitem.htm">AgendaItem</a> that becomes active at some point in the future. As with <a href="convagendaitem.htm">ConvAgendaItem</a> this relies on an overridden <b>isReady</b> method, so that if you want to add your own isReady condition this needs to be combined with the inherited behaviour.
+<br>
+
+<br>
+In addition to the properties it inherits from AgendaItem, DelayedAgendaItem has a <b>readyTime</b> property which is used to determine when it will become active, and a <b>setDelay(turns)</b> method which is used to set readyTime the desired number of turns in the future; the setDelay method returns self (for reasons that will shortly become apparent).
+<br>
+
+<br>
+For example, suppose we want a pair of demons to make a threatening advance on the player character (PC) two turns <i>after</i> the PC arrives in their vicinity (assuming that the PC remains in their vicinity). The usefulness of the delay in this case is that the demons' sudden outburst is rather less predictable to the player if it doesn't come on the same turn that the player first encounters the demons. First we can define an appropriate DelayedAgendaItem, which should be located in the demons object:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;demonsHissing&nbsp;:&nbsp;DelayedAgendaItem
+<br>
+&nbsp;&nbsp;isReady&nbsp;=&nbsp;(inherited&nbsp;&amp;&amp;&nbsp;getActor.canSee(gPlayerChar))
+<br>
+&nbsp;&nbsp;invokeItem
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"Two&nbsp;of&nbsp;the&nbsp;demons&nbsp;suddenly&nbsp;spring&nbsp;towards&nbsp;you,&nbsp;hissing&nbsp;wildly&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pawing&nbsp;at&nbsp;you&nbsp;with&nbsp;their&nbsp;claws.&nbsp;&lt;q&gt;Despair,&nbsp;human,&nbsp;despair!&lt;/q&gt;&nbsp;they
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shriek,&nbsp;&lt;q&gt;Your&nbsp;time&nbsp;is&nbsp;running&nbsp;out!&lt;/q&gt;&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isDone&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Next we want some means of setting this to run two turns after the PC encounters the demons. The best way to do this is probably to add demonsHissing to the demonic agenda in demonsPrancing.afterTravel:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;demonsPrancing&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;gaggle&nbsp;of&nbsp;demons&nbsp;is&nbsp;prancing&nbsp;around&nbsp;on&nbsp;the&nbsp;rocks&nbsp;near&nbsp;the&nbsp;steps&nbsp;down
+<br>
+&nbsp;&nbsp;&nbsp;towards&nbsp;the&nbsp;basalt&nbsp;plain,&nbsp;pretending&nbsp;to&nbsp;ignore&nbsp;you,&nbsp;but&nbsp;keeping&nbsp;a&nbsp;careful&nbsp;watch&nbsp;on
+<br>
+&nbsp;&nbsp;&nbsp;you&nbsp;just&nbsp;the&nbsp;same.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"They're&nbsp;prancing&nbsp;around&nbsp;near&nbsp;the&nbsp;steps&nbsp;down&nbsp;to&nbsp;the&nbsp;plain.&nbsp;"
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;beforeTravel(traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(connector&nbsp;==&nbsp;hellPathDown)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;demons&nbsp;bunch&nbsp;together&nbsp;and&nbsp;shriek&nbsp;at&nbsp;you,&nbsp;driving&nbsp;you&nbsp;back&nbsp;from&nbsp;the&nbsp;steps.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(traveler,&nbsp;connector);&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>afterTravel(traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;getActor.addToAgenda(demonsHissing.setDelay(2));
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Now we can see the advantage of having setDelay() return self. This allows us to do in one statement what we should otherwise have to do in two, since
+<br>
+
+<br>
+    <b> </b></font><font face="Courier New" size="2" color="#000000">getActor.addToAgenda(demonsHissing.setDelay(2));<b>
+<br>
+</b></font><font face="Arial" size="2" color="#000000">
+<br>
+is equivalent to
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;demonsHissing.setDelay(2);
+<br>
+&nbsp;&nbsp;getActor.addToAgenda(demonsHissing);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

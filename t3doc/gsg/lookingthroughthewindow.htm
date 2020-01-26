@@ -1,0 +1,278 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Looking Through the Window</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="countingthecash.htm">[Previous] </a>&nbsp;&nbsp;<a href="easingtestinganddebugging.htm">[Next] </a></I></FONT></P>
+<h2>Looking Through the Window</h2>
+
+<p>You'll recall that some time back we fitted a <a href="doorsandwindows.htm">window</a> to the cottage that allowed Heidi to see what's inside when she's outside and <i>vice versa</i>. As implemented, this is a rather 'passive' window that simply makes whatever's inside the cottage visible on the outside (and <i>vice versa</i>). Since a window is something one might actively look through, it would be nice if we could implement a <b>look through</b> <b>window</b> command, the response to which was a description of what was on the other  side of the window. In principle, this could be done quite simply by something like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cottageWindow&nbsp;:&nbsp;SenseConnector,&nbsp;Fixture&nbsp;'window'&nbsp;'window'
+<br>
+&nbsp;&nbsp;"The&nbsp;cottage&nbsp;window&nbsp;has&nbsp;a&nbsp;freshly&nbsp;painted&nbsp;green&nbsp;frame.&nbsp;The&nbsp;glass&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;has&nbsp;been&nbsp;recently&nbsp;cleaned.&nbsp;"
+<br>
+
+<br>
+&nbsp;&nbsp;dobjFor(LookThrough)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;otherLocation;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gActor.isIn(outsideCottage))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherLocation&nbsp;=&nbsp;insideCottage;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;peer&nbsp;through&nbsp;the&nbsp;window&nbsp;into&nbsp;the&nbsp;neat&nbsp;little&nbsp;room
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inside&nbsp;the&nbsp;cottage.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherLocation&nbsp;=&nbsp;outsideCottage;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Looking&nbsp;out&nbsp;through&nbsp;the&nbsp;window&nbsp;you&nbsp;see&nbsp;a&nbsp;path&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leading&nbsp;into&nbsp;the&nbsp;forest.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gActor.location.listRemoteContents(otherLocation);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;connectorMaterial&nbsp;=&nbsp;glass
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[outsideCottage,&nbsp;insideCottage]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The logic of this should be reasonably easy to follow: according to whether Heidi is inside or outside the cottage the </font><font face="Courier New" size="2" color="#000000">action</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine displays a brief general description of what can be seen on the other side of the window and then calls </font><font face="Courier New" size="2" color="#000000">listRemoteContents(otherLocation)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to list the contents of the other location being viewed through the window. We need to use a </font><font face="Courier New" size="2" color="#000000">listRemoteContents&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">routine because we want to list the contents of the other location as they appear from the room we're in, not as they would appear if Heidi were in the same location as they. This is all fairly straightforward apart from one thing: there is no </font><font face="Courier New" size="2" color="#000000">listRemoteContents</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method in the library, so we'll have to provide our own.
+<br>
+
+<br>
+The library does provide a routine that does almost what we want; it's called </font><font face="Courier New" size="2" color="#000000">lookAround</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This is normally used to provide a full room description, but we can restrict it to just listing the objects within a room. At a first approximation our listRemoteContents routine could be defined simply as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">listRemoteContents(otherLocation)
+<br>
+{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;lookAround(gActor,&nbsp;LookListSpecials&nbsp;|&nbsp;LookListPortables);&nbsp;&nbsp;&nbsp;
+<br>
+}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+The first parameter of </font><font face="Courier New" size="2" color="#000000">lookAround</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the actor performing the command (i.e. </font><font face="Courier New" size="2" color="#000000">gActor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">). The final parameter uses the bitwise or operator ( | ), the details of which are a bit beyond this Getting Started Guide; suffice to say that in this context it can be used to combine a number of option flags into a single argument. The two flags listed here are to list the objects with special descriptions and the portable objects.
+<br>
+
+<br>
+If you define </font><font face="Courier New" size="2" color="#000000">lookRemoteContents</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and then try compiling and running the game (with the revised </font><font face="Courier New" size="2" color="#000000">cottageWindow</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), you'll find that it almost works as we want, but not quite. If you stand outside the cottage and look through its window on the first turn, the chair will be reported sitting in the corner of the room as expected. But if you subsequently collect the key, unlock the door, then drop the key on the ground, you'll find that looking in through the window from the outside lists the key as well as the chair, while looking out through the window from the inside lists the chair as well as the key. The problem is that </font><font face="Courier New" size="2" color="#000000">lookAround</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> lists everything that's visible from the room as well as the contents of the room itself, whereas we want something that lists only the contents of the room on the other side of the window.
+<br>
+
+<br>
+Fortunately, TADS 3 provides another </font><font face="Courier New" size="2" color="#000000">Thing&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method we can use to tweak this: </font><font face="Courier New" size="2" color="#000000">adjustLookAroundTable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This is a method that can be used to remove any items we don't want included in the room description. By default it simply removes the point-of-view object, since an object looking round a location doesn't normally include itself in the list of things it sees; but we could use it to remove any object that's not in the location we're interested in:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">adjustLookAroundTable(tab,&nbsp;pov,&nbsp;actor)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(tab,&nbsp;pov,&nbsp;actor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(listLocation_&nbsp;!=&nbsp;&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;tab.keysToList();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;lst)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!cur.isIn(listLocation_))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tab.removeElement(cur);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+In this method, we first call the inherited behaviour to remove the actor and point-of-view object. If </font><font face="Courier New" size="2" color="#000000">listLocation_&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(which we'll explain more fully shortly) is not </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, we then go on to remove everything that's not in </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> from the table of items to be listed. The items that are otherwise about to be listed are in a </font><font face="Courier New" size="2" color="#000000">LookupTable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> passed in the </font><font face="Courier New" size="2" color="#000000">tab</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> parameter. This </font><font face="Courier New" size="2" color="#000000">LookupTable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> contains a series of pairs of values: a <i>key</i> containing the object and a value containing information about the sensing of the object. If that all sounds a bit too complicated, don't worry; all we're interested in this point is the list of objects contained in the keys. To get at this we use the </font><font face="Courier New" size="2" color="#000000">keysToList()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method. Then, having obtained the list of objects (in the local variable </font><font face="Courier New" size="2" color="#000000">lst</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) we simply work through them and remove from the table every object that isn't in </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+So far, so good, but what exactly is </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and how do we set it to what we want? Well, </font><font face="Courier New" size="2" color="#000000">listLocation_&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is the name we're giving to the location (i.e. room) whose contents we want listed. It can't be passed as a parameter of </font><font face="Courier New" size="2" color="#000000">adjustLookAroundTable()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, since there's no provision for such an extra parameter in the library's definition of this method. So to make it available to </font><font face="Courier New" size="2" color="#000000">adjustLookAroundTable()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">we need to define it as a property (which can then be set from another method). We add the underscore at the end of the name to highlight the fact that it's a property intended for a particular internal use only.
+<br>
+
+<br>
+We next need to arrange for </font><font face="Courier New" size="2" color="#000000">listRemoteContents</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to set </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">  to the room whose contents we want listed:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">listRemoteContents(otherLocation)&nbsp;&nbsp;
+<br>
+{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;listLocation_&nbsp;=&nbsp;otherLocation;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;lookAround(gActor,&nbsp;LookListSpecials&nbsp;|&nbsp;LookListPortables);&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;listLocation_&nbsp;=&nbsp;nil;
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that we reset </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> after calling </font><font face="Courier New" size="2" color="#000000">lookAroundWithin</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This is vital, because we only want </font><font face="Courier New" size="2" color="#000000">adjustLookAroundTable&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to remove items from the list of objects to be shown when </font><font face="Courier New" size="2" color="#000000">listRemoteContents</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is called. At any other time we want </font><font face="Courier New" size="2" color="#000000">adjustLookAroundTable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to behave as defined in the library - which it will when </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. If </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> were not reset to </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> at the end of each call to </font><font face="Courier New" size="2" color="#000000">listRemoteContents</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, then subsequent listings of objects in room descriptions would cease to work properly (since all objects not in </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> would be removed from the list of objects to be shown). In fact, it's so important that we make sure that </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is always reset to nil at the end of </font><font face="Courier New" size="2" color="#000000">listRemoteContents</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> that there's one more step we really ought to take to ensure that it always is - and that's to use </font><font face="Courier New" size="2" color="#000000">try&#133;&nbsp;finally</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The way we do this is to enclose one or more statements in a block following the </font><font face="Courier New" size="2" color="#000000">try</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword, then one or more statements in a block following the </font><font face="Courier New" size="2" color="#000000">finally</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword. This will ensure that the statements in the </font><font face="Courier New" size="2" color="#000000">finally</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> block will <i>always</i> be executed, even if the game encounters an exception (such as an unanticipated error) in the </font><font face="Courier New" size="2" color="#000000">try</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> block. In this case we want to protect the call to </font><font face="Courier New" size="2" color="#000000">lookAroundWithin</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in a </font><font face="Courier New" size="2" color="#000000">try</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> block and place the statement </font><font face="Courier New" size="2" color="#000000">listLocation_&nbsp;=&nbsp;nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the </font><font face="Courier New" size="2" color="#000000">finally</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> block, to make it absolutely certain that </font><font face="Courier New" size="2" color="#000000">listLocation_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will <i>always</i> be reset to </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> at the end of the method, come what may.
+<br>
+
+<br>
+The modification to </font><font face="Courier New" size="2" color="#000000">Thing&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">required to achieve all this is thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;listLocation_&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;listRemoteContents(otherLocation)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;listLocation_&nbsp;=&nbsp;otherLocation;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;try
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lookAround(gActor,&nbsp;LookListSpecials&nbsp;|&nbsp;LookListPortables);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;finally
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listLocation_&nbsp;=&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;adjustLookAroundTable(tab,&nbsp;pov,&nbsp;actor)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(tab,&nbsp;pov,&nbsp;actor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(listLocation_&nbsp;!=&nbsp;&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;tab.keysToList();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;lst)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!cur.isIn(listLocation_))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tab.removeElement(cur);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you don't totally understand all the details of this, don't worry at this stage. You can just copy the code and check that it works (or use it in your own project), and then come back to it when you're more experienced with TADS 3 and it makes more sense to you.
+<br>
+
+<br>
+In the meantime, there's one further refinement we may want to add to the cottage window. At the moment, the chair inside the cottage advertises its presence as soon as Heidi's in </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which she is on the very first turn of the game. It may be both a bit more subtle and a bit more realistic if she's not allowed to become aware of what's inside the cottage until she either enters it or explicitly looks in through the window.
+<br>
+
+<br>
+The simplest way to achieve this is to have the window start totally opaque and only become transparent to sight the first time a <b>look through window</b> command is issued. To do this, first change the definition of </font><font face="Courier New" size="2" color="#000000">cottageWindow</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> so that instead of
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">connectorMaterial&nbsp;=&nbsp;glass
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You have
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">connectorMaterial&nbsp;=&nbsp;adventium
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Then add the statement
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">connectorMaterial&nbsp;=&nbsp;glass;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">At the start of the </font><font face="Courier New" size="2" color="#000000">action</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine of </font><font face="Courier New" size="2" color="#000000">dobjFor(LookThrough),&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">say, immediately after </font><font face="Courier New" size="2" color="#000000">local&nbsp;otherLocation;.</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> Now, the chair will not be listed until the player issues the command <b>look through window</b>.
+<br>
+
+<br>
+You might be tempted to add a further statement </font><font face="Courier New" size="2" color="#000000">connectorMaterial&nbsp;=&nbsp;adventium</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; at the end of the </font><font face="Courier New" size="2" color="#000000">action</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine, so that the contents of the room inside the cottage are visible only when the window is being explicitly looked through. The problem with this is that once the player has seen the chair inside the cottage, he or she ought to be able to refer to it (e.g. with <b>x chair</b>), but making the window opaque again (adventium is a material that's opaque to all senses) will prevent that (<b>x chair</b> would result in the message 'you see no chair here', even though you'd just seen it through the window). In any case, once Heidi has once looked through the window it's not so unreasonable that she should continue to be aware of what lies on the other side of it.</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="countingthecash.htm">[Previous] </a>&nbsp;&nbsp;<a href="easingtestinganddebugging.htm">[Next] </a></I></FONT></P>
+</body></html>

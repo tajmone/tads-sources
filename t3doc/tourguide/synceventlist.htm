@@ -1,0 +1,22 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SyncEventList</title><meta name="keywords" content="SyncEventList,masterObject"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="verdana, arial, Helvetica, Sans-Serif" size="3" color="#000000"><b>SyncEventList : <a href="eventlist.htm">EventList</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Helvetica, Sans-Serif" size="2"><a href="externaleventlist.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="randomfiringscript.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="verdana, arial, Helvetica, Sans-Serif" size="2" color="#000000">A synchronized event list is an event list that takes its actions from a separate event list object. It gets its current state from the other list, and advancing our state advances the other list's state in lock step. Set '<b>masterObject</b>' to refer to the master list whose state we synchronize with.
+<br>
+
+<br>
+This can be useful, for example, when you have messages that reflect two different points of view on the same events: the messages for each point of view can be kept in a separate list, but the one list can be a slave of the other to ensure that the two lists are based on a common state.
+<br>
+
+<br>
+
+<br>
+</font>
+
+</body></html>

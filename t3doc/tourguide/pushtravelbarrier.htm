@@ -1,0 +1,98 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PushTravelBarrier</title><meta name="keywords" content="PushTravelBarrier,gMessageParams,travelBarrier,canTravelerPass,canPushedObjectPass"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PushTravelBarrier : <a href="travelbarrier.htm">TravelBarrier</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="travelpushable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="intangibles-overview.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A PushTravelBarrier is a special kind of <a href="travelbarrier.htm">TravelBarrier</a> that can be used (by attaching it to the travelBarrier property of a TravelConnector) to block (or selectively block) pushing a TravelPushable via this connector. By default a PushTravelBarrier blocks all TravelPushables, but this can be changed by overriding its canTravelerPass method, or, perhaps more simply, its <font face="Courier New" size="2" color="#000000"><b>canPushedObjectPass</b>(obj)</font><font face="Arial" size="2" color="#000000"> method, which canTravelerPass calls. You can also override the explainTravelBarrier method to explain why pushing an object this way isn't allowed.
+<br>
+
+<br>
+For example, we might well want to prevent pushing any TravelPushables up and down stairs or ladders. To do this, we can simply define an appropriate PushTravelBarrier object and modify the Stairway class to make use of it:</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Stairway
+<br>
+&nbsp;&nbsp;travelBarrier&nbsp;=&nbsp;[stairBarrier]
+<br>
+;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;
+<br>
+stairBarrier&nbsp;:&nbsp;PushTravelBarrier
+<br>
+&nbsp;&nbsp;explainTravelBarrier(traveler)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;obj&nbsp;=&nbsp;traveler.obj_;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gMessageParams(obj);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('{The&nbsp;obj/he}&nbsp;can\'t&nbsp;negotiate&nbsp;ladders&nbsp;and&nbsp;stairs.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;&nbsp;&nbsp;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Although we allow the monolith to be pushed down the tunnel, we may feel that it shouldn't be possible to push it aboard the ship. This time we can create a selective PushTravelBarrier that just blocks the monolith:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">monolithBarrier&nbsp;:&nbsp;PushTravelBarrier
+<br>
+&nbsp;&nbsp;canPushedObjectPass(obj)&nbsp;{&nbsp;return&nbsp;obj&nbsp;!=&nbsp;monolith;&nbsp;}
+<br>
+&nbsp;&nbsp;explainTravelBarrier(traveler)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;monolith&nbsp;is&nbsp;far&nbsp;too&nbsp;large&nbsp;and&nbsp;unwieldy&nbsp;to&nbsp;be&nbsp;pushed&nbsp;there.&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Then all we have to do is attach this barrier to the portDeck of the ship (which is where anything entering the ship will arrive):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">portDeck&nbsp;:&nbsp;Deck&nbsp;'Port&nbsp;Deck'&nbsp;'the&nbsp;main&nbsp;deck'
+<br>
+&nbsp;&nbsp;&nbsp;"This&nbsp;part&nbsp;of&nbsp;the&nbsp;main&nbsp;deck&nbsp;is&nbsp;on&nbsp;the&nbsp;port&nbsp;side&nbsp;of&nbsp;the&nbsp;ship,&nbsp;close&nbsp;to&nbsp;the&nbsp;shore.&nbsp;The
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;deck&nbsp;continues&nbsp;to&nbsp;fore,&nbsp;aft&nbsp;and&nbsp;starboard,&nbsp;and&nbsp;a&nbsp;tall&nbsp;mast&nbsp;towers&nbsp;up&nbsp;from
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;main&nbsp;deck.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fore&nbsp;=&nbsp;foreDeck
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;aft&nbsp;=&nbsp;quarterDeck
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;starboard&nbsp;=&nbsp;starboardDeck
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;=&nbsp;(ship.location)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;mast
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>travelBarrier&nbsp;=&nbsp;[monolithBarrier]
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Once again, this works because a Room (from which the custom Deck class inherits) inherits from TravelConnector.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

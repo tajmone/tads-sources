@@ -1,0 +1,49 @@
+body {
+    background: #ffffff;
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    color: #000000;
+    line-height: 1.4;
+}
+
+h1 {
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    font-size: 150%;
+    font-weight: normal;
+    color: #000080;
+}
+
+h2 {
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    font-size: 125%;
+    font-weight: normal;
+    color: #000080;
+}
+
+h3 {
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    font-size: 110%;
+    font-weight: normal;
+    color: #000080;
+}
+
+h4 {
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    font-size: 100%;
+    font-weight: bold;
+    color: #000080;
+}
+
+span.sysid {
+    font-size: 80%;
+    font-style: italic;
+    color: #808080;
+}
+
+dl.cmdlist dt {
+    font-weight: bold;
+}
+
+dl.cmdlist dd {
+    margin-bottom: 0.75em;
+}
+

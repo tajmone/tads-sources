@@ -1,0 +1,46 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PreSaveObject</title><meta name="keywords" content="PreSaveObject,saving a game"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PreSaveObject: <a href="moduleexecobject.htm">ModuleExecObject</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="preinitobject.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="postrestoreobject.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">PreSaveObject - every instance of this class is notified, via its execute() method, just before we save the game. This provides a convenient way to make something happen just before our game is saved. The need for this may not arise very often, but if it should arise it's probably more convenient to define a PreSaveObject than to tinker about trying to modify SaveAction or something it calls.
+<br>
+
+<br>
+For example, an author really determined to earn the wrath and indignation of his players might write:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">PreSaveObject
+<br>
+&nbsp;&nbsp;execute()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;pathetically&nbsp;pusillanimous&nbsp;poltroon!&nbsp;&lt;i&gt;Real&lt;/i&gt;&nbsp;adventurers&nbsp;don't&nbsp;need&nbsp;to&nbsp;save!&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;penalize&nbsp;you&nbsp;for&nbsp;this&nbsp;cowardly&nbsp;inanity&nbsp;ten&nbsp;thousand&nbsp;points&nbsp;will&nbsp;be&nbsp;instantly&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deducted&nbsp;from&nbsp;your&nbsp;score.&lt;.p&gt;";
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(-10000,&nbsp;'saving&nbsp;the&nbsp;game');&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Of course, we don't recommend you follow such an author's example!
+<br>
+</font></font>
+
+</body></html>

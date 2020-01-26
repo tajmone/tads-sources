@@ -1,0 +1,69 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>RealTimeEvent</title></head><body>
+<table class=ban><tr><td align=left><span class=title>RealTimeEvent</span><span class=type>class</span><td align=right><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#1136">1136</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Real-Time Event.  This is an event that occurs according to elapsed   wall-clock time in the real world.
+<p>
+<code>class
+<b>RealTimeEvent</b> :  &nbsp; <a href="../object/BasicEvent.html">BasicEvent</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>RealTimeEvent</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicEvent.html">BasicEvent</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>RealTimeEvent</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RealTimeDaemon.html">RealTimeDaemon</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RealTimeSenseDaemon.html">RealTimeSenseDaemon</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RealTimeFuse.html">RealTimeFuse</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RealTimeSenseFuse.html">RealTimeSenseFuse</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#eventTime">eventTime</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicEvent</code> :<br>
+<code>
+<a href="../object/BasicEvent.html#obj_">obj_</a>&nbsp;
+<a href="../object/BasicEvent.html#prop_">prop_</a>&nbsp;
+<a href="../object/BasicEvent.html#sense_">sense_</a>&nbsp;
+<a href="../object/BasicEvent.html#source_">source_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#getEventTime">getEventTime</a>&nbsp;
+<a href="#removeEvent">removeEvent</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicEvent</code> :<br>
+<code>
+<a href="../object/BasicEvent.html#callMethod">callMethod</a>&nbsp;
+<a href="../object/BasicEvent.html#eventMatches">eventMatches</a>&nbsp;
+<a href="../object/BasicEvent.html#executeEvent">executeEvent</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="eventTime"></a>
+<table class=decl><tr><td><code>eventTime</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#1161">1161</a>]</table><div class=desc>our scheduled event time<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (obj, prop)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#1148">1148</a>]</table><div class=desc>construction<p>
+</div>
+<a name="getEventTime"></a>
+<table class=decl><tr><td><code>getEventTime ( )</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#1141">1141</a>]</table><div class=desc>   Get the elapsed real time at which this event is triggered.  This   is a time value in terms of realTimeManager.getElapsedTime(). <p>
+</div>
+<a name="removeEvent"></a>
+<table class=decl><tr><td><code>removeEvent ( )</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#1158">1158</a>]</table><div class=desc>remove this event from the real-time event manager<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Let There be Light</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="callingaspadeaspade.htm">[Previous] </a>&nbsp;&nbsp;<a href="rowmyboat.htm">[Next] </a></I></FONT></P>
+<h1>Chapter 7 - Pushing the Boat Out</h1>
+<H2>Let There be Light</h2>
+
+<font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This is the last chapter in which we'll try to make things more difficult for poor Heidi. The complication we'll add is quite simple: simply change the class of <font face="Courier New" size="2" color="#000000">insideCave</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> from </font><font face="Courier New" size="2" color="#000000">Room</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to </font><font face="Courier New" size="2" color="#000000">DarkRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. As you'll find if you now try to pay the cave a visit, Heidi now needs a light source to see what's going on there. The next task, then, is to plant a torch (which American readers may call a flashlight) somewhere. We can't put it inside the cottage, since that would make the game unwinnable (you need to dig up the boots to get to the key to get into the cottage). So instead we'll put the torch/flashlight in a garden shed. We'll also be creating a stream, a jetty, and a shop that Heidi will eventually need to visit in order to buy some batteries for the torch/flashlight.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Again, before seeing how this guide tackles all this, you might like to have a go at adding some of this for yourself. First of all, you need to add four more locations to the map: the garden, the inside of the shed, the jetty, and the shop, bearing in mind that the player may want to use the commands <b>enter shed</b> and <b>enter shop</b> as an alternative to other movement commands:
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="71"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"><img src="clip0001.png" width="452" height="184" border="0" alt="clip0001.png">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="71"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You'll also need to put a pair of oars and a torch (without batteries) inside the shed, perhaps placing the latter in a cupboard. There'll need to be an object representing the stream at both locations, and a customised response to <b>cross stream</b> explaining why Heidi can't simply cross it at that point. It would be especially neat if the player got the same response from a <b>north</b> command issued by the stream. You might also want to add some </font><font face="Courier New" size="2" color="#000000">FakeConnectors</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">NoTravelMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to explain why Heidi can't go west from the Garden or either east or west from the Jetty.
+<br>
+
+<br>
+Your biggest challenge, however, will be to get Heidi from the Cottage Garden to the Jetty, since the map shows no direct connection. The idea is that Heidi gets there by rowing a boat down the stream (hence the oars), so you'll need a boat that Heidi can enter, a means of moving it between the Garden and the Jetty (and back), and a new <b>row</b> verb, which will require Heidi to be sitting in the boat holding the oars before it all works. Maybe the boat will need more than one object, such as an inside boat room that Heidi actually enters and a boat object to represent the boat from outside, just as you may create a shed object to represent the shed from outside.
+<br>
+
+<br>
+If you can't manage all this by yourself, not to worry; once you've got as far as you can get, you can read on to see at least one way this can all be implemented.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">First, then, we need to create the garden and its shed, using the opportunity to introduce a few more TADS 3 features we haven't come across yet:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cottageGarden&nbsp;:&nbsp;OutdoorRoom&nbsp;'Cottage&nbsp;Garden'
+<br>
+&nbsp;&nbsp;"This&nbsp;neat&nbsp;little&nbsp;garden&nbsp;is&nbsp;situated&nbsp;on&nbsp;the&nbsp;north&nbsp;side&nbsp;of&nbsp;the&nbsp;cottage.&nbsp;A
+<br>
+&nbsp;&nbsp;stream&nbsp;runs&nbsp;along&nbsp;the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;garden,&nbsp;while&nbsp;a&nbsp;short&nbsp;path&nbsp;disappears
+<br>
+&nbsp;&nbsp;through&nbsp;a&nbsp;gap&nbsp;in&nbsp;the&nbsp;fence&nbsp;to&nbsp;the&nbsp;southeast,&nbsp;and&nbsp;another&nbsp;leads&nbsp;westwards&nbsp;
+<br>
+&nbsp;&nbsp;down&nbsp;to&nbsp;the&nbsp;road.&nbsp;Next&nbsp;to&nbsp;the&nbsp;fence&nbsp;stands&nbsp;a&nbsp;small&nbsp;garden&nbsp;shed.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;southeast&nbsp;=&nbsp;outsideCottage
+<br>
+&nbsp;&nbsp;north&nbsp;:&nbsp;NoTravelMessage&nbsp;{"&lt;&lt;gardenStream.cannotCrossMsg&gt;&gt;"}
+<br>
+&nbsp;&nbsp;east&nbsp;:&nbsp;NoTravelMessage&nbsp;{"You&nbsp;can't&nbsp;walk&nbsp;through&nbsp;the&nbsp;fence.&nbsp;"}
+<br>
+&nbsp;&nbsp;west&nbsp;:&nbsp;FakeConnector&nbsp;{"That&nbsp;path&nbsp;leads&nbsp;down&nbsp;to&nbsp;the&nbsp;road,&nbsp;and&nbsp;you&nbsp;don't&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fancy&nbsp;going&nbsp;near&nbsp;all&nbsp;those&nbsp;nasty,&nbsp;smelly,&nbsp;noisy&nbsp;cars&nbsp;right&nbsp;now.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;in&nbsp;=&nbsp;insideShed&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;Decoration&nbsp;'wooden&nbsp;fence'&nbsp;'wooden&nbsp;fence'
+<br>
+&nbsp;&nbsp;"The&nbsp;tall&nbsp;wooden&nbsp;fence&nbsp;runs&nbsp;along&nbsp;the&nbsp;eastern&nbsp;side&nbsp;of&nbsp;the&nbsp;garden,&nbsp;with
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;small&nbsp;gap&nbsp;at&nbsp;its&nbsp;southern&nbsp;end.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;gardenStream:&nbsp;Fixture&nbsp;'stream'&nbsp;'stream'
+<br>
+&nbsp;&nbsp;"&lt;&lt;cannotCrossMsg&gt;&gt;"
+<br>
+&nbsp;&nbsp;dobjFor(Cross)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{&nbsp;failCheck(cannotCrossMsg);&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;cannotCrossMsg&nbsp;=&nbsp;'&nbsp;The&nbsp;stream&nbsp;is&nbsp;quite&nbsp;wide&nbsp;at&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;point,&nbsp;and&nbsp;too&nbsp;deep&nbsp;to&nbsp;cross.&nbsp;'
+<br>
+;
+<br>
+
+<br>
++&nbsp;Enterable&nbsp;-&gt;&nbsp;insideShed&nbsp;'garden&nbsp;shed'&nbsp;'garden&nbsp;shed'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small,&nbsp;wooden&nbsp;shed.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;matchNameCommon(origTokens,&nbsp;adjustedTokens)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(adjustedTokens.indexOf('shed'))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;self;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;cottageGarden;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+insideShed&nbsp;:&nbsp;Room&nbsp;'Inside&nbsp;the&nbsp;Garden&nbsp;Shed'
+<br>
+&nbsp;"The&nbsp;inside&nbsp;of&nbsp;the&nbsp;shed&nbsp;is&nbsp;full&nbsp;of&nbsp;garden&nbsp;implements,&nbsp;leaving&nbsp;just&nbsp;about
+<br>
+&nbsp;&nbsp;enough&nbsp;room&nbsp;for&nbsp;one&nbsp;person&nbsp;to&nbsp;stand.&nbsp;An&nbsp;old&nbsp;cupboard&nbsp;stands&nbsp;
+<br>
+&nbsp;&nbsp;in&nbsp;the&nbsp;corner.&nbsp;"
+<br>
+&nbsp;out&nbsp;=&nbsp;cottageGarden
+<br>
+;
+<br>
+
+<br>
++&nbsp;Decoration&nbsp;'garden&nbsp;implements/hoe/rake/shears'&nbsp;'garden&nbsp;implements'
+<br>
+&nbsp;&nbsp;"There's&nbsp;a&nbsp;hoe,&nbsp;a&nbsp;rake,&nbsp;some&nbsp;shears,&nbsp;and&nbsp;several&nbsp;other&nbsp;bits&nbsp;and&nbsp;pieces.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+
+<br>
++&nbsp;oars&nbsp;:&nbsp;Thing&nbsp;'pair/oars'&nbsp;'pair&nbsp;of&nbsp;oars'
+<br>
+&nbsp;&nbsp;"The&nbsp;oars&nbsp;look&nbsp;like&nbsp;they're&nbsp;meant&nbsp;for&nbsp;a&nbsp;small&nbsp;rowing-boat.&nbsp;"
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;10
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;pair&nbsp;of&nbsp;oars&nbsp;leans&nbsp;against&nbsp;the&nbsp;wall.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">To take the simple points first, we add </font><font face="Courier New" size="2" color="#000000">isPlural&nbsp;=&nbsp;true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to the definition of the </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object so that an attempt to take, say, the hoe results in "The garden implements aren't important" rather than "The garden implements isn't important." The other simple point is that the </font><font face="Courier New" size="2" color="#000000">-&gt;insideShed</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on the </font><font face="Courier New" size="2" color="#000000">Enterable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object is a shorthand way of specifying its </font><font face="Courier New" size="2" color="#000000">connector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property (through use of a template).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The more complex point involves the garden shed. Since it's called 'garden shed', the player could in principle refer to it either as 'shed', 'garden shed' or just 'garden', and all three forms would match. Yet one may feel that the last of these forms <i>shouldn't</i> match. The player character is standing in a garden, so logically the command <b>x garden</b> should result in a description of the garden, not the shed.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">matchNameCommon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method is the way we get round this. To quote from the comments in the library source code:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">'origTokens' is the list of the original input words making up the noun phrase, in canonical tokenizer format. Each element of this list is a sublist representing one token.
+&nbsp;<br>
+</font></td><td width="51"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+&nbsp;<br>
+</font></td><td width="51"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">'adjustedTokens' is the "adjusted" token list, which provides more information on how the parser is analyzing the phrase but may not contain the exact original tokens of the command. In the adjusted list, the tokens are represented by pairs of values in the list: the first value of each pair is a string giving the adjusted token text, and the second value of the pair is a property ID giving the part of speech of the parser's interpretation of the phrase. For example, if the noun phrase is "red book", the list might look like ['red', &amp;adjective, 'book', &amp;noun].
+&nbsp;<br>
+</font></td><td width="51"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></td><td></td><td width="51"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">For our purposes all we need to know is that </font><font face="Courier New" size="2" color="#000000">adjustedTokens</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will be a list that will include all the tokens the player typed, so we can test whether or not 'shed' is among them. If not, the player must have typed 'garden' but not 'shed'. Since </font><font face="Courier New" size="2" color="#000000">adjustedTokens</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a list, we can use its </font><font face="Courier New" size="2" color="#000000">indexOf</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method to find where in the list the string 'shed' is; if 'shed' is in the list then </font><font face="Courier New" size="2" color="#000000">adjustedTokens.indexOf('shed')</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will return a non-zero number which the test (with if) will treat as true; if it isn't then the test will fail. If the test succeeds, the tokens include 'shed' and we return self (i.e. the shed) as the object matched. Otherwise the player typed 'garden' but not shed, so we return </font><font face="Courier New" size="2" color="#000000">cottageGarden</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as the object matched. Thus, if the player types <b>x garden shed</b> or <b>x shed</b> the game will describe the shed, but if he or she types <b>x garden</b> it will describe the garden.
+<br>
+
+<br>
+We could have implemented some of this functionality by using a <i>weak token</i> in the definition of the garden shed; we'd do this by enclosing the word 'garden' in parentheses in the list of vocabulary words, i.e.:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;Enterable&nbsp;-&gt;&nbsp;insideShed&nbsp;'(garden)&nbsp;shed'&nbsp;'garden&nbsp;shed'
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+This would prevent the garden shed from responding to commands that just use the word 'garden' but would not remap such commands to the garden object. This, however, could easily be achieved by adding a </font><font face="Courier New" size="2" color="#000000">vocabWords&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">property to the definition of the cottage garden thus:-
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">vocabWords&nbsp;=&nbsp;'(cottage)&nbsp;garden'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that once again we can use the weak token feature, so that the garden can be referred to by <b>x garden</b> or <b>x cottage garden</b> but not simply <b>x cottage</b> (you might want to add a cottage decoration object to respond to the latter). In practice one would probably use the weak tokens method rather than defining a custom </font><font face="Courier New" size="2" color="#000000">matchNameCommon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method to achieve the result desired here, but the detour through </font><font face="Courier New" size="2" color="#000000">matchNameCommon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> has illustrated how to use it.
+<br>
+
+<br>
+There's a couple more things we may want to do with the Enterable representing the outside of this garden shed. If the player types <b>open shed</b> or <b>look in shed</b>, the standard library responses may be not just unhelpful but potentially misleading (perhaps suggesting that the shed is only a decoration object):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">&gt;<b>open shed</b>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">That is not something you can open.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">&gt;<b>look in shed</b>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's nothing unusual in the garden shed.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We can solve the first problem simply by making the shed an </font><font face="Courier New" size="2" color="#000000">Openable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as well as an </font><font face="Courier New" size="2" color="#000000">Enterable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The second is perhaps most easily solved by having <b>look in shed</b> treated as <b>enter shed</b>, on the grounds that someone wanting to find out what's in the shed would go inside it. A final problem is that if the player examines the shed it will be described as a 'small wooden shed', but that, as things stand, <b>x small wooden shed</b> will provoke the response, 'You see no small wooden shed here'; we need to add 'small' and 'wooden' to the vocabWords of this object. Our revised shed exterior thus becomes:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;Openable,&nbsp;Enterable&nbsp;-&gt;&nbsp;insideShed&nbsp;'small&nbsp;wooden&nbsp;(garden)&nbsp;shed'&nbsp;
+<br>
+&nbsp;&nbsp;'garden&nbsp;shed'&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small,&nbsp;wooden&nbsp;shed.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;dobjFor(LookIn)&nbsp;asDobjFor(Enter)
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You may have noticed that the description of the shed's interior includes mention of an old cupboard. What we want to do next is to put a tin on the cupboard and a torch inside it. On the face of it we can't do this, since an object can be either a container (something you can put things in) or a surface (something you put things on) but not both at the same time. We could get round this by laboriously making our cupboard out of separate objects, but fortunately the TADS 3 library has already done most of this work for us with a class called </font><font face="Courier New" size="2" color="#000000">ComplexContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. For the details of how </font><font face="Courier New" size="2" color="#000000">ComplexContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> works, you can consult the <i>Library Reference Manual</i> and the <i>TADS 3 Tour Guide</i> but there's no need to do so right now; the implementation of our cupboard using this class becomes quite straightforward:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;cupboard:&nbsp;ComplexContainer,&nbsp;Heavy&nbsp;'battered&nbsp;old&nbsp;wooden&nbsp;cupboard'&nbsp;
+<br>
+&nbsp;&nbsp;'old&nbsp;cupboard'
+<br>
+&nbsp;&nbsp;"The&nbsp;cupboard&nbsp;is&nbsp;a&nbsp;battered&nbsp;old&nbsp;wooden&nbsp;thing,&nbsp;with&nbsp;chipped&nbsp;blue&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;white&nbsp;paint.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;subContainer&nbsp;:&nbsp;ComplexComponent,&nbsp;OpenableContainer&nbsp;{&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;subSurface&nbsp;:&nbsp;ComplexComponent,&nbsp;Surface&nbsp;{&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Basically, the </font><font face="Courier New" size="2" color="#000000">ComplexContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> delegates putting-in and putting-on type behaviour to the anonymous nested objects defined in its </font><font face="Courier New" size="2" color="#000000">subContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">subSurface</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> properties. These nested objects must be of class </font><font face="Courier New" size="2" color="#000000">ComplexComponent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but you can then mix-in whatever classed you want (which, logically, will normally be something like </font><font face="Courier New" size="2" color="#000000">Container</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">Surface</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> respectively). The empty braces {} then contain the space where we'd define any properties or methods of these nested objects; but here we don't need to, since all the relevant behaviour has already been defined on their superclasses.
+<br>
+
+<br>
+The next task is to put objects in and on the cupboard:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;tin&nbsp;:&nbsp;OpenableContainer&nbsp;'small&nbsp;square&nbsp;tin'&nbsp;'small&nbsp;tin'&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;square&nbsp;tin&nbsp;with&nbsp;a&nbsp;lid.&nbsp;"
+<br>
+&nbsp;&nbsp;subLocation&nbsp;=&nbsp;&amp;subSurface
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;5
+<br>
+;
+<br>
+
+<br>
++++&nbsp;battery&nbsp;:&nbsp;Thing&nbsp;'small&nbsp;red&nbsp;battery'&nbsp;'small&nbsp;red&nbsp;battery'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;red&nbsp;battery,&nbsp;1.5v,&nbsp;manufactured&nbsp;by&nbsp;ElectroLeax
+<br>
+&nbsp;&nbsp;and&nbsp;made&nbsp;in&nbsp;the&nbsp;People's&nbsp;Republic&nbsp;of&nbsp;Erewhon.&nbsp;"
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;1
+<br>
+;
+<br>
+
+<br>
+++&nbsp;torch&nbsp;:&nbsp;Flashlight,&nbsp;OpenableContainer&nbsp;'small&nbsp;blue&nbsp;torch/flashlight'
+<br>
+&nbsp;&nbsp;&nbsp;'small&nbsp;blue&nbsp;torch'
+<br>
+&nbsp;&nbsp;"It's&nbsp;just&nbsp;a&nbsp;small&nbsp;blue&nbsp;torch.&nbsp;"
+<br>
+&nbsp;&nbsp;subLocation&nbsp;=&nbsp;&amp;subContainer
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;1
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The main thing to note here is the special syntax for specifying the initial location of objects inside a </font><font face="Courier New" size="2" color="#000000">ComplexContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. We can still use the + syntax to show that an object is on or in (or under or behind) a </font><font face="Courier New" size="2" color="#000000">ComplexContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but we need to specify which subobject of the </font><font face="Courier New" size="2" color="#000000">ComplexContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> the object is actually located in. To do this we use the special </font><font face="Courier New" size="2" color="#000000">subLocation&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">property which can be used <i>only</i> for initialization. If we subsquently wanted to move an object into a part of a </font><font face="Courier New" size="2" color="#000000">ComplexContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> we'd need to do so with an explicit </font><font face="Courier New" size="2" color="#000000">moveInto</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, e.g. </font><font face="Courier New" size="2" color="#000000">torch.moveInto(cupboard.subContainer)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Note also that what we assign to <code>subLocation</code> must be a property <i>pointer</i>  (a property name preceded by &amp;).
+<br>
+
+<br>
+We make the torch an </font><font face="Courier New" size="2" color="#000000">OpenableContainer</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> so that we can insert the battery. The behaviour of the torch requires a little thought. By default an object of the </font><font face="Courier New" size="2" color="#000000">Flashlight</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class will provide light if it's switched on and will stop doing so if it's switched off. This is what we want, with the added complication that it should only be possible to turn the torch on if the battery is in it.  A further complication is that if the player insists on removing the battery while the torch is on, it should at once go out again. Here's the definition of the torch with all that extra handling added:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;torch&nbsp;:&nbsp;Flashlight,&nbsp;OpenableContainer&nbsp;'small&nbsp;blue&nbsp;torch/flashlight'&nbsp;'small&nbsp;blue&nbsp;torch'
+<br>
+&nbsp;&nbsp;"It's&nbsp;just&nbsp;a&nbsp;small&nbsp;blue&nbsp;torch.&nbsp;"
+<br>
+&nbsp;&nbsp;subLocation&nbsp;=&nbsp;&amp;subContainer
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;1&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;dobjFor(TurnOn)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!&nbsp;battery.isIn(self))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Nothing&nbsp;happens.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;iobjFor(PutIn)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gDobj&nbsp;!=&nbsp;battery)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;dobj/he}&nbsp;doesn't&nbsp;fit&nbsp;in&nbsp;the&nbsp;torch.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeOpen(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;achieve.addToScoreOnce(1);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;notifyRemove(obj)
+<br>
+&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isOn)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Removing&nbsp;the&nbsp;battery&nbsp;causes&nbsp;the&nbsp;torch&nbsp;to&nbsp;go&nbsp;out.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeOn(nil);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;achieve:&nbsp;Achievement
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;desc&nbsp;=&nbsp;"fitting&nbsp;the&nbsp;battery&nbsp;into&nbsp;the&nbsp;torch"&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's nothing very difficult here, but note that we take the opportunity to make sure that the battery is the only object that can be put in the torch; we automatically close the torch after the battery is inserted to avoid getting the battery mentioned in response to an <b>inventory</b> command when we're carrying the torch. The most important thing to note is the use of the </font><font face="Courier New" size="2" color="#000000">notifyRemove</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method to handle the battery being removed from the torch; we use this since we can't be sure which command a player might use to do this, e.g. <b>take battery</b> or <b>remove battery from torch</b>. The other thing we do is to award a point for inserting the battery  into the torch for the first time only. To do this we define an </font><font face="Courier New" size="2" color="#000000">Achievement</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object nested on the (custom) </font><font face="Courier New" size="2" color="#000000">achieve</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, and call its </font><font face="Courier New" size="2" color="#000000">addToScoreOnce(points)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method in our </font><font face="Courier New" size="2" color="#000000">iObjFor(PutIn)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">action</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method. We do it this way since there is no freestanding </font><font face="Courier New" size="2" color="#000000">AddToScoreOnce</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> <i>function</i> we can call, and we need the </font><font face="Courier New" size="2" color="#000000">Achievement</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object so that it can keep track of whether its been used to award points before.
+<br>
+
+<br>
+At this point, we need to adjust the original location, first to indicate that there's a path round to the side of the cottage, and second to provide the relevant connection:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">outsideCottage&nbsp;:&nbsp;OutdoorRoom&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage'&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;A&nbsp;short&nbsp;path&nbsp;leads&nbsp;round&nbsp;the&nbsp;cottage&nbsp;to&nbsp;the&nbsp;northwest.&nbsp;"&nbsp;<i>//add&nbsp;this</i>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;east&nbsp;=&nbsp;forest
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;in&nbsp;=&nbsp;cottageDoor
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;west&nbsp;asExit(in)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;northwest&nbsp;=&nbsp;cottageGarden&nbsp;<i>//&nbsp;add&nbsp;this</i>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Once again, you can now recompile the program and test it all out to check that it still works.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="callingaspadeaspade.htm">[Previous] </a>&nbsp;&nbsp;<a href="rowmyboat.htm">[Next] </a></I></FONT></P>
+</body></html>

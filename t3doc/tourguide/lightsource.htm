@@ -1,0 +1,56 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>LightSource</title><meta name="keywords" content="LightSource,makeLit,isLit,BrightnessOn,BrightnessOff,isHeldBy"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>LightSource : <a href="thing-introduction.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="brightness.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="flashlight.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">LightSource is the most basic class that provides some specialization for providing light. It provides a <b>makeLit(lit)</b> method for turning the light on and off, or, to be strictly accurate, for adjusting the brightness between the values of its <b>brightnessOn</b> and <b>brightnessOff</b> properties (by default 3 and 0 respectively).  Again, by default, a LightSource starts out lit (i.e. with its <b>isLit</b> property set to true). It also describes itself as providing light when lit. It may sometimes be useful to use this class for lightsources other than the <a href="flashlight.htm">Flashlight</a> and <a href="candle.htm">Candle</a> types provided by the library. As an illustration, we can convert the brass lantern of the previous section into a curious device that is lit only when the player character is holding it.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">LightSource&nbsp;'brass&nbsp;lantern'&nbsp;'brass&nbsp;lantern'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;an&nbsp;ordinary&nbsp;brass&nbsp;lantern,&nbsp;except&nbsp;it&nbsp;has&nbsp;no&nbsp;visible&nbsp;means&nbsp;of&nbsp;control.&nbsp;"
+<br>
+&nbsp;&nbsp;isLit&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;moveInto(newCont)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;makeLit(newCont&nbsp;==&nbsp;gPlayerChar);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(newCont);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Once you've finished playing (experimenting seriously, I mean) with this lantern you can delete it; it's an impractical device and we shall have no further use for it in this game. In the meantime you may have noticed that an even simpler way to have defined it would have been:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">LightSource&nbsp;'brass&nbsp;lantern'&nbsp;'brass&nbsp;lantern'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;an&nbsp;ordinary&nbsp;brass&nbsp;lantern,&nbsp;except&nbsp;it&nbsp;has&nbsp;no&nbsp;visible&nbsp;means&nbsp;of&nbsp;control.&nbsp;"
+<br>
+&nbsp;&nbsp;isLit&nbsp;=&nbsp;(isHeldBy(gPlayerChar))&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+But I wanted to illustrate the use of the makeLit() method. The second way of defining it does, however, provide a useful illustration of the isHeldBy(actor) method, a method of Thing that returns true if the Thing is directly in the actor's inventory, but is not being worn by the actor (more or less).
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

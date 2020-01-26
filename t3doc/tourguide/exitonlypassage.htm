@@ -1,0 +1,92 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ExitOnlyPassage</title><meta name="keywords" content="ExitOnlyPassage,ThroughPassage,TravelWithMessage,NoTravelMessage"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ExitOnlyPassage : <a href="throughpassage.htm">ThroughPassage</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="notravelmessage.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="autoclosingdoor.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An ExitOnlyPassage is designed for one-way travel into a room, the other side of a passage through which you can pass but by which you cannot return. For example, imagine you have a slippery chute leading down from one cave to another below it. In the upper cave the chute might be represented by a ThroughPassage that the Player Character can enter; in the lower cave, the other end of the chute, which ejects the PC into the lower cave but can't be climbed back up could be implemented as an ExitOnlyPassage. To illustrate this we'll add four more objects: a round cave to the west of mainCave to act as the start of the chute, a long cave underneath to act as the destination of the chute, and the two halves of the chute, one in each location:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">roundCave&nbsp;:&nbsp;DarkRoom&nbsp;'Round&nbsp;Cave'&nbsp;'the&nbsp;round&nbsp;cave'
+<br>
+&nbsp;&nbsp;"This&nbsp;round,&nbsp;rocky&nbsp;cave&nbsp;has&nbsp;a&nbsp;narrow&nbsp;exit&nbsp;to&nbsp;the&nbsp;east&nbsp;and&nbsp;a&nbsp;strange&nbsp;square
+<br>
+&nbsp;&nbsp;&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor.&nbsp;"
+<br>
+&nbsp;&nbsp;east&nbsp;=&nbsp;mainCave
+<br>
+&nbsp;&nbsp;down&nbsp;=&nbsp;squareHole&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;squareHole&nbsp;:&nbsp;TravelWithMessage,&nbsp;ThroughPassage&nbsp;'square&nbsp;hole/chute'&nbsp;'square&nbsp;hole'
+<br>
+&nbsp;&nbsp;"The&nbsp;hole&nbsp;is&nbsp;just&nbsp;about&nbsp;large&nbsp;enough&nbsp;for&nbsp;one&nbsp;person&nbsp;to&nbsp;fit&nbsp;through.&nbsp;A&nbsp;glint
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;something&nbsp;metallic&nbsp;can&nbsp;be&nbsp;seen&nbsp;just&nbsp;through&nbsp;the&nbsp;hole.&nbsp;"
+<br>
+&nbsp;&nbsp;travelDesc&nbsp;=&nbsp;"You&nbsp;find&nbsp;yourself&nbsp;sliding&nbsp;down&nbsp;a&nbsp;long,&nbsp;slippery&nbsp;metal&nbsp;chute;
+<br>
+&nbsp;&nbsp;&nbsp;After&nbsp;a&nbsp;short&nbsp;ride&nbsp;you&nbsp;are&nbsp;ejected&nbsp;into&nbsp;another&nbsp;cave.&nbsp;"&nbsp;
+<br>
+;
+<br>
+
+<br>
+longCave&nbsp;:&nbsp;DarkRoom&nbsp;'Long&nbsp;Cave'&nbsp;'the&nbsp;long&nbsp;cave'
+<br>
+&nbsp;&nbsp;"This&nbsp;long&nbsp;narrow&nbsp;cave&nbsp;runs&nbsp;from&nbsp;east&nbsp;to&nbsp;west&nbsp;between&nbsp;rough&nbsp;walls&nbsp;and&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;low&nbsp;ceiling.&nbsp;There&nbsp;is&nbsp;a&nbsp;large&nbsp;square&nbsp;hole&nbsp;in&nbsp;the&nbsp;west&nbsp;wall,&nbsp;while
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;ladder&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall&nbsp;at&nbsp;the&nbsp;east&nbsp;end&nbsp;runs&nbsp;up&nbsp;to&nbsp;a&nbsp;trapdoor
+<br>
+&nbsp;&nbsp;&nbsp;set&nbsp;in&nbsp;the&nbsp;ceiling.&nbsp;Some&nbsp;words&nbsp;have&nbsp;been&nbsp;crudely&nbsp;scratched&nbsp;on&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;wall.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;:&nbsp;NoTravelMessage&nbsp;{&nbsp;"You&nbsp;can't&nbsp;climb&nbsp;back&nbsp;up&nbsp;the&nbsp;chute,&nbsp;it's
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;too&nbsp;slippery.&nbsp;"&nbsp;}
+<br>
+;
+<br>
+
+<br>
++&nbsp;ExitOnlyPassage&nbsp;-&gt;&nbsp;squareHole&nbsp;'square&nbsp;hole/chute'&nbsp;'square&nbsp;hole'
+<br>
+&nbsp;&nbsp;"Through&nbsp;the&nbsp;square&nbsp;hole&nbsp;you&nbsp;can&nbsp;see&nbsp;the&nbsp;bottom&nbsp;end&nbsp;of&nbsp;the&nbsp;shiny&nbsp;metal
+<br>
+&nbsp;&nbsp;&nbsp;chute,&nbsp;which&nbsp;is&nbsp;too&nbsp;slippery&nbsp;to&nbsp;climb&nbsp;back&nbsp;up.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+One other thing we need to add before this can be tested is
+<br>
+
+<br>
+   </font><font face="Courier New" size="2" color="#000000">west&nbsp;=&nbsp;roundCave
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+to mainCave.
+<br>
+
+<br>
+Note that we don't need to give the ExitOnlyPassage a name; we simply point it to the squareHole with the -&gt; symbol in the <a href="passagetemplate.htm">Passage template</a> to connect the two halves of the chute together; in the <a href="passagetemplate.htm">Passage template</a> the -&gt; references the masterObject property. Note also the use of a <a href="notravelmessage.htm">NoTravelMessage</a> to explain why we can't climb back up the chute if we try to go west, and of the <a href="travelwithmessage.htm">TravelWithMessage</a> mix-in class used with the <a href="throughpassage.htm">ThroughPassage</a> to provide a description of the descent via the chute.
+<br>
+
+<br>
+You can compile and run this, but you'll need to use MEGA or FIAT LUX to see what you're doing in the dark rooms.
+<br>
+</font></font>
+
+</body></html>

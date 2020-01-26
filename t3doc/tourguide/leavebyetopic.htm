@@ -1,0 +1,36 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>LeaveByeTopic</title><meta name="keywords" content="LeaveByeTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>LeaveByeTopic: <a href="misctopic.htm">MiscTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="impbyetopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="boredbyetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A LeaveByeTopic is effectively a more specialised ImpByeTopic. We can use it in the case where we want to distinguish a conversation ending through the PC walking away from one ending because his interlocutor gives up waiting for him to speak. So, for example, we could add the following, which should also be located in his curatorWatching ConversationReadyState:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+++&nbsp;LeaveByeTopic
+<br>
+&nbsp;&nbsp;"{The&nbsp;curator/he}&nbsp;watches&nbsp;you&nbsp;leave,&nbsp;and&nbsp;then&nbsp;resumes&nbsp;working.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And then we'll see a different message depending on whether the conversation ends as a result of boredom or travel. Note that in this case the (more specific) LeaveByeTopic will be used when the PC departs, and the (less specific) ImpByeTopic will be used when the curator becomes bored, although we could achieve the same effect by using a <a href="boredbyetopic.htm">BoredByeTopic</a>.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

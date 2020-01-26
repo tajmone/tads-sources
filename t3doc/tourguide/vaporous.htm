@@ -1,0 +1,136 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Vaporous</title><meta name="keywords" content="Vaporous,notWithIntangibleMsg,lookInVaporousMsg,Message Properties"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Vaporous : <a href="intangible.htm">Intangible</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="occluder.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="simpleodor.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Vaporous is a good class to use for something you can see, and maybe smell and hear, but that is not fully tangible, such as a ray of light, a flame, or smoke. To set up an example, let's start creating some locations on the east side of the lake:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">eastShore&nbsp;:&nbsp;Room&nbsp;'Stone&nbsp;Jetty'&nbsp;'the&nbsp;stone&nbsp;jetty'
+<br>
+&nbsp;&nbsp;"This&nbsp;bleak&nbsp;stone&nbsp;jetty&nbsp;is&nbsp;little&nbsp;more&nbsp;than&nbsp;a&nbsp;narrow&nbsp;corridor&nbsp;between&nbsp;the&nbsp;lake&nbsp;to
+<br>
+&nbsp;&nbsp;the&nbsp;west&nbsp;and&nbsp;the&nbsp;rough&nbsp;cave&nbsp;wall&nbsp;to&nbsp;the&nbsp;east.&nbsp;A&nbsp;broad&nbsp;flight&nbsp;of&nbsp;stone&nbsp;steps&nbsp;leads
+<br>
+&nbsp;&nbsp;down&nbsp;to&nbsp;the&nbsp;north,&nbsp;while&nbsp;a&nbsp;much&nbsp;narrower&nbsp;flight&nbsp;leads&nbsp;up&nbsp;to&nbsp;the&nbsp;south.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>north&nbsp;=&nbsp;eastShoreDown
+<br>
+&nbsp;&nbsp;down&nbsp;asExit(north)
+<br>
+&nbsp;&nbsp;south = eastShoreUp
+<br>
+&nbsp;&nbsp;up asExit(south)
+<br>
+&nbsp;&nbsp;roomParts = [defaultGround, defaultEastWall, caveSky]
+<br>
+</b>;
+<br>
+
+<br>
++&nbsp;eastShoreDown&nbsp;:&nbsp;StairwayDown&nbsp;'broad stone flight/steps' 'broad stone steps'
+<br>
+&nbsp;&nbsp;"The&nbsp;broad&nbsp;stone&nbsp;steps&nbsp;looks&nbsp;fatally&nbsp;inviting,&nbsp;an&nbsp;easy&nbsp;walk&nbsp;down&nbsp;into&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;bowels&nbsp;of&nbsp;the&nbsp;earth.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true&nbsp;
+<br>
+;
+<br>
+<br>
++&nbsp;eastShoreUp&nbsp;:&nbsp;StairwayUp&nbsp;'narrow stone flight/steps' 'narrow stone steps'
+<br>
+&nbsp;&nbsp;"The&nbsp;broad&nbsp;stone&nbsp;steps&nbsp;looks&nbsp;fatally&nbsp;inviting,&nbsp;an&nbsp;easy&nbsp;walk&nbsp;down&nbsp;into&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;bowels&nbsp;of&nbsp;the&nbsp;earth.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true&nbsp;
+<br>
+;
+<br>
+<br>
+hellVestibule&nbsp;:&nbsp;Room&nbsp;'Vestibule&nbsp;of&nbsp;Hell&nbsp;Fire&nbsp;Cavern'&nbsp;'the&nbsp;vestibule'
+<br>
+&nbsp;&nbsp;"The&nbsp;broad&nbsp;stone&nbsp;steps&nbsp;leading&nbsp;up&nbsp;to&nbsp;the&nbsp;south&nbsp;come&nbsp;to&nbsp;an&nbsp;end&nbsp;in&nbsp;this&nbsp;small,&nbsp;hot,
+<br>
+&nbsp;&nbsp;&nbsp;rough&nbsp;round&nbsp;cave&nbsp;that&nbsp;seems&nbsp;to&nbsp;form&nbsp;the&nbsp;vestibule&nbsp;to&nbsp;what&nbsp;lies&nbsp;beyond&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;uninviting&nbsp;entrance&nbsp;to&nbsp;the&nbsp;east,&nbsp;through&nbsp;which&nbsp;comes&nbsp;a&nbsp;dull&nbsp;red&nbsp;glow.&nbsp;A
+<br>
+&nbsp;&nbsp;&nbsp;sign&nbsp;next&nbsp;to&nbsp;this&nbsp;entrance&nbsp;declares&nbsp;it&nbsp;to&nbsp;be&nbsp;the&nbsp;entrance&nbsp;to&nbsp;Hell&nbsp;Fire&nbsp;Cavern.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;south&nbsp;=&nbsp;hellVestibuleUp
+<br>
+&nbsp;&nbsp;up&nbsp;asExit(south)&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;hellVestibuleUp&nbsp;:&nbsp;StairwayUp&nbsp;-&gt;eastShoreDown&nbsp;'broad&nbsp;stone&nbsp;steps'&nbsp;'broad&nbsp;stone&nbsp;steps'
+<br>
+&nbsp;&nbsp;"The&nbsp;steps&nbsp;back&nbsp;up&nbsp;to&nbsp;the&nbsp;jetty&nbsp;look&nbsp;long,&nbsp;rough&nbsp;and&nbsp;wearisome.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+
+<br>
++&nbsp;Readable,&nbsp;Decoration&nbsp;'sign'&nbsp;'sign'
+<br>
+&nbsp;&nbsp;"The&nbsp;sign&nbsp;declares:\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;b&gt;&lt;FONT&nbsp;COLOR=RED&gt;HELL&nbsp;FIRE&nbsp;CAVERN&lt;/FONT&gt;&lt;/b&gt;\n
+<br>
+&nbsp;&nbsp;&nbsp;ADMISSION&nbsp;ABSOLUTELY&nbsp;FREE\n
+<br>
+&nbsp;&nbsp;&nbsp;(getting&nbsp;out&nbsp;alive&nbsp;not&nbsp;guaranteed)\n"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The description of hellVestibule refers to a "dull red glow"; this is not something the player can TAKE, PUSH, OPEN or otherwise interact with as if it were a physical object, but it is plainly something the player can see, and so could EXAMINE. This makes it a good candidate for implementation as a Vaporous:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;redGlow&nbsp;:&nbsp;Vaporous&nbsp;'dull&nbsp;red&nbsp;glow'&nbsp;'dull&nbsp;red&nbsp;glow'
+<br>
+&nbsp;&nbsp;"It&nbsp;flickers&nbsp;a&nbsp;dull,&nbsp;hungry&nbsp;shade&nbsp;of&nbsp;red&nbsp;with&nbsp;a&nbsp;diabolical,&nbsp;fiery&nbsp;look&nbsp;to&nbsp;it.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The only thing you can meaningfully do to a Vaporous is EXAMINE in (or LISTEN TO it or SMELL it if the author provides a listenDesc and a smellDesc), otherwise it provides one standard message if the player tries to LOOK IN, UNDER or BEHIND ("You just see the dull red glow.") and another if you try to do anything else to it, such as PUSH, TAKE or EAT it ("You can't do that to a dull red glow."). For most purposes these messages are probably fine, but you can easily change them if you want to by overriding the </font><font face="Courier New" size="2" color="#000000"><b>lookInVaporousMsg</b></font><font face="Times New Roman" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000"><b>notWithIntangibleMsg</b></font><font face="Times New Roman" size="3" color="#000000"> properties, e.g.:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;redGlow:&nbsp;Vaporous&nbsp;'dull&nbsp;red&nbsp;glow'&nbsp;'dull&nbsp;red&nbsp;glow'
+<br>
+&nbsp;&nbsp;"It&nbsp;flickers&nbsp;a&nbsp;dull,&nbsp;hungry&nbsp;shade&nbsp;of&nbsp;red&nbsp;with&nbsp;a&nbsp;diabolical,&nbsp;fiery&nbsp;look&nbsp;to&nbsp;it.&nbsp;"
+<br>
+&nbsp;&nbsp;lookInVaporousMsg(obj)&nbsp;{&nbsp;return&nbsp;'It\'s&nbsp;just&nbsp;as&nbsp;red&nbsp;whichever&nbsp;way&nbsp;you&nbsp;look&nbsp;at&nbsp;it.&nbsp;';&nbsp;}
+<br>
+&nbsp;&nbsp;notWithIntangibleMsg(obj)&nbsp;{&nbsp;return&nbsp;'That\'s&nbsp;not&nbsp;a&nbsp;particularly&nbsp;practical&nbsp;suggestion.&nbsp;';&nbsp;}
+<br>
+;
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that these two message properties have to be overridden as methods with a single parameter that return a single-quoted string. Unfortunately, this is not a general rule when overriding a message property; it other cases you might simply need to override the message property with a single-quoted string. To find out what you need to do in any particular case you need to look up the corresponding message property in the library code to see how it is implemented.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

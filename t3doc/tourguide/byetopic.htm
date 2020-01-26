@@ -1,0 +1,54 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ByeTopic</title><meta name="keywords" content="ByeTopic,impByeTopicObj"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ByeTopic : <a href="misctopic.htm">MiscTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="imphellotopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="impbyetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A ByeTopic is usually used in connection with <a href="greetingprotocols.htm">greeting protocols</a>, to handle the end of a conversation. As such, it is normally located in the <a href="conversationreadystate.htm">ConversationReadyState</a> to which the actor returns at the conclusion of the conversation.  The ByeTopic handles explicit termination of a conversation (via a BYE command).
+<br>
+
+<br>
+In the case of King Solomon, we shall assume that our player character would not be so gauche as to walk out on the king without some attempt at formal leave-taking, so we really want a ByeTopic that handles both implicit and explicit conversation termination.  As with the HelloTopic and the ImpHelloTopic this should go in the solomonExamining ConversationReadyState:
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+++&nbsp;ByeTopic,&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Goodbye,&nbsp;your&nbsp;majesty.&lt;/q&gt;&nbsp;you&nbsp;say,&nbsp;with&nbsp;a&nbsp;little&nbsp;bow,&nbsp;just&nbsp;to&nbsp;be
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;the&nbsp;safe&nbsp;side.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Farewell,&nbsp;mysterious&nbsp;messenger,&lt;/q&gt;&nbsp;the&nbsp;king&nbsp;replies,&nbsp;&lt;q&gt;perhaps
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we&nbsp;shall&nbsp;meet&nbsp;again.&lt;/q&gt;&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Well,&nbsp;er,&nbsp;cheerio&nbsp;then,&nbsp;sire.&lt;/q&gt;&nbsp;you&nbsp;say.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Solomon&nbsp;cocks&nbsp;one&nbsp;eyebrow,&nbsp;&lt;q&gt;Cheerio?&nbsp;Is&nbsp;that&nbsp;how&nbsp;angels&nbsp;speak?
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fare&nbsp;thee&nbsp;well.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Goodbye,&nbsp;sir.&lt;/q&gt;&nbsp;you&nbsp;bid&nbsp;him&nbsp;farewell.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;God&nbsp;be&nbsp;with&nbsp;you&nbsp;too.&lt;/q&gt;&nbsp;the&nbsp;king&nbsp;replies&nbsp;formally,&nbsp;before&nbsp;returning
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;his&nbsp;contemplations.&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]&nbsp;
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Note the symmetry here between HelloTopic and ByeTopic: while HelloTopic handles both implicit and explicit conversation initiation, ByeTopic handles both explicit and implicit conversation termination.
+<br>
+</font></font>
+
+</body></html>

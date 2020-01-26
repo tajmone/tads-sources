@@ -1,0 +1,144 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Setting the Scene</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="otherresponsestoactions.htm">[Previous] </a>&nbsp;&nbsp;<a href="abasicburner.htm">[Next] </a></I></FONT></P>
+<H1>Chapter 5 - Character Building</H1>
+
+<H2>Setting the Scene</H2>
+
+<font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The main task in this chapter will be to add an NPC (Non-Player Character) to our game, though in the course of doing so we shall be looking at a number of other matters. The first task is to add another couple of locations to give our NPC somewhere to operate. He's going to be a charcoal-burner working in the forest; clearly, then, he needs a fire to tend, which we'd better put in another clearing. In order to avoid having one clearing running straight into another, we'll put a length of path in between.
+<br>
+
+<br>
+Once again, you might like to have a go at implementing all this yourself before turning the page and seeing how this guide does it. First of all you need to add a 'forest path' room north of the clearing, and a 'fire clearing' room north of the forest path, remembering to add all the appropriate connections. The game map should then look like this, with the new rooms you're adding shown in pale blue:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><img src="clip0002.png" width="489" height="248" border="0" alt="clip0002.png">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+There's no need to put any objects in the Forest Path, but in the Fire Clearing we'll want a fire, and also the smoke given off by the fire. Give some thought to what class to make these objects. In particular, smoke is not a solid physical object, so you might want to make it of a class we haven't encountered before, </font><font face="Courier New" size="2" color="#000000">Vaporous</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, since this has the kind of behaviour we need; it is designed for insubstantial objects such as fire, smoke and fog which you can sense but not interact with in any other way.
+<br>
+
+<br>
+It is not quite right for the fire in the clearing, however, since this fire is something rather more substantial. The fire object will require some thought since quite apart from the fact that it's too big to pick up or push around, there are more immediate reasons why one would not expect Heidi to try to manipulate a burning fire. It would be tedious for you to have to write special handling for every single action the player might on the fire, however, so it may help you to know that there's a short-cut way of dealing with this: you can use </font><font face="Courier New" size="2" color="#000000">dobjFor(Default)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (which means, this is what we do when the current object is the direct object of any action not explicitly defined for this object). There are some actions you will then need to explicitly allow, however, such as examining and smelling the fire.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Our new code looks like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">forestPath&nbsp;:&nbsp;OutdoorRoom&nbsp;'forest&nbsp;Path'
+<br>
+&nbsp;&nbsp;"This&nbsp;broad&nbsp;path&nbsp;leads&nbsp;more&nbsp;or&nbsp;less&nbsp;straight&nbsp;north-south
+<br>
+&nbsp;&nbsp;&nbsp;through&nbsp;the&nbsp;forest.&nbsp;To&nbsp;the&nbsp;north&nbsp;the&nbsp;occasional&nbsp;puff&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;smoke&nbsp;floats&nbsp;up&nbsp;above&nbsp;the&nbsp;trees.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;=&nbsp;clearing
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;fireClearing
+<br>
+;
+<br>
+
+<br>
+fireClearing&nbsp;:&nbsp;OutdoorRoom&nbsp;'Clearing&nbsp;with&nbsp;Fire'
+<br>
+&nbsp;&nbsp;"The&nbsp;main&nbsp;feature&nbsp;of&nbsp;this&nbsp;large&nbsp;clearing&nbsp;a&nbsp;large,&nbsp;smouldering&nbsp;charcoal
+<br>
+&nbsp;&nbsp;&nbsp;fire&nbsp;that&nbsp;periodically&nbsp;lets&nbsp;off&nbsp;clouds&nbsp;of&nbsp;smoke.&nbsp;A&nbsp;path&nbsp;leads&nbsp;off
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;south,&nbsp;and&nbsp;another&nbsp;to&nbsp;the&nbsp;northwest.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;=&nbsp;forestPath
+<br>
+&nbsp;&nbsp;&nbsp;northwest&nbsp;:&nbsp;FakeConnector&nbsp;{"You&nbsp;decide&nbsp;against&nbsp;going&nbsp;that&nbsp;way
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;now.&nbsp;"}
+<br>
+;
+<br>
+
+<br>
++&nbsp;fire&nbsp;:&nbsp;Fixture&nbsp;'large&nbsp;smoking&nbsp;charcoal&nbsp;fire'&nbsp;'fire'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;fire&nbsp;is&nbsp;burning&nbsp;slowly,&nbsp;turning&nbsp;wood&nbsp;into&nbsp;charcoal.&nbsp;It&nbsp;nevertheless
+<br>
+&nbsp;&nbsp;&nbsp;feels&nbsp;quite&nbsp;hot&nbsp;even&nbsp;from&nbsp;a&nbsp;distance,&nbsp;and&nbsp;every&nbsp;now&nbsp;and&nbsp;again&nbsp;lets&nbsp;out
+<br>
+&nbsp;&nbsp;&nbsp;billows&nbsp;of&nbsp;smoke&nbsp;that&nbsp;get&nbsp;blown&nbsp;in&nbsp;your&nbsp;direction.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Examine)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()&nbsp;{&nbsp;inherited;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Smell)&nbsp;remapTo(Smell,&nbsp;smoke)
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Default)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;illogical('The&nbsp;fire&nbsp;is&nbsp;best&nbsp;left&nbsp;well&nbsp;alone;&nbsp;it\'s&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;i&gt;very&lt;/i&gt;&nbsp;&nbsp;hot&nbsp;and&nbsp;{you/he}&nbsp;do{es}n\'t&nbsp;want&nbsp;to&nbsp;get&nbsp;too&nbsp;close.&lt;.p&gt;');}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+;
+<br>
+
+<br>
++&nbsp;smoke&nbsp;:&nbsp;Vaporous&nbsp;'smoke'&nbsp;'smoke'
+<br>
+&nbsp;&nbsp;"The&nbsp;thick,&nbsp;grey&nbsp;smoke&nbsp;rises&nbsp;steadily&nbsp;from&nbsp;the&nbsp;fire,&nbsp;but&nbsp;gusts&nbsp;of&nbsp;wind&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;occasionally&nbsp;send&nbsp;billows&nbsp;of&nbsp;it&nbsp;in&nbsp;your&nbsp;direction.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;smellDesc&nbsp;=&nbsp;"The&nbsp;smoke&nbsp;from&nbsp;the&nbsp;fire&nbsp;smells&nbsp;acrid&nbsp;and&nbsp;makes&nbsp;you&nbsp;cough.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's one further change we need to make before trying any of this out, and that's to change the </font><font face="Courier New" size="2" color="#000000">north</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of </font><font face="Courier New" size="2" color="#000000">clearing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to read:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">north&nbsp;=&nbsp;forestPath
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's not a lot here that's new in principle, but one or two things about the fire and smoke objects merit some further explanation.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">So we start by defining the fire as a </font><font face="Courier New" size="2" color="#000000">Fixture</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, since it certainly isn't the sort of thing one would walk away with. We have used </font><font face="Courier New" size="2" color="#000000">dobjFor(Default)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to stop most actions on the fire at the verify stage since this makes reasonably good conceptual sense, it should seem illogical to the player to take, eat, or move a fire; it also conveniently stops it before the display of default messages defined in the </font><font face="Courier New" size="2" color="#000000">check</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">() or </font><font face="Courier New" size="2" color="#000000">action</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">() methods of </font><font face="Courier New" size="2" color="#000000">dobjFor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> the various verbs on any of Fixture's superclasses, such as </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. But, since left to itself, </font><font face="Courier New" size="2" color="#000000">dobjFor(Default)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> would trap <i>all</i> actions on the fire, we need to make Examine carry out its inherited behaviour. Finally, since it would not be unreasonable to smell the fire, we allow for that also, in this case by redirecting the action to the smoke emanating from the fire.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="otherresponsestoactions.htm">[Previous] </a>&nbsp;&nbsp;<a href="abasicburner.htm">[Next] </a></I></FONT></P>
+</body></html>

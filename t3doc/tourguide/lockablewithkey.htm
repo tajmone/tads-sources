@@ -1,0 +1,104 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>LockableWithKey</title><meta name="keywords" content="LockableWithKey,Tardis,Tardis, initial definition,ShipboardRoom"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>LockableWithKey : <a href="lockable.htm">Lockable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="keyedcontainer.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="keyring.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">You may recall a little way back that we defined a <a href="complexcontainer.htm">tardisKey</a> to be found inside the desk in the cabin. Where there's a key to a Tardis, there should be a Tardis somewhere, so we'll set about defining one and giving it a lockable door.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">tardis&nbsp;:&nbsp;Enterable&nbsp;-&gt;&nbsp;tardisDoor&nbsp;'dark&nbsp;blue&nbsp;police&nbsp;box/tardis'&nbsp;'Tardis'&nbsp;@hold
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;dark&nbsp;blue&nbsp;booth,&nbsp;with&nbsp;a&nbsp;blue&nbsp;light&nbsp;on&nbsp;the&nbsp;top&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;words&nbsp;POLICE&nbsp;BOX&nbsp;above&nbsp;the&nbsp;door.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;dark&nbsp;blue&nbsp;police&nbsp;box&nbsp;stands&nbsp;in&nbsp;the&nbsp;corner.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;Tardis,&nbsp;conspicuously&nbsp;disguised&nbsp;as&nbsp;a&nbsp;police&nbsp;box,&nbsp;stands&nbsp;here.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;tardisDoor&nbsp;:&nbsp;LockableWithKey,&nbsp;Door&nbsp;'(tardis)&nbsp;door'&nbsp;'door'
+<br>
+&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'Tardis&nbsp;door'
+<br>
+&nbsp;&nbsp;keyList&nbsp;=&nbsp;[tardisKey]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+For those not familiar with the BBC TV series "Dr Who", a Tardis is a type of time machine (the name is meant to be an acronym of Time And Relative Dimensions In Space). The main ability of a Tardis is to dematerialize at one point in time and space and rematerialize in another location in time and space. A Tardis is also larger inside than out. Finally, a Tardis is meant to blend in with its surroundings on rematerialization, but Dr Who's Tardis became stuck in its 1960s London appearance, and so always looks like a Police Box (a kind of dark blue phone booth) from the outside.
+<br>
+
+<br>
+At this point we need to define the interior of the Tardis, so that there's somewhere to go to if the player attempts to enter it or go through its door. As is well known, a Tardis is bigger inside than out, so we could give it as many rooms as we liked. We'll stick to just two, but then there's the question of how to describe their relative positions. Compass directions won't mean much inside the Tardis, and it's not obvious that shipboard directions like port and starboard would mean much either. On the other hand, from the outside one would probably regard the side of the Tardis with the door as its front, so there would be some justification for regarding movement towards this door as "fore" and away from it as "aft", which means that shipboard directions might just about do. We don't want the customizations of the Cabin class aboard the Tardis though, so we'll simply use the ShipboardRoom class:
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">tardisControlRoom&nbsp;:&nbsp;ShipboardRoom&nbsp;'Tardis&nbsp;control&nbsp;room'&nbsp;'the&nbsp;Tardis&nbsp;control&nbsp;room'
+<br>
+&nbsp;&nbsp;"The&nbsp;room&nbsp;is,&nbsp;of&nbsp;course,&nbsp;much&nbsp;larger&nbsp;than&nbsp;the&nbsp;Tardis&nbsp;looks&nbsp;from&nbsp;the&nbsp;outside.
+<br>
+&nbsp;&nbsp;&nbsp;Its&nbsp;walls&nbsp;are&nbsp;white,&nbsp;with&nbsp;curious&nbsp;circular&nbsp;indentations.
+<br>
+&nbsp;&nbsp;&nbsp;A&nbsp;white&nbsp;door&nbsp;leads&nbsp;out&nbsp;to&nbsp;the&nbsp;outside&nbsp;world&nbsp;(wherever&nbsp;or&nbsp;whatever&nbsp;that&nbsp;may&nbsp;be)
+<br>
+&nbsp;&nbsp;&nbsp;and&nbsp;an&nbsp;inner&nbsp;door&nbsp;leads&nbsp;further&nbsp;into&nbsp;the&nbsp;vessel.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;At&nbsp;the&nbsp;centre&nbsp;of&nbsp;the&nbsp;control&nbsp;room&nbsp;stands&nbsp;a&nbsp;hexagonal&nbsp;control&nbsp;console.&nbsp;"
+<br>
+&nbsp;&nbsp;fore&nbsp;=&nbsp;tardisDoorInside
+<br>
+&nbsp;&nbsp;out&nbsp;asExit(fore)&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;aft&nbsp;=&nbsp;tardisInnerDoor
+<br>
+&nbsp;&nbsp;in&nbsp;asExit(aft)
+<br>
+;
+<br>
+
+<br>
++&nbsp;tardisDoorInside&nbsp;:&nbsp;Lockable,&nbsp;Door&nbsp;-&gt;tardisDoor&nbsp;'outer&nbsp;white&nbsp;door*doors'&nbsp;'white&nbsp;door';
+<br>
+
+<br>
++&nbsp;tardisInnerDoor&nbsp;:&nbsp;Door&nbsp;'inner&nbsp;door*doors'&nbsp;'inner&nbsp;door';
+<br>
+
+<br>
+tardisLivingQuarters&nbsp;:&nbsp;ShipboardRoom&nbsp;'Tardis&nbsp;Living&nbsp;Quarters'&nbsp;'the&nbsp;living&nbsp;quarters'
+<br>
+&nbsp;&nbsp;"There's&nbsp;not&nbsp;much&nbsp;here&nbsp;at&nbsp;the&nbsp;moment,&nbsp;but&nbsp;a&nbsp;door&nbsp;leads&nbsp;out.&nbsp;"
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;tardisLivingQuartersDoor
+<br>
+&nbsp;&nbsp;fore&nbsp;asExit(out)
+<br>
+;
+<br>
+
+<br>
++&nbsp;tardisLivingQuartersDoor&nbsp;:&nbsp;Door&nbsp;-&gt;&nbsp;tardisInnerDoor&nbsp;'door'&nbsp;'door';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The beauty of the way tardisDoorInside points to tardisDoor is that whenever we move the Tardis to a new location, the player character will automatically emerge in that location on leaving the Tardis.
+<br>
+
+<br>
+Once again, LockableWithKey is a mix-in class, so it should become before any Thing-derived class in an object or class definition.
+<br>
+</font></font>
+
+</body></html>

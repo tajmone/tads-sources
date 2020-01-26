@@ -1,0 +1,27 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>qualifiedSingularNounPhrase</title></head><body>
+<table class=ban><tr><td align=left><span class=title>qualifiedSingularNounPhrase</span><span class=type>GrammarProd</span></table><p>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedSingularNounPhrase(anyOneIn).html">qualifiedSingularNounPhrase(anyOneIn)</a></span> :  &nbsp; <a href="../object/VagueContainerIndefiniteNounPhraseProd.html">VagueContainerIndefiniteNounPhraseProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5798">5798</a>]</code></table><div class=gramrule>    ('anything' | 'one') ('that' ('is' | 'was') | 'that' tokApostropheS | )<br>    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')<br>    completeNounPhraseWithoutAll-&gt;cont_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedSingularNounPhrase(anyPlural).html">qualifiedSingularNounPhrase(anyPlural)</a></span> :  &nbsp; <a href="../object/ArbitraryNounProd.html">ArbitraryNounProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5772">5772</a>]</code></table><div class=gramrule>    'any' 'of' explicitDetPluralNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedSingularNounPhrase(arbitrary).html">qualifiedSingularNounPhrase(arbitrary)</a></span> :  &nbsp; <a href="../object/ArbitraryNounProd.html">ArbitraryNounProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5754">5754</a>]</code></table><div class=gramrule>    ('any' | 'one' | '1' | 'any' ('one' | '1')) indetSingularNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedSingularNounPhrase(definite).html">qualifiedSingularNounPhrase(definite)</a></span> :  &nbsp; <a href="../object/DefiniteNounProd.html">DefiniteNounProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5737">5737</a>]</code></table><div class=gramrule>    ('the' | 'the' 'one' | 'the' '1' | ) indetSingularNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedSingularNounPhrase(indefinite).html">qualifiedSingularNounPhrase(indefinite)</a></span> :  &nbsp; <a href="../object/IndefiniteNounProd.html">IndefiniteNounProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5745">5745</a>]</code></table><div class=gramrule>    ('a' | 'an') indetSingularNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedSingularNounPhrase(possessive).html">qualifiedSingularNounPhrase(possessive)</a></span> :  &nbsp; <a href="../object/PossessiveNounProd.html">PossessiveNounProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5762">5762</a>]</code></table><div class=gramrule>    possessiveAdjPhrase-&gt;poss_ indetSingularNounPhrase-&gt;np_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/qualifiedSingularNounPhrase(theOneIn).html">qualifiedSingularNounPhrase(theOneIn)</a></span> :  &nbsp; <a href="../object/VagueContainerDefiniteNounPhraseProd.html">VagueContainerDefiniteNounPhraseProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5781">5781</a>]</code></table><div class=gramrule>    'the' 'one' ('that' ('is' | 'was') | 'that' tokApostropheS | )<br>    ('in' | 'inside' | 'inside' 'of' | 'on' | 'from')<br>    completeNounPhraseWithoutAll-&gt;cont_<br></div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

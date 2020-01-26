@@ -1,0 +1,49 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ResolveAsker</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ResolveAsker</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#312">312</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Noun phrase resolver "asker."  This type of object can be passed to   certain ResolveResults methods in order to customize the messages   that the parser generates for interactive prompting.
+<p>
+<code>class
+<b>ResolveAsker</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ResolveAsker</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>ResolveAsker</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskConnector.html">AskConnector</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultAskConnector.html">DefaultAskConnector</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/enterOnWhatAsker.html">enterOnWhatAsker</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#askDisambig">askDisambig</a>&nbsp;
+<a href="#askMissingObject">askMissingObject</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="askDisambig"></a>
+<table class=decl><tr><td><code>askDisambig (targetActor, promptTxt, curMatchList, fullMatchList, requiredNum, askingAgain, dist)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#318">318</a>]</table><div class=desc>   Ask for help disambiguating a noun phrase.  This asks which of   several possible matching objects was intended.  This method has   the same parameter list as the equivalent message object method. <p>
+</div>
+<a name="askMissingObject"></a>
+<table class=decl><tr><td><code>askMissingObject (targetActor, action, which)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#332">332</a>]</table><div class=desc>   Ask for a missing object.  This prompts for an object that's   structurally required for an action, but which was omitted from   the player's command. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

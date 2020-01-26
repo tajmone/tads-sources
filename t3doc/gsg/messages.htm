@@ -1,0 +1,254 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Messages</title><meta name="keywords" content="Messages"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="remap.htm">[Previous] </a>&nbsp;&nbsp;<a href="otherresponsestoactions.htm">[Next] </a></I></FONT></P>
+<h3>Messages</h3>
+
+<p>So far, when we've used things like <font face="Courier New" size="2" color="#000000">illogical()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">reportFailure()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and the like, we've used them with single-quoted strings (e.g.</font><font face="Courier New" size="2" color="#000000">&nbsp;illogical('You&nbsp;can't&nbsp;do&nbsp;that.&nbsp;')</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> ). If you look in library source code, however, you won't see them used like  that; instead you'll see them used with property pointers (e.g. </font><font face="Courier New" size="2" color="#000000">&amp;cannotTakeMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) sometimes followed by one or more further arguments (a property pointer is &amp; followed by the name of the property we want to reference). This allows the text of messages to be kept separate from the library code, which, among other things, makes it easier to translate the library into another language, since all the language-dependent stuff is on one place - or rather two (en_us.t and msg_neu.t) - rather than scattered all over the library.
+</p>
+
+<br>
+What actually happens when the library sees something like </font><font face="Courier New" size="2" color="#000000">illogical(&amp;cannotTakeMsg)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is that it calls the corresponding property on the object returned by </font><font face="Courier New" size="2" color="#000000">gActor.getActionMessageObj()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; thus, for example, when the library wants to display the message from </font><font face="Courier New" size="2" color="#000000">illogical(&amp;cannotTakeMsg)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> it actually calls:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">gActor.getActionMessageObj().cannotTakeMsg
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This then returns the single-quoted string to be displayed. This, incidentally, is why we need to use a property pointer here. A function call like <code>illogical(cannotTakeMsg)</code> would look for a property called <code>cannotTakeMsg</code> on the current object and pass the value of that property to whatever routine was going to process it. But that's not what we want here; what we want to do is to tell the routine which property of <code>gActor.getActionMessageObj()</code> to use, and for that we need to pass a property <i>pointer</i> (<code>&cannotTakeMsg</code>) not the property <i>value</i> (<code>cannotTakeMsg</code>).
+
+<p>When the player character is the actor (as is generally the case when executing player commands), then </font><font face="Courier New" size="2" color="#000000">gActor.getActionMessageObj()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">returns </font><font face="Courier New" size="2" color="#000000">playerActionMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; if an NPC is performing the action then it returns </font><font face="Courier New" size="2" color="#000000">npcActionMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.  Both objects are defined in msg_neu.t, where you can find all the library default messages.
+<br>
+
+<br>
+Sometimes you'll see in library code that one of these message macros has more than one parameter; for example, you might see something like:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">illogical(&amp;mustBeHoldingMsg,&nbsp;self);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">In such a case the second and subsequent parameters are arguments to the method invoked by the first parameter, so that the above example would get its message string from:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">gActor.getActionMessageObj().mustBeHoldingMsg(self)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">So far this may all seem quite remote from the concerns of a game author, but as we shall see, this mechanism can have its uses in game code.
+<br>
+
+<br>
+Firstly, if you don't like any of the library default messages, you can simply modify the </font><font face="Courier New" size="2" color="#000000">playerActionMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object to substitute your own version (this is not the only way to do it, but it's probably as good as the alternative, which we'll see in a minute). For example, the standard response to trying to put something on an object that isn't a </font><font face="Courier New" size="2" color="#000000">Surface</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is "There's no good surface on {the iobj/him}. "; thus, for example, if you try to put the stick on the cottage:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><b>&gt;put stick on cottage
+<br>
+</b>There's no good surface on the pretty little cottage.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You might prefer a different message as a default, such as "You can't put anything on {the iobj/him}. " In which case all you need to do is to override the </font><font face="Courier New" size="2" color="#000000">notASurfaceMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in </font><font face="Courier New" size="2" color="#000000">playerActionMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;playerActionMessages
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;notASurfaceMsg&nbsp;=&nbsp;'{You/he}&nbsp;can\'t&nbsp;put&nbsp;anything&nbsp;on&nbsp;{the&nbsp;iobj/him}.&nbsp;'
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you like, you can try adding this to heidi.t, recompiling, and then trying putting the stick on the cottage (or anything else on anything else that's not a surface).
+<br>
+
+<br>
+In addition to this, you can also change the messages by defining the appropriate message property on a class or object. Thus, for example, we could have obtained almost the same result by modifying Thing:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;notASurfaceMsg&nbsp;=&nbsp;'{You/he}&nbsp;can\'t&nbsp;put&nbsp;anything&nbsp;on&nbsp;{the&nbsp;iobj/him}.&nbsp;'
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">I say <i>almost</i> the same result because there is in fact a small (though readily fixable) catch with this that we'll come to shortly, which is why the first method might be slightly better for making global changes to messages. However, this second method is very useful when you want to customise the message that appears for individual objects (or particular classes of object). For example, suppose instead of the plain vanilla "You can't take that" message you'd get from trying to take the cottage, you'd like to see "It may be a small cottage, but it's still a lot bigger than you are;  you can't walk around with it!" One way to do that would be to override the cottage's verify method for the Take action:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">dobjFor(Take)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogical('It&nbsp;may&nbsp;be&nbsp;a&nbsp;small&nbsp;cottage,&nbsp;but&nbsp;it\'s&nbsp;still&nbsp;a&nbsp;lot&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bigger&nbsp;than&nbsp;you&nbsp;are;&nbsp;you&nbsp;can\'t&nbsp;walk&nbsp;around&nbsp;with&nbsp;it!&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">That will work fine, but it's relatively verbose just for changing a message, and could quickly become quite tedious if you wanted to customize a lot of messages on a lot of objects. However, the mechanism we've just been exploring offers a handy short-cut; all you actually need to do to customize this response on the cottage is to add the following to its definition:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'It&nbsp;may&nbsp;be&nbsp;a&nbsp;small&nbsp;cottage,&nbsp;but&nbsp;it\'s&nbsp;still&nbsp;a&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lot&nbsp;bigger&nbsp;than&nbsp;you&nbsp;are;&nbsp;you&nbsp;can\'t&nbsp;walk&nbsp;around&nbsp;with&nbsp;it!&nbsp;'
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">What happens here is that the procedure for choosing which object will supply the message is a little more complex than originally described above. Before the parser selects either the </font><font face="Courier New" size="2" color="#000000">playerActionMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">npcActionMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object it looks to see if the property it's looking for is defined on any of the objects defined in the action; if so, it uses that object instead. Since cottage now defines a </font><font face="Courier New" size="2" color="#000000">cannotTakeMsg&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">property, the cottage's version is used in preference to that defined on </font><font face="Courier New" size="2" color="#000000">playerActionMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+But although this is very useful, it also presents a potential trap for the unwary. Suppose we also wanted to customise the response to <b>clean cottage</b>. In the same way we could just add a cannotCleanMsg property to the definition of the cottage:
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
++&nbsp;Enterable&nbsp;-&gt;&nbsp;(outsideCottage.in)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'pretty&nbsp;little&nbsp;cottage/house/building'&nbsp;'pretty&nbsp;little&nbsp;cottage'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;just&nbsp;the&nbsp;sort&nbsp;of&nbsp;pretty&nbsp;little&nbsp;cottage&nbsp;that&nbsp;townspeople
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dream&nbsp;of&nbsp;living&nbsp;in,&nbsp;with&nbsp;roses&nbsp;round&nbsp;the&nbsp;door&nbsp;and&nbsp;a&nbsp;neat&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;little&nbsp;window&nbsp;frame&nbsp;freshly&nbsp;painted&nbsp;in&nbsp;green.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'It&nbsp;may&nbsp;be&nbsp;a&nbsp;small&nbsp;cottage,&nbsp;but&nbsp;it\'s&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;still&nbsp;a&nbsp;lot&nbsp;bigger&nbsp;than&nbsp;you&nbsp;are;&nbsp;you&nbsp;can\'t&nbsp;walk&nbsp;around&nbsp;with&nbsp;it!&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cannotCleanMsg&nbsp;=&nbsp;'You&nbsp;don\'t&nbsp;have&nbsp;time&nbsp;for&nbsp;that&nbsp;right&nbsp;now.&nbsp;'&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you now recompile heidi.t and enter the command <b>clean cottage</b>, you'll see that it works as expected, you now see the response "You don't have time for that right now." The trouble is you'll see the same response if you enter the obviously nonsensical command <b>clean door with cottage</b>, instead of the expected "You can't clean anything with that" or "You wouldn't know how to clean that." The problem is that since the cottage defines a </font><font face="Courier New" size="2" color="#000000">cannotCleanMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and the cottage is one of the objects involved in the command, the cottage's </font><font face="Courier New" size="2" color="#000000">cannotCleanMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is used in preference to any of the properties on playerActionMessages. The solution is to specify that you only want your custom </font><font face="Courier New" size="2" color="#000000">cannotCleanMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to be used when the cottage is the direct object of the command; you can do that with the </font><font face="Courier New" size="2" color="#000000">dobjMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cannotCleanMsg&nbsp;=&nbsp;dobjMsg('You&nbsp;don\'t&nbsp;have&nbsp;time&nbsp;for&nbsp;that&nbsp;right&nbsp;now.&nbsp;')
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Similarly, if you defined a message that should only work when the cottage is the indirect object of a command (e.g. <b>put stick on cottage</b>), you must remember to use the </font><font face="Courier New" size="2" color="#000000">iobjMsg&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">macro:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">notASurfaceMsg&nbsp;=&nbsp;iobjMsg('You&nbsp;can\'t&nbsp;reach&nbsp;the&nbsp;roof.&nbsp;')
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Forgetting to use </font><font face="Courier New" size="2" color="#000000">dobjMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">iobjMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> when customizing a response for what is, or might be, a two-object command is a <i>very</i> easy mistake to fall into, so it's worth drumming into yourself at an early stage that you must <i>always</i> stop to think whether one or other macro might be necessary. Frequent use of customized messages is one thing that tends to distinguish a really good piece of IF from a mediocre one, so this is a technique you will want to master and use often in your own work.
+<br>
+
+<br>
+There is one further problem here. If you type a nonsensical command like <b>clean cottage with door</b> you'll now see the response "You don't have time for that right now", which is clearly less than ideal. This can't be fixed simply by tweaking message properties; the cleanest solution here might be to make <b>clean with</b> fail in check rather than verify on the direct object, so the indirect object's failure message is used instead:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;dobjFor(CleanWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{&nbsp;failCheck(&amp;cannotCleanMsg);&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The question you're probably asking yourself now is, "That's all very well, but how on earth do I know what message property I need to customise for a given action?" Well, you can find out by looking through the library code, but that's fairly laborious, so you really need a quick-reference chart: you should one find included in the TADS 3 documentation set, or a complete set of quick-reference charts for TADS 3 can be obtained from <a href=" http://users.ox.ac.uk/~manc0049/TADSGuide/QRefs.zip " TARGET="_top">http://users.ox.ac.uk/~manc0049/TADSGuide/QRefs.zip</A>. Since this information is so important for TADS 3 authors, it's also included in this <i>Guide</i> at <a href="appendixa-actionmessagepropert.htm">Appendix A</a> (though you'll probably find the downloaded chart a bit easier to use, since you can print it out on the two sides of a single sheet of paper). The chart doesn't list all the messages defined in the library (that would make such an unwieldy document that it would probably be self-defeating), but it does include the ones you'll most commonly want to override. For each of the transitive actions defined in the library (i.e. actions that take one or more Things as objects, but excluding actions such as Look or Inventory that don't), the chart shows the corresponding message property name as it is defined on Thing, and also on any subclasses where it is overridden to something different. The chart also indicates whether the message property is invoked from verify, check or action (abbreviated to V, C, and A respectively) and whether it is used when the object is either the direct or indirect object of the command (abbreviated to d or i). Thus, for example, if you look under PutIn (not to be confused with the former Russian president) you'll see:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">PutIn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thing&nbsp;iV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notAContainerMsg
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fixture&nbsp;dV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cannotPutMsg
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Component&nbsp;dV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cannotPutComponentMsg(location)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Immovable&nbsp;dC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cannotPutMsg</font><font face="Courier New" size="3" color="#000000">
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+This means that </font><font face="Courier New" size="2" color="#000000">Thing.verifyIobjPutIn&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">uses </font><font face="Courier New" size="2" color="#000000">notAContainerMsg,&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and this will propagate all the way down the class hierarchy (except for objects that <i>are</i> Containers, of course). There's no entry for Thing dV since in general there's no reason to rule out a Thing as the <i>direct</i> object of a PutIn command. However, since Fixtures, Components and Immovables can't be moved, they can't be put in anything, so there are messages for not being able to put them. The only difference between Fixture and Immovable is that in Fixture a PutInAction is ruled out in </font><font face="Courier New" size="2" color="#000000">verify()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, whereas in an Immovable it's ruled out in </font><font face="Courier New" size="2" color="#000000">check()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; in both cases the </font><font face="Courier New" size="2" color="#000000">cannotPutMsg&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is used. A Component also rules itself out as the direct object of a PutIn command, again in verify(), but this time with a different message and one that calls a parameter (location will normally be the object the Component is a component of).  If you wanted to define your own </font><font face="Courier New" size="2" color="#000000">cannotPutComponentMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on an object, you can either simply define it as a single-quoted string, or as a method that's passed location as a parameter, e.g. either
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cannotPutComponentMsg&nbsp;=&nbsp;'You&nbsp;can\'t&nbsp;do&nbsp;that,&nbsp;because&nbsp;it's&nbsp;part&nbsp;of&nbsp;
+<br>
+&nbsp;&nbsp;the&nbsp;worble-wangler.&nbsp;'
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Or
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cannotPutComponentMsg(obj)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gMessageParams(obj);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'You&nbsp;can\'t&nbsp;do&nbsp;that,&nbsp;because&nbsp;it\'s&nbsp;part&nbsp;of&nbsp;{the&nbsp;obj/him}.&nbsp;';
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">As an example to try in the context of the Heidi game, you could try adding the following in the starting location (outsideCottage):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;Distant&nbsp;'forest'&nbsp;'forest'
+<br>
+&nbsp;&nbsp;"The&nbsp;forest&nbsp;is&nbsp;off&nbsp;to&nbsp;the&nbsp;east.&nbsp;"
+<br>
+&nbsp;&nbsp;tooDistantMsg&nbsp;=&nbsp;'It\'s&nbsp;too&nbsp;far&nbsp;away&nbsp;for&nbsp;that.&nbsp;'
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This works fine, even though the library version of </font><font face="Courier New" size="2" color="#000000">tooDistantMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is actually a method which is passed self as a parameter (look under </font><font face="Courier New" size="2" color="#000000">Default&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">in Appendix A).
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="remap.htm">[Previous] </a>&nbsp;&nbsp;<a href="otherresponsestoactions.htm">[Next] </a></I></FONT></P>
+</body></html>

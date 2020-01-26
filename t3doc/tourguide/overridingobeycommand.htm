@@ -1,0 +1,130 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Overriding obeyCommand</title><meta name="keywords" content="Overriding obeyCommand,obeyCommand"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Overriding obeyCommand
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaultcommandtopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="tcommandtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The library version of ActorState.obeyCommand is defined as follows:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">obeyCommand(issuingActor,&nbsp;action)&nbsp;
+<br>
+{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;By&nbsp;default,&nbsp;we&nbsp;ignore&nbsp;all&nbsp;orders.&nbsp;We&nbsp;do&nbsp;need&nbsp;to&nbsp;generate&nbsp;a&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;response,&nbsp;though,&nbsp;so&nbsp;for&nbsp;this&nbsp;purpose,&nbsp;treat&nbsp;the&nbsp;order&nbsp;as&nbsp;a&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;conversational&nbsp;action,&nbsp;with&nbsp;the&nbsp;'action'&nbsp;object&nbsp;as&nbsp;the&nbsp;topic.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handleConversation(issuingActor,&nbsp;action,&nbsp;commandConvType);&nbsp;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;indicate&nbsp;that&nbsp;the&nbsp;order&nbsp;is&nbsp;refused&nbsp;*/&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;return&nbsp;nil;&nbsp;
+<br>
+}&nbsp;
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">It is the call to handleConversation that will invoke any CommandTopics (or DefaultCommandTopics). Unfortunately, at this point, the action is not fully resolved. As we have seen, it contains a list of the direct objects (if any) that are the target of the command, but as yet it has not selected any of them (even if there is only one) as the direct object. As it stands, when a CommandTopic is triggered and wants to handle the command on some direct objects but not others, it will have to examine the complete list of direct objects, decide whether it wants to match any of them, and then decide what it wants to do both with the objects that it does match and with those that it doesn't. This makes considerable demands on the author and makes for potentially messy code.
+<br>
+
+<br>
+It would be much easier for authors if instead of calling handleConversation once for the complete list of direct objects (where there are direct objects), obeyCommand() called handleConversation once for each of the direct objects in turn. Then all CommandTopics could be written knowing that there will be at most one direct object to any command it handles. If different direct objects of a command are to be handled in different ways, then each object (or set of objects) that is to be handled differently can have a CommandTopic of its own, which is much neater and makes each individual CommandTopic easier to write. In addition, it would be even better if handleConversation set the current direct object for every command passed to handleConversation, so that CommandTopics can use the full range of action methods that assume this is defined.
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">The code for such an obeyCommand routine is as follows:</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;ActorState
+<br>
+&nbsp;&nbsp;obeyCommand(issuingActor,&nbsp;action)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;By&nbsp;default,&nbsp;we&nbsp;ignore&nbsp;all&nbsp;orders.&nbsp;&nbsp;We&nbsp;do&nbsp;need&nbsp;to&nbsp;generate&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;response,&nbsp;though,&nbsp;so&nbsp;for&nbsp;this&nbsp;purpose,&nbsp;treat&nbsp;the&nbsp;order&nbsp;as&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;conversational&nbsp;action,&nbsp;with&nbsp;the&nbsp;'action'&nbsp;object&nbsp;as&nbsp;the&nbsp;topic.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;If&nbsp;the&nbsp;action&nbsp;takes&nbsp;a&nbsp;direct&nbsp;object&nbsp;(and&nbsp;so&nbsp;could&nbsp;have&nbsp;a&nbsp;list
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;of&nbsp;direct&nbsp;objects),&nbsp;split&nbsp;it&nbsp;into&nbsp;a&nbsp;series&nbsp;of&nbsp;actions
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;with&nbsp;a&nbsp;single&nbsp;direct&nbsp;object
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;dobjLst&nbsp;=&nbsp;action.getResolvedDobjList;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dobjLst&nbsp;!=&nbsp;nil)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;singleAction&nbsp;=&nbsp;action;
+<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;obj&nbsp;in&nbsp;dobjLst)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;singleAction.dobjCur_&nbsp;=&nbsp;obj;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handleConversation(issuingActor,&nbsp;singleAction,&nbsp;commandConvType);&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;Otherwise,&nbsp;just&nbsp;treat&nbsp;it&nbsp;as&nbsp;a&nbsp;single&nbsp;command&nbsp;*/
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handleConversation(issuingActor,&nbsp;action,&nbsp;commandConvType);
+<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;indicate&nbsp;that&nbsp;the&nbsp;order&nbsp;is&nbsp;refused&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">There's really also no need to try to cater for commands with multiple indirect objects, since the standard library defines none, and they are perhaps seldom likely occur; there's very little reason to cater for commands like PUT THE ONION IN THE PAN, THE OVEN AND THE JAR or UNLOCK THE DOOR WITH THE BRASS KEY, THE SILVER KEY AND THE IRON KEY.
+<br>
+</font></font>
+
+</body></html>

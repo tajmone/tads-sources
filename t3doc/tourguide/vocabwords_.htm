@@ -1,0 +1,140 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>vocabWords_</title><meta name="keywords" content="vocabWords_,weak token,noun,adjective,plural,initializeVocabWith,addWord,removeWord"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>vocabWords_
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="thing-thebasics.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="initdesc+initexaminedesc.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The vocabWords_ property defines the vocabulary with which the player can refer to the object. The definition of brassCoin is
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brass&nbsp;coin/groat*coins'&nbsp;'small&nbsp;brass&nbsp;coin'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+In this definition the format of the vocabWords_ property defined through the template is:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">(weakToken)&nbsp;adjective&nbsp;noun/noun*plural
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">A weak token is a word that may be included among the words used to identify an object, but which is not sufficient to do so by itself. In this case, for example, the player may call the coin SMALL BRASS COIN or SMALL GROAT or SMALL BRASS and the parser will know what is meant, but the coin will not answer to being referred to simply as SMALL (as in EXAMINE SMALL or TAKE SMALL). Any word (it need not be the first) included in parentheses in the vocabWords_ property of a Thing is a weak token. We have here made SMALL a weak token since it seems too common a word to stand on its own as defining which object is meant.
+<br>
+
+<br>
+The functional difference between adjectives and nouns is that any number of the listed adjectives may be used by the player to identify the object, but only one of the nouns. Thus the player may type X SMALL COIN,  or X BRASS COIN or TAKE SMALL BRASS GROAT and the parser will accept all of these as valid references to the coin. However, if the player types X GROAT COIN or X SMALL COIN GROAT this will not be taken as referring to the coin. If you felt GROAT COIN was a valid way of referring to this object you could allow it by adding 'groat' to the list of adjectives as well, i.e.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brass&nbsp;groat&nbsp;coin/groat*coins'&nbsp;'brass&nbsp;coin'&nbsp;
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Players can then refer to it as a SMALL BRASS GROAT COIN if they so wish.
+<br>
+
+<br>
+The plural (anything after the asterisk) can be used to refer to a number of coin objects collectively. For example, if we defined a silver coin and a gold coin, and gave them both a plural of 'coins', then, provided all three were in scope, the word COINS could be used to refer to all three coins at once. For example, X COINS would list a description of all three coins and TAKE COINS would cause the Player Character to pick up all three coins (assuming that TAKE was a valid action for all three coins when the command was issued).
+<br>
+
+<br>
+A further complication of the vocabWords_ property is that you can't usefully change the vocabulary used to refer to an object by a programming statement that manipulates it directly. For example, if you wanted the player to be able to refer to the coin as a groat only after something else had occurred (perhaps his examining the coin) you could not achieve this by writing a statement like:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin.vocabWords_&nbsp;+=&nbsp;'groat';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Since although this code would execute, it would not have the desired effect. Instead the easiest way to add vocabulary to an object is with the initializeVocabWith() method, which accepts a string argument in the same format as the vocabWords_ property, so we could write:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin.initializeVocabWith('groat');&nbsp;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+To add 'groat' as a noun to the brassCoin's vocabulary. Or even
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin.initializeVocabWith('little&nbsp;shiny&nbsp;object');&nbsp;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">To add 'little' and 'shiny' as adjectives and 'object' as a noun.
+<br>
+
+<br>
+An alternative is to use G_dict.addWord(obj, str, voc_prop), e.g. to achieve the same as the previous example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">G_dict.addWord(brassKey,&nbsp;'little'&nbsp;&amp;adjective);
+<br>
+G_dict.addWord(brassKey,&nbsp;'shiny'&nbsp;&amp;adjective);
+<br>
+G_dict.addWord(brassKey,&nbsp;'object'&nbsp;&amp;noun);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Although this is rather more long-winded. You can use the similar removeWord method to take vocabulary <i>away </i>from an object, which may occasionally be useful. For example, let's suppose that when the coin is first seen lying on the ground it just appears to be a small brassy object. We want it referred to as a small brassy object until it's examined, after which it becomes a small brass coin; at that point we no longer want the vague word 'object' to refer to it, but until then the player can't refer to it as a coin or groat. We can achieve this with the following:-
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;<b>'(small)&nbsp;brassy&nbsp;object'&nbsp;'small&nbsp;brassy&nbsp;object'</b>&nbsp;@longCave
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;<b>dobjFor(Examine)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;changeName();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;changeName()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'small&nbsp;brass&nbsp;coin';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;G_dict.removeWord(self,&nbsp;'object',&nbsp;&amp;noun);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;initializeVocabWith('brass&nbsp;coin/groat*coins');
+<br>
+&nbsp;&nbsp;}&nbsp;</b>
+<br>
+;
+<br>
+</font></font>
+
+</body></html>

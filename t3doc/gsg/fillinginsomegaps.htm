@@ -1,0 +1,483 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Filling in Some Gaps</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link>
+</head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="handlingcashtransactions.htm">[Previous] </a>&nbsp;&nbsp;<a href="countingthecash.htm">[Next] </a></I></FONT></P>
+<H1>Chapter 8 - Finishing Off</h1>
+<h2>Filling in Some Gaps</h2>
+
+<h3>a. Atmosphere Strings</h3>
+<p>We have now taken the <i>Further Adventures of Heidi</i> about as far as it's worth taking them for the purposes of this Guide. It would be perfectly possible to go on adding in some further obstacles between Heidi and that ring (perhaps the oars could be hidden in a less obvious place, or the pound coins more widely dispersed), but it would become increasingly difficult to devise something that introduced a new feature of the library in a worthwhile way, and it might be better to leave such extensions as an exercise to any readers who wants to practice what they have learnt. Instead, we shall look at a few ways in which the library can help lend a bit more atmosphere to the game we've already created.
+<br>
+
+<br>
+For the first example, consider the forest through which Heidi keeps passing. As it stands, the only other living creature she ever encounters there is Joe the charcoal burner; but one would expect a real forest to have all sorts of life in it. It's not worth creating lots of animal objects to represent the living forest, but we can use the </font><font face="Courier New" size="2" color="#000000">atmosphereStrings</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property to simulate its presence. Rather than coding a separate </font><font face="Courier New" size="2" color="#000000">atmosphereStrings</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> for each room we consider to be part of the forest, it will be quicker and easier to define our own </font><font face="Courier New" size="2" color="#000000">ForestRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class that encapsulates this behaviour:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">class&nbsp;ForestRoom&nbsp;:&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;&nbsp;atmosphereList&nbsp;:&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'A&nbsp;fox&nbsp;dashes&nbsp;across&nbsp;your&nbsp;path.\n',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'A&nbsp;clutch&nbsp;of&nbsp;rabbits&nbsp;dash&nbsp;back&nbsp;among&nbsp;the&nbsp;trees.\n',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'A&nbsp;deer&nbsp;suddenly&nbsp;leaps&nbsp;out&nbsp;from&nbsp;the&nbsp;trees,&nbsp;then&nbsp;darts&nbsp;back&nbsp;off&nbsp;into
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;forest.\n',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'There&nbsp;is&nbsp;a&nbsp;rustling&nbsp;in&nbsp;the&nbsp;undergrowth.\n',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'There&nbsp;is&nbsp;a&nbsp;sudden&nbsp;flapping&nbsp;of&nbsp;wings&nbsp;as&nbsp;a&nbsp;pair&nbsp;of&nbsp;birds&nbsp;take&nbsp;flight&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;off&nbsp;to&nbsp;the&nbsp;left.\n'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eventPercent&nbsp;=&nbsp;90
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eventReduceAfter&nbsp;=&nbsp;6
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eventReduceTo&nbsp;=&nbsp;50
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Defining a </font><font face="Courier New" size="2" color="#000000">ShuffledEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as a nested object should be familiar by now. The Room class has a built-in Room daemon that will call the </font><font face="Courier New" size="2" color="#000000">doScript</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of </font><font face="Courier New" size="2" color="#000000">atmosphereList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; in other words, all we have to worry about is defining the list for </font><font face="Courier New" size="2" color="#000000">eventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, (a property defined in the template for the </font><font face="Courier New" size="2" color="#000000">EventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, so we don't need to name it explicitly), and they'll automatically be displayed. We can, however, exercise some control over the frequency with which they're displayed, and that's what the three properties </font><font face="Courier New" size="2" color="#000000">eventPercent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">eventReduceAfter</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and </font><font face="Courier New" size="2" color="#000000">eventReduceTo</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> are for. As we have set it up, the messages we have defined will first be displayed 90% of the time, but after 6 turns this will fall to 50%. There is no need to define these properties at all; if none of them is overridden, then one of the messages in the list will be displayed each time the player character is in a room of class </font><font face="Courier New" size="2" color="#000000">ForestRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; if only the first is overridden, then that message frequency will be maintained throughout the game. The purpose of these properties is we can only define a finite number of strings, and after the player has seen them the first couple of times their appeal may start to wear a little thin; reducing their frequency may therefore help towards increasing the longevity of their positive contribution to the playing experience.
+<br>
+
+<br>
+The three rooms that might best be redefined as belonging to the </font><font face="Courier New" size="2" color="#000000">ForestRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class are </font><font face="Courier New" size="2" color="#000000">forest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">clearing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and </font><font face="Courier New" size="2" color="#000000">forestPath</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; you could also add define </font><font face="Courier New" size="2" color="#000000">fireClearing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to be of class </font><font face="Courier New" size="2" color="#000000">ForestRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but in practice you'll probably find that the atmosphere strings tend to get in the way of the conversation with Joe.
+<br>
+<h3>b. Sensory Emanations</h3>
+<p>However, there is a different kind of atmospheric upgrade we could apply to the </font><font face="Courier New" size="2" color="#000000">fireClearing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. We have a fire billowing forth smoke, and so far we have smoke that makes its presence known to the nostrils only when the player explicitly chooses to smell it. In such a situation one might expect Heidi's nostrils to be assaulted by the smell of smoke whether she makes an active attempt to sniff it or not. We can simulate this by locating an </font><font face="Courier New" size="2" color="#000000">Odor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object directly inside our smoke object (having removed the </font><font face="Courier New" size="2" color="#000000">smellDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property from </font><font face="Courier New" size="2" color="#000000">smoke</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;Odor&nbsp;'acrid&nbsp;smoky&nbsp;smell/whiff/pong'&nbsp;'smell&nbsp;of&nbsp;smoke'
+<br>
+&nbsp;&nbsp;sourceDesc&nbsp;=&nbsp;"The&nbsp;smoke&nbsp;from&nbsp;the&nbsp;fire&nbsp;smells&nbsp;acrid&nbsp;and&nbsp;makes&nbsp;you&nbsp;cough.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;descWithSource&nbsp;=&nbsp;"The&nbsp;smoke&nbsp;smells&nbsp;strongly&nbsp;of&nbsp;charred&nbsp;wood."
+<br>
+&nbsp;&nbsp;hereWithSource&nbsp;=&nbsp;"You&nbsp;catch&nbsp;a&nbsp;whiff&nbsp;of&nbsp;the&nbsp;smoke&nbsp;from&nbsp;the&nbsp;fire.&nbsp;"
+<br>
+&nbsp;&nbsp;displaySchedule&nbsp;=&nbsp;[2,&nbsp;4,&nbsp;6]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">hereWithSource</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> message is displayed as part of the room description, and then at intervals defined in the </font><font face="Courier New" size="2" color="#000000">displaySchedule</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> list (in this case first after two turns, then after four turns, and finally every six turns; if we wanted to switch the smell messages off altogether we could end this list with </font><font face="Courier New" size="2" color="#000000">nil)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This both stops the message from becoming too intrusive and repetitive, and also models the way in which human senses tend to take note of the environment. The property </font><font face="Courier New" size="2" color="#000000">sourceDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> contains what will be displayed if you the player smells the object from which the smell emanates, in this case the smoke (i.e. it will be displayed in response to <b>smell smoke</b>), while the </font><font face="Courier New" size="2" color="#000000">descWithSource</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property contains what will be displayed if the player refers directly to the </font><font face="Courier New" size="2" color="#000000">Odor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object, e.g. with <b>x smell</b> or <b>smell smoky whiff</b>. There are also </font><font face="Courier New" size="2" color="#000000">descWithoutSource</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">hereWithoutSource</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> properties that would contain messages to be displayed in the event of the source of the odour, in this case the smoke, being obscured from the player character; but since in this case the smoke from the fire is all too visible we don't need to define these properties (if, however, one had, for example, a dead rat concealed in a sandwich box, one could then use these two properties to contain messages appropriate to the situation before the player opens the box and discovers the source of the offensive odour; whether and where to include "You smell a rat" I leave to the discretion of the reader).
+<br>
+
+<br>
+If you want to vary the message displayed according to the schedule, you can override </font><font face="Courier New" size="2" color="#000000">hereWithSource</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (and/or </font><font face="Courier New" size="2" color="#000000">hereWithoutSource</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> if appropriate) with a method that checks the </font><font face="Courier New" size="2" color="#000000">displayCount</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property (which is reset to 1 each time after the object comes within sensory range after it has left it (in this case, each time you return to the fire clearing after having been somewhere else). For example:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">hereWithSource
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;switch&nbsp;(displayCount)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;1:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;catch&nbsp;a&nbsp;whiff&nbsp;of&nbsp;the&nbsp;smoke&nbsp;from&nbsp;the&nbsp;fire.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;2:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;catch&nbsp;another&nbsp;whiff&nbsp;of&nbsp;smoke&nbsp;from&nbsp;the&nbsp;fire.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;catch&nbsp;yet&nbsp;another&nbsp;whiff&nbsp;of&nbsp;smoke&nbsp;from&nbsp;that&nbsp;wretched&nbsp;fire.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">An alternative, if you were not concerned about restarting the list every time the object came into scope, would be to define the </font><font face="Courier New" size="2" color="#000000">hereWithSource</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method to call the </font><font face="Courier New" size="2" color="#000000">doScript</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of an </font><font face="Courier New" size="2" color="#000000">EventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object (which could be a nested object attached to the custom property of your </font><font face="Courier New" size="2" color="#000000">Odor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">).
+<br>
+
+<br>
+Note that you can also define a </font><font face="Courier New" size="2" color="#000000">Noise</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object in much the same way as the </font><font face="Courier New" size="2" color="#000000">Odor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object is defined here (there are a couple of examples in sample.t). Perhaps, for example, the fire is making a crackling sound - once again the implementation can be left as an exercise for the interested reader (begin by defining </font><font face="Courier New" size="2" color="#000000">++Noise&nbsp;'crackling&nbsp;sound/noise'&nbsp;'crackling&nbsp;sound'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> directly after the fire object, and then follow precisely the same format as used for the </font><font face="Courier New" size="2" color="#000000">Odor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object, making the obviously necessary adjustments to refer to sounds instead of smells).
+<br><br>
+<h3>c. Settling the Score</h3>
+<p>The maximum score you can obtain by winning the game is 7. Clearly we need to know how to adjust the maximum score; this is done by adding the following to the </font><font face="Courier New" size="2" color="#000000">gameMain&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">object, (which you may already have done if you copied the startup code from the start of chapter 3).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">maxScore&nbsp;=&nbsp;7
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The whole gameMain object for Heidi should look like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">gameMain:&nbsp;GameMainDef
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialPlayerChar&nbsp;=&nbsp;me
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showIntro()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Welcome&nbsp;to&nbsp;the&nbsp;Further&nbsp;Adventures&nbsp;of&nbsp;Heidi!\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showGoodbye()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;.p&gt;Thanks&nbsp;for&nbsp;playing!\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxScore&nbsp;=&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The other routines do what they say: </font><font face="Courier New" size="2" color="#000000">showIntro()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> shows the introductory text for the game (which you can make more elaborate if you wish), while </font><font face="Courier New" size="2" color="#000000">showGoodBye()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> shows a terminating message when the game ends.
+<br>
+
+<br>
+Of course, you may think that there should be more opportunities for gaining points. In that case you can add more </font><font face="Courier New" size="2" color="#000000">addToScore</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> calls at the appropriate places, being careful to ensure than they can only be called once (or use the </font><font face="Courier New" size="2" color="#000000">addToScoreOnce</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method on new </font><font face="Courier New" size="2" color="#000000">Achievement</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects), and then adjust </font><font face="Courier New" size="2" color="#000000">gameMain.maxScore&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">accordingly.
+<br><br>
+<h3>d. Destination Names</h3>
+<p>If at the start of the game you type the command <b>east</b> followed by the command <b>exits</b> you'll see the response:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">&nbsp;&nbsp;&nbsp;Obvious exits lead south; west, back to the in front of a cottage; and northeast.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This is less than ideal; "back to the in front of a cottage" is not exactly elegant. And you'd get much the same thing if you tried, for example, to go north from this location and the game helpfully tried to display the valid exits. What's happening, of course, is that the game is using the name we gave to the first room ("In Front of a Cottage"), converting it to lower case, and then displaying that as a description of where the path west leads back to from the forest. In this case, though, we'd prefer to see something like "back to the front of the cottage". Well, that's what TADS 3 provides the </font><font face="Courier New" size="2" color="#000000">destName&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">property for. In order to fix the problem with the exit listing, all we need to do is to add the line:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">destName&nbsp;=&nbsp;'the&nbsp;front&nbsp;of&nbsp;the&nbsp;cottage'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to the definition of </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. In fact, you may recall when we first introduced the Room template, it contained a convenient slot for </font><font face="Courier New" size="2" color="#000000">destName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (because the need to change </font><font face="Courier New" size="2" color="#000000">destName&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">from the default is quite common). So instead of adding the above line, we could simply change the start of the definition of </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">outsideCottage&nbsp;:&nbsp;OutdoorRoom&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'the&nbsp;front&nbsp;of&nbsp;the&nbsp;cottage'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.
+<br>
+&nbsp;&nbsp;&nbsp;A&nbsp;short&nbsp;path&nbsp;leads&nbsp;round&nbsp;the&nbsp;cottage&nbsp;to&nbsp;the&nbsp;northwest.&nbsp;"
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Clearly, this is not the only place in the <i>Further Adventures of Heidi</i> where we need to do this. Another example would be the </font><font face="Courier New" size="2" color="#000000">topOfTree&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">room:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">topOfTree&nbsp;:&nbsp;OutdoorRoom&nbsp;'At&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree'&nbsp;'the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;cling&nbsp;precariously&nbsp;to&nbsp;the&nbsp;trunk,&nbsp;next&nbsp;to&nbsp;a&nbsp;firm,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;narrow&nbsp;branch.&nbsp;"
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The principle should (hopefully) now be clear enough, so I'll leave it as an exercise to the reader to check down the other rooms that need a </font><font face="Courier New" size="2" color="#000000">destName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> adding (some of them will be fine as they are) and to add </font><font face="Courier New" size="2" color="#000000">destNames</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as appropriate. You can then compare your efforts with those in the heidi.t file that should have come with this guide.
+<br><br>
+<h3>e. Stopping Sally's Misbehaviour</h3>
+<p>Sally is actually a pretty well-behaved shopkeeper most of the time, but there is a particular set of circumstances under which her behaviour - or at least the way it's reported - can become a little odd. If Heidi enters the shop, rings the bell, and leaves immediately (<b>ring bell</b> followed by <b>north</b>), the player will still see the message about the shopkeeper entering the shop, and the shopkeeper will still start a conversation, even though her customer is not actually there. Although the player may be unlikely to enter this sequence of commands, we really ought to try to anticipate <i>anything</i> the player might type, and so we do need to fix this bug.
+<br>
+
+<br>
+The easiest way to go about it is to stop the daemon code actually executing unless Heidi is in the shop. We can do that by rewriting the shopkeeper's </font><font face="Courier New" size="2" color="#000000">daemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">daemon
+<br>
+&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;if(gPlayerChar.isIn(insideShop))
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveIntoForTravel(insideShop);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;shopkeeper/she}&nbsp;comes&nbsp;through&nbsp;the&nbsp;door&nbsp;and&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stands&nbsp;behind&nbsp;the&nbsp;counter.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemonID.removeEvent();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initiateConversation(sallyTalking,&nbsp;'sally-1');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This will work reasonably well; since the daemon has been set up to execute on the second turn, once the bell is rung, the daemon will keep checking every second turn to see whether Heidi is inside the shop, and if she is, will then move the shopkeeper into the shop and start the conversation. Thus if Heidi leaves the shop immediately after ringing the bell, the shopkeeper won't move or start talking until Heidi returns. It is theoretically possible that Heidi could keep missing the shopkeeper by entering the shop on the odd turns and leaving again immediately, but it's unlikely that a player who's interested in having Heidi meet the shopkeeper would actually keep making that sequence of moves.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Nonetheless, this solution is not quite ideal. Probably what ought to happen is that the shopkeeper should come into the shop on the second turn after the bell is rung regardless of whether Heidi remains in the shop or not, but her movement into the shop should only be reported if Heidi is in the shop to see it. We can achieve this quite straightforwardly by employing a </font><font face="Courier New" size="2" color="#000000">SenseDaemon&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">in place of the plain </font><font face="Courier New" size="2" color="#000000">Daemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. To do this, find the shopkeeper's </font><font face="Courier New" size="2" color="#000000">notifySoundEvent&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method and change the line:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">daemonID&nbsp;=&nbsp;new&nbsp;Daemon(self,&nbsp;&amp;daemon,&nbsp;2);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to read:
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">daemonID&nbsp;=&nbsp;new&nbsp;SenseDaemon(self,&nbsp;&amp;daemon,&nbsp;2,&nbsp;self,&nbsp;sight);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">A </font><font face="Courier New" size="2" color="#000000">SenseDaemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a special kind of </font><font face="Courier New" size="2" color="#000000">Daemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> that executes as normal except that it only displays anything if the player character can sense a particular object (the source) with a particular sense. The last two parameters of the call to </font><font face="Courier New" size="2" color="#000000">new</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">SenseDaemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> are the <i>source</i> and the <i>sense</i> involved. In this case the source is the shopkeeper (which can be referred to here as </font><font face="Courier New" size="2" color="#000000">self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> since we are setting up this </font><font face="Courier New" size="2" color="#000000">SenseDaemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in a method of the shopkeeper object) and the sense is sight. The effect of this is (if we revert to the older definition of the </font><font face="Courier New" size="2" color="#000000">shopkeeper.daemon&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method) is that the shopkeeper will move on the second turn after the bell is rung, but will only be reported as moving if Heidi is there to see it.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's still one thing left to fix; although it's okay for Sally to come into the shop in response to the bell regardless of whether Heidi stays there to meet her or not, she should only start talking to Heidi if Heidi has indeed remained in the shop. We could use the test </font><font face="Courier New" size="2" color="#000000">if(gPlayerChar.isIn(insideShop))</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as before, but we could also employ a different test. In this case, since what we're really testing is whether Sally <i>can</i> talk to Heidi, it would be reasonable to use her </font><font face="Courier New" size="2" color="#000000">canTalkTo&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method. The relevant part of the revised shopkeeper code then becomes:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">shopkeeper&nbsp;:&nbsp;Person,&nbsp;SoundObserver&nbsp;'young&nbsp;shopkeeper/woman'&nbsp;'young&nbsp;shopkeeper'
+<br>
+&nbsp;@backRoom
+<br>
+&nbsp;"The&nbsp;shopkeeper&nbsp;is&nbsp;a&nbsp;jolly&nbsp;woman&nbsp;with&nbsp;rosy&nbsp;cheeks&nbsp;and&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fluffy&nbsp;blonde&nbsp;curls.&nbsp;"
+<br>
+&nbsp;isHer&nbsp;=&nbsp;true
+<br>
+&nbsp;properName&nbsp;=&nbsp;'Sally'
+<br>
+&nbsp;notifySoundEvent(event,&nbsp;source,&nbsp;info)
+<br>
+&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;if(event&nbsp;==&nbsp;bellRing&nbsp;&amp;&amp;&nbsp;daemonID&nbsp;==&nbsp;nil&nbsp;&amp;&amp;&nbsp;isIn(backRoom))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;new&nbsp;SenseDaemon(self,&nbsp;&amp;daemon,&nbsp;2,&nbsp;self,&nbsp;sight);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;else&nbsp;if(isIn(insideShop)&nbsp;&amp;&amp;&nbsp;event&nbsp;==&nbsp;bellRing)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;All&nbsp;right,&nbsp;all&nbsp;right,&nbsp;here&nbsp;I&nbsp;am!&lt;/q&gt;&nbsp;says&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{the&nbsp;shopkeeper/she}.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;}
+<br>
+&nbsp;daemonID&nbsp;=&nbsp;nil
+<br>
+&nbsp;daemon
+<br>
+&nbsp;{&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;moveIntoForTravel(insideShop);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;shopkeeper/she}&nbsp;comes&nbsp;through&nbsp;the&nbsp;door&nbsp;and&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stands&nbsp;behind&nbsp;the&nbsp;counter.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;daemonID.removeEvent();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(canTalkTo(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initiateConversation(sallyTalking,&nbsp;'sally-1');&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;}
+<br>
+
+<br>
+&#133;&nbsp;//&nbsp;continue&nbsp;as&nbsp;before
+<br>
+;</font>
+<br><br>
+<h3>f. Finishing the Boat</h3>
+<p>There's just a couple of problems with our implementation of the boat, which we might like to fix now.
+<br>
+
+<br>
+First of all, if the player enters the command <b>row the boat</b> when Heidi is in the garden, the game will reply with "You can't row that.", which is not entirely true. We need to provide a more appropriate response here. Again this is something you can probably work out how to do yourself by now, so have a go at it before reading on.
+<br>
+
+<br>
+The second problem is a bit more subtle. Suppose that after issuing the command <b>row the boat</b> when Heidi is in the garden, the player types <b>enter it</b> followed by <b>row it</b>. The game will now respond with "The word 'it' doesn't refer to anything right now." You can probably work out why: the parser thinks that 'it' refers to the object we used to implement the <i>outside</i> of the boat, but once Heidi's entered the boat, that object is no longer in scope. We can cure this by using the </font><font face="Courier New" size="2" color="#000000">getFacets&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">property. This holds a list of other objects that we, the game author, consider to be facets of the same object, so that once we've referred to any of the objects representing the boat, the pronoun 'it' can refer to any of its facets currently in scope. So, for example, if we give the name </font><font face="Courier New" size="2" color="#000000">rowBoat&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to the previously anonymous Fixture we placed in </font><font face="Courier New" size="2" color="#000000">insideBoat&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to act as the target of a <b>row</b> command, we can now define </font><font face="Courier New" size="2" color="#000000">getFacets&nbsp;=&nbsp;[rowBoat]&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">on the </font><font face="Courier New" size="2" color="#000000">boat&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">object, and conversely </font><font face="Courier New" size="2" color="#000000">getFacets&nbsp;=&nbsp;[boat]&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">on the </font><font face="Courier New" size="2" color="#000000">rowBoat</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object, and having referred to one, we can freely use 'it' to refer to the other.
+<br>
+
+<br>
+The definition of the boat then becomes:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">boat&nbsp;:&nbsp;Heavy,&nbsp;Enterable&nbsp;-&gt;&nbsp;insideBoat&nbsp;'rowing&nbsp;boat/dinghy'&nbsp;'rowing&nbsp;boat'
+<br>
+&nbsp;&nbsp;@cottageGarden
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;rowing&nbsp;boat.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;rowing&nbsp;boat&nbsp;floats&nbsp;on&nbsp;the&nbsp;stream,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;just&nbsp;by&nbsp;the&nbsp;bank.&nbsp;"
+<br>
+&nbsp;&nbsp;useSpecialDesc&nbsp;{&nbsp;return&nbsp;true;&nbsp;}
+<br>
+&nbsp;&nbsp;dobjFor(Board)&nbsp;asDobjFor(Enter)
+<br>
+&nbsp;&nbsp;dobjFor(Row)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;illogicalNow('You&nbsp;need&nbsp;to&nbsp;be&nbsp;aboard&nbsp;the&nbsp;boat&nbsp;before&nbsp;you&nbsp;can&nbsp;row&nbsp;it.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;getFacets&nbsp;=&nbsp;[rowBoat]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Notice the use of the illogicalNow() macro for handling <b>row boat</b> when Heidi is standing on the bank. It is illogical to try to row a boat when we're not in it, but it is not illogical to try to row a boat under all circumstances, so even under these circumstances <b>row boat</b> is less illogical than, say, <b>row sky</b> or <b>row stream</b>.
+<br><br>
+<h3>g. Other Suggestions - including an MultiInstance</h3>
+<p>There are also a several other things you could add that don't involve anything we have not already seen, including various </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (or, where appropriate, </font><font face="Courier New" size="2" color="#000000">Distant</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) objects to deal with things mentioned in various room descriptions but not otherwise implemented, and various additional </font><font face="Courier New" size="2" color="#000000">NoTravelMessages</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">FakeConnectors</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to deal more elegantly with the boundaries of our game world (e.g., the village mentioned in the description of the jetty location should perhaps be implemented as a </font><font face="Courier New" size="2" color="#000000">Distant</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object in that room, and one or two </font><font face="Courier New" size="2" color="#000000">FakeConnectors</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> should be added to the </font><font face="Courier New" size="2" color="#000000">meadow</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to explain why the only way Heidi can leave it is back across the stream). Since these involve nothing new, the reader can try them for him or herself.
+<br>
+
+<br>
+But one new thing of this type does suggest itself, and that is putting some trees in the forest, since allowing the player to experience the following would be less than optimal:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"><b>Deep in the Forest
+<br>
+</b>
+<br>
+Through the deep foliage you glimpse a building to the west. A track leads to the northeast, and a path leads south.
+<br>
+
+<br>
+There is a rustling in the undergrowth.
+<br>
+
+<br>
+&gt;<b>x trees</b>
+<br>
+The word "trees" is not necessary in this story.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If one is in a forest, one can reasonably expect to find trees, but rather than defining a different "trees" decoration object in all forest locations, we can simply use an </font><font face="Courier New" size="2" color="#000000">MultiInstance&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to place our 'trees' object in every </font><font face="Courier New" size="2" color="#000000">ForestRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">MultiInstance&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;instanceObject&nbsp;:&nbsp;Decoration&nbsp;{&nbsp;'pine&nbsp;tree*trees*pines'&nbsp;'pine&nbsp;trees'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;forest&nbsp;is&nbsp;full&nbsp;of&nbsp;tall,&nbsp;fast-growing&nbsp;pines,&nbsp;although&nbsp;the
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;occasional&nbsp;oak,
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;beach&nbsp;and&nbsp;sycamore&nbsp;can&nbsp;occasionally&nbsp;be&nbsp;seen&nbsp;among&nbsp;them.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;initialLocationClass&nbsp;=&nbsp;ForestRoom
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The slight complication here is that we have to define the </font><font face="Courier New" size="2" color="#000000">instanceObject</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as a nested object within the </font><font face="Courier New" size="2" color="#000000">MultiInstance</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object. We define it to be of class </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> since the only interaction the player will have with the trees is to look at them. The effect of this code is that the game will create an instance of the 'pine trees' </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object in every location of the </font><font face="Courier New" size="2" color="#000000">ForestRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class. The </font><font face="Courier New" size="2" color="#000000">MultiInstance</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class saves us the bother of having to do this by hand.
+<br>
+
+<br>
+We could have implemented these trees as a </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and in this particular game there would have been no functional difference. Strictly speaking, though, </font><font face="Courier New" size="2" color="#000000">MultiInstance</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the more correct class to use here. The main use for a </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is for a single physical object that exists in more than one location by virtue of being situated at the border of two or more rooms. For example, a large town square with a fountain at its centre might be implemented as four rooms, with the central fountain being a </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> that appears in each. It is physically the same fountain whether it is viewed from, say, the northeast or the southeast corner of the square, and if the Player Character throws a coin into the fountain from the northeast corner of the square, he or she should then be able to retrieve it from the fountain even after moving to another part of the square, since it remains the same physical fountain. A </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> may also be used for a </font><font face="Courier New" size="2" color="#000000">Distant</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object, such as a far-off mountain range or the moon, that is visible from a number of different locations, since once again it is the same physical object that is being represented (provided it appears identical from all the locations in question).
+<br>
+
+<br>
+But in this case, we are not trying to implement the same clump of trees visible from all parts of the forest, but the fact that there are trees, albeit numerically different trees, in all parts of the forest. Since all these trees are functionally identical (apart from the sycamore tree in the clearing that we have implemented separately) we can use </font><font face="Courier New" size="2" color="#000000">MultiInstance</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as a short-cut to creating them all over the forest. Although in this game it makes no practical difference to the player whether we use a </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or a </font><font face="Courier New" size="2" color="#000000">MultiInstance</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, in general it may. If, for example, Heidi were exploring the forest by night, then </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> trees illuminated in one room would appear illuminated in all rooms (since they represent the same physical object).  This would mean that if Heidi dropped her torch/flashlight at one spot in the forest and then moved to another part of the forest without any illumination, she'd be in a totally dark room but still be able to examine the trees, which is probably not what we'd want. Using </font><font face="Courier New" size="2" color="#000000">MultiInstance</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> ensures that we do note get this sort of unwanted behaviour.
+<br>
+
+<br>
+You might think that a problem here would be that if the player types <b>examine tree</b> while Heidi is in the sycamore tree clearing, the parser will ask, "Which tree do you mean, the pine trees or the tree?". But in fact the library automatically takes care of this by giving a </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object a lower 'logical rank' than a normal object; that means that if two objects are in scope which might match the same vocabulary, one of them being a </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object and the other not, the other will be chosen in response to an <b>examine</b> command. So in this case when the player types <b>examine tree</b> the parser will assume that it is the sycamore tree that is meant, without troubling the player with a disambiguation request. For a fuller discussion of 'logical rank' see  the discussion of <a href="verify.htm">verify</a> above (and the section on 'Action Results' in the <i>Technical Manual</i>).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">One more thing you might like to consider is letting the player know that you have defined a couple of custom verbs (although in this case it's arguably superfluous). You can do that by overriding the </font><font face="Courier New" size="2" color="#000000">customVerbs</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of </font><font face="Courier New" size="2" color="#000000">InstructionsAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;InstructionsAction
+<br>
+&nbsp;&nbsp;customVerbs&nbsp;=&nbsp;['ROW&nbsp;THE&nbsp;BOAT',&nbsp;'CROSS&nbsp;STREAM',&nbsp;'RING&nbsp;THE&nbsp;BELL'&nbsp;]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Then, when players type an <b>instructions </b>command<b>, </b>your custom verbs will be included in the list of game verbs the instructions text tells them about.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="handlingcashtransactions.htm">[Previous] </a>&nbsp;&nbsp;<a href="countingthecash.htm">[Next] </a></I></FONT></P>
+</body></html>

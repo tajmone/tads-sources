@@ -1,0 +1,632 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>mainOutputStream</title><meta name="keywords" content="mainOutputStream,capturing output,captureOutput,watchForOutput"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>mainOutputStream: OutputStream
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="inputmanager.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="pasttense.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The complement to the inputManager object is the mainOutputStream object, which has a couple of methods that can be of use on occasion.
+<br>
+
+<br>
+The first of these allows you to capture output (i.e. store what would have been output to the screen in a variable or property instead). To do this you can call its <b>captureOutput() </b>method. This takes a function pointer as its first argument, and the arguments to that function (if any) as its remaining arguments. It returns the string that would have been output to the screen.
+<br>
+
+<br>
+For example, <b> </b>the statement:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;a&nbsp;=&nbsp;mainOutputStream.captureOutput(&nbsp;{:&nbsp;"The&nbsp;rain&nbsp;in&nbsp;Spain&nbsp;stays&nbsp;mainly&nbsp;in&nbsp;the&nbsp;plain.&nbsp;"&nbsp;});</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Would result in a containing the string 'The rain in Spain stays mainly in the plain. ', without anything being output to the screen.
+<br>
+
+<br>
+That particular example may not be useful, but suppose we wanted to get at the value of a property defined as a double-quoted string, such as the desc property of a Thing to manipulate it in some way, e.g. suppose we had:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">redBall:&nbsp;Thing&nbsp;'big&nbsp;red&nbsp;bouncy&nbsp;round&nbsp;ball'&nbsp;'red&nbsp;ball'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;big&nbsp;bouncy&nbsp;object,&nbsp;red&nbsp;and&nbsp;round.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And we wanted at some other point to generate the string "He said that it's a big bouncy object, red and round. " from this description. This can't be done by writing something like:
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">"He&nbsp;said&nbsp;that&nbsp;&lt;&lt;redBall.desc.toLower&gt;&gt;"
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Since toLower can't be applied to a double-quoted string. To manipulate the double-quoted string we need to be able to convert it to a single-quoted string, but normally any attempt to manipulate a double-quoted string will simply result in its being displayed.
+<br>
+
+<br>
+This is one case where we could use output capture. For example, we could write:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;local&nbsp;descText&nbsp;=&nbsp;mainOutputStream.captureOutput(&nbsp;{:&nbsp;redBall.desc&nbsp;});
+<br>
+&nbsp;&nbsp;&nbsp;"He&nbsp;said&nbsp;that&nbsp;&lt;&lt;descText.toLower&gt;&gt;&nbsp;";
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Alternatively, if you were going to do this sort of thing often, you could define:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">function&nbsp;objDesc(obj)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;obj.desc;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Arial" size="2" color="#000000">
+<br>
+And then call
+<br>
+
+<br>
+   </font><font face="Courier New" size="2" color="#000000">local&nbsp;descText&nbsp;=&nbsp;mainOutputStream.captureOutput(objDesc,&nbsp;redBall);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+To achieve the same effect. Of course, it wouldn't be worth the bother of defining quite such a simple function, but this simple example shows the principle that could be applied to a more complex case.
+<br>
+
+<br>
+
+<br>
+The other thing mainOutputStream can help with is determining whether anything has been output at all. For this you can use its <b>watchForOutput  </b>method. TYou use this by calling </font><font face="Courier New" size="2" color="#000000">mainOutputStream.watchForOutput(func)</font><font face="Arial" size="2" color="#000000">, which returns true if calling func caused something to be displayed and nil otherwise.
+<br>
+
+<br>
+For example, suppose you define a custom class with a specialMessage property, which defaults to nil on your class, but may contain a double-quoted string or a routine that displays a string on some members of the class:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">class&nbsp;SpecialThing&nbsp;:&nbsp;Thing
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;specialMessage&nbsp;=&nbsp;nil
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;showSpecialMessage
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!mainOutputStream.watchForOutput({:&nbsp;specialMessage&nbsp;}))
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There's&nbsp;nothing&nbsp;special&nbsp;about&nbsp;&lt;&lt;theName&gt;&gt;.&lt;.p&gt;&nbsp;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">specialBall:&nbsp;SpecialThing&nbsp;'ball'&nbsp;'ball'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;specialMessage&nbsp;=&nbsp;"It's&nbsp;a&nbsp;special&nbsp;ball.&lt;.p&gt;"
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">specialStick:&nbsp;SpecialThing&nbsp;'stick'&nbsp;'stick'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Arial" size="2" color="#000000">
+<br>
+Then calling </font><font face="Courier New" size="2" color="#000000">specialBall.specialMessage</font><font face="Arial" size="2" color="#000000"> will result in the display of "It's a special ball", while calling </font><font face="Courier New" size="2" color="#000000">specialStick.specialMessage</font><font face="Arial" size="2" color="#000000"> will result in "There's nothing special about the stick. "
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font></td></tr></table><font face="Arial" size="2" color="#000000">Apart from showing the principle, the above example is pretty pointless, since it would have been more straightforward to have defined </font><font face="Courier New" size="2" color="#000000">SpecialThing.specialMessage&nbsp;=&nbsp;"There's&nbsp;nothing&nbsp;special&nbsp;about&nbsp;&lt;&lt;theName&gt;&gt;.&lt;.p&gt;&nbsp;"&nbsp;</font><font face="Arial" size="2" color="#000000">A slightly more useful example would be a variant in which we wanted specialMessage to be displayed correctly whether it was defined as double-quoted string, a routine that displayed a string, a single-quoted string, or a routine that returned a single-quoted string. We could do that with the following code:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">class&nbsp;SpecialThing&nbsp;:&nbsp;Thing
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;specialMessage&nbsp;=&nbsp;nil
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;showSpecialMessage
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;val;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;hasDisplayed&nbsp;=&nbsp;mainOutputStream.watchForOutput(&nbsp;{:&nbsp;val&nbsp;=&nbsp;specialMessage&nbsp;}&nbsp;);&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!hasDisplayed)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(dataType(val))
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TypeSString:
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TypeInt:&nbsp;"&lt;&lt;val&gt;&gt;&lt;.p&gt;";&nbsp;break;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TypeTrue:&nbsp;"True&lt;.p&gt;";&nbsp;break;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"Nothing&nbsp;to&nbsp;report.&nbsp;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">specialBall:&nbsp;SpecialThing&nbsp;'ball'&nbsp;'ball'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;specialMessage&nbsp;=&nbsp;"It's&nbsp;a&nbsp;special&nbsp;ball.&lt;.p&gt;"
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">specialStick:&nbsp;SpecialThing&nbsp;'stick'&nbsp;'stick'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;specialMessage&nbsp;=&nbsp;'It\'s&nbsp;a&nbsp;stick.&nbsp;'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">specialNumber:&nbsp;SpecialThing&nbsp;'number'&nbsp;'number'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;specialMessage&nbsp;=&nbsp;532
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">DefineIAction(Bar)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;execAction()
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;specialBall.showSpecialMessage;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;specialStick.showSpecialMessage;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;specialNumber.showSpecialMessage;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">VerbRule(Bar)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;'bar'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;:BarAction
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">In this case, issuing the command BAR will result in the display:
+<br>
+
+<br>
+<b>&gt;bar</b>
+<br>
+It's a special ball.
+<br>
+
+<br>
+It's a stick.
+<br>
+
+<br>
+532
+<br>
+
+<br>
+Although in this case we could have tested for dataType(val) being of kind TypeDString, that wouldn't work in the more general case in which specialMessage was a routine that may or may not display something, e.g:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">specialBall:&nbsp;SpecialThing&nbsp;'ball'&nbsp;'ball'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;specialMessage
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(fooVal&nbsp;&lt;&nbsp;2)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;an&nbsp;ordinary&nbsp;ball.&nbsp;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(fooVal&nbsp;==&nbsp;2)&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;special&nbsp;ball.&lt;.p&gt;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(fooVal&nbsp;&gt;&nbsp;10)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;very&nbsp;special&nbsp;ball.&nbsp;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'It\'s&nbsp;a&nbsp;moderately&nbsp;special&nbsp;ball.&nbsp;';
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;fooVal&nbsp;=&nbsp;4
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Arial" size="2" color="#000000">
+<br>
+In this highly artificial example, </font><font face="Courier New" size="2" color="#000000">specialBall.specialMessage</font><font face="Arial" size="2" color="#000000"> always returns 'It\'s a moderately special ball. ' but may also display a different string as well depending on the value of </font><font face="Courier New" size="2" color="#000000">specialBall.fooVal</font><font face="Arial" size="2" color="#000000">. Calling </font><font face="Courier New" size="2" color="#000000">specialBall.showSpecialMessage</font><font face="Arial" size="2" color="#000000"> will cause 'It\'s a moderately special ball. ' to be displayed if and only if fooVal is between 3 and 9 inclusive; otherwise one of the other messages will be displayed instead. A more real example is the use of watchForOutput in my lookDir library extension, where it checks to see if the relevant xxxLook property (e.g. northLook) has output anything before falling back on one of the defaults (describing the north wall or displaying a default message).
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">DefineIAction(LookDir)
+<br>
+&nbsp;&nbsp;execAction()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;dirn&nbsp;=&nbsp;dirMatch.dir;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;prop&nbsp;=&nbsp;dirLook.dirTab[dirn];
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;loc&nbsp;=&nbsp;gActor.roomLocation.lookLocation(dirn);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;hasDisplayed&nbsp;=&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;rPart;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;If&nbsp;the&nbsp;player&nbsp;simply&nbsp;types&nbsp;LOOK&nbsp;IN&nbsp;treat&nbsp;it&nbsp;as&nbsp;an&nbsp;incomplete
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;form&nbsp;of&nbsp;the&nbsp;library's&nbsp;LookInAction,&nbsp;and&nbsp;redirect&nbsp;the&nbsp;command
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;accordingly.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dirn&nbsp;==&nbsp;inDirection)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;askForDobj(LookIn);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;If&nbsp;it's&nbsp;too&nbsp;dark&nbsp;to&nbsp;see,&nbsp;diplay&nbsp;a&nbsp;failure&nbsp;message&nbsp;to&nbsp;that&nbsp;effect.&nbsp;&nbsp;But&nbsp;allow
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;this&nbsp;to&nbsp;be&nbsp;overridden&nbsp;for&nbsp;special&nbsp;cases&nbsp;(e.g.&nbsp;the&nbsp;player&nbsp;char&nbsp;may&nbsp;be&nbsp;able&nbsp;to&nbsp;see
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;a&nbsp;distant&nbsp;light&nbsp;in&nbsp;the&nbsp;dark).&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;There&nbsp;are&nbsp;three&nbsp;ways&nbsp;you&nbsp;can&nbsp;go&nbsp;about&nbsp;this.&nbsp;The&nbsp;easiest,&nbsp;and&nbsp;generally
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;preferred,&nbsp;way&nbsp;is&nbsp;simply&nbsp;to&nbsp;define&nbsp;an&nbsp;xxxxLookDark&nbsp;property&nbsp;on&nbsp;the&nbsp;location
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;where&nbsp;you&nbsp;want&nbsp;a&nbsp;custom&nbsp;message&nbsp;displayed&nbsp;in&nbsp;the&nbsp;dark.&nbsp;For&nbsp;example,&nbsp;if
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;you&nbsp;have&nbsp;a&nbsp;dark&nbsp;cave&nbsp;with&nbsp;an&nbsp;entrance&nbsp;to&nbsp;the&nbsp;west,&nbsp;you&nbsp;may&nbsp;want&nbsp;to&nbsp;display
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;a&nbsp;message&nbsp;about&nbsp;light&nbsp;coming&nbsp;in&nbsp;from&nbsp;tbe&nbsp;west&nbsp;when&nbsp;an&nbsp;actor&nbsp;LOOKS&nbsp;WEST&nbsp;in&nbsp;the&nbsp;cave.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;In&nbsp;which&nbsp;case&nbsp;define&nbsp;a&nbsp;westLookDark&nbsp;property&nbsp;on&nbsp;the&nbsp;cave&nbsp;thus:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;westLookDark&nbsp;=&nbsp;"{You/he}&nbsp;see{s}&nbsp;a&nbsp;small&nbsp;amount&nbsp;of&nbsp;light&nbsp;seeping&nbsp;in&nbsp;through&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;cave&nbsp;entrance.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;The&nbsp;second&nbsp;is&nbsp;to&nbsp;override
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;tooDarkForDirLook(dirn)&nbsp;on&nbsp;the&nbsp;appropriate&nbsp;location&nbsp;so&nbsp;that&nbsp;it&nbsp;returns
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;nil.&nbsp;The&nbsp;location&nbsp;will&nbsp;then&nbsp;be&nbsp;treated&nbsp;as&nbsp;if&nbsp;it&nbsp;were&nbsp;lit&nbsp;for&nbsp;the&nbsp;purposes
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;of&nbsp;processing&nbsp;the&nbsp;LOOK&nbsp;DIR&nbsp;command.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;The&nbsp;third&nbsp;is&nbsp;to&nbsp;override&nbsp;lookDirInDark(dirn)&nbsp;on&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;appropriate&nbsp;location&nbsp;to&nbsp;display&nbsp;whatever&nbsp;custom&nbsp;messages(s)&nbsp;you&nbsp;want
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;displayed&nbsp;when&nbsp;an&nbsp;actor&nbsp;looks&nbsp;to&nbsp;dirn&nbsp;in&nbsp;the&nbsp;dark.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!gActor.isLocationLit&nbsp;&amp;&amp;&nbsp;loc.tooDarkForDirLook(dirn))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Otherwise,&nbsp;if&nbsp;the&nbsp;current&nbsp;location&nbsp;defines&nbsp;the&nbsp;appropriate
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;dirLook&nbsp;property&nbsp;(or&nbsp;method),&nbsp;let&nbsp;that&nbsp;handle&nbsp;the&nbsp;action.&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(prop&nbsp;!=&nbsp;nil&nbsp;&amp;&amp;&nbsp;loc.propDefined(prop)&nbsp;&amp;&amp;&nbsp;loc.propType(prop)&nbsp;!=&nbsp;TypeNil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;Even&nbsp;if&nbsp;prop&nbsp;is&nbsp;defined&nbsp;and&nbsp;is&nbsp;non-nil,&nbsp;it&nbsp;may&nbsp;fail&nbsp;to&nbsp;display&nbsp;anything,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;so&nbsp;we&nbsp;test&nbsp;to&nbsp;ensure&nbsp;it&nbsp;does.&nbsp;Failure&nbsp;to&nbsp;display&nbsp;may&nbsp;occur&nbsp;because&nbsp;prop
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;is&nbsp;a&nbsp;method&nbsp;or&nbsp;expression&nbsp;that&nbsp;evaluates&nbsp;to&nbsp;nil,&nbsp;or&nbsp;because&nbsp;it&nbsp;evaluates
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;to&nbsp;a&nbsp;single-quoted&nbsp;string.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;val;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hasDisplayed&nbsp;=&nbsp;mainOutputStream.watchForOutput(&nbsp;{:&nbsp;val&nbsp;=&nbsp;loc.(prop)&nbsp;}&nbsp;);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;If&nbsp;we&nbsp;displayed&nbsp;something,&nbsp;we're&nbsp;done,&nbsp;unless&nbsp;we&nbsp;returned&nbsp;showRoomPart&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;The&nbsp;test&nbsp;for&nbsp;returning&nbsp;showRoomPart&nbsp;is&nbsp;a&nbsp;special&nbsp;case&nbsp;to&nbsp;allow&nbsp;us&nbsp;to&nbsp;display
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;a&nbsp;custom&nbsp;message&nbsp;followed&nbsp;by&nbsp;a&nbsp;description&nbsp;of&nbsp;the&nbsp;appropriate&nbsp;room&nbsp;part.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;e.g.:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;northLook&nbsp;{&nbsp;"You&nbsp;look&nbsp;north&nbsp;across&nbsp;the&nbsp;room.&nbsp;";&nbsp;return&nbsp;showRoomPart;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;This&nbsp;would&nbsp;display&nbsp;"You&nbsp;look&nbsp;north&nbsp;across&nbsp;the&nbsp;room.&nbsp;"&nbsp;followed&nbsp;by&nbsp;the&nbsp;description
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;of&nbsp;the&nbsp;north&nbsp;wall,&nbsp;if&nbsp;there&nbsp;is&nbsp;one&nbsp;(or&nbsp;else&nbsp;display&nbsp;the&nbsp;defaultLook&nbsp;message,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;which&nbsp;probably&nbsp;wouldn't&nbsp;be&nbsp;what&nbsp;you&nbsp;want).&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(hasDisplayed&nbsp;&amp;&amp;&nbsp;val&nbsp;!=&nbsp;showRoomPart)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;If&nbsp;we&nbsp;didn't&nbsp;display&nbsp;something,&nbsp;perhaps&nbsp;loc.(prop)&nbsp;evaluated&nbsp;to&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;single-quoted&nbsp;string;&nbsp;in&nbsp;which&nbsp;case&nbsp;display&nbsp;the&nbsp;string&nbsp;and&nbsp;return.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dataType(val)&nbsp;==&nbsp;TypeSString)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;say(val);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;If&nbsp;no&nbsp;outLook&nbsp;was&nbsp;defined,&nbsp;treat&nbsp;LOOK&nbsp;OUT&nbsp;as&nbsp;an&nbsp;incomplete&nbsp;LOOK&nbsp;THROUGH
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;command.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dirn&nbsp;==&nbsp;outDirection)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;askForDobj(LookThrough);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Otherwise,&nbsp;if&nbsp;the&nbsp;player&nbsp;specified&nbsp;a&nbsp;shipboard&nbsp;direction&nbsp;(e.g.&nbsp;LOOK&nbsp;PORT)&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;we're&nbsp;not&nbsp;in&nbsp;a&nbsp;shipboard&nbsp;room,&nbsp;display&nbsp;the&nbsp;standard&nbsp;'not&nbsp;aboard&nbsp;ship'&nbsp;message.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Note&nbsp;that&nbsp;putting&nbsp;this&nbsp;check&nbsp;*after*&nbsp;the&nbsp;previous&nbsp;ones&nbsp;allows&nbsp;an&nbsp;author&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;define&nbsp;a&nbsp;portLook,&nbsp;starboardLook,&nbsp;aftLook&nbsp;or&nbsp;foreLook&nbsp;even&nbsp;on&nbsp;a&nbsp;non-shipboard
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;room;&nbsp;whether&nbsp;this&nbsp;is&nbsp;useful&nbsp;is&nbsp;left&nbsp;to&nbsp;authors&nbsp;to&nbsp;decide,&nbsp;not&nbsp;dictated&nbsp;by
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;this&nbsp;extension.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(dirn.ofKind(ShipboardDirection)&nbsp;&amp;&amp;&nbsp;!loc.isShipboard)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;libMessages.notOnboardShip();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Otherwise&nbsp;see&nbsp;if&nbsp;we&nbsp;can&nbsp;find&nbsp;a&nbsp;room&nbsp;part&nbsp;matching&nbsp;the&nbsp;compass&nbsp;direction&nbsp;name,&nbsp;and,&nbsp;if
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;so,&nbsp;examine&nbsp;it,&nbsp;provided&nbsp;this&nbsp;location&nbsp;allows&nbsp;it.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(loc.lookDirToRoomPart(dirn)&nbsp;&amp;&amp;&nbsp;(rPart&nbsp;=&nbsp;findRoomPart(dirn))&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;If&nbsp;we&nbsp;found&nbsp;an&nbsp;appropriate&nbsp;room&nbsp;part,&nbsp;examine&nbsp;it&nbsp;*/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replaceAction(Examine,&nbsp;rPart);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;Otherwise&nbsp;print&nbsp;the&nbsp;default&nbsp;message&nbsp;"You&nbsp;see&nbsp;nothing&nbsp;remarkable&nbsp;by&nbsp;looking&nbsp;&lt;&lt;dir&gt;&gt;.&nbsp;",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;unless&nbsp;we&nbsp;previously&nbsp;displayed&nbsp;something&nbsp;else.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(!hasDisplayed)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loc.defaultLook(dirn);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;This&nbsp;is&nbsp;made&nbsp;a&nbsp;separate&nbsp;method&nbsp;in&nbsp;case&nbsp;it&nbsp;needs&nbsp;to&nbsp;be&nbsp;customised&nbsp;for
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;languages&nbsp;other&nbsp;than&nbsp;English.
+<br>
+&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;findRoomPart(dirn)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;loc&nbsp;=&nbsp;gActor.getOutermostRoom;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;If&nbsp;the&nbsp;command&nbsp;was&nbsp;LOOK&nbsp;DOWN&nbsp;try&nbsp;looking&nbsp;at&nbsp;the&nbsp;current&nbsp;room's&nbsp;floor&nbsp;object&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dirn&nbsp;==&nbsp;downDirection)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;loc.roomFloor;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;If&nbsp;the&nbsp;command&nbsp;was&nbsp;LOOK&nbsp;UP&nbsp;try&nbsp;to&nbsp;find&nbsp;the&nbsp;sky&nbsp;or&nbsp;ceiling&nbsp;object&nbsp;*/&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dirn&nbsp;==&nbsp;upDirection)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;loc.roomParts.valWhich(
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;x:&nbsp;nilToList(x.noun).indexOf(dirLook.sky)&nbsp;!=&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;nilToList(x.noun).indexOf(dirLook.ceiling)&nbsp;!=&nbsp;nil&nbsp;}&nbsp;);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;Otherwise&nbsp;try&nbsp;to&nbsp;find&nbsp;a&nbsp;wall&nbsp;(or&nbsp;other&nbsp;room&nbsp;part)&nbsp;with&nbsp;an&nbsp;adjective&nbsp;that&nbsp;matches&nbsp;our&nbsp;direction&nbsp;name&nbsp;*/&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;loc.roomParts.valWhich(
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{x:&nbsp;nilToList(x.adjective).indexOf(dirn.name)&nbsp;!=&nbsp;nil&nbsp;});&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

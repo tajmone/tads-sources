@@ -1,0 +1,48 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>NumberedDial</title><meta name="keywords" content="NumberedDial,maxSetting,minSetting,toInteger"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>NumberedDial : <a href="dial.htm">Dial</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="settable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="dynamiclocations.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Numbered Dial is simply a dial that can be turned to a number of numerical (and only numerical) settings. The definition of the numbered dial on the Tardis control console is pretty straightforward. We need to use two new properties used on NumberedDial, <b>minSetting</b> and <b>maxSetting</b>, which, as their names suggest, contain the minimum and maximum numerical value to which the dial can be set. Again, the object must be placed in your code so that it's a Component of tardisConsole:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;tardisDial&nbsp;:&nbsp;NumberedDial,&nbsp;Component&nbsp;'(tardis)&nbsp;control&nbsp;dial'&nbsp;'dial'
+<br>
+&nbsp;&nbsp;"The&nbsp;numbers&nbsp;round&nbsp;the&nbsp;dial&nbsp;run&nbsp;from&nbsp;0&nbsp;to&nbsp;9;&nbsp;the&nbsp;dial&nbsp;is&nbsp;currently&nbsp;set&nbsp;to&nbsp;&lt;&lt;curSetting&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;minSetting&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;maxSetting&nbsp;=&nbsp;9
+<br>
+&nbsp;&nbsp;curSetting&nbsp;=&nbsp;'0'
+<br>
+&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'Tardis&nbsp;control&nbsp;dial'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note the need for a disambigName and the extra vocabWords corresponding to it; if the scales are in the control room at some point (as they probably will be once the player has picked them up) there would otherwise be no way the player could refer to this dial in preference to that on the scales.
+<br>
+
+<br>
+One thing in particular you need to watch out for on NumberedDials is that while minSetting and maxSetting are <b><i>numerical</i></b><b> </b>properties, curSetting is a <b><i>string</i></b> property. This can easily catch you out if you expect curSetting to contain a number because it's a property of a NumberedDial. What curSetting in fact contains here is a string representation of the number. If for any reason you need its numerical value (e.g. for calculation or comparison purposes) you will need to convert it using the toInteger function, e.g. (if we imagine a situation with two numbered dials):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">local&nbsp;overallSetting&nbsp;=&nbsp;10&nbsp;*&nbsp;toInteger(dial1.curSetting)&nbsp;+&nbsp;toInteger(dial2.curSetting);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We shan't be needing to do that in this game; instead we'll take a brief (or perhaps not-so-brief) diversion from the gadget classes to construct a custom gadget for moving the Tardis round the universe in time and space.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

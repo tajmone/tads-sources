@@ -1,0 +1,278 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Crossing the Stream</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="doorsandwindows.htm">[Previous] </a>&nbsp;&nbsp;<a href="buryingtheboots.htm">[Next] </a></I></FONT></P>
+
+
+<h2>Crossing the Stream</h2>
+
+<font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">As the next step to making things more complicated for Heidi, we'll put the key in a field on the far side of a stream. First we need to add two extra locations to accommodate the stream:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">pathByStream&nbsp;:&nbsp;OutdoorRoom&nbsp;'By&nbsp;a&nbsp;stream'
+<br>
+&nbsp;&nbsp;"The&nbsp;path&nbsp;through&nbsp;the&nbsp;trees&nbsp;from&nbsp;the&nbsp;southeast&nbsp;comes&nbsp;to&nbsp;an&nbsp;end&nbsp;on
+<br>
+&nbsp;&nbsp;the&nbsp;banks&nbsp;of&nbsp;a&nbsp;stream.&nbsp;Across&nbsp;the&nbsp;stream&nbsp;to&nbsp;the&nbsp;west&nbsp;you&nbsp;can&nbsp;see
+<br>
+&nbsp;&nbsp;an&nbsp;open&nbsp;meadow.&nbsp;"
+<br>
+&nbsp;&nbsp;southeast&nbsp;=&nbsp;fireClearing
+<br>
+&nbsp;&nbsp;west&nbsp;=&nbsp;streamWade
+<br>
+;
+<br>
+
+<br>
+streamWade&nbsp;:&nbsp;RoomConnector
+<br>
+&nbsp;&nbsp;room1&nbsp;=&nbsp;pathByStream
+<br>
+&nbsp;&nbsp;room2&nbsp;=&nbsp;meadow
+<br>
+;
+<br>
+
+<br>
+meadow&nbsp;:&nbsp;OutdoorRoom&nbsp;'Large&nbsp;Meadow'
+<br>
+&nbsp;&nbsp;"This&nbsp;large,&nbsp;open&nbsp;meadow&nbsp;stretches&nbsp;almost&nbsp;as&nbsp;far&nbsp;as&nbsp;you&nbsp;can&nbsp;see
+<br>
+&nbsp;&nbsp;to&nbsp;north,&nbsp;west,&nbsp;and&nbsp;south,&nbsp;but&nbsp;is&nbsp;bordered&nbsp;by&nbsp;a&nbsp;fast-flowing&nbsp;stream
+<br>
+&nbsp;&nbsp;to&nbsp;the&nbsp;east.&nbsp;"
+<br>
+&nbsp;&nbsp;east&nbsp;=&nbsp;streamWade
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The reason for using the separate </font><font face="Courier New" size="2" color="#000000">RoomConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object, </font><font face="Courier New" size="2" color="#000000">streamWade</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, will gradually become apparent. At the moment note that it simply connects the room in its </font><font face="Courier New" size="2" color="#000000">room1</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property to the room in its </font><font face="Courier New" size="2" color="#000000">room2</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property. It also furnishes an example of how we can set the direction property of a room to an explicit connector object. One further thing we need to do at this stage is to set the </font><font face="Courier New" size="2" color="#000000">northwest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of </font><font face="Courier New" size="2" color="#000000">fireClearing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to </font><font face="Courier New" size="2" color="#000000">pathByStream</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+Next we'll move the small brass key to the meadow and tweak its properties a little.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;cottageKey&nbsp;:&nbsp;Key&nbsp;'small&nbsp;brass&nbsp;brassy&nbsp;key/object/something'&nbsp;'object'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;brass&nbsp;key,&nbsp;with&nbsp;a&nbsp;faded&nbsp;tag&nbsp;you&nbsp;can&nbsp;no&nbsp;longer&nbsp;read.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;brass&nbsp;object&nbsp;lies&nbsp;in&nbsp;the&nbsp;grass.&nbsp;"
+<br>
+&nbsp;&nbsp;remoteInitSpecialDesc(actor)&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"There&nbsp;is&nbsp;a&nbsp;momentary&nbsp;glint&nbsp;of&nbsp;something&nbsp;brassy&nbsp;as
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;sun&nbsp;reflects&nbsp;off&nbsp;something&nbsp;lying&nbsp;in&nbsp;the&nbsp;meadow&nbsp;across&nbsp;the&nbsp;stream.&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;dobjFor(Take)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!moved)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(1,&nbsp;'retrieving&nbsp;the&nbsp;key');&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'small&nbsp;brass&nbsp;key';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The reason for the special </font><font face="Courier New" size="2" color="#000000">dobjFor(Take)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine is that if we let the key start with the name 'small brass key', it might give its presence away prematurely, so we give it about the vaguest name we can in its initial definition and then change it to a more meaningful name when it's picked up. Note that we have once again used </font><font face="Courier New" size="2" color="#000000">remoteInitSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which (once we've done some more clever stuff) will be the description that's displayed when we view the key from a distance, in this case the other side of the stream. Note that this is a method, not a property, and it takes a single parameter </font><font face="Courier New" size="2" color="#000000">pov</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (point of view). This parameter represents the actor who is doing the looking, and would allow you to alter the message displayed depending on where the actor was (e.g by testing for </font><font face="Courier New" size="2" color="#000000">if(pov.isIn(pathByStream))</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> ). In this case the test is unnecessary, since there is only one location from which the key can be viewed remotely before it is moved.
+<br>
+
+<br>
+Now comes the clever stuff. In order to make objects in room A visible from room B we need to join the two locations together with a </font><font face="Courier New" size="2" color="#000000">DistanceConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; which is particular kind of </font><font face="Courier New" size="2" color="#000000">SenseConnector&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(which we met before in connection with the cottage window); a </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> can exist in two or more locations since it is a subclass of </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (more of which anon). A </font><font face="Courier New" size="2" color="#000000">DistanceConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> has a library template that makes it exceedingly easy to define; all we need to add is:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">DistanceConnector&nbsp;[pathByStream,&nbsp;meadow];
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The list in square brackets is in fact the </font><font face="Courier New" size="2" color="#000000">locationList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, the name of which should be fairly self-explanatory. Note that </font><font face="Courier New" size="2" color="#000000">DistanceConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a descendant of both </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which is a mix-in class, and </font><font face="Courier New" size="2" color="#000000">Intangible</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (since the connector has no physical presence). Another </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object we could use here would be a stream, which runs through both the rooms. And while we're at it, we'll make it possible for the player to cross the stream with the command <b>cross stream</b>.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">stream&nbsp;:&nbsp;MultiLoc,&nbsp;Fixture&nbsp;'stream'&nbsp;'stream'
+<br>
+&nbsp;&nbsp;"The&nbsp;stream&nbsp;is&nbsp;not&nbsp;terribly&nbsp;deep&nbsp;at&nbsp;this&nbsp;point,&nbsp;though&nbsp;it's&nbsp;flowing
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;quite&nbsp;rapidly&nbsp;towards&nbsp;the&nbsp;south.&nbsp;"
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[pathByStream,&nbsp;meadow]
+<br>
+&nbsp;&nbsp;dobjFor(Cross)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replaceAction(TravelVia,&nbsp;streamWade);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that being a </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object (like the </font><font face="Courier New" size="2" color="#000000">DistanceConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), the stream does not have a </font><font face="Courier New" size="2" color="#000000">location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property (its list of locations instead being held in </font><font face="Courier New" size="2" color="#000000">locationList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">). Note also that for this to work properly, </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> must come first in the class list; </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a mix-in class that should always be combined with something else.
+<br>
+
+<br>
+Part of the value of defining a separate </font><font face="Courier New" size="2" color="#000000">streamWade</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object now becomes apparent; it makes the coding of the action method of </font><font face="Courier New" size="2" color="#000000">dobjFor(Cross)&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">exceedingly simple. Instead of having to test for which side of the stream we're on to decide which side we need to end up on when we cross the stream, we simply TravelVia </font><font face="Courier New" size="2" color="#000000">streamWade</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and leave </font><font face="Courier New" size="2" color="#000000">streamWade</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to sort it all out. But as we'll see shortly,  that's only part of the story.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">In the meantime, there's another little matter we need to attend to. Unlike the other verbs we've used so far, there's no definition of Cross anywhere in the TADS 3 library, so we have to create our own. For details of how to do this in general, see the <i><a href="../techman/t3verb.htm" target="_top">Technical Manual</i></a> (but there's no need to consult it right now - you can finish this guide first). Here we'll just list the steps for this simple case.
+<br>
+
+<br>
+First, we need to define both </font><font face="Courier New" size="2" color="#000000">CrossAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and its associated grammar. A couple of library macros hide most of the complication of all this, and all we need write is:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">DefineTAction(Cross);
+<br>
+
+<br>
+VerbRule(Cross)
+<br>
+&nbsp;&nbsp;'cross'&nbsp;singleDobj
+<br>
+&nbsp;&nbsp;:&nbsp;CrossAction
+<br>
+&nbsp;&nbsp;verbPhrase&nbsp;=&nbsp;'cross/crossing&nbsp;(what)'
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We use the </font><font face="Courier New" size="2" color="#000000">DefineTAction()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro to define a Transitive Action (hence </font><font face="Courier New" size="2" color="#000000">TAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), which means an action taking a direct object (as opposed to an </font><font face="Courier New" size="2" color="#000000">IAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> like <b>Look</b> which takes no objects, or a </font><font face="Courier New" size="2" color="#000000">TIAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> like <b>put x on y</b> which takes both a direct object and an indirect object). We next use the </font><font face="Courier New" size="2" color="#000000">VerbRule()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">macro to define the grammar for the command, that is the form of words that a player can use to invoke it.
+<br>
+
+<br>
+The name of the </font><font face="Courier New" size="2" color="#000000">VerbRule&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(here </font><font face="Courier New" size="2" color="#000000">Cross</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) can be anything we like, so long as it's unique among the </font><font face="Courier New" size="2" color="#000000">VerbRule&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">names in our game. It doesn't actually <i>need</i> to match the name of our action, it's just (a) a convenient way of ensuring a unique </font><font face="Courier New" size="2" color="#000000">VerbRule</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> name and (b) an obvious way of making it clear what the </font><font face="Courier New" size="2" color="#000000">VerbRule</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is for. After naming the </font><font face="Courier New" size="2" color="#000000">VerbRule</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> we next need to define its grammar, i.e. the phrase that the player must enter to invoke this command. This will normally consist of a fixed element, such as the name of the verb, in this case 'cross', followed by a placeholder for the noun or nouns that the player wants the command to apply to. For a </font><font face="Courier New" size="2" color="#000000">TAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> this placeholder can either be </font><font face="Courier New" size="2" color="#000000">singleDobj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (meaning that only one direct object is allowed) or </font><font face="Courier New" size="2" color="#000000">dobjList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (meaning that the command can be applied to several direct objects at once, as in <b>take the red ball, the long stick, and the bent banana</b>).
+<br>
+
+<br>
+It would make no sense to cross several objects at once, so we definitely want </font><font face="Courier New" size="2" color="#000000">singleDobj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather than </font><font face="Courier New" size="2" color="#000000">dobjList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> here. We could, if we wanted, have defined more synonyms for the verb, e.g</font><font face="Courier New" size="2" color="#000000">.&nbsp;('cross'&nbsp;|&nbsp;'ford')&nbsp;singleDobj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but once more I'll leave that as an exercise for the interested reader. The point to note is that if we do want to define alternative phrasings, we use a vertical bar (</font><font face="Courier New" size="2" color="#000000">|</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">)  to separate the alternatives, and brackets to group them. The brackets would be necessary in the foregoing example, since without them we'd have </font><font face="Courier New" size="2" color="#000000">'cross'&nbsp;|&nbsp;'ford'&nbsp;singleDobj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which would mean 'cross' or 'ford something', rather than 'cross something' or 'ford something', as we'd actually want.
+<br>
+
+<br>
+After the definition of the grammar for the command comes a colon followed by the name of the action class, which is the name we gave the action plus the word 'Action' appended, hence </font><font face="Courier New" size="2" color="#000000">CrossAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. If you think this looks rather like declaring our </font><font face="Courier New" size="2" color="#000000">VerbRule&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(strictly speaking, our grammar definition) to be of class </font><font face="Courier New" size="2" color="#000000">CrossAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, then you're right; but again this isn't an issue that need concern us here, beyond noting that the </font><font face="Courier New" size="2" color="#000000">DefineTAction(Cross)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro in fact defines a new class called </font><font face="Courier New" size="2" color="#000000">CrossAction&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">as a subclass of </font><font face="Courier New" size="2" color="#000000">TAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+We then have to define a </font><font face="Courier New" size="2" color="#000000">verbPhrase&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">so</font><font face="Courier New" size="2" color="#000000">&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">that the parser can construct certain messages, such as '(first crossing the stream)' or 'What do you want to cross?' if it needs to. The correct format for a verb phrase for a </font><font face="Courier New" size="2" color="#000000">TAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> should be reasonably clear from the example shown: first the infinitive (without 'to') followed by the present participle with a slash (oblique) in between (hence  'cross/crossing'). Then a placeholder for a direct object, enclosed in brackets (hence '(what)'). Note that this placeholder may be used by the parser to construct a question about a missing direct object ('What do you want to cross?'), so for verbs that were more likely to be applied to people (e.g. 'thank') you'd want to use '(who)' or, even more correctly, '(whom)' rather than '(what)'.
+<br>
+
+<br>
+One more step we have to take is to define what happens when <b>cross</b> is used with any noun other than the stream, which we can do by modifying the definition of the Thing class:
+
+<p><pre>
+modify Thing
+  dobjFor(Cross)
+  {
+   verify()
+   {
+      illogical('{The dobj/he} {is} not something you can cross. ' );
+   }
+  }
+;
+</pre><p>
+Note here how we've begun the illogical response with <code>'{The dobj/he} {is}'</code> rather than <code>'{The dobj/he} is'</code>. By putting 'is' in curly braces we ensure that it will always agree in number with the name of the direct object (which is what, of course, <code>'{The dobj/he}'</code> expands to). This ensures that if the direct object were, say, some flowers growing on the river bank, then <b>cross flowers</b> will respond with 'The flowers are not something you can cross' rather than the incorrect 'The flowers is not something you can cross'.
+
+<p>If you now compile and run the game it should all work, though getting across the stream doesn't seem to be much of a puzzle. We can make it more of one if Heidi has to wear a pair of old boots before she can cross. To start with we'll leave the boots lying by the side of the stream. Then all we have to do is to modify the </font><font face="Courier New" size="2" color="#000000">streamWade</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object so that it only allows anyone to pass when they're wearing the boots.
+<br>
+
+<br>
+Before looking at the solution below, you may like to try to work out how to do all this yourself. The only new thing about the boots is that we need to make them of class </font><font face="Courier New" size="2" color="#000000">Wearable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, so Heidi can put them on. The trick is then to work out how to prevent Heidi from crossing the stream unless she is wearing the boots. You should be able to work it out by analogy from the way we prevented Heidi from climbing the tree unless she's standing on the chair.<b>
+<br>
+</b><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">First here's the boots; as noted above the only thing new about them is that we make them of class </font><font face="Courier New" size="2" color="#000000">Wearable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, so Heidi can put them on:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">boots&nbsp;:&nbsp;Wearable&nbsp;'old&nbsp;wellington&nbsp;pair/boots/wellies'&nbsp;'old&nbsp;pair&nbsp;of&nbsp;boots'
+<br>
+&nbsp;&nbsp;@pathByStream
+<br>
+&nbsp;"They&nbsp;look&nbsp;ancient,&nbsp;battered,&nbsp;and&nbsp;scuffed,&nbsp;but&nbsp;probably&nbsp;still&nbsp;waterproof.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Next we need to modify the </font><font face="Courier New" size="2" color="#000000">RoomConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> so that Heidi can only cross the stream when she's wearing the boots:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">streamWade&nbsp;:&nbsp;RoomConnector
+<br>
+&nbsp;&nbsp;room1&nbsp;=&nbsp;pathByStream
+<br>
+&nbsp;&nbsp;room2&nbsp;=&nbsp;meadow
+<br>
+&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;boots.isWornBy(traveler);&nbsp;}
+<br>
+&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;"Your&nbsp;shoes&nbsp;aren't&nbsp;waterproof.&nbsp;If&nbsp;you&nbsp;wade&nbsp;across&nbsp;you'll&nbsp;get&nbsp;your&nbsp;feet
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wet&nbsp;and&nbsp;probably&nbsp;catch&nbsp;your&nbsp;death&nbsp;of&nbsp;cold.&nbsp;";&nbsp;
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">And that's all there is to it. If you try the game again you'll find you can't cross the stream (in either direction) unless you're wearing the boots. The next job is to hide the boots in a less obvious place.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="doorsandwindows.htm">[Previous] </a>&nbsp;&nbsp;<a href="buryingtheboots.htm">[Next] </a></I></FONT></P>
+</body></html>

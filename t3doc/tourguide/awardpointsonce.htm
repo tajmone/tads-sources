@@ -1,0 +1,52 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>awardPointsOnce</title><meta name="keywords" content="awardPointsOnce"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>awardPointsOnce
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="awardpoints.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="scoreranktable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">In cases where you want to prevent points being awarded several times for the same feat, you could use awardPointsOnce in preference to <a href="awardpoints.htm">awardPoints</a> and as an alternative to <a href="achievement.htm">addToScoreOnce</a>.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+++&nbsp;bronzeBowl&nbsp;:&nbsp;Container&nbsp;'bronze&nbsp;bowl/vessel'&nbsp;'bronze&nbsp;bowl'&nbsp;
+<br>
+&nbsp;&nbsp;"It's&nbsp;of&nbsp;ancient&nbsp;and&nbsp;somewhat&nbsp;curious&nbsp;design,&nbsp;cast&nbsp;with&nbsp;two&nbsp;rows&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pomegranates&nbsp;all&nbsp;the&nbsp;way&nbsp;round&nbsp;the&nbsp;outside.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;bulkCapcity&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;5
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;5&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;<b>dobjFor(Take)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;achievement.awardPointsOnce();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;achievement&nbsp;:&nbsp;Achievement&nbsp;{&nbsp;+3&nbsp;"recovering&nbsp;the&nbsp;bronze&nbsp;bowl"&nbsp;}
+<br>
+</b>;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Once again, note the use of the <a href="achievementtemplate.htm">Achievement template</a> here.
+<br>
+</font></font>
+
+</body></html>

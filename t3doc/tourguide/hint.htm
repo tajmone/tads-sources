@@ -1,0 +1,120 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Hint</title><meta name="keywords" content="Hint,hintText,referencedGoals,getItemText,template,template, defining"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Hint : MenuSubTopicItem
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="goal.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="concludingremarks.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">As we have seen, most of the hints given within a <a href="goal.htm">Goal </a>object are single-quoted strings, but there may be occasions when we want a hint to do  a bit more than display a message, and in that case we can use a Hint object.
+<br>
+
+<br>
+Hint defines two properties and one method:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>hintText</b> - the text that is displayed for this hint.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>referencedGoals - </b> A list of other Goal objects that this hint references. By default, when this hint is shown for the first time, each goal in this list is promoted from Undiscovered to Open. Sometimes, it's necessary to solve one puzzle before another can be solved. In these cases, some hints for the first puzzle (which depends on the second), especially the later, more specific hints, might need to refer to the other puzzle. This would make the player aware of the other puzzle even if they weren't already. In such cases, it's a good idea to make sure that we make hints for the other puzzle available immediately, since otherwise the player might be confused by the absence of hints about it.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>getItemText ( )</b> - Get the hint text. By default, we mark as Open any goals listed in our referencedGoals list, then return our hintText string. Individual Hint objects can override this as desired to apply any additional side effects.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+Prior to TADS 3.0.9 there was no Hint template, so you would need to define your own if you wanted one (which would be useful since  hintText and referencedGoals are likely to be used a good deal on Hint objects). TADS 3.0.9 now defines:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Hint&nbsp;template&nbsp;'hintText'&nbsp;[referencedGoals]?&nbsp;;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+If you keep all your hints in one source file, which is probably a good idea, then this definition need only be placed once, at the start of your hints file, since there's no need for you to be defining Hint objects anywhere else.
+<br>
+
+<br>
+The normal way we'd use a Hint object is when the text of a hint suggests another goal that the player might want to pursue, so that this second goal should become an open one. For example, if we provide a series of hints to the player about how to open the door south from anotherCave, we'll sooner or later end up telling the player to put a groat in the slot. This then alerts the player that s/he needs to find a groat, which could then become another goal we want to open at this point. This is how we can handle this with a couple more Goals linked by a suitable Hint:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;Goal&nbsp;'How&nbsp;do&nbsp;I&nbsp;open&nbsp;the&nbsp;south&nbsp;door&nbsp;in&nbsp;Another&nbsp;Cave?'
+<br>
+&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;'Have&nbsp;you&nbsp;examined&nbsp;the&nbsp;door&nbsp;closely?',
+<br>
+&nbsp;&nbsp;&nbsp;'Have&nbsp;you&nbsp;looked&nbsp;at&nbsp;the&nbsp;slot&nbsp;in&nbsp;the&nbsp;door?',
+<br>
+&nbsp;&nbsp;&nbsp;'Is&nbsp;there&nbsp;anything&nbsp;written&nbsp;by&nbsp;the&nbsp;slot?',
+<br>
+&nbsp;&nbsp;&nbsp;groatHint
+<br>
+&nbsp;]&nbsp;&nbsp;
+<br>
+&nbsp;openWhenSeen&nbsp;=&nbsp;lakeDoor
+<br>
+&nbsp;closeWhenTrue&nbsp;=&nbsp;(!lakeDoor.isLocked)&nbsp;//&nbsp;there's&nbsp;no&nbsp;way&nbsp;of&nbsp;relocking&nbsp;this&nbsp;door&nbsp;so&nbsp;this&nbsp;is&nbsp;safe
+<br>
+;&nbsp;
+<br>
+&nbsp;&nbsp;
+<br>
+/*&nbsp;Note,&nbsp;there's&nbsp;no&nbsp;need&nbsp;to&nbsp;locate&nbsp;a&nbsp;Hint&nbsp;item&nbsp;inside&nbsp;the&nbsp;Goal&nbsp;that&nbsp;references&nbsp;it,
+<br>
+&nbsp;*&nbsp;it&nbsp;is&nbsp;simply&nbsp;convenient&nbsp;to&nbsp;do&nbsp;so&nbsp;(a)&nbsp;to&nbsp;show&nbsp;the&nbsp;relationship&nbsp;between&nbsp;the&nbsp;two
+<br>
+&nbsp;*&nbsp;and&nbsp;(b)&nbsp;so&nbsp;we&nbsp;can&nbsp;carry&nbsp;on&nbsp;adding&nbsp;Goals&nbsp;after&nbsp;the&nbsp;Hint&nbsp;without&nbsp;the&nbsp;containment
+<br>
+&nbsp;*&nbsp;tree&nbsp;getting&nbsp;messed&nbsp;up.
+<br>
+&nbsp;*/
+<br>
+&nbsp;
+<br>
++++&nbsp;groatHint&nbsp;:&nbsp;Hint
+<br>
+&nbsp;&nbsp;'You&nbsp;need&nbsp;to&nbsp;put&nbsp;a&nbsp;groat&nbsp;in&nbsp;the&nbsp;slot.&nbsp;'
+<br>
+&nbsp;&nbsp;[groatGoal]
+<br>
+;
+<br>
+
+<br>
+++&nbsp;groatGoal&nbsp;:&nbsp;Goal&nbsp;
+<br>
+&nbsp;&nbsp;'What\'s&nbsp;a&nbsp;groat&nbsp;and&nbsp;where&nbsp;can&nbsp;I&nbsp;find&nbsp;one?&nbsp;'
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'A&nbsp;groat&nbsp;is&nbsp;a&nbsp;small&nbsp;coin.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'More&nbsp;specifically,&nbsp;it\'s&nbsp;a&nbsp;small&nbsp;brass&nbsp;coin.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'You&nbsp;won\'t&nbsp;find&nbsp;it&nbsp;till&nbsp;you\'ve&nbsp;dealt&nbsp;with&nbsp;the&nbsp;boulder.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'How&nbsp;closely&nbsp;have&nbsp;you&nbsp;examined&nbsp;everything&nbsp;in&nbsp;the&nbsp;cave&nbsp;beyond&nbsp;the&nbsp;boulder?&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'What&nbsp;might&nbsp;be&nbsp;under&nbsp;the&nbsp;carpet,&nbsp;and&nbsp;how&nbsp;might&nbsp;you&nbsp;find&nbsp;out?&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Have&nbsp;you&nbsp;tried&nbsp;pulling&nbsp;the&nbsp;carpet?&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;closeWhenDescribed&nbsp;=&nbsp;brassCoin
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We use closeWhenDescribed on the groatGoal goal, because the brass coin is first named as a 'small brassy object', and does not reveal itself as a coin - specifically a groat - until it has been examined (which sets described to true). We do not need to define an OpenWhenXXX property on groatGoal since groatCall is opened by groatHint.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

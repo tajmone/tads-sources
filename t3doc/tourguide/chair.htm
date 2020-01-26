@@ -1,0 +1,138 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Chair</title><meta name="keywords" content="Chair"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Chair : <a href="basicchair.htm">BasicChair</a>, <a href="surface.htm">Surface</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="bed.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="highnestedroom.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Having provided King Solomon somewhere to sleep, we can go on to provide somewhere for him to sit - a chair in the neighbouring room (along with one or two useful items):
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">solomonStudy&nbsp;:&nbsp;Room&nbsp;'Study'&nbsp;'the&nbsp;study'
+<br>
+&nbsp;&nbsp;"This&nbsp;is&nbsp;another&nbsp;square,&nbsp;cedar-panelled&nbsp;room,&nbsp;with&nbsp;windows&nbsp;to&nbsp;north&nbsp;and&nbsp;south
+<br>
+&nbsp;&nbsp;&nbsp;and&nbsp;doors&nbsp;to&nbsp;east&nbsp;and&nbsp;west.&nbsp;It&nbsp;is&nbsp;largely&nbsp;bare&nbsp;apart&nbsp;from&nbsp;a&nbsp;table&nbsp;and&nbsp;chair
+<br>
+&nbsp;&nbsp;&nbsp;over&nbsp;by&nbsp;the&nbsp;northern&nbsp;window.&nbsp;"
+<br>
+&nbsp;&nbsp;east&nbsp;=&nbsp;solBedroomDoorOutside
+<br>
+&nbsp;&nbsp;west&nbsp;=&nbsp;studyDoor
+<br>
+;
+<br>
+
+<br>
++&nbsp;solBedroomDoorOutside&nbsp;:&nbsp;Door&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;-&gt;&nbsp;solBedroomDoor&nbsp;'bedroom&nbsp;door*doors'&nbsp;'bedroom&nbsp;door'
+<br>
+;
+<br>
+
+<br>
++&nbsp;studyDoor&nbsp;:&nbsp;Door&nbsp;'study&nbsp;door'&nbsp;'study&nbsp;door'
+<br>
+&nbsp;&nbsp;"Predictably&nbsp;enough,&nbsp;it's&nbsp;made&nbsp;of&nbsp;cedar.&nbsp;"
+<br>
+&nbsp;&nbsp;checkDobjOpen
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('You\'d&nbsp;better&nbsp;not&nbsp;go&nbsp;that&nbsp;way.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
++&nbsp;solomonTable&nbsp;:&nbsp;Surface,&nbsp;Heavy&nbsp;'table'&nbsp;'table'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;plain,&nbsp;square,&nbsp;cedarwood&nbsp;table.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;baarasRoot&nbsp;:&nbsp;Thing&nbsp;'flame-coloured&nbsp;flame&nbsp;coloured&nbsp;baaras&nbsp;root/mandrake'&nbsp;
+<br>
+&nbsp;&nbsp;'flame-coloured&nbsp;root'
+<br>
+&nbsp;&nbsp;"The&nbsp;flame-coloured&nbsp;root&nbsp;is&nbsp;forked&nbsp;and&nbsp;fleshy.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;carbuncle&nbsp;:&nbsp;Thing&nbsp;'purple&nbsp;carbuncle/ruby/stone'&nbsp;'purple&nbsp;carbuncle'
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;an&nbsp;amazingly&nbsp;large&nbsp;stone&nbsp;-&nbsp;probably&nbsp;a&nbsp;ruby,&nbsp;but&nbsp;with&nbsp;a&nbsp;curious&nbsp;purple&nbsp;tinge.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;solomonChair&nbsp;:&nbsp;Chair,&nbsp;Heavy&nbsp;'chair'&nbsp;'chair'
+<br>
+&nbsp;&nbsp;"The&nbsp;chair&nbsp;is&nbsp;made&nbsp;of&nbsp;cedar.&nbsp;It's&nbsp;quite&nbsp;large&nbsp;and&nbsp;elegantly&nbsp;carved&nbsp;with
+<br>
+&nbsp;&nbsp;&nbsp;pomegranates,&nbsp;but&nbsp;is&nbsp;totally&nbsp;unpadded&nbsp;and&nbsp;doesn't&nbsp;look&nbsp;terribly
+<br>
+&nbsp;&nbsp;&nbsp;comfortable.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And just to show this works, we can put the king himself in his chair:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">solomon&nbsp;:&nbsp;Person&nbsp;'king&nbsp;solomon'&nbsp;'King&nbsp;Solomon'&nbsp;@solomonChair
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;isProperName&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;posture&nbsp;=&nbsp;sitting
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Okay, so you think a study is a bit of an anachronism in a tenth-century BCE palace; you're probably right, but then where did Solomon sit around while he was getting all that wisdom? The Baaras root, by the way, will be used for its exorcistic properties. In the meantime, we already have another chair, the one in the cabin of our ship:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">cabinChair&nbsp;:&nbsp;Chair&nbsp;'padded&nbsp;chair/cushion'&nbsp;'chair'&nbsp;@deskRear
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;fine&nbsp;wooden&nbsp;chair&nbsp;with&nbsp;a&nbsp;round&nbsp;back&nbsp;and&nbsp;a&nbsp;padded&nbsp;cushion.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;wooden&nbsp;chair&nbsp;sits&nbsp;behind&nbsp;the&nbsp;desk.&nbsp;"
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;10
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;7
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

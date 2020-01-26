@@ -1,0 +1,101 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>CommandReport</title></head><body>
+<table class=ban><tr><td align=left><span class=title>CommandReport</span><span class=type>class</span><td align=right><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#55">55</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Command report objects.  The library uses these to control how the   text from a command is displayed.  Game code can also use report   objects to show and control command results, but this isn't usually   necessary; game code can usually simply display messages directly. <p>   Reports are divided into two broad classes: "default" and "full"   reports. <p>   A "default" report is one that simply confirms that an action was   performed, and provides little additional information.  The library   uses default reports for simple commands whose full implications   should normally be obvious to a player typing such commands: take,   drop, put in, and the like.  The library's default reports are   usually quite terse: "Taken", "Dropped", "Done". <p>   A "full" report is one that gives the player more information than a   simple confirmation.  These reports typically describe either the   changes to the game state caused by a command or surprising side   effects of a command.  For example, if the command is "push button,"   and pushing the button opens the door next to the button, a full   report would describe the door opening. <p>   Note that a full report is warranted any time a command describes   anything beyond a simple confirmation.  In our door-opening button   example, opening the door by pushing the button always warrants a   full report, even if the player has already seen the effects of the   button a hundred times before, and even if the button is labeled   "push to open door."  It doesn't matter whether or not the   consequences of the command ought to be obvious to the player; what   matters is that the command warrants a report beyond a simple   confirmation.  Any time a report is more than a simple confirmation,   it is a full report, no matter how obvious to the player the effects   of the action. <p>   Full reports are further divided into three subcategories by time   ordering: "main," "before," and "after."  "Before" and "after"   reports are ordered before and after (respectively) a main report.
+<p>
+<code>class
+<b>CommandReport</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>CommandReport</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>CommandReport</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandAnnouncement.html">CommandAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AmbigObjectAnnouncement.html">AmbigObjectAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandSepAnnouncement.html">CommandSepAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultObjectAnnouncement.html">DefaultObjectAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ImplicitActionAnnouncement.html">ImplicitActionAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MultiObjectAnnouncement.html">MultiObjectAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RemappedActionAnnouncement.html">RemappedActionAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandReportMessage.html">CommandReportMessage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CosmeticSpacingCommandReport.html">CosmeticSpacingCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultCommandReport.html">DefaultCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultDescCommandReport.html">DefaultDescCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ExtraCommandReport.html">ExtraCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FullCommandReport.html">FullCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AfterCommandReport.html">AfterCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BeforeCommandReport.html">BeforeCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FailCommandReport.html">FailCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MainCommandReport.html">MainCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/QuestionCommandReport.html">QuestionCommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvBoundaryReport.html">ConvBoundaryReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvBeginReport.html">ConvBeginReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvEndReport.html">ConvEndReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GroupSeparatorMessage.html">GroupSeparatorMessage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InternalSeparatorMessage.html">InternalSeparatorMessage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MarkerReport.html">MarkerReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/EndOfDescReport.html">EndOfDescReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FailCommandMarker.html">FailCommandMarker</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#action_">action_</a>&nbsp;
+<a href="#isFailure">isFailure</a>&nbsp;
+<a href="#isQuestion">isQuestion</a>&nbsp;
+<a href="#iter_">iter_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#getAction">getAction</a>&nbsp;
+<a href="#isActionImplicit">isActionImplicit</a>&nbsp;
+<a href="#isActionNestedIn">isActionNestedIn</a>&nbsp;
+<a href="#isPartOf">isPartOf</a>&nbsp;
+<a href="#setAction">setAction</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="action_"></a>
+<table class=decl><tr><td><code>action_</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#97">97</a>]</table><div class=desc>the action I'm associated with<p>
+</div>
+<a name="isFailure"></a>
+<table class=decl><tr><td><code>isFailure</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#85">85</a>]</table><div class=desc>   Flag: if this property is true, this report indicates a failure.   By default, a report does not indicate failure. <p>
+</div>
+<a name="isQuestion"></a>
+<table class=decl><tr><td><code>isQuestion</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#91">91</a>]</table><div class=desc>   Flag: if this property is true, this report indicates an   interruption for interactive input. <p>
+</div>
+<a name="iter_"></a>
+<table class=decl><tr><td><code>iter_</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#94">94</a>]</table><div class=desc>iteration number current when we were added to the transcript<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#56">56</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getAction"></a>
+<table class=decl><tr><td><code>getAction ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#67">67</a>]</table><div class=desc>get/set my action<p>
+</div>
+<a name="isActionImplicit"></a>
+<table class=decl><tr><td><code>isActionImplicit ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#71">71</a>]</table><div class=desc>check to see if my action is implicit<p>
+</div>
+<a name="isActionNestedIn"></a>
+<table class=decl><tr><td><code>isActionNestedIn (other)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#74">74</a>]</table><div class=desc>check to see if my action is nested in the other report's action<p>
+</div>
+<a name="isPartOf"></a>
+<table class=decl><tr><td><code>isPartOf (report)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#104">104</a>]</table><div class=desc>   Am I part of the same action as the given report?  Returns true if   this action is part of the same iteration and part of the same   action as the other report. <p>
+</div>
+<a name="setAction"></a>
+<table class=decl><tr><td><code>setAction (action)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#68">68</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>NoTravelMessage</title><meta name="keywords" content="NoTravelMessage,travelDesc"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>NoTravelMessage : <a href="travelmessage.htm">TravelMessage</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="basicdoor.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="exitonlypassage.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We have described the lakeShore room as being on the northern shore of a giant underground lake. This means that it should be fairly apparent that the PC cannot proceed south. In this situation we may want to display a custom message if the player nevertheless attempts to walk out onto the lake; a NoTravelMessage will perform this role (using the <a href="notravelmessagetemplate.htm">NoTravelMessage template</a>):
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">lakeRoom:&nbsp;Room&nbsp;'Lake&nbsp;Shore'
+<br>
+&nbsp;&nbsp;"This&nbsp;is&nbsp;the&nbsp;northern&nbsp;shore&nbsp;of&nbsp;a&nbsp;giant&nbsp;underground&nbsp;lake.&nbsp;A&nbsp;door&nbsp;leads&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;lakeDoor2
+<br>
+&nbsp;&nbsp;<b>south&nbsp;:&nbsp;NoTravelMessage&nbsp;{&nbsp;"You&nbsp;never&nbsp;learnt&nbsp;to&nbsp;walk&nbsp;on&nbsp;water.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;southeast&nbsp;asExit(south)
+<br>
+&nbsp;&nbsp;southwest&nbsp;asExit(south)
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This is very similar to a <a href="fakeconnector.htm">FakeConnector</a>. The only difference is a direction attached to a NoTravelMessage won't be included in a list of exits (e.g. in response to an EXITS command, or in the status line), whereas that attached to a FakeConnector will. A NoTravelMessage should therefore be used to explain why travel is not possible in a direction in which it's reasonably apparent that travel isn't possible, while a FakeConnector should be used to make travel apparently possible in a direction in which it isn' t really, e.g.. to provide a "soft boundary" to the map.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

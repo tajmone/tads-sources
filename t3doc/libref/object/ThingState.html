@@ -1,0 +1,80 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ThingState</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ThingState</span><span class=type>class</span><td align=right><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#471">471</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#214">214</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   "State" of a Thing.  This is an object abstractly describing the   state of an object that can assume different states. <p>   The 'listName', 'inventoryName', and 'wornName' give the names of   state as displayed in room/contents listings, inventory listings, and   listings of items being worn by an actor.  This state name is   displayed along with the item name (usually parenthetically after the   item name, but the exact nature of the display is controlled by the   language-specific part of the library). <p>   The 'listingOrder' is an integer giving the listing order of this   state relative to other states of the same kind of object.  When we   show a list of equivalent items in different states, we'll order the   state names in ascending order of listingOrder.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#214">214</a>]:</i><br>
+   Language-specific modifications for ThingState.
+<p>
+<code>class
+<b>ThingState</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ThingState</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/lightSourceStateOff.html">lightSourceStateOff</a>&nbsp;
+<a href="../object/lightSourceStateOn.html">lightSourceStateOn</a>&nbsp;
+<a href="../object/matchStateLit.html">matchStateLit</a>&nbsp;
+<a href="../object/matchStateUnlit.html">matchStateUnlit</a>&nbsp;
+<a href="../object/unwornState.html">unwornState</a>&nbsp;
+<a href="../object/wornState.html">wornState</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#listingOrder">listingOrder</a>&nbsp;
+<a href="#listName_">listName_</a>&nbsp;
+<a href="#stateTokens">stateTokens</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#findStateToken">findStateToken</a>&nbsp;
+<a href="#inventoryName">inventoryName</a>&nbsp;
+<a href="#listName">listName</a>&nbsp;
+<a href="#matchName">matchName</a>&nbsp;
+<a href="#wornName">wornName</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="listingOrder"></a>
+<table class=decl><tr><td><code>listingOrder</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#504">504</a>]</table><div class=desc>the relative listing order<p>
+</div>
+<a name="listName_"></a>
+<table class=decl><tr><td><code>listName_</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#325">325</a>]</table><div class=desc>   our list name setting - we define this so that we can be easily   initialized with a template (we can't initialize listName()   directly in this manner because it's a method, but we define the   listName() method to simply return this property value, which we   can initialize with a template) <p>
+</div>
+<a name="stateTokens"></a>
+<table class=decl><tr><td><code>stateTokens</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#242">242</a>]</table><div class=desc>   Our state-specific tokens.  This is a list of vocabulary words   that are state-specific: that is, if a word is in this list, the   word can ONLY refer to this object if the object is in a state   with that word in its list. <p>   The idea is that you set up the object's "static" vocabulary with   the *complete* list of words for all of its possible states.  For   example: <p> <br>    + Matchstick 'lit unlit match'; <p>   Then, you define the states: in the "lit" state, the word 'lit' is   in the stateTokens list; in the "unlit" state, the word 'unlit' is   in the list.  By putting the words in the state lists, you   "reserve" the words to their respective states.  When the player   enters a command, the parser will limit object matches so that the   reserved state-specific words can only refer to objects in the   corresponding states.  Hence, if the player refers to a "lit   match", the word 'lit' will only match an object in the "lit"   state, because 'lit' is a reserved state-specific word associated   with the "lit" state. <p>   You can re-use a word in multiple states.  For example, you could   have a "red painted" state and a "blue painted" state, along with   an "unpainted" state. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="findStateToken"></a>
+<table class=decl><tr><td><code>findStateToken (toks)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#293">293</a>]</table><div class=desc>   Check a token list for any tokens matching any of our   state-specific words.  Returns true if we find any such words,   nil if not. <p>   'toks' is the *adjusted* token list used in matchName(). <p>
+</div>
+<a name="inventoryName"></a>
+<table class=decl><tr><td><code>inventoryName (lst)</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#494">494</a>]</table><div class=desc>   The state name to use in inventory lists.  By default, we just use   the base name.  'lst' has the same meaning as in listName(). <p>
+</div>
+<a name="listName"></a>
+<table class=decl><tr><td><code>listName (lst)</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#488">488</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#316">316</a>]</table><div class=desc>   The name of the state to use in ordinary room/object contents   listings.  If the name is nil, no extra state information is shown   in a listing for an object in this state.  (It's often desirable   to leave the most ordinary state an object can be in unnamed, to   avoid belaboring the obvious.  For example, a match that isn't   burning would probably not want to mention "(not lit)" every time   it's listed.) <p>   'lst' is a list of the objects being listed in this state.  If   we're only listing a single object, this will be a list with one   element giving the object being listed.  If we're listing a   counted set of equivalent items all in this same state, this will   be the list of items.  Everything in 'lst' will be equivalent (in   the isEquivalent sense). <p>
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#316">316</a>]:</i><br>
+get our name<p>
+</div>
+<a name="matchName"></a>
+<table class=decl><tr><td><code>matchName (obj, origTokens, adjustedTokens, states)</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#520">520</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#250">250</a>]</table><div class=desc>   Match the name of an object in this state.  'obj' is the object   to be matched; 'origTokens' and 'adjustedTokens' have the same   meanings they do for Thing.matchName; and 'states' is a list of   all of the possible states the object can assume. <p>   Implementation of this is always language-specific.  In most   cases, this should do something along the lines of checking for   the presence (in the token list) of words that only apply to   other states, rejecting the match if any such words are found.   For example, the ThingState object representing the unlit state   of a light source might check for the presence of 'lit' as an   adjective, and reject the object if it's found. <p>
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#250">250</a>]:</i><br>
+   Match the name of an object in this state.  We'll check the token   list for any words that apply only to *other* states the object   can assume; if we find any, we'll reject the match, since the   phrase must be referring to an object in a different state. <p>
+</div>
+<a name="wornName"></a>
+<table class=decl><tr><td><code>wornName (lst)</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#501">501</a>]</table><div class=desc>   The state name to use in listings of items being worn.  By   default, we just use the base name.  'lst' has the same meaning as   in listName(). <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

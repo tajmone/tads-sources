@@ -1,0 +1,532 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Rewarding the Effort</title><meta name="keywords" content="addToScore,score,Container,exit,makePresent,PresentLater,Hidden,FloorlessRoom,enteringRoom,bottomRoom"></meta>
+
+<LINK href="main.css" type=text/css rel=stylesheet></link></head>
+<body>
+<div class="topbar"><A href="index.html"><IMG src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><A href="index.html">[Main]</a><BR>
+<I><A href="makinglifemoreproblematic.htm">[Previous] </a>&nbsp;&nbsp;<A href="controllingtheaction.htm">[Next] </a></I></FONT></P>
+<h2>Rewarding the Effort</h2>
+<p>If the player has gone to all this trouble to reach the top of the tree, perhaps he or she deserves some sort of reward for it. One way we can do this is to add some points to the player's score. This can be done with the statement:
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font><font face="Courier New" size="2"
+     >addToScore(points,&nbsp;'reason&nbsp;for&nbsp;awarding&nbsp;points');
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     ></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >In this case we might have:
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font><font face="Courier New" size="2"
+     >addToScore(1,&nbsp;'reaching&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree.');
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     ></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >The two problems we need to solve now are (a) where best to put this statement and (b) how to prevent the player from accumulating a huge (if boring) score by repeatedly going up the tree - the point should be awarded first time round only.
+<br>
+
+<br>
+It would possible to code this on the TravelMessage object Heidi has to travel via when she climbs the tree, but since what we want to do is to check for Heidi arriving at a the top of the tree regardless of how she gets there, the best solution is to make use of the <TT>enteringRoom</TT> method of the <TT>topOfTree</TT> room. The library code already keeps track of which rooms have been visited by setting their <TT>seen</TT> property, so we can use this to ensure that the point is awarded only the first time Heidi reaches the top of the tree. The revised <TT>topOfTree</TT> room then looks like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" ></font><font face="Courier New" size="2" >topOfTree&nbsp;:&nbsp;OutdoorRoom&nbsp;'At&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree'
+<br>
+&nbsp;&nbsp;&nbsp;"You&nbsp;cling&nbsp;precariously&nbsp;to&nbsp;the&nbsp;trunk,&nbsp;next&nbsp;to&nbsp;a&nbsp;firm,&nbsp;narrow&nbsp;branch."
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;clearing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;enteringRoom(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!traveler.hasSeen(self)&nbsp;&amp;&amp;&nbsp;traveler&nbsp;==&nbsp;gPlayerChar)&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(1,&nbsp;'reaching&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree.&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     ></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >Being awarded a point is all very well, but it may all seem pretty pointless if that's all that happens when Heidi arrives at the top of the tree. At the very least she should find something interesting there. Since the room description for the top of the tree mentions a branch, that may be the first thing to add. Then perhaps we could place a bird's nest on the branch (in the original <i>Adventures of Heidi</i> the object was to replace the bird's nest, complete with fledgling, to the branch), and finally we could place a worthwhile find in the nest.
+<br>
+
+<br>
+Before turning over the page to see how this guide does it, you could have a go at implementing these extra objects yourself. Remember that the branch will need to be a </font><font face="Courier New" size="2" >Supporter</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > so you can put things on it, and the nest a </font><font face="Courier New" size="2" >Container&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >so you can put things in it. Remember too that you'll need to make sure that Heidi can't pick up the branch - after all it's part of the tree and fixed in place (if in doubt, look at the pedestal in the 'goldskull' game). Then put something interesting in the nest, and see if you can get your revised game to compile and run.
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >Here's how this guide does it (this code should be placed immediately after the definition of </font><font face="Courier New" size="2" >topOfTree</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >).
+<br>
+</font><font face="Courier New" size="2" >
+<br>
++&nbsp;branch&nbsp;:&nbsp;Surface,&nbsp;Fixture&nbsp;'branch'&nbsp;'branch'
+<br>
+&nbsp;&nbsp;"The&nbsp;branch&nbsp;looks&nbsp;too&nbsp;narrow&nbsp;to&nbsp;walk,&nbsp;crawl&nbsp;or&nbsp;climb&nbsp;along,&nbsp;but&nbsp;firm
+<br>
+&nbsp;&nbsp;&nbsp;enough&nbsp;to&nbsp;support&nbsp;a&nbsp;reasonable&nbsp;weight.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;nest&nbsp;:&nbsp;Container&nbsp;'bird\'s&nbsp;nest'&nbsp;'bird\'s&nbsp;nest'
+<br>
+&nbsp;&nbsp;"It's&nbsp;carefully&nbsp;woven&nbsp;from&nbsp;twigs&nbsp;and&nbsp;moss.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;ring&nbsp;:&nbsp;Thing&nbsp;'platinum&nbsp;diamond&nbsp;ring'&nbsp;'diamond&nbsp;ring'
+<br>
+&nbsp;&nbsp;"The&nbsp;ring&nbsp;comprises&nbsp;a&nbsp;sparkling&nbsp;solitaire&nbsp;diamond&nbsp;set&nbsp;in&nbsp;platinum.&nbsp;It&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;looks&nbsp;like&nbsp;it&nbsp;could&nbsp;be&nbsp;intended&nbsp;as&nbsp;an&nbsp;engagement&nbsp;ring.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >Note the use of the + notation to nest (no pun intended) each item in the preceding one. We make the branch a </font><font face="Courier New" size="2" >Surface</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > so that we can put things <i>on</i> it and a </font><font face="Courier New" size="2" >Fixture</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > so
+that it's fixed in place; this llustrates how the same object may inherit from
+more than one superclass (but note that the same object can't be both a <font face="Courier New" size="2" >Surface</font> and a <font face="Courier New" size="2" >Container</font>).
+The nest is made a <font face="Courier New" size="2" >Container</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > so we can put something <i>in</i> it. Internally there's not a lot of difference; the </font><font face="Courier New" size="2" >location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > property of </font><font face="Courier New" size="2" >ring</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > is set to </font><font face="Courier New" size="2" >nest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >, and the </font><font face="Courier New" size="2" >location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > property of </font><font face="Courier New" size="2" >nest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > to </font><font face="Courier New" size="2" >branch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >. The difference lies in the way the library code describes the situation (in or on) and the type of commands it will respond to (<b>put in</b> or <b>put on</b>), as you'll find if you add the code and play with the new version of the game.
+<br>
+
+<br>
+You'll probably also find that the discovery of the ring seems rather bland and bathetic,  since as soon as Heidi arrives at the top of the tree the game announces "On the branch is a bird's nest (which contains a diamond ring)." It would be more interesting if she had to work a little to find that ring. Besides, one might suppose that the ring would at first be hidden among the twigs and moss that make up the nest. The first step towards making things more interesting, then, is to remove the <TT>+++</TT> from in front of the definition of the ring (so that it starts life outside the game world altogether) and then code the nest to respond to a <B>search </B>or <B>look in</B> command. This code must first check that we haven't already found the ring, and then, if we haven't, it should move the ring into the nest and report the find. While we're at it we might as well award the player a point for the discovery. The appropriate code looks like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" ></font><font face="Courier New" size="2" >++&nbsp;nest&nbsp;:&nbsp;Container&nbsp;'bird\'s&nbsp;nest'&nbsp;'bird\'s&nbsp;nest'
+<br>
+&nbsp;&nbsp;"It's&nbsp;carefully&nbsp;woven&nbsp;from&nbsp;twigs&nbsp;and&nbsp;moss.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(LookIn)
+<br>
+&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b>(ring.moved)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;find&nbsp;nothing&nbsp;else&nbsp;of&nbsp;interest&nbsp;in&nbsp;the&nbsp;nest.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ring.moveInto(self);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&nbsp;closer&nbsp;examination&nbsp;of&nbsp;the&nbsp;nest&nbsp;reveals&nbsp;a&nbsp;diamond&nbsp;ring&nbsp;inside!&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(1,&nbsp;'finding&nbsp;the&nbsp;ring');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >
+You'll remember that dobj is short for direct object, so that when we define <code>dobjFor(LookIn)</code> on an object we're defining what should happen when that object is the direct object of a <b>look in</b> command. In this case, though, what comes after <code>dobjFor</code> looks rather more complicated than our previous example.
+<p>Let's take the simpler part first. Towards the end of the nest object we have written <code>dobjFor(Search) asDobjFor(LookIn)</code>. That <code>asDobjFor()</code> is a reasonably close cousin of the <code>remapTo()</code> we encountered earlier; you could read it as "as if it were the direct object for" so that <code>dobjFor(Search) asDobjFor(LookIn)</code> means "when the nest is the direct object of a <b>search</b> command treat it as if it were the direct object of a <b>look in</b> command", or "treat <b>search nest</b> as equivalent <b>to look in nest</b>".
+<p>Up to this point we've only used <code>dobjFor()</code> to make one command behave like another, but obviously there has to be more to writing a game than that: at some point we have to define what a command actually <i>does</i>, and this is what the example above does for <code>dobjFor(LookIn)</code>. Note first of all that when we do that we follow <code>dobjFor()</code> with a block of code enclosed by braces {}. Within that block we have what looks like a method called action() with its code enclosed in a further set of braces {}. This may look rather strange; it is in fact exactly equivalent to defining a method called <code>actionDobjLookIn()</code> (without <code>dobjFor()</code> and the outer enclosing braces), and you could indeed do it that way. We tend to use <code>dobjFor()</code> instead because it makes the code easier to read and write.
+
+<p>We'll give a fuller account of all this at the end of the chapter, so don't worry if it still seems a little hazy at the moment. The main thing to note right now is that the method that looks like it's called <code>action()</code>, what we might call the action part of the <code>dobjFor()</code> block, is the place where we put the code that defines what actually happens when the nest is looked in.
+
+
+<p>There are four further points to note about this code:
+<br>
+
+<br>
+(1) </font><font face="Courier New" size="2" >moved</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > is a property defined by the library; it starts at </font><font face="Courier New" size="2" >nil&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >(i.e. not true) and is set to </font><font face="Courier New" size="2" >true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > as soon as the object is moved from its initial location, which is what </font><font face="Courier New" size="2" >ring.moveInto(self)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > does;
+<br>
+(2) to move the ring we use its </font><font face="Courier New" size="2" >moveInto</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > method, we do <i>not</i> change its </font><font face="Courier New" size="2" >location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > property directly by writing something like </font><font face="Courier New" size="2" >ring.location&nbsp;=&nbsp;self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > (part of the reason for this is that the library maintains lists of what's contained by what; the </font><font face="Courier New" size="2" >moveInto</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > method takes care of updating the appropriate lists when an object is moved, while setting the location property would not);
+<br>
+(3) </font><font face="Courier New" size="2" >self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > simply refers to the object in which it occurs (in this case the nest);
+<br>
+(4) </font><font face="Courier New" size="2" >exit</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > terminates the action straightaway, so that code following an </font><font face="Courier New" size="2" >exit</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > statement is not executed; the </font><font face="Courier New" size="2" >exit</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > statement may also be used to veto an action at the check stage, as we shall see shortly;
+<br>
+
+<br>
+An alternative way of achieving the same effect would be to leave the +++ in front of the definition of ring, and add </font><font face="Courier New" size="2" >PresentLater</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > to the front of its class list, at the same time changing </font><font face="Courier New" size="2" >ring.moveInto(self)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > to </font><font face="Courier New" size="2" >ring.makePresent()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > in the definition of </font><font face="Courier New" size="2" >nest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >. Where the </font><font face="Courier New" size="2" >PresentLater</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > mix-in class is used, the game initialization makes a note of the object's location, then moves it into </font><font face="Courier New" size="2" >nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > (i.e. out of the game world); a call to </font><font face="Courier New" size="2" >makePresent()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > then restores the object to its initial location. Yet another way we could achieve much the same effect would be by making the ring of class </font><font face="Courier New" size="2" >Hidden</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >, but we shall illustrate that on another object shortly.
+<br>
+
+<br>
+The revision to the nest object makes things slightly more interesting, but searching the nest isn't much of a challenge. It would be rather more interesting if in order to search the nest we first had to hold it, and, furthermore, if the nest was just out of reach so we first had to find some way of bringing it nearer. The obvious tool for the job would be some sort of stick, and the obvious place to find such a stick might be among twigs and branches lying at the foot of the tree.
+<br>
+
+<br>
+But first we must prevent Heidi from looking in the nest until she's holding it. To do that we can use <code>check()</code>. Like <code>action()</code>, <code>check()</code> is a method that goes inside the braces following <code>dobjFor()</code>, but whereas we use <code>action()</code> to define what happens when the command is carried out, we can use <code>check()</code> to stop it being carried out and explain why. In this case we don't want to stop it unconditionally, but only if the nest isn't held:
+<br>
+</font><font face="Courier New" size="2" >
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     >check()
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     >&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!isHeldBy(gActor))
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     ></font></td></tr></table><font face="Courier New" size="2" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;really&nbsp;need&nbsp;to&nbsp;hold&nbsp;the&nbsp;nest&nbsp;to&nbsp;take&nbsp;a&nbsp;good&nbsp;look&nbsp;at
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;what's&nbsp;inside.&nbsp;";
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     >&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     ></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >Our next job is to make it impossible to take the nest without the use of the stick. TADS 3 already defines what happens when the player tries to take something, so what we need to do here is to change that behaviour; we do this by overriding the nest's <code>dobjFor(Take)</code> routines. Nonetheless, when we do allow the action to go ahead, we'll still want the normal library handling to work; to ensure that happens we need to include <code>inherited</code> in the action part, which calls the action handling for <b>take</b> that the nest inherits from its superclass. To ease the player's "guess the verb" hassle we'll let the player character take the nest if she's simply carrying the stick. The appropriate code, which illustrates both a check and an action section in the same <code>dobjFor()</code> block, is as follows::
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" ></font><font face="Courier New" size="2" >dobjFor(Take)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!moved&nbsp;&amp;&amp;&nbsp;!stick.isIn(gActor))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;nest&nbsp;is&nbsp;too&nbsp;far&nbsp;away&nbsp;for&nbsp;you&nbsp;to&nbsp;reach.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!moved)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Using&nbsp;the&nbsp;stick&nbsp;you&nbsp;manage&nbsp;to&nbsp;pull&nbsp;the&nbsp;nest&nbsp;near&nbsp;enough&nbsp;to&nbsp;take,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;you&nbsp;promptly&nbsp;do.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     ></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >We include the </font><font face="Courier New" size="2" >if(!moved)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > condition in both </font><font face="Courier New" size="2" >check()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > and </font><font face="Courier New" size="2" >action()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > here on the assumption that once the nest has been moved, it won't be put back out of reach. The </font><font face="Courier New" size="2" >inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > statement at the end of the action method ensures that we actually do end up taking the nest (by continuing with the standard behaviour for the take action). But this raises another issue: <code>inherited()</code> means roughly "at this point carry out what would have happened if we hadn't overridden this method", but what would have happened is that not only would Heidi have picked up the nest, but this would have been reported with the laconic response "Taken." That's fine, except the first time we take the nest (when <code>moved</code> is still <TT>nil</TT>), when we don't want to see "Taken" in addition to our custom message about moving the stick. Actually, this won't be a problem; if you try running this code you'll find that the "Taken" message doesn't appear alongside the other message. That's because the library doesn't use a double-quoted string to produce it, but a macro called <code>defaultReport()</code>, in this case. <code>defaultReport('Taken. ')</code>, and a defaultReport is only shown if there's no other report.
+<br>
+
+<br>
+This is fine, but it might not occur to the player that the nest can be taken simply because Heidi is holding the stick; the player may suppose other command needs to be used to bring the stick nearer, such as <b>move nest with stick</b>, so we'll code this command to act in exactly the same way. This introduces a new complication, defining special behaviour for a verb involving two objects. We'll begin by defining some code on the intended direct object of this command, which is still the nest:
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" ></font><font face="Courier New" size="2" >dobjFor(MoveWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(isHeldBy(gActor))&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogicalAlready('{You/he}&nbsp;{is}&nbsp;already&nbsp;holding&nbsp;it.&nbsp;');&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gIobj&nbsp;!=&nbsp;stick)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;can't&nbsp;move&nbsp;the&nbsp;nest&nbsp;with&nbsp;that.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >The effect of this code is to rule that it is illogical to attempt to move the nest with anything while the nest is being held, and not to allow the nest to be moved with anything other than the stick.
+
+<p>
+This code snippet introduces several new features we should pause to consider. First, just as in TADS 3 the abbreviation dobj will normally refer to a direct object, so iobj will normally refer to an <b>i</b>ndirect <b>obj</b>ect, the second object involved in a two-object command like <b>move nest with stick</b>. But in the <code>check</code> routine above what we actually see is something call <code>gIobj</code>. Here the g effectively stands for 'global'; although TADS 3 does not in fact support global variables, it has several things that look and act like global variables, and <code>gIobj</code> is one of them (in fact these pseudo-global variables are shorthand ways of referring to the properties of objects in which the values are actually stored, but that needn't concern us now). The common not-exactly-global variables you'll often encounter in TADS 3 include: <code>gDobj</code> (the direct object of the current action), <code>gIobj</code> (the indirect object of the current action), <code>gAction</code> (the current action), <code>gActor</code> (the actor performing the current action, which is usually but not necessarily the player character), and <code>gPlayerChar</code> (the object representing the player character).
+<p>The next new feature we've introduced in this code is a <code>verify()</code> routine. We'll be giving the full story on <code>verify()</code> shortly, but the very brief version is that, like <code>check()</code>, <code>verify</code> can be used to veto an action, but that unlike <code>check()</code>, <code>verify()</code> affects disambiguation (which object the parser thinks a player's command most probably refers to). A <code>verify()</code> routine can contribute to disambiguation without vetoing an action, but when it does disallow an action it (nearly) always does so with statement of the form <code>illogical('Reason why this action is plain daft. ')</code>. <code>illogicalAlready()</code> is just a specialized form of <code>illogical()</code>, used when the action is pointless because it's trying to bring about something that's already the case (for example, trying to open a door that's already open).
+<p>The third new feature is the use of parameter substitution strings, meaning those strange things in curly braces: <code>{you/he}</code> and <code>{is}</code>. The point of these is that when they are actually displayed in a game, they are replaced with the appropriate text. So, for example, if the player issues the command move nest with stick '<code>{you/he} {is}</code>' becomes 'you are', but if an NPC called Fred attempted the action it would become 'Fred is'.  For the full story on parameter substitution strings, read the <a href="../techman/t3msg.htm">Message Parameter Substitutions</a> article in the Technical Manual.
+
+<p>The next job is to make the stick handle its part of the action. You'll recall that the stick is the indirect object of this command, so you might guess that just as we need to define <code>dobjFor()</code> on the direct object, we need to define <code>iobjFor()</code> on the indirect object. IUf you did guess that, you'd be right:
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" ></font><font face="Courier New" size="2" >iobjFor(MoveWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gDobj==nest&nbsp;&amp;&amp;&nbsp;!nest.moved)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replaceAction(Take,&nbsp;nest);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >
+The first thing to note is the <TT>verify()</TT> <TT>and check()</TT> routines that do nothing. We need them to do nothing to make sure they don't veto the use of the stick as the indirect object of a <B>move with</B> command. Without that empty <TT>verify()</TT> method <B>move nest with stick</B> would produce the response 'You cannot move anything with the stick.' We don't actually need to provide an empty <TT>check()</TT> method here, since the library version is already empty, but including it here does no harm, and if we didn't know that the library didn't rule out move with in <TT>check()</TT> it would be as well to include it just to make sure.
+
+<p>The <TT>action()</TT> routine only does anything if the direct object (<TT>gDobj</TT>) is the nest and the nest hasn't already been moved. If either of those conditions fails, the command will result in the default MoveWith action of the direct object, which simply reports that moving the direct object didn't achieve anything. If, however, the direct object is the nest and it hasn't been moved yet we want the result to be the same as if we had issued the command <B>take nest</B>. We achieve this with the <TT>replaceAction </TT>macro, which does just what it says it does and stops processing the current command, replacing it with the new command. Had we wished to execute another command and then continue with the existing command we would have used <TT>nestedAction </TT>instead.
+<p>
+You may be wondering how <code>replaceAction()</code> differs from <code>remap()</code>, which we used before. The main difference is that remapping happens before anything else (in particular, before <code>verify()</code> and <code>check()</code>), while <code>replaceAction()</code>, which can really only go in the <code>action()</code> part, happens after <code>verify()</code> and <code>check()</code>; <code>replaceAction()</code> and <code>nestedAction()</code> are also more flexible than remap in that they can be combined with other code in the <code>action()</code> routine; we can do other things before replacing the action, but we can't do anything before remapping.
+
+<p>You may also be wondering why we put the code for taking the nest in the <code>action()</code> routine of the indirect object rather than the direct object here. The answer is, there's no reason at all for doing it that way, apart from illustrating the use of an <code>action()</code> routine on an indirect object (and incidentally taking advantage of the fact that the indirect object's <code>action()</code> routine generally runs before the direct object's <code>action()</code> routine). Other than that, it would have been just as good, if not better, to have put this handling on the direct object, thus:
+<p><pre>
+dobjFor(MoveWith)
+{
+    verify()
+     {
+       if(isHeldBy(gActor))
+          illogicalAlready('{You/he} {is} already holding it. ');
+     }
+    check()
+    {
+      if(gIobj != stick)
+        {
+          "{You/he} can't move the nest with that. ";
+          exit;
+        }
+    }
+    action()
+    {
+       if(!moved)
+          replaceAction(Take, self);
+       else
+          inherited();
+    }
+}
+</pre>
+<p>Indeed, this would probably have been a clearer and neater way of doing it. In this revised version, note the use of <code>inherited()</code> to call the base class handling of MoveWith once the nest has been moved. Note also that <code>else</code> on the line before is not strictly necessary since once <code>replaceAction()</code> is executed the original (MoveWith) action is stopped in any case.
+
+<p>More broadly, this illustrates that the <code>action()</code> part of a two-object command can be written on either the direct object or the indirect object or even split between both, since both action routines will be executed (unless <code>exit</code> or one of its close relatives is used to break out of them), with the indirect object's action handling usually (but not necessarily) called before the direct object's. So how do we decide which to use? One rule of thumb might be to write the <code>action()</code> handling on the object most affected by the action. Another might be to write it on the object which most affects the outcome of the item: for example, if your game contains a knife, a sword and a laser rifle, and cutting things with each of these produces greatly different results, you might want to write the CutWith action handling on the indirect object, whereas if it doesn't make much difference what you cut with but a great deal of difference whether it's a piece of solid rock, a window, a lump of butter, or Aunt Gertrude that you're cutting, you'll probably be better off putting the action handling on the direct object. A third rule of thumb might be to put the action handling on the object that exhibits the most exceptional behaviour; so, for example, most objects won't allow things to be put inside them, but Containers will, so the library action handling for <b>put x in y</b> goes on the indirect object (the Container), not the thing that's being put in the Container. Other cases may be less clear-cut (no pun intended), in which case it's best to choose one or the other and stick with it consistently (having an action like CutWith handled on some direct objects and some indirect objects is a likely recipe for confusion).
+
+<p>Enough of that digression; let's return to the stick. Although the base of the tree is a good place to find the stick, it's probably better not to make it too obvious; if the stick is just lying there in plain sight the player will take it automatically, which will make getting hold of the nest virtually a non-puzzle. We'll make things harder by burying the stick in a pile of useless twigs, so that the player has to do some work to find them. While we're at it we'll change the description of the sycamore tree so that it refers to the pile of twigs. Again, this is something you might like to try yourself before reading on to see how this guide does it. After changing the description of the tree, you'll need to add one object to represent the pile of twigs, and then another for the stick object, which should remain hidden until Heidi examines or searches the pile of twigs. To hide the stick you could use one of the techniques discussed in relation to hiding the ring in the nest, or you could make the stick a </font><font face="Courier New" size="2" >Hidden</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > object and call its </font><font face="Courier New" size="2" >discovered()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >method at the appropriate moment.
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >Here's one way of doing it:-
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" ></font><font face="Courier New" size="2" >+&nbsp;tree&nbsp;:&nbsp;Fixture&nbsp;'tall&nbsp;sycamore&nbsp;tree'&nbsp;'tree'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"Standing&nbsp;proud&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;clearing,&nbsp;the&nbsp;stout
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tree&nbsp;looks&nbsp;like&nbsp;it&nbsp;should&nbsp;be&nbsp;easy&nbsp;to&nbsp;climb.&nbsp;A&nbsp;small&nbsp;pile&nbsp;of&nbsp;loose&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;twigs&nbsp;has&nbsp;gathered&nbsp;at&nbsp;its&nbsp;base.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dobjFor(Climb)&nbsp;remapTo(Up)&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;Decoration&nbsp;'loose&nbsp;small&nbsp;pile/twigs'&nbsp;'pile&nbsp;of&nbsp;twigs'
+<br>
+&nbsp;&nbsp;"There&nbsp;are&nbsp;several&nbsp;small&nbsp;twigs&nbsp;here,&nbsp;most&nbsp;of&nbsp;them&nbsp;small,&nbsp;insubstantial,
+<br>
+&nbsp;&nbsp;&nbsp;and&nbsp;frankly&nbsp;of&nbsp;no&nbsp;use&nbsp;to&nbsp;anyone&nbsp;bigger&nbsp;than&nbsp;a&nbsp;blue-tit&nbsp;&lt;&lt;stick.moved&nbsp;?
+<br>
+&nbsp;&nbsp;&nbsp;nil&nbsp;:&nbsp;';&nbsp;but&nbsp;there&nbsp;is&nbsp;also&nbsp;one&nbsp;fairly&nbsp;long,&nbsp;substantial&nbsp;stick&nbsp;among&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;them'&gt;&gt;.&nbsp;&lt;&lt;stick.discover&gt;&gt;"
+<br>
+&nbsp;&nbsp;dobjFor(Search)&nbsp;asDobjFor(Examine)&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;stick&nbsp;:&nbsp;Hidden&nbsp;'long&nbsp;substantial&nbsp;stick'&nbsp;'long&nbsp;stick'
+<br>
+&nbsp;&nbsp;"It's&nbsp;about&nbsp;two&nbsp;feet&nbsp;long,&nbsp;a&nbsp;quarter&nbsp;of&nbsp;an&nbsp;inch&nbsp;in&nbsp;diameter,&nbsp;and&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reasonably&nbsp;straight.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;iobjFor(MoveWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gDobj==nest&nbsp;&amp;&amp;&nbsp;!nest.moved)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replaceAction(Take,&nbsp;nest);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >We could have handled the stick in a similar manner to the ring, by moving it into the clearing when we wanted it to appear, but this seems a good opportunity to introduce the </font><font face="Courier New" size="2" >Hidden&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >class, which does much what it says. A </font><font face="Courier New" size="2" >Hidden</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > item is one that is physically present but does not reveal its presence until its </font><font face="Courier New" size="2" >discover</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > method is called. By making </font><font face="Courier New" size="2" >stick</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > of class </font><font face="Courier New" size="2" >Hidden</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > instead of class </font><font face="Courier New" size="2" >Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >, we can control when we want it to appear. In this case we want it to appear when the player character examines the pile of twigs, so we make an embedded call to </font><font face="Courier New" size="2" >stick.discover</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > in the description of the twigs, using the &lt;&lt;&gt;&gt; syntax. The fact that this method will be called every time the twigs are examined doesn't matter, since once the method has been called once, the subsequent calls will have no effect. There are a couple of other refinements we need to think about, however. First, the description of the pile of twigs should only refer to the stick amongst them until the stick has been moved; we achieve this through another embedded expression, <code>&lt;&lt;stick.moved ? nil : '; but there is also one fairly long, substantial stick among them'&gt;&gt;</code> that displays nothing if the stick has been moved but describes the stick if it hasn't. Secondly, the player might reasonably try to <b>search</b> the pile of sticks as well as <b>examine</b> them, so we add a line to the definition of the anonymous sticks object to remap <b>search</b> to <b>examine</b>.
+<br>
+
+<br>
+Note how we have defined the </font><font face="Courier New" size="2" >vocabWords</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > property of the </font><font face="Courier New" size="2" >Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > object representing the pile of twigs: we have defined it as </font><font face="Courier New" size="2" >'loose&nbsp;small&nbsp;pile/twigs'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >. Although you can't normally refer to an object by two or more of its nouns, there is an exception in the case of a name like 'x of y', where both x and y should be specified as nouns. Our pile of twigs will now respond to <b>examine twigs</b> or <b>x small pile</b> or <b>search pile of loose twigs</b> and other such combinations.
+<br>
+
+<br>
+Let's just add one final refinement. Normally if you <b>drop</b> an object, it lands in the room where you are, as you would expect. But if you were to drop something from the top of a tree you'd expect it to fall to the ground below rather than hover around in the air still conveniently in reach. It would be good if we could model this in our game, and it turns out to be fairly straightforward. First, we need to change the class of </font><font face="Courier New" size="2" >topOfTree</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > to </font><font face="Courier New" size="2" >FloorlessRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >, which means that any object dropped or thrown from this location won't land here. Then we need to override </font><font face="Courier New" size="2" >topOfTree's</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > </font><font face="Courier New" size="2" >bottomRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > property to define where something dropped from there <i>will</i> land. In this case we want </font><font face="Courier New" size="2" >bottomRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > to be </font><font face="Courier New" size="2" >clearing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >. Now anything dropped (or thrown) while Heidi is at the top of the tree will fall to the clearing, and the game will display a suitable message to show that the object is falling out of sight. The definition of </font><font face="Courier New" size="2" >topOfTree</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" > thus becomes;
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" ></font><font face="Courier New" size="2" >topOfTree&nbsp;:&nbsp;FloorlessRoom&nbsp;'At&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;cling&nbsp;precariously&nbsp;to&nbsp;the&nbsp;trunk,&nbsp;next&nbsp;to&nbsp;a&nbsp;firm,&nbsp;narrow&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;branch.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;clearing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enteringRoom(traveler)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!traveler.hasSeen(self)&nbsp;&amp;&amp;&nbsp;traveler&nbsp;==&nbsp;gPlayerChar)&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(1,&nbsp;'reaching&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree.&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottomRoom&nbsp;=&nbsp;clearing
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2"
+     ></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     >
+&nbsp;<br>
+</font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+     ></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" >In the <A href="settingthescene.htm">next chapter</a> we shall learn how the ring came to be in the nest, who it belongs to, and how to win the game. To do that we shall need to create a Non Player Character (NPC), and that will be our central task.
+<br>
+
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<A href="index.html">[Main]</a><BR>
+<I><A href="makinglifemoreproblematic.htm">[Previous]</a>&nbsp;&nbsp;<A href="controllingtheaction.htm">[Next]
+</a></I></FONT></P></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></div>
+</body></html>

@@ -1,0 +1,54 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ActorByeTopic</title><meta name="keywords" content="ActorByeTopic,endConversation"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="verdana, arial, Helvetica, Sans-Serif" size="3" color="#000000"><b>ActorByeTopic: <a href="misctopic.htm">MiscTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Helvetica, Sans-Serif" size="2"><a href="boredbyetopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="hellogoodbyetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="verdana, arial, Helvetica, Sans-Serif" size="2" color="#000000">ActorByeTopic is the third specialization of <a href="impbyetopic.htm">ImpByeTopic</a>. It is used when the NPC terminates the conversation of its own accord via npc.endConversation(). In the absence of an active ActorByeTopic, the active ImpByeTopic will be used instead.
+<br>
+
+<br>
+npc.endConversation() is used to make an NPC break off a current conversation. This is the complement to initiateConversation; it causes the NPC to effectively say BYE on its own, rather than waiting for the PC to decide to end the conversation. This call is mostly useful when the actor's current state is an <a href="inconversationstate.htm">InConversationState</a>, since the main function of this routine is to switch to an out-of-conversation state<font face="Times New Roman" size="3" color="#000000">.
+<br>
+</font><font face="verdana, arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+For example, if our curator was particularly cantankerous, we might, for example, tweak one or more of his TopicEntries to call endConversation():
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;Do&nbsp;I&nbsp;need&nbsp;another&nbsp;ticket&nbsp;if&nbsp;I&nbsp;want&nbsp;to&nbsp;come&nbsp;in&nbsp;again?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;No,&lt;/q&gt;&nbsp;he&nbsp;assures&nbsp;you,&nbsp;&lt;q&gt;the&nbsp;ticket&nbsp;you&nbsp;showed&nbsp;me&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;good&nbsp;for&nbsp;multiple&nbsp;entry.&lt;/q&gt;&nbsp;<b>&lt;&lt;getActor().endConversation()&gt;&gt;&nbsp;</b>"
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;gRevealed('ticket-shown')&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="verdana, arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+And then add the following in his ConversationReadyState:
+<br>
+
+<br>
++++ ActorByeTopic
+<br>
+   "&lt;q&gt;Now, if that's all, I have work to do,&lt;/q&gt; he adds, turning back to the
+<br>
+    pile of papers on his desk. "
+<br>
+;
+<br>
+
+<br>
+</font></font>
+
+</body></html>

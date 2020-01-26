@@ -1,0 +1,80 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>initDesc &amp; initSpecialDesc</title><meta name="keywords" content="initDesc,initSpecialDesc,moved,moveInto"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>initDesc &amp; initSpecialDesc
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="vocabwords.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="globalparamname.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">If the coin starts life lying on the ground as a small brassy object, rather than seeing a description that reads "You see a small brassy object here" it would be nicer if it read something like "A small brassy object lies on the ground in a dim corner of the cave. " Likewise, if we examined the coin without first picking it up it would be good if we obtained a vaguer description such as "It looks like it might be a coin of some sort. " - after all, the standard description we've given the coin refers to what's on its obverse and its reverse, but how can we see what's on both sides of the coin while it's still lying on the ground?
+<br>
+
+<br>
+To achieve this we can use the initSpecialDesc and initDesc properties. The first of these, initSpecialDesc, is what will be displayed in a room or contents listing before the object has been moved (while its moved property is nil); initDesc (if defined) is the description that will be given in response to an EXAMINE command before the object has been moved (if initDesc is not defined, the ordinary desc property will be used instead). The definition of brassCoin then becomes:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brassy&nbsp;object'&nbsp;'small&nbsp;brassy&nbsp;object'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;<b>initSpecialDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;brassy&nbsp;object&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground&nbsp;in&nbsp;a&nbsp;dim&nbsp;corner&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;initDesc&nbsp;=&nbsp;"It&nbsp;looks&nbsp;like&nbsp;it&nbsp;might&nbsp;be&nbsp;a&nbsp;coin&nbsp;of&nbsp;some&nbsp;sort.&nbsp;"</b>
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Examine)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;changeName();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;changeName()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'small&nbsp;brass&nbsp;coin';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmdDict.removeWord(self,&nbsp;'object',&nbsp;&amp;noun);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initializeVocabWith('brass&nbsp;coin/groat*coins');
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that initSpecialDesc and initDesc are only used so long as moved is nil; as soon as moved is set to true they are no longer employed. The moved property is set to nil by the mainMoveInto(newContainer), which is called by moveIntoForTravel(newContainer) which is in turn called by moveInto(newContainer), the method most commonly used to move objects in game code or the library's handling of actions like TAKE. Normally this does not matter, but there may be occasions when it could defeat the use of initSpecialDesc and initDesc. For example, suppose the player had to perform some action to reveal the coin, e.g. because it was hidden under something else or falls out of something else. We might start the coin in another container (or nil) and then move it into the longCave using:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin.moveInto(longCave);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The trouble is that this will set brassCoin.moved to true, so the initSpecialDesc and initExaminedDesc won't be used, even though this is effectively the first appearance of the coin in the game. The way round this under such circumstances is to set moved back to nil in your code:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin.moveInto(longCave);
+<br>
+brassCoin.moved&nbsp;=&nbsp;nil;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

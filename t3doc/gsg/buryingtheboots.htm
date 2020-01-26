@@ -1,0 +1,319 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Burying the Boots</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="crossingthestream.htm">[Previous] </a>&nbsp;&nbsp;<a href="callingaspadeaspade.htm">[Next] </a></I></FONT></P>
+<h2>Burying the Boots</h2>
+
+<p>We'll hide the boots by burying them in a cave and then provide a means of digging them out again. In the next chapter we'll give the cave a dark interior so we can look at the handling of light sources, but so as not to handle too many new problems at once, we'll leave that to one side for now, and concentrate on giving the cave a floor that can be excavated.
+</p>
+
+<br>
+But first we have to add the cave and a means of getting to it. Again, you may like to try doing this yourself rather than just copying the code overleaf. Create a room to the south of <font face="Courier New" size="2" color="#000000">forest&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">called </font><font face="Courier New" size="2" color="#000000">outsideCave</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and give it an appropriate name and description. Then create a room called </font><font face="Courier New" size="2" color="#000000">insideCave</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (representing the inside of the cave) to the south of that. Be sure to implement all the appropriate connections (including one south from </font><font face="Courier New" size="2" color="#000000">forest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">!). Also, give some thought to which class is most appropriate to each of these two new locations, and also whether it may be appropriate to use the </font><font face="Courier New" size="2" color="#000000">asExit()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro to allow alternative commands for moving between them.
+<br>
+
+<br>
+Once you've done that and checked that it all works, you'll probably have an </font><font face="Courier New" size="2" color="#000000">outsideCave&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">location that mentions a cave somewhere in the description - at least, you certainly should do. So what if the player types the command <b>enter cave</b>? You'd better add another object to handle that.
+<br>
+
+<br>
+Finally, if you're feeling really adventurous, you could try to devise a way of burying the boots in the cave so that they are only discovered when Heidi digs in the ground with a spade (which you'll need to provide). For inspiration, you could look back at the way we hid the ring in the nest, or the stick in the pile of twigs.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Here's one way of implementing the new rooms:
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+outsideCave&nbsp;:&nbsp;OutdoorRoom&nbsp;'Just&nbsp;Outside&nbsp;a&nbsp;Cave'
+<br>
+&nbsp;&nbsp;"The&nbsp;path&nbsp;through&nbsp;the&nbsp;trees&nbsp;from&nbsp;the&nbsp;north&nbsp;comes&nbsp;to&nbsp;an&nbsp;end
+<br>
+&nbsp;&nbsp;just&nbsp;outside&nbsp;the&nbsp;mouth&nbsp;of&nbsp;a&nbsp;large&nbsp;cave&nbsp;to&nbsp;the&nbsp;south.&nbsp;Behind&nbsp;the&nbsp;cave
+<br>
+&nbsp;&nbsp;rises&nbsp;a&nbsp;sheer&nbsp;wall&nbsp;of&nbsp;rock.&nbsp;"
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;forest
+<br>
+&nbsp;&nbsp;in&nbsp;=&nbsp;insideCave
+<br>
+&nbsp;&nbsp;south&nbsp;asExit(in)
+<br>
+;
+<br>
+
+<br>
++&nbsp;Enterable&nbsp;'cave/entrance'&nbsp;'cave'
+<br>
+&nbsp;&nbsp;"The&nbsp;entrance&nbsp;to&nbsp;the&nbsp;cave&nbsp;looks&nbsp;quite&nbsp;narrow,&nbsp;but&nbsp;probably&nbsp;just&nbsp;wide
+<br>
+&nbsp;&nbsp;enough&nbsp;for&nbsp;someone&nbsp;to&nbsp;squeeze&nbsp;through.&nbsp;"
+<br>
+&nbsp;&nbsp;connector&nbsp;=&nbsp;insideCave
+<br>
+;
+<br>
+
+<br>
+insideCave&nbsp;:&nbsp;Room&nbsp;'Inside&nbsp;a&nbsp;large&nbsp;cave'
+<br>
+&nbsp;&nbsp;"The&nbsp;cave&nbsp;is&nbsp;larger&nbsp;than&nbsp;its&nbsp;narrow&nbsp;entrance&nbsp;might&nbsp;lead&nbsp;one&nbsp;to&nbsp;expect.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Even&nbsp;a&nbsp;tall&nbsp;adult&nbsp;could&nbsp;stand&nbsp;here&nbsp;quite&nbsp;comfortably,&nbsp;and&nbsp;the&nbsp;cave&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stretches&nbsp;back&nbsp;quite&nbsp;some&nbsp;way.&nbsp;"
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;outsideCave&nbsp;
+<br>
+&nbsp;&nbsp;north&nbsp;asExit(out)
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's nothing that requires comment here, apart from the need to add </font><font face="Courier New" size="2" color="#000000">south&nbsp;=&nbsp;outsideCave</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to the definition of the </font><font face="Courier New" size="2" color="#000000">forest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> room (whose description already mentions a path to the south that might have seemed a bit superfluous up to now.)
+<br>
+
+<br>
+Now let's make a number of assumptions about how we want to handle the action of digging. The library provides both Dig and DigWith verbs (e.g. <b>dig ground</b> and <b>dig ground with spade</b>). Let's assume that in order to be able to dig, it's necessary to be holding  a spade, and that there's only one spade object in the game. Let's further assume that although we should allow the player to <b>dig ground with spade</b>, it's unnecessarily pedantic to insist on that form of command and refuse to respond to <b>dig ground</b> when the spade is being held (if someone's holding a spade it's pretty obvious that's what they want to dig with). Finally, let's assume that there may in general be more than one place where we might want the player to be able to dig, so that it would be useful to define a Diggable class that can handle all this. The class might then look like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">class&nbsp;Diggable&nbsp;:&nbsp;Floor
+<br>
+&nbsp;&nbsp;dobjFor(DigWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;preCond&nbsp;=&nbsp;[objVisible,&nbsp;touchObj]&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Digging&nbsp;here&nbsp;reveals&nbsp;nothing&nbsp;of&nbsp;interest.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">At first sight, this class definition may look a little surprising, since we have done nothing to handle the case where the player simply types <b>dig ground</b>. In fact this is already catered for by the library, which defines the </font><font face="Courier New" size="2" color="#000000">action</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of Dig on the </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class as: </font><font face="Courier New" size="2" color="#000000">action()&nbsp;{&nbsp;askForIobj(DigWith);&nbsp;}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.  This more or less does what it looks like: if the player types <b>dig whatever</b> without specifying an indirect object, (i.e. an implement to dig with) the game will respond with "What do you want to dig in it with?". If the player then types the name of an implement, such as "spoon", the game will treat the whole command as if it were <b>dig in whatever with spoon</b>. On the other hand, if one and only one suitable digging implement is to hand, then the parser will automatically assume that's what the player wants to use. In this game the only suitable digging implement is the spade, so if the player types <b>dig in ground</b> when Heidi is already holding the spade, the parser will automatically select the spade and treat the command as if it had been <b>dig in ground with spade</b>; this is precisely what we want. Normally we'll override the </font><font face="Courier New" size="2" color="#000000">dobjFor(DigWith)&nbsp;action()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method on the specific object to provide a particular response, but we provide a default response on the class.
+<br>
+
+<br>
+In order to dig in something you must be able to touch it. In practice, you probably need to be able to see it as well. We take care of enforcing these conditions with the line </font><font face="Courier New" size="2" color="#000000">preCond&nbsp;=&nbsp;[objVisible,&nbsp;touchObj]</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which adds a couple of <i>preconditions</i> to the digging action on the digging class. Although it's possible (and not actually all that difficult) to define preconditions of your own, the common ones are already defined for you in the library. In particular, the </font><font face="Courier New" size="2" color="#000000">objVisible</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> precondition prevents the action from proceeding if the object is not visible for any reason (this will become relevant when we go on to make the cave dark). Similarly </font><font face="Courier New" size="2" color="#000000">touchObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will not allow an actor to dig in the ground unless the actor is in a position to touch the ground (this precondition will not strictly affect anything in this game, but we'll add it anyway for the sake of completeness and in order to illustrate the principle).
+<br>
+
+<br>
+We next need to define the spade:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">spade&nbsp;:&nbsp;Thing&nbsp;'sturdy&nbsp;spade'&nbsp;'spade'
+<br>
+@insideCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;sturdy&nbsp;spade&nbsp;with&nbsp;a&nbsp;broad&nbsp;steel&nbsp;blade&nbsp;and&nbsp;a&nbsp;firm&nbsp;wooden&nbsp;handle.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;sturdy&nbsp;spade&nbsp;leans&nbsp;against&nbsp;the&nbsp;wall&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;iobjFor(DigWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Placing the spade inside the cave is a temporary measure to make it easy to test that the digging operation works as we intend. The only point to note about the definition of this object is the empty </font><font face="Courier New" size="2" color="#000000">verify()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">check()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> methods we supply for </font><font face="Courier New" size="2" color="#000000">iobjFor(DigWith)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to ensure that the spade raises no objection to be used as a digging implement (i.e. the indirect object of a <b>dig with</b> command).
+<br>
+
+<br>
+Now we need to supply our </font><font face="Courier New" size="2" color="#000000">Diggable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object, the ground. Since digging the ground will create a hole, and a pair of boots will be found lurking in the hole, we may as well deal with them at the same time.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">caveFloor&nbsp;:&nbsp;Diggable&nbsp;'cave&nbsp;floor/ground'&nbsp;'cave&nbsp;floor'
+<br>
+&nbsp;&nbsp;@insideCave
+<br>
+&nbsp;&nbsp;"The&nbsp;floor&nbsp;of&nbsp;the&nbsp;cave&nbsp;is&nbsp;quite&nbsp;sandy;&nbsp;near&nbsp;the&nbsp;centre&nbsp;is
+<br>
+&nbsp;&nbsp;&lt;&lt;hasBeenDug&nbsp;?&nbsp;'a&nbsp;freshly&nbsp;dug&nbsp;hole'&nbsp;:&nbsp;'a&nbsp;patch&nbsp;that&nbsp;looks&nbsp;as&nbsp;if&nbsp;it&nbsp;has
+<br>
+&nbsp;&nbsp;been&nbsp;recently&nbsp;disturbed'&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;hasBeenDug&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;dobjFor(DigWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(hasBeenDug)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You've&nbsp;already&nbsp;dug&nbsp;a&nbsp;hole&nbsp;here.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hasBeenDug&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;dig&nbsp;a&nbsp;small&nbsp;hole&nbsp;in&nbsp;the&nbsp;sandy&nbsp;floor&nbsp;and&nbsp;find&nbsp;a&nbsp;buried&nbsp;pair&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;Wellington&nbsp;boots.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hole.moveInto(self);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(1,&nbsp;'finding&nbsp;the&nbsp;boots');
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+hole&nbsp;:&nbsp;Container,&nbsp;Fixture&nbsp;'hole'&nbsp;'hole'
+<br>
+&nbsp;&nbsp;"There's&nbsp;a&nbsp;small&nbsp;round&nbsp;hole,&nbsp;freshly&nbsp;dug&nbsp;in&nbsp;the&nbsp;floor&nbsp;near&nbsp;the&nbsp;centre
+<br>
+&nbsp;&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;boots&nbsp;:&nbsp;Wearable&nbsp;'old&nbsp;pair&nbsp;of&nbsp;wellington&nbsp;boots/wellies'&nbsp;'old&nbsp;pair&nbsp;of&nbsp;boots'&nbsp;&nbsp;
+<br>
+&nbsp;"They&nbsp;look&nbsp;ancient,&nbsp;battered,&nbsp;and&nbsp;scuffed,&nbsp;but&nbsp;probably&nbsp;still&nbsp;waterproof.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;pair&nbsp;of&nbsp;old&nbsp;Wellington&nbsp;boots&nbsp;lies&nbsp;in&nbsp;the&nbsp;hole.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Again, there's little that should require much explanation here. Note that we have moved the original boots and put them inside the hole, giving them an appropriate </font><font face="Courier New" size="2" color="#000000">initSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Since the act of digging undoubtedly will be to create a hole, we make the creation of the hole (simulated by moving the hole object into the floor) the main effect of the DigWith action - again note that we do this by using the hole's </font><font face="Courier New" size="2" color="#000000">moveInto</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, <i>not</i> by setting its </font><font face="Courier New" size="2" color="#000000">location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property directly. We make the hole both a </font><font face="Courier New" size="2" color="#000000">Container</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (so the boots can be in it) and a </font><font face="Courier New" size="2" color="#000000">Fixture</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (so we can't carry it away). We use the </font><font face="Courier New" size="2" color="#000000">check()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method to trap a second or subsequent attempt to dig in the floor, although it would have worked just as well to put the same test in the </font><font face="Courier New" size="2" color="#000000">action()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method - in this case it's simply a matter of preference (I slightly prefer it the way I did it because the message displayed in the </font><font face="Courier New" size="2" color="#000000">check&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method implies that a second or subsequent request to dig in the cave floor is not even attempted, so there should be no action notifications). The </font><font face="Courier New" size="2" color="#000000">desc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of the floor makes use of the double angle brackets, the </font><font face="Courier New" size="2" color="#000000">?:</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> ternary operator and the custom </font><font face="Courier New" size="2" color="#000000">hasBeenDug</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property to display an appropriate description.
+<br><br>
+Note that as of TADS 3.1.0 there is another way we could have written the desc property of the cave, namely:
+<br>
+<pre>
+caveFloor : Diggable 'cave floor/ground' 'cave floor'
+  @insideCave
+  "The floor of the cave is quite sandy; near the centre is a
+  &lt;&lt;if hasBeenDug&gt;&gt;freshly dug hole&lt;&lt;else&gt;&gt;patch that looks as if it has
+  been recently disturbed&lt;&lt;end&gt;&gt;. "
+</pre>
+
+<br>
+Either way, this <i>almost</i> works fine, apart from one thing: as you'll no doubt discover, it you haven't tried it already, when you try to <b>dig floor with spade</b> you'll be greeted with the message:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Which floor do you mean, the cave floor, or the floor?
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This is somewhat annoying, to say the least. The reason for it is that the </font><font face="Courier New" size="2" color="#000000">Room</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class defines a default set of room components: four walls, a floor, and a ceiling, which normally provide an uninformative default message if you try to examine them. So what we should have done, instead of using @</font><font face="Courier New" size="2" color="#000000">insideCave</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to put our custom floor into the cave, was to include it in the list of room parts. While we're at it, we may as well replace some of the other default room parts:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">caveNorthWall&nbsp;:&nbsp;DefaultWall&nbsp;'north&nbsp;wall'&nbsp;'north&nbsp;wall'
+<br>
+&nbsp;&nbsp;"In&nbsp;the&nbsp;north&nbsp;wall&nbsp;is&nbsp;a&nbsp;narrow&nbsp;gap&nbsp;leading&nbsp;out&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+caveEastWall&nbsp;:&nbsp;DefaultWall&nbsp;'east&nbsp;wall'&nbsp;'east&nbsp;wall'
+<br>
+&nbsp;&nbsp;"The&nbsp;east&nbsp;wall&nbsp;of&nbsp;the&nbsp;cave&nbsp;is&nbsp;quite&nbsp;smooth&nbsp;and&nbsp;has&nbsp;the&nbsp;faint&nbsp;remains&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;something&nbsp;drawn&nbsp;or&nbsp;written&nbsp;on&nbsp;it.&nbsp;Unfortunately&nbsp;it's&nbsp;no&nbsp;longer&nbsp;possible
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;discern&nbsp;whether&nbsp;it&nbsp;was&nbsp;once&nbsp;a&nbsp;Neolithic&nbsp;cave&nbsp;painting&nbsp;or&nbsp;an&nbsp;example
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;modern&nbsp;graffiti.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We then override the </font><font face="Courier New" size="2" color="#000000">roomParts</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of </font><font face="Courier New" size="2" color="#000000">insideCave.</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> At the same time, we must be careful to remove </font><font face="Courier New" size="2" color="#000000">@insideCave</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> from the definition of </font><font face="Courier New" size="2" color="#000000">caveFloor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, otherwise we'll effectively be including the floor in the cave twice. While we're at it, we'll also tweak </font><font face="Courier New" size="2" color="#000000">insideCave's</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> description so that it includes a description of the floor:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">insideCave&nbsp;:&nbsp;Room&nbsp;'Inside&nbsp;a&nbsp;large&nbsp;cave'
+<br>
+&nbsp;&nbsp;"The&nbsp;cave&nbsp;is&nbsp;larger&nbsp;than&nbsp;its&nbsp;narrow&nbsp;entrance&nbsp;might&nbsp;lead&nbsp;one&nbsp;to&nbsp;expect.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;Even&nbsp;a&nbsp;tall&nbsp;adult&nbsp;could&nbsp;stand&nbsp;here&nbsp;quite&nbsp;comfortable,&nbsp;and&nbsp;the&nbsp;cave&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;stretches&nbsp;back&nbsp;quite&nbsp;some&nbsp;way.&nbsp;&lt;&lt;caveFloor.desc&gt;&gt;"
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;outsideCave&nbsp;
+<br>
+&nbsp;&nbsp;north&nbsp;asExit(out)
+<br>
+&nbsp;&nbsp;roomParts&nbsp;=&nbsp;[caveFloor,&nbsp;defaultCeiling,&nbsp;&nbsp;caveNorthWall,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultSouthWall,&nbsp;caveEastWall,&nbsp;defaultWestWall]
+<br>
+
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">By the way, note that we made Diggable inherit from </font><font face="Courier New" size="2" color="#000000">Floor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather than, say,  </font><font face="Courier New" size="2" color="#000000">Fixture</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; this tells the library that the caveFloor (derived from </font><font face="Courier New" size="2" color="#000000">Floor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> via </font><font face="Courier New" size="2" color="#000000">Diggable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) is the room part acting as the floor, so that, for example <b>put torch on ground</b> is equivalent to <b>drop torch</b>. If you compile and run the game again you should find it works much more satisfactorily, with the added bonus that if you examine the cave walls, two of them will be a bit more interesting than the defaults would have been.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="crossingthestream.htm">[Previous] </a>&nbsp;&nbsp;<a href="callingaspadeaspade.htm">[Next] </a></I></FONT></P>
+</body></html>

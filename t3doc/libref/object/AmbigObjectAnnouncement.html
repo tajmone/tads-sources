@@ -1,0 +1,67 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>AmbigObjectAnnouncement</title></head><body>
+<table class=ban><tr><td align=left><span class=title>AmbigObjectAnnouncement</span><span class=type>class</span><td align=right><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#447">447</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Ambiguous object announcement.  We display this when the parser   manages to resolve a noun phrase to an object (or objects) from an   ambiguous set of possibilities, without having to ask the player for   help but also without absolute certainty that the objects selected are   the ones the player meant.  This happens when more than enough objects   are logical possibilities for selection, but some objects are more   logical choices than others.  The parser picks the most logical of the   available options, but since other logical choices are present, the   parser can't be certain that it chose the ones the player actually   meant.  Because of this uncertainty, we generate one of these   announcements each time this happens.  This report lets the player   know exactly which object we chose, which will immediately alert the   player when our selection is different from what they had in mind. <p>   In form, this type of announcement usually looks just like a default   object announcement.
+<p>
+<code>class
+<b>AmbigObjectAnnouncement</b> :  &nbsp; <a href="../object/CommandAnnouncement.html">CommandAnnouncement</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>AmbigObjectAnnouncement</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandAnnouncement.html">CommandAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandReport.html">CommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#messageProp_">messageProp_</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandAnnouncement</code> :<br>
+<code>
+<a href="../object/CommandAnnouncement.html#messageText_">messageText_</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandReport</code> :<br>
+<code>
+<a href="../object/CommandReport.html#action_">action_</a>&nbsp;
+<a href="../object/CommandReport.html#isFailure">isFailure</a>&nbsp;
+<a href="../object/CommandReport.html#isQuestion">isQuestion</a>&nbsp;
+<a href="../object/CommandReport.html#iter_">iter_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+</code><p>
+<p>Inherited from <code>CommandAnnouncement</code> :<br>
+<code>
+<a href="../object/CommandAnnouncement.html#construct">construct</a>&nbsp;
+<a href="../object/CommandAnnouncement.html#getMessageText">getMessageText</a>&nbsp;
+<a href="../object/CommandAnnouncement.html#showMessage">showMessage</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandReport</code> :<br>
+<code>
+<a href="../object/CommandReport.html#getAction">getAction</a>&nbsp;
+<a href="../object/CommandReport.html#isActionImplicit">isActionImplicit</a>&nbsp;
+<a href="../object/CommandReport.html#isActionNestedIn">isActionNestedIn</a>&nbsp;
+<a href="../object/CommandReport.html#isPartOf">isPartOf</a>&nbsp;
+<a href="../object/CommandReport.html#setAction">setAction</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="messageProp_"></a>
+<table class=decl><tr><td><code>messageProp_</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#449">449</a>]</table><div class=desc>show the announceAmbigObject announcement<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<i>(none)</i>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

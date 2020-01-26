@@ -1,0 +1,76 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>TravelWithMessage</title><meta name="keywords" content="TravelWithMessage,TravelWithMessage,StopEventList,eventList,doScript,new function,getState"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>TravelWithMessage : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="stairwayup.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="secretdoor.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">TravelWithMessage is a mix-in class for use with TravelConnectors (note that some descendents of TravelConnector - <a href="travelmessage.htm">TravelMessage</a>, <a href="notravelmessage.htm">NoTravelMessage</a> and <a href="fakeconnector.htm">FakeConnector</a> - include TravelWithMessage in their definition in any case). TravelConnector overrides noteTraversal(traveler) to call showTravelDesc(), which in turn calls either travelDesc (if the Player Character is doing the traveling) or npcTravelDesc (if an NPC is doing the traveling).
+<br>
+
+<br>
+Firstly, we'll add TravelWithMessage to the upLadder's class list so that we can use its travelDesc property. We take advantage of the fact that this will call upLadder's doScript method provided that it also inherits from the <a href="script.htm">Script</a> class or one of its descendents. In this case we'll use the <a href="stopeventlist.htm">StopEventList</a> class with two items in its eventList. The first time the PC traverses the upLadder the first event in the eventList will be fired, and thereafter the second one will (defining with the <a href="passagetemplate.htm">Passage template</a>):
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">
+<br>
++&nbsp;upLadder&nbsp;:&nbsp;TravelWithMessage,&nbsp;StairwayUp,&nbsp;StopEventList&nbsp;&nbsp;-&gt;downLadder&nbsp;
+<br>
+&nbsp;&nbsp;'sturdy&nbsp;steel&nbsp;ladder'&nbsp;'sturdy&nbsp;steel&nbsp;ladder'
+<br>
+&nbsp;&nbsp;"The&nbsp;ladder&nbsp;leads&nbsp;up&nbsp;through&nbsp;a&nbsp;hole&nbsp;in&nbsp;the&nbsp;ceiling.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+<b>&nbsp;&nbsp;eventList&nbsp;=</b>&nbsp;<b>
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;function
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"As&nbsp;you&nbsp;climb&nbsp;the&nbsp;ladder&nbsp;you&nbsp;hear&nbsp;what&nbsp;sounds&nbsp;like&nbsp;a&nbsp;thunderous&nbsp;rockfall
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;above.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entranceTunnel.blocked&nbsp;=&nbsp;true;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'You&nbsp;climb&nbsp;the&nbsp;ladder&nbsp;again.&nbsp;'
+<br>
+&nbsp;&nbsp;]&nbsp;&nbsp;
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This takes advantage of the fact that an eventList can contain, inter alia, single-quoted strings (such as 'You climb the ladder again. '), which will just be displayed, or anonymous function pointers, in which case the anonymous function will be executed. To create an anonymous function containing more than one statement, as we wish to do here, we have to use the new function syntax:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">new&nbsp;function
+<br>
+{
+<br>
+&nbsp;&nbsp;<i>statement1;
+<br>
+&nbsp;&nbsp;statement2;
+<br>
+</i>&nbsp;&nbsp;...
+<br>
+}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In this case the function simply prints an appropriate message about the rockfall and sets <a href="roomconnector.htm">entranceTunnel</a>'s blocked property to true.
+<br>
+
+<br>
+You can now recompile and test the game so far.
+<br>
+</font></font>
+
+</body></html>

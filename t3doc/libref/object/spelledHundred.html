@@ -1,0 +1,21 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>spelledHundred</title></head><body>
+<table class=ban><tr><td align=left><span class=title>spelledHundred</span><span class=type>GrammarProd</span></table><p>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledHundred(aHundred).html">spelledHundred(aHundred)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7790">7790</a>]</code></table><div class=gramrule> 'a' 'hundred'</div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledHundred(aHundredPlus).html">spelledHundred(aHundredPlus)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7794">7794</a>]</code></table><div class=gramrule>    'a' 'hundred' 'and' spelledSmallNumber-&gt;num_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledHundred(hundreds).html">spelledHundred(hundreds)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7778">7778</a>]</code></table><div class=gramrule> spelledSmallNumber-&gt;hun_ 'hundred'<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledHundred(hundredsPlus).html">spelledHundred(hundredsPlus)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7783">7783</a>]</code></table><div class=gramrule>    spelledSmallNumber-&gt;hun_ 'hundred' spelledSmallNumber-&gt;num_<br>    | spelledSmallNumber-&gt;hun_ 'hundred' 'and'-&gt;and_ spelledSmallNumber-&gt;num_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledHundred(small).html">spelledHundred(small)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7774">7774</a>]</code></table><div class=gramrule> spelledSmallNumber-&gt;num_</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

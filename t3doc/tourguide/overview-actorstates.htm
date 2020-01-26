@@ -1,0 +1,74 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Overview - Actor States</title><meta name="keywords" content="ActorState,stateDesc,specialDesc,obeyCommand,takeTurn,afterAction,beforeAction,beforeTravel,afterTravel,isInitState,arrivingTurn,autoSuggest,getActor,curState,setCurState"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Overview - Actor States
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="movingactorsaround.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="hermitactorstate.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Over the course of a game a sophisticated NPC may be doing many different things - talking with the player character (or resolutely ignoring him), leaning against a wall waiting for something to happen, attacking the PC in a fit of fury, going about his or her daily business, interfering with the PC's plans or following him around to lend a helping hand, and any number of other things that authors may dream up. Where these different activities (or inactivities) are sufficiently different that we should want to describe the NPC in a different way and to have the NPC respond or behave in a different way, we can use a different ActorState. An ActorState is an abstract object (not a representation of a physical game object) which we nest inside its associated actor, and which defines the state the actor is in.
+<br>
+
+<br>
+Although one can use the ActorState class itself (and in some cases, particularly with non-human NPCs this may be appropriate), often it is the more specialized subclasses of ActorState that are employed. The simplest of these, the <a href="hermitactorstate.htm">HermitActorState</a>, it used when you want the NPC to ignore the PC altogether (because the NPC is unconscious, preoccupied with something else, or just pointedly ignoring the PC). An NPC who's ready to engage in conversation with the PC but is not actually talking with him at the moment would probably be in a <a href="conversationreadystate.htm">ConversationReadyState</a>, which would switch to an associate <a href="inconversationstate.htm">InConversationState</a> while conversation is actually in progress. For a sidekick NPC who's following the PC around of his travels (or a hostile one that's pursuing him) you'd use an <a href="accompanyingstate.htm">AccompanyingState</a> (together with an <a href="accompanyingintravelstate.htm">AccompanyingInTravelState</a>), while if you want the NPC to lead the PC around, you might use <a href="guidedtourstate.htm">GuidedTourState</a> and <a href="guidedintravelstate.htm">GuidedInTravelState</a>.
+<br>
+
+<br>
+Although some of these states have special methods and properties that apply to them, they all derive a great many properties and methods in common from ActorState. The subset of these that you will most often want to override with your own code are:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>stateDesc</b> - this is a message that's added to the actor's basic description (the "npcDesc" property in the Actor object). Most actors will have a permanent description that never changes - a basic description of their physical appearance - along with some extra information that describes what they're doing right now. The stateDesc lets you add this extra state-dependent part.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>specialDesc</b> - display's the actor's in-room description. This is the description displayed in the room description (for example, when entering a room, or in response to a LOOK command). By default, we'll invoke the actor's actorHereDesc method. You may or may not want to call this <i>inherited</i> behaviour when overriding specialDesc; for example, quite a serviceable specialDesc can often be set up by defining it as {inherited; stateDesc; }.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>obeyCommand(issuingActor, action)</b> - determines if the NPC should obey the command from the given actor to carry out the given action. By default this returns nil to refuse all commands.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>takeTurn()</b> - this is called once per turn. This allows the actor to carry out scripted behaviour appropriate to the current state. Note that if you override this method you should <i>always</i> call <i>inherited</i> in your override (unless you are absolutely sure you don't want the inherited behaviour), since by default this method carries out several important steps that you don't want to disable. One of the things takeTurn does is call doScript if the ActorState also inherits from Script, which means that (for example) you can add an EventList class to the class list and takeTurn will automatically work through the eventList you define for the ActorState.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>afterAction()</b> - this method can contain code to be run after the PC performs an action in the NPC's scope.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>beforeAction()</b> - this method can contain code to be run before the PC performs an action in the NPC's scope; the action can be vetoed with an exit command.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>afterTravel(traveler, connector)</b>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>beforeTravel(traveler, connector)</b> - these methods are invoked just before and after a traveler travels via travelerTravelTo(); beforeTravel is called on each object connected by containment in its old location, and afterTravel is called on each object connected by containment to the traveler in the new location. These notifications are more precise than using beforeAction() and afterAction() with theTravelVia pseudo-action, because these methods are called only when travel is actually occurring, whereas TravelVia will fire notifications even when travel isn't actually possible. A beforeTravel() method can veto the travel action using "exit". The notification is invoked before the travel is actually performed, and even before a description of the departure is produced. Although ActorAction.beforeTravel(traveler, connector) does nothing by default, this is not so of many of its subclasses, so it's a good idea to get into the habit of calling inherited(traveler, connector) when overriding this method.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>isInitState</b> - if set to true, then the library will automatically set the corresponding actor's curState property to point to that ActorState during pre-initialization; in other words, set this to true on the ActorState you want this actor to start off in.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>arrivingTurn() </b>- when group travel is performed using the AccompanyingInTravelState class, this is essentially called in lieu of the regular takeTurn() method on the state that is coming into effect after the group travel; in other words, if an NPC is following the PC around, this method will be called each time they arrive at a new location.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>autoSuggest</b> - set to nil to disable automatic topic inventory listing on TALK TO commands.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>getActor()</b> - returns the actor object to which this ActorState belongs; you <i>never</i> want to override this method, but you may frequently want access to its result.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+In addition there's a couple of properties of Actor associated with ActorStates that you need to know about: <b>curState</b> contains the current ActorState for the Actor, while <b>setCurState(state)</b> changes the Actor into the new state ActorState. To change the current ActorState of an Actor, <i>always</i> call setCurState(state), <i>never</i> set curState directly (the reason being that setCurState looks after all the necessary side-effects of the state change).
+<br>
+
+<br>
+To give some idea of how this might look in practice, we could define an initial ActorState for the ghost like this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;ghostHovering&nbsp;:&nbsp;ActorState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"The&nbsp;ghost&nbsp;is&nbsp;hovering&nbsp;over&nbsp;its&nbsp;tomb,&nbsp;staring&nbsp;at&nbsp;you&nbsp;intently.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"It's&nbsp;hovering&nbsp;over&nbsp;its&nbsp;tomb.&nbsp;"
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This should, of course, immediately follow the definition of the ghost actor object.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

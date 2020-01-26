@@ -1,0 +1,231 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ActorState</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ActorState</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4116">4116</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   An ActorState represents the current state of an Actor. <p>   The main thing that makes actors special is that they're supposed to   be living, breathing people or creatures.  That substantially   complicates the programming of one of these objects, because in order   to create the appearance of animation, many things about an actor have   to change over time. <p>   The ActorState is designed to make it easier to program this   variability that's needed to make an actor seem life-like.  The idea   is to separate the parts of an actor that tend to change according to   what the actor is doing, moving all of those out of the Actor object   and into an ActorState object instead.  Each ActorState object   represents one state of an actor (i.e., one thing the actor can be   doing).  The Actor object becomes easier to program, because we've   reduced the Actor object to the character's constant, unchanging   features.  The stateful part is also easier to program, because we   don't have to make it conditional on anything; we simply define all of   the stateful parts in an ActorState, and we define separate ActorState   objects for the different states. <p>   For example, suppose we want a shopkeeper actor, whose activities   include waiting behind the counter, sweeping the floor, and stacking   cans.  We'd define one ActorState object for each of these activities.   When the shopkeeper switches from standing behind the counter to   sweeping, for example, we simply set the "curState" property in the   shopkeeper object so that it points to the "sweeping" state object.   When it's time to stack cans, we change "curState" to it points to the   "stacking cans" state object.
+<p>
+<code>class
+<b>ActorState</b> :  &nbsp; <a href="../object/TravelMessageHandler.html">TravelMessageHandler</a> &nbsp; <a href="../object/ActorTopicDatabase.html">ActorTopicDatabase</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ActorState</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TravelMessageHandler.html">TravelMessageHandler</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorTopicDatabase.html">ActorTopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicDatabase.html">TopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>ActorState</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AccompanyingInTravelState.html">AccompanyingInTravelState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GuidedInTravelState.html">GuidedInTravelState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AccompanyingState.html">AccompanyingState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GuidedTourState.html">GuidedTourState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConversationReadyState.html">ConversationReadyState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HermitActorState.html">HermitActorState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InConversationState.html">InConversationState</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#autoSuggest">autoSuggest</a>&nbsp;
+<a href="#getImpliedConvState">getImpliedConvState</a>&nbsp;
+<a href="#isInitState">isInitState</a>&nbsp;
+<a href="#location">location</a>&nbsp;
+<a href="#stateDesc">stateDesc</a>&nbsp;
+<a href="#stateSuggestedTopics">stateSuggestedTopics</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ActorTopicDatabase</code> :<br>
+<code>
+<a href="../object/ActorTopicDatabase.html#askForTopics">askForTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#askTopics">askTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#commandTopics">commandTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#giveTopics">giveTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#initiateTopics">initiateTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#miscTopics">miscTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#showTopics">showTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#specialTopics">specialTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#tellTopics">tellTopics</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicDatabase</code> :<br>
+<code>
+<a href="../object/TopicDatabase.html#limitSuggestions">limitSuggestions</a>&nbsp;
+<a href="../object/TopicDatabase.html#suggestedTopics">suggestedTopics</a>&nbsp;
+<a href="../object/TopicDatabase.html#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="../object/TopicDatabase.html#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#activateState">activateState</a>&nbsp;
+<a href="#afterAction">afterAction</a>&nbsp;
+<a href="#afterTravel">afterTravel</a>&nbsp;
+<a href="#arrivingTurn">arrivingTurn</a>&nbsp;
+<a href="#arrivingWithDesc">arrivingWithDesc</a>&nbsp;
+<a href="#beforeAction">beforeAction</a>&nbsp;
+<a href="#beforeTravel">beforeTravel</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#deactivateState">deactivateState</a>&nbsp;
+<a href="#distantSpecialDesc">distantSpecialDesc</a>&nbsp;
+<a href="#endConversation">endConversation</a>&nbsp;
+<a href="#getActor">getActor</a>&nbsp;
+<a href="#getNominalTraveler">getNominalTraveler</a>&nbsp;
+<a href="#getSuggestedTopicList">getSuggestedTopicList</a>&nbsp;
+<a href="#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="#handleConversation">handleConversation</a>&nbsp;
+<a href="#initializeActorState">initializeActorState</a>&nbsp;
+<a href="#justFollowed">justFollowed</a>&nbsp;
+<a href="#notifyTopicResponse">notifyTopicResponse</a>&nbsp;
+<a href="#obeyCommand">obeyCommand</a>&nbsp;
+<a href="#remoteSpecialDesc">remoteSpecialDesc</a>&nbsp;
+<a href="#showSpecialDescInContents">showSpecialDescInContents</a>&nbsp;
+<a href="#specialDesc">specialDesc</a>&nbsp;
+<a href="#specialDescListWith">specialDescListWith</a>&nbsp;
+<a href="#suggestTopicsFor">suggestTopicsFor</a>&nbsp;
+<a href="#takeTurn">takeTurn</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TravelMessageHandler</code> :<br>
+<code>
+<a href="../object/TravelMessageHandler.html#sayArriving">sayArriving</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDir">sayArrivingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDownStairs">sayArrivingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingLocally">sayArrivingLocally</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingThroughPassage">sayArrivingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingUpStairs">sayArrivingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingViaPath">sayArrivingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDeparting">sayDeparting</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingDir">sayDepartingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingDownStairs">sayDepartingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingLocally">sayDepartingLocally</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingThroughPassage">sayDepartingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingUpStairs">sayDepartingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingViaPath">sayDepartingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayTravelingRemotely">sayTravelingRemotely</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorTopicDatabase</code> :<br>
+<code>
+<a href="../object/ActorTopicDatabase.html#initiateTopic">initiateTopic</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#showTopicResponse">showTopicResponse</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicDatabase</code> :<br>
+<code>
+<a href="../object/TopicDatabase.html#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#addTopic">addTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#addTopicToList">addTopicToList</a>&nbsp;
+<a href="../object/TopicDatabase.html#compareVocabMatch">compareVocabMatch</a>&nbsp;
+<a href="../object/TopicDatabase.html#findTopicResponse">findTopicResponse</a>&nbsp;
+<a href="../object/TopicDatabase.html#handleTopic">handleTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeSuggestedTopic">removeSuggestedTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeTopic">removeTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeTopicFromList">removeTopicFromList</a>&nbsp;
+<a href="../object/TopicDatabase.html#showSuggestedTopicList">showSuggestedTopicList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="autoSuggest"></a>
+<table class=decl><tr><td><code>autoSuggest</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4156">4156</a>]</table><div class=desc>   Should we automatically suggest topics when the player greets our   actor?  By default, we show our "topic inventory" (the list of   currently active topics marked as "suggested").  This can be set   to nil to suppress this automatic suggestion list. <p>   Some authors might not like the idea of automatically suggesting   topics every time we greet a character, but nonetheless wish to   keep the TOPICS command as a sort of hint mechanism.  This flag   can be used for this purpose.  Authors who don't like suggested   topics at all can simply skip defining any SuggestedTopic entries,   in which case there will never be anything to suggest, rendering   this flag moot. <p>
+</div>
+<a name="getImpliedConvState"></a>
+<table class=decl><tr><td><code>getImpliedConvState</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4374">4374</a>]</table><div class=desc>   Get my implied in-conversation state.  This is used when our actor   initiates a conversation without specifying a particular   conversation state to enter (i.e., actor.initiateConversation() is   called with 'state' set to nil).  By default, we don't have an   implied conversation state, so we just return 'self' to indicate   that we want to stay in the current state.  States that are   coupled with separate in-conversation states, such as   ConversationReadyState, should return their associated   conversation states here. <p>
+</div>
+<a name="isInitState"></a>
+<table class=decl><tr><td><code>isInitState</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4140">4140</a>]</table><div class=desc>   Is this the actor's initial state?  If so, we'll automatically   set the actor's curState to point to 'self' during   pre-initialization.  For obvious reasons, this should be set to   true for only one state for each actor; if multiple states are   all flagged as initial for the same actor, we'll pick on   arbitrarily as the actual initial state. <p>
+</div>
+<a name="location"></a>
+<table class=decl><tr><td><code>location</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4167">4167</a>]</table><div class=desc>   The 'location' is the actor that we're associated with. <p>   ActorState objects aren't actual simulation objects, so the   'location' property isn't used for containment.  For convenience,   though, use it to indicate which actor we're associated with; this   lets us use the '+' notation to define the state objects   associated with an actor. <p>
+</div>
+<a name="stateDesc"></a>
+<table class=decl><tr><td><code>stateDesc</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4251">4251</a>]</table><div class=desc>   Our "state" description.  This shows information on what the actor   is *currently* doing; we display this after the static part of the   actor's description on EXAMINE &lt;ACTOR&gt;.  By default, we add   nothing here, but state objects that represent scripted activies   should override this to describe their scripted activities. <p>
+</div>
+<a name="stateSuggestedTopics"></a>
+<table class=decl><tr><td><code>stateSuggestedTopics</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4361">4361</a>]</table><div class=desc>   get the topic suggestions for this state - by default, we just   return our own suggestedTopics list <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="activateState"></a>
+<table class=decl><tr><td><code>activateState (actor, oldState)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4123">4123</a>]</table><div class=desc>   Activate the state - this is called when we're about to become   the active state for an actor.  We do nothing by default. <p>
+</div>
+<a name="afterAction"></a>
+<table class=decl><tr><td><code>afterAction ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4491">4491</a>]</table><div class=desc>handle an after-action notification for our actor<p>
+</div>
+<a name="afterTravel"></a>
+<table class=decl><tr><td><code>afterTravel (traveler, connector)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4521">4521</a>]</table><div class=desc>handle an after-travel notification<p>
+</div>
+<a name="arrivingTurn"></a>
+<table class=decl><tr><td><code>arrivingTurn ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4706">4706</a>]</table><div class=desc>   Perform any special action on a group-travel arrival.  When group   travel is performed using the AccompanyingInTravelState class,   this is essentially called in lieu of the regular takeTurn()   method on the state that is coming into effect after the group   travel.  (Not really, but effectively: the accompanying travel   state will still be in effect, so its takeTurn() method is what's   really called, but that method will call this method explicitly.)   By default, we do nothing.  Since this runs on our turn, it's a   good place to put any scripted behavior we perform on arriving at   our new destination after the group travel. <p>
+</div>
+<a name="arrivingWithDesc"></a>
+<table class=decl><tr><td><code>arrivingWithDesc ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4692">4692</a>]</table><div class=desc>   Our group-travel arrival description.  By default, when we perform   an accompanying travel with another actor as the lead actor, the   accompanying travel state will display this message instead of our   specialDesc when the lead actor first arrives in the new location.   We'll just display our own specialDesc by default, but this should   usually be overridden to say something specific to the group   travel arrival.  The actual message is entirely dependent on the   nature of the group travel, which is why we don't provide a   special message by default. <p>   For scripted behavior, it's sometimes better to use arrivingTurn()   rather than this method to describe the behavior.   arrivingWithDesc() is called as part of the room description, so   it's best for any message shown here to fit well into the usual   room description format.  For more complex transitions into the   new room state, arrivingTurn() is sometimes more appropriate,   since it runs like a daemon, after the arrival (and thus the new   room description) is completed. <p>
+</div>
+<a name="beforeAction"></a>
+<table class=decl><tr><td><code>beforeAction ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4485">4485</a>]</table><div class=desc>   Handle a before-action notification for our actor.  By default,   we do nothing. <p>
+</div>
+<a name="beforeTravel"></a>
+<table class=decl><tr><td><code>beforeTravel (traveler, connector)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4496">4496</a>]</table><div class=desc>handle a before-travel notification<p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (actor)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4117">4117</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="deactivateState"></a>
+<table class=decl><tr><td><code>deactivateState (actor, newState)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4130">4130</a>]</table><div class=desc>   Deactivate the state - this is called when we're the active state   for an actor, and the actor is about to switch to a new state.   We do nothing by default. <p>
+</div>
+<a name="distantSpecialDesc"></a>
+<table class=decl><tr><td><code>distantSpecialDesc ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4210">4210</a>]</table><div class=desc>show the special description for the actor at a distance<p>
+</div>
+<a name="endConversation"></a>
+<table class=decl><tr><td><code>endConversation (actor, reason)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4534">4534</a>]</table><div class=desc>   End the current conversation.  'reason' indicates why we're   leaving the conversation - this is one of the endConvXxx enums   defined in adv3.h.  beforeTravel() calls this automatically when   the other party is trying to depart, and they're talking to us. <p>   This returns true if we wish to allow the conversation to end,   nil if not. <p>
+</div>
+<a name="getActor"></a>
+<table class=decl><tr><td><code>getActor ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4174">4174</a>]</table><div class=desc>   Get the actor associated with the state - this is simply the   'location' property.  If we're nested inside another ActorState,   then our actor is our enclosing ActorState's actor. <p>
+</div>
+<a name="getNominalTraveler"></a>
+<table class=decl><tr><td><code>getNominalTraveler ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4714">4714</a>]</table><div class=desc>   For our TravelMessageHandler implementation, the nominal traveler   is our actor.  Note that this is all we need to implement for   travel message handling, since we simply inherit the default   handling for all of the arrival/departure messages. <p>
+</div>
+<a name="getSuggestedTopicList"></a>
+<table class=decl><tr><td><code>getSuggestedTopicList ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4315">4315</a>]</table><div class=desc>   Get our suggested topic list.  The suggested topic list consists   of the union of the current ConvNode's suggestion list, the   ActorState list, and the Actor's suggestion list.  In each case,   the suggestion list is the list of all SuggestedTopic objects at   each database level. <p>   The suggestions are arranged in a hierarchy, and each hierarchy   level can prevent suggestions from a lower level from being   included.  The top level of the hierarchy is the ConvNode; the   next level is the ActorState; and the last level is the Actor.   Suggestions are limited at each level with the 'limitSuggestions'   property: if true, suggestions from lower levels are not included. <p>
+</div>
+<a name="getTopicOwner"></a>
+<table class=decl><tr><td><code>getTopicOwner ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4183">4183</a>]</table><div class=desc>the owner of any topic entries within the state is just my actor<p>
+</div>
+<a name="handleConversation"></a>
+<table class=decl><tr><td><code>handleConversation (otherActor, topic, convType)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4397">4397</a>]</table><div class=desc>   General conversation handler.  This can be used to process most   conversational commands - ASK, TELL, GIVE, SHOW, etc.  The   standard sequence of processing is as follows: <p>   - If our actor has a non-nil current conversation node (ConvNode)   object, and the ConvNode wants to handle the event, let the   ConvNode handle it. <p>   - Otherwise, check our own topic database to see if we can find a   TopicEntry that matches the topic; if we can find one, let the   TopicEntry handle it. <p>   - Otherwise, let the actor handle it. <p>   'otherActor' is the actor who originated the conversation command   (usually the player character). 'topic' is the subject being   discussed (the indirect object of ASK ABOUT, for example).   convType' is a ConvType describing the type of conversational   action we're performing. <p>
+</div>
+<a name="initializeActorState"></a>
+<table class=decl><tr><td><code>initializeActorState ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4186">4186</a>]</table><div class=desc>initialize the actor state<p>
+</div>
+<a name="justFollowed"></a>
+<table class=decl><tr><td><code>justFollowed (success)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4667">4667</a>]</table><div class=desc>   Receive notification that we just followed another actor as part   of our programmed following behavior (in other words, due to our   'followingActor' property, not due to an explicit FOLLOW command   directed to us).  'success' is true if we ended up in the actor's   location, nil if not. <p>   This can be used to update the actor's state after a 'follow'   operation occurs; for example, if the actor's state depends on   the actor's location, this can update the state accordingly.  We   don't do anything by default. <p>
+</div>
+<a name="notifyTopicResponse"></a>
+<table class=decl><tr><td><code>notifyTopicResponse (fromActor, entry)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4479">4479</a>]</table><div class=desc>   Receive notification that a TopicEntry is being used (via its   handleTopic method) to respond to a command.  The TopicEntry will   call this before it shows its message or takes any other action.   By default, we do nothing. <p>
+</div>
+<a name="obeyCommand"></a>
+<table class=decl><tr><td><code>obeyCommand (issuingActor, action)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4259">4259</a>]</table><div class=desc>   Should we obey an action?  If so, returns true; if not, displays   an appropriate response and returns nil.  This will only be   called when the issuing actor is different from our actor, since   a command to oneself is implicitly always obeyed. <p>
+</div>
+<a name="remoteSpecialDesc"></a>
+<table class=decl><tr><td><code>remoteSpecialDesc (actor)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4213">4213</a>]</table><div class=desc>show the special description for the actor in a remote location<p>
+</div>
+<a name="showSpecialDescInContents"></a>
+<table class=decl><tr><td><code>showSpecialDescInContents (actor, cont)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4238">4238</a>]</table><div class=desc>show the special description when we appear in a contents listing<p>
+</div>
+<a name="specialDesc"></a>
+<table class=decl><tr><td><code>specialDesc ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4207">4207</a>]</table><div class=desc>   Show the special description for the actor when the actor is   associated with this state.  By default, we use the actor's   actorHereDesc message, which usually shows a generic message   (something like "Bob is here" or "Bob is sitting on the chair") to   indicate that the actor is present. <p>   States representing scripted activities should override these to   indicate what the actor is doing: "Bob is sweeping the floor," for   example. <p>
+</div>
+<a name="specialDescListWith"></a>
+<table class=decl><tr><td><code>specialDescListWith ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4224">4224</a>]</table><div class=desc>   The list group(s) for the special description.  By default, if   our specialDesc isn't overridden, we'll keep this in sync with   the specialDesc by returning our actor's actorListWith.  And if   specialDesc *is* overridden, we'll just return an empty list to   indicate that we're not part of any list group.  If you want to   provide your own listing group special to the state, simply   override this and speicfy the custom list group. <p>
+</div>
+<a name="suggestTopicsFor"></a>
+<table class=decl><tr><td><code>suggestTopicsFor (actor, explicit)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4278">4278</a>]</table><div class=desc>   Suggest topics for the given actor to talk to us about.  This is   called when the given actor enters a TOPICS command (in which   case 'explicit' will be true) or enters a conversation with us   via TALK TO or the like (in which case 'explicit' will be nil). <p>
+</div>
+<a name="takeTurn"></a>
+<table class=decl><tr><td><code>takeTurn ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4619">4619</a>]</table><div class=desc>   Take a turn.  This is called when it's the actor's turn and   there's not something else the actor needs to be doing (such as   following another actor, or carrying out a command in the actor's   pending command queue). <p>   By default, we perform several steps automatically. <p>   First, we check to see if the actor is in a ConvNode.  If so, the   ConvNode takes precedence.  If we haven't been addressed already   in conversation on this turn, we'll let the ConvNode perform its   "continuation," which lets the NPC advance the conversation of its   own volition.  In any case, if we have a current ConvNode, we're   done with the turn, since we assume the actor will want to proceed   with the conversation before pursuing its agenda or performing a   background action. <p>   Second, assuming there's no active ConvNode, we check for an   "agenda" item that's ready to execute.  If we find one, we execute   it, and we're done.  The agenda item takes precedence over any   other scripting we might have. <p>   Finally, if we also inherit from Script, and we didn't find an   active ConvNode or an agenda item that was ready to execute, we   invoke our doScript() method.  This makes it especially easy to   define random background messages for the actor - just add an   EventList class (ShuffledEventList is usually the right one) to   the state's superclass list, and define a list of background   message strings. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

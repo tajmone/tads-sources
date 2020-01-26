@@ -1,0 +1,48 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>Floorless</title></head><body>
+<table class=ban><tr><td align=left><span class=title>Floorless</span><span class=type>class</span><td align=right><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4799">4799</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Make a room "floorless."  This is a mix-in class that you can include   in a superclass list ahead of Room or any of its subclasses to create   a room where support is provided by some means other than standing on   a surface, or where there's simply no support.  Examples: hanging on a   rope over a chasm; climbing a ladder; in free-fall after jumping out   of a plane; levitating in mid-air. <p>   There are two main special features of a floorless room.  First, and   most obviously, there's no "floor" or "ground" object among the room   parts.  We accomplish this by simply subtracting out any object of   class Floor from the room parts list inherited from the combined base   room class. <p>   Second, there's no place to put anything down, so objects dropped here   either disappear from the game or are transported to another location   (the room at the bottom of the chasm, for example).
+<p>
+<code>class
+<b>Floorless</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>Floorless</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>Floorless</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FloorlessRoom.html">FloorlessRoom</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#bottomRoom">bottomRoom</a>&nbsp;
+<a href="#roomParts">roomParts</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#receiveDrop">receiveDrop</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="bottomRoom"></a>
+<table class=decl><tr><td><code>bottomRoom</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4818">4818</a>]</table><div class=desc>   The room below, if any - this is where objects dropped here will   actually end up.  By default, this is nil, which means that   objects dropped here simply disappear from the game.  If there's a   "bottom of chasm" location where dropped objects should land,   provide it here. <p>
+</div>
+<a name="roomParts"></a>
+<table class=decl><tr><td><code>roomParts</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4809">4809</a>]</table><div class=desc>   Omit the default floor/ground objects from the room parts list.   Room classes generally have static room parts lists, so calculate   this once per instance and store the results. <p>   NOTE - if you combine Floorless with a base Room class that has a   dynamic room parts list, you'll need to override this to calculate   the subset dynamically on each invocation. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="receiveDrop"></a>
+<table class=decl><tr><td><code>receiveDrop (obj, desc)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4821">4821</a>]</table><div class=desc>receive a dropped object<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

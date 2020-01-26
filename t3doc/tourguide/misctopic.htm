@@ -1,0 +1,296 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>MiscTopic</title><meta name="keywords" content="MiscTopic,PraiseTopic,ConvType"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>MiscTopic : <a href="topicentry.htm">TopicEntry</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="hellogoodbyetopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="topicgroup.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">MiscTopic is the parent class of TopicEntry types such as <a href="byetopic.htm">ByeTopic</a>, <a href="hellotopic.htm">HelloTopic</a>, <a href="yestopic.htm">YesTopic</a> and <a href="notopic.htm">NoTopic</a> that respond to simple command such as HELLO, BYE, YES and NO without referring to any further object or topic (you don't HELLO SARAH ABOUT FISH as you might ASK SARAH ABOUT FISH, for example).
+<br>
+
+<br>
+Although you'll never have occasion to use MiscTopic directly in the sense of creating MiscTopics in your own game, you can use it as the basis of creating subclasses to extend the conversational commands available in your game. For example, suppose you want to create a PraiseTopic class that provides a response to commands like PRAISE SARAH or PAY SARAH A COMPLIMENT; there are several steps involved in getting this to work, but it's perfectly feasible to do.
+<br>
+
+<br>
+First, simply define PraiseTopic as subclass of MiscTopic:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;PraiseTopic:&nbsp;MiscTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;includeInList&nbsp;=&nbsp;[&amp;miscTopics]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matchList&nbsp;=&nbsp;[praiseTopicObj]
+<br>
+;
+<br>
+
+<br>
+praiseTopicObj&nbsp;:&nbsp;object;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+(Here, praiseTopicObj is simply a dummy object that PraiseTopic will always match, in default of it's having a Thing or Topic to match).
+<br>
+
+<br>
+Next define the action and the vocabulary for your new conversation verb:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">DefineTAction(Praise)
+<br>
+;
+<br>
+
+<br>
+VerbRule(Praise)
+<br>
+&nbsp;&nbsp;(('praise'&nbsp;|&nbsp;'flatter'&nbsp;|&nbsp;'compliment')&nbsp;singleDobj)
+<br>
+&nbsp;&nbsp;|&nbsp;(('pay'&nbsp;|&nbsp;'offer')&nbsp;singleDobj&nbsp;('a'&nbsp;|)&nbsp;'compliment')
+<br>
+&nbsp;&nbsp;:&nbsp;PraiseAction
+<br>
+&nbsp;&nbsp;verbPhrase&nbsp;=&nbsp;'praise/praising&nbsp;(whom)'
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Then provide default handling for this verb on inanimate objects:</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;dobjFor(Praise)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;illogical('Praising&nbsp;{a&nbsp;dobj/him}&nbsp;is&nbsp;a&nbsp;waste&nbsp;of&nbsp;breath.&nbsp;');&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The slightly more complicated part is defining the handling of the new verb on the Actor class, but this will always follow the same pattern:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Actor
+<br>
+&nbsp;&nbsp;dobjFor(Praise)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preCond&nbsp;=&nbsp;[canTalkToObj]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;it&nbsp;is&nbsp;vain&nbsp;to&nbsp;praise&nbsp;oneself&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(gActor&nbsp;==&nbsp;self)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogical('Vanity!&nbsp;Vanity!&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;note&nbsp;that&nbsp;the&nbsp;issuer&nbsp;is&nbsp;targeting&nbsp;us&nbsp;with&nbsp;conversation&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gActor.noteConversation(self);
+<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;let&nbsp;the&nbsp;state&nbsp;object&nbsp;handle&nbsp;it&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curState.handleConversation(gActor,&nbsp;praiseTopicObj,&nbsp;praiseConvType);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+&nbsp;&nbsp;defaultPraiseResponse(actor)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"\^&lt;&lt;theName&gt;&gt;&nbsp;appears&nbsp;totally&nbsp;unmoved&nbsp;by&nbsp;your&nbsp;flattery.&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The new defaultPraiseResponse method we've just defined here does what it says it does: it handles any PRAISE commands directed to the actor if they're not dealt with by a PraiseTopic or DefaultAnyTopic. You may be wondering, however, how the game <i>knows</i> to use this newly-defined method in such a case. You may be wondering also where the praiseConvType object referred to in the action handler comes from. We can now answer both questions together by defining the praiseConvType object, which is the final piece of the mechanism we need to put in place:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">praiseConvType&nbsp;:&nbsp;ConvType
+<br>
+&nbsp;&nbsp;unknownMsgType&nbsp;=&nbsp;'No-one\'s&nbsp;listening.&nbsp;'
+<br>
+&nbsp;&nbsp;topicListProp&nbsp;=&nbsp;&amp;miscTopics
+<br>
+&nbsp;&nbsp;defaultResponseProp&nbsp;=&nbsp;&amp;defaultPraiseResponse
+<br>
+&nbsp;&nbsp;defaultResponse(db,&nbsp;other,&nbsp;topic)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;db.defaultPraiseResponse(other);&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Now we can put our new PraiseTopic to work. We can start by locating the following in sarah's sarahTalking : InConversationState:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;PraiseTopic,&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;Has&nbsp;anyone&nbsp;told&nbsp;you&nbsp;what&nbsp;an&nbsp;attractive&nbsp;woman&nbsp;you&nbsp;are?&lt;/q&gt;&nbsp;you&nbsp;enquire.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I\'m&nbsp;quite&nbsp;immune&nbsp;to&nbsp;such&nbsp;flattery.&lt;/q&gt;&nbsp;she&nbsp;informs&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;You&nbsp;strike&nbsp;me&nbsp;as&nbsp;a&nbsp;brave&nbsp;and&nbsp;resourceful&nbsp;woman.&lt;/q&gt;&nbsp;you&nbsp;remark.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;What&nbsp;&lt;i&gt;can&lt;/i&gt;&nbsp;you&nbsp;be&nbsp;basing&nbsp;that&nbsp;opinion&nbsp;on?&lt;/q&gt;&nbsp;she&nbsp;complains&nbsp;-
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;though&nbsp;she&nbsp;does&nbsp;not&nbsp;seem&nbsp;entirely&nbsp;displeased.&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;think&nbsp;I&nbsp;could&nbsp;really&nbsp;get&nbsp;to&nbsp;like&nbsp;you.&lt;/q&gt;&nbsp;you&nbsp;tell&nbsp;her.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I\'m&nbsp;still&nbsp;reserving&nbsp;judgment&nbsp;on&nbsp;you.&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;cautiously.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;You\'re&nbsp;a&nbsp;good&nbsp;woman&nbsp;-&nbsp;you&nbsp;know&nbsp;that?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Less&nbsp;talk,&nbsp;more&nbsp;action.&lt;/q&gt;&nbsp;she&nbsp;retorts,&nbsp;&lt;q&gt;It\'s&nbsp;your&nbsp;help
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;need&nbsp;-&nbsp;not&nbsp;your&nbsp;praise.&lt;/q&gt;&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;You&nbsp;know,&nbsp;I&nbsp;do&nbsp;feel&nbsp;you\'re&nbsp;basically&nbsp;a&nbsp;kind&nbsp;and&nbsp;decent&nbsp;person.&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;tell&nbsp;her.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;You\'re&nbsp;too&nbsp;kind.&lt;/q&gt;&nbsp;she&nbsp;responds&nbsp;dryly.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;It&nbsp;was&nbsp;really&nbsp;very&nbsp;brave&nbsp;of&nbsp;you&nbsp;to&nbsp;dash&nbsp;in&nbsp;here&nbsp;after&nbsp;that&nbsp;thief
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;who&nbsp;stole&nbsp;your&nbsp;ring.&lt;/q&gt;&nbsp;you&nbsp;remark,&nbsp;&lt;q&gt;I\'m&nbsp;really&nbsp;very&nbsp;impressed!&lt;/q&gt;\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Brave?&nbsp;Or&nbsp;just&nbsp;daft?&lt;/q&gt;&nbsp;she&nbsp;laughs,&nbsp;&lt;q&gt;I&nbsp;was&nbsp;so&nbsp;incensed&nbsp;I&nbsp;didn\'t
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stop&nbsp;to&nbsp;think&nbsp;about&nbsp;being&nbsp;&lt;i&gt;brave&lt;/i&gt;.&lt;/q&gt;'&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(getActor.isProperName)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The isActive condition here ensures that the player at least gets to know Sarah's name (and has thus asked her a couple of questions about her) before he can start heaping praise on her. We'll enforce the same condition we put on the PraiseTopic we'll locate in her sarahFollowing state:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;PraiseTopic,&nbsp;StopEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;It\'s&nbsp;really&nbsp;very&nbsp;good&nbsp;of&nbsp;you&nbsp;to&nbsp;come&nbsp;with&nbsp;me.&lt;/q&gt;&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tell&nbsp;her.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Not&nbsp;at&nbsp;all,&lt;/q&gt;&nbsp;she&nbsp;replies,&nbsp;&lt;q&gt;I\'m&nbsp;just&nbsp;hoping&nbsp;you&nbsp;are
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;going&nbsp;to&nbsp;find&nbsp;the&nbsp;way&nbsp;out&nbsp;of&nbsp;here.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'m&nbsp;really&nbsp;glad&nbsp;you\'re&nbsp;with&nbsp;me&nbsp;-&nbsp;whatever&nbsp;your&nbsp;reasons.&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;remark,&nbsp;&lt;q&gt;Quite&nbsp;frankly,&nbsp;I\'m&nbsp;glad&nbsp;of&nbsp;your&nbsp;company.&lt;/q&gt;\b&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Me&nbsp;too,&lt;/q&gt;&nbsp;she&nbsp;admits.',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;do&nbsp;like&nbsp;you,&nbsp;you&nbsp;know.&lt;/q&gt;&nbsp;you&nbsp;tell&nbsp;her.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Now,&nbsp;don\'t&nbsp;go&nbsp;all&nbsp;sentimental&nbsp;on&nbsp;me!&lt;/q&gt;&nbsp;she&nbsp;complains,&nbsp;though
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;there\'s&nbsp;a&nbsp;warm&nbsp;twinkle&nbsp;in&nbsp;her&nbsp;eye&nbsp;as&nbsp;she&nbsp;says&nbsp;it.',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'m&nbsp;afraid&nbsp;I&nbsp;can\'t&nbsp;help&nbsp;finding&nbsp;you&nbsp;very&nbsp;attractive.&lt;/q&gt;&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;confess.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I&nbsp;daresay&nbsp;neither&nbsp;of&nbsp;us&nbsp;can&nbsp;help&nbsp;that&nbsp;-&nbsp;what&nbsp;you&nbsp;find&nbsp;attractive,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;mean.&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;matter-of-factly.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;really&nbsp;do&nbsp;appreciate&nbsp;having&nbsp;you&nbsp;around.&lt;/q&gt;&nbsp;you&nbsp;tell&nbsp;her.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;So&nbsp;you&nbsp;keep&nbsp;saying,&lt;/q&gt;&nbsp;she&nbsp;observes.&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(getActor.isProperName)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This is likely to be more interesting if Sarah's relationship with the player character advances so that as circumstances change, so do her responses to his compliments. Perhaps the shared experience of encountering the ghost might be one such event, so we could add:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+++&nbsp;AltTopic,&nbsp;StopEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;You\'ve&nbsp;been&nbsp;pretty&nbsp;brave&nbsp;about&nbsp;that&nbsp;ghost&nbsp;-&nbsp;after&nbsp;all&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;was&nbsp;scary!&lt;/q&gt;&nbsp;you&nbsp;remark.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;It&nbsp;was,&lt;/q&gt;&nbsp;she&nbsp;agrees,&nbsp;&lt;q&gt;and&nbsp;you\'ve&nbsp;been&nbsp;pretty&nbsp;brave&nbsp;too!&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;You&nbsp;know,&nbsp;I&nbsp;really&nbsp;&lt;i&gt;am&lt;/i&gt;&nbsp;glad&nbsp;you\'re&nbsp;with&nbsp;me.&lt;/q&gt;&nbsp;you&nbsp;tell&nbsp;her.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Me&nbsp;too!&lt;/q&gt;&nbsp;she&nbsp;agrees&nbsp;warmly,&nbsp;giving&nbsp;your&nbsp;arm&nbsp;a&nbsp;little&nbsp;squeeze.&nbsp;'&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(getActor.hasSeen(ghost))
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Obviously, this could be taken a lot further, but enough has been said to demonstrate the principle of creating a new kind of MiscTopic. One problem remains: how is the player to know that a new kind of conversational command (PRAISE X) is available? We'll solve this problem shortly by defining a new kind of <a href="suggestedtopic.htm">SuggestedTopic </a>to match.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

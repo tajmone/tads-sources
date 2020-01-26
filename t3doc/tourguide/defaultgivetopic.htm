@@ -1,0 +1,232 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultGiveTopic</title><meta name="keywords" content="DefaultGiveTopic,excludeMatch,PreinitObject,deferToEntry"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultGiveTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaultasktelltopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultshowtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A DefaultGiveTopic responds to any GIVE X TO Y command when no specific response (GiveTopic or GiveShowTopic) has been provided for X. Note, however, that this does not mean that a DefaultGiveTopic will respond to any old GIVE X TO Y, no matter what the X. For the DefaultGiveTopic to be activated, X must be something that the Player Character <i>could</i> give to Y, i.e. it must be an object that the PC is either holding or able to pick up, i.e. a portable object in scope. This makes DefaultGiveTopics (and DefaultShowTopics) rather easier to write than DefaultAskTopics and the like, since with a DefaultGiveTopic there is a predefined list of things the player can actually try to give the NPC.
+<br>
+
+<br>
+We'll give Sarah two DefaultGiveTopics, the first of which we'll put in the sarah object directly:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;DefaultGiveTopic,&nbsp;ShuffledEventList&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;No&nbsp;thank&nbsp;you,&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;declines&nbsp;after&nbsp;a&nbsp;cursory&nbsp;glance.&nbsp;',&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'d&nbsp;hang&nbsp;on&nbsp;to&nbsp;that&nbsp;if&nbsp;I&nbsp;were&nbsp;you,&lt;/q&gt;&nbsp;she&nbsp;says,&nbsp;&lt;q&gt;it\'s&nbsp;no&nbsp;use&nbsp;to&nbsp;me.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;How&nbsp;kind!&lt;/q&gt;&nbsp;she&nbsp;declares,&nbsp;with&nbsp;an&nbsp;ironic&nbsp;twinkle&nbsp;in&nbsp;her&nbsp;eye,&nbsp;&lt;q&gt;But&nbsp;I
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;think&nbsp;I\'ll&nbsp;let&nbsp;you&nbsp;keep&nbsp;it!&lt;/q&gt;'
+<br>
+&nbsp;&nbsp;]
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Now we'll add a second one to the sarahFollowing state, that provides a list of responses more appropriate to when Sarah is following the player character around:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultGiveTopic,&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'ll&nbsp;let&nbsp;you&nbsp;carry&nbsp;that,&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;with&nbsp;a&nbsp;pert&nbsp;smile.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Why&nbsp;don\'t&nbsp;you&nbsp;keep&nbsp;it&nbsp;for&nbsp;now?&lt;/q&gt;&nbsp;she&nbsp;suggests.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Keep&nbsp;it&nbsp;-&nbsp;I\'m&nbsp;sure&nbsp;your&nbsp;need&nbsp;is&nbsp;greater&nbsp;than&nbsp;mine.&lt;/q&gt;&nbsp;she&nbsp;insists.&nbsp;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If you compile the game and try it now, you should eventually come up against a problem: we've now made it impossible to give Sarah a gas-mask once she's in the sarahFollowing state, since the GiveTopic for gas masks is directly in the sarah object, and a DefaultTopic in an ActorState masks any TopicEntries of the same kind  located directly in the actor (so that a DefaultGiveTopic located in sarahFollowing will make all GiveTopics located directly in sarah unreachable when Sarah's in her sarahFollowing state). Fortunately, there is a way round this: you can use the <b>excludeMatch</b> property of any DefaultTopic to list the objects you <i>don't</i> want it to match, which allows TopicEntries from a wider scope to match those objects after all. In this case, we have a GiveTopic on sarah that matches the two gas masks in the game, so all we need to do is explicitly exclude them from the list of objects that this DefaultGiveTopic matches:
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultGiveTopic,&nbsp;ShuffledEventList&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'ll&nbsp;let&nbsp;you&nbsp;carry&nbsp;that,&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;with&nbsp;a&nbsp;pert&nbsp;smile.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Why&nbsp;don\'t&nbsp;you&nbsp;keep&nbsp;it&nbsp;for&nbsp;now?&lt;/q&gt;&nbsp;she&nbsp;suggests.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Keep&nbsp;it&nbsp;-&nbsp;I\'m&nbsp;sure&nbsp;your&nbsp;need&nbsp;is&nbsp;greater&nbsp;than&nbsp;mine.&lt;/q&gt;&nbsp;she&nbsp;insists.&nbsp;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;<b>excludeMatch&nbsp;=&nbsp;[gasMask1,&nbsp;gasMask2]</b>
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">If there were many more gas masks in the game, and you wanted might keep on adding objects of class GasMask, this method of specifying exclusions might become error prone. One way to automate the process might be to make the DefaultGiveTopic a PreinitObject that automatically builds the list of excluded objects from anything that's of class GasMask:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultGiveTopic,&nbsp;ShuffledEventList,&nbsp;<b>PreinitObject</b>&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'ll&nbsp;let&nbsp;you&nbsp;carry&nbsp;that,&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;with&nbsp;a&nbsp;pert&nbsp;smile.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Why&nbsp;don\'t&nbsp;you&nbsp;keep&nbsp;it&nbsp;for&nbsp;now?&lt;/q&gt;&nbsp;she&nbsp;suggests.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Keep&nbsp;it&nbsp;-&nbsp;I\'m&nbsp;sure&nbsp;your&nbsp;need&nbsp;is&nbsp;greater&nbsp;than&nbsp;mine.&lt;/q&gt;&nbsp;she&nbsp;insists.&nbsp;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;<b>execute()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;obj&nbsp;=&nbsp;firstObj(GasMask);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;while(obj&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;excludeMatch&nbsp;+=&nbsp;obj;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj&nbsp;=&nbsp;nextObj(obj,&nbsp;GasMask);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Though this is probably overkill in the present context. In the present context, the simplest method would be to override matchScore:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultGiveTopic,&nbsp;ShuffledEventList,&nbsp;PreinitObject&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'ll&nbsp;let&nbsp;you&nbsp;carry&nbsp;that,&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;with&nbsp;a&nbsp;pert&nbsp;smile.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Why&nbsp;don\'t&nbsp;you&nbsp;keep&nbsp;it&nbsp;for&nbsp;now?&lt;/q&gt;&nbsp;she&nbsp;suggests.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Keep&nbsp;it&nbsp;-&nbsp;I\'m&nbsp;sure&nbsp;your&nbsp;need&nbsp;is&nbsp;greater&nbsp;than&nbsp;mine.&lt;/q&gt;&nbsp;she&nbsp;insists.&nbsp;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;<b>matchTopic(fromActor,&nbsp;topic)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;topic.ofKind(GasMask)&nbsp;?&nbsp;nil&nbsp;:&nbsp;matchScore;
+<br>
+&nbsp;&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+But note that this is only safe if we <i>know</i> that it's only ever gas masks that we'll want this DefaultGiveTopic to skip. It might become error prone if, for example, we later wanted to Sarah also to accept the silverGizzmo in a GiveTopic on sarah, and just went ahead and put excludeMatch = [silverGizzmo] on the DefaultGiveTopic (whereas the PreinitObject method would be quite safe in such an instance, since it would simply add all objects of class GasMask to what was already in the DefaultGiveTopic list). A safer way of overriding matchTopic to do what we want would be:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000"><b>matchTopic(fromActor,&nbsp;topic)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;topic.ofKind(GasMask)&nbsp;?&nbsp;nil&nbsp;:&nbsp;inherited(fromActor,&nbsp;topic);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+</b></font><font face="Arial" size="2" color="#000000">
+<br>
+Perhaps the most general solution overall is to modify DefaultTopic to exclude classes as well as individual objects, thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;DefaultTopic
+<br>
+&nbsp;&nbsp;excludeClass&nbsp;=&nbsp;[]
+<br>
+&nbsp;&nbsp;matchTopic(fromActor,&nbsp;topic)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;excludeClass.indexWhich({x:&nbsp;topic.ofKind(x)})&nbsp;!=&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?&nbsp;nil&nbsp;:&nbsp;inherited(fromActor,&nbsp;topic);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then our DefaultGiveTopic becomes simply:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultGiveTopic,&nbsp;ShuffledEventList,&nbsp;PreinitObject&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'ll&nbsp;let&nbsp;you&nbsp;carry&nbsp;that,&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;with&nbsp;a&nbsp;pert&nbsp;smile.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Why&nbsp;don\'t&nbsp;you&nbsp;keep&nbsp;it&nbsp;for&nbsp;now?&lt;/q&gt;&nbsp;she&nbsp;suggests.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Keep&nbsp;it&nbsp;-&nbsp;I\'m&nbsp;sure&nbsp;your&nbsp;need&nbsp;is&nbsp;greater&nbsp;than&nbsp;mine.&lt;/q&gt;&nbsp;she&nbsp;insists.&nbsp;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;<b>excludeClass&nbsp;=&nbsp;[GasMask]
+<br>
+</b>;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">And we can quite safely keep adding to excludeClass and excludeMatch if we need to. Note, however, that this modification will only work as expected for DefaultTopics that match Things; if the DefaultTopic matches a ResolvedTopic, then topic will be ofKind ResolvedTopic, and the excludeClass list won't do much (although provided we don't specify excludeClass = [ResolvedTopic] this probably won't do too much harm).
+<br>
+
+<br>
+An alternative approach would be to use the <b>deferToEntry(other)</b> method. This allows any TopicEntry to 'defer' to a TopicEntry in a lower priority TopicDatabase. In matching topics the priority is (1) the current ConvNode (if any), (2) the current Actor State and (3) the current Actor. We can therefore use deferToEntry to have a DefaultTopic on, say, an ActorState defer to a more specific TopicEntry on the actor; the method must return true if the deferral is to take place and nil otherwise. Most commonly, we might want a DefaultTopic on an ActorState to defer to a specific TopicEntry that's matched on the actor but not to a DefaultTopic that's defined there. This approach will work here, so instead of the previous definition we could define:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultGiveTopic,&nbsp;ShuffledEventList&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'ll&nbsp;let&nbsp;you&nbsp;carry&nbsp;that,&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;with&nbsp;a&nbsp;pert&nbsp;smile.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Why&nbsp;don\'t&nbsp;you&nbsp;keep&nbsp;it&nbsp;for&nbsp;now?&lt;/q&gt;&nbsp;she&nbsp;suggests.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Keep&nbsp;it&nbsp;-&nbsp;I\'m&nbsp;sure&nbsp;your&nbsp;need&nbsp;is&nbsp;greater&nbsp;than&nbsp;mine.&lt;/q&gt;&nbsp;she&nbsp;insists.&nbsp;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;<b>&nbsp;deferToEntry(other)&nbsp;{&nbsp;return&nbsp;!other.ofKind(DefaultTopic);&nbsp;}
+<br>
+</b>;&nbsp;
+<br>
+</font></font>
+
+</body></html>

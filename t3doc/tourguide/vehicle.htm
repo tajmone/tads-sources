@@ -1,0 +1,208 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Vehicle</title><meta name="keywords" content="Vehicle,useSpecialDesc,specialDesc,initDesc,travelerPreCond,logicalRank,PreCondition,checkPreCondition"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Vehicle : <a href="nestedroom.htm">NestedRoom</a>, Traveler
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="booth.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="vehiclebarrier.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Vehicle is a special kind of NestedRoom that can move around with actors inside. Specifically, if the player character is aboard a vehicle and the player issues a movement command (such as NORTH, IN, or GO THROUGH DOOR) it is the vehicle that moves (conveying the player character and any other passengers with it).
+<br>
+
+<br>
+Note that the Vehicle class is not the only way in which to implement a vehicle, both the ship and the Tardis have shown that vehicles in the broader sense can often be implemented as one or more rooms whose exits can be manipulated to produce the desired movement effect. The Vehicle class is suited for relatively small vehicles, such as bicycles or horses, that don't provide a complete location in themselves, and that it seems reasonably natural to control with the standard movement commands. A character on a horse might reasonably regard riding a horse as a little like a faster form of walking, allowing him or her to roam over the countryside as freely as s/he would on foot. A character in a car is usually restricted to roads, and this perhaps forms a borderline case; it may be you don't want to implement the mechanics of driving in your game and you provide a reasonably comprehensive network to drive round, and in that case the car might appropriately be implemented as a Vehicle. For larger vehicles, especially those restricted in where they can travel, such as ships, aircraft and buses, it is probably better to implement the Vehicle as one or more Rooms.
+<br>
+
+<br>
+Another rule of thumb to apply when deciding whether to use the Vehicle class is how, in the context of the game, it is most natural to think of the actor's location. On a bicycle or on the back of a horse, you might think of yourself as primarily on the sloping plain or the cycle path, and only secondarily on the horse or bicycle. You would expect the room name to be shown as "Sloping Plain (sitting on the horse)" rather than "Back of Horse". Conversely, aboard a ship or even a boat you might expect the room name to be "Aboard the Boat" rather than "Somewhere in Lake (sitting in the boat)". In the former case, but not the latter, you'd want to use a vehicle.
+<br>
+
+<br>
+To make a Vehicle actually useful and not merely a cosmetic equivalent to walking, it ought to be able to take the player character where he would not otherwise be able to go. To show how we might do this, we'll create a snow-covered world (which you reach with the Tardis), where the combination of snow and distance make it impossible to get very far without a snowmobile. To make the snowmobile a bit more realistic, we'll make it necessary to start up its engine before it'll go anywhere. We'll start the snowmobile off in a small wooden hut:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">insideHut&nbsp;:&nbsp;Room&nbsp;'Inside&nbsp;the&nbsp;Wooden&nbsp;Hut'&nbsp;'inside&nbsp;the&nbsp;hut'
+<br>
+&nbsp;&nbsp;"This&nbsp;interior&nbsp;of&nbsp;this&nbsp;hut&nbsp;affords&nbsp;scant&nbsp;shelter&nbsp;from&nbsp;the&nbsp;biting&nbsp;cold&nbsp;wind
+<br>
+&nbsp;&nbsp;&nbsp;outside.&nbsp;"
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;snowCliff
+<br>
+;
+<br>
+
+<br>
++&nbsp;snowMobile&nbsp;:&nbsp;Vehicle,&nbsp;Chair,&nbsp;Heavy&nbsp;'snowmobile'&nbsp;'snowmobile'
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;vaguely&nbsp;like&nbsp;a&nbsp;large&nbsp;motorbike&nbsp;on&nbsp;sleds.&nbsp;There&nbsp;are&nbsp;two&nbsp;seats,
+<br>
+&nbsp;&nbsp;&nbsp;one&nbsp;behind&nbsp;the&nbsp;other,&nbsp;with&nbsp;handlebars&nbsp;at&nbsp;the&nbsp;front,&nbsp;in&nbsp;the&nbsp;centre&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;which&nbsp;is&nbsp;mounted&nbsp;the&nbsp;starter&nbsp;button&nbsp;and&nbsp;a&nbsp;small&nbsp;switch.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"The&nbsp;two-seater&nbsp;snowmobile&nbsp;rests&nbsp;on&nbsp;the&nbsp;ground.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;two-seater&nbsp;snowmobile&nbsp;stands&nbsp;at&nbsp;one&nbsp;end&nbsp;of&nbsp;the&nbsp;hut.&nbsp;"
+<br>
+&nbsp;&nbsp;useSpecialDesc&nbsp;=&nbsp;(!gPlayerChar.isIn(self))
+<br>
+&nbsp;&nbsp;engineOn&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;travelerPreCond(conn)&nbsp;{&nbsp;return&nbsp;[snowEngineOn];&nbsp;}
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;20&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's a few things to note about the customization here. Firstly, we include Chair and Heavy in the class list so that the player character (and a passenger) can sit on the snowmobile, but can't pick it up. Because we've used Heavy, the snowMobile wouldn't normally be listed in room descriptions, but because it will be moving around, we need it to show up; accordingly we give it a specialDesc and an initSpecialDesc. If the player character is sitting on the snowmobile, however, we don't need these descriptions, since the presence of the snowmobile will be stated in the room name (e.g. "Inside the Wooden Hut (sitting on the snowmobile)", so we override useSpecialDesc only to return true when the player character is not sitting on the snowmobile. We define a custom engineOn property that we'll come to in a moment. The main thing it will do is disallow travel on the snowmobile unless it's true. To enforce this condition we override the <b>travelerPreCond(conn)</b> method to return a custom precondition we'll define shortly.
+<br>
+
+<br>
+But first, we'll define the two essential components of the snowmobile, the button and the switch that control its engine (we should also define handlebars and seats since the description of the snowmobile mentions them, but that will be left as an exercise for the reader), together with the noise it makes:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;Button,&nbsp;Component&nbsp;'starter&nbsp;button'&nbsp;'starter&nbsp;button'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Push)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(snowMobile.engineOn)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogicalNow('The&nbsp;snowmobile\'s&nbsp;engine&nbsp;is&nbsp;already&nbsp;running.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!starterSwitch.isOn)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failCheck('Nothing&nbsp;happens.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;snowmobile's&nbsp;engine&nbsp;roars&nbsp;into&nbsp;life.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;snowMobile.engineOn&nbsp;=&nbsp;true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engineNoise.makePresent();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+++&nbsp;starterSwitch&nbsp;:&nbsp;Switch,&nbsp;Component&nbsp;'small&nbsp;black&nbsp;switch/engine'&nbsp;'small&nbsp;switch'
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;black&nbsp;switch&nbsp;mounted&nbsp;at&nbsp;the&nbsp;centre&nbsp;of&nbsp;the&nbsp;handlebars,&nbsp;next
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;button.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;makeOn(val)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited(val);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(val==nil&nbsp;&amp;&amp;&nbsp;snowMobile.engineOn)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;snowmobile&nbsp;engine&nbsp;lapses&nbsp;into&nbsp;silence.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;snowMobile.engineOn&nbsp;=&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engineNoise.makePresentIf(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;verifyDobjListenTo&nbsp;{&nbsp;logicalRank(50,&nbsp;'silent');&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;soundDesc&nbsp;=&nbsp;"The&nbsp;engine&nbsp;is&nbsp;currently&nbsp;silent.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;engineNoise&nbsp;:&nbsp;PresentLater,&nbsp;SimpleNoise&nbsp;'engine/noise'&nbsp;'engine'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;snowmobile&nbsp;engine&nbsp;is&nbsp;purring&nbsp;quietly&nbsp;as&nbsp;it&nbsp;ticks&nbsp;over.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;isAmbient&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This arrangement ensures that to start the engine you have to turn on the switch and push the button; to stop the engine you merely need to turn off the switch. We make the engineNoise a PresentLater so that it can easily be brought in or out of play according to whether the engine is on or off; we could make it more sophisticated than a SimpleNoise, but a SimpleNoise will do the job reasonably well. Note that we have overridden its isAmbient property to be nil, so that when the engine is running we'll see a description of its noise every turn. This is fair enough given the fairly limited travel that will actually be performed on the snowmobile. The other point to note here is how we handle LISTEN TO ENGINE. Since the player might legitimately try to TURN ON ENGINE or SWITCH OFF ENGINE, we add engine to the vocabWords of the starterSwitch. When the engine is off, this is the object to which LISTEN TO ENGINE will apply, so we give it a soundDesc to report that the engine is silent. But when the engine is on we'd rather that LISTEN TO ENGINE was handled by the engineNoise object, so we make starterSwitch.verifyDobjListenTo return a relatively low logicalRank (the default would be 100). This means that when the engineNoise is present, the parser will accept it as the more logical argument to handle the LISTEN TO ENGINE command, but when it is absent, the starterSwitch will handle the command and report the silence of the engine (to be sure EXAMINE ENGINE won't be handled quite so felicitously as things stands, but again, that can be left as an exercise for the reader; to do the job properly you might need a separate engine object that redirects turn on and turn off commands to the switch).
+<br>
+
+<br>
+The next job is to define the precondition that stops the snowmobile from moving when its engine is not running. This is actually a bit easier than it may at first seem; basically all we need to do is to define an object of the PreCondition class and write a <b>checkPreCondition</b> method that performs the requisite check:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">snowEngineOn&nbsp;:&nbsp;PreCondition
+<br>
+&nbsp;&nbsp;&nbsp;checkPreCondition(obj,&nbsp;allowImplicit)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!snowMobile.engineOn)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('The&nbsp;snowmobile&nbsp;doesn\'t&nbsp;budge.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(obj.travelBarrier.indexOf(snowmobileBarrier)&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;snowmobile&nbsp;emits&nbsp;a&nbsp;healthy&nbsp;roar&nbsp;from&nbsp;its&nbsp;engine&nbsp;as&nbsp;it&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sets&nbsp;off.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We are cheating slightly here by using the PreCondition to report the noise the snowmobile makes if it <i>does</i> move off. This isn't the official use of a precondition, but it happens to be a convenient place - perhaps about the only convenient place - to display a message describing this sound each time the snowmobile moves. Without it, the snowmobile becomes a bit ghostly - we're reported as sitting on the snowmobile each turn, but it's not made explicit that the snowmobile has conveyed us. But we don't want this message displayed if the snowmobile doesn't actually move, and there's another reason it might not move besides its engine being switched off: the player might try to take it somewhere we decide a snowmobile shouldn't go. To restrict its movements we'll be setting up a special kind of TravelBarrier called a <a href="vehiclebarrier.htm">VehicleBarrier</a>, which is what we'll be looking at next. Here we check for the presence of that VehicleBarrier among the travel barriers associated with the connector via which the snowmobile is being asked to travel, which connector is fortunately provided for us in the obj parameter of the checkPreCondition method.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

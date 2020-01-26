@@ -1,0 +1,38 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Food</title><meta name="keywords" content="Food,tasteDesc,smellDesc,feelDesc"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Food : <a href="thing-thebasics.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="readable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="disambigname.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The Food class, as its name suggests, is used for things that can be eaten. By default, when eaten, an object of class Food simply disappears (with a default message telling the player that he or she has eaten it). Since food can be eaten it can also be tasted, or smelt. For that matter, it can be touched or felt. To describe what happens when we TASTE it, SMELL it or FEEL it we can use its <b>tasteDesc</b>, <b>smellDesc</b> and <b>feelDesc</b> properties. If you really want to you can even define <b>soundDesc</b> to define a response to a LISTEN TO command. Actually, all four of these properties exist on Thing, but this seemed a convenient point at which to introduce them. Later on we shall be looking at more sophisticated ways of handling sensory information. For now we'll just define a banana we'll leave in squareCave:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Food&nbsp;'banana'&nbsp;'banana'&nbsp;@squareCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;yellow,&nbsp;about&nbsp;six&nbsp;inches&nbsp;long,&nbsp;and&nbsp;slightly&nbsp;curved.&nbsp;And&nbsp;It&nbsp;looks
+<br>
+&nbsp;&nbsp;&nbsp;reasonably&nbsp;fresh.&nbsp;"
+<br>
+&nbsp;&nbsp;tasteDesc&nbsp;=&nbsp;"It's&nbsp;distinctly&nbsp;banana-flavoured.&nbsp;"
+<br>
+&nbsp;&nbsp;smellDesc&nbsp;=&nbsp;"It&nbsp;has&nbsp;a&nbsp;kind&nbsp;of&nbsp;faint,&nbsp;fruity&nbsp;smell.&nbsp;"
+<br>
+&nbsp;&nbsp;feelDesc&nbsp;=&nbsp;"The&nbsp;banana&nbsp;skin&nbsp;feels&nbsp;firm&nbsp;but&nbsp;smooth.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;soundDesc&nbsp;=&nbsp;"The&nbsp;banana&nbsp;is&nbsp;strangely&nbsp;silent.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"Someone&nbsp;has&nbsp;left&nbsp;a&nbsp;banana&nbsp;here.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

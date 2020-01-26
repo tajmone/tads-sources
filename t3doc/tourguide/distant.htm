@@ -1,0 +1,64 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Distant</title><meta name="keywords" content="Distant,switch statement,break"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Distant : <a href="fixture.htm">Fixture</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="decoration.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="unthing.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Distant is a special type of <a href="decoration.htm">Decoration</a> that represents an object that's too far away to interact with, perhaps an object that's in another location. The lake as seen from the top of the mast might come into this category:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Distant&nbsp;'great&nbsp;underground&nbsp;lake'&nbsp;'lake'&nbsp;@topOfMast
+<br>
+&nbsp;&nbsp;"The&nbsp;lake&nbsp;stretches&nbsp;out&nbsp;to&nbsp;starboard&nbsp;as&nbsp;far&nbsp;as&nbsp;the&nbsp;eye&nbsp;can&nbsp;see;&nbsp;it&nbsp;looks&nbsp;as
+<br>
+&nbsp;&nbsp;&nbsp;calm&nbsp;and&nbsp;flat&nbsp;as&nbsp;a&nbsp;millpond.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The shore as seen from the same place might also come into this category. Since eventually the ship will move around the description must either be studiously vague or else vary according to the location of the ship:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Distant&nbsp;'shore'&nbsp;'shore'&nbsp;@topOfMast
+<br>
+&nbsp;&nbsp;desc()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;switch(ship.location)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;lakeRoom:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;shore&nbsp;to&nbsp;port&nbsp;is&nbsp;a&nbsp;narrow&nbsp;strip&nbsp;of&nbsp;land&nbsp;bounded&nbsp;by&nbsp;the&nbsp;wall&nbsp;of&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cave,&nbsp;through&nbsp;which&nbsp;a&nbsp;doorway&nbsp;leads&nbsp;to&nbsp;the&nbsp;north.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;shore&nbsp;is&nbsp;directly&nbsp;on&nbsp;the&nbsp;port&nbsp;side&nbsp;of&nbsp;the&nbsp;ship.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Clearly, we should come back and expand the desc method once we've implemented more of the locations the ship can go to. The points to note here are (1) that desc() can be a method (in which case we need to name it explicitly, not via the template) and (2) to remember to use the break statement in each branch of the switch statement where we don't want fall-through.
+<p>
+Note that the <a href='outofreach.htm'>OutOfReach</a> class, which we shall encounter later, can sometimes offer a more flexible way of implementing distant objects; especially when they may become reachable under certain conditions.
+<br>
+</font></font>
+
+</body></html>

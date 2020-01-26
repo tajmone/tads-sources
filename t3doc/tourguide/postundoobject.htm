@@ -1,0 +1,82 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PostUndoObject</title><meta name="keywords" content="PostUndoObject,transient"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PostUndoObject: <a href="moduleexecobject.htm">ModuleExecObject</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="postrestoreobject.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="prerestartobject.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">PostUndoObject - every instance of this class is notified, via its execute() method, immediately after we perform an 'undo' command.<font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You can probably guess how our manic player-hating author might put this to evil use:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">PostUndoObject
+<br>
+&nbsp;&nbsp;execute()&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"If&nbsp;there's&nbsp;one&nbsp;thing&nbsp;I&nbsp;hate&nbsp;more&nbsp;than&nbsp;players&nbsp;feeble&nbsp;enough&nbsp;to&nbsp;save&nbsp;and&nbsp;restore,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it's&nbsp;idiots&nbsp;who&nbsp;ruin&nbsp;the&nbsp;amazing&nbsp;gaming&nbsp;experience&nbsp;I've&nbsp;devised&nbsp;for&nbsp;them&nbsp;by&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resorting&nbsp;to&nbsp;UNDO.&nbsp;The&nbsp;penalty&nbsp;of&nbsp;&lt;i&gt;fifty&lt;/i&gt;&nbsp;thousand&nbsp;points&nbsp;you're&nbsp;about&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;suffer&nbsp;is&nbsp;thus&nbsp;richly&nbsp;deserved.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;By&nbsp;the&nbsp;way,&nbsp;this&nbsp;makes&nbsp;the&nbsp;game&nbsp;unwinnable&nbsp;-&nbsp;but&nbsp;hey,&nbsp;only&nbsp;lousy&nbsp;LOSERS&nbsp;like&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;use&nbsp;UNDO.&lt;.p&gt;";
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(-50000,&nbsp;'using&nbsp;undo');
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Hopefully if you do find yourself using a PostUndoObject it will be for a more legitimate purpose than this, though it's probably not something you'll need to use very often, if at all. A more legitimate use might be if, for some research purpose, you wanted to keep track of how often players used UNDO during a session with your game, then you might do something like this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">transient&nbsp;statisticsObj:&nbsp;object
+<br>
+&nbsp;&nbsp;&nbsp;undoCount&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;&nbsp;saveCount&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;&nbsp;restoreCount&nbsp;=&nbsp;0
+<br>
+;
+<br>
+
+<br>
+PostUndoObject
+<br>
+&nbsp;&nbsp;execute()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statisticsObj.undoCount&nbsp;+=&nbsp;1;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Because statisticsObj has been declared as <b>transient</b> (for fuller details of which see the Object Definitions section of the language documentation) its properties will be preserved across operations such as UNDO, RESTART, SAVE and RESTORE, and this should work (although since a transient object is thus not itself saved or restored, its properties cannot be preserved across different game sessions, hence the seemingly odd name 'transient' for this type of object).
+<br>
+
+<br>
+</font></font>
+
+</body></html>

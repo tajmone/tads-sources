@@ -1,0 +1,76 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Bed</title><meta name="keywords" content="Bed"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Bed : BasicBed, <a href="surface.htm">Surface</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="nominalplatform.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="chair.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Bed is simply a NestedRoom an actor can lie on (or sit on). The likely place for a bed is in a bedroom, and as we'll need to pay King Solomon a visit sometime to collect his legendary purple carbuncle (no you won't find it mentioned in the Bible, but we can always imagine that it's one of the precious stones the Queen of Sheba gave him at 1 Kings 10.10) it may as well be his bedroom.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">solomonBedroom&nbsp;:&nbsp;Room&nbsp;'Bedroom'&nbsp;'the&nbsp;bedroom'
+<br>
+&nbsp;&nbsp;"This&nbsp;large,&nbsp;square&nbsp;bedchamber&nbsp;is&nbsp;panelled&nbsp;in&nbsp;cedar,&nbsp;with&nbsp;a&nbsp;non-glazed&nbsp;window
+<br>
+&nbsp;&nbsp;&nbsp;looking&nbsp;out&nbsp;to&nbsp;the&nbsp;north,&nbsp;and&nbsp;a&nbsp;large&nbsp;bed&nbsp;against&nbsp;the&nbsp;east&nbsp;wall.&nbsp;A&nbsp;door&nbsp;leads
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;to&nbsp;the&nbsp;west.&nbsp;"
+<br>
+&nbsp;&nbsp;west&nbsp;=&nbsp;solBedroomDoor
+<br>
+&nbsp;&nbsp;out&nbsp;asExit(west)
+<br>
+;
+<br>
+
+<br>
++&nbsp;solBedroomDoor&nbsp;:&nbsp;Door&nbsp;'bedroom&nbsp;cedar&nbsp;door'&nbsp;'bedroom&nbsp;door'
+<br>
+&nbsp;&nbsp;"It's&nbsp;made&nbsp;of&nbsp;cedar.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;Bed,&nbsp;Heavy&nbsp;'large&nbsp;bed'&nbsp;'large&nbsp;bed'
+<br>
+&nbsp;&nbsp;"It&nbsp;has&nbsp;a&nbsp;cedar&nbsp;frame&nbsp;and&nbsp;an&nbsp;unsprung&nbsp;mattress.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;Fixture&nbsp;'window'&nbsp;'window'
+<br>
+&nbsp;&nbsp;"The&nbsp;window&nbsp;is&nbsp;basically&nbsp;an&nbsp;opening&nbsp;in&nbsp;the&nbsp;north&nbsp;wall,&nbsp;comprising
+<br>
+&nbsp;&nbsp;&nbsp;two&nbsp;rectangular&nbsp;sections&nbsp;each&nbsp;with&nbsp;curved&nbsp;tops.&nbsp;It&nbsp;is&nbsp;unglazed.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(LookThrough)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;window&nbsp;overlooks&nbsp;a&nbsp;building&nbsp;site&nbsp;where&nbsp;a&nbsp;large&nbsp;team&nbsp;of&nbsp;workers
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;constructing&nbsp;a&nbsp;small&nbsp;temple.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

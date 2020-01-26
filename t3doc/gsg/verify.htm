@@ -1,0 +1,212 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Verify</title><meta name="keywords" content="Verify,logical,logicalRank,logicalRankOrd,dangerous,illogicalAlready,illogicalNow,illogical,illogicalSelf,nonObvious,inaccessible"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="controllingtheaction.htm">[Previous] </a>&nbsp;&nbsp;<a href="check.htm">[Next] </a></I></FONT></P>
+<h3>Verify</h3>
+
+<p>The verify method has two main functions: (a) to veto actions that plainly should not be allowed to continue (e.g. EAT MOUNTAIN) and explain the veto, and (b) to help the parser decide which object to choose in the case of ambiguity (e.g. if OPEN DOOR could refer to either the currently open red door or the currently closed blue door, verify can be used to prefer the blue door, since you can't open a door that's already open).
+</p>
+
+<br>
+A verify() routine should never alter the game state (since, among other things, it will probably be called multiple times during object resolution). Neither should it directly display a string using a double-quoted string or <font face="Courier New" size="2" color="#000000">say()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Normally it should only contain one or more of the macros designed to be used in a verify routine, if-statements to determine which macro to use, or the </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword to invoke a superclass's verify behaviour. A verify routine can also simply be empty (i.e. contain no code at all); this is often useful when you want to allow an action to proceed unconditionally.
+<br>
+
+<br>
+The macros that can be used in verify routines to define verify results are:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">logical
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">logicalRank(rank,&nbsp;key)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">logicalRankOrd(rank,&nbsp;key,&nbsp;ord)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">dangerous
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">illogicalAlready(msg,&nbsp;params&#133;)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">illogicalNow(msg,&nbsp;params&#133;)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">illogical(msg,&nbsp;params&#133;)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">illogicalSelf(msg,&nbsp;params&#133;)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">nonObvious
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">inaccessible(msg,&nbsp;params&#133;)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Of these, only the five that start with i (illogical or inaccessible) will prevent an action altogether, the rest mainly make the object more or less likely to be chosen as the object of the action by the parser in case of uncertainty. This is why it is only these five i-macros that take a msg parameter, which is single-quoted string (or property returning one) explaining why the action may not proceed. For now, it's only the four </font><font face="Courier New" size="2" color="#000000">illogical</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macros that you need to worry about (</font><font face="Courier New" size="2" color="#000000">inaccessible&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is rarely needed in game code).  Each of the four will prevent an action from continuing, but in case of ambiguity the parser will choose an object that returns an </font><font face="Courier New" size="2" color="#000000">illogicalAlready</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> result in preference to one that returns an </font><font face="Courier New" size="2" color="#000000">illogicalNow&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">result, and either to one that returns a plain </font><font face="Courier New" size="2" color="#000000">illogical&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">result. All three will be preferred to something that returns </font><font face="Courier New" size="2" color="#000000">illogicalSelf</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+For example, suppose your game has a red door, a red box and a red cup. It's perfectly logical to open a door, but it's not a good choice for an OPEN command if it's already open. Likewise, a box can probably be opened, but perhaps this red box can be broken, and once broken, it's no longer openable. Finally, a cup is never something that can be opened; the command OPEN CUP would never make sense. You might define the corresponding </font><font face="Courier New" size="2" color="#000000">verify&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">methods as follows:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">redDoor:&nbsp;Door&nbsp;'red&nbsp;door*doors'&nbsp;'red&nbsp;door'
+<br>
+&nbsp;&nbsp;dobjFor(Open)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(isOpen)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogicalAlready('The&nbsp;red&nbsp;door&nbsp;is&nbsp;already&nbsp;open.&nbsp;);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+redBox:&nbsp;OpenableContainer&nbsp;'red&nbsp;box*boxes'&nbsp;'red&nbsp;box'
+<br>
+&nbsp;&nbsp;dobjFor(Open)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(isBroken)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogicalNow('You&nbsp;can&nbsp;no&nbsp;longer&nbsp;open&nbsp;it;&nbsp;it\'s&nbsp;broken.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+redCup:&nbsp;Container&nbsp;'red&nbsp;cup*cups'&nbsp;'red&nbsp;cup'
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Open)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogical('You&nbsp;can\'t&nbsp;open&nbsp;a&nbsp;cup.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you type <b>open red </b>when all three red objects are present, then if the red door is not closed and the red box is not broken, the parser will ask which red object you mean (since under these circumstances either would be equally logical). If the red door were already open, but the box not yet broken, the parser would choose the red box; if the red door were already open and the box broken, the parser would choose the red door (and report that it's already open). Finally, if the player character took the broken red box and the red cup to another location and you then typed <b>open red</b>, the parser would choose the red box (and report that you can't open it because it's broken).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that in the library the argument to these illogical macros is typically a property pointer (e.g. </font><font face="Courier New" size="2" color="#000000">&amp;cannotTakeMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">); roughly speaking, these refer to properties of the playerActionMessages object (defined in msg_neu.t). But this is a complication we shall set to one side till later; in your own code, at least to start with, you can stick to using single-quoted strings.
+<br>
+
+<br>
+The non-i macros all allow the action to proceed (at least to the check stage, see below), but again affect how likely the object is to be chosen by the parser in case of ambiguity. The </font><font face="Courier New" size="2" color="#000000">logical</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro is simply the default; a </font><font face="Courier New" size="2" color="#000000">verify()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine that consists solely of the keyword </font><font face="Courier New" size="2" color="#000000">logical</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is identical to one that contains nothing at all. The </font><font face="Courier New" size="2" color="#000000">logical</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro is thus strictly speaking redundant, but it may improve the readability of code to use it in a complex </font><font face="Courier New" size="2" color="#000000">verify()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine with several different conditions producing different results.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">logicalRank(rank,&nbsp;key)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro allows you to choose the priority the parser gives to selecting different objects in cases of ambiguity. The default rank is 100; an object with a logical rank of 150 is regarded as a particularly suitable target for a command, while one with a logical rank of 50 would be a possible but not very likely one.
+<br>
+
+<br>
+Suppose that in the previous example, when the the door is closed and the box not broken we wanted the parser to prefer the door to the box in response to an <b>open red </b>command.. To boost the ranking of the door, we might use </font><font face="Courier New" size="2" color="#000000">logicalRank</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">redDoor:&nbsp;Door&nbsp;'red&nbsp;door*doors'&nbsp;'red&nbsp;door'
+<br>
+&nbsp;&nbsp;dobjFor(Open)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(isOpen)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogicalAlready('The&nbsp;red&nbsp;door&nbsp;is&nbsp;already&nbsp;open.&nbsp;);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logicalRank(120,&nbsp;'door');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Since the (unbroken) red box has a default logical rank of 100, <b>open red </b>will now prefer the door. Note that in this example, </font><font face="Courier New" size="2" color="#000000">'door'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the second parameter to the </font><font face="Courier New" size="2" color="#000000">logicalRank</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro, is the key value; this is effectively an arbitrary single-quoted string. Technically it can be used by the parser in breaking a tie (if two objects have the same logicalRank with the same key, then the parser knows that it can ignore this and look for some other way of breaking the tie), but in practice it seldom matters in game code what you put here.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The final two macros (</font><font face="Courier New" size="2" color="#000000">dangerous</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">nonObvious</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) allow an action to proceed, but only if the player unambiguously names the object. Both macros also prevent the object ever being chosen as a default object for the command in question, or in an implicit action.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">dangerous&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">macro is intended to prevent an object being used in an action when carrying out the action on that object would be plainly dangerous (e.g. <b>drink poison</b>) even though the action is perfectly possible and the object might be the only suitable one in scope. Thus, to prevent a bare <b>drink</b> command from making the PC drink the poison when the poison is the only potable object around, you would define the poison's </font><font face="Courier New" size="2" color="#000000">verifyDobjDrink()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method as </font><font face="Courier New" size="2" color="#000000">dangerous</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">poison:&nbsp;Thing&nbsp;'deadly&nbsp;poison'&nbsp;'deadly&nbsp;poison'
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Drink)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;&nbsp;dangerous;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;feel&nbsp;an&nbsp;unpleasant&nbsp;choking&nbsp;sensation&nbsp;as&nbsp;the&nbsp;poison
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;burns&nbsp;down&nbsp;your&nbsp;throat;&nbsp;then&nbsp;you&nbsp;feel&nbsp;no&nbsp;more.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;finishGameMsg(ftDeath); // this ends the game
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">nonObvious&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">macro works similarly, but makes the object so marked even less likely to be chosen in the event of ambiguity. Its main purpose is to prevent a puzzle being solved accidentally by having an action carried out implicitly or by default. For example, if we hadn't wanted to make it obvious that the nest could be moved with the stick, we could have put </font><font face="Courier New" size="2" color="#000000">nonObvious&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">in the </font><font face="Courier New" size="2" color="#000000">verify()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">section of the </font><font face="Courier New" size="2" color="#000000">iobjFor(MoveWith)&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">on the stick.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">One last point: the macros we have just been discussing (<TT>illogical </TT>and the like) are for use only in verify() routines.
+<p>So far we have discussed <TT>verify()</TT> mainly in terms of how the parser selects objects in case of ambiguity. Another way of looking at is that <TT>verify()</TT> should be used to veto an action only if it should be obvious to the player (not the player character) that the action is illogical (e.g. eating a mountain or opening an already-open door). In fact, these two ways of looking it amount to the same thing: the purpose of <TT>verify()</TT> is to help the parser decide what the player probably meant in case of ambiguity. If you want to veto an action which is perfectly 'logical' (i.e. one that the player could well have meant) you should therefore use <TT>check()</TT> instead.
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="controllingtheaction.htm">[Previous] </a>&nbsp;&nbsp;<a href="check.htm">[Next] </a></I></FONT></P>
+</body></html>

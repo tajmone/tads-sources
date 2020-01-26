@@ -1,0 +1,76 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Flashlight</title><meta name="keywords" content="Flashlight"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Flashlight : <a href="lightsource.htm">LightSource</a>, <a href="switch.htm">Switch</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="lightsource.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="candle.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Flashlight is basically a LightSource with a switch that can be used to turn it on and off (just like a flashlight or, as we'd call it in Britain, a torch).
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">blackTorch&nbsp;:&nbsp;Flashlight&nbsp;'large&nbsp;black&nbsp;flashlight/torch'&nbsp;'large&nbsp;black&nbsp;torch'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;a&nbsp;serious&nbsp;heavy-duty&nbsp;instrument,&nbsp;with&nbsp;a&nbsp;firm&nbsp;ridged&nbsp;grip&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;powerful&nbsp;bulb.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;brightnessOn&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;2
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;2&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's no particular reason for setting brightnessOn to 4 here, other than the fact that it's described as a powerful torch and to demonstrate that it can be done. You can try this torch/flashlight out if you like, but we won't be leaving it lying around in mainCave for the player to pick up so easily. Instead we'll put in a storage cabinet aboard the Tardis:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">tardisLivingQuarters&nbsp;:&nbsp;ShipboardRoom&nbsp;'Tardis&nbsp;Living&nbsp;Quarters'&nbsp;'the&nbsp;living&nbsp;quarters'
+<br>
+&nbsp;&nbsp;"These&nbsp;living&nbsp;quarters&nbsp;are&nbsp;pretty&nbsp;bare&nbsp;right&nbsp;now,&nbsp;but&nbsp;there&nbsp;is&nbsp;a&nbsp;storage&nbsp;cabinet
+<br>
+&nbsp;&nbsp;&nbsp;fixed&nbsp;to&nbsp;one&nbsp;wall,&nbsp;and&nbsp;a&nbsp;door&nbsp;that&nbsp;leads&nbsp;out.&nbsp;"
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;tardisLivingQuartersDoor
+<br>
+&nbsp;&nbsp;fore&nbsp;asExit(out)
+<br>
+;
+<br>
+
+<br>
+OpenableContainer,&nbsp;Fixture&nbsp;'storage&nbsp;cabinet'&nbsp;'storage&nbsp;cabinet'&nbsp;@tardisLivingQuarters&nbsp;
+<br>
+&nbsp;&nbsp;"The&nbsp;large&nbsp;cabinet&nbsp;is&nbsp;painted&nbsp;a&nbsp;cream&nbsp;colour&nbsp;and&nbsp;looks&nbsp;securely&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;blackTorch&nbsp;:&nbsp;Flashlight&nbsp;'large&nbsp;black&nbsp;flashlight/torch'&nbsp;'large&nbsp;black&nbsp;torch'
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;a&nbsp;serious&nbsp;heavy-duty&nbsp;instrument,&nbsp;with&nbsp;a&nbsp;firm&nbsp;ridged&nbsp;grip&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;powerful&nbsp;bulb.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;brightnessOn&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;2
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;2&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This, of course, leaves players with the problem of finding an alternative light source before they can reach the Tardis. We'll deal with that next.
+<br>
+</font></font>
+
+</body></html>

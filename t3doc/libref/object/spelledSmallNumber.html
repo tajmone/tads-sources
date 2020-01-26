@@ -1,0 +1,21 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>spelledSmallNumber</title></head><body>
+<table class=ban><tr><td align=left><span class=title>spelledSmallNumber</span><span class=type>GrammarProd</span></table><p>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledSmallNumber(digit).html">spelledSmallNumber(digit)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7729">7729</a>]</code></table><div class=gramrule> digitWord-&gt;num_</div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledSmallNumber(teen).html">spelledSmallNumber(teen)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7742">7742</a>]</code></table><div class=gramrule> teenWord-&gt;num_</div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledSmallNumber(tens).html">spelledSmallNumber(tens)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7750">7750</a>]</code></table><div class=gramrule> tensWord-&gt;num_</div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledSmallNumber(tensAndUnits).html">spelledSmallNumber(tensAndUnits)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7758">7758</a>]</code></table><div class=gramrule>    tensWord-&gt;tens_ '-'-&gt;sep_ digitWord-&gt;units_<br>    | tensWord-&gt;tens_ digitWord-&gt;units_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledSmallNumber(zero).html">spelledSmallNumber(zero)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7770">7770</a>]</code></table><div class=gramrule> 'zero'</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

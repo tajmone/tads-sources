@@ -1,0 +1,95 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>MultiInstance</title></head><body>
+<table class=ban><tr><td align=left><span class=title>MultiInstance</span><span class=type>class</span><td align=right><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3049">3049</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A "multi-instance" object is a simple way of creating copies of an   object in several places.  This is often useful for decorations and   other features that recur in a whole group of rooms. <p>   You define a multi-instance object in two parts. <p>   First, you define a MultiInstance object, which is just a hollow   shell of an object that sets up the location relationships.  This   shell object doesn't have any presence in the game world; it's just a   programming abstraction. <p>   Second, as part of the shell object, you define an example of the   object that will actually show up in the game in each of the multiple   locations.  You do this by defining a nested object under the   'instanceObject' property of the shell object.  This is otherwise a   perfectly ordinary object.  In most cases, you'll want to make this a   Decoration, Fixture, or some other non-portable object class, since   the "cloned" nature of these objects means that you usually won't   want them moving around (if they did, you might run into situations   where you had several of them in the same place, leading to   disambiguation headaches for the player). <p>   Here's an example of how you set up a multi-instance object: <p>   trees: MultiInstance <br>   locationList = [forest1, forest2, forest3] <br>   instanceObject: Fixture { 'tree/trees' 'trees' <br>     "Many tall, old trees grow here. " <br>     isPlural = true <br>   } <br> ; <p>   Note that the instanceObject itself has no location, because it   doesn't appear in the game-world model itself - it's just a template   for the real objects. <p>   During initialization, the library will automatically create several   instances (i.e., subclasses) of the example object - one instance per   location, to be exact.  These instances are the real objects that   show up in the game world. <p>   MultiInstance has one more helpful feature: it lets you dynamically   change the set of locations where the instances appear.  You do this   using the same interface that you use to move around MultiLoc objects   - moveInto(), moveIntoAdd(), moveOutOf().  When you call these   routines on the MultiInstance shell object, it will add and remove   object instances as needed to keep everything consistent.  Thanks to   a little manipulation we do on the instance objects when we set them up,   you can also move the instance objects around directly using   moveInto(), and they'll update the MultiInstance parent to keep its   location list consistent.
+<p>
+<code>class
+<b>MultiInstance</b> :  &nbsp; <a href="../object/BaseMultiLoc.html">BaseMultiLoc</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>MultiInstance</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BaseMultiLoc.html">BaseMultiLoc</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>MultiInstance</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MultiFaceted.html">MultiFaceted</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#instanceList">instanceList</a>&nbsp;
+<a href="#instanceMixIn">instanceMixIn</a>&nbsp;
+<a href="#instanceObject">instanceObject</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BaseMultiLoc</code> :<br>
+<code>
+<a href="../object/BaseMultiLoc.html#initialLocationClass">initialLocationClass</a>&nbsp;
+<a href="../object/BaseMultiLoc.html#locationList">locationList</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#addInstance">addInstance</a>&nbsp;
+<a href="#addToContents">addToContents</a>&nbsp;
+<a href="#getInstanceIn">getInstanceIn</a>&nbsp;
+<a href="#initializeLocation">initializeLocation</a>&nbsp;
+<a href="#moveInto">moveInto</a>&nbsp;
+<a href="#moveIntoAdd">moveIntoAdd</a>&nbsp;
+<a href="#moveOutOf">moveOutOf</a>&nbsp;
+<a href="#removeFromContents">removeFromContents</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BaseMultiLoc</code> :<br>
+<code>
+<a href="../object/BaseMultiLoc.html#buildLocationList">buildLocationList</a>&nbsp;
+<a href="../object/BaseMultiLoc.html#isDirectlyIn">isDirectlyIn</a>&nbsp;
+<a href="../object/BaseMultiLoc.html#isIn">isIn</a>&nbsp;
+<a href="../object/BaseMultiLoc.html#isInitiallyIn">isInitiallyIn</a>&nbsp;
+<a href="../object/BaseMultiLoc.html#isListedInContents">isListedInContents</a>&nbsp;
+<a href="../object/BaseMultiLoc.html#isOrIsIn">isOrIsIn</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="instanceList"></a>
+<table class=decl><tr><td><code>instanceList</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3159">3159</a>]</table><div class=desc>our vector of active instance objects<p>
+</div>
+<a name="instanceMixIn"></a>
+<table class=decl><tr><td><code>instanceMixIn</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3156">3156</a>]</table><div class=desc>the mix-in superclass for our instance objects<p>
+</div>
+<a name="instanceObject"></a>
+<table class=decl><tr><td><code>instanceObject</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3051">3051</a>]</table><div class=desc>the template object<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="addInstance"></a>
+<table class=decl><tr><td><code>addInstance (loc)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3119">3119</a>]</table><div class=desc>internal service routine - add an instance for a given location<p>
+</div>
+<a name="addToContents"></a>
+<table class=decl><tr><td><code>addToContents (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3147">3147</a>]</table><div class=desc>   If any contents are added to the MultiInstance object, they must   be contents of the template object, so add them to the template   object instead of the MultiInstance parent. <p>
+</div>
+<a name="getInstanceIn"></a>
+<table class=decl><tr><td><code>getInstanceIn (loc)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3115">3115</a>]</table><div class=desc>get our instance object (if any) that's in the given location<p>
+</div>
+<a name="initializeLocation"></a>
+<table class=decl><tr><td><code>initializeLocation ( )</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3054">3054</a>]</table><div class=desc>initialize my locations<p>
+</div>
+<a name="moveInto"></a>
+<table class=decl><tr><td><code>moveInto (loc)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3065">3065</a>]</table><div class=desc>   Move the MultiInstance into the given location.  This removes us   from any other existing locations and adds us (if we're not   already there) to the given location. <p>
+</div>
+<a name="moveIntoAdd"></a>
+<table class=decl><tr><td><code>moveIntoAdd (loc)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3091">3091</a>]</table><div class=desc>   Add the new location to our set of locations.  Any existing   locations are unaffected. <p>
+</div>
+<a name="moveOutOf"></a>
+<table class=decl><tr><td><code>moveOutOf (loc)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3102">3102</a>]</table><div class=desc>   Remove me from the given location.  Other locations are   unaffected. <p>
+</div>
+<a name="removeFromContents"></a>
+<table class=decl><tr><td><code>removeFromContents (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3153">3153</a>]</table><div class=desc>   remove an object from our contents - we'll delegate this to our   template object just like we delegate addToContents <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

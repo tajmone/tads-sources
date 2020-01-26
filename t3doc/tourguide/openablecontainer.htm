@@ -1,0 +1,56 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>OpenableContainer</title><meta name="keywords" content="OpenableContainer,bulk,bulkCapacity"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>OpenableContainer :<a href="openable.htm">Openable</a>, <a href="container.htm">Container</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="container.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="notifyinsert+notifyremove.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">If, unlike the cap and the glass jar in the last two sections, you want a container that can be opened and closed by the player, then you need to use OpenableContainer (or one of its lockable subclasses, which we'll be encountering later). As an example of a simple OpenableContainer we'll leave a first aid kit on the ledge in entranceCave and put a couple of items in it. For convenience, the definition of the ledge is repeated to show the nesting relationship using the + syntax:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Surface,&nbsp;Fixture&nbsp;'narrow&nbsp;ledge'&nbsp;'narrow&nbsp;ledge'&nbsp;@entranceCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;about&nbsp;a&nbsp;foot&nbsp;wide&nbsp;and&nbsp;two&nbsp;feet&nbsp;long.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;25
+<br>
+;
+<br>
+
+<br>
++&nbsp;firstAidKit&nbsp;:&nbsp;OpenableContainer&nbsp;'small&nbsp;white&nbsp;first&nbsp;aid&nbsp;box/kit'&nbsp;'first&nbsp;aid&nbsp;kit'&nbsp;
+<br>
+&nbsp;&nbsp;"It's&nbsp;made&nbsp;of&nbsp;some&nbsp;kind&nbsp;of&nbsp;white&nbsp;plastic&nbsp;and&nbsp;is&nbsp;about&nbsp;nine&nbsp;inches&nbsp;long.&nbsp;The&nbsp;lid
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;marked&nbsp;with&nbsp;a&nbsp;broad&nbsp;red&nbsp;cross.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;white&nbsp;box&nbsp;lies&nbsp;on&nbsp;the&nbsp;ledge.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;4
+<br>
+;
+<br>
+
+<br>
+++&nbsp;syringe&nbsp;:&nbsp;Thing&nbsp;'syringe'&nbsp;'syringe';
+<br>
+
+<br>
+++&nbsp;stickingPlaster&nbsp;:&nbsp;Thing&nbsp;'sticking&nbsp;adhesive&nbsp;plaster'&nbsp;'sticking&nbsp;plaster';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note the use of the + notation to place the firstAidKit on the ledge, and the ++ notation to indicate a second level of nesting to put objects in the firstAidKit. The use of initSpecialDesc means that it will be described as a 'small white box' when the player first encounters it, but will be listed as 'a first aid kit' once the player picks it up, which seems reasonable: its vocabulary has been defined so that it will answer to either appellation. Since it is only a small box we give it quite a small bulkCapacity, and a bulk that's just a bit bigger than its capacity. We also place a couple of items in it, but their definition is minimal for now - we'll be fleshing them out in due course.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

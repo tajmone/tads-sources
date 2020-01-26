@@ -1,0 +1,212 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>Lister</title></head><body>
+<table class=ban><tr><td align=left><span class=title>Lister</span><span class=type>class</span><td align=right><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#33">33</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Lister.  This is the base class for formatting of lists of objects. <p>   The external interface consists of the showList() method, which   displays a formatted list of objects according to the rules of the   lister subclass. <p>   The rest of the methods are an internal interface which lister   subclasses can override to customize the way that a list is shown.   Certain of these methods are meant to be overridden by virtually all   listers, such as the methods that show the prefix and suffix   messages.  The remaining methods are designed to allow subclasses to   customize detailed aspects of the formatting, so they only need to be   overridden when something other than the default behavior is needed.
+<p>
+<code>class
+<b>Lister</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>Lister</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>Lister</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BaseContentsLister.html">BaseContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BaseRearContentsLister.html">BaseRearContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BaseSurfaceContentsLister.html">BaseSurfaceContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BaseUndersideContentsLister.html">BaseUndersideContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BaseThingContentsLister.html">BaseThingContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ContentsLister.html">ContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BaseInlineContentsLister.html">BaseInlineContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CustomRoomLister.html">CustomRoomLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DescContentsLister.html">DescContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LookWhereContentsLister.html">LookWhereContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ExitLister1.html">ExitLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InventoryLister.html">InventoryLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DividedInventoryLister.html">DividedInventoryLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InventorySublister.html">InventorySublister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/WearingLister.html">WearingLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/WearingSublister.html">WearingSublister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ParagraphLister.html">ParagraphLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SenseLister.html">SenseLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SpecialDescContentsLister.html">SpecialDescContentsLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RemoteRoomLister.html">RemoteRoomLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SimpleAttachmentLister.html">SimpleAttachmentLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MajorAttachmentLister.html">MajorAttachmentLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SimpleLister.html">SimpleLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedTopicLister.html">SuggestedTopicLister</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/aboardVehicleLister.html">aboardVehicleLister</a>&nbsp;
+<a href="../object/darkRoomLister.html">darkRoomLister</a>&nbsp;
+<a href="../object/equivalentStateLister.html">equivalentStateLister</a>&nbsp;
+<a href="../object/finishOptionsLister.html">finishOptionsLister</a>&nbsp;
+<a href="../object/fullScoreLister.html">fullScoreLister</a>&nbsp;
+<a href="../object/otherExitLister.html">otherExitLister</a>&nbsp;
+<a href="../object/plainLister.html">plainLister</a>&nbsp;
+<a href="../object/roomLister.html">roomLister</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#nextCustomFlag">nextCustomFlag</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#contentsListed">contentsListed</a>&nbsp;
+<a href="#contentsListedSeparately">contentsListedSeparately</a>&nbsp;
+<a href="#getArrangedListCardinality">getArrangedListCardinality</a>&nbsp;
+<a href="#getArrangedListNounPhraseCount">getArrangedListNounPhraseCount</a>&nbsp;
+<a href="#getContents">getContents</a>&nbsp;
+<a href="#getFilteredList">getFilteredList</a>&nbsp;
+<a href="#getListedContents">getListedContents</a>&nbsp;
+<a href="#getListGrouping">getListGrouping</a>&nbsp;
+<a href="#getTopLister">getTopLister</a>&nbsp;
+<a href="#isListed">isListed</a>&nbsp;
+<a href="#listCardinality">listCardinality</a>&nbsp;
+<a href="#listSepEnd">listSepEnd</a>&nbsp;
+<a href="#listSepMiddle">listSepMiddle</a>&nbsp;
+<a href="#listSepTwo">listSepTwo</a>&nbsp;
+<a href="#listWith">listWith</a>&nbsp;
+<a href="#longListSepEnd">longListSepEnd</a>&nbsp;
+<a href="#longListSepMiddle">longListSepMiddle</a>&nbsp;
+<a href="#longListSepTwo">longListSepTwo</a>&nbsp;
+<a href="#showArrangedList">showArrangedList</a>&nbsp;
+<a href="#showContentsList">showContentsList</a>&nbsp;
+<a href="#showInlineContentsList">showInlineContentsList</a>&nbsp;
+<a href="#showList">showList</a>&nbsp;
+<a href="#showListAll">showListAll</a>&nbsp;
+<a href="#showListContentsPrefixTall">showListContentsPrefixTall</a>&nbsp;
+<a href="#showListEmpty">showListEmpty</a>&nbsp;
+<a href="#showListIndent">showListIndent</a>&nbsp;
+<a href="#showListItem">showListItem</a>&nbsp;
+<a href="#showListItemCounted">showListItemCounted</a>&nbsp;
+<a href="#showListPrefixTall">showListPrefixTall</a>&nbsp;
+<a href="#showListPrefixWide">showListPrefixWide</a>&nbsp;
+<a href="#showListSeparator">showListSeparator</a>&nbsp;
+<a href="#showListSimple">showListSimple</a>&nbsp;
+<a href="#showListSuffixWide">showListSuffixWide</a>&nbsp;
+<a href="#showSeparateContents">showSeparateContents</a>&nbsp;
+<a href="#showTallListNewline">showTallListNewline</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="nextCustomFlag"></a>
+<table class=decl><tr><td><code>nextCustomFlag</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1258">1258</a>]</table><div class=desc>   The last custom flag defined by this class.  Lister and each   subclass are required to define this so that each subclass can   allocate its own custom flags in a manner that adapts   automatically to future additions of flags to base classes.  As   the base class, we allocate our flags statically with #define's,   so we simply use the fixed #define'd last flag value here. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="contentsListed"></a>
+<table class=decl><tr><td><code>contentsListed (obj)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1088">1088</a>]</table><div class=desc>   Are this item's contents listable? <p>
+</div>
+<a name="contentsListedSeparately"></a>
+<table class=decl><tr><td><code>contentsListedSeparately (obj)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1008">1008</a>]</table><div class=desc>   Determine if an object's contents are listed separately from its   own list entry for the purposes of our type of listing.  If this   returns true, then we'll list the object's contents in a separate   listing (a separate sentence following the main listing sentence,   or a separate tree when in 'tall' mode). <p>   Note that this only matters for objects listed in the top-level   list.  We'll always show the contents separately for an object   that isn't listed in the top-level list (i.e., an object for which   isListed(obj) returns nil). <p>
+</div>
+<a name="getArrangedListCardinality"></a>
+<table class=decl><tr><td><code>getArrangedListCardinality (singles, groups, groupTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#769">769</a>]</table><div class=desc>   Get the cardinality of an arranged list.  Returns the number of   items that will appear in the list, for grammatical agreement. <p>
+</div>
+<a name="getArrangedListNounPhraseCount"></a>
+<table class=decl><tr><td><code>getArrangedListNounPhraseCount (singles, groups, groupTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#805">805</a>]</table><div class=desc>   Get the number of noun phrase elements in a list.  This differs   from the cardinality in that we only count noun phrases, not the   cardinality of each noun phrase.  So, for example, "five coins"   has cardinality five, but has only one noun phrase. <p>
+</div>
+<a name="getContents"></a>
+<table class=decl><tr><td><code>getContents (obj)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1093">1093</a>]</table><div class=desc>   Get all contents of this item. <p>
+</div>
+<a name="getFilteredList"></a>
+<table class=decl><tr><td><code>getFilteredList (lst, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#148">148</a>]</table><div class=desc>   Filter a list to get only the elements we actually want to show.   Returns a new list consisting only of the items that (1) pass the   isListed() test, and (2) are represented in the sense information   table (infoTab).  If infoTab is nil, no sense filtering is   applied. <p>
+</div>
+<a name="getListedContents"></a>
+<table class=decl><tr><td><code>getListedContents (obj, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1102">1102</a>]</table><div class=desc>   Get the listed contents of an object.  'infoTab' is the sense   information table for the enclosing listing.  By default, we call   the object's getListedContents() method, but this is virtualized   in the lister interface to allow for listing other hierarchies   besides ordinary contents. <p>
+</div>
+<a name="getListGrouping"></a>
+<table class=decl><tr><td><code>getListGrouping (groupTab, groups, singles, lst, parentGroup)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#194">194</a>]</table><div class=desc>   Get the groupings for a given listing. <p>   'groupTab' is an empty LookupTable, and 'groups' is an empty   Vector; we'll populate these with the grouping information.   'singles' is an empty Vector that we'll populate with the single   items not part of any group. <p>
+</div>
+<a name="getTopLister"></a>
+<table class=decl><tr><td><code>getTopLister ( )</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1248">1248</a>]</table><div class=desc>   Get my "top-level" lister.  For a sub-lister, this will return   the parent lister's top-level lister.  The default lister is a   top-level lister, so we just return ourself. <p>
+</div>
+<a name="isListed"></a>
+<table class=decl><tr><td><code>isListed (obj)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1076">1076</a>]</table><div class=desc>   Is this item to be listed in room descriptions?  Returns true if   so, nil if not.  By default, we'll use the object's isListed   method to make this determination.  We virtualize this into the   lister interface to allow for different inclusion rules for the   same object depending on the type of list we're generating. <p>
+</div>
+<a name="listCardinality"></a>
+<table class=decl><tr><td><code>listCardinality (obj)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1083">1083</a>]</table><div class=desc>   Get the grammatical cardinality of this listing item.  This should   return the number of items that this item appears to be   grammatically, for noun-verb agreement purposes. <p>
+</div>
+<a name="listSepEnd"></a>
+<table class=decl><tr><td><code>listSepEnd ( )</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1240">1240</a>]</table><div class=desc>   normal and long list separator between second-to-last and last   items in a list with more than two items <p>
+</div>
+<a name="listSepMiddle"></a>
+<table class=decl><tr><td><code>listSepMiddle ( )</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1233">1233</a>]</table><div class=desc>   normal and long list separator between items in list with more   than two items <p>
+</div>
+<a name="listSepTwo"></a>
+<table class=decl><tr><td><code>listSepTwo ( )</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1226">1226</a>]</table><div class=desc>   normal and "long list" separator between the two items in a list   with exactly two items <p>
+</div>
+<a name="listWith"></a>
+<table class=decl><tr><td><code>listWith (obj)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1119">1119</a>]</table><div class=desc>   Get the list of grouping objects for listing the item.  By   default, we return the object's listWith result.  Subclasses can   override this to specify different groupings for the same object   depending on the type of list we're generating. <p>   The group list returned is in order from most general to most   specific.  For example, if an item is grouped with coins in   general and silver coins in particular, the general coins group   would come first, then the silver coin group, because the silver   coin group is more specific. <p>
+</div>
+<a name="longListSepEnd"></a>
+<table class=decl><tr><td><code>longListSepEnd ( )</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1241">1241</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="longListSepMiddle"></a>
+<table class=decl><tr><td><code>longListSepMiddle ( )</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1234">1234</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="longListSepTwo"></a>
+<table class=decl><tr><td><code>longListSepTwo ( )</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1227">1227</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="showArrangedList"></a>
+<table class=decl><tr><td><code>showArrangedList (pov, parent, lst, options, indent, infoTab, itemCount, singles, groups, groupTab, origLst)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#533">533</a>]</table><div class=desc>   Show the list.  This is called after we've figured out which items   we intend to display, and after we've arranged the items into   groups.  In rare cases, listers might want to override this, to   customize the way the way the list is displayed based on the   internal arrangement of the list. <p>
+</div>
+<a name="showContentsList"></a>
+<table class=decl><tr><td><code>showContentsList (pov, obj, options, indent, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#985">985</a>]</table><div class=desc>   List the contents of an item. <p>   'pov' is the point of view, which is usually an actor (and   usually the player character actor). <p>   'obj' is the item whose contents we are to display. <p>   'options' is the set of flags that we'll pass to showList(), and   has the same meaning as for that function. <p>   'infoTab' is a lookup table of SenseInfo objects giving the sense   information for all of the objects that the actor to whom we're   showing the contents listing can sense. <p>
+</div>
+<a name="showInlineContentsList"></a>
+<table class=decl><tr><td><code>showInlineContentsList (pov, obj, options, indent, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1016">1016</a>]</table><div class=desc>   Show an "in-line" contents list.  This shows the item's contents   list as a parenthetical, as part of a recursive listing.  This is   pretty much the same as showContentsList(), but uses the object's   in-line contents lister instead of its regular contents lister. <p>
+</div>
+<a name="showList"></a>
+<table class=decl><tr><td><code>showList (pov, parent, lst, options, indent, infoTab, parentGroup)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#95">95</a>]</table><div class=desc>   Display a list of items, grouping according to the 'listWith'   associations of the items.  We will only list items for which   isListed() returns true. <p>   'pov' is the point of view of the listing, which is usually an   actor (and usually the player character actor). <p>   'parent' is the parent (container) of the list being shown.  This   should be nil if the listed objects are not all within a single   object. <p>   'lst' is the list of items to display. <p>   'options' gives a set of ListXxx option flags. <p>   'indent' gives the indentation level.  This is used only for   "tall" lists (specified by including ListTall in the options   flags).  An indentation level of zero indicates no indentation. <p>   'infoTab' is a lookup table of SenseInfo objects for all of the   objects that can be sensed from the perspective of the actor   performing the action that's causing the listing.  This is   normally the table returned from Thing.senseInfoTable() for the   actor from whose point of view the list is being generated.  (We   take this as a parameter rather than generating ourselves for two   reasons.  First, it's often the case that the same information   table will be needed for a series of listings, so we can save the   compute time of recalculating the same table repeatedly by having   the caller obtain the table and pass it to each lister.  Second,   in some cases the caller will want to synthesize a special sense   table rather than using the actual sense information; taking this   as a parameter allows the caller to easily customize the table.) <p>   'parentGroup' is the ListGroup object that is showing this list.   We will not group the objects we list into the parent group, or   into any group more general than the parent group. <p>   This routine is not usually overridden in lister subclasses.   Instead, this method calls a number of other methods that   determine the listing style in more detail; usually those other,   simpler methods are customized in subclasses. <p>
+</div>
+<a name="showListAll"></a>
+<table class=decl><tr><td><code>showListAll (lst, options, indent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#38">38</a>]</table><div class=desc>   Show a list, showing all items in the list as though they were   fully visible, regardless of their actual sense status. <p>
+</div>
+<a name="showListContentsPrefixTall"></a>
+<table class=decl><tr><td><code>showListContentsPrefixTall (itemCount, pov, parent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1057">1057</a>]</table><div class=desc>   Show the list prefix for the contents of an object in a 'tall'   listing.  By default, we just show our usual tall list prefix. <p>
+</div>
+<a name="showListEmpty"></a>
+<table class=decl><tr><td><code>showListEmpty (pov, parent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1067">1067</a>]</table><div class=desc>   Show an empty list.  If the list to be displayed has no items at   all, this is called instead of the prefix/suffix routines.  This   can be left empty if no message is required for an empty list, or   can display the complete message appropriate for an empty list   (such as "You are empty-handed"). <p>
+</div>
+<a name="showListIndent"></a>
+<table class=decl><tr><td><code>showListIndent (options, indent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#874">874</a>]</table><div class=desc>   Show a list indent if necessary.  If ListTall is included in the   options, we'll indent to the given level; otherwise we'll do   nothing. <p>
+</div>
+<a name="showListItem"></a>
+<table class=decl><tr><td><code>showListItem (obj, options, pov, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1122">1122</a>]</table><div class=desc>show an item in a list<p>
+</div>
+<a name="showListItemCounted"></a>
+<table class=decl><tr><td><code>showListItemCounted (lst, options, pov, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1138">1138</a>]</table><div class=desc>   Show a set of equivalent items as a counted item ("three coins").   The listing mechanism itself never calls this directly; instead,   this is provided so that ListGroupEquivalent can ask the lister   how to describe its equivalent sets, so that different listers   can customize the display of equivalent items. <p>   'lst' is the full list of equivalent items.  By default, we pick   one of these arbitrarily to show, since they're presumably all   the same for the purposes of the list. <p>
+</div>
+<a name="showListPrefixTall"></a>
+<table class=decl><tr><td><code>showListPrefixTall (itemCount, pov, parent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1051">1051</a>]</table><div class=desc>   Show the list prefix for a 'tall' listing.  Note that there is no   list suffix for a tall listing, because the format doesn't allow   it. <p>
+</div>
+<a name="showListPrefixWide"></a>
+<table class=decl><tr><td><code>showListPrefixWide (itemCount, pov, parent, lst, :)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1038">1038</a>]</table><div class=desc>   Show the prefix for a 'wide' listing - this is a message that   appears just before we start listing the objects.  'itemCount' is   the number of items to be listed; the items might be grouped in   the listing, so a list that comes out as "three boxes and two   books" will have an itemCount of 5.  (The purpose of itemCount is   to allow the message to have grammatical agreement in number.) <p>   'lst' is the entire list, which some languages need for   grammatical agreement.  This is passed as a named argument, so an   overrider can omit it from the parameter list if it's not needed. <p>   This will never be called with an itemCount of zero, because we   will instead use showListEmpty() to display an empty list. <p>
+</div>
+<a name="showListSeparator"></a>
+<table class=decl><tr><td><code>showListSeparator (options, curItemNum, totalItems)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1161">1161</a>]</table><div class=desc>   Show a list separator after displaying an item.  curItemNum is   the number of the item just displayed (1 is the first item), and   totalItems is the total number of items that will be displayed in   the list. <p>   This generic routine is further parameterized by properties for   the individual types of separators.  This default implementation   distinguishes the following separators: the separator between the   two items in a list of exactly two items; the separator between   adjacent items other than the last two in a list of more than two   items; and the separator between the last two elements of a list   of more than two items. <p>
+</div>
+<a name="showListSimple"></a>
+<table class=decl><tr><td><code>showListSimple (pov, lst, options, indent, prevCnt, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#903">903</a>]</table><div class=desc>   Show a simple list, recursing into contents lists if necessary.   We pay no attention to grouping; we just show the items   individually. <p>   'prevCnt' is the number of items already displayed, if anything   has already been displayed for this list.  This should be zero if   this will display the entire list. <p>
+</div>
+<a name="showListSuffixWide"></a>
+<table class=decl><tr><td><code>showListSuffixWide (itemCount, pov, parent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1044">1044</a>]</table><div class=desc>   show the suffix for a 'wide' listing - this is a message that   appears just after we finish listing the objects <p>
+</div>
+<a name="showSeparateContents"></a>
+<table class=decl><tr><td><code>showSeparateContents (pov, lst, options, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#835">835</a>]</table><div class=desc>   Service routine: show the separately-listed contents of the items   in the given list, and their separately-listed contents, and so   on.  This routine is not normally overridden in subclasses, and is   not usually called except from the Lister implementation. <p>   For each item in the given list, we show the item's contents if   the item is either marked as unlisted, or it's marked as showing   its contents separately.  In the former case, we know that we   cannot have shown the item's contents in-line in the main list,   since we didn't show the item at all in the main list.  In the   latter case, we know that we didn't show the item's contents in   the main list because it's specifically marked as showing its   contents out-of-line. <p>
+</div>
+<a name="showTallListNewline"></a>
+<table class=decl><tr><td><code>showTallListNewline (options)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#888">888</a>]</table><div class=desc>   Show a newline after a list item if we're in a tall list; does   nothing for a wide list. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

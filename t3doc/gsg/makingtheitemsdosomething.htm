@@ -1,0 +1,134 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Making the Items do Something</title><meta name="keywords" content="actionDobjTake,finishGameMsg"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="addingitemstothegame.htm">[Previous] </a>&nbsp;&nbsp;<a href="startinganewgame.htm">[Next] </a></I></FONT></P>
+<h2>Making the Items do Something</h2>
+
+<font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The game is still rather bland; it has no puzzles. So, let's introduce a small puzzle. Let's assume that the gold skull wasn't merely left lying around; instead, whoever left it there arranged for a trap to go off if it should be lifted off the pedestal. To implement this, we need to add a <i>method</i> to the <font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object. A <i>method</i> is a special type of property which contains code (i.e. a sequence of one or more statements) to be executed; it is very much like a function in C or Pascal. The new </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> with the method looks like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;goldSkull:&nbsp;Thing
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'gold&nbsp;skull'
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;vocabWords&nbsp;=&nbsp;'gold&nbsp;skull/head'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;pedestal
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;actionDobjTake()&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"As&nbsp;you&nbsp;lift&nbsp;the&nbsp;skull,&nbsp;a&nbsp;volley&nbsp;of&nbsp;poisonous
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arrows&nbsp;is&nbsp;shot&nbsp;from&nbsp;the&nbsp;walls!&nbsp;You&nbsp;try&nbsp;to&nbsp;dodge
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;arrows,&nbsp;but&nbsp;they&nbsp;take&nbsp;you&nbsp;by&nbsp;surprise!";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;finishGameMsg(ftDeath,&nbsp;[finishOptionUndo]);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The method </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (which stands for "action <b>D</b>irect <b>obj</b>ect <b>Take</b>") is invoked when the player (or any other actor) tries to take the skull. Here, we've simply defined it first to display a message (since the message is enclosed in double quotes, it is displayed immediately upon being evaluated), and to then call a special function called </font><font face="Courier New" size="2" color="#000000">finishGameMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (the argument </font><font face="Courier New" size="2" color="#000000">ftDeath</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> shows that we want </font><font face="Courier New" size="2" color="#000000">finishGameMsg&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to end the game with a YOU HAVE DIED message; </font><font face="Courier New" size="2" color="#000000">finishOptionUndo</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> offers the player an UNDO option after the death message).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You should note that we didn't just pick the name </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> out of thin air. The </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method in the </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object is called by TADS 3 when the player types a "take" command with </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as the direct object. Each verb the player types results in the system calling particular methods in the object or objects named in the command. The naming of these methods is described in more detail later in this guide.
+<br>
+
+<br>
+You might wonder why we didn't need a </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method in our original definition of </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, or you might have assumed that the system automatically knows what to do if no </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is defined for an object. In fact, all objects do need a </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, and the system doesn't automatically know anything about it. However, since practically every object has the same </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, with a few exceptions such as </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, it would be extremely tedious to type a </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method for every object in the game. Instead, we use something called "inheritance." By defining the </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to be a member of the </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, you tell TADS 3 that </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> "inherits" all of the definitions for </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, in addition to any definitions it makes on its own. The </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, which appears in the </font><font face="Courier New" size="2" color="#000000">adv3&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">library file included at the beginning of the program, defines a </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, so anything that is defined to be a </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> inherits that definition. However, if something is defined in both </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, as </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is in this example, the definition in </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> takes precedence - it "overrides" the inherited method.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We actually don't have a very good puzzle here, because there's no way to take the gold skull without dying. So, let's put a rock on the cave floor:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;smallRock:&nbsp;Thing
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'small&nbsp;rock'
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;vocabWords&nbsp;=&nbsp;'small&nbsp;rock'
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;cave
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;;
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Now, let's change the </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of the </font><font face="Courier New" size="2" color="#000000">goldSkull</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;actionDobjTake()
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(location&nbsp;!=&nbsp;pedestal&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;am&nbsp;I&nbsp;off&nbsp;the&nbsp;pedestal?&nbsp;*/
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;smallRock.location&nbsp;==&nbsp;pedestal&nbsp;)&nbsp;&nbsp;/*&nbsp;or&nbsp;is&nbsp;the&nbsp;rock&nbsp;there?&nbsp;*/
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;yes&nbsp;-&nbsp;take&nbsp;as&nbsp;usual&nbsp;*/
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;no&nbsp;-&nbsp;the&nbsp;trap&nbsp;goes&nbsp;off!&nbsp;*/
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"As&nbsp;you&nbsp;lift&nbsp;the&nbsp;skull,&nbsp;a&nbsp;volley
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;poisonous&nbsp;arrows&nbsp;is&nbsp;shot&nbsp;from
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;walls!&nbsp;You&nbsp;try&nbsp;to&nbsp;dodge&nbsp;the
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arrows,&nbsp;but&nbsp;they&nbsp;take&nbsp;you&nbsp;by&nbsp;surprise!";
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;finishGameMsg(ftDeath,&nbsp;[finishOptionUndo]);
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This new </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> first checks to see if the object being taken (the special object </font><font face="Courier New" size="2" color="#000000">self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which is the object to which the message </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> was originally sent), which in this case is the gold skull, is already off the pedestal; if it is, we don't want anything to happen, so we invoke the <i>inherited</i> handling of </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. We also use the inherited handling if the small rock is on the pedestal. When we invoke the <i>inherited</i> handling, the </font><font face="Courier New" size="2" color="#000000">actionDobjTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method that we inherit from our parent class (in this case, </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) is invoked. This allows us to override a method only under certain special circumstances, and otherwise do business as usual. If we don't satisfy one of these two requirements, the volley of poisonous arrows is released as before.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">So, the solution to the puzzle is to put the rock on the pedestal before taking the skull, thereby fooling the pedestal into thinking the skull is still there.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">As this stands, the player can avoid losing the game, but can't actually win it. To finish the game with a winning ending instead of a deadly one, you can call </font><font face="Courier New" size="2" color="#000000">finishGameMsg&nbsp;with&nbsp;ftVictory&nbsp;instead&nbsp;of&nbsp;ftDeath.&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you want to try experimenting for yourself before going on to the next chapter, see if you can make the game end in victory either (a) when the player succeeds in picking up the gold skull, or (b) when he succeeds in leaving the cave with it. For the latter, try putting your extra code in the </font><font face="Courier New" size="2" color="#000000">enteringRoom(traveler)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of startroom, and testing for the condition </font><font face="Courier New" size="2" color="#000000">goldSkull.isIn(gPlayerChar)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. If you want to be even more adventurous, try adding another room, say a path through the jungle leading away from startroom, and make the player win the game when the player character enters your new room with the skull. However, if you don't feel confident enough to try any of this on your own just yet, no matter, just read on.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This should give you some idea of how a TADS 3 program looks. In the next chapter, we'll start to develop a somewhat larger game, starting once again from the very basics and developing our understanding of how they're normally handled in TADS 3, before going on to add items and puzzles of increasing complexity.
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="addingitemstothegame.htm">[Previous] </a>&nbsp;&nbsp;<a href="startinganewgame.htm">[Next] </a></I></FONT></P>
+</body></html>

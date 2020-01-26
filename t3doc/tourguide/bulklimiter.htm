@@ -1,0 +1,40 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>BulkLimiter</title><meta name="keywords" content="BulkLimiter,bulkCapacity,maxSingleBulk,revealHiddenItems,tooFullMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>BulkLimiter : <a href="thing-thebasics.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="containers-introduction.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="surface.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">BulkLimiter is the common base class for containers and surfaces: things that have limited bulk capacities. You probably won't have cause to use this class directly; you'll usually use subclasses such as <a href="surface.htm">Surface</a> and <a href="container.htm">Container</a> instead.
+<br>
+
+<br>
+BulkLimiter defines the following properties that are inherited by its subclasses:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>bulkCapacity</b> - the total aggregate bulk that can be contained in this object (by default, 10000).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>maxSingleBulk</b> - the maximum bulk that any individual item inserted into the BulkLimiter may have (by default 10).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>revealHiddenItems</b> - a flag that determines whether any Hidden items will be revealed when this BulkLimiter's interior is examined (i.e. when look in, under, or behind will cause the discover method of any item of class <a href="hidden.htm">Hidden</a> to be called). By default this is true, representing the fact that when we look in, under or behind something we normally see what was there even if we didn't before we looked; if desired this can be set to nil so that <a href="hidden.htm">Hidden</a> items remain hidden.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>tooFullMsg</b> - The message that is displayed when adding a new object would exceed the BulkLimiter's bulkCapacity. This may be overridden on subclasses.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>becomingTooFullMsg</b> - the message property to use when doing something to one of our contents would cause our overall contents to exceed our capacity.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>becomingTooLargeMsg</b> - the message property to use when doing something to one of our contents would make it too large to fit all by itself into this container (that is, it would cause that object's bulk to exceed our maxSingleBulk).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+BulkLimiter also overrides the <a href="notifyinsert+notifyremove.htm">notifyInsert()</a> method to check whether an object will fit into BulkContainer (which it won't if either the aggregate bulkCapacity or the individual maxSingleBulk would be exceeded by the insertion).
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

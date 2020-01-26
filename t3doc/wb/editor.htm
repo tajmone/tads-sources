@@ -1,0 +1,1046 @@
+<html>
+
+<head>
+<title>Advanced Text Editing Features</title>
+<link rel=stylesheet href="wbdoc.css">
+</head>
+<body>
+
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+
+
+<center>
+<br><br><br><img src='../htmltads.jpg'>
+<br><h1>
+Advanced Text Editing Features</h1>
+<br><br>
+</center>
+
+<p>Workbench's integrated text editor is an open-source program called
+Scintilla.  The Scintilla project has its own Web page, at <a
+href="http://www.scintilla.org">www.scintilla.org</a>.  That site has
+extensive documentation, but unfortunately it's almost all written for
+programmers who want to use Scintilla in other programs, rather than
+for "end users" who just want to use Scintilla to edit their
+documents.
+
+<p>Fortunately, for the most part, Scintilla behaves very much like
+any other Windows text editor for all of the basic editing tasks -
+moving the cursor, selecting text with the mouse, typing, cut and
+paste, and so on.  You should be able to figure out the basics pretty
+quickly if you're at all familiar with any other Windows applications,
+so we won't dwell on those parts.
+
+<p>However, Scintilla is more than just a Windows text editor: it's a
+<i>programmer's</i> text editor.  That means that it has a number of
+features that are advanced or idiosyncratic - usually both.  These
+extra features, outside of what you'd find in an ordinary Windows
+text editor or word processor, merit some extra discussion.
+
+<h2>Keyboard customization</h2>
+
+<p>There are a lot of things that set programmer's editors apart from
+the ordinary sort of editor, but one of the really big ones is
+customizability.  Programmers do a lot of typing, and tend to place a
+premium on efficiency - not only in the programs they write, but in
+the process of writing them.  So it's natural for programmers to want
+to make their typing workload as light as possible.  One important way
+to do this is to adjust your keyboard to fit your working style,
+rather than vice versa.  It's a basic requirement for a programmer's
+editor, therefore, that the user should be able to easily change the
+way the keyboard works.
+
+<p>Workbench provides keyboard customization not only in the editor,
+but throughout the entire environment.  You can customize the editor
+key mapping using the general-purpose Workbench keyboard customizer.
+This is described in detail in <a href="custom.htm">Customizing
+Workbench</a>.
+
+
+<h2>Cursor key variations</h2>
+
+<p>Scintilla provides a few variations on behavior for some of the
+basic cursor keys.  The variations are basically matters of taste, to
+let you choose the behavior that best matches what you're accustomed
+to from other editors you've used, or simply what best suits your
+taste.
+
+<p>The variations are handled through customization.  Rather than
+providing yet another option setting to control which variation you
+want for a given command, Scintilla provides several different
+versions of the command; to choose the custom behavior you want,
+you simply choose which version of the command you want, and map
+that version as the definition of the corresponding key.
+
+<p><b>Start of line:</b> This is normally mapped to the Home key.
+Scintilla lets you move the cursor to the actual start of the line via
+the command Edit.Home, or to the start of the indented text on the
+line (that is, the first non-blank character) via Edit.IndentHome.
+Edit.HomeDisplay moves the cursor to the start of the current
+<i>display</i> line - that is, if the line is wrapped because it's too
+wide to fit the window, Edit.HomeDisplay moves the cursor to the
+beginning of the current line as actually displayed, rather than to
+the start of the entire overall line.  Edit.HomeWrap is almost the
+same as Edit.HomeDisplay, but has the additional feature of moving the
+cursor to the start of the actual line if it's already at the start of
+the display line.  Edit.IndentHomeWrap is a combination of
+Edit.IndentHome and Edit.HomeWrap.
+
+<p><b>End of line:</b> This is normally mapped to the End key.
+Scintilla lets you move the cursor to the actual end of the line
+via Edit.LineEnd.  Edit.LineEndDisplay moves the cursor to the end
+of the display line, if the line is wrapped; Edit.LineEndWrap does
+the same thing, but also moves the cursor to the end of the actual
+line if it's already at the end of the display line.
+
+<p><b>Page Up/Down:</b> The Edit.PageUp and Edit.PageDown commands
+scroll the window up or down one page - that is, by approximately the
+height of the editor window.  These commands move the cursor by the
+same amount.  Edit.StutteredPageUp and Edit.StutteredPageDown move the
+cursor to the first or last line in the window; if the cursor is
+already there, they move up or down by a page.
+
+
+<h2>Language modes</h2>
+
+<p>The editor has some features that are customized for each file
+according to the file's "language mode."  In particular, syntax
+coloring and auto-indenting are controlled by the mode.
+
+<p>When you open a file, the editor selects a default language mode
+for the file.  This is typically based on the file's extension - the
+part of the filename following the last period (".") in the name.  For
+example, the editor assumes that any file that ends in ".t" or ".h" is
+a TADS source file, and assumes that any file ending in ".htm" or
+".html" is an HTML (Web page source) file.
+
+<p>You can explicitly change the language mode for a window after
+opening it using the Language Mode submenu of the Edit menu.  If you
+do change a file's language mode explicitly, Workbench will remember
+the setting, and will use the same mode when you open the file again
+in the future - this means you won't have to manually change the
+file's mode again every time you edit it.
+
+
+<h2>Syntax coloring</h2>
+
+<p>Another important feature that makes an editor a programmer's
+editor is "syntax coloring."  This is the ability of the editor to
+color-code the elements of the source text, based on the lexical rules
+of the language that the source text is written in.  Most programmers
+find that syntax coloring makes it easier to see the structure of a
+program - it makes literal elements like comments and strings stand
+out clearly from the surrounding program text, for example, and makes
+it easier to see significant punctuation marks.
+
+<p>The Workbench editor has full syntax coloring capabilities for
+several programming languages.  Scintilla itself has built-in support
+for dozens of languages, plus the ability to add infinitely more
+languages through an open extensibility mechanism.  To simplify the
+UI, though, Workbench only includes out-of-the-box support for the
+languages that we expect to be most useful to TADS users - TADS
+itself, of course, plus HTML, XML, and TADS command scripts.
+
+<p>You can customize the color settings - and whether to use syntax
+coloring at all - for each of the language modes individually.  Within
+each language mode, you can select your own color settings for each
+type of lexical element.  The color customizer is part of the main
+Options dialog - go to the Syntax Coloring page.
+
+<p><b>User Keywords:</b> The TADS 3 language mode has special syntax
+element categories called User Keywords 1, User Keywords 2, and User
+Keywords 3.  These categories let you specify your own custom sets of
+keywords that you want to display in separate colors.  For each User
+Keywords category, you can specify a custom color for that category,
+and you can specify a list of keywords to display in that custom
+color.  You can use this, for example, to set special coloring for
+particular object names or library macros.
+
+<p>To specify a set of keywords to associated with one
+of these categories, open the Options dialog, go to the Syntax
+Coloring page, and selected one of the User Keywords items in the
+Syntax Elements list.  Then click the Keywords button - this will
+bring up a dialog that lets you enter the keywords to associate with
+the category.  You can enter any number of keywords, separated by
+spaces.  Note that the keywords you enter must conform to the standard
+syntax rules for symbols, so they can only contain letters, digits,
+and underscores.
+
+
+<h2>Auto-indenting</h2>
+
+<p>Some of the language modes provide auto-indenting.  This feature
+automatically keeps the program indented to the proper level <i>as you
+type it</i>.  This is a tremendous time-saver; it saves you from
+having to insert spaces or tabs in the margin every time you start a
+new line.
+
+<p>In TADS source files, the auto-indenter is triggered by several
+keys, including the Return key, colons and semicolons, and the various
+"bracket" characters (parentheses, braces, and square brackets).  It's
+designed so that you can just type away, and the indentation will come
+out right without your ever having to insert spaces at the start of a
+line.  ("Right" is defined roughly as the way the adv3 library is
+indented.)
+
+<p>The auto-indenter can take a little getting used to.  For one
+thing, it can be a little strange for lines to jump around as you type
+them.  For another, some lines won't appear to be correctly indented
+right away - you might have to type part or all of the line before the
+indenter figures out where the line is supposed to go.  If the
+auto-indent feature seems weird to you at first, we'd recommend giving
+it a little time, a chance to grow on you.  The amount of time it can
+save you is huge.
+
+
+<h2>Manual indenting</h2>
+
+<p>The auto-indenter normally works as you type in new code.
+Sometimes, though, you'll want to adjust the indentation of a block of
+<i>existing</i> code.  For example, if you insert an <tt>if</tt>
+condition, and move a block of existing code into the "then" part of
+the <tt>if</tt>, the existing code moved into the "then" block would
+need to be indented one level.  Or, suppose you cut and paste a block
+of code from one function to another; the inserted code might need
+to be re-indented to fit its new surroundings.
+
+<p>The auto-indenter can help in cases like these.  The indenter
+not only automatically indents new code, but can be called upon
+explicitly to indent existing code.
+
+<p>To explicitly recalculate the indentation for a block of code,
+select the range of text you'd like to re-indent, then press the
+Ctrl+I key combination.  This invokes the command
+Ext.Edit.SyntaxIndent in the default and Epsilon-style keyboard
+mappings supplied with Workbench; if you've customized the keyboard,
+you might need to use a different key combination.  This command
+explicitly reindents the entire selected block of code, as though
+you'd just typed in the code.
+
+<p>You can also indent code using the Alt+Q key, which invokes the
+Edit.FillParagraph command in the standard key layouts.  In the TADS
+language mode, Alt+Q acts just like Ctrl+I when a region is selected.
+When there's no region selected, Alt+Q looks at the cursor position to
+determine what to do: if the cursor is in a string, it reformats the
+string; if the cursor is in a block comment, it reformats the comment;
+otherwise it just reindents the line like Ctrl+I.
+
+
+<h2>Comment auto-formatting</h2>
+
+<p>In the TADS language mode, the editor provides another automatic
+formatting feature: comment auto-formatting.  The comment formatter is
+triggered when you type the closing "/" of a multi-line block comment
+(<tt>/*...*/</tt>).  The comment formatter does the following:
+
+<ul>
+
+<li>Word-wraps the lines of the comment to fill out each line to
+the current right margin (as set through the options dialog)
+
+<li>Inserts a column of "*" characters at the left side of the
+comment, lined up under the "*" of the opening <tt>/*</tt>.
+
+<li>Treats blank lines within the comment as paragraph breaks.
+
+<li>Treats lines starting with "." (or "*.") as "preformatted" -
+the formatter leaves these lines as they are, without word-wrapping
+them into the adjacent lines.
+
+<li>If the comment starts or ends with multiple asterisks adjacent to
+the opening <tt>/*</tt> or closing <tt>*/</tt>, the formatter assumes
+that you either want to create a "box" around the comment or are using
+a special comment syntax (such as Javadoc), so it leaves the extra
+asterisks exactly as they are.
+
+</ul>
+
+<p>Like the auto-indenter, the comment auto-formatter can take a
+little getting used to.  If you don't like it, you can turn this
+feature off via the Indenting page of the main Options dialog.
+
+<p>You can <i>explicitly</i> re-indent a comment - applying the same
+rules listed above - by using the key combination Alt+Q (in the
+standard keyboard layouts) any time the cursor is within a block
+comment.  This invokes the Edit.FillParagraph command, which the TADS
+language mode interprets as comment reformatting when there's no
+selected range and the cursor is within a block comment.  In addition,
+any time you reindent a region of code, the indenter automatically
+reformats any comments within the region.
+
+<p>(There's also a dedicated command for reformatting a comment:
+Ext.Edit.FormatComment.  This command isn't assigned to any key in the
+standard key layouts, since that makes for fewer keys to memorize.
+All you have to remember is that Alt+Q is the master re-indenter
+command.)
+
+
+<h2>String reformatting</h2>
+
+<p>TADS source code tends to have a lot of quoted text, since so much
+of writing a text game is (it seems needless to say) writing the text.
+These passages often span multiple lines, and any time you edit a
+multi-line passage, you might need to fix up the line breaks to make
+everything fit into the screen width again.  This is tedious to do by
+hand, but luckily, the editor has a command that automatically
+does this sort of reformatting for you.
+
+<p>To reformat a string, move the cursor within a string and press
+Alt+Q.  This invokes the Edit.FillParagraph command, which the TADS
+language mode interprets as reformatting the string containing the
+cursor when the cursor is within a string.
+
+<p>(There's also a dedicated command for reformatting a string:
+Ext.Edit.FormatString.  But this command isn't assigned to any keys in
+the default key mappings, since that makes for fewer keys to memorize.
+All you have to remember is that Alt+Q is the master re-indenter
+command.)
+
+<p>Pressing Alt+Q when the cursor is within a string will
+automatically find the boundaries of the string, and will then re-flow
+the string as though it were a paragraph of text, word-wrapping the
+text to fit the margin width and the current indentation level.  If
+the cursor is within an embedded &lt;&lt; &gt;&gt; expression, the
+command applies to the entire enclosing string, not just the embedded
+expression.
+
+<p>The string formatter will not break lines at spaces within {xxx}
+substitution parameter strings.  It also won't break at a space at the
+end of a string.  (It's common to put a space at the end of a string
+to ensure that any subsequent text that's displayed immediately after
+the string in question is properly spaced out in the final display.
+Breaking the line there usually looks inelegant, because it typically
+does something like leaving a bare close quote, or just a close quote
+plus a semicolon, on a line by itself.)
+
+<p>The string reformatter recognizes several formatting codes that add
+explicit line breaks in the <i>displayed</i> text: \n, \b, &lt;br&gt;,
+&lt;p&gt;, and &lt;.p&gt;.  If one of these codes appears at the end
+or at the beginning of a line (as the string appears just before the
+command is invoked), the formatter leaves the adjacent line break in
+place.  This will retain the line structure if you intentionally break
+up source lines at line-breaking display codes, which many people do
+so that they can more easily see the approximate shape of the string
+as displayed at run-time.
+
+
+<h2>Bookmarks</h2>
+
+<p>The editor lets you mark a location in a source file so that you
+can easily return there later.  These location markers are called
+"bookmarks."
+
+<p>The editor provides three different ways of working with bookmarks.
+You might find that one of these fits your working style best, or you
+might find that you use each of these on different occasions.
+
+<p><b>Scanning:</b> The first style is to simply use bookmarks to mark
+a few places in the code that you frequently return to, and then to
+scan through the bookmarks sequentially any time you want to return
+to one of these oft-visited location.
+
+<p>To set a bookmark, move the cursor to the location that you want
+to mark, then press Alt+/ (this invokes Edit.ToggleBookmark in the
+standard keyboard mappings).
+
+<p>To scan through the bookmarks you've set, press Ctrl+Shift+J
+(Edit.JumpToNextBookmark in the Workbench default mapping; in the
+Epsilon-style mapping, it's Ctrl+X Ctrl+J).  Each time you press this
+key, the editor will jump to the nearest bookmark after the cursor
+position.  If the next bookmark is in a different file, the editor
+will jump to the new file.  If you reach the last bookmark, the editor
+will cycle around back to the first - so no matter where you start,
+you can always cycle through all of the bookmarks by pressing
+Ctrl+Shift+J repeatedly.
+
+<p><b>Naming:</b> The second style is to assign names to your
+bookmarks.  You can then easily return to a specific bookmark by name,
+rather than having to hunt through all of the bookmarks sequentially.
+A bookmark name is limited to a single letter, so you can set up to 26
+named bookmarks - A through Z.
+
+<p>To set a named bookmark, press Alt+Shift+/ (Edit.SetNamedBookmark),
+then press the letter you'd like to assign as the bookmark's name.  To
+jump to a named bookmark, press Ctrl+J (Edit.JumpToNamedBookmark in
+the Workbench default mapping; in the Epsilon-style mapping, its
+Ctrl+X J), then press the letter naming the bookmark to go to.
+
+<p>Named bookmarks otherwise work like regular ("anonymous")
+bookmarks, so they're included in the cycle when you use Ctrl+Shift+J
+to scan through all bookmarks, and are included in the "stack" cycle
+as well (which we'll come to next).
+
+<p><b>Stacking:</b> The third style of bookmarking is to use bookmarks
+as a "stack."  That's in the computer programming sense, of a last-in,
+first-out collection.  The stack style is useful when you're following
+a series of cross-references through many parts of a file, or through
+several files, and you find that one thing leads to another, which
+leads to another, and another.  In this type of situation, you might
+want to work your way back through the files the way you came, maybe
+branching off into other references along the way.
+
+<p>To facilitate the stack style of usage, the bookmark system
+automatically remembers the order in which bookmarks were added, and
+provides a command to jump back to the most recently defined bookmark.
+
+<p>To set a bookmark, move the cursor to the location you want to mark,
+and press Alt+/ (this invokes the command Edit.ToggleBookmark in the
+standard keyboard mappings).
+
+<p>To jump back to the most recent bookmark, press Alt+J
+(Edit.PopBookmark in the standard mappings).  This command does two
+things: first, it jumps to the latest bookmark defined; second, it
+moves that bookmark to the <i>least</i> recent position in the
+bookmark list.  This means that pressing Alt+J again will jump to the
+second most recently defined bookmark, then the third, and so on.
+This lets you retrace your steps, essentially following a trail of
+breadcrumbs back to where you started.
+
+<p><b>Other notes:</b> You can delete a bookmark by moving to a line
+containing a bookmark and pressing Alt+/ (Edit.ToggleBookmark).  This
+deletes any named or anonymous bookmarks set on the same line.
+Setting a new named bookmark on a line deletes any previous bookmarks
+on the same line.  Setting a named bookmark also deletes any existing
+bookmark with the same name.
+
+<p>The editor displays a little blue diamond in the margin at each
+line containing a bookmark, so you can see visually where any
+bookmarks are located in a file.
+
+<p>Bookmarks are saved with the project configuration, so they'll
+be reinstated each time you start a new Workbench session.
+
+
+<h2>Searching for a symbol definition</h2>
+
+<p>The editor has a command that searches for the definition of a
+symbol.  Position the cursor at the symbol whose definition you're
+looking for, and press F6.  The default keyboard mappings assign F6 to
+the command Edit.FindDefinition.  This command searches all of the
+files in the project list for the symbol.  If a match is found, the
+editor opens the file containing the match and selects the matching
+symbol text.
+
+<p>Some symbols have more than one definition.  In this case, you can
+continue searching for alternative definitions simply by pressing F6
+again.  Since each successful search leaves the cursor positioned at
+the symbol name in the definition line it found, pressing F6 again
+will perform another search for the same symbol, starting at the last
+definition found.
+
+<p>The search recognizes TADS 3-style definitions, including function,
+object, class, and grammar definitions; modify and replace statements;
+object definitions starting with "+"; and DefineXAction() macros.
+
+
+<h2>Code folding</h2>
+
+<p>The editor has a feature called "code folding" that lets you
+selectively hide sections of your source text, to better see the
+overall block structure.  It's similar to the way some word processors
+let you show and hide parts of an outline: you might want to hide all
+of the sub-points below the big roman numeral sections, for example,
+so that you can see the main points at the top level in the outline.
+Code folding works like that, except that the levels are defined by
+the lexical structure of the code: an object is at the top level,
+within an object are properties and methods, within methods are
+statements, and some statements contain sub-statements enclosed in
+braces.
+
+<p>To use folding, you first have to tell the editor to show you the
+folding controls.  Do this by going to the Edit menu and selecting the
+command Show Folding Controls.  (If the menu item is checked, folding
+is already enabled.)
+
+<p>The folding controls show as little "+" and "-" signs in the left
+margin.  These work essentially like the +/- buttons in Windows tree
+controls, such as in Windows Explorer when you're viewing the tree of
+folders on your disk.  Each + or - is a folding point, which is the
+first line of a lexical block.  You'll see one of these at the start
+of each object definition, at the start of each method definition, and
+at the start of each brace block within a method.  Initially, the
+editor displays the entire file - nothing is hidden, so all of the
+folding points are "open."  An open folding point is displayed as a
+minus sign, because clicking it will "close" the block - that is, hide
+everything but the first line in the block.  This will change the
+minus sign to a plus sign, to indicate that clicking the button now
+will open the block back up, showing all of the lines within.
+
+<p>The point of folding is that it lets you hide the details of a long
+block of code so that you can see the overall block structure at a
+glance.  This is sometimes helpful, especially in long stretches of
+procedural code within a method - it might make it easier to see how
+an "if" and "else" match up, for instance, or to see exactly what
+happens next after exiting a long "switch" block.
+
+<p>Some people really like folding, and some don't find it very
+useful; that's why Workbench provides it if you want it, but doesn't
+force you to use it.
+
+
+<h2>Repeating a command</h2>
+
+<p>The editor has a convenient way of repeating a character or
+keyboard command a given number of times.  To do this, use the
+Edit.RepeatCount command, which is assigned to Ctrl+U in the standard
+keyboard mappings, then type a number giving how many times you'd like
+to repeat the next command.  Then, just press the character or command
+key.
+
+<p>For example, to enter a row of 80 dashes, you can just type
+this sequence of keys:
+
+<p><pre>
+Ctrl+U  8  0  -
+</pre>
+
+<p>The repeat count applies only to the very next character or command
+key you type.  Clicking the mouse anywhere cancels the repeat count
+entry, as does pressing the Edit.Cancel key (this is Esc in the
+Workbench Default key mapping, or Ctrl+G in the Epsilon-style
+mapping).
+
+<p>If you want to type a digit key repeatedly, use the Edit.QuoteKey
+command, which is assigned to Ctrl+Q in the default mappings.  After
+pressing the Edit.QuoteKey key, press the digit key you want to enter.
+For example, to enter 100 zeroes, you'd type:
+
+<p><pre>
+Ctrl+U  1  0  0  Ctrl+Q  0
+</pre>
+
+<p>The repeat count is only obeyed by certain commands.  It works for
+ordinary character keys, for the cursor-movement commands (the arrow
+keys, Page Up and Down, and so on), and for the various
+delete-character and delete-word commands.  Other commands will
+simply ignore the repeat count.
+
+
+<h2>Inserting special characters</h2>
+
+<p>Workbench treats every Ctrl+<i>Letter</i> key as a command key,
+whether or not your keyboard mapping actually assigns a command to
+that particular Ctrl combination.  If there's no command assigned
+to a particular Ctrl+<i>Letter</i> key, Workbench simply ignores
+that key.
+
+<p>Now, those Ctrl+<i>Letter</i> keys all have an additional meaning
+outside of Workbench: they all generate what are called "control
+characters," which are special ASCII characters that have various
+special meanings, depending on the application.  Some of the control
+characters are quite common - for example, the end of each line of a
+conventional text file is denoted by a combination of Ctrl-M and
+Ctrl-J characters, also known (respectively) as the Carriage Return
+and Line Feed characters.  Most of the other control characters are
+somewhat more fluid in their meaning, varying from one application to
+another in interpretation.
+
+<p>In any case, Workbench's monopolization of the Ctrl+<i>Letter</i>
+keys creates a slight complication: in rare cases, you might actually
+want to enter a control character directly into a text file.
+Fortunately, Workbench provides a way to do this: the Edit.QuoteKey
+command, which is assigned to Ctrl+Q in the default keyboard mappings.
+
+<p>Here's how it works: press the Edit.QuoteKey command key, then
+press the special character key you want to enter into the text
+file.  For example, to enter a Ctrl-C character, you could do this:
+
+<p>
+<pre>
+Ctrl+Q  Ctrl+C
+</pre>
+
+<p>Note that the Scintilla editor window displays control characters
+that occur in the file using special symbols, which look like this:
+
+<p><center><img src="esc.gif"></center>
+
+<p>The symbol shows an abbreviation for the ASCII name of the control
+character.  These are rather archaic holdovers from the early days of
+digital telecommunications, so they're cryptic to modern eyes.  For
+reference, here are the symbol codes:
+
+
+<p><center>
+<table style="text-align:center; font-size: 80%;">
+<th>ASCII code<th>Key<th>Symbol
+<tr><td>0<td>Ctrl+@<td>NUL
+<tr><td>1<td>Ctrl+A<td>SOH
+<tr><td>2<td>Ctrl+B<td>STX
+<tr><td>3<td>Ctrl+C<td>ETX
+<tr><td>4<td>Ctrl+D<td>EOT
+<tr><td>5<td>Ctrl+E<td>ENQ
+<tr><td>6<td>Ctrl+F<td>ACK
+<tr><td>7<td>Ctrl+G<td>BEL
+<tr><td>8<td>Ctrl+H or Backspace<td>BS
+<tr><td>9<td>Ctrl+I or Tab<td>HT
+<tr><td>10<td>Ctrl+J<td>LF
+<tr><td>11<td>Ctrl+K<td>VT
+<tr><td>12<td>Ctrl+L<td>FF
+<tr><td>13<td>Ctrl+M or Enter<td>CR
+<tr><td>14<td>Ctrl+N<td>SO
+<tr><td>15<td>Ctrl+O<td>SI
+<tr><td>16<td>Ctrl+P<td>DLE
+<tr><td>17<td>Ctrl+Q<td>DC1
+<tr><td>18<td>Ctrl+R<td>DC2
+<tr><td>19<td>Ctrl+S<td>DC3
+<tr><td>20<td>Ctrl+T<td>DC4
+<tr><td>21<td>Ctrl+U<td>NAK
+<tr><td>22<td>Ctrl+V<td>SYN
+<tr><td>23<td>Ctrl+W<td>ETB
+<tr><td>24<td>Ctrl+X<td>CAN
+<tr><td>25<td>Ctrl+Y<td>EM
+<tr><td>26<td>Ctrl+Z<td>SUB
+<tr><td>27<td>Ctrl+[ or Esc<td>ESC
+<tr><td>28<td>Ctrl+\<td>FS
+<tr><td>29<td>Ctrl+]<td>GS
+<tr><td>30<td>Ctrl+^<td>RS
+<tr><td>31<td>Ctrl+_<td>US
+</table>
+</center>
+
+<p>Note that the editor actually uses a few of the control characters
+for its own purposes.  Specifically, Ctrl-M (Carriage Return) and
+Ctrl-J (Line Feed) are used to denote line endings, and Ctrl-I (Tab)
+represents a horizontal tab.  Scintilla will interpret any of these
+characters as it normally would, even if you insert it with
+Edit.QuoteKey, so you won't see the corresponding special symbol.
+
+
+<h2>Incremental search</h2>
+
+<p>The Workbench editor has a typical Windows-style Find command,
+which lets you enter search text using a dialog box.  In addition, the
+editor has another search mode, known as "incremental" search.
+
+<p>To start an incremental search, use the Edit.SearchIncremental
+command, which is assigned to Ctrl+F3 in the Workbench default key
+mapping (or Ctrl+S in the Epsilon-style mapping).  This will show a
+prompt in the status line.  You can now begin typing your search term.
+
+<p>Incremental search is so named because it performs the search as
+you type the search text.  Each time you type another letter, the
+editor immediately jumps to the first location matching the updated
+search term.  If you press backspace to delete the previous letter,
+the incremental search immediately goes back to the first match
+for the shorter word.
+
+<p>As you enter the search term, Workbench shows the term being
+entered on the status line, and highlights the current matching
+text in the editor window.  Each time you add or remove text, the
+editor highlights the updated match.
+
+<p>If you want to find the next match after the current highlighted
+match, just press the incremental-search key again.  The editor will
+highlight the next match.  Press the key again to jump to each
+subsequent match.  To go back to a previous match, press Ctrl+R (for
+"reverse").
+
+<p>You can stop the incremental search by pressing Esc.  This leaves
+the latest match highlighted in the editor.  Alternatively, you can
+cancel the search by pressing Ctrl+G - this acts as though the
+search never took place, returning the cursor to its position before
+you started the search.
+
+<p>While you're performing the search, you can press Ctrl+C to toggle
+"exact case" matching on and off.  By default, exact case matching is
+off, so press Ctrl+C to turn it on.  Exact-case matching means that
+the editor will only match text that has exactly the same upper/lower
+case text as the search term you type.
+
+<p>Pressing Ctrl+W during the search toggles "whole word" match mode,
+meaning that the search term will only match a separate word in the
+file.  That is, there can't be a letter or number immediately before
+or after the matching text.
+
+<p>You can press Ctrl+T during the search to toggle "regular
+expression" mode on and off.  By default, an incremental search is
+literal, meaning that the editor simply matches the text you type
+character for character.  If you turn on regular expression mode, the
+editor instead interprets your search term as a regular expression
+pattern.  The editor uses the same regular expression syntax as
+TADS 3 itself.
+
+<p>Incremental search ultimately performs the same function as the
+traditional dialog-box Find command, but many programmers prefer it
+because it can be operated entirely from the keyboard, without having
+to fuss around with the mouse and a dialog box.
+
+<p>You can use incremental search to set the selection range.  To use
+this ability, first move to the starting point for the selection, and
+use a "selection mode" command - see the section on Emacs-style
+mark-and-select below.  For example, in the Epsilon-style mapping,
+you'd move to the start position and press Ctrl+Space to start the
+selection.  Next, perform the incremental search as normal.  When you
+find the term you're looking for, end the search normally (in the
+default and Epsilon mappings, this is the Esc key).  The selection
+will now be expanded to include everything betweee the starting point
+you set prior to the search and the end of the matching text from the
+search.
+
+<p>There's one more handy feature that's worth noting.  If you want
+run another incremental search that repeats the last one you did, just
+press the incremental search command key twice in a row - Ctrl+F3
+Ctrl+F3 for the default mapping, Ctrl+S Ctrl+S for the Epsilon-style
+mapping.  This will automatically re-enter the most recent incremental
+search term.  In practice, one often wants to find the same term
+several times in a row, making a few edits at each occurrence and then
+moving on to the next; the auto-repeat feature makes this sort of task
+especially easy.
+
+
+<h2>Regular expression Find-and-Replace</h2>
+
+<p>The Edit.Replace command (Ctrl+R for the Workbench Default key
+mapping, or Esc % in the Epsilon-style mapping) can search for matches
+to a regular expression, if you check the box for that.  When the
+search term is a regular expression, there's a special feature
+available for the replacement text: you can substitute "groups" from
+the original matching text back into the replacement text.
+
+<p>A "group" is simply a parenthesized expression in the regular
+expression pattern.  Each group is assigned a number; the first open
+parenthesis (reading from the left of the pattern) starts group number
+1, the next open paren is group 2, and so on.  The numbering is always
+based on the <b>open</b> (left) parenthesis of a group.  Nesting
+doesn't matter; just count left parens from the start of the string.
+
+<p>Each time the Search-and-Replace system finds a match for the
+regular expression, it remembers the part of the matching text that
+matches each parenthesized group in the expression.  When it replaces
+a match with the substitution text, it looks for any occurrences of
+the symbols \1, \2, \3, and so on - that is, a backslash followed by a
+digit.  Each of these symbols is replaced by the original matching
+text for the corresponding group.
+
+<p>For example, suppose the search term is <tt>(&lt;alpha&gt;+)Room</tt>,
+and the replacement text is <tt>\1Zimmer</tt>.  When this matches
+the text <tt>DarkRoom</tt> in the file, the replacement text will
+be <tt>DarkZimmer</tt> - the text that matches the first parenthesized
+group is <tt>Dark</tt>, so when the replacement is made, <tt>Dark</tt>
+is substituted for the <tt>\1</tt> symbol in the replacement text.
+
+<p>Refer to the TADS 3 documentation for full details on the regular
+expression syntax.  Note that the replacement process works like the
+TADS 3 intrinsic function <tt>rexReplace()</tt>, except that
+group-match symbols in the replacement text are denoted with
+backslashes (<tt>\1</tt>, etc) in the text editor instead of the
+percent signs (<tt>%1</tt>, etc) used in <tt>rexReplace</tt>.
+
+
+<h2>Rectangular selections</h2>
+
+<p>In Windows text editors and word processors, the usual way of
+selecting text is as a "range," which is simply all of the text
+between two character positions in the file.  This is the standard
+selection mode in Scintilla, of course, but Scintilla also supports
+something called "rectangular" selections.  Rectangular selection mode
+is quite unusual in Windows programs in general, but is not uncommon
+in programmer's editors.
+
+<p>A rectangular selection is a block of text that includes a
+range of character columns across a range of lines.  It's called
+rectangular because that's the way it looks visually.  Here's an
+example of what it might look like:
+
+<p><pre>
+This is the first line.
+This <span style="background: #C0C0C0">is the sec</span>ond line.
+This <span style="background: #C0C0C0">is the thi</span>rd line.
+This <span style="background: #C0C0C0">is the fou</span>rth line.
+Short<span style="background: #C0C0C0"> line.</span>
+This <span style="background: #C0C0C0">is the six</span>th line.
+And this is the last line.
+</pre>
+
+<p>Here we have a rectangular selection that runs from column 6 to
+column 15, and from line 2 to line 6.  With a "range" selection, all
+of the text at the beginnings of lines 3 through 6 would be part of
+the selection, but with a rectangular selection we can limit the
+selection to a column range.
+
+<p>To create a rectangular selection, you can use any of the
+Edit.<i>xxx</i>RectExtend commands.  These are assigned in the default
+key mappings to the Alt+Shift+<i>cursor</i> keys - the arrow keys,
+Home, End, Page Up, and Page Down.  Move the cursor to the upper left
+or lower right of the rectangular area you'd like to select, then use
+Alt+Shift+<i>cursor</i> keys to move the cursor to the opposing corner
+of the area.  This will highlight the rectangular area.  You can then
+use Cut, Copy, or similar commands to manipulate the selection.
+
+
+<h2>Emacs-style mark-and-select</h2>
+
+<p>The usual ways of selecting a range of text in a Windows text
+editor or word processor are (1) dragging the mouse over the desired
+range, and (2) moving the cursor to one end of the range-to-be, then
+using the Shift+<i>cursor</i> keys to move to the other end of the
+range, extending the selection as you go.  These methods naturally
+work as you'd expect in Scintilla.
+
+<p>Scintilla offers a third way of selecting a text range.  This third
+way will be familiar to users of Emacs and its descendants, and is
+included specifically for their convenience.
+
+<p>The Emacs style of selecting a range is as follows: first, you move
+the cursor to one end of the range, and press a special key to set the
+"mark"; then you simply move the cursor to the other end of the range,
+using the normal cursor keys.  At any given time, the text between the
+current cursor position and the mark constitutes the selected region.
+
+<p>The "mark" command is Edit.SelectionMode.  This command isn't
+assigned to any key in the Workbench Default key map, since it's
+not something that most Windows users would expect.  The command is
+assigned in the Epsilon-style mapping, though: in that mapping,
+it's on the Ctrl+Space and Ctrl+@ keys.
+
+<p>Note that the Epsilon-style mapping also assigns a key to the
+Edit.RectSelectMode, which is similar to Edit.SelectionMode except
+that it marks the start of a rectangular selection.  The key assigned
+is Ctrl+X # (that's a two-key chord: first press Ctrl+X, then press
+#).
+
+<p>You can explicitly cancel regular or rectangular selection mode by
+pressing the Edit.Cancel key, which is assigned to Ctrl+G in the
+Epsilon-style mapping.  The editor implicitly cancels the selection
+after most commands that directly use it, such as Copy.
+
+
+<h2>Using the "mark"</h2>
+
+<p>Another Emacs-style feature that the editor provides is something
+called the "mark."  This an invisible position that the editor
+maintains; it's separate from the cursor position and the selection
+range endpoints.  The mark is essentially a temporary, ad hoc
+bookmark: it lets you remember the current position, then navigate
+elsewhere in the file for a while, and finally return to the saved
+position.
+
+<p>The mark is automatically set to the current position when you use
+any of the "selection mode" commands - Edit.SelectionMode,
+Edit.RectSelectMode, Edit.LineSelectMode.  (In the Workbench default
+mapping, these commands aren't assigned to keys; in the Epsilon-style
+mapping, SelectionMode is on Ctrl+Space and Ctrl+@, and RectSelectMode
+is on Ctrl+X #.)  The commands to jump to the start or end of the
+document also set the mark: via Edit.DocumentStart,
+Edit.DocumentStartExtend, Edit.DocumentEnd, or Edit.DocumentEndExtend.
+The mark is also set to the current position at the start of a
+regular or incremental search.
+
+<p>To jump to the mark, use the Edit.SwapMark command (Alt+X in the
+Workbench default mapping; Ctrl+X Ctrl+X in the Epsilon-style
+mapping).  This command moves the cursor to the mark position, and
+moves the mark position to where the cursor was before the jump.  This
+command swaps the current mark and cursor positions, so using it twice
+in a row returns the cursor to where it was.
+
+<p>You can also select the range of text between the cursor and the
+mark, by using the Edit.SelectToMark commmand (Alt+Shift+X in the
+Workbench default mapping; Ctrl+X Ctrl+H in the Epsilon-style
+mapping).  This simply sets the selection range to include all of the
+text between the cursor and the mark position.
+
+
+<h2>Emacs-style cut and paste extensions</h2>
+
+<p>Scintilla supports the standard Windows clipboard commands - Cut,
+Copy, and Paste - and these work like they do in any other Windows
+application.  In addition, the editor has a couple of useful
+extensions that will be familiar to Emacs users.
+
+<p>The Edit.CutLineRight command works like the Emacs "kill" (Ctrl+K)
+command.  If the cursor is in the middle of a line, the command cuts
+from the cursor to the end of the line, not including the newline.  If
+the cursor is at the end of a line, the command cuts just the newline.
+If you use the command repeatedly without moving the cursor, the
+deleted text from the whole series is combined into the clipboard, so
+the cumulative effect is the same as if you'd selected the whole range
+of lines and used the ordinary Edit.Cut command.
+
+<p>Edit.CutLineRight is bound to the Ctrl+K key in the Epsilon-style
+mapping; it's not assigned to a key in the Workbench default mapping.
+
+<p>In most Windows applications, the clipboard holds only one
+"clipping" at a time; each Cut or Copy command simply discards any
+previous clipboard contents to make room for the new clipping.  The
+Workbench editor, in contrast, maintains a "stack" of up to ten
+clippings.  Each time you use a Cut or Copy command in the editor, the
+editor adds the new clipping to the stack.  If there are already ten
+clippings on the stack, the oldest item is discarded.
+
+<p>When you use the Paste command, the editor inserts the "top
+element" of the stack.  This is normally just the latest item you
+clipped with a Cut or Copy command, so by default, everything works
+just as you'd expect in any Windows application.
+
+<p>However, you can explicitly access older clipboard stack items by
+using the Edit.PastePop command.  PastePop can only be used
+<b>immediately</b> after another Paste or PastePop command; the editor
+will ignore it if you use it after any other command (including simple
+cursor movement or typing).  PastePop first cancels the effect of the
+preceding Paste or PastePop by removing the pasted text, then "pops
+the stack" - that is, it removes the top element.  This makes the next
+older element the new top of the stack.  The command doesn't discard
+the old top element; rather, it simply moves the old top element to
+the <i>bottom</i> of the stack.  Finally, the command inserts the new
+top element from the stack.
+
+<p>So, if you use Edit.PastePop repeatedly after a Paste command,
+you'll cycle through the old stack elements one by one.  Because the
+command re-inserts the top item at the bottom of the stack on each
+use, you'll eventually cycle back to the original top item.
+
+<p>The benefit of the clipboard stack is that it gives you more
+flexibility as you work on a file.  If you cut a block of text in
+order to move it to a new location, the stack gives you a little
+cushion if you get sidetracked along the way - you can make some other
+edits before you get around to re-inserting the block of text you're
+moving, without worrying too much about the block being discarded by
+another clipboard operation.  Even if you do a few cut-and-paste
+operations after cutting the block, you can still recall the block
+when you're ready to insert it by popping the clipboard stack.
+
+<p>Edit.PastePop is assigned to Alt+Y in the Epsilon-style key
+mapping.  The command isn't assigned in the Workbench default key map.
+
+<p>Note that the clipboard stack position "sticks" even after a series
+of Edit.PastePop commands ends.  If you use PastePop a few times to
+recall an older clipboard item, then you move the cursor somewhere
+else and use an ordinary Paste command, the new Paste will insert the
+same top-of-stack item that was last recalled via PastePop.  Of
+course, you can then cycle back through the stack after the new Paste
+by using PastePop again at that point.
+
+
+<h2>Margins and Wrapping</h2>
+
+
+<p>In the Workbench options dialog, under the Margins &amp; Wrapping
+page, you can set a "right margin" for the text editor.  The margin
+setting affects several things in the editor:
+
+<ul>
+
+<li>The TADS comment auto-formatter word-wraps comments to fit within
+the right margin.
+
+<li>You can optionally set the editor to automatically wrap text as
+you type it in.  If you set the text wrapping option, the editor will
+monitor the cursor position as you enter text; whenever the cursor
+goes beyond the right margin, the editor will automatically find the
+nearest word break and insert a newline there.
+
+<li>The Edit.FillParagraph command (see below) uses the right margin
+as the default line width for its word-wrapping.
+
+<li>The editor can display a visual guide at the right margin; check
+the box in the dialog if you want this guide.  Many people like to
+keep their source text to some fixed width (often 80 columns) to
+ensure that it will display properly in different contexts, such as in
+hardcopy print-outs or in email messages.  Since the editor window's
+line length varies according to the window size, it's not sufficient
+to use the window size as a guide, which is why a guide line showing
+the actual margin's location comes in handy.
+
+</ul>
+
+<p>Note that there's a separate option in the Edit menu, under the
+Long Lines submenu - you can set the Long Line mode to Scroll, Wrap
+Anywhere, or Word Wrap.  That option controls how long lines are
+<b>displayed</b>, and only comes into play when text exceeds the
+<b>window's</b> width.
+
+<p>The command Edit.FillParagraph can be used to explicitly re-flow a
+paragraph of plain text to fit within the margins.  This is assigned
+to Alt+Q in the standard mappings.  If you select a range of text
+first, the command will re-flow the selected text; otherwise, the
+command finds the limits of the current paragraph by looking for the
+nearest blank lines before and after the cursor position.  By default,
+the command fills the paragraph to the current right margin, as set in
+the editor options.  You can override the default margin by using a
+repeat count prefix (Ctrl+U in the standard mappings) - any repeat
+count greater than 1 is taken as the right margin column to use for
+the current fill.  Use a repeat count of 0 as "infinity" - this simply
+joins the entire paragraph into one long line.
+
+
+<h2>Splitting the window</h2>
+
+<p>Editor windows can be split into two halves - upper and lower -
+each showing an independent portion of the file.  You can use this
+capability when you need to work on or refer to two distant parts of
+the file at the same time.
+
+<p>The window splitter works like it does in other Windows
+applications.  The little button at the top right corner, just above
+the scrollbar, is the splitter control - grab it with the mouse and
+drag it downward to split the windows.  You can use the splitter
+control to adjust the proportions of the two "panes" within the
+window.  When the window is showing just a single pane,
+double-clicking the splitter control will split the window in halves;
+double-clicking it when the window is already split will return to a
+single-pane view.
+
+
+
+<h2>Extending the editor</h2>
+
+<p>Workbench has a plug-in feature that makes it possible to add new
+editing features.  The plug-in system is primarily designed for adding
+new language modes to the editor, but it has another benefit: all of
+the TADS editing mode features are part of a plug-in, so you can
+customize the TADS language mode by editing only the plug-in source
+code, without having to muck around in Workbench's innards.
+
+<p>All of the TADS auto-indenting features are part of the TADS-mode
+plug-in, so if you don't like something about the default indenting
+style, you can customize it by modifying the plug-in.
+
+<p>For full details on using the plug-in mechanism, refer to the file
+<tt>addins\itadsworkbench.h</tt>, which is part of the Workbench
+installation.  That file defines the plug-in interfaces and explains
+how to use them to write new plug-ins.
+
+<p>The full source code for the TADS plug-in is in
+addins\tads3addin.cpp (and the related .h and .rc files).  The source
+for the HTML/XML plug-in is in addins\htmladdin.cpp.  If you want to
+customize these, you can make changes and recompile the plug-in DLLs
+using Microsoft Visual C++.  There's a free version, Visual C++
+Express Edition, that you can download from the Microsoft site: <a
+href="http://msdn.microsoft.com/vstudio/express/visualc/">
+http://msdn.microsoft.com/vstudio/express/visualc/</a>.  To build the
+plug-ins, use the <tt>addins/make-addins.vc</tt> makefile with the
+NMAKE build tool:
+
+<p><pre>
+cd addins
+nmake -f make-addins.vc
+</pre>
+
+<p>If you plan to build a new plug-in from scratch for a new
+language mode, take a look at <tt>addins\wb_addin.h</tt>.  This
+file defines a set of base classes that simplify the process
+of creating a new plug-in.
+
+<p>Even though all of the supplied plug-ins are written in C++, note
+that you should be able to use almost any Windows programming language
+to create your own.  The plug-in system is based on COM, which is a
+standard Windows interoperability mechanism.  Virtually all Microsoft
+language compilers support COM, as do compilers from other vendors.
+
+
+<br><br><br><br><br>
+<hr>
+<br>
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+<font size=-1>
+Copyright &copy;1999, 2007 by Michael J. Roberts.
+</font>
+
+</body>
+</html>
+

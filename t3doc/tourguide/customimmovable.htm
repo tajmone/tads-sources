@@ -1,0 +1,22 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>CustomImmovable</title><meta name="keywords" content="CustomImmovable,cannotTakeMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>CustomImmovable : <a href="immovable.htm">Immovable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="immovable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="heavy.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A CustomImmovable is an Immovable that uses the same custom message for taking, moving, and putting. In many cases, it's useful to customize the message for an immovable, using the same custom message for all sorts of moving. Just override <b>cannotTakeMsg</b>, and the other messages will copy it.<font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At first sight this makes a CustomImmovable look identical in function to a <a href="customfixture.htm">CustomFixture</a>; there is, however, a subtle difference. This is, of course, the same as the difference between an Immovable and a Fixture, namely that while the library regards an attempt to move, push or take a Fixture as illogical (i.e. ruled out in the verify method), it merely disallows taking an Immovable (in the action method). The main practical effect of this is that a CustomFixture will not be considered as a possible candidate for a move, take or push action in disambiguation, while a CustomImmovable will. CustomFixture should therefore be used for things that obviously can't be moved around (like pillars in a temple), while CustomImmovable should be used for things that perhaps could be taken, but in fact cannot be (like the carpet in the <a href="immovable.htm">Immovable </a>example, which could just as well have been a CustomImmovable). We'll give another example of a CustomImmovable <a href="cycliceventlist.htm">later</a>.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

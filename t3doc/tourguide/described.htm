@@ -1,0 +1,72 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>described</title><meta name="keywords" content="described"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>described
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="specialdesc.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="bulkandweight.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The <b>described</b> property is simply a flag that indicates whether an object has been explicitly examined by the player. It starts out at nil, and is set to true when the player EXAMINES the object. We can take advantage of this to provide a slightly smoother response if the player first picks up the coin and only then examines it, by explaining on what is then the first examination that the 'small brassy object' is in fact a coin; and while we're at it we can also use it to avoid needlessly calling the changeName() routine more than once (note that this test must come <i>before</i> we call the inherited handling, or changeName will never be called):
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brassy&nbsp;object'&nbsp;'small&nbsp;brassy&nbsp;object'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;<b>"&lt;&lt;described&nbsp;?&nbsp;nil&nbsp;:&nbsp;'It&nbsp;turns&nbsp;out&nbsp;to&nbsp;be&nbsp;a&nbsp;coin.&nbsp;'&gt;&gt;
+<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"{A&nbsp;coin/he}&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground&nbsp;in&nbsp;a&nbsp;dim&nbsp;corner&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;initDesc&nbsp;=&nbsp;"It&nbsp;looks&nbsp;like&nbsp;it&nbsp;might&nbsp;be&nbsp;a&nbsp;coin&nbsp;of&nbsp;some&nbsp;sort.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'coin'
+<br>
+&nbsp;&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{A&nbsp;coin/he}&nbsp;lies&nbsp;on&nbsp;the&nbsp;floor.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;useSpecialDesc&nbsp;{&nbsp;return&nbsp;location.ofKind(Room)&nbsp;||&nbsp;useInitSpecialDesc();&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Examine)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if&nbsp;(!described)&nbsp;changeName();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</b>inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;changeName()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'small&nbsp;brass&nbsp;coin';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmdDict.removeWord(self,&nbsp;'object',&nbsp;&amp;noun);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initializeVocabWith('brass&nbsp;coin/groat*coins');
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If this is beginning to seem like a lot of complicated work for one simple coin, don't worry; in practice most object definitions are not nearly this elaborate, we have made this one so mainly to illustrate what <i>can</i> be done with some of the methods and properties of Thing, not what <i>must</i> be done on each occasion. Our small brass coin is now well and truly defined enough, and we shall move on to define some other Things to populate our game world.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

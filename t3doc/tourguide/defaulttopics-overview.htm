@@ -1,0 +1,72 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultTopics - Overview</title><meta name="keywords" content="DefaultTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultTopics - Overview
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="topicgroup.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultasktopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">There is no way in which any game author can provide responses for every topic players will attempt to raise with NPCs via GIVE, SHOW, TELL and ASK commands during the course of a game. On the other hand seeing "Sarah does not respond" (which is what the library will display if the author does not provide any other response) as the response to a large variety of GIVE, SHOW, TELL and ASK commands will probably not create a terribly favourable impression on the player. The various types of DefaultTopic are provided to deal with this; rather than have "X does not respond" they allow the author to provide customised default handling for the various conversational commands when the player attempts to ASK, TELL, GIVE or SHOW something for which no specific response has been programmed.
+<br>
+
+<br>
+Roughly speaking, there is a DefaultTopic type corresponding to each type of TopicEntry:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;<a href="defaultanytopic.htm">DefaultAnyTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaultaskfortopic.htm">DefaultAskForTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaultasktelltopic.htm">DefaultAskTellTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaultasktopic.htm">DefaultAskTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaultconsulttopic.htm">DefaultConsultTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaultgiveshowtopic.htm">DefaultGiveShowTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaultgivetopic.htm">DefaultGiveTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;DefaultInitiateTopic
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaultshowtopic.htm">DefaultShowTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaulttelltopic.htm">DefaultTellTopic</a>
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that there is also a <a href="defaultanytopic.htm">DefaultAnyTopic</a> that matches any conversational command for which the response is not specifically defined.
+<br>
+
+<br>
+One thing to watch out for is that a DefaultTopic defined on an ActorState will mask any specific TopicEntries defined on the actor. So, for example, if we defined a DefaultAskTellTopic in sarahFollowing none of the AskTopics and TellTopics defined directly on sarah will be reachable when she's in the sarahFollowing state. This means that if you define any common TopicEntries on the actor, you'll need to define the corresponding DefaultTopics there as well. As of TADS 3.0.6p, however, there are two ways round this. The first, introduced in TADS 3.0.6n uses the <b>excludeMatch</b> property of the DefaultTopic, which we'll demonstrate with <a href="defaultgivetopic.htm">DefaultGiveTopic</a>. The second, new to TADS 3.0.6p, uses the <b>deferToEntry(other)</b> method. Note that in any case a DefaultTopic in an ActorState will only mask the corresponding type of TopicEntry in the actor, so that, for example, if you only use (say) AskTopics and TellTopics directly on the Actor, it would be safe to put DefaultGiveTopics, DefaultShowTopics and DefaultAskForTopics in the ActorStates. Thus, if you put any TopicEntries directly on the Actor, the corresponding type of DefaultTopic should go on the actor, not the ActorState. The converse does not necessarily apply: if you wish to handle all the DefaultTopics on the actor rather than making them state-specific there's absolutely no reason why you should not do so even if you define no other TopicEntries directly on the actor.
+<br>
+
+<br>
+Apart from that <i>programming</i> DefaultTopics isn't particularly difficult; the difficulty lies in devising ones that work well. One might suppose, for example, that a suitable DefaultAskTopic could say something like "&lt;q&gt;I don't know anything about that,&lt;/q&gt; she confesses, and a reasonable DefaultAskForTopic might be something like, "&lt;q&gt;I haven't got it,&lt;/q&gt; she points out", but this could lead to a transcript such as the following:
+<br>
+
+<br>
+<b>&gt;ask sarah about her home</b>
+<br>
+"I don't know anything about that," she confesses.
+<br>
+
+<br>
+<b>&gt;ask sarah for sex</b>
+<br>
+"I haven't got it," she points out.
+<br>
+
+<br>
+Such exchanges may be regarded as less than felicitous. The trick is to devise default responses that make some kind of sense no matter what they're responses to, and which at the same time help develop the character. Since the player is likely to be seeing a lot of default responses, it's also probably a good idea for DefaultTopics to be combined with a ShuffledText list to provide some variety to them. Clearly this is more important with a major NPC the player character will be interacting a lot with than with a minor one.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

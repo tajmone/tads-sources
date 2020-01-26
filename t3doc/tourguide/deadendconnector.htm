@@ -1,0 +1,145 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DeadEndConnector</title><meta name="keywords" content="DeadEndConnector,apparentDestName,actorKnowsDestination"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DeadEndConnector: <a href="travelmessage.htm">TravelMessage</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="fakeconnector.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="roomconnector.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">In the previous section we added a pair of FakeConnectors to prevent the player character from going wandering north into the valley or east into the car park, although there's nothing physically preventing him from doing so. When using the FakeConnectors for this purpose we basically blocked the PC from travelling north or east by providing him motivational reasons for not doing so. The alternative would be allow him to do so, but then have him return to his starting point (either because the way turns out to be blocked, or because the PC finds nothing of interest). So instead of the FakeConnectors used in the previous section, we could use a pair of DeadEndConnectors thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">outsideCave&nbsp;:&nbsp;OutdoorRoom&nbsp;'Parser&nbsp;Valley'&nbsp;'Parser&nbsp;Valley'
+<br>
+&nbsp;&nbsp;"To&nbsp;the&nbsp;north&nbsp;stretches&nbsp;the&nbsp;broad&nbsp;green&nbsp;Parser&nbsp;Valley&nbsp;under&nbsp;a&nbsp;clear&nbsp;blue&nbsp;sky,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;past&nbsp;a&nbsp;small&nbsp;car&nbsp;park&nbsp;lying&nbsp;just&nbsp;off&nbsp;to&nbsp;the&nbsp;east.&nbsp;The&nbsp;main&nbsp;feature&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;interest&nbsp;round&nbsp;here&nbsp;is&nbsp;the&nbsp;notorious&nbsp;Eerhtsdat&nbsp;Caves,&nbsp;the&nbsp;entrance&nbsp;to&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;lies&nbsp;just&nbsp;to&nbsp;the&nbsp;south,&nbsp;marked&nbsp;by&nbsp;a&nbsp;large&nbsp;blue&nbsp;sign&nbsp;that&nbsp;proclaims,&nbsp;predictably
+<br>
+&nbsp;&nbsp;&nbsp;enough:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&nbsp;BGCOLOR=BLUE&nbsp;COLOR=WHITE&gt;
+<br>
+&nbsp;&nbsp;&nbsp;ENTRANCE&nbsp;TO&nbsp;THE\nEERHTSDAT&nbsp;CAVES&lt;/FONT&gt;\n"
+<br>
+&nbsp;&nbsp;&nbsp;<b>north&nbsp;:&nbsp;DeadEndConnector&nbsp;{&nbsp;'Parser&nbsp;Valley'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;start&nbsp;to&nbsp;stride&nbsp;off&nbsp;into&nbsp;the&nbsp;valley,&nbsp;but&nbsp;soon&nbsp;decide&nbsp;it's&nbsp;not&nbsp;that&nbsp;interesting,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;so&nbsp;you&nbsp;wander&nbsp;back&nbsp;towards&nbsp;the&nbsp;cave&nbsp;entrance.&nbsp;"&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;east&nbsp;:&nbsp;DeadEndConnector&nbsp;{&nbsp;&nbsp;'the&nbsp;car&nbsp;park'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;go&nbsp;and&nbsp;wander&nbsp;round&nbsp;the&nbsp;car&nbsp;park&nbsp;for&nbsp;a&nbsp;few&nbsp;&nbsp;minutes,&nbsp;but&nbsp;decide&nbsp;you&nbsp;don't&nbsp;want&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leave&nbsp;just&nbsp;yet,&nbsp;so&nbsp;you&nbsp;return&nbsp;to&nbsp;the&nbsp;cave&nbsp;entrance.&nbsp;"&nbsp;}
+<br>
+</b><b>
+<br>
+</b>&nbsp;&nbsp;&nbsp;atmosphereList&nbsp;:&nbsp;ShuffledEventList&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'A&nbsp;flight&nbsp;of&nbsp;birds&nbsp;disappears&nbsp;off&nbsp;to&nbsp;the&nbsp;west.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:&nbsp;"\nA&nbsp;&lt;&lt;one of&gt;&gt;small&lt;&lt;or&gt;&gt;large&lt;&lt;at random&gt;&gt;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;one of&gt;&gt;green&lt;&lt;or&gt;&gt;red&lt;&lt;or&gt;&gt;blue&lt;&lt;or&gt;&gt;black&lt;&lt;or&gt;&gt;white&lt;&lt;at random&gt;&gt;&nbsp;car
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pulls&nbsp;out&nbsp;of&nbsp;the&nbsp;car&nbsp;park&nbsp;and&nbsp;drives&nbsp;off&nbsp;to&nbsp;the&nbsp;north.&nbsp;"&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'An&nbsp;aeroplane&nbsp;flies&nbsp;far&nbsp;overhead.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;]&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At first sight it may look as if we could have used a FakeConnector for this purpose and it would have done the job just as well, and this is indeed almost the case. Nevertheless there are a couple of distinctions between FakeConnector and DeadEndConnector that are worth observing, even if they may seem a bit subtle at first sight.
+<br>
+
+<br>
+The first is that traveling via a DeadEndConnector triggers travel notifications while attempting to travel via a FakeConnector does not. So, for example, suppose there was an NPC present who might react to our attempts to walk away from the cave entrance; suppose that if we try to go in any direction except south into the cave she (assuming a female NPC) objects and prevents our leaving (we'd implement this with a beforeTravel() method on the NPC's current ActorState, but that's the sort of thing we'll be coming to some way ahead, so we shan't worry about the details just now). If we used a FakeConnector to represent what happens when the PC tries to go north or east, then we'd never see the NPC's protest. If we used a DeadEndConnector, however, the NPC's protest would be triggered, and we'd see her protest in place of the message describing our wandering round the valley or car park. The first case, using a FakeConnector, is appropriate in situations where the PC doesn't even attempt to travel and we're simply displaying a message explaining why not; since the PC doesn't attempt to travel, there's no reason why anyone or anything should react to his non-attempt. The second case is appropriate when the PC does (at least notionally) attempt the travel, and where the message we display describes that (albeit simulated and circular) travel unless something or someone acts to prevent it, such as our (for now) putative female companion who insists on our entering the cave instead.
+<br>
+
+<br>
+So, in brief:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></font></td><td><font face="Arial" size="2" color="#000000">Use a <i>FakeConnector</i> to explain why your PC refuses to attempt travel in a direction in which travel would be physically possible.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">Use a <i>DeadEndConnector</i> to simulate the effect of your PC travelling in a direction (which doesn't actually connect to another location on your game map) and then returning to his starting point.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+And now on to the second difference. If you look at the code we just changed, you'll see that we added a second property in the DeadEndConnectors, just before the double-quoted strings describing the aborted walk into the valley and car park. These extra properties are the single-quoted strings 'Parser Valley' and 'the car park', which name the locations to which these connectors notionally lead (although in reality they lead nowhere and we aren't going to implement a Parser Valley or car park location in our game). The property to which we are giving a value here is called <b>apparentDestName</b>; the point of it is that the exit lister (shown in response to an explicit EXITS command or an attempt to move in a direction for which no connector has been defined) will show these as the destinations that can (notionally) be reached by travelling via the DeadEndConnector. For example, an EXITS command issued in our starting location might generate the response:
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;Obvious exits lead north to Parser Valley, south, and east to the car park.
+<br>
+
+<br>
+If you compile the game and try it out as it stands, however, you'll find these destination names appear only after the PC has attempted to travel via these DeadEndConnectors. In some situations (namely where the PC doesn't know where a connector leads till he tries traversing it) this may be just what we want. In this case, however, it's perfectly obvious from where the PC's standing that the valley is to the north and the car park to the east, so ideally we'd like these destination names to appear even before the PC attempts to travel. We can do this by overriding the <b>actorKnowsDestination</b> method on the location to indicate which connectors the PC already knows the destinations of even without travelling:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">outsideCave&nbsp;:&nbsp;OutdoorRoom&nbsp;'Parser&nbsp;Valley'&nbsp;'Parser&nbsp;Valley'
+<br>
+</font><font face="Arial" size="2" color="#000000">    ...
+<br>
+    </font><font face="Courier New" size="2" color="#000000"><b>actorKnowsDestination(actor,&nbsp;conn)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;conn&nbsp;is&nbsp;in&nbsp;(east,&nbsp;north)&nbsp;?&nbsp;true&nbsp;:&nbsp;inherited(actor,&nbsp;conn);
+<br>
+&nbsp;&nbsp;}</b></font><font face="Arial" size="2" color="#000000">
+<br>
+;
+<br>
+
+<br>
+There are two further points to note about this. In the above method east and north are actually references to our two DeadEndConnectors. Neither DeadEndConnector has a name of its own, so the only way of referring to them is via the properties to which they are attached, namely outsideCave.north and outsideCave.east. Since, in this case, we are referencing these properties from a method of outsideCave, we don't need to prepend the object name to them; in this context they can be referred to simply as 'east' and 'north' meaning the TravelConnectors attached to the east and north properties of the current object.
+<br>
+
+<br>
+The second point is that we're not restricted to using actorKnowsDestination with DeadEndConnectors; the method can be used to signal that the NPC already knows the destination of <i>any</i> kind of TravelConnector (including another Room, if a direction property points straight to another Room, as is usually most often the case).
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

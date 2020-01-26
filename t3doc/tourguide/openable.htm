@@ -1,0 +1,54 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Openable</title><meta name="keywords" content="Openable,openStatus,lockStatusReportable"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Openable: <a href="basicopenable.htm">BasicOpenable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="keyring.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="basicopenable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Most objects that are lockable are also likely to be openable - after all, there's not a lot of point in locking or unlocking an object that can't be open or closed. However, since most of the objects that are openable and closable tend to be container-like objects or door-like objects, in practice one tends to use classes like <a href="door.htm">Door</a> and <a href="openablecontainer.htm">OpenableContainer</a> rather more than a bare Openable. We are not yet ready to introduce an example of a bare Openable in our test game, but there is one later, the <a href="presentlater.htm">tardisPanel </a>object.
+<br>
+
+<br>
+The Openable class inherits all the behaviour of <a href="basicopenable.htm">BasicOpenable</a> and the mainly adds handling (or at least additional preconditions) for a number of common verbs (OPEN, CLOSE, PUT IN, POUR INTO, LOCK, LOCK WITH, GET OUT OF, and BOARD).
+<br>
+
+<br>
+Openable also defines <b>lockStatusReportable</b> to be (!isOpen); for a fuller explanation see <a href="lockable.htm">Lockable</a>. Finally it defines an <b>openStatus</b>() method which returns a sentence like "it's open" or "it's closed" (without punctuation) which can be added to the description of an object to indicate whether it's open or closed. The library defaults are usually fine, but you may, for example, want to suppress "it's closed" either for aesthetic reasons or to disguise the fact that something is openable, in which case you might write something like:
+<br>
+
+<br>
+  <font face="Courier New" size="2" color="#000000">openStatus&nbsp;{&nbsp;return&nbsp;isOpen&nbsp;?&nbsp;inherited&nbsp;:&nbsp;'';&nbsp;}</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+If you do that, however, the punctuation will look a bit wayward when the object is closed, so you also have to tweak the description of the object from something like:
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">"It's&nbsp;red&nbsp;and&nbsp;square.&nbsp;"</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+To
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">"It's&nbsp;red&nbsp;and&nbsp;square"</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+And then write your openStatus method thus:
+<br>
+
+<br>
+ </font><font face="Courier New" size="2" color="#000000">&nbsp;openStatus&nbsp;=&nbsp;(isOpen&nbsp;?&nbsp;'&nbsp;.&nbsp;It\'s&nbsp;open'&nbsp;:&nbsp;'')
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that the final full stop (or period) and space have been removed from the end of the object description and added instead to the start of the "It's open" message.
+<br>
+</font></font>
+
+</body></html>

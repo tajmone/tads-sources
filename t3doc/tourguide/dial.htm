@@ -1,0 +1,201 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Dial</title><meta name="keywords" content="isValidSetting,stringLister,listing strings,makeSetting"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Dial : <a href="settable.htm">Settable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="lever.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="onoffcontrol.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The Dial class is an immediate descendant of the <a href="settable.htm">Settable</a> class and the immediate ancestor of the <a href="numbereddial.htm">NumberedDial</a> and <a href="labeleddial.htm">LabeledDial</a> classes. As such, it is not likely to be used much in game code, since if something is a dial at all, it is likely to be either numbered or labeled if it is to be at all useful, and if one wants something more general that a NumberedDial or a LabeledDial the chances are it'll be a Settable, like the slider we implemented before.
+<br>
+
+<br>
+There may be one or two niches Dial can fill in game code, however. The most obvious might be a Dial with case-sensitive labels (since the LabeledDial assumes that its labels are not case sensitive). Although there may not be much call for case-sensitive labels, it could be possible to construct a minor puzzle of sorts out of a Dial with such labels, and it's probably easier (or at least, no harder) to do so starting from the Dial class than the LabeledDial class. Basically, all one need do to make it work is to define one's own validSettings list and override the <b>isValidSettings</b> method on such a dial thus:
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;<font face="Courier New" size="2" color="#000000">isValidSetting(val)&nbsp;{&nbsp;return&nbsp;validSettings.indexOf(val)&nbsp;!=&nbsp;nil;&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+To show how this might work in practice, we'll add one of these in the secret chamber behind the stone altar, which we'll transmogrify into a lift in the process. The dial will be the lift control, which can be turned to thinly-disguised versions of the words UP and DOWN; no other setting has any effect. If the handle is turned to DOWN (disguised as Dupe OWN) the lift descends (unless it's already at the bottom). If it's turned to UP (disguised as dUPe own) the lift ascends again (unless it's already at the top):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">templeChamber&nbsp;:&nbsp;DarkRoom&nbsp;'Small&nbsp;Square&nbsp;Chamber'&nbsp;'the&nbsp;small&nbsp;square&nbsp;chamber'
+<br>
+&nbsp;&nbsp;"The&nbsp;most&nbsp;noticeable&nbsp;feature&nbsp;of&nbsp;this&nbsp;otherwise&nbsp;featureless&nbsp;chamber&nbsp;is&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;way&nbsp;out&nbsp;to&nbsp;the&nbsp;east<b>,&nbsp;"</b>
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;temple
+<br>
+&nbsp;&nbsp;<b>east&nbsp;=&nbsp;(out)</b>
+<br>
+&nbsp;&nbsp;<b>moveInto(newDest)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(out&nbsp;==&nbsp;newDest)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"and&nbsp;nothing&nbsp;happens.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"and&nbsp;with&nbsp;a&nbsp;shudder,&nbsp;the&nbsp;small&nbsp;chamber&nbsp;&lt;&lt;newDest==temple&nbsp;?&nbsp;'ascends'&nbsp;:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'descends'&gt;&gt;&nbsp;a&nbsp;long&nbsp;shaft,&nbsp;and&nbsp;finally&nbsp;comes&nbsp;to&nbsp;a&nbsp;halt.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;=&nbsp;newDest;
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+
+<br>
++&nbsp;Dial,&nbsp;Fixture&nbsp;'curious&nbsp;(wall)&nbsp;dial/handle'&nbsp;'dial'
+<br>
+&nbsp;&nbsp;"The&nbsp;dial&nbsp;comprises&nbsp;a&nbsp;handle&nbsp;set&nbsp;into&nbsp;the&nbsp;stone&nbsp;work&nbsp;that&nbsp;can&nbsp;be&nbsp;turned&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;point&nbsp;to&nbsp;any&nbsp;of&nbsp;the&nbsp;eight&nbsp;phrases&nbsp;carved&nbsp;round&nbsp;its&nbsp;circumference:&nbsp;&lt;&lt;listSettings&gt;&gt;.
+<br>
+&nbsp;&nbsp;It&nbsp;currently&nbsp;points&nbsp;to&nbsp;&lt;i&gt;&lt;&lt;curSetting&gt;&gt;&lt;/i&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;inRoomDesc&nbsp;=&nbsp;"but&nbsp;there&nbsp;is&nbsp;also&nbsp;a&nbsp;curious&nbsp;dial&nbsp;set&nbsp;into&nbsp;one&nbsp;wall.&nbsp;"
+<br>
+&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'curious&nbsp;wall&nbsp;dial'
+<br>
+&nbsp;&nbsp;curSetting&nbsp;=&nbsp;'DUPE&nbsp;OWN'
+<br>
+&nbsp;&nbsp;listSettings()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stringLister.showSimpleList(validSettings);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;validSettings&nbsp;=&nbsp;['dupe&nbsp;own',&nbsp;'dupE&nbsp;own',&nbsp;'dUPe&nbsp;own',&nbsp;'DUPe&nbsp;own',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Dupe&nbsp;OWN',&nbsp;'DUPE&nbsp;oWn',&nbsp;'DUPE&nbsp;oWN',&nbsp;'DUPE&nbsp;OWN']
+<br>
+&nbsp;&nbsp;isValidSetting(val)&nbsp;{&nbsp;return&nbsp;validSettings.indexOf(val)&nbsp;!=&nbsp;nil;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;makeSetting(val)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(val&nbsp;==&nbsp;curSetting)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;dial&nbsp;already&nbsp;points&nbsp;to&nbsp;&lt;i&gt;&lt;&lt;val&gt;&gt;&lt;/i&gt;.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;turn&nbsp;the&nbsp;dial&nbsp;to&nbsp;&lt;i&gt;&lt;&lt;val&gt;&gt;&lt;/i&gt;,&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;switch(val)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'dUPe&nbsp;own':&nbsp;templeChamber.moveInto(temple);&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'Dupe&nbsp;OWN':&nbsp;templeChamber.moveInto(templeCellar);&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"but&nbsp;nothing&nbsp;happens.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(val);&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we have to change the definition of templeChamber.east, since the asExit macro won't do what we want if it refers to a directional property we subsequently change. Note also that we have overridden templeChamber.moveInto to something quite different from what moveInto normally does; we could have used any method name we liked for this, but moveInto is quite descriptive here, and we have no use for the <a name="stringlister">standard Thing.moveInto handling here, so we might as well replace it. Finally, note that we define a listSettings method to avoid (the tedious and possibly error-prone process of) writing out the possible settings of the dial twice. This calls the convenient stringLister.showSimpleList() method to format the list in the form "a, b, c and d".
+
+<br>
+<br>Finally, we need to define the location the list/chamber arrives at if the dial is turned to the <i>Dupe OWN</i> position. As an attempt at brevity we might write:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">templeCellar&nbsp;:&nbsp;DarkRoom&nbsp;'Cellar&nbsp;beneath&nbsp;Temple'&nbsp;'the&nbsp;cellar&nbsp;beneath&nbsp;the&nbsp;Temple'
+<br>
+&nbsp;&nbsp;"This&nbsp;long,&nbsp;damp&nbsp;cellar&nbsp;probably&nbsp;hasn't&nbsp;been&nbsp;visited&nbsp;in&nbsp;years.&nbsp;"
+<br>
+&nbsp;&nbsp;lift&nbsp;=&nbsp;templeChamber
+<br>
+&nbsp;&nbsp;west&nbsp;=&nbsp;(lift.out&nbsp;==&nbsp;self&nbsp;?&nbsp;lift&nbsp;:&nbsp;nil)&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The west property shows a possible but not very sanitary method of checking that the lift is in place before allowing entry to it. It works after a fashion, but will cause an immediate runtime error if you then added, for example:
+<br>
+
+<br>
+   </font><font face="Courier New" size="2" color="#000000">in&nbsp;asExit(west)</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Although we probably won't be implementing any other way into the temple cellar than via the lift, so the lift will always be available to the west when the player character is in the cellar, if we want to make this kind of test at all, it would be far better to use the recommended method we have already seen (using a nested TravelConnector), even though it is a bit more long-winded:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">templeCellar&nbsp;:&nbsp;DarkRoom&nbsp;'Cellar&nbsp;beneath&nbsp;Temple'&nbsp;'the&nbsp;cellar&nbsp;beneath&nbsp;the&nbsp;Temple'
+<br>
+&nbsp;&nbsp;"This&nbsp;long,&nbsp;damp&nbsp;cellar&nbsp;probably&nbsp;hasn't&nbsp;been&nbsp;visited&nbsp;in&nbsp;years.&nbsp;"
+<br>
+&nbsp;&nbsp;lift&nbsp;=&nbsp;templeChamber
+<br>
+&nbsp;&nbsp;west:&nbsp;OneWayRoomConnector&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;=&nbsp;(lexicalParent.lift)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;lexicalParent.lift.out&nbsp;==&nbsp;lexicalParent;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;explainTravelBarrier(traveler)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There's&nbsp;nothing&nbsp;that&nbsp;way&nbsp;but&nbsp;an&nbsp;empty&nbsp;shaft.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">The above definition could be made a bit less verbose if we dispensed with the lift property and replaced each instance of </font><font face="Courier New" size="2" color="#000000">lexicalParent.lift</font><font face="Arial" size="2" color="#000000"> with </font><font face="Courier New" size="2" color="#000000">templeChamber</font><font face="Arial" size="2" color="#000000">. </font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

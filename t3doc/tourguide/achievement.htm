@@ -1,0 +1,296 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Achievement</title><meta name="keywords" content="Achievement,addToScoreOnce,addToScore,scoreCount,totalPoints,desc,points,maxPoints,awardPointsOnce"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Achievement : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="addtoscore.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="simpleachievement.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Using addToScore is fine where we can easily make sure that it will be called only once, but in some situations this becomes harder to guarantee.
+<br>
+
+<br>
+For example, the player should probably be rewarded for getting the door into the museum corridor open, since this is a puzzle that takes several steps to solve, but if we just put addToScore in, say,  blankSteelDoor.makeOpen(), then  players could keep adding to their score by repeatedly opening the blank steel door once they'd worked out how to <a href="attachable.htm">fix the button</a>. We <i>could</i> prevent this by adding a hasBeenOpened property to the blankSteelDoor, setting it to true when the door is opened, and only calling addToScore if hasBeenOpened is nil. But it would be nice if there was an addToScoreOnce function that effectively did this for us. Well, there's no such <i>function</i>, but there is always the <b>addToScoreOnce(points)</b> <i>method</i> of the Achievement class, and we could always use that.
+<br>
+
+<br>
+This does mean, of course, that we need to set up an Achievement object for the purpose, but there's no reason why this shouldn't simply be an anonymous nested object, so that, for example, we could get the result we wanted by modifying blankSteelDoor thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;blankSteelDoor&nbsp;:&nbsp;Door&nbsp;'blank&nbsp;steel&nbsp;door'&nbsp;'blank&nbsp;steel&nbsp;door'
+<br>
+&nbsp;&nbsp;"The&nbsp;door&nbsp;&lt;&lt;isOpen&nbsp;?&nbsp;'has&nbsp;slid&nbsp;open&nbsp;out&nbsp;of&nbsp;sight'&nbsp;:&nbsp;'is&nbsp;without&nbsp;handle,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;keyhole&nbsp;or&nbsp;any&nbsp;other&nbsp;visible&nbsp;mechanism'&gt;&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;openStatus&nbsp;{&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;checkDobjOpen()&nbsp;{&nbsp;"There's&nbsp;nothing&nbsp;on&nbsp;the&nbsp;door&nbsp;to&nbsp;get&nbsp;a&nbsp;purchase&nbsp;on.&nbsp;";&nbsp;exit;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;checkDobjClose()&nbsp;{&nbsp;"The&nbsp;door&nbsp;has&nbsp;slid&nbsp;out&nbsp;of&nbsp;sight.&nbsp;";&nbsp;exit;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;makeOpen(stat)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited(stat);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>achievement.addToScoreOnce(3);</b>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;steel&nbsp;door&nbsp;slides&nbsp;&lt;&lt;isOpen&nbsp;?&nbsp;'open'&nbsp;:&nbsp;'shut'&gt;&gt;.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;<b>achievement&nbsp;:&nbsp;Achievement&nbsp;{&nbsp;"opening&nbsp;the&nbsp;blank&nbsp;steel&nbsp;door"&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This will increase the player's score by three points the first time the player manages to get the blank steel door open, but not thereafter.
+<br>
+
+<br>
+At this point it may be helpful to take a closer look at the properties and methods the Achievement class defines:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>desc</b> - Describe the achievement - this must display a string explaining the reason the points associated with this achievement were awarded. Note that this description can make use of the scoreCount information to show different descriptions depending on how many times the item has scored. For example, an achievement for finding various treasure items might want to display "finding a treasure" if only one treasure was found and "finding five treasures" if five were found. In some cases, it might be desirable to keep track of additional custom information, and use that information in generating the description. For example, the game might keep a list of treasures found with the achievement, adding to the list each time the achievement is scored, and displaying the contents of the list when the description is shown.</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>scoreCount</b> - The number of times the achievement has been awarded. Each time the achievement is passed to addToScore(), this is incremented. Note that this is distinct from the number of points.</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>totalPoints</b> - the number of points awarded for the achievement; if this achievement has been accomplished multiple times, this reflects the aggregate number of points awarded for all of the times it has been accomplished.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>addToScoreOnce(</b><b><i>points</i></b><b>) - </b> Add this achievement to the score one time only. This can be used to score an achievement without separately tracking whether or not the achievement has been accomplished previously. If the achievement has already been scored before, this will do nothing at all; otherwise, it'll score the achievement with the given number of points.</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>points</b> - the number of points awarded for this Achievement if either its <a href="awardpoints.htm">awardPoints</a> or its <a href="awardpointsonce.htm">awardPointsOnce</a> method is called.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>maxPoints</b></font><font face="Times New Roman" size="3" color="#000000"> - </font><font face="Arial" size="2" color="#000000">the maximum number of points that can be awarded for this Achievement if its points can be awarded for it more than once. By default this is simply the same as <i>points</i>. This figure is used by the library routine that calculates the <a href="maxscore.htm">maximum score</a>.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>awardPoints()</b> - adds this Achievement to the list of Achievements accomplished, and awards the number of points contained in its <i>points</i> property (which <i>must</i> then be overridden to something other than nil).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>awardPointsOnce()</b> - this is the same as awardPoints, except that the points are awarded only the first time this method is called (so that you would typically use this method like addToScoreOnce, which it in fact calls, to ensure that the player is not awarded points multiple times for the same achievement).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+You'll see from this that an Achievement object is geared up to the possibility of awarding points for the same achievement more than once. The situation where you'd mostly likely want to do this is in aggregating points for similar feats under a common generic description, such as:
+<br>
+
+<br>
+   23 points for finding sundry items
+<br>
+
+<br>
+Rather than listing the twenty-three sundry items separately at one point each.
+<br>
+
+<br>
+In the present game, we might want to define such an aggregating achievement for getting past sundry minor obstacles:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">obstacleAchievement&nbsp;:&nbsp;Achievement
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"getting&nbsp;past&nbsp;&lt;&lt;scoreCount&nbsp;&gt;&nbsp;1&nbsp;?&nbsp;spellInt(scoreCount)&nbsp;+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'&nbsp;sundry&nbsp;obstacles'&nbsp;:&nbsp;'an&nbsp;obstacle'&gt;&gt;.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then we can employ this obstacleAchievement at each place in the code where we want to reward the player for getting past a minor obstacle, by calling addToScore(<i>points</i>, obstacleAchievement); though now we have to make sure that we call this only once for each obstacle; for example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">secretPassage&nbsp;:&nbsp;Room&nbsp;'Secret&nbsp;Passage'&nbsp;'the&nbsp;secret&nbsp;passage'
+<br>
+&nbsp;&nbsp;"This&nbsp;hitherto&nbsp;secret&nbsp;passage&nbsp;narrows&nbsp;to&nbsp;a&nbsp;long&nbsp;tunnel&nbsp;running&nbsp;north.&nbsp;To&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;&lt;&lt;rock2.isOpen&nbsp;?&nbsp;'an&nbsp;opening&nbsp;leads&nbsp;out&nbsp;into&nbsp;a&nbsp;large,&nbsp;ruddy-hued&nbsp;cave'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'a&nbsp;large&nbsp;rock&nbsp;blocks&nbsp;the&nbsp;way&nbsp;out'&gt;&gt;.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;south&nbsp;=&nbsp;rock2
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;tunnel
+<br>
+&nbsp;&nbsp;brightness&nbsp;=&nbsp;(rock2.isOpen&nbsp;?&nbsp;3&nbsp;:&nbsp;0)
+<br>
+&nbsp;&nbsp;<b>enteringRoom(traveler)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!seen)&nbsp;addToScore(1,&nbsp;obstacleAchievement);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+<br>
+<b>&nbsp;&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">crewQuarters&nbsp;:&nbsp;DarkCabin&nbsp;'Crew&nbsp;Quarters'&nbsp;'the&nbsp;crew&nbsp;quarters'
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">enteringRoom(traveler)
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;darkEvents.curScriptState&nbsp;=&nbsp;1;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;<b>if(!seen)&nbsp;addToScore(1,&nbsp;obstacleAchievement);</b>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">hellPath&nbsp;:&nbsp;OutdoorRoom&nbsp;'Path&nbsp;down&nbsp;Hell&nbsp;Fire&nbsp;Cavern'&nbsp;'the&nbsp;path'
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+&nbsp;&nbsp;<b>enteringRoom(traveler)
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;if(!seen)&nbsp;addToScore(2,&nbsp;obstacleAchievement);&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">chasmLedge&nbsp;:&nbsp;DarkRoom&nbsp;'Ledge&nbsp;of&nbsp;Chasm'&nbsp;'the&nbsp;ledge&nbsp;of&nbsp;the&nbsp;chasm'
+<br>
+&nbsp;&nbsp;"A&nbsp;deep,&nbsp;wide&nbsp;chasm&nbsp;splits&nbsp;the&nbsp;ground&nbsp;immediately&nbsp;to&nbsp;the&nbsp;north&nbsp;of&nbsp;this
+<br>
+&nbsp;&nbsp;&nbsp;narrow&nbsp;ledge,&nbsp;while&nbsp;a&nbsp;dark&nbsp;tunnel&nbsp;runs&nbsp;south.&nbsp;Another&nbsp;tunnel&nbsp;can&nbsp;be&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;seen&nbsp;leading&nbsp;north&nbsp;from&nbsp;the&nbsp;far&nbsp;side&nbsp;of&nbsp;the&nbsp;chasm.&nbsp;"
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;deepChasm
+<br>
+&nbsp;&nbsp;south&nbsp;=&nbsp;tunnelFromChasm
+<br>
+&nbsp;&nbsp;inRoomName(pov)&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'on&nbsp;the&nbsp;'&nbsp;+&nbsp;(pov.isIn(deepChasm)&nbsp;?&nbsp;'south'&nbsp;:&nbsp;'far')&nbsp;+&nbsp;'&nbsp;ledge&nbsp;of&nbsp;the&nbsp;chasm';&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>enteringRoom(traveler)
+<br>
+&nbsp;&nbsp;{&nbsp;if(!seen)&nbsp;addToScore(1,&nbsp;obstacleAchievement);&nbsp;}&nbsp;
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">museum&nbsp;:&nbsp;Room&nbsp;'Museum&nbsp;of&nbsp;Curious&nbsp;Antiquities'&nbsp;'the&nbsp;main&nbsp;museum'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;...
+<br>
+&nbsp;&nbsp;&nbsp;<b>enteringRoom(traveler)
+<br>
+&nbsp;&nbsp;{&nbsp;if(!seen)&nbsp;addToScore(1,&nbsp;obstacleAchievement);&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">templeCellar&nbsp;:&nbsp;DarkRoom&nbsp;'Cellar&nbsp;beneath&nbsp;Temple'&nbsp;'the&nbsp;cellar&nbsp;beneath&nbsp;the&nbsp;Temple'
+<br>
+&nbsp;&nbsp;"This&nbsp;long,&nbsp;damp&nbsp;cellar&nbsp;probably&nbsp;hasn't&nbsp;been&nbsp;visited&nbsp;in&nbsp;years.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+&nbsp;&nbsp;&nbsp;<b>enteringRoom(traveler)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;addToScore&nbsp;(1,&nbsp;obstacleAchievement);&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Of course some of the obstacles are more noteworthy and would definitely deserve their own individual achievements, along the lines we have already seen, such as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;Lever,&nbsp;Component&nbsp;'banana-shaped&nbsp;banana&nbsp;shaped&nbsp;projection'&nbsp;'banana-shaped&nbsp;projection'
+<br>
+&nbsp;&nbsp;&nbsp;"Protruding&nbsp;from&nbsp;the&nbsp;north&nbsp;side&nbsp;of&nbsp;the&nbsp;altar,&nbsp;the&nbsp;banana-shaped&nbsp;projection&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;its&nbsp;only&nbsp;decorative&nbsp;feature.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;makePulled(pulled)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(stoneAltar.getWeight&nbsp;!=&nbsp;54)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('It&nbsp;won\'t&nbsp;budge.&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(pulled)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"With&nbsp;a&nbsp;loud&nbsp;grating&nbsp;sound,&nbsp;the&nbsp;wall&nbsp;behind&nbsp;the&nbsp;altar&nbsp;grinds&nbsp;open.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"When&nbsp;you&nbsp;push&nbsp;the&nbsp;lever,&nbsp;the&nbsp;wall&nbsp;behind&nbsp;the&nbsp;altar&nbsp;grinds&nbsp;shut.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited(pulled);&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;templeWestWall.makeOpen(pulled);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>achievement.addToScoreOnce(5);
+<br>
+</b>&nbsp;&nbsp;&nbsp;}&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;0&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;<b>achievement&nbsp;:&nbsp;Achievement&nbsp;{&nbsp;"opening&nbsp;the&nbsp;wall&nbsp;behind&nbsp;the&nbsp;altar&nbsp;"&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we have used the <a href="achievementtemplate.htm">Achievement Template</a> in these definitions.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,167 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Adding an Object to the Room</title><meta name="keywords" content="Thing,Thing template,Decoration"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="definingourfirstroom.htm">[Previous] </a>&nbsp;&nbsp;<a href="tyingupsomeloosestrings.htm">[Next] </a></I></FONT></P>
+
+<h2>Adding an Object to the Room</h2>
+
+<p>It is time we added an object to our sample game. If you run the game again and try typing <b>examine cottage</b> you'll be told that:
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The word "cottage" is not necessary in this story.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">But since our minimalist room description mentions the cottage, our game ought to be able to do a bit better than that. This suggests that the first thing we need to add to our game is a cottage. If we defined it in full, our first attempt might look like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cottage&nbsp;:&nbsp;Thing
+<br>
+&nbsp;&nbsp;&nbsp;vocabWords&nbsp;=&nbsp;'pretty&nbsp;little&nbsp;cottage/house/building'
+<br>
+&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'pretty&nbsp;little&nbsp;cottage'
+<br>
+&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;"It's&nbsp;just&nbsp;the&nbsp;sort&nbsp;of&nbsp;pretty&nbsp;little&nbsp;cottage&nbsp;that&nbsp;townspeople
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dream&nbsp;of&nbsp;living&nbsp;in,&nbsp;with&nbsp;roses&nbsp;round&nbsp;the&nbsp;door&nbsp;and&nbsp;a&nbsp;neat&nbsp;little&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;frame&nbsp;freshly&nbsp;painted&nbsp;in&nbsp;green.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;outsideCottage
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">As we shall see in a moment, this can be simplified using the appropriate template and the + syntax, but writing it out in full has the merit of explicitly re-introducing two important properties, </font><font face="Courier New" size="2" color="#000000">location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">vocabWords</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The first of these, as its name suggests, defines the location of an object (in this case, which room it's in); more generally it defines what the immediate parent of an object is in the object tree. You should normally avoid manipulating the location property in programming statements (but here we have a property definition, not a statement). The second property, </font><font face="Courier New" size="2" color="#000000">vocabWords</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, lists the words the player can use to refer to the object. In this definition, the final group of words separated by slashes (</font><font face="Courier New" size="2" color="#000000">cottage/house/building</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) are the <i>nouns</i> by which this object may be known, whereas the first two, separated by spaces, are the <i>adjectives</i>. This means that if you now compile the game and run it, with the cottage added, you'll find that you can <b>examine building</b>, <b>examine little house</b>, <b>examine pretty little cottage</b>, but not<b> examine house cottage</b>, or <b>x building house</b>.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">In practice you would hardly ever define all those properties explicitly, instead you'd make use of the standard Thing template (which can be used not only for Thing objects but for objects whose classes descend from Thing, which is the great majority of physical objects in the game). Using this template, the definition becomes:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cottage&nbsp;:&nbsp;Thing&nbsp;'pretty&nbsp;little&nbsp;cottage/house/building'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'pretty&nbsp;little&nbsp;cottage'&nbsp;&nbsp;@outsideCottage
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;just&nbsp;the&nbsp;sort&nbsp;of&nbsp;pretty&nbsp;little&nbsp;cottage&nbsp;that&nbsp;townspeople&nbsp;dream&nbsp;of&nbsp;living&nbsp;in,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;roses&nbsp;round&nbsp;the&nbsp;door&nbsp;and&nbsp;a&nbsp;neat&nbsp;little&nbsp;window&nbsp;frame&nbsp;freshly&nbsp;painted&nbsp;in&nbsp;green.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note the form of this definition, since it is <i>very</i> common in TADS 3. After the superclass (or superclass list) comes first the list of vocabulary words in single quotes, in the form 'adjective1 adjective2 noun1/noun2/noun3', then the name in single quotes, then the location immediately preceded by an @ sign, and then the description in double quotes (left till the end since it is likely to be the longest element). The list of vocabulary words should always include at least one noun, but may otherwise contain as many adjectives and alternative nouns as you care to define. Ideally, what you need to aim for is a list of words that will include most of those that a player is likely to type to identify the object, while at the same time being sufficiently distinct from the words used to identify other objects that the parser will not have too hard a time trying to figure out which object is meant.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The @location element is optional in this template, so you could simply define, for example:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cottage&nbsp;:&nbsp;Thing&nbsp;'pretty&nbsp;little&nbsp;cottage/house/building'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'pretty&nbsp;little&nbsp;cottage'
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;just&nbsp;the&nbsp;sort&nbsp;of&nbsp;pretty&nbsp;little&nbsp;cottage&nbsp;that&nbsp;townspeople&nbsp;dream&nbsp;of&nbsp;living&nbsp;in,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;roses&nbsp;round&nbsp;the&nbsp;door&nbsp;and&nbsp;a&nbsp;neat&nbsp;little&nbsp;window&nbsp;frame&nbsp;freshly&nbsp;painted&nbsp;in&nbsp;green.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The only problem with this is that there's now nothing to say where the cottage is located; the game will still compile but the cottage will have disappeared. One way to bring it back would be to use the + notation, so that the cottage could be defined:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;cottage&nbsp;:&nbsp;Thing&nbsp;'pretty&nbsp;little&nbsp;cottage/house/building'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'pretty&nbsp;little&nbsp;cottage'&nbsp;&nbsp;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;just&nbsp;the&nbsp;sort&nbsp;of&nbsp;pretty&nbsp;little&nbsp;cottage&nbsp;that&nbsp;townspeople&nbsp;dream&nbsp;of&nbsp;living&nbsp;in,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;roses&nbsp;round&nbsp;the&nbsp;door&nbsp;and&nbsp;a&nbsp;neat&nbsp;little&nbsp;window&nbsp;frame&nbsp;freshly&nbsp;painted&nbsp;in&nbsp;green.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The + is just a shorthand way of saying "set the location property of this object to the nearest previous object in the current source file not preceded by a +". The + shortcut can be used to nest to any level, so that if we began an object definition with </font><font face="Courier New" size="2" color="#000000">++&nbsp;myObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the location property of </font><font face="Courier New" size="2" color="#000000">myObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> would be set to the nearest preceding object beginning with a single + and so on. This allows for very compact code for defining nested objects, e.g.:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">study&nbsp;:&nbsp;Room&nbsp;'study'&nbsp;"A&nbsp;large&nbsp;desk&nbsp;stands&nbsp;under&nbsp;the&nbsp;window.&nbsp;";
+<br>
++&nbsp;desk&nbsp;:&nbsp;Heavy,&nbsp;Surface&nbsp;'desk'&nbsp;'desk'&nbsp;"This&nbsp;large&nbsp;desk&nbsp;has&nbsp;a&nbsp;single&nbsp;drawer.&nbsp;";
+<br>
+++&nbsp;drawer&nbsp;:&nbsp;Component,&nbsp;OpenableContainer&nbsp;'drawer',&nbsp;'drawer'&nbsp;"It&nbsp;looks&nbsp;like&nbsp;it&nbsp;should&nbsp;open&nbsp;easily.&nbsp;";
+<br>
++++&nbsp;redPencil&nbsp;:&nbsp;Thing&nbsp;'red&nbsp;pencil'&nbsp;'red&nbsp;pencil'&nbsp;"It's&nbsp;a&nbsp;bit&nbsp;blunt.&nbsp;";
+<br>
++++&nbsp;bluePencil:&nbsp;Thing&nbsp;'blue&nbsp;pencil'&nbsp;'blue&nbsp;pencil'&nbsp;"It's&nbsp;been&nbsp;sharpened&nbsp;recently.&nbsp;";
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">In this case both the red pencil and the blue pencil will be inside the drawer, the drawer inside the desk, and the desk inside the study.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">But, to return to our cottage, if you change its definition to the latest version above and recompile and run the game, you should find it still works the same, but the way it works isn't quite what we want. For one thing, the room description already mentions the cottage (that's why we created a cottage object in the first place), so it's rather superfluous for the game to add "You see a pretty little cottage here." More seriously, if you type <b>take cottage</b> and then <b>inventory </b>(or<b> i</b>) you'll find that you're carrying a pretty little cottage, which should probably count as murder of mimesis in the first degree.
+<br>
+
+<br>
+The problem here is that </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the most generic class of object in the library. For objects that you want the player character to be able to pick up and carry around it's often fine, but for things that are fixed in place or otherwise not intended to move, it's not the best class to use. We could use the Fixture class to fix the present example. Try changing </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to </font><font face="Courier New" size="2" color="#000000">Fixture</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the definition of cottage and recompiling the game. Then run it again. You'll see that the game no longer displays "You see a pretty little cottage here" and that you can no longer pick the cottage up. This is just about what we want (at least for now), but there's a couple of further refinements we could add.
+<br>
+
+<br>
+Firstly, the main reason for adding the cottage was that a cottage was mentioned in the room description, so the player ought to be able to refer to it. So far, we have no other use for the cottage object. In effect, the cottage is purely decorative, part of the scenery but not otherwise part of the game. For this purpose the library defines a </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, and that might be the one to use here.
+<br>
+
+<br>
+Secondly, since the cottage is purely decorative (at least at this stage) we probably won't need to refer to it anywhere else. We can therefore make it an <i>anonymous</i> object, i.e. one to which we do not give an object name. Such an object can simply be defined with its superclass name (or list). So we can finally redefine our cottage as follows:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;Decoration&nbsp;'pretty&nbsp;little&nbsp;cottage/house/building'&nbsp;'pretty&nbsp;little&nbsp;cottage'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;just&nbsp;the&nbsp;sort&nbsp;of&nbsp;pretty&nbsp;little&nbsp;cottage&nbsp;that&nbsp;townspeople&nbsp;dream&nbsp;of&nbsp;living&nbsp;in,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;roses&nbsp;round&nbsp;the&nbsp;door&nbsp;and&nbsp;a&nbsp;neat&nbsp;little&nbsp;window&nbsp;frame&nbsp;freshly&nbsp;painted&nbsp;in&nbsp;green.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Try this, and you'll see that the game now simply tells you that "The pretty little cottage isn't important" if you try to do anything with it other than examine it. For now, this is just what we want.
+<br>
+
+<br>
+You'll note that the description of the cottage includes a door, a window and some roses. It's always possible that a player may try to examine these; so as an exercise you could try adding further Decoration objects to represent them.
+<br>
+
+<br>
+In the present chapter we have learned the basics of defining room objects and other objects. Progress may have seemed slow, but these are the basics that apply to all objects in the game, so we should be able to make more rapid progress from now on. In the next chapter we'll make our game a little more interesting by adding some more rooms and objects.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="definingourfirstroom.htm">[Previous] </a>&nbsp;&nbsp;<a href="tyingupsomeloosestrings.htm">[Next] </a></I></FONT></P>
+</body></html>

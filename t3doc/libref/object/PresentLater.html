@@ -1,0 +1,67 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>PresentLater</title></head><body>
+<table class=ban><tr><td align=left><span class=title>PresentLater</span><span class=type>class</span><td align=right><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3622">3622</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A mix-in class for objects that don't come into play until some   future event.  This class lets us initialize these objects with their   *eventual* location, using the standard '+' syntax, but they won't   actually appear in the given location until later in the game.   During pre-initialization, we'll remember the starting location, then   set the actual location to nil; later, the object can be easily moved   to its eventual location by calling makePresent().
+<p>
+<code>class
+<b>PresentLater</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>PresentLater</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#eventualLocation">eventualLocation</a>&nbsp;
+<a href="#initiallyPresent">initiallyPresent</a>&nbsp;
+<a href="#plKey">plKey</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#initializeLocation">initializeLocation</a>&nbsp;
+<a href="#makePresent">makePresent</a>&nbsp;
+<a href="#makePresentByKey">makePresentByKey</a>&nbsp;
+<a href="#makePresentByKeyIf">makePresentByKeyIf</a>&nbsp;
+<a href="#makePresentIf">makePresentIf</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="eventualLocation"></a>
+<table class=decl><tr><td><code>eventualLocation</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3787">3787</a>]</table><div class=desc>our eventual location<p>
+</div>
+<a name="initiallyPresent"></a>
+<table class=decl><tr><td><code>initiallyPresent</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3647">3647</a>]</table><div class=desc>   Flag: are we present initially?  By default, we're only present   later, as that's the whole point.  In some cases, though, we have   objects that come and go, but start out present.  Setting this   property to true makes the object present initially, but still   allows it to come and go using the standard PresentLater   mechanisms. <p>
+</div>
+<a name="plKey"></a>
+<table class=decl><tr><td><code>plKey</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3637">3637</a>]</table><div class=desc>   My "key" - this is an optional property you can add to a   PresentLater object to associate it with a group of objects.  You   can then use makePresentByKey() to move every object with a given   key into the game world at once.  This is useful when an event   triggers a whole set of objects to come into the game world:   rather than having to write a method that calls makePresent() on   each of the related objects individually, you can simply give each   related object the same key value, then call makePresentByKey() on   that key. <p>   You don't need to define this for an object unless you want to use   makePresentByKey() with the object. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="initializeLocation"></a>
+<table class=decl><tr><td><code>initializeLocation ( )</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3649">3649</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="makePresent"></a>
+<table class=decl><tr><td><code>makePresent ( )</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3688">3688</a>]</table><div class=desc>bring the object into the game world in its eventual location(s)<p>
+</div>
+<a name="makePresentByKey"></a>
+<table class=decl><tr><td><code>makePresentByKey (key)</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3732">3732</a>]</table><div class=desc>   Bring every PresentLater object with the given key into the game.   Note that this is a "class" method that you call on PresentLater   itself: <p>   PresentLater.makePresentByKey('foo'); <p>
+</div>
+<a name="makePresentByKeyIf"></a>
+<table class=decl><tr><td><code>makePresentByKeyIf (key, cond)</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3760">3760</a>]</table><div class=desc>   Bring every PresentLater object with the given key into the game,   or move every one out of the game, according to the condition   'cond'. <p>   If 'cond' is a function pointer, we'll invoke it once per object   with the given key, passing the object as the parameter, and use   the return value as the in game/out of game setting.  For example,   if you wanted to show every object with key 'foo' AND with the   property 'showObj' set to true, you could write this: <p>   PresentLater.makePresentByKeyIf('foo', {x: x.showObj}); <p>   Note that this is a "class" method that you call on PresentLater   itself. <p>
+</div>
+<a name="makePresentIf"></a>
+<table class=decl><tr><td><code>makePresentIf (cond)</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#3717">3717</a>]</table><div class=desc>   make myself present if the given condition is true; otherwise,   remove me from the game world (i.e. move me into nil) <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

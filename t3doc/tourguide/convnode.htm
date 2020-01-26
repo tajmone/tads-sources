@@ -1,0 +1,126 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ConvNode</title><meta name="keywords" content="ConvNode,npcContinueList,limitSuggestions,npcGreetingMsg,npcGreetingList,npcContinueMsg,endConversation,canEndConversation,endConvBye,endConvBoredom,endConvTravel,noteLeaving,noteActive,isSticky,blockEndConv"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ConvNode : ActorTopicDatabase
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="conversationnodes-overview.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="yestopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">ConvNode is the class used to set up a <a href="conversationnodes-overview.htm">ConversationNode</a> in an NPC's conversational responses. We'll discuss the principal methods and properties of the ConvNode class below, but first we'll clarify the concept by means of an example.
+<br>
+
+<br>
+Once the player character (PC) gains access to the Benefactors' Room where the Golden Banana is stored, he'll find it enclosed in a glass case. To get at it, he'll need to cut the glass case open with a diamond. If Sarah is with him, she'll have the diamond in her ring, and he'll need to ask her for it (just as he did when he wanted to cut open the glass jar containing the <a href="askfortopic.htm">crystal</a>). This time, however, there's a catch; although Sarah can cut open the case, if she goes ahead and does so the microphone embedded in the pedestal under the case will pick up the sound, causing the curator to come in and discover the attempted theft. The solution to this will be for the PC to attach the sticking plaster (found in the first aid kit) over the microphone to prevent it from registering the sound. So if Sarah goes ahead and cuts open the glass case in response simply to being asked for her ring, the game will be lost in a way the player could not really have predicted. To prevent this from happening it would be better if Sarah offered to cut open the case and gave the player the choice whether she should go ahead or not. For this we need a ConvNode.
+<br>
+
+<br>
+The first stage is to add a second AltTopic after the AskForTopic @diamondRing, an AltTopic that is triggered if Sarah is asked for the ring while she can see the glass case but the case is not yet open:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+++&nbsp;AltTopic&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Can&nbsp;I&nbsp;borrow&nbsp;your&nbsp;diamond&nbsp;ring&nbsp;again?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Don't&nbsp;tell&nbsp;me,&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;surmises,&nbsp;&lt;q&gt;you\'re
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thinking&nbsp;of&nbsp;cutting&nbsp;open&nbsp;that&nbsp;glass&nbsp;case&nbsp;-&nbsp;right?&lt;/q&gt;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;.convnode&nbsp;banana-case&gt;"&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(getActor.canSee(bananaCase)&nbsp;&amp;&amp;&nbsp;!bananaCase.isOpen)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The important thing to note here is the use of &lt;.convnode banana-case&gt; to move Sarah into the Conversation Node after she's asked her question about cutting open the case. We now need to define the corresponding ConvNode (which must be located inside Sarah, <i>not</i> one of her ActorStates):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;ConvNode&nbsp;'banana-case'
+<br>
+&nbsp;&nbsp;npcContinueList&nbsp;:&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;[&nbsp;'{The&nbsp;sarah/she}&nbsp;looks&nbsp;at&nbsp;you&nbsp;expectantly.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Well,&nbsp;are&nbsp;we&nbsp;going&nbsp;to&nbsp;cut&nbsp;this&nbsp;thing&nbsp;open&nbsp;or&nbsp;aren\'t&nbsp;we?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;she&nbsp;asks.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Did&nbsp;you&nbsp;want&nbsp;me&nbsp;to&nbsp;cut&nbsp;it&nbsp;open?&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;asks.&nbsp;',&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;You&nbsp;asked&nbsp;me&nbsp;for&nbsp;my&nbsp;ring,&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;reminds&nbsp;you,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Assuming&nbsp;you&nbsp;didn\'t&nbsp;just&nbsp;want&nbsp;to&nbsp;wear&nbsp;it,&nbsp;was&nbsp;it&nbsp;for&nbsp;some
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;purpose,&nbsp;like&nbsp;trying&nbsp;to&nbsp;cut&nbsp;open&nbsp;that&nbsp;case?&lt;/q&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;limitSuggestions&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The npcContinueList provides a list of messages that will be displayed if the PC fails to reply to Sarah's question at all but issues a non-conversational command (such as LOOK or EXAMINE BANANA). This reminds the player that Sarah has asked a question and is expecting a reply: it also makes her a bit more life-like, by having her show some human impatience for a reply. We set limitSuggestion to true to prevent a TOPICS command from listing any SuggestedTopics apart from the ones listed under the ConvNode (because we'll be blocking access to all other topics via a DefaultAnyTopic).
+<br>
+
+<br>
+It's possible that the player may reply by trying changing the subject inconsequentially, e.g. by ASK SARAH ABOUT HERSELF or SHOW LAMP TO SARAH, which doesn't make for a very realistic conversation at this point. To trap this, we can use a DefaultAnyTopic which simply has Sarah repeat her question more insistently and then uses the &lt;.convstay&gt; tag to ensure that Sarah remains in this Conversation Node, still expecting a reply:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultAnyTopic&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;That&nbsp;glass&nbsp;case,&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;insists,&nbsp;&lt;q&gt;Should&nbsp;I&nbsp;try&nbsp;to&nbsp;cut&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;open,&nbsp;yes&nbsp;or&nbsp;no?&lt;/q&gt;&lt;.convstay&gt;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This traps the invalid responses the player might make; we'll go on to give the valid ones when we come to look at <a href="yestopic.htm">YesTopic</a>, <a href="notopic.htm">NoTopic</a> and <a href="specialtopic.htm">SpecialTopic</a>. But before we do that we need to look at the ConvNode class in a bit more detail. The principal properties and methods you may want to use on ConvNode are:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>npcGreetingMsg</b> - use this to display a message when the NPC initiates a conversation (normally via a call to <a href="initiateconversation.htm">initiateConversation()</a>).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>npcGreetingList</b> - use this as an alternative to npcGreetingMsg to provide a list of messages where the ConvNode may be initiated more than once.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>npcContinueMsg</b> or <b>npcContinueList</b> - the <a href="overview-actorstates.htm">ActorState</a> class automatically displays the current ConvNode's continuation message (using either npcContinueMsg or npcContinueList, as appropriate) on each turn on which the ConvNode is active, and the player didn't address a conversational command to the NPC on the same turn.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>noteLeaving()</b> - Note that we're leaving this conversation node. This doesn't do anything by default, but individual instances might find the notification useful for triggering side effects.</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>noteActive()</b> - Note that this ConvNode is becoming active. Our actor will call this method when the ConvNode is becoming active, as long as it wasn't already active. By default this schedules the topic inventory (to display the list of SuggestedTopics) if there are any SpecialTopics in the ConvNode (so if you want to insert any code here, you should remember to call inherited).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>endConversation(actor, reason) </b>- Instances can override this for special behaviour on terminating a conversation (e.g. if the Player Character walks away while we're in the ConvNode we could have the NPC complain of his rudeness).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>canEndConversation(actor, reason)</b> - lets a ConvNode prevent a conversation ending, by returning nil; in this and endConversation reason can be one of endConvBye, endConvTravel, or endConvBoredom. From TADS 3.0.10 canEndConversation can also prevent a conversation ending by returning the special value blockEndConv; this has the additional side effect that the caller will call noteConvAction() on the other actor, to prevent this actor from generating any further scripted remarks on the same turn. You should therefore return blockEndConv rather than nil if you display a message in canEndConversation that takes the form of the NPC explaining why s/he won't let you end the conversation, since if such a message has been displayed, you don't want to see one from npcContinueMsg or npcContinueList as well.</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>isSticky</b> - if true then the conversation remains in this node until a &lt;.convnode&gt; tag explicitly changes to another node (or no node at all). This can be useful when you are constructing a ConvNode where the NPC is insisting on an answer and won't give up till the PC gives one. By default isSticky is nil.</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>limitSuggestions</b> - if true then the only topics that will be suggested while the conversation is in this node are the topic entries that are actually within the node; otherwise (if nil, the default), a topic inventory request will list all the SuggestedTopics available from the actor's current ActorState as well. You'll normally want to set this property to true if you give the node one or more default topics that prevent topics from outside the node being reachable.</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Times New Roman" size="3" color="#000000"></font></td><td></td></tr></table><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that the last two methods are only operative if the NPC's current ActorState is an <a href="inconversationstate.htm">InConversationState</a>, since the notion of a conversation ending is only meaningful programmatically as an NPC switching out of an InConversationState. Thus, in the present example, where Sarah enters a ConvNode while in an AccompanyingState, these methods will never be called. We'll use an example where these methods are relevant <a href="initiateconversation.htm">later</a>. Basically, though, the three reasons a conversation might be terminated (when the NPC is in an InConversationState) are (a) if the player explicitly says goodbye (with a BYE command), corresponding to endCondBye; (b) if the player character walks away (the player types a movement command), corresponding to endConvTravel; or (c) if the player fails to issue a conversational command for long enough to exhaust the NPC's attentionSpan (endConvBoredom). The last two methods allow each of these situations to be handled differently, if required.
+<br>
+
+<br>
+We'll see some more examples of ConvNodes when we come to look at the <a href="initiateconversation.htm">initiateConversation</a> method.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

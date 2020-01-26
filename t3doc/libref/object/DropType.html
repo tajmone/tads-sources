@@ -1,0 +1,49 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>DropType</title></head><body>
+<table class=ban><tr><td align=left><span class=title>DropType</span><span class=type>class</span><td align=right><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#270">270</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Drop Descriptor.  This is passed to the receiveDrop() method of a   "drop destination" when an object is discarded via commands such as   DROP or THROW.  The purpose of the descriptor is to identify the type   of command being performed, so that the receiveDrop() method can   generate an appropriate report message.
+<p>
+<code>class
+<b>DropType</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>DropType</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>DropType</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DropTypeThrow.html">DropTypeThrow</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DropTypeShortThrow.html">DropTypeShortThrow</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/dropTypeDrop.html">dropTypeDrop</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#getReportPrefix">getReportPrefix</a>&nbsp;
+<a href="#standardReport">standardReport</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="getReportPrefix"></a>
+<table class=decl><tr><td><code>// getReportPrefix (obj, dest)</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#299">299</a>]</table><div class=desc>   Get a short report describing the action without saying where the   object ended up.  This is roughly the same as the standard report,   but omits any information on where the object lands, so that the   caller can show a separate message explaining that part. <p>   The report must be worded such that the object being dropped is   the logical antecedent for any subsequent text.  This means that   callers can use a pronoun to refer back to the object dropped,   allowing for more natural sequences to be constructed.  (It   usually sounds stilted to repeat the full name: "You drop the box.   The box falls into the chasm."  It's better if we can use a   pronoun in the second sentence: "You drop the box. It falls into   the chasm.") <p>   'obj' is the object being dropped, and 'dest' is the drop   destination. <p>
+</div>
+<a name="standardReport"></a>
+<table class=decl><tr><td><code>// standardReport (obj, dest)</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#279">279</a>]</table><div class=desc>   Generate the standard report message for the action.  The drop   destination's receiveDrop() method can call this if the standard   message is adequate to describe the result of the action. <p>   'obj' is the object being dropped, and 'dest' is the drop   destination. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

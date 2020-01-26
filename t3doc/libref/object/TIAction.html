@@ -1,0 +1,633 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TIAction</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TIAction</span><span class=type>class</span><td align=right><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3935">3935</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8600">8600</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Transitive-with-indirect Action class - this is an action that takes   both a direct and indirect object.  We subclass the basic one-object   action to add the indirect object handling.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8600">8600</a>]:</i><br>
+   English-specific additions for two-object verbs.
+<p>
+<code>class
+<b>TIAction</b> :  &nbsp; <a href="../object/TAction.html">TAction</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TIAction</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TAction.html">TAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Action.html">Action</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Resolver.html">Resolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TIAction</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AttachToAction.html">AttachToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AttachTo).html">predicate(AttachTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AttachToWhat).html">predicate(AttachToWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AttackWithAction.html">AttackWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AttackWith).html">predicate(AttackWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BurnWithAction.html">BurnWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(BurnWith).html">predicate(BurnWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CleanWithAction.html">CleanWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(CleanWith).html">predicate(CleanWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CutWithAction.html">CutWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(CutWith).html">predicate(CutWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(CutWithWhat).html">predicate(CutWithWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DetachFromAction.html">DetachFromAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(DetachFrom).html">predicate(DetachFrom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DigWithAction.html">DigWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(DigWith).html">predicate(DigWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FastenToAction.html">FastenToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(FastenTo).html">predicate(FastenTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GiveToAction.html">GiveToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GiveTo).html">predicate(GiveTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GiveToType2).html">predicate(GiveToType2)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GiveToWhom).html">predicate(GiveToWhom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LockWithAction.html">LockWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(LockWith).html">predicate(LockWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MoveToAction.html">MoveToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(MoveTo).html">predicate(MoveTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MoveWithAction.html">MoveWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(MoveWith).html">predicate(MoveWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PlugIntoAction.html">PlugIntoAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PlugInto).html">predicate(PlugInto)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PlugIntoWhat).html">predicate(PlugIntoWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PourIntoAction.html">PourIntoAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PourInto).html">predicate(PourInto)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PourOntoAction.html">PourOntoAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PourOnto).html">predicate(PourOnto)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelViaIobjAction.html">PushTravelViaIobjAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelClimbDownAction.html">PushTravelClimbDownAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelClimbDown).html">predicate(PushTravelClimbDown)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelClimbUpAction.html">PushTravelClimbUpAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelClimbUp).html">predicate(PushTravelClimbUp)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelEnterAction.html">PushTravelEnterAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelEnter).html">predicate(PushTravelEnter)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelGetOutOfAction.html">PushTravelGetOutOfAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelGetOutOf).html">predicate(PushTravelGetOutOf)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelThroughAction.html">PushTravelThroughAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelThrough).html">predicate(PushTravelThrough)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PutBehindAction.html">PutBehindAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutBehind).html">predicate(PutBehind)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PutInAction.html">PutInAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutIn).html">predicate(PutIn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutInWhat).html">predicate(PutInWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PutOnAction.html">PutOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutOn).html">predicate(PutOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PutUnderAction.html">PutUnderAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutUnder).html">predicate(PutUnder)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ScrewWithAction.html">ScrewWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ScrewWith).html">predicate(ScrewWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ShowToAction.html">ShowToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ShowTo).html">predicate(ShowTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ShowToType2).html">predicate(ShowToType2)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ShowToWhom).html">predicate(ShowToWhom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TakeFromAction.html">TakeFromAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TakeFrom).html">predicate(TakeFrom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThrowAtAction.html">ThrowAtAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ThrowAt).html">predicate(ThrowAt)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThrowToAction.html">ThrowToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ThrowTo).html">predicate(ThrowTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ThrowToType2).html">predicate(ThrowToType2)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TurnWithAction.html">TurnWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TurnWith).html">predicate(TurnWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnfastenFromAction.html">UnfastenFromAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(UnfastenFrom).html">predicate(UnfastenFrom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnlockWithAction.html">UnlockWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(UnlockWith).html">predicate(UnlockWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnplugFromAction.html">UnplugFromAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(UnplugFrom).html">predicate(UnplugFrom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnscrewWithAction.html">UnscrewWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(UnscrewWith).html">predicate(UnscrewWith)</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#actionIobjProp">actionIobjProp</a>&nbsp;
+<a href="#askIobjResponseProd">askIobjResponseProd</a>&nbsp;
+<a href="#checkIobjProp">checkIobjProp</a>&nbsp;
+<a href="#execFirst">execFirst</a>&nbsp;
+<a href="#iobjCur_">iobjCur_</a>&nbsp;
+<a href="#iobjInfoCur_">iobjInfoCur_</a>&nbsp;
+<a href="#iobjList_">iobjList_</a>&nbsp;
+<a href="#iobjMatch">iobjMatch</a>&nbsp;
+<a href="#iobjResolver_">iobjResolver_</a>&nbsp;
+<a href="#isPrepositionalPhrasing">isPrepositionalPhrasing</a>&nbsp;
+<a href="#lastObjList_">lastObjList_</a>&nbsp;
+<a href="#needAnaphoricBinding_">needAnaphoricBinding_</a>&nbsp;
+<a href="#omitIobjInDobjQuery">omitIobjInDobjQuery</a>&nbsp;
+<a href="#preCondIobjProp">preCondIobjProp</a>&nbsp;
+<a href="#predicateNounPhrases">predicateNounPhrases</a>&nbsp;
+<a href="#remapIobjProp">remapIobjProp</a>&nbsp;
+<a href="#resolveFirst">resolveFirst</a>&nbsp;
+<a href="#resolveFirstEmpty">resolveFirstEmpty</a>&nbsp;
+<a href="#tentativeDobj_">tentativeDobj_</a>&nbsp;
+<a href="#tentativeIobj_">tentativeIobj_</a>&nbsp;
+<a href="#verIobjProp">verIobjProp</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TAction</code> :<br>
+<code>
+<a href="../object/TAction.html#actionAllowsAll">actionAllowsAll</a>&nbsp;
+<a href="../object/TAction.html#actionDobjProp">actionDobjProp</a>&nbsp;
+<a href="../object/TAction.html#actor_">actor_</a>&nbsp;
+<a href="../object/TAction.html#askDobjResponseProd">askDobjResponseProd</a>&nbsp;
+<a href="../object/TAction.html#checkDobjProp">checkDobjProp</a>&nbsp;
+<a href="../object/TAction.html#dobjCur_">dobjCur_</a>&nbsp;
+<a href="../object/TAction.html#dobjInfoCur_">dobjInfoCur_</a>&nbsp;
+<a href="../object/TAction.html#dobjList_">dobjList_</a>&nbsp;
+<a href="../object/TAction.html#dobjMatch">dobjMatch</a>&nbsp;
+<a href="../object/TAction.html#dobjResolver_">dobjResolver_</a>&nbsp;
+<a href="../object/TAction.html#issuer_">issuer_</a>&nbsp;
+<a href="../object/TAction.html#preCondDobjProp">preCondDobjProp</a>&nbsp;
+<a href="../object/TAction.html#remapDobjProp">remapDobjProp</a>&nbsp;
+<a href="../object/TAction.html#verDobjProp">verDobjProp</a>&nbsp;
+<a href="../object/TAction.html#whichMessageObject">whichMessageObject</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Action</code> :<br>
+<code>
+<a href="../object/Action.html#actionTime">actionTime</a>&nbsp;
+<a href="../object/Action.html#afterActionMainList">afterActionMainList</a>&nbsp;
+<a href="../object/Action.html#beforeAfterObjs">beforeAfterObjs</a>&nbsp;
+<a href="../object/Action.html#defaultForRecursion">defaultForRecursion</a>&nbsp;
+<a href="../object/Action.html#extraMessageParams">extraMessageParams</a>&nbsp;
+<a href="../object/Action.html#implicitMsg">implicitMsg</a>&nbsp;
+<a href="../object/Action.html#includeInUndo">includeInUndo</a>&nbsp;
+<a href="../object/Action.html#isImplicit">isImplicit</a>&nbsp;
+<a href="../object/Action.html#isRepeatable">isRepeatable</a>&nbsp;
+<a href="../object/Action.html#iterationCanceled">iterationCanceled</a>&nbsp;
+<a href="../object/Action.html#originalAction">originalAction</a>&nbsp;
+<a href="../object/Action.html#parentAction">parentAction</a>&nbsp;
+<a href="../object/Action.html#preCond">preCond</a>&nbsp;
+<a href="../object/Action.html#pronounOverride">pronounOverride</a>&nbsp;
+<a href="../object/Action.html#remappedFrom">remappedFrom</a>&nbsp;
+<a href="../object/Action.html#showDefaultReports">showDefaultReports</a>&nbsp;
+<a href="../object/Action.html#synthParamID">synthParamID</a>&nbsp;
+<a href="../object/Action.html#verbFlags">verbFlags</a>&nbsp;
+<a href="../object/Action.html#verifiedOkay">verifiedOkay</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#action_">action_</a>&nbsp;
+<a href="../object/Resolver.html#equivs_">equivs_</a>&nbsp;
+<a href="../object/Resolver.html#isGlobalScope">isGlobalScope</a>&nbsp;
+<a href="../object/Resolver.html#isSubResolver">isSubResolver</a>&nbsp;
+<a href="../object/Resolver.html#scope_">scope_</a>&nbsp;
+<a href="../object/Resolver.html#whichObject">whichObject</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#announceAllDefaultObjects">announceAllDefaultObjects</a>&nbsp;
+<a href="#announceDefaultObject">announceDefaultObject</a>&nbsp;
+<a href="#canIobjResolveTo">canIobjResolveTo</a>&nbsp;
+<a href="#checkAction">checkAction</a>&nbsp;
+<a href="#checkRemapping">checkRemapping</a>&nbsp;
+<a href="#copyTentativeObjs">copyTentativeObjs</a>&nbsp;
+<a href="#createForMissingIobj">createForMissingIobj</a>&nbsp;
+<a href="#createIobjResolver">createIobjResolver</a>&nbsp;
+<a href="#doActionMain">doActionMain</a>&nbsp;
+<a href="#execAction">execAction</a>&nbsp;
+<a href="#filterAmbiguousIobj">filterAmbiguousIobj</a>&nbsp;
+<a href="#filterPluralIobj">filterPluralIobj</a>&nbsp;
+<a href="#getAllIobj">getAllIobj</a>&nbsp;
+<a href="#getAnaphoricBinding">getAnaphoricBinding</a>&nbsp;
+<a href="#getCurrentObjects">getCurrentObjects</a>&nbsp;
+<a href="#getDefaultIobj">getDefaultIobj</a>&nbsp;
+<a href="#getIobj">getIobj</a>&nbsp;
+<a href="#getIobjCount">getIobjCount</a>&nbsp;
+<a href="#getIobjFlags">getIobjFlags</a>&nbsp;
+<a href="#getIobjInfo">getIobjInfo</a>&nbsp;
+<a href="#getIobjResolver">getIobjResolver</a>&nbsp;
+<a href="#getIobjTokens">getIobjTokens</a>&nbsp;
+<a href="#getIobjWords">getIobjWords</a>&nbsp;
+<a href="#getMatchForRole">getMatchForRole</a>&nbsp;
+<a href="#getMessageParam">getMessageParam</a>&nbsp;
+<a href="#getObjectForRole">getObjectForRole</a>&nbsp;
+<a href="#getObjResponseProd">getObjResponseProd</a>&nbsp;
+<a href="#getOtherMessageObjectPronoun">getOtherMessageObjectPronoun</a>&nbsp;
+<a href="#getOtherObjectRole">getOtherObjectRole</a>&nbsp;
+<a href="#getPreCondDescList">getPreCondDescList</a>&nbsp;
+<a href="#getPreCondPropForRole">getPreCondPropForRole</a>&nbsp;
+<a href="#getQuestionInf">getQuestionInf</a>&nbsp;
+<a href="#getRemapPropForRole">getRemapPropForRole</a>&nbsp;
+<a href="#getResolvedIobjList">getResolvedIobjList</a>&nbsp;
+<a href="#getResolvedObjList">getResolvedObjList</a>&nbsp;
+<a href="#getResolveInfo">getResolveInfo</a>&nbsp;
+<a href="#getRoleFromIndex">getRoleFromIndex</a>&nbsp;
+<a href="#getTentativeDobj">getTentativeDobj</a>&nbsp;
+<a href="#getTentativeIobj">getTentativeIobj</a>&nbsp;
+<a href="#getVerbPhrase">getVerbPhrase</a>&nbsp;
+<a href="#getVerbPhrase2">getVerbPhrase2</a>&nbsp;
+<a href="#getVerifyPropForRole">getVerifyPropForRole</a>&nbsp;
+<a href="#initForMissingDobj">initForMissingDobj</a>&nbsp;
+<a href="#initForMissingIobj">initForMissingIobj</a>&nbsp;
+<a href="#initTentative">initTentative</a>&nbsp;
+<a href="#needRemappedAnnouncement">needRemappedAnnouncement</a>&nbsp;
+<a href="#resetAction">resetAction</a>&nbsp;
+<a href="#resolvedObjectsInScope">resolvedObjectsInScope</a>&nbsp;
+<a href="#resolveNouns">resolveNouns</a>&nbsp;
+<a href="#retryWithAmbiguousIobj">retryWithAmbiguousIobj</a>&nbsp;
+<a href="#retryWithMissingIobj">retryWithMissingIobj</a>&nbsp;
+<a href="#setCurrentObjects">setCurrentObjects</a>&nbsp;
+<a href="#setObjectMatches">setObjectMatches</a>&nbsp;
+<a href="#setPronounByInput">setPronounByInput</a>&nbsp;
+<a href="#setResolvedIobj">setResolvedIobj</a>&nbsp;
+<a href="#setResolvedObjects">setResolvedObjects</a>&nbsp;
+<a href="#testRetryDefaultIobj">testRetryDefaultIobj</a>&nbsp;
+<a href="#verifyAction">verifyAction</a>&nbsp;
+<a href="#whatObj">whatObj</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TAction</code> :<br>
+<code>
+<a href="../object/TAction.html#adjustDefaultObjectPrep">adjustDefaultObjectPrep</a>&nbsp;
+<a href="../object/TAction.html#canDobjResolveTo">canDobjResolveTo</a>&nbsp;
+<a href="../object/TAction.html#construct">construct</a>&nbsp;
+<a href="../object/TAction.html#createDobjResolver">createDobjResolver</a>&nbsp;
+<a href="../object/TAction.html#createForMissingDobj">createForMissingDobj</a>&nbsp;
+<a href="../object/TAction.html#createForRetry">createForRetry</a>&nbsp;
+<a href="../object/TAction.html#filterAmbiguousDobj">filterAmbiguousDobj</a>&nbsp;
+<a href="../object/TAction.html#filterPluralDobj">filterPluralDobj</a>&nbsp;
+<a href="../object/TAction.html#getAllDobj">getAllDobj</a>&nbsp;
+<a href="../object/TAction.html#getDefaultDobj">getDefaultDobj</a>&nbsp;
+<a href="../object/TAction.html#getDobj">getDobj</a>&nbsp;
+<a href="../object/TAction.html#getDobjCount">getDobjCount</a>&nbsp;
+<a href="../object/TAction.html#getDobjFlags">getDobjFlags</a>&nbsp;
+<a href="../object/TAction.html#getDobjInfo">getDobjInfo</a>&nbsp;
+<a href="../object/TAction.html#getDobjResolver">getDobjResolver</a>&nbsp;
+<a href="../object/TAction.html#getDobjTokens">getDobjTokens</a>&nbsp;
+<a href="../object/TAction.html#getDobjWords">getDobjWords</a>&nbsp;
+<a href="../object/TAction.html#getResolvedDobjList">getResolvedDobjList</a>&nbsp;
+<a href="../object/TAction.html#getVerbPhrase1">getVerbPhrase1</a>&nbsp;
+<a href="../object/TAction.html#initResolver">initResolver</a>&nbsp;
+<a href="../object/TAction.html#retryWithAmbiguousDobj">retryWithAmbiguousDobj</a>&nbsp;
+<a href="../object/TAction.html#retryWithMissingDobj">retryWithMissingDobj</a>&nbsp;
+<a href="../object/TAction.html#setResolvedDobj">setResolvedDobj</a>&nbsp;
+<a href="../object/TAction.html#testRetryDefaultDobj">testRetryDefaultDobj</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Action</code> :<br>
+<code>
+<a href="../object/Action.html#actionOfKind">actionOfKind</a>&nbsp;
+<a href="../object/Action.html#addBeforeAfterObj">addBeforeAfterObj</a>&nbsp;
+<a href="../object/Action.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/Action.html#afterActionMain">afterActionMain</a>&nbsp;
+<a href="../object/Action.html#announceActionObject">announceActionObject</a>&nbsp;
+<a href="../object/Action.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/Action.html#beforeActionMain">beforeActionMain</a>&nbsp;
+<a href="../object/Action.html#cacheMultiObjectAnnouncements">cacheMultiObjectAnnouncements</a>&nbsp;
+<a href="../object/Action.html#callAfterActionMain">callAfterActionMain</a>&nbsp;
+<a href="../object/Action.html#callCatchAllProp">callCatchAllProp</a>&nbsp;
+<a href="../object/Action.html#callPreConditions">callPreConditions</a>&nbsp;
+<a href="../object/Action.html#callVerifyPreCond">callVerifyPreCond</a>&nbsp;
+<a href="../object/Action.html#callVerifyProp">callVerifyProp</a>&nbsp;
+<a href="../object/Action.html#cancelIteration">cancelIteration</a>&nbsp;
+<a href="../object/Action.html#checkPreConditions">checkPreConditions</a>&nbsp;
+<a href="../object/Action.html#combineRemappedVerifyResults">combineRemappedVerifyResults</a>&nbsp;
+<a href="../object/Action.html#createActionFrom">createActionFrom</a>&nbsp;
+<a href="../object/Action.html#createActionInstance">createActionInstance</a>&nbsp;
+<a href="../object/Action.html#createTopicQualifierResolver">createTopicQualifierResolver</a>&nbsp;
+<a href="../object/Action.html#doAction">doAction</a>&nbsp;
+<a href="../object/Action.html#doActionOnce">doActionOnce</a>&nbsp;
+<a href="../object/Action.html#filterAmbiguousWithVerify">filterAmbiguousWithVerify</a>&nbsp;
+<a href="../object/Action.html#filterFacets">filterFacets</a>&nbsp;
+<a href="../object/Action.html#filterPluralWithVerify">filterPluralWithVerify</a>&nbsp;
+<a href="../object/Action.html#finishResolveList">finishResolveList</a>&nbsp;
+<a href="../object/Action.html#getDefaultWithVerify">getDefaultWithVerify</a>&nbsp;
+<a href="../object/Action.html#getEnteredVerbPhrase">getEnteredVerbPhrase</a>&nbsp;
+<a href="../object/Action.html#getImplicitPhrase">getImplicitPhrase</a>&nbsp;
+<a href="../object/Action.html#getInfPhrase">getInfPhrase</a>&nbsp;
+<a href="../object/Action.html#getNotifyTable">getNotifyTable</a>&nbsp;
+<a href="../object/Action.html#getObjPreCondDescList">getObjPreCondDescList</a>&nbsp;
+<a href="../object/Action.html#getObjPreConditions">getObjPreConditions</a>&nbsp;
+<a href="../object/Action.html#getOriginalAction">getOriginalAction</a>&nbsp;
+<a href="../object/Action.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/Action.html#getParticiplePhrase">getParticiplePhrase</a>&nbsp;
+<a href="../object/Action.html#getPredicate">getPredicate</a>&nbsp;
+<a href="../object/Action.html#getPronounOverride">getPronounOverride</a>&nbsp;
+<a href="../object/Action.html#getRemappedFrom">getRemappedFrom</a>&nbsp;
+<a href="../object/Action.html#getSimpleSynonymRemap">getSimpleSynonymRemap</a>&nbsp;
+<a href="../object/Action.html#getSortedVerifyResults">getSortedVerifyResults</a>&nbsp;
+<a href="../object/Action.html#isConversational">isConversational</a>&nbsp;
+<a href="../object/Action.html#isNestedIn">isNestedIn</a>&nbsp;
+<a href="../object/Action.html#isPartOf">isPartOf</a>&nbsp;
+<a href="../object/Action.html#isRemapped">isRemapped</a>&nbsp;
+<a href="../object/Action.html#makeResolveInfo">makeResolveInfo</a>&nbsp;
+<a href="../object/Action.html#makeResolveInfoList">makeResolveInfoList</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceDefaultObject">maybeAnnounceDefaultObject</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceImplicit">maybeAnnounceImplicit</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceMultiObject">maybeAnnounceMultiObject</a>&nbsp;
+<a href="../object/Action.html#noMatch">noMatch</a>&nbsp;
+<a href="../object/Action.html#notifyBeforeAfter">notifyBeforeAfter</a>&nbsp;
+<a href="../object/Action.html#objListPronoun">objListPronoun</a>&nbsp;
+<a href="../object/Action.html#preAnnounceActionObject">preAnnounceActionObject</a>&nbsp;
+<a href="../object/Action.html#recalcSenseContext">recalcSenseContext</a>&nbsp;
+<a href="../object/Action.html#repeatAction">repeatAction</a>&nbsp;
+<a href="../object/Action.html#resolveAction">resolveAction</a>&nbsp;
+<a href="../object/Action.html#runBeforeNotifiers">runBeforeNotifiers</a>&nbsp;
+<a href="../object/Action.html#saveActionForAgain">saveActionForAgain</a>&nbsp;
+<a href="../object/Action.html#setImplicit">setImplicit</a>&nbsp;
+<a href="../object/Action.html#setMessageParam">setMessageParam</a>&nbsp;
+<a href="../object/Action.html#setMessageParams">setMessageParams</a>&nbsp;
+<a href="../object/Action.html#setNested">setNested</a>&nbsp;
+<a href="../object/Action.html#setOriginalAction">setOriginalAction</a>&nbsp;
+<a href="../object/Action.html#setPronounOverride">setPronounOverride</a>&nbsp;
+<a href="../object/Action.html#setRemapped">setRemapped</a>&nbsp;
+<a href="../object/Action.html#spPrefix">spPrefix</a>&nbsp;
+<a href="../object/Action.html#spSuffix">spSuffix</a>&nbsp;
+<a href="../object/Action.html#synthMessageParam">synthMessageParam</a>&nbsp;
+<a href="../object/Action.html#verifyHandlersExist">verifyHandlersExist</a>&nbsp;
+<a href="../object/Action.html#whatTranslate">whatTranslate</a>&nbsp;
+<a href="../object/Action.html#withVerifyResults">withVerifyResults</a>&nbsp;
+<a href="../object/Action.html#zeroActionTime">zeroActionTime</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#allowAll">allowAll</a>&nbsp;
+<a href="../object/Resolver.html#cacheScopeList">cacheScopeList</a>&nbsp;
+<a href="../object/Resolver.html#filterAll">filterAll</a>&nbsp;
+<a href="../object/Resolver.html#filterAmbiguousEquivalents">filterAmbiguousEquivalents</a>&nbsp;
+<a href="../object/Resolver.html#filterAmbiguousNounPhrase">filterAmbiguousNounPhrase</a>&nbsp;
+<a href="../object/Resolver.html#filterPluralPhrase">filterPluralPhrase</a>&nbsp;
+<a href="../object/Resolver.html#filterPossRank">filterPossRank</a>&nbsp;
+<a href="../object/Resolver.html#getAction">getAction</a>&nbsp;
+<a href="../object/Resolver.html#getAll">getAll</a>&nbsp;
+<a href="../object/Resolver.html#getAllDefaults">getAllDefaults</a>&nbsp;
+<a href="../object/Resolver.html#getDefaultObject">getDefaultObject</a>&nbsp;
+<a href="../object/Resolver.html#getPossessiveResolver">getPossessiveResolver</a>&nbsp;
+<a href="../object/Resolver.html#getPronounDefault">getPronounDefault</a>&nbsp;
+<a href="../object/Resolver.html#getQualifierResolver">getQualifierResolver</a>&nbsp;
+<a href="../object/Resolver.html#getRawPronounAntecedent">getRawPronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#getReflexiveBinding">getReflexiveBinding</a>&nbsp;
+<a href="../object/Resolver.html#getScopeList">getScopeList</a>&nbsp;
+<a href="../object/Resolver.html#getTargetActor">getTargetActor</a>&nbsp;
+<a href="../object/Resolver.html#matchName">matchName</a>&nbsp;
+<a href="../object/Resolver.html#objInScope">objInScope</a>&nbsp;
+<a href="../object/Resolver.html#resetResolver">resetResolver</a>&nbsp;
+<a href="../object/Resolver.html#resolvePronounAntecedent">resolvePronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#resolveUnknownNounPhrase">resolveUnknownNounPhrase</a>&nbsp;
+<a href="../object/Resolver.html#selectIndefinite">selectIndefinite</a>&nbsp;
+<a href="../object/Resolver.html#withGlobals">withGlobals</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="actionIobjProp"></a>
+<table class=decl><tr><td><code>actionIobjProp</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5174">5174</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="askIobjResponseProd"></a>
+<table class=decl><tr><td><code>askIobjResponseProd</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4087">4087</a>]</table><div class=desc>   The root production to use to parse missing indirect object   responses.  By default, this is singleNoun, but individual   actions can override this as appropriate. <p>   Note that language modules might want to override this to allow   for special responses.  For example, in English, most verbs will   want to override this with a specialized production that allows   the appropriate preposition in the response. <p>
+</div>
+<a name="checkIobjProp"></a>
+<table class=decl><tr><td><code>checkIobjProp</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5173">5173</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="execFirst"></a>
+<table class=decl><tr><td><code>execFirst</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4126">4126</a>]</table><div class=desc>   Determine which object to call first for action processing.  By   default, we execute in the same order as we resolve, but this can   be overridden if necessary. <p>
+</div>
+<a name="iobjCur_"></a>
+<table class=decl><tr><td><code>iobjCur_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5149">5149</a>]</table><div class=desc>current indirect object being executed<p>
+</div>
+<a name="iobjInfoCur_"></a>
+<table class=decl><tr><td><code>iobjInfoCur_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5152">5152</a>]</table><div class=desc>the full ResolveInfo associated with iobjCur_<p>
+</div>
+<a name="iobjList_"></a>
+<table class=decl><tr><td><code>iobjList_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5146">5146</a>]</table><div class=desc>the indirect object list<p>
+</div>
+<a name="iobjMatch"></a>
+<table class=decl><tr><td><code>iobjMatch</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5143">5143</a>]</table><div class=desc>   the predicate grammar must assign the indirect object production   tree to iobjMatch <p>
+</div>
+<a name="iobjResolver_"></a>
+<table class=decl><tr><td><code>iobjResolver_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5155">5155</a>]</table><div class=desc>my cached indirect object resolver<p>
+</div>
+<a name="isPrepositionalPhrasing"></a>
+<table class=decl><tr><td><code>isPrepositionalPhrasing</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8646">8646</a>]</table><div class=desc>   For VerbRules: does this verb rule have a prepositional or   structural phrasing of the direct and indirect object slots?  That   is, are the object slots determined by a prepositional marker, or   purely by word order?  For most English verbs with two objects,   the indirect object is marked by a preposition: GIVE BOOK TO BOB,   PUT BOOK IN BOX.  There are a few English verbs that don't include   any prespositional markers for the objects, though, and assign the   noun phrase roles purely by the word order: GIVE BOB BOOK, SHOW   BOB BOOK, THROW BOB BOOK.  We define these phrasings with separate   verb rules, which we mark with this property. <p>   We use this in ranking verb matches.  Non-prepositional verb   structures are especially prone to matching where they shouldn't,   because we can often find a way to pick out words to fill the   slots in the absence of any marker words.  For example, GIVE GREEN   BOOK could be interpreted as GIVE BOOK TO GREEN, where GREEN is   assumed to be an adjective-ending noun phrase; but the player   probably means to give the green book to someone who they assumed   would be filled in as a default.  So, whenever we find an   interpretation that involves a non-prespositional phrasing, we'll   use this flag to know we should be suspicious of it and try   alternative phrasing first. <p>   Most two-object verbs in English use prepositional markers, so   we'll set this as the default.  Individual VerbRules that use   purely structural phrasing should override this. <p>
+</div>
+<a name="lastObjList_"></a>
+<table class=decl><tr><td><code>lastObjList_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4500">4500</a>]</table><div class=desc>   The last object list we resolved.  We keep track of this so that   we can provide it as the anaphoric binding, if an anaphor binding   is requested. <p>
+</div>
+<a name="needAnaphoricBinding_"></a>
+<table class=decl><tr><td><code>needAnaphoricBinding_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4508">4508</a>]</table><div class=desc>   Flag: we have been asked for an anaphoric binding, but we don't   have a binding available.  We'll check this after resolving the   first-resolved noun phrase so that we can go back and re-resolve   it again after resolving the other noun phrase. <p>
+</div>
+<a name="omitIobjInDobjQuery"></a>
+<table class=decl><tr><td><code>omitIobjInDobjQuery</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8616">8616</a>]</table><div class=desc>   Flag: omit the indirect object in a query for a missing direct   object.  For many verbs, if we already know the indirect object   and we need to ask for the direct object, the query sounds best   when it includes the indirect object: "what do you want to put in   it?"  or "what do you want to take from it?".  This is the   default phrasing. <p>   However, the corresponding query for some verbs sounds weird:   "what do you want to dig in with it?" or "whom do you want to ask   about it?".  For such actions, this property should be set to   true to indicate that the indirect object should be omitted from   the queries, which will change the phrasing to "what do you want   to dig in", "whom do you want to ask", and so on. <p>
+</div>
+<a name="preCondIobjProp"></a>
+<table class=decl><tr><td><code>preCondIobjProp</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5172">5172</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="predicateNounPhrases"></a>
+<table class=decl><tr><td><code>predicateNounPhrases</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4322">4322</a>]</table><div class=desc>we have a direct and indirect object<p>
+</div>
+<a name="remapIobjProp"></a>
+<table class=decl><tr><td><code>remapIobjProp</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5183">5183</a>]</table><div class=desc>   Action-remap properties for the indirect object.  By convention,   the remapper properties are named remapDobjAction and   remapIobjAction, for the direct and indirect objects,   respectively, where Action is replaced by the root name of the   action. <p>
+</div>
+<a name="resolveFirst"></a>
+<table class=decl><tr><td><code>resolveFirst</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4107">4107</a>]</table><div class=desc>   Resolution order - returns DirectObject or IndirectObject to   indicate which noun phrase to resolve first in resolveNouns().   By default, we'll resolve the indirect object first, but   individual actions can override this to resolve in a non-default   order. <p>
+</div>
+<a name="resolveFirstEmpty"></a>
+<table class=decl><tr><td><code>resolveFirstEmpty</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4119">4119</a>]</table><div class=desc>   Empty phrase resolution order.  This is similar to the standard   resolution order (resolveFirst), but is used only when both the   direct and indirect objects are empty phrases. <p>   When both phrases are empty, we will either use a default or   prompt interactively for the missing phrase.  In most cases, it   is desirable to prompt interactively for a missing direct object   first, regardless of the usual resolution order. <p>
+</div>
+<a name="tentativeDobj_"></a>
+<table class=decl><tr><td><code>tentativeDobj_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5162">5162</a>]</table><div class=desc>   The tentative direct and indirect object lists.  A tentative list   is available for the later-resolved object while resolving the   earlier-resolved object. <p>
+</div>
+<a name="tentativeIobj_"></a>
+<table class=decl><tr><td><code>tentativeIobj_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5163">5163</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verIobjProp"></a>
+<table class=decl><tr><td><code>verIobjProp</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5171">5171</a>]</table><div class=desc>   Verification and action properties for the indirect object.  By   convention, the verification method for the indirect object of a   two-object action is verIobjXxx; the check method is   checkIobjXxx; and the action method is actionIobjXxx. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="announceAllDefaultObjects"></a>
+<table class=decl><tr><td><code>announceAllDefaultObjects (allResolved)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8767">8767</a>]</table><div class=desc>announce all defaulted objects<p>
+</div>
+<a name="announceDefaultObject"></a>
+<table class=decl><tr><td><code>announceDefaultObject (obj, whichObj, resolvedAllObjects)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8711">8711</a>]</table><div class=desc>announce a default object used with this action<p>
+</div>
+<a name="canIobjResolveTo"></a>
+<table class=decl><tr><td><code>canIobjResolveTo (obj)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4135">4135</a>]</table><div class=desc>   Can the indirect object potentially resolve to the given   simulation object?  This only determines if the object is a   *syntactic* match, meaning that it can match at a vocabulary and   grammar level.  This doesn't test it for logicalness or check that   it's an otherwise valid resolution. <p>
+</div>
+<a name="checkAction"></a>
+<table class=decl><tr><td><code>checkAction ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4976">4976</a>]</table><div class=desc>   Check the command. <p>   For a two-object action, this first calls the catch-all 'check'   methods (the dobjFor(Default) and dobjFor(All) methods) on the two   objects (indirect object first), then calls the 'check' methods   for this specific action (direct object first). <p>
+</div>
+<a name="checkRemapping"></a>
+<table class=decl><tr><td><code>checkRemapping ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4935">4935</a>]</table><div class=desc>   Check for remapping <p>
+</div>
+<a name="copyTentativeObjs"></a>
+<table class=decl><tr><td><code>copyTentativeObjs ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5122">5122</a>]</table><div class=desc>   Copy one tentative object list to the other.  This is useful when   an object's verifier for one TIAction wants to forward the call   to the other object verifier for a different TIAction. <p>
+</div>
+<a name="createForMissingIobj"></a>
+<table class=decl><tr><td><code>createForMissingIobj (orig, asker)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4010">4010</a>]</table><div class=desc>   Create an instance of this action for retrying a given   single-object action with a missing indirect object. <p>
+</div>
+<a name="createIobjResolver"></a>
+<table class=decl><tr><td><code>createIobjResolver (issuingActor, targetActor)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4544">4544</a>]</table><div class=desc>   Create our indirect object resolver.  By default, we'll use a   basic indirect object resolver. <p>
+</div>
+<a name="doActionMain"></a>
+<table class=decl><tr><td><code>doActionMain ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4590">4590</a>]</table><div class=desc>   Execute the action.  We'll run through the execution sequence   once for each resolved object in our direct or indirect object   list, depending on which one is the list and which one is the   singleton. <p>
+</div>
+<a name="execAction"></a>
+<table class=decl><tr><td><code>execAction ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5008">5008</a>]</table><div class=desc>   Execute the command. <p>
+</div>
+<a name="filterAmbiguousIobj"></a>
+<table class=decl><tr><td><code>filterAmbiguousIobj (lst, requiredNum, np)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4560">4560</a>]</table><div class=desc>filter an ambiguous indirect object noun phrase<p>
+</div>
+<a name="filterPluralIobj"></a>
+<table class=decl><tr><td><code>filterPluralIobj (lst, np)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4569">4569</a>]</table><div class=desc>filter a plural phrase<p>
+</div>
+<a name="getAllIobj"></a>
+<table class=decl><tr><td><code>getAllIobj (actor, scopeList)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4554">4554</a>]</table><div class=desc>   Resolve 'all' for the indirect object.  By default, we'll return   everything in the scope list. <p>
+</div>
+<a name="getAnaphoricBinding"></a>
+<table class=decl><tr><td><code>getAnaphoricBinding (typ)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4476">4476</a>]</table><div class=desc>   Get the anaphoric binding for the noun phrase we're currently   resolving. <p>
+</div>
+<a name="getCurrentObjects"></a>
+<table class=decl><tr><td><code>getCurrentObjects ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5101">5101</a>]</table><div class=desc>   Get the list of active objects.  We have a direct and indirect   object. <p>
+</div>
+<a name="getDefaultIobj"></a>
+<table class=decl><tr><td><code>getDefaultIobj (np, resolver)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4577">4577</a>]</table><div class=desc>get the default indirect object<p>
+</div>
+<a name="getIobj"></a>
+<table class=decl><tr><td><code>getIobj ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5072">5072</a>]</table><div class=desc>get the current indirect object being executed<p>
+</div>
+<a name="getIobjCount"></a>
+<table class=decl><tr><td><code>getIobjCount ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5081">5081</a>]</table><div class=desc>get the number of direct objects<p>
+</div>
+<a name="getIobjFlags"></a>
+<table class=decl><tr><td><code>getIobjFlags ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5078">5078</a>]</table><div class=desc>get the object resolution flags for the indirect object<p>
+</div>
+<a name="getIobjInfo"></a>
+<table class=decl><tr><td><code>getIobjInfo ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5075">5075</a>]</table><div class=desc>get the full ResolveInfo associated with the current indirect object<p>
+</div>
+<a name="getIobjResolver"></a>
+<table class=decl><tr><td><code>getIobjResolver (issuingActor, targetActor, reset)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4526">4526</a>]</table><div class=desc>   get our indirect object resolver, or create one if we haven't   already cached one <p>
+</div>
+<a name="getIobjTokens"></a>
+<table class=decl><tr><td><code>getIobjTokens ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5084">5084</a>]</table><div class=desc>get the original token list of the current indirect object phrase<p>
+</div>
+<a name="getIobjWords"></a>
+<table class=decl><tr><td><code>getIobjWords ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5091">5091</a>]</table><div class=desc>get the original words (as a list of strings) of the current iobj<p>
+</div>
+<a name="getMatchForRole"></a>
+<table class=decl><tr><td><code>getMatchForRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4388">4388</a>]</table><div class=desc>get the match tree for the noun phrase in the given role<p>
+</div>
+<a name="getMessageParam"></a>
+<table class=decl><tr><td><code>getMessageParam (objName)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5057">5057</a>]</table><div class=desc>   Get a message parameter object for the action.  We define 'dobj'   as the direct object and 'iobj' as the indirect object, in   addition to any inherited targets. <p>
+</div>
+<a name="getObjectForRole"></a>
+<table class=decl><tr><td><code>getObjectForRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4335">4335</a>]</table><div class=desc>get the resolved object in a given role<p>
+</div>
+<a name="getObjResponseProd"></a>
+<table class=decl><tr><td><code>getObjResponseProd (resolver)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4090">4090</a>]</table><div class=desc>get the missing object response production for a given role<p>
+</div>
+<a name="getOtherMessageObjectPronoun"></a>
+<table class=decl><tr><td><code>getOtherMessageObjectPronoun (which)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8852">8852</a>]</table><div class=desc>   Get the pronoun for the message object in the given role. <p>
+</div>
+<a name="getOtherObjectRole"></a>
+<table class=decl><tr><td><code>getOtherObjectRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4381">4381</a>]</table><div class=desc>get the OtherObject role for the given role<p>
+</div>
+<a name="getPreCondDescList"></a>
+<table class=decl><tr><td><code>getPreCondDescList ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5041">5041</a>]</table><div class=desc>get the precondition descriptor list for the action<p>
+</div>
+<a name="getPreCondPropForRole"></a>
+<table class=decl><tr><td><code>getPreCondPropForRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4401">4401</a>]</table><div class=desc>get the 'preCond' property for a given object role<p>
+</div>
+<a name="getQuestionInf"></a>
+<table class=decl><tr><td><code>getQuestionInf (which)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8777">8777</a>]</table><div class=desc>show the verb's basic infinitive form for an interrogative<p>
+</div>
+<a name="getRemapPropForRole"></a>
+<table class=decl><tr><td><code>getRemapPropForRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4407">4407</a>]</table><div class=desc>get the 'remap' property for a given object role<p>
+</div>
+<a name="getResolvedIobjList"></a>
+<table class=decl><tr><td><code>getResolvedIobjList ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4420">4420</a>]</table><div class=desc>get the list of resolved indirect objects<p>
+</div>
+<a name="getResolvedObjList"></a>
+<table class=decl><tr><td><code>getResolvedObjList (which)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4413">4413</a>]</table><div class=desc>get the list of resolved objects in the given role<p>
+</div>
+<a name="getResolveInfo"></a>
+<table class=decl><tr><td><code>getResolveInfo (obj, oldRole)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4342">4342</a>]</table><div class=desc>get the ResolveInfo for the given resolved object<p>
+</div>
+<a name="getRoleFromIndex"></a>
+<table class=decl><tr><td><code>getRoleFromIndex (idx)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4325">4325</a>]</table><div class=desc>get an object role<p>
+</div>
+<a name="getTentativeDobj"></a>
+<table class=decl><tr><td><code>getTentativeDobj ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5136">5136</a>]</table><div class=desc>   Get the tentative direct/indirect object resolution lists.  A   tentative list is available for the later-resolved object while   resolving the earlier-resolved object. <p>
+</div>
+<a name="getTentativeIobj"></a>
+<table class=decl><tr><td><code>getTentativeIobj ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5137">5137</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getVerbPhrase"></a>
+<table class=decl><tr><td><code>getVerbPhrase (inf, ctx)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8883">8883</a>]</table><div class=desc>get the verb phrase in infinitive or participle form<p>
+</div>
+<a name="getVerbPhrase2"></a>
+<table class=decl><tr><td><code>getVerbPhrase2 (inf, vp, dobjText, dobjIsPronoun, iobjText)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8927">8927</a>]</table><div class=desc>   Get the verb phrase for a two-object (dobj + iobj) phrasing.  This   is a class method, so that it can be reused by unrelated (i.e.,   non-TIAction) classes that also use two-object syntax but with   other internal structures.  This is the two-object equivalent of   TAction.getVerbPhrase1(). <p>
+</div>
+<a name="getVerifyPropForRole"></a>
+<table class=decl><tr><td><code>getVerifyPropForRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4395">4395</a>]</table><div class=desc>get the 'verify' property for a given object role<p>
+</div>
+<a name="initForMissingDobj"></a>
+<table class=decl><tr><td><code>initForMissingDobj (orig)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4040">4040</a>]</table><div class=desc>   Initialize the action for retrying with a missing direct object. <p>   If we're trying a TIAction, we can only be coming from a TAction   (since that's the only kind of original action that can turn into   a two-object, at least in the base library).  That means the   original action already has a direct object.  Now, since we're   asking for a MISSING direct object, the only possibility is that   the original action's direct object is our INDIRECT object.  For   example: SWEEP WITH BROOM is turning into SWEEP &lt;what&gt; WITH   BROOM. <p>
+</div>
+<a name="initForMissingIobj"></a>
+<table class=decl><tr><td><code>initForMissingIobj (orig)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4063">4063</a>]</table><div class=desc>   Initialize the action for retrying with a missing indirect object. <p>   We can only be coming from a TAction, so the TAction will have a   direct object already.  Simply copy that as our own direct   object.  For example: UNLOCK DOOR is turning into UNLOCK DOOR   WITH &lt;what&gt;. <p>
+</div>
+<a name="initTentative"></a>
+<table class=decl><tr><td><code>initTentative (issuingActor, targetActor, whichObj)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4869">4869</a>]</table><div class=desc>initialize tentative resolutions for other noun phrases<p>
+</div>
+<a name="needRemappedAnnouncement"></a>
+<table class=decl><tr><td><code>needRemappedAnnouncement (info)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4823">4823</a>]</table><div class=desc>   Determine if we need to announce this action when the action was   remapped, based on the resolution information for one of our   objects.  We need to announce a remapped action when either   object had unclear disambiguation or was defaulted. <p>
+</div>
+<a name="resetAction"></a>
+<table class=decl><tr><td><code>resetAction ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3936">3936</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="resolvedObjectsInScope"></a>
+<table class=decl><tr><td><code>resolvedObjectsInScope ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4511">4511</a>]</table><div class=desc>check that the resolved objects are in scope<p>
+</div>
+<a name="resolveNouns"></a>
+<table class=decl><tr><td><code>resolveNouns (issuingActor, targetActor, results)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4145">4145</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8649">8649</a>]</table><div class=desc>   resolve our noun phrases to objects <p>
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8649">8649</a>]:</i><br>
+resolve noun phrases<p>
+</div>
+<a name="retryWithAmbiguousIobj"></a>
+<table class=decl><tr><td><code>retryWithAmbiguousIobj (orig, objs, asker, objPhrase)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3966">3966</a>]</table><div class=desc>   Retry an action as a two-object action with an ambiguous indirect   object.  We'll ask which of the given possible objects is   intended. <p>
+</div>
+<a name="retryWithMissingIobj"></a>
+<table class=decl><tr><td><code>retryWithMissingIobj (orig, asker)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3955">3955</a>]</table><div class=desc>   Retry a single-object action as a two-object action.  We'll treat   the original action's direct object list as our direct object   list, and obtain an indirect object using the normal means (first   looking for a default, then prompting the player if we can't find   a suitable default).  'orig' is the original single-object action. <p>   This routine terminates with 'exit' if it doesn't throw some   other error. <p>
+</div>
+<a name="setCurrentObjects"></a>
+<table class=decl><tr><td><code>setCurrentObjects (lst)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5107">5107</a>]</table><div class=desc>set the current objects<p>
+</div>
+<a name="setObjectMatches"></a>
+<table class=decl><tr><td><code>setObjectMatches (dobj, iobj)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4457">4457</a>]</table><div class=desc>manually set the unresolved object noun phrase match trees<p>
+</div>
+<a name="setPronounByInput"></a>
+<table class=decl><tr><td><code>setPronounByInput (lst)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4766">4766</a>]</table><div class=desc>   Set the pronoun according to the pronoun type actually used in   the input.  For example, if we said PUT BOX ON IT, we want IT to   continue referring to whatever IT referred to before this command   - we specifically do NOT want IT to refer to the BOX in this   case. <p>
+</div>
+<a name="setResolvedIobj"></a>
+<table class=decl><tr><td><code>setResolvedIobj (iobj)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4443">4443</a>]</table><div class=desc>set a resolved iobj<p>
+</div>
+<a name="setResolvedObjects"></a>
+<table class=decl><tr><td><code>setResolvedObjects (dobj, iobj)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4433">4433</a>]</table><div class=desc>   Manually set the resolved objects.  We'll set our direct and   indirect objects. <p>
+</div>
+<a name="testRetryDefaultIobj"></a>
+<table class=decl><tr><td><code>testRetryDefaultIobj (orig)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3989">3989</a>]</table><div class=desc>   Test to see if askForIobj() would find a default indirect object.   Returns true if there's a default, nil if not.  If this returns   true, then askForIobj() will simply take the default and proceed;   otherwise, it will have to actually ask the user for the missing   information. <p>
+</div>
+<a name="verifyAction"></a>
+<table class=decl><tr><td><code>verifyAction ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#4837">4837</a>]</table><div class=desc>   Verify the action. <p>
+</div>
+<a name="whatObj"></a>
+<table class=decl><tr><td><code>whatObj (which)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#8685">8685</a>]</table><div class=desc>get the interrogative for one of our objects<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

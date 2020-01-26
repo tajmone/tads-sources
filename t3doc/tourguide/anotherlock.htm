@@ -1,0 +1,151 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>A Card Lock</title><meta name="keywords" content="Keyring,isMyKey,KeyedContainer,keyIsPlausible,remapTo"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>A Card Lock
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="lever(2).htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="fuse.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We'll finish off the space station section by adding another lockable compartment, but this time one that uses a card key to open it. First we'll leave the card key lying around to be picked up - but we'll also damage it:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;CardKey&nbsp;:&nbsp;Key;
+<br>
+
+<br>
+cardKey&nbsp;:&nbsp;CardKey&nbsp;'white&nbsp;plastic&nbsp;card'&nbsp;'white&nbsp;plastic&nbsp;card'&nbsp;@spaceStation
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;piece&nbsp;of&nbsp;white&nbsp;plastic,&nbsp;about&nbsp;80&nbsp;x&nbsp;30mm,&nbsp;with&nbsp;some&nbsp;blue&nbsp;letters
+<br>
+&nbsp;&nbsp;&nbsp;printed&nbsp;on&nbsp;it&nbsp;that&nbsp;are&nbsp;now&nbsp;too&nbsp;indistinct&nbsp;to&nbsp;read.&nbsp;&lt;&lt;isBent&nbsp;?&nbsp;'Unfortunately,
+<br>
+&nbsp;&nbsp;&nbsp;it&nbsp;also&nbsp;looks&nbsp;a&nbsp;bit&nbsp;bent.&nbsp;'&nbsp;:&nbsp;nil&gt;&gt;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"On&nbsp;the&nbsp;floor&nbsp;lies&nbsp;a&nbsp;white&nbsp;plastic&nbsp;card.&nbsp;"
+<br>
+&nbsp;&nbsp;isBent&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Now in the other accessible half of the space station we'll place the cabinet this key's designed to unlock, and put yet another of our tablets inside it. We'll make it a LockableWithKey, defining the cardKey as the key, but since the player may also try to insert the card, we'll remap a PutIn command to the appropriate UnlockWith command (so that PUT CARD IN SLOT  is treated as  UNLOCK CABINET WITH CARD):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">ssCabinet&nbsp;:&nbsp;KeyedContainer,&nbsp;Fixture&nbsp;'small&nbsp;cabinet/slot'&nbsp;'small&nbsp;cabinet'&nbsp;@ssLivingQuarters
+<br>
+&nbsp;&nbsp;"The&nbsp;front&nbsp;of&nbsp;the&nbsp;cabinet&nbsp;is&nbsp;flush&nbsp;with&nbsp;the&nbsp;bulkhead&nbsp;and&nbsp;contains&nbsp;a&nbsp;small&nbsp;slot.&nbsp;"
+<br>
+&nbsp;&nbsp;inRoomDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;metal&nbsp;cabinet&nbsp;is&nbsp;set&nbsp;into&nbsp;another&nbsp;of&nbsp;the&nbsp;bulkheads.&nbsp;"
+<br>
+&nbsp;&nbsp;keyList&nbsp;=&nbsp;[cardKey]
+<br>
+&nbsp;&nbsp;keyIsPlausible(key)&nbsp;{&nbsp;return&nbsp;key.ofKind(CardKey);&nbsp;}
+<br>
+&nbsp;&nbsp;initiallyLocked&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;lockOrUnlockAction(lock)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gIobj.isBent)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('{The&nbsp;iobj/he}&nbsp;won\'t&nbsp;fit&nbsp;in&nbsp;the&nbsp;slot.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(lock);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;iobjFor(PutIn)&nbsp;remapTo(UnlockWith,&nbsp;self,&nbsp;DirectObject)
+<br>
+;
+<br>
+
+<br>
++&nbsp;silverTablet&nbsp;:&nbsp;Tablet&nbsp;'silver&nbsp;tablet'&nbsp;'silver&nbsp;tablet'
+<br>
+&nbsp;&nbsp;inscription&nbsp;=&nbsp;"F&nbsp;R&nbsp;A&nbsp;N&nbsp;K\nE&nbsp;I&nbsp;I&nbsp;O&nbsp;I\nO&nbsp;T&nbsp;V&nbsp;N&nbsp;L\nF&nbsp;L&nbsp;E&nbsp;E&nbsp;T\nF&nbsp;O&nbsp;R&nbsp;H&nbsp;S"
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;8
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we have introduced a new (to the reader) method of KeyedContainer (and other LockableWithKey objects), namely <b>keyIsPlausible</b>. This should return true if and only if a key might plausibly fit the lock; in this case the card key might but a conventional key obviously wouldn't. Only if keyIsPlausible(key) returns true for a certain key will that key be tried in an implicit action. The keyList property narrows down the list of keys that will actually operate the lock to the card key alone, but we override lockOrUnlockAction to prevent even this key from working if it is bent.
+<br>
+
+<br>
+At this point we had best move our autoRectifier into its proper,  futuristic, initial setting, so that the player has an immediate means of repairing the bent card key:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">autoRectifier&nbsp;:&nbsp;ComplexContainer&nbsp;'silver&nbsp;cylinder'&nbsp;'silver&nbsp;cylinder'&nbsp;<b>@ssTable</b>
+<br>
+&nbsp;&nbsp;"It's&nbsp;about&nbsp;a&nbsp;foot&nbsp;high&nbsp;and&nbsp;five&nbsp;inches&nbsp;in&nbsp;diameter.&nbsp;A&nbsp;black&nbsp;ring&nbsp;surrounds
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;opening&nbsp;at&nbsp;one&nbsp;end.&nbsp;The&nbsp;only&nbsp;other&nbsp;feature&nbsp;of&nbsp;interest&nbsp;are&nbsp;a&nbsp;conspicuous
+<br>
+&nbsp;&nbsp;&nbsp;orange&nbsp;button&nbsp;and&nbsp;the&nbsp;manufacturer's&nbsp;name&nbsp;inscribed&nbsp;just&nbsp;below&nbsp;the&nbsp;ring.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;subContainer&nbsp;:&nbsp;ComplexComponent,&nbsp;SingleContainer&nbsp;{&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;3&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;3
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If you move this definition in your source code, remember to move the component object definitions (the black ring, manufacturer's name, and orange button) with it. It probably won't take the player long to figure out that the autorectifier solves the problem of the bent card key, but this is then a reasonable clue that it might do the same for the bent brass key found elsewhere.
+<br>
+
+<br>
+The introduction of the card key leaves us with one or two pieces of tidying up to do. First of all, a card key is not the sort of thing that should be added to our keyring, so we need to override its isMyKey method as envisaged when we first encountered the <a href="keyring.htm">Keyring</a> class:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Keyring&nbsp;'silver&nbsp;(key)&nbsp;keyring/ring'&nbsp;'silver&nbsp;keyring'&nbsp;@firstAidKit
+<br>
+
+&nbsp;&nbsp;isMyKey(key)
+<br>
+&nbsp;&nbsp;{&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;key.ofKind(Key)&nbsp;&amp;&amp;&nbsp;!key.ofKind(CardKey);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Finally, we have a couple of lockable objects (the trunk and the Tardis door) for which the card key is quite obviously not the right kind of key. Rather than deal with them individually, it's easier simply to override keyIsPlausible on the class:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;LockableWithKey
+<br>
+&nbsp;&nbsp;keyIsPlausible(key)&nbsp;{&nbsp;return&nbsp;key.ofKind(Key)&nbsp;&amp;&amp;&nbsp;!key.ofKind(CardKey)&nbsp;;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Since the ssCabinet object overrides this method in its own way, it won't be affected by this change.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

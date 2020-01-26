@@ -1,0 +1,571 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>npcActionMessages</title></head><body>
+<table class=ban><tr><td align=left><span class=title>npcActionMessages</span><span class=type>object</span><td align=right><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4152">4152</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Non-player character verb messages.  By default, we inherit all of   the messages defined for the player character, but we override some   that must be rephrased slightly to make sense for NPC's.
+<p>
+<code><b>npcActionMessages</b> :  &nbsp; <a href="../object/playerActionMessages.html">playerActionMessages</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>npcActionMessages</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/playerActionMessages.html">playerActionMessages</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MessageHelper.html">MessageHelper</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#alreadyFollowModeMsg">alreadyFollowModeMsg</a>&nbsp;
+<a href="#cannotAskSelfForMsg">cannotAskSelfForMsg</a>&nbsp;
+<a href="#cannotAskSelfMsg">cannotAskSelfMsg</a>&nbsp;
+<a href="#cannotGiveToSelfMsg">cannotGiveToSelfMsg</a>&nbsp;
+<a href="#cannotJumpOffHereMsg">cannotJumpOffHereMsg</a>&nbsp;
+<a href="#cannotMoveFixtureMsg">cannotMoveFixtureMsg</a>&nbsp;
+<a href="#cannotMoveHeavyMsg">cannotMoveHeavyMsg</a>&nbsp;
+<a href="#cannotMoveImmovableMsg">cannotMoveImmovableMsg</a>&nbsp;
+<a href="#cannotPutHeavyMsg">cannotPutHeavyMsg</a>&nbsp;
+<a href="#cannotShowToSelfMsg">cannotShowToSelfMsg</a>&nbsp;
+<a href="#cannotTakeHeavyMsg">cannotTakeHeavyMsg</a>&nbsp;
+<a href="#cannotTalkToSelfMsg">cannotTalkToSelfMsg</a>&nbsp;
+<a href="#cannotTellSelfMsg">cannotTellSelfMsg</a>&nbsp;
+<a href="#keyDoesNotFitLockMsg">keyDoesNotFitLockMsg</a>&nbsp;
+<a href="#moveNoEffectMsg">moveNoEffectMsg</a>&nbsp;
+<a href="#moveToNoEffectMsg">moveToNoEffectMsg</a>&nbsp;
+<a href="#objNotForKeyringMsg">objNotForKeyringMsg</a>&nbsp;
+<a href="#okayAttachToMsg">okayAttachToMsg</a>&nbsp;
+<a href="#okayCloseMsg">okayCloseMsg</a>&nbsp;
+<a href="#okayDetachFromMsg">okayDetachFromMsg</a>&nbsp;
+<a href="#okayDoffMsg">okayDoffMsg</a>&nbsp;
+<a href="#okayDropMsg">okayDropMsg</a>&nbsp;
+<a href="#okayExtinguishCandleMsg">okayExtinguishCandleMsg</a>&nbsp;
+<a href="#okayFollowModeMsg">okayFollowModeMsg</a>&nbsp;
+<a href="#okayLockMsg">okayLockMsg</a>&nbsp;
+<a href="#okayNotStandingOnMsg">okayNotStandingOnMsg</a>&nbsp;
+<a href="#okayOpenMsg">okayOpenMsg</a>&nbsp;
+<a href="#okayPushButtonMsg">okayPushButtonMsg</a>&nbsp;
+<a href="#okayPutBehindMsg">okayPutBehindMsg</a>&nbsp;
+<a href="#okayPutInMsg">okayPutInMsg</a>&nbsp;
+<a href="#okayPutOnMsg">okayPutOnMsg</a>&nbsp;
+<a href="#okayPutUnderMsg">okayPutUnderMsg</a>&nbsp;
+<a href="#okayTakeMsg">okayTakeMsg</a>&nbsp;
+<a href="#okayTurnOffMsg">okayTurnOffMsg</a>&nbsp;
+<a href="#okayTurnOnMsg">okayTurnOnMsg</a>&nbsp;
+<a href="#okayUnlockMsg">okayUnlockMsg</a>&nbsp;
+<a href="#okayWearMsg">okayWearMsg</a>&nbsp;
+<a href="#pullNoEffectMsg">pullNoEffectMsg</a>&nbsp;
+<a href="#pushNoEffectMsg">pushNoEffectMsg</a>&nbsp;
+<a href="#shouldNotBreakMsg">shouldNotBreakMsg</a>&nbsp;
+<a href="#takeFromNotBehindMsg">takeFromNotBehindMsg</a>&nbsp;
+<a href="#takeFromNotInMsg">takeFromNotInMsg</a>&nbsp;
+<a href="#takeFromNotOnMsg">takeFromNotOnMsg</a>&nbsp;
+<a href="#takeFromNotUnderMsg">takeFromNotUnderMsg</a>&nbsp;
+<a href="#timePassesMsg">timePassesMsg</a>&nbsp;
+<a href="#whereToGoMsg">whereToGoMsg</a>&nbsp;
+</code><p>
+<p>Inherited from <code>playerActionMessages</code> :<br>
+<code>
+<a href="../object/playerActionMessages.html#alreadyAttachedMsg">alreadyAttachedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyBurningMsg">alreadyBurningMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyClosedMsg">alreadyClosedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyHoldingMsg">alreadyHoldingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyInLocMsg">alreadyInLocMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyLockedMsg">alreadyLockedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyLyingMsg">alreadyLyingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyLyingOnMsg">alreadyLyingOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyOpenMsg">alreadyOpenMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyPulledMsg">alreadyPulledMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyPushedMsg">alreadyPushedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyPutBehindMsg">alreadyPutBehindMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyPutInMsg">alreadyPutInMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyPutOnMsg">alreadyPutOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyPutUnderMsg">alreadyPutUnderMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadySittingMsg">alreadySittingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadySittingOnMsg">alreadySittingOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyStandingMsg">alreadyStandingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyStandingOnMsg">alreadyStandingOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadySwitchedOffMsg">alreadySwitchedOffMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadySwitchedOnMsg">alreadySwitchedOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyUnlockedMsg">alreadyUnlockedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#alreadyWearingMsg">alreadyWearingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#askVagueMsg">askVagueMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#candleNotLitMsg">candleNotLitMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#candleOutOfFuelMsg">candleOutOfFuelMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotAttachKeyToMsg">cannotAttachKeyToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotAttachMsg">cannotAttachMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotAttachToMsg">cannotAttachToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotAttachToSelfMsg">cannotAttachToSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotBoardMsg">cannotBoardMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotBurnDobjWithMsg">cannotBurnDobjWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotBurnMsg">cannotBurnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotBurnWithMsg">cannotBurnWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotCleanMsg">cannotCleanMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotCleanWithMsg">cannotCleanWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotClimbMsg">cannotClimbMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotCloseMsg">cannotCloseMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotConsultMsg">cannotConsultMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotCutWithMsg">cannotCutWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDetachFromMsg">cannotDetachFromMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDetachMsg">cannotDetachMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDetachPermanentMsg">cannotDetachPermanentMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDigMsg">cannotDigMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDigWithMsg">cannotDigWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDoFromHereMsg">cannotDoFromHereMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDoThatMsg">cannotDoThatMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDrinkMsg">cannotDrinkMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotEatMsg">cannotEatMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotEnterHeldMsg">cannotEnterHeldMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotEnterMsg">cannotEnterMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotEnterOnMsg">cannotEnterOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotExtinguishMsg">cannotExtinguishMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotFastenMsg">cannotFastenMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotFastenToMsg">cannotFastenToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotFindTopicMsg">cannotFindTopicMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotFlipMsg">cannotFlipMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotFollowSelfMsg">cannotFollowSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGetOffOfMsg">cannotGetOffOfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGetOutMsg">cannotGetOutMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGiveToItselfMsg">cannotGiveToItselfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGiveToMsg">cannotGiveToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGoBackMsg">cannotGoBackMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGoThatWayInDarkMsg">cannotGoThatWayInDarkMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGoThatWayMsg">cannotGoThatWayMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGoThroughMsg">cannotGoThroughMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotJumpOffMsg">cannotJumpOffMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotJumpOverMsg">cannotJumpOverMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotKissMsg">cannotKissMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotKissSelfMsg">cannotKissSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotLieOnMsg">cannotLieOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotLightMsg">cannotLightMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotLockMsg">cannotLockMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotLockWithMsg">cannotLockWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotLookBehindMsg">cannotLookBehindMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotLookInClosedMsg">cannotLookInClosedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotLookThroughMsg">cannotLookThroughMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotLookUnderMsg">cannotLookUnderMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotMoveActorMsg">cannotMoveActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotMovePersonMsg">cannotMovePersonMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotMovePushableMsg">cannotMovePushableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotMoveWithMsg">cannotMoveWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotOpenLockedMsg">cannotOpenLockedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotOpenMsg">cannotOpenMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPlugInMsg">cannotPlugInMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPlugInToMsg">cannotPlugInToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPourIntoMsg">cannotPourIntoMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPourMsg">cannotPourMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPourOntoMsg">cannotPourOntoMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPushTravelMsg">cannotPushTravelMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutActorMsg">cannotPutActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutBehindMsg">cannotPutBehindMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutBehindRestrictedMsg">cannotPutBehindRestrictedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutBehindSelfMsg">cannotPutBehindSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutFixtureMsg">cannotPutFixtureMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutImmovableMsg">cannotPutImmovableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutInDispenserMsg">cannotPutInDispenserMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutInRestrictedMsg">cannotPutInRestrictedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutInSelfMsg">cannotPutInSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutOnRestrictedMsg">cannotPutOnRestrictedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutOnSelfMsg">cannotPutOnSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutPersonMsg">cannotPutPersonMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutPushableMsg">cannotPutPushableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutUnderMsg">cannotPutUnderMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutUnderRestrictedMsg">cannotPutUnderRestrictedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutUnderSelfMsg">cannotPutUnderSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotRemoveHeldMsg">cannotRemoveHeldMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotReturnToDispenserMsg">cannotReturnToDispenserMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotScrewMsg">cannotScrewMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotScrewWithMsg">cannotScrewWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotSetToMsg">cannotSetToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotShowToItselfMsg">cannotShowToItselfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotShowToMsg">cannotShowToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotSitOnMsg">cannotSitOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotSleepMsg">cannotSleepMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotStandOnMsg">cannotStandOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotStandOnPathMsg">cannotStandOnPathMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotSwitchMsg">cannotSwitchMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTakeActorMsg">cannotTakeActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTakeFixtureMsg">cannotTakeFixtureMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTakeImmovableMsg">cannotTakeImmovableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTakeLocationMsg">cannotTakeLocationMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTakePersonMsg">cannotTakePersonMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTakePushableMsg">cannotTakePushableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTasteActorMsg">cannotTasteActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTastePersonMsg">cannotTastePersonMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotThrowAtContentsMsg">cannotThrowAtContentsMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotThrowAtSelfMsg">cannotThrowAtSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotThrowToMsg">cannotThrowToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTurnMsg">cannotTurnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTurnOffMsg">cannotTurnOffMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTurnOnMsg">cannotTurnOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTurnWithMsg">cannotTurnWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTypeOnMsg">cannotTypeOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnboardMsg">cannotUnboardMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnfastenFromMsg">cannotUnfastenFromMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnfastenMsg">cannotUnfastenMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnlockMsg">cannotUnlockMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnlockWithMsg">cannotUnlockWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnplugFromMsg">cannotUnplugFromMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnplugMsg">cannotUnplugMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnscrewMsg">cannotUnscrewMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotUnscrewWithMsg">cannotUnscrewWithMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cutNoEffectMsg">cutNoEffectMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#dontThrowDirMsg">dontThrowDirMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#droppingSelfMsg">droppingSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#flashlightOnButDarkMsg">flashlightOnButDarkMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#followAlreadyHereInDarkMsg">followAlreadyHereInDarkMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#followAlreadyHereMsg">followAlreadyHereMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#followUnknownMsg">followUnknownMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#giveAlreadyHasMsg">giveAlreadyHasMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#keyNotDetachableMsg">keyNotDetachableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#keyNotOnKeyringMsg">keyNotOnKeyringMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#matchNotLitMsg">matchNotLitMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeStandingMsg">mustBeStandingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustSpecifyTurnToMsg">mustSpecifyTurnToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#newlyDarkMsg">newlyDarkMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#noKeyNeededMsg">noKeyNeededMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#noRoomToLieMsg">noRoomToLieMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#noRoomToSitMsg">noRoomToSitMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#noRoomToStandMsg">noRoomToStandMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notAContainerMsg">notAContainerMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notASurfaceMsg">notASurfaceMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notAttachedToMsg">notAttachedToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notAWeaponMsg">notAWeaponMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notCarryingMsg">notCarryingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notDoffableMsg">notDoffableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notFollowableMsg">notFollowableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nothingBehindMsg">nothingBehindMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nothingBeyondDoorMsg">nothingBeyondDoorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nothingInsideMsg">nothingInsideMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nothingThroughMsg">nothingThroughMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nothingThroughPassageMsg">nothingThroughPassageMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nothingToHearMsg">nothingToHearMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nothingToSmellMsg">nothingToSmellMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nothingUnderMsg">nothingUnderMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notOnPlatformMsg">notOnPlatformMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notWearableMsg">notWearableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notWearingMsg">notWearingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayBurnCandleMsg">okayBurnCandleMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayBurnMatchMsg">okayBurnMatchMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayEatMsg">okayEatMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayExtinguishMatchMsg">okayExtinguishMatchMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayJumpMsg">okayJumpMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayPullLeverMsg">okayPullLeverMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayPullSpringLeverMsg">okayPullSpringLeverMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayPushLeverMsg">okayPushLeverMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayYellMsg">okayYellMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#puttingSelfMsg">puttingSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#sayGoodbyeMsg">sayGoodbyeMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#sayHelloMsg">sayHelloMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#sayNoMsg">sayNoMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#sayYesMsg">sayYesMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#setToInvalidMsg">setToInvalidMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#shouldNotThrowAtFloorMsg">shouldNotThrowAtFloorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#stairwayNotDownMsg">stairwayNotDownMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#stairwayNotUpMsg">stairwayNotUpMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#takeFromNotInActorMsg">takeFromNotInActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#takingSelfMsg">takingSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#tellVagueMsg">tellVagueMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#throwingSelfMsg">throwingSelfMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#tooDarkMsg">tooDarkMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#turnToInvalidMsg">turnToInvalidMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#unknownHowToLockMsg">unknownHowToLockMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#unknownHowToUnlockMsg">unknownHowToUnlockMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#unlockRequiresKeyMsg">unlockRequiresKeyMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#uselessToAttackMsg">uselessToAttackMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#wrongAttachmentMsg">wrongAttachmentMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#wrongDetachmentMsg">wrongDetachmentMsg</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#cannotMoveComponentMsg">cannotMoveComponentMsg</a>&nbsp;
+<a href="#containerTooFullMsg">containerTooFullMsg</a>&nbsp;
+<a href="#okayPostureChangeMsg">okayPostureChangeMsg</a>&nbsp;
+<a href="#okayTurnToMsg">okayTurnToMsg</a>&nbsp;
+<a href="#roomOkayPostureChangeMsg">roomOkayPostureChangeMsg</a>&nbsp;
+<a href="#surfaceTooFullMsg">surfaceTooFullMsg</a>&nbsp;
+<a href="#tooLargeForContainerMsg">tooLargeForContainerMsg</a>&nbsp;
+<a href="#tooLargeForRearMsg">tooLargeForRearMsg</a>&nbsp;
+<a href="#tooLargeForUndersideMsg">tooLargeForUndersideMsg</a>&nbsp;
+</code><p>
+<p>Inherited from <code>playerActionMessages</code> :<br>
+<code>
+<a href="../object/playerActionMessages.html#actorCannotSeeMsg">actorCannotSeeMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#becomingTooLargeForActorMsg">becomingTooLargeForActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#becomingTooLargeForContainerMsg">becomingTooLargeForContainerMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotBeWearingMsg">cannotBeWearingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotDoFromMsg">cannotDoFromMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotEnterExitOnlyMsg">cannotEnterExitOnlyMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotFitIntoOpeningMsg">cannotFitIntoOpeningMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotFitOutOfOpeningMsg">cannotFitOutOfOpeningMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotFollowFromHereMsg">cannotFollowFromHereMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGoThatWayInVehicleMsg">cannotGoThatWayInVehicleMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotGoThroughClosedDoorMsg">cannotGoThroughClosedDoorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotHearMsg">cannotHearMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotMoveThroughClosedMsg">cannotMoveThroughClosedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotMoveThroughContainerMsg">cannotMoveThroughContainerMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotMoveThroughMsg">cannotMoveThroughMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPushObjectNestedMsg">cannotPushObjectNestedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPushObjectThatWayMsg">cannotPushObjectThatWayMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotPutComponentMsg">cannotPutComponentMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotReachIntoOpeningMsg">cannotReachIntoOpeningMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotReachObjectMsg">cannotReachObjectMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotReachOutOfOpeningMsg">cannotReachOutOfOpeningMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotReachThroughMsg">cannotReachThroughMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotSmellMsg">cannotSmellMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTakeComponentMsg">cannotTakeComponentMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTasteMsg">cannotTasteMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotThrowThroughMsg">cannotThrowThroughMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTouchThroughClosedMsg">cannotTouchThroughClosedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#cannotTouchThroughContainerMsg">cannotTouchThroughContainerMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#circularlyBehindMsg">circularlyBehindMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#circularlyInMsg">circularlyInMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#circularlyOnMsg">circularlyOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#circularlyUnderMsg">circularlyUnderMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#containerBecomingTooFullMsg">containerBecomingTooFullMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#decorationNotImportantMsg">decorationNotImportantMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#doorClosesBehindMsg">doorClosesBehindMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#droppingObjMsg">droppingObjMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#floorlessDropMsg">floorlessDropMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#foundKeyOnKeyringMsg">foundKeyOnKeyringMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#foundNoKeyOnKeyringMsg">foundNoKeyOnKeyringMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#handsBecomingTooFullForMsg">handsBecomingTooFullForMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#handsTooFullForMsg">handsTooFullForMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#heardButNotSeenMsg">heardButNotSeenMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#invalidStagingContainerActorMsg">invalidStagingContainerActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#invalidStagingContainerMsg">invalidStagingContainerMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#invalidStagingLocationMsg">invalidStagingLocationMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#lookInVaporousMsg">lookInVaporousMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#movedKeysToKeyringMsg">movedKeysToKeyringMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#movedKeyToKeyringMsg">movedKeyToKeyringMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeBurningMsg">mustBeBurningMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeCarryingMsg">mustBeCarryingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeClosedMsg">mustBeClosedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeEmptyMsg">mustBeEmptyMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeHoldingMsg">mustBeHoldingMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeInMsg">mustBeInMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeOpenMsg">mustBeOpenMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeUnlockedMsg">mustBeUnlockedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustBeVisibleMsg">mustBeVisibleMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustDetachMsg">mustDetachMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustGetOnMsg">mustGetOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustLieOnMsg">mustLieOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustOpenDoorMsg">mustOpenDoorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#mustSitOnMsg">mustSitOnMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nestedRoomTooHighMsg">nestedRoomTooHighMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#nestedRoomTooHighToExitMsg">nestedRoomTooHighToExitMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#noiseSourceMsg">noiseSourceMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#noResponseFromMsg">noResponseFromMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notAddressableMsg">notAddressableMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notInterestedMsg">notInterestedMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notWithIntangibleMsg">notWithIntangibleMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#notWithVaporousMsg">notWithVaporousMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#npcDescMsg">npcDescMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#objCannotHearActorMsg">objCannotHearActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#odorSourceMsg">odorSourceMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayFollowInSightMsg">okayFollowInSightMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okayPushTravelMsg">okayPushTravelMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#okaySetToMsg">okaySetToMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#rearTooFullMsg">rearTooFullMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#refuseCommand">refuseCommand</a>&nbsp;
+<a href="../object/playerActionMessages.html#smelledButNotSeenMsg">smelledButNotSeenMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#takenAndMovedToKeyringMsg">takenAndMovedToKeyringMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#thingDescMsg">thingDescMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#thingSmellDescMsg">thingSmellDescMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#thingSoundDescMsg">thingSoundDescMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#throwCatchMsg">throwCatchMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#throwFallMsg">throwFallMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#throwFallShortMsg">throwFallShortMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#throwHitFallMsg">throwHitFallMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#throwHitMsg">throwHitMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#throwShortMsg">throwShortMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#tooDistantMsg">tooDistantMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#tooHeavyForActorMsg">tooHeavyForActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#tooLargeForActorMsg">tooLargeForActorMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#totalTooHeavyForMsg">totalTooHeavyForMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#undersideTooFullMsg">undersideTooFullMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#unthingNotHereMsg">unthingNotHereMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#vehicleCannotDoFromMsg">vehicleCannotDoFromMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#willNotCatchMsg">willNotCatchMsg</a>&nbsp;
+<a href="../object/playerActionMessages.html#willNotLetGoMsg">willNotLetGoMsg</a>&nbsp;
+</code><p>
+<p>Inherited from <code>MessageHelper</code> :<br>
+<code>
+<a href="../object/MessageHelper.html#askDisambigList">askDisambigList</a>&nbsp;
+<a href="../object/MessageHelper.html#shortTIMsg">shortTIMsg</a>&nbsp;
+<a href="../object/MessageHelper.html#shortTMsg">shortTMsg</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="alreadyFollowModeMsg"></a>
+<table class=decl><tr><td><code>alreadyFollowModeMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4323">4323</a>]</table><div class=desc>note that we're already in "follow" mode<p>
+</div>
+<a name="cannotAskSelfForMsg"></a>
+<table class=decl><tr><td><code>cannotAskSelfForMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4344">4344</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotAskSelfMsg"></a>
+<table class=decl><tr><td><code>cannotAskSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4342">4342</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotGiveToSelfMsg"></a>
+<table class=decl><tr><td><code>cannotGiveToSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4348">4348</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotJumpOffHereMsg"></a>
+<table class=decl><tr><td><code>cannotJumpOffHereMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4283">4283</a>]</table><div class=desc>cannot jump off (with no direct object) from here<p>
+</div>
+<a name="cannotMoveFixtureMsg"></a>
+<table class=decl><tr><td><code>cannotMoveFixtureMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4157">4157</a>]</table><div class=desc>trying to move a Fixture/Immovable<p>
+</div>
+<a name="cannotMoveHeavyMsg"></a>
+<table class=decl><tr><td><code>cannotMoveHeavyMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4163">4163</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotMoveImmovableMsg"></a>
+<table class=decl><tr><td><code>cannotMoveImmovableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4158">4158</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutHeavyMsg"></a>
+<table class=decl><tr><td><code>cannotPutHeavyMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4165">4165</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotShowToSelfMsg"></a>
+<table class=decl><tr><td><code>cannotShowToSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4350">4350</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotTakeHeavyMsg"></a>
+<table class=decl><tr><td><code>cannotTakeHeavyMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4161">4161</a>]</table><div class=desc>trying to take/move/put a Heavy object<p>
+</div>
+<a name="cannotTalkToSelfMsg"></a>
+<table class=decl><tr><td><code>cannotTalkToSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4340">4340</a>]</table><div class=desc>   the PC's responses to conversational actions applied to oneself   need some reworking for NPC's <p>
+</div>
+<a name="cannotTellSelfMsg"></a>
+<table class=decl><tr><td><code>cannotTellSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4346">4346</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="keyDoesNotFitLockMsg"></a>
+<table class=decl><tr><td><code>keyDoesNotFitLockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4316">4316</a>]</table><div class=desc>the key (iobj) does not fit the lock (dobj)<p>
+</div>
+<a name="moveNoEffectMsg"></a>
+<table class=decl><tr><td><code>moveNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4215">4215</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="moveToNoEffectMsg"></a>
+<table class=decl><tr><td><code>moveToNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4217">4217</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="objNotForKeyringMsg"></a>
+<table class=decl><tr><td><code>objNotForKeyringMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4263">4263</a>]</table><div class=desc>the dobj doesn't fit on this keyring<p>
+</div>
+<a name="okayAttachToMsg"></a>
+<table class=decl><tr><td><code>okayAttachToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4329">4329</a>]</table><div class=desc>acknowledge attachment<p>
+</div>
+<a name="okayCloseMsg"></a>
+<table class=decl><tr><td><code>okayCloseMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4204">4204</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="okayDetachFromMsg"></a>
+<table class=decl><tr><td><code>okayDetachFromMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4333">4333</a>]</table><div class=desc>acknowledge detachment<p>
+</div>
+<a name="okayDoffMsg"></a>
+<table class=decl><tr><td><code>okayDoffMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4200">4200</a>]</table><div class=desc>default successful response to 'doff obj'<p>
+</div>
+<a name="okayDropMsg"></a>
+<table class=decl><tr><td><code>okayDropMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4179">4179</a>]</table><div class=desc>default successful 'drop' response<p>
+</div>
+<a name="okayExtinguishCandleMsg"></a>
+<table class=decl><tr><td><code>okayExtinguishCandleMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4326">4326</a>]</table><div class=desc>extinguishing a candle<p>
+</div>
+<a name="okayFollowModeMsg"></a>
+<table class=decl><tr><td><code>okayFollowModeMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4320">4320</a>]</table><div class=desc>acknowledge entering "follow" mode<p>
+</div>
+<a name="okayLockMsg"></a>
+<table class=decl><tr><td><code>okayLockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4207">4207</a>]</table><div class=desc>default successful responses to lock/unlock<p>
+</div>
+<a name="okayNotStandingOnMsg"></a>
+<table class=decl><tr><td><code>okayNotStandingOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4302">4302</a>]</table><div class=desc>report for getting off a platform<p>
+</div>
+<a name="okayOpenMsg"></a>
+<table class=decl><tr><td><code>okayOpenMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4203">4203</a>]</table><div class=desc>default successful responses to open/close<p>
+</div>
+<a name="okayPushButtonMsg"></a>
+<table class=decl><tr><td><code>okayPushButtonMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4309">4309</a>]</table><div class=desc>default 'push button' acknowledgment<p>
+</div>
+<a name="okayPutBehindMsg"></a>
+<table class=decl><tr><td><code>okayPutBehindMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4192">4192</a>]</table><div class=desc>default successful 'put behind' response<p>
+</div>
+<a name="okayPutInMsg"></a>
+<table class=decl><tr><td><code>okayPutInMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4182">4182</a>]</table><div class=desc>default successful 'put in' response<p>
+</div>
+<a name="okayPutOnMsg"></a>
+<table class=decl><tr><td><code>okayPutOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4185">4185</a>]</table><div class=desc>default successful 'put on' response<p>
+</div>
+<a name="okayPutUnderMsg"></a>
+<table class=decl><tr><td><code>okayPutUnderMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4188">4188</a>]</table><div class=desc>default successful 'put under' response<p>
+</div>
+<a name="okayTakeMsg"></a>
+<table class=decl><tr><td><code>okayTakeMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4176">4176</a>]</table><div class=desc>default successful 'take' response<p>
+</div>
+<a name="okayTurnOffMsg"></a>
+<table class=decl><tr><td><code>okayTurnOffMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4313">4313</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="okayTurnOnMsg"></a>
+<table class=decl><tr><td><code>okayTurnOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4312">4312</a>]</table><div class=desc>default acknowledgment for switching on/off<p>
+</div>
+<a name="okayUnlockMsg"></a>
+<table class=decl><tr><td><code>okayUnlockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4208">4208</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="okayWearMsg"></a>
+<table class=decl><tr><td><code>okayWearMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4196">4196</a>]</table><div class=desc>default succesful response to 'wear obj'<p>
+</div>
+<a name="pullNoEffectMsg"></a>
+<table class=decl><tr><td><code>pullNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4213">4213</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="pushNoEffectMsg"></a>
+<table class=decl><tr><td><code>pushNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4211">4211</a>]</table><div class=desc>push/pull/move with no effect<p>
+</div>
+<a name="shouldNotBreakMsg"></a>
+<table class=decl><tr><td><code>shouldNotBreakMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4287">4287</a>]</table><div class=desc>should not break object<p>
+</div>
+<a name="takeFromNotBehindMsg"></a>
+<table class=decl><tr><td><code>takeFromNotBehindMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4279">4279</a>]</table><div class=desc>taking dobj from behind something, but dobj isn't behind iobj<p>
+</div>
+<a name="takeFromNotInMsg"></a>
+<table class=decl><tr><td><code>takeFromNotInMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4267">4267</a>]</table><div class=desc>taking dobj from iobj, but dobj isn't in iobj<p>
+</div>
+<a name="takeFromNotOnMsg"></a>
+<table class=decl><tr><td><code>takeFromNotOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4271">4271</a>]</table><div class=desc>taking dobj from surface, but dobj isn't on iobj<p>
+</div>
+<a name="takeFromNotUnderMsg"></a>
+<table class=decl><tr><td><code>takeFromNotUnderMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4275">4275</a>]</table><div class=desc>taking dobj under something, but dobj isn't under iobj<p>
+</div>
+<a name="timePassesMsg"></a>
+<table class=decl><tr><td><code>timePassesMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4154">4154</a>]</table><div class=desc>"wait"<p>
+</div>
+<a name="whereToGoMsg"></a>
+<table class=decl><tr><td><code>whereToGoMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4219">4219</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="cannotMoveComponentMsg"></a>
+<table class=decl><tr><td><code>cannotMoveComponentMsg (loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4169">4169</a>]</table><div class=desc>trying to move a component object<p>
+</div>
+<a name="containerTooFullMsg"></a>
+<table class=decl><tr><td><code>containerTooFullMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4247">4247</a>]</table><div class=desc>container doesn't have room for object<p>
+</div>
+<a name="okayPostureChangeMsg"></a>
+<table class=decl><tr><td><code>okayPostureChangeMsg (posture)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4291">4291</a>]</table><div class=desc>report for standing up/sitting down/lying down<p>
+</div>
+<a name="okayTurnToMsg"></a>
+<table class=decl><tr><td><code>okayTurnToMsg (val)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4305">4305</a>]</table><div class=desc>default 'turn to' acknowledgment<p>
+</div>
+<a name="roomOkayPostureChangeMsg"></a>
+<table class=decl><tr><td><code>roomOkayPostureChangeMsg (posture, obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4295">4295</a>]</table><div class=desc>report for standing/sitting/lying in/on something<p>
+</div>
+<a name="surfaceTooFullMsg"></a>
+<table class=decl><tr><td><code>surfaceTooFullMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4255">4255</a>]</table><div class=desc>surface doesn't have room for object<p>
+</div>
+<a name="tooLargeForContainerMsg"></a>
+<table class=decl><tr><td><code>tooLargeForContainerMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4223">4223</a>]</table><div class=desc>object is too large for container<p>
+</div>
+<a name="tooLargeForRearMsg"></a>
+<table class=decl><tr><td><code>tooLargeForRearMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4239">4239</a>]</table><div class=desc>object is too large to fit behind something<p>
+</div>
+<a name="tooLargeForUndersideMsg"></a>
+<table class=decl><tr><td><code>tooLargeForUndersideMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4231">4231</a>]</table><div class=desc>object is too large for underside<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,231 @@
+#############################################
+#  TADS Source Code Repository:             #
+#  https://github.com/tajmone/tads-sources  #
+#############################################
+
+root = true
+
+## Repository Configurations
+############################
+[.{git*,editorconfig,*.yml}]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = unset
+trim_trailing_whitespace = true
+[.gitkeep]
+insert_final_newline = false
+[.gitmodules]
+indent_style = tab
+
+
+## Shell Scripts
+################
+[{*.sh,/tads3/unix/test/test_*,/tads3/unix/test/run_*,scintilla/tgzsrc,*.iface}]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+indent_size = unset
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+
+## Batch Scripts
+################
+[*.{bat,cmd}]
+charset = utf-8
+end_of_line = crlf
+indent_style = tab
+indent_size = unset
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+
+## Windows Assets
+################
+[*.{def,rc,redir,dsp}]
+charset = utf-8
+end_of_line = crlf
+indent_style = space
+indent_size = unset
+trim_trailing_whitespace = true
+insert_final_newline = unset
+
+
+## TADS Source Files
+#####################
+; Ascii and ISO aren't supported by EditorConfig,
+; so UTF-8 (without BOM) will have to do:
+[*.{t,T,tl,t3m,tdb-project-starter}]
+charset = utf-8
+end_of_line = unset
+indent_style = space
+indent_size = unset
+trim_trailing_whitespace = true
+insert_final_newline = true
+; C-style doc comments:
+block_comment_start = /*
+block_comment = *
+block_comment_end = */
+; -------------------------
+; Encodings Exceptions List
+; -------------------------
+; TADS UTF-8 Sources must contain a BOM:
+[tads3/test/data/utf-8.t]
+charset = utf-8-bom
+; EClint is unable to validate these files:
+[tads3/test/data/{ucs2_src,utf-16??}.t]
+charset = unset
+trim_trailing_whitespace = false
+insert_final_newline = unset
+
+
+## TADS Character Mapping Files
+###############################
+[*.tcs]
+charset = utf-8
+end_of_line = unset
+indent_style = space
+indent_size = unset
+trim_trailing_whitespace = false
+insert_final_newline = true
+
+
+## TADS Test Suite
+##################
+[*.{in,IN,log,LOG}]
+charset = utf-8
+end_of_line = unset
+[*.{in,IN}]
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+
+## C/C++ Source Files
+#####################
+[*.{c,C,cpp,CPP,h,H,*.cxx*,*.m,*.mm}]
+charset = utf-8
+end_of_line = unset
+indent_style = space
+indent_size = unset
+trim_trailing_whitespace = true
+insert_final_newline = true
+; C-style doc comments:
+block_comment_start = /*
+block_comment = *
+block_comment_end = */
+
+
+## Make Files
+#############
+[{[Mm]akefile*,MAKEFILE,make-*.*,*.mak,*.mk}]
+end_of_line = lf
+indent_style = tab
+indent_size = 2
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+
+## ASM Sources
+##############
+[*.asm]
+charset = utf-8
+end_of_line = unset
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+
+## Plain-Text Files
+###################
+[{*.txt,*.TXT,LICENSE,README,help.tdb,readtads.src}]
+end_of_line = unset
+indent_style = space
+indent_size = unset
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+
+## HTML Docs & TADS Web Server
+##############################
+[*.{html,htm,HTM,css,js,php}]
+end_of_line = unset
+trim_trailing_whitespace = true
+insert_final_newline = true
+[*.css]
+indent_style = space
+indent_size = 2
+; C-style doc comments:
+block_comment_start = /*
+block_comment = *
+block_comment_end = */
+[*.{css,js}]
+charset = utf-8
+[*.{html,htm,HTM,js,php}]
+; Some HTML files use CodePage enconding! (don't use 'charset')
+indent_style = space
+indent_size = unset
+[*.php]
+insert_final_newline = unset
+[.htaccess]
+charset = utf-8
+end_of_line = unset
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+## Misc. Extensions
+###################
+[*.{xml,as}]
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+[*.xml]
+end_of_line = lf
+indent_style = tab
+[*.as]
+end_of_line = unset
+indent_style = space
+indent_size = 4
+; C-style doc comments:
+block_comment_start = /*
+block_comment = *
+block_comment_end = */
+
+
+######################################
+## Extensions from Scintilla Folder ##
+######################################
+; There are many file types in Scintilla's folder,
+; we'll just add some basic styles rules...
+[*.{list,pbxproj,pbxproj,pch,plist,plist,py,py.styled,sql,sql,strings,xib,xib}]
+trim_trailing_whitespace = true
+insert_final_newline = true
+[*.{list,pbxproj,plist,sql,strings,xib}]
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+[*.{d,d.styled,pbxproj,plist,xib}]
+indent_style = tab
+[*.{pch,sql}]
+charset = utf-8
+indent_style = space
+indent_size = unset
+[*.{py,py.styled}]
+charset = utf-8
+indent_style = space
+indent_size = 4
+
+
+## Mercurial Configurations
+###########################
+[*.{hg*}]
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# EOF #

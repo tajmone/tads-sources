@@ -1,0 +1,119 @@
+<html><head><link rel=stylesheet type="text/css" href="../libref.css"><title>numbers.t</title></head><body>
+<table class=ban><tr><td><h1>numbers.t</h1><td align=right><a href="../file/numbers.t.html">documentation</a></table><pre>
+<a name="1"></a>#charset "us-ascii"
+<a name="2"></a>
+<a name="3"></a>/*
+<a name="4"></a> *   Copyright 2000, 2006 Michael J. Roberts
+<a name="5"></a> *
+<a name="6"></a> *   TADS 3 library - number handling.  This module provides utility
+<a name="7"></a> *   functions for converting numbers to strings in various formats.
+<a name="8"></a> */
+<a name="9"></a>
+<a name="10"></a>#include "adv3.h"
+<a name="11"></a>
+<a name="12"></a>
+<a name="13"></a>/* ------------------------------------------------------------------------ */
+<a name="14"></a>/*
+<a name="15"></a> *   Format a number as a binary string.
+<a name="16"></a> */
+<a name="17"></a>intToBinary(val)
+<a name="18"></a>{
+<a name="19"></a>    local result;
+<a name="20"></a>    local outpos;
+<a name="21"></a>
+<a name="22"></a>    /* if the value is zero, the binary representation is simply '0' */
+<a name="23"></a>    if (val == 0)
+<a name="24"></a>        return '0';
+<a name="25"></a>
+<a name="26"></a>    /* allocate a vector to store the characters of the result */
+<a name="27"></a>    result = new Vector(33).fillValue(nil, 1, 33);
+<a name="28"></a>
+<a name="29"></a>    /*
+<a name="30"></a>     *   Fill up the vector with 1's and 0's, working from the lowest-order
+<a name="31"></a>     *   bit to the highest-order bit.  On each iteration, we'll pull out
+<a name="32"></a>     *   the low-order bit, add it to the result string, and then shift the
+<a name="33"></a>     *   value right one bit so that the next higher-order bit becomes the
+<a name="34"></a>     *   low-order bit in the value.
+<a name="35"></a>     */
+<a name="36"></a>    for (outpos = 34 ; val != 0 ; val &gt;&gt;= 1)
+<a name="37"></a>    {
+<a name="38"></a>        /*
+<a name="39"></a>         *   Add the next bit.  Add it at the end of the string so the
+<a name="40"></a>         *   final result reads left-to-right, high-to-low.  Note that
+<a name="41"></a>         *   Unicode value 0x30 is the digit '0', and Unicode value 0x31 is
+<a name="42"></a>         *   the digit '1'.  We build the result as a vector of Unicode
+<a name="43"></a>         *   values for efficiency, so that we don't have to repeatedly
+<a name="44"></a>         *   allocate partial strings.
+<a name="45"></a>         */
+<a name="46"></a>        result[--outpos] = ((val &amp; 1) == 0 ? 0x30 : 0x31);
+<a name="47"></a>    }
+<a name="48"></a>
+<a name="49"></a>    /* convert the vector of Unicode characters to a string */
+<a name="50"></a>    return makeString(result.toList(outpos, 34 - outpos));
+<a name="51"></a>}
+<a name="52"></a>
+<a name="53"></a>/* ------------------------------------------------------------------------ */
+<a name="54"></a>/*
+<a name="55"></a> *   Convert an integer number to Roman numerals.  Returns a string with
+<a name="56"></a> *   the Roman numeral format.  This can only accept numbers in the range
+<a name="57"></a> *   1 to 4999; returns nil for anything outside of this range.
+<a name="58"></a> */
+<a name="59"></a>intToRoman(val)
+<a name="60"></a>{
+<a name="61"></a>    local str;
+<a name="62"></a>    local info =
+<a name="63"></a>    [
+<a name="64"></a>        /* numeral value / corresponding string */
+<a name="65"></a>        1000, 'M',
+<a name="66"></a>        900,  'CM',
+<a name="67"></a>        500,  'D',
+<a name="68"></a>        400,  'CD',
+<a name="69"></a>        100,  'C',
+<a name="70"></a>        90,   'XC',
+<a name="71"></a>        50,   'L',
+<a name="72"></a>        40,   'XL',
+<a name="73"></a>        10,   'X',
+<a name="74"></a>        9,    'IX',
+<a name="75"></a>        5,    'V',
+<a name="76"></a>        4,    'IV',
+<a name="77"></a>        1,    'I'
+<a name="78"></a>    ];
+<a name="79"></a>    local i;
+<a name="80"></a>
+<a name="81"></a>    /* if the value is outside of the legal range, fail immediately */
+<a name="82"></a>    if (val &lt; 1 || val &gt; 4999)
+<a name="83"></a>        return nil;
+<a name="84"></a>
+<a name="85"></a>    /*
+<a name="86"></a>     *   iterate over the specifiers and apply each one as many times as
+<a name="87"></a>     *   possible
+<a name="88"></a>     */
+<a name="89"></a>    for (str = '', i = 1 ; val != 0 ; )
+<a name="90"></a>    {
+<a name="91"></a>        /*
+<a name="92"></a>         *   If we're greater than the current specifier, apply it;
+<a name="93"></a>         *   otherwise, move on to the next specifier.
+<a name="94"></a>         */
+<a name="95"></a>        if (val &gt;= info[i])
+<a name="96"></a>        {
+<a name="97"></a>            /* add this specifier's roman numeral into the result */
+<a name="98"></a>            str += info[i+1];
+<a name="99"></a>
+<a name="100"></a>            /* subtract the corresponding value */
+<a name="101"></a>            val -= info[i];
+<a name="102"></a>        }
+<a name="103"></a>        else
+<a name="104"></a>        {
+<a name="105"></a>            /* move to the next specifier */
+<a name="106"></a>            i += 2;
+<a name="107"></a>        }
+<a name="108"></a>    }
+<a name="109"></a>
+<a name="110"></a>    /* return the result */
+<a name="111"></a>    return str;
+<a name="112"></a>}
+<a name="113"></a>
+</pre>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

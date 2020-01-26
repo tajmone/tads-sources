@@ -1,0 +1,72 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultGiveShowTopic</title><meta name="keywords" content="DefaultGiveShowTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultGiveShowTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaultshowtopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultaskfortopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A DefaultGiveShowTopic combines the functionality of a DefaultGiveTopic and a DefaultShowTopic by responding to any GIVE X TO Y or SHOW X TO Y command for which a specific GiveTopic, ShowTopic, or GiveShowTopic has not been provided. The further remarks relating to DefaultGiveTopic and DefaultShowTopic also apply here; the DefaultGiveShowTopic will be triggered by SHOW X TO Y provided X is in scope, but GIVE X TO Y only if, in addition, X is portable and the player character can take it (or is already holding it).
+<br>
+
+<br>
+With these factors in mind, we can define a DefaultGiveShowTopic that should work reasonably well for the curator (put it under the curator talking state). Once again we make liberal use of the rand() function to provide some measure of apparent variety to the curator's response:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;DefaultGiveShowTopic
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;&lt;&lt;rand('I\'m&nbsp;sorry, ',&nbsp;'I\'m&nbsp;afraid ',&nbsp;'',&nbsp;'I&nbsp;regret ')&gt;&gt;I&nbsp;don't&nbsp;have&nbsp;time&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;&lt;&lt;rand&nbsp;('be&nbsp;bothered&nbsp;with',&nbsp;'look&nbsp;at','study',&nbsp;'inspect')&gt;&gt;&nbsp;{that&nbsp;dobj/him}&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;&lt;rand('right&nbsp;now',&nbsp;'at&nbsp;the&nbsp;moment',&nbsp;'today')&gt;&gt;,&lt;/q&gt;&nbsp;he&nbsp;tells&nbsp;you."
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+An alternative way of writing a variant of this employing syntax that became available in TADS 3.1.0 might be;
+</font>
+<br>
+<pre><font size ="3">
+++ DefaultGiveShowTopic
+   "&lt;q&gt;&lt;&lt;one of&gt;&gt;I'm sorry, &lt;&lt;or&gt;&gt;I'm afraid &lt;&lt;or&gt;&gt;&lt;&lt;or&gt;&gt;I regret &lt;&lt;at random&gt;&gt;I don't have time
+   to &lt;&lt;one of&gt;&gt;be bothered with&lt;&lt;or&gt;&gt;look at&lt;&lt;or&gt;&gt;study&lt;&lt;or&gt;&gt;inspect&lt;&lt;shuffled&gt;&gt; {that dobj/him}
+   &lt;&lt;one of&gt;&gt;right now&lt;&lt;or&gt;&gt;at the moment&lt;&lt;or&gt;&gt;today&lt;&lt;cycling&gt;&gt;,&lt;/q&gt; he tells you."
+;
+</font></pre><br>
+<font face="Arial" size="2" color="#000000">
+<br>
+We'll assume that Solomon, an avid collector of wisdom on all topics, is fascinated by anything he's shown (put this in the solomonTalking state):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultGiveShowTopic,&nbsp;ShuffledEventList&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Fascinating!&lt;/q&gt;&nbsp;{the&nbsp;solomon/he}&nbsp;declares.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;So&nbsp;that\'s&nbsp;{a&nbsp;dobj/he},&nbsp;how&nbsp;interesting!&lt;/q&gt;&nbsp;he&nbsp;remarks.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;solomon/he}&nbsp;examines&nbsp;{the&nbsp;dobj/him}&nbsp;carefully,&nbsp;&lt;q&gt;This&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;one\'s&nbsp;wisdom&nbsp;grows.&lt;/q&gt;&nbsp;he&nbsp;tells&nbsp;you,&nbsp;&lt;q&gt;By&nbsp;careful
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;observation&nbsp;of&nbsp;all&nbsp;things&nbsp;under&nbsp;the&nbsp;sun.&lt;/q&gt;&nbsp;',&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Thank&nbsp;you,&lt;/q&gt;&nbsp;he&nbsp;says,&nbsp;looking&nbsp;at&nbsp;{it&nbsp;dobj/him}&nbsp;carefully,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;The&nbsp;more&nbsp;I&nbsp;observe,&nbsp;the&nbsp;wiser&nbsp;I&nbsp;become.&lt;/q&gt;&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

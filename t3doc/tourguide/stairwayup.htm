@@ -1,0 +1,92 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>StairwayUp</title><meta name="keywords" content="StairwayUp,noteTraversal,masterObject"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>StairwayUp : Stairway
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="stairwaydown.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="travelwithmessage.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We first need to add a minimal definition of the room in which we'll put the bottom end of the ladder:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">mainCave:&nbsp;Room&nbsp;'Large&nbsp;Cave'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;flickering&nbsp;orange&nbsp;light&nbsp;from&nbsp;the&nbsp;blazing&nbsp;torch&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accentuates&nbsp;the&nbsp;naturally&nbsp;ruddy&nbsp;hues&nbsp;of&nbsp;this&nbsp;large,&nbsp;irregular&nbsp;cave,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;seems&nbsp;to&nbsp;be&nbsp;something&nbsp;of&nbsp;a&nbsp;major&nbsp;hub&nbsp;in&nbsp;the&nbsp;cave&nbsp;system.&nbsp;A
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;large&nbsp;rock&nbsp;rests&nbsp;against&nbsp;the&nbsp;wall&nbsp;to&nbsp;the&nbsp;north.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;sturdy&nbsp;steel&nbsp;ladder&nbsp;leading&nbsp;upwards.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;upLadder
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The main thing to note here is that we point the up property of the room to the upLadder object we're about to define, so that in can be traversed either in response to an UP command, or in response to a CLIMB (UP) LADDER command. We next define the basic upLadder object (using  the <a href="passagetemplate.htm">Passage template</a>):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;upLadder&nbsp;:&nbsp;StairwayUp&nbsp;&nbsp;-&gt;downLadder&nbsp;
+<br>
+&nbsp;&nbsp;'sturdy&nbsp;steel&nbsp;ladder'&nbsp;'sturdy&nbsp;steel&nbsp;ladder'
+<br>
+&nbsp;&nbsp;"The&nbsp;ladder&nbsp;leads&nbsp;up&nbsp;through&nbsp;a&nbsp;hole&nbsp;in&nbsp;the&nbsp;ceiling.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The one thing to note here is the use of the -&gt; in the template syntax to link the upLadder to its masterObject, the corresponding <a href="stairwaydown.htm">StairwayDown</a>, downLadder. The two Stairway objects are now linked so that traversing one will take us to the location of the other (we could equally well have done this the other way round by having downLadder point to upLadder as its master object, although we would <i>not</i> want both of them pointing to each other).
+<br>
+
+<br>
+Either way, our ladder will work fine, but now we want to add a refinement. Remember when we defined the entranceTunnel <a href="roomconnector.htm">RoomConnector</a> we gave it a <b>blocked</b> property to simulate the effect of a rockfall? Well, now we want to trigger the rockfall the first time the PC climbs the ladder back to the entranceCave. We could do this by overriding the stairwayUp's noteTraversal method, perhaps along the following lines (using an additional <b>climbed</b> property we define to make sure that the rockfall occurs only once):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;upLadder&nbsp;:&nbsp;&nbsp;StairwayUp&nbsp;&nbsp;-&gt;downLadder&nbsp;
+<br>
+&nbsp;&nbsp;'sturdy&nbsp;steel&nbsp;ladder'&nbsp;'sturdy&nbsp;steel&nbsp;ladder'
+<br>
+&nbsp;&nbsp;"The&nbsp;ladder&nbsp;leads&nbsp;up&nbsp;through&nbsp;a&nbsp;hole&nbsp;in&nbsp;the&nbsp;ceiling.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>noteTraversal(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!climbed)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"As&nbsp;you&nbsp;climb&nbsp;the&nbsp;ladder&nbsp;you&nbsp;hear&nbsp;what&nbsp;sounds&nbsp;like&nbsp;a&nbsp;thunderous&nbsp;rockfall
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;above.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entranceTunnel.blocked&nbsp;=&nbsp;true;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;climbed&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;climbed&nbsp;=&nbsp;nil</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There is no reason why we should not do it this way, but since we want to explore as much of the library as possible, we'll next look at another way of doing it using <a href="travelwithmessage.htm">TravelWithMessage</a>.
+<br>
+</font></font>
+
+</body></html>

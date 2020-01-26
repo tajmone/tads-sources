@@ -1,0 +1,98 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SimpleOdor</title><meta name="keywords" content="SimpleOdor,isAmbient,MultiLoc,smellDesc"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SimpleOdor : <a href="odor.htm">Odor</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="vaporous.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="simplenoise.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Along with its close relative, <a href="simplenoise.htm">SimpleNoise</a>, SimpleOdor offers a very straightforward way of representing an intangible sensory presence (i.e. a sound or smell), which can be associated either with a location, a particular object, or a number of objects. For more sophisticated behaviour involving smells you may want to consider the <a href="odor.htm">Odor</a> class, which we shall come to shortly.
+<br>
+
+<br>
+Let's suppose that we want the player to know that there's a whiff of sulphur around the cavern entrance we mentioned in the description of the hellVestibule location. We could achieve this simply by adding the following to the list of objects in hellVestibule
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;SimpleOdor&nbsp;'sulphur/sulfur'&nbsp;'sulphur'
+<br>
+&nbsp;&nbsp;"A&nbsp;strong&nbsp;whiff&nbsp;of&nbsp;sulphur&nbsp;comes&nbsp;through&nbsp;the&nbsp;cavern&nbsp;entrance&nbsp;to&nbsp;the&nbsp;east.&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Now if we go to hellVestibule and type a SMELL command, we'll see the message "A strong whiff of sulphur comes through the cavern entrance to the east. " This is the standard use of SimpleOdor (and SimpleNoise): to add an ongoing smell (or sound) to a location.
+<br>
+
+<br>
+However, since we've mentioned the cavern entrance in the room description, and we say that that's where the smell is coming from, we might prefer to associate the SimpleOdor particularly with the entrance:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;cavernEntrance:&nbsp;ThroughPassage&nbsp;'east&nbsp;eastern&nbsp;cavern&nbsp;entrance'&nbsp;'cavern&nbsp;entrance'
+<br>
+&nbsp;&nbsp;"It's&nbsp;wide,&nbsp;with&nbsp;a&nbsp;sign&nbsp;next&nbsp;to&nbsp;it,&nbsp;and&nbsp;it&nbsp;emits&nbsp;an&nbsp;eerie&nbsp;red&nbsp;glow.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;SimpleOdor&nbsp;'whiff&nbsp;sulphur/sulfur'&nbsp;'sulphur'
+<br>
+&nbsp;&nbsp;"A&nbsp;strong&nbsp;whiff&nbsp;of&nbsp;sulphur&nbsp;comes&nbsp;through&nbsp;the&nbsp;cavern&nbsp;entrance.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At first sight this may seem to achieve no more than adding </font><font face="Courier New" size="2" color="#000000">smellDesc&nbsp;=</font><font face="Arial" size="2" color="#000000"> </font><font face="Courier New" size="2" color="#000000">"A&nbsp;strong&nbsp;whiff&nbsp;of&nbsp;sulphur&nbsp;comes&nbsp;through&nbsp;the&nbsp;cavern&nbsp;entrance.&nbsp;"</font><font face="Arial" size="2" color="#000000">  to the definition of cavernEntrance. There is, however, one small but important difference. Using the smellDesc method, we get a description of the odor if we type SMELL CAVERN ENTRANCE but not if we just type SMELL (in which case we'll be told "You smell nothing out of the ordinary"). Using the SimpleOdor object, however, we get the description of the smell either way. We can also SMELL WHIFF or SMELL SULPHUR or SMELL WHIFF OF SULPHUR.
+<br>
+
+<br>
+We can also add a further refinement. With the SimpleOdor nested in the cavernEntrance as above, if we issue the command SMELL RED GLOW we'll be told "You smell nothing out of the ordinary. " Now, there's an argument for saying that since a glow doesn't smell, this is the right response. And yet one may feel it's a bit odd that when one smells the entrance one smells the sulphur, but that when one smells the glow coming through the entrance one smells nothing odd; is the human sense of smell really that localised? Well, if we did take that view we could very easily attach the SimpleOdor to the red glow as well by making it a MultiLoc:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;MultiLoc,&nbsp;SimpleOdor&nbsp;'whiff&nbsp;sulphur/sulfur'&nbsp;'sulphur'
+<br>
+&nbsp;&nbsp;"A&nbsp;strong&nbsp;whiff&nbsp;of&nbsp;sulphur&nbsp;comes&nbsp;through&nbsp;the&nbsp;cavern&nbsp;entrance.&nbsp;"
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[cavernEntrance,&nbsp;redGlow]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+(Note that once we define it as a MultiLoc the + no longer defines its location, it just allows us to continue listing other objects after if with the + notation and have them be located in hellVestibule). Now we can SMELL, SMELL ENTRANCE, SMELL WHIFF, or SMELL RED GLOW and receive the same answer each time, and this is certainly rather more than we can do by setting one smellDesc property.
+<br>
+
+<br>
+If we really want, we can take this a stage further still. SimpleOdor (and <a href="simplenoise.htm">SimpleNoise</a>) have an <b>isAmbient</b> property which, by default, is set to true. If we set it to nil, the SimpleOdor won't wait for us to SMELL anything, it'll announce its presence each time we get a description of the room - or each time we examine the cave entrance or the red glow:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;MultiLoc,&nbsp;SimpleOdor&nbsp;'whiff&nbsp;sulphur/sulfur'&nbsp;'sulphur'
+<br>
+&nbsp;&nbsp;"A&nbsp;strong&nbsp;whiff&nbsp;of&nbsp;sulphur&nbsp;comes&nbsp;through&nbsp;the&nbsp;cavern&nbsp;entrance.&nbsp;"
+<br>
+&nbsp;&nbsp;isAmbient&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[cavernEntrance,&nbsp;redGlow]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You may or may not think the effect is appropriate here; it calls attention to a smell that the player might otherwise miss, but could quickly become monotonous. We are getting to the point where it might be better to use the greater complexity of an <a href="odor.htm">Odor</a> to get the effect we'd really like. Nevertheless, we introduce the isAmbient property here just to show what it does; whether you prefer to leave isAmbient as nil or true here is up to you. It also illustrates a point that may at first sight seem counter-intuitive. A SimpleOdor (or any other kind of SensoryEmanation object) announces its presence when isAmbient is <i>nil</i>, but not when it is <i>true</i>, whereas one might have expected an ambient sensory one to be something that was <i>more</i> proactive in making its presence felt. Here we have to understand 'ambient' in the sense of 'background' (which is admittedly not quite the meaning given in the OED); a background smell (or noise) is one that doesn't obtrude itself on our awareness unless and until we actively seek it out (by explicitly SMELLing or LISTENing).
+<br>
+
+<br>
+
+
+
+<br>
+</font></font>
+
+</body></html>

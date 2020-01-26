@@ -1,0 +1,60 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>Sense</title></head><body>
+<table class=ban><tr><td align=left><span class=title>Sense</span><span class=type>class</span><td align=right><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#104">104</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Sense: the basic class for senses.
+<p>
+<code>class
+<b>Sense</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>Sense</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/sight.html">sight</a>&nbsp;
+<a href="../object/smell.html">smell</a>&nbsp;
+<a href="../object/sound.html">sound</a>&nbsp;
+<a href="../object/touch.html">touch</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#ambienceProp">ambienceProp</a>&nbsp;
+<a href="#presenceProp">presenceProp</a>&nbsp;
+<a href="#sizeProp">sizeProp</a>&nbsp;
+<a href="#thruProp">thruProp</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#canObjBeSensed">canObjBeSensed</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="ambienceProp"></a>
+<table class=decl><tr><td><code>ambienceProp</code><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#173">173</a>]</table><div class=desc>   Each sense can define this property to specify a property pointer   used to define a Thing's "ambient" energy emissions.  Senses   which do not use ambient energy should define this to nil. <p>   Some senses work only on directly emitted sensory data; human   hearing, for example, has no (at least effectively no) use for   reflected sound, and can sense objects only by the sounds they're   actually emitting.  Sight, on the other hand, can make use not   only of light emitted by an object but of light reflected by the   object.  So, sight defines an ambience property, whereas hearing,   touch, and smell do not. <p>
+</div>
+<a name="presenceProp"></a>
+<table class=decl><tr><td><code>presenceProp</code><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#158">158</a>]</table><div class=desc>   Each sense must define the property presenceProp as a property   pointer giving the xxxPresence property for the sense.  The   xxxPresence property is the property of a Thing which determines   whether or not the object has a "presence" in this sense, which is   to say whether or not the object is emitting any detectable   sensory data for the sense.  For example, soundPresence indicates   whether or not a Thing is making any noise. <p>   The sensory presence is used to determine if an object is in   scope.  An object with a detectable sensory presence is normally   in scope.  Note that sounds and smells emitted by a tangible   object are frequently represented as additional intangible   objects, and in these cases the intangible object (the sensory   emanation) is usually the object with a sensory presence, rather   than the tangible object making the noise/odor.  However, it is   sometimes obvious that a particular sound or odor is coming from a   particular kind of object, so the presence of the sound or odor   implies the presence of the source object and thus places the   source object in scope.  In such cases, it is desirable for the   source object to have a sensory presence of its own, in addition   to the sensory presence of the intangible sensory emanation   object. <p>   Note that the "presence" doesn't have any effect on whether or not   an object can be sensed.  Only the sense path matters for that: an   object without a presence can still be sensed if there's a   non-opaque sense path to the object.  Presence only determines   whether or not an object is *actively* calling attention to   itself. <p>
+</div>
+<a name="sizeProp"></a>
+<table class=decl><tr><td><code>sizeProp</code><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#125">125</a>]</table><div class=desc>   Each sense must define the property sizeProp as a property   pointer giving the xxxSize property for the sense.  The xxxSize   property is the property of a Thing which determines how "large"   the object is with respect to the sense.  For example, sightSize   indicates how large the object is visually, while soundSize   indicates how loud the object is. <p>   The purpose of an object's size in a given sense is to determine   how well the object can be sensed through an obscuring medium or   at a distance. <p>
+</div>
+<a name="thruProp"></a>
+<table class=decl><tr><td><code>thruProp</code><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#111">111</a>]</table><div class=desc>   Each sense must define the property thruProp as a property   pointer giving the xxxThru property for the sense.  The xxxThru   property is the property of a material which determines how the   sense passes through that material. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="canObjBeSensed"></a>
+<table class=decl><tr><td><code>canObjBeSensed (obj, trans, ambient)</code><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#188">188</a>]</table><div class=desc>   Determine if, in general, the given object can be sensed under   the given conditions.  Returns true if so, nil if not.  By   default, if the ambient level is zero, we'll return nil;   otherwise, if the transparency level is 'transparent', we'll   return true; otherwise, we'll consult the object's size: <p>   - Small objects cannot be sensed under less than transparent   conditions. <p>   - Medium or large objects can be sensed in any conditions other   than opaque. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

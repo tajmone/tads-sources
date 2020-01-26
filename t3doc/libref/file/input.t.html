@@ -1,0 +1,35 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>input.t</title></head><body>
+<table class=ban><tr><td align=left><span class=title>input.t</span><span class=type>file</span><td align=right><a href="../source/input.t.html">source file</a></table><p>
+<table class=nav><tr>
+<td><b>Classes</b><br><a href="#_ClassSummary_">Summary</a><br>&nbsp;<td><b>Objects</b><br><a href="#_ObjectSummary_">Summary</a><br>&nbsp;<td><b>Functions</b><br><a href="#_FunctionSummary_">Summary</a><br><a href="#_Functions_">Details</a></table><div class=fdesc>
+ <p>   TADS 3 Library: input <p>   This modules defines functions and objects related to reading input   from the player.
+</div>
+<a name="_ClassSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Classes</span> &nbsp; </div><p>
+<code>
+<a href="../object/BasicInputDef.html">BasicInputDef</a>&nbsp;
+<a href="../object/EndOfFileException.html">EndOfFileException</a>&nbsp;
+<a href="../object/InputDef.html">InputDef</a>&nbsp;
+<a href="../object/QuittingException.html">QuittingException</a>&nbsp;
+<a href="../object/StringPreParser.html">StringPreParser</a>&nbsp;
+</code>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/commentPreParser.html">commentPreParser</a>&nbsp;
+<a href="../object/inputManager.html">inputManager</a>&nbsp;
+</code>
+<a name="FunctionSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Functions</span> &nbsp; </div><p>
+<code>
+<a href="#readMainCommand">readMainCommand</a>&nbsp;
+<a href="#readMainCommandTokens">readMainCommandTokens</a>&nbsp;
+</code><p>
+<a name="_Functions_"></a><p><div class=mjhd><span class=hdln>Global Functions</span> &nbsp; </div><p>
+<a name="readMainCommand"></a>
+<table class=decl><tr><td><code>readMainCommand (which)</code><td align=right><code><a href="../file/input.t.html">input.t</a>[<a href="../source/input.t.html#797">797</a>]</table><div class=desc>   Read a command line from the player.  Displays the main command   prompt and returns a line of input. <p>   We process any pending real-time events before reading the command.   If the local platform supports real-time command-line interruptions,   we'll continue processing real-time events as they occur in the   course of command editing. <p>
+</div>
+<a name="readMainCommandTokens"></a>
+<table class=decl><tr><td><code>readMainCommandTokens (which)</code><td align=right><code><a href="../file/input.t.html">input.t</a>[<a href="../source/input.t.html#1049">1049</a>]</table><div class=desc>   Read a line of text and return the token list and the original text.   We keep going until a non-empty line of text is read. <p>   'which' is one of the rmcXxx enum values specifying what kind of   command line we're reading. <p>   The return value is a list of two elements.  The first element is the   string entered, and the second element is the token list. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>GuidedTourState</title></head><body>
+<table class=ban><tr><td align=left><span class=title>GuidedTourState</span><span class=type>class</span><td align=right><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#2402">2402</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Guided Tour state.  This provides a simple way of defining a "guided   tour," which is a series of locations to which we try to guide the   player character.  We don't force the player character to travel as   specified; we merely try to lead the player.  The actual travel is up   to the player. <p>   Here's how this works.  For each location on the guided tour, create   one of these state objects.  Set escortDest to the travel connector   to which we're attempting to guide the player character from the   current location.  Set stateAfterEscort to the state object for the   next location on the tour.  Set stateDesc to something indicating   that we're trying to show the player to the next stop - something   along the lines of "Bob waits for you by the door."  Set   arrivingWithDesc to a message indicating that we just showed up in   the current location and are ready to show the player to the next -   "Bob goes to the door and waits for you to follow him."
+<p>
+<code>class
+<b>GuidedTourState</b> :  &nbsp; <a href="../object/AccompanyingState.html">AccompanyingState</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>GuidedTourState</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AccompanyingState.html">AccompanyingState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorState.html">ActorState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TravelMessageHandler.html">TravelMessageHandler</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorTopicDatabase.html">ActorTopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicDatabase.html">TopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#escortActor">escortActor</a>&nbsp;
+<a href="#escortDest">escortDest</a>&nbsp;
+<a href="#escortStateClass">escortStateClass</a>&nbsp;
+<a href="#stateAfterEscort">stateAfterEscort</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ActorState</code> :<br>
+<code>
+<a href="../object/ActorState.html#autoSuggest">autoSuggest</a>&nbsp;
+<a href="../object/ActorState.html#getImpliedConvState">getImpliedConvState</a>&nbsp;
+<a href="../object/ActorState.html#isInitState">isInitState</a>&nbsp;
+<a href="../object/ActorState.html#location">location</a>&nbsp;
+<a href="../object/ActorState.html#stateDesc">stateDesc</a>&nbsp;
+<a href="../object/ActorState.html#stateSuggestedTopics">stateSuggestedTopics</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ActorTopicDatabase</code> :<br>
+<code>
+<a href="../object/ActorTopicDatabase.html#askForTopics">askForTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#askTopics">askTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#commandTopics">commandTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#giveTopics">giveTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#initiateTopics">initiateTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#miscTopics">miscTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#showTopics">showTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#specialTopics">specialTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#tellTopics">tellTopics</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicDatabase</code> :<br>
+<code>
+<a href="../object/TopicDatabase.html#limitSuggestions">limitSuggestions</a>&nbsp;
+<a href="../object/TopicDatabase.html#suggestedTopics">suggestedTopics</a>&nbsp;
+<a href="../object/TopicDatabase.html#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="../object/TopicDatabase.html#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#accompanyTravel">accompanyTravel</a>&nbsp;
+<a href="#getAccompanyingTravelState">getAccompanyingTravelState</a>&nbsp;
+</code><p>
+<p>Inherited from <code>AccompanyingState</code> :<br>
+<code>
+<a href="../object/AccompanyingState.html#beforeTravel">beforeTravel</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorState</code> :<br>
+<code>
+<a href="../object/ActorState.html#activateState">activateState</a>&nbsp;
+<a href="../object/ActorState.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/ActorState.html#afterTravel">afterTravel</a>&nbsp;
+<a href="../object/ActorState.html#arrivingTurn">arrivingTurn</a>&nbsp;
+<a href="../object/ActorState.html#arrivingWithDesc">arrivingWithDesc</a>&nbsp;
+<a href="../object/ActorState.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/ActorState.html#construct">construct</a>&nbsp;
+<a href="../object/ActorState.html#deactivateState">deactivateState</a>&nbsp;
+<a href="../object/ActorState.html#distantSpecialDesc">distantSpecialDesc</a>&nbsp;
+<a href="../object/ActorState.html#endConversation">endConversation</a>&nbsp;
+<a href="../object/ActorState.html#getActor">getActor</a>&nbsp;
+<a href="../object/ActorState.html#getNominalTraveler">getNominalTraveler</a>&nbsp;
+<a href="../object/ActorState.html#getSuggestedTopicList">getSuggestedTopicList</a>&nbsp;
+<a href="../object/ActorState.html#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="../object/ActorState.html#handleConversation">handleConversation</a>&nbsp;
+<a href="../object/ActorState.html#initializeActorState">initializeActorState</a>&nbsp;
+<a href="../object/ActorState.html#justFollowed">justFollowed</a>&nbsp;
+<a href="../object/ActorState.html#notifyTopicResponse">notifyTopicResponse</a>&nbsp;
+<a href="../object/ActorState.html#obeyCommand">obeyCommand</a>&nbsp;
+<a href="../object/ActorState.html#remoteSpecialDesc">remoteSpecialDesc</a>&nbsp;
+<a href="../object/ActorState.html#showSpecialDescInContents">showSpecialDescInContents</a>&nbsp;
+<a href="../object/ActorState.html#specialDesc">specialDesc</a>&nbsp;
+<a href="../object/ActorState.html#specialDescListWith">specialDescListWith</a>&nbsp;
+<a href="../object/ActorState.html#suggestTopicsFor">suggestTopicsFor</a>&nbsp;
+<a href="../object/ActorState.html#takeTurn">takeTurn</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TravelMessageHandler</code> :<br>
+<code>
+<a href="../object/TravelMessageHandler.html#sayArriving">sayArriving</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDir">sayArrivingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDownStairs">sayArrivingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingLocally">sayArrivingLocally</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingThroughPassage">sayArrivingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingUpStairs">sayArrivingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingViaPath">sayArrivingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDeparting">sayDeparting</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingDir">sayDepartingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingDownStairs">sayDepartingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingLocally">sayDepartingLocally</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingThroughPassage">sayDepartingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingUpStairs">sayDepartingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingViaPath">sayDepartingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayTravelingRemotely">sayTravelingRemotely</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorTopicDatabase</code> :<br>
+<code>
+<a href="../object/ActorTopicDatabase.html#initiateTopic">initiateTopic</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#showTopicResponse">showTopicResponse</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicDatabase</code> :<br>
+<code>
+<a href="../object/TopicDatabase.html#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#addTopic">addTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#addTopicToList">addTopicToList</a>&nbsp;
+<a href="../object/TopicDatabase.html#compareVocabMatch">compareVocabMatch</a>&nbsp;
+<a href="../object/TopicDatabase.html#findTopicResponse">findTopicResponse</a>&nbsp;
+<a href="../object/TopicDatabase.html#handleTopic">handleTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeSuggestedTopic">removeSuggestedTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeTopic">removeTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeTopicFromList">removeTopicFromList</a>&nbsp;
+<a href="../object/TopicDatabase.html#showSuggestedTopicList">showSuggestedTopicList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="escortActor"></a>
+<table class=decl><tr><td><code>escortActor</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#2414">2414</a>]</table><div class=desc>the actor we're escorting - this is usually the player character<p>
+</div>
+<a name="escortDest"></a>
+<table class=decl><tr><td><code>escortDest</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#2404">2404</a>]</table><div class=desc>the travel connector we're trying to show the player into<p>
+</div>
+<a name="escortStateClass"></a>
+<table class=decl><tr><td><code>escortStateClass</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#2424">2424</a>]</table><div class=desc>   The class we use for our actor state during the escort travel.   By default, we use the basic guided-tour accompanying travel   state class, but games will probably want to use a customized   subclass of this basic class in most cases.  The main reason to   use a custom subclass is to provide customized messages to   describe the departure of the escorting actor. <p>
+</div>
+<a name="stateAfterEscort"></a>
+<table class=decl><tr><td><code>stateAfterEscort</code><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#2411">2411</a>]</table><div class=desc>   The next state for our actor to assume after the travel.  This   should be overridden and set to the state object for the next   stop on the tour. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="accompanyTravel"></a>
+<table class=decl><tr><td><code>accompanyTravel (traveler, conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#2430">2430</a>]</table><div class=desc>   we should accompany the travel if the actor we're guiding will be   traveling, and they're traveling to the next stop on our tour <p>
+</div>
+<a name="getAccompanyingTravelState"></a>
+<table class=decl><tr><td><code>getAccompanyingTravelState (traveler, conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/extras.t.html">extras.t</a>[<a href="../source/extras.t.html#2439">2439</a>]</table><div class=desc>   get our accompanying state object - we'll create an instance of   the class specified in our escortStateClass property <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

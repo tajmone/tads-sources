@@ -1,0 +1,80 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>maxScore</title><meta name="keywords" content="maxScore,libScore"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>maxScore
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="scoreranktable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="hints-overview.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">If you want to set the maximum score in your game manually, you will need to override <b>gameMain.maxScore</b>:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">gameMain:&nbsp;GameMainDef
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialPlayerChar&nbsp;=&nbsp;me
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scoreRankTable&nbsp;=
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;0,&nbsp;'a&nbsp;tourist'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;5,&nbsp;'a&nbsp;novice&nbsp;explorer'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;10,&nbsp;'a&nbsp;willing&nbsp;amateur'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;15,&nbsp;'an&nbsp;apprentice&nbsp;adventurer'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;25,&nbsp;'an&nbsp;accomplished&nbsp;adventurer'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;40,&nbsp;'a&nbsp;hero']
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;maxScore&nbsp;=&nbsp;43</b>
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">However, it is possible to have the game calculate the maximum score automatically, provided you follow certain rules in the way you award points. These rules, as they are described in the library code comments, are as follows:
+<br>
+
+<br>
+<i>You can use EXCLUSIVELY Achievement objects to represents scoring items, and give each Achievement object a 'points' property indicating the number of points it's worth. To award a scoring item, you call the method awardPoints() on an Achievement object. If you use this style of scoring, the library AUTOMATICALLY computes the gameMain.maxScore value, by adding up the 'points' values of all of the Achievement objects in the game. For this to work properly, you have to obey the following rules:
+<br>
+</i><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><i></i><font face="Symbol" size="2" color="#000000">&#183;</font><i></i></font></i></font></td><td><font face="Arial" size="2" color="#000000"><i>use ONLY Achievement objects (never strings) to award points;
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><i></i><font face="Symbol" size="2" color="#000000">&#183;</font><i></i></font></td><td><font face="Arial" size="2" color="#000000"><i>set the 'points' property of each Achievement to its score;
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><i></i><font face="Symbol" size="2" color="#000000">&#183;</font><i></i></font></td><td><font face="Arial" size="2" color="#000000"><i>define Achievement objects statically only (never use 'new' to create an Achievement dynamically)
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><i></i><font face="Symbol" size="2" color="#000000">&#183;</font><i></i></font></td><td><font face="Arial" size="2" color="#000000"><i>if an Achievement can be awarded more than once, you must override its 'maxPoints' property to reflect the total number of points it will be worth when it is awarded the maximum number of times;
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><i></i><font face="Symbol" size="2" color="#000000">&#183;</font><i></i></font></td><td><font face="Arial" size="2" color="#000000"><i>always award an Achievement through its awardPoints() or awardPointsOnce() method;
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><i></i><font face="Symbol" size="2" color="#000000">&#183;</font><i></i></font></td><td><font face="Arial" size="2" color="#000000"><i>there exists at least one solution of the game in which every Achievement object is awarded</i></font><font face="Times New Roman" size="3" color="#000000"><i>
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Times New Roman" size="3" color="#000000"><i></i></font></td><td></td></tr></table><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">We have not followed these rules in this game (otherwise we should not have been able to demonstrate the other ways of awarding points), so this cannot be demonstrated here. Note, however, that there <i>may</i> be a way of sorts round the last two restrictions in some cases. In particular, if there are alternative routes through the game so that points can be awarded (say) for doing either A or B but not both, then you could award points for A using awardPoints() or awardPointsOnce, and points for B by using addToScore or addToScoreOnce, and provided the same number of points are awarded for A or B, then the automatic maximum score calculation should still work.
+<br>
+
+<br>
+You also need to bear in mind the following rules about setting maxScore:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></font></td><td><font face="Arial" size="2" color="#000000">If you do not explicitly override gameMain.maxScore at all in your game code, then the game will automatically calculate the maximum score on the basis of the rules given above.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">If you explicitly set gameMain.maxScore to nil, then the game will assume there is no defined maximum score, and the maximum score will not be mentioned at all in response to the SCORE and FULL SCORE commands.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">If you explicitly set gameMain.maxScore to a number, that number will be used as the maximum score.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000"></font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,114 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TravelMessageHandler</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TravelMessageHandler</span><span class=type>class</span><td align=right><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#210">210</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Travel Message Handler.  This contains a set of messages that are   specific to different types of TravelConnector objects, to describe   NPC arrivals and departures via these connectors when the NPC's are in   view of the player character. <p>   This base class implements the methods simply by calling the   corresponding gLibMessages message methods. <p>   The purpose of providing this variety of connector-specific handlers   is to make it easy for individual travelers to customize the   arrival/departure messages for specific connector subclasses.  These   messages sometimes benefit from customization for specific   traveler/connector combinations; the easiest way to enable such   granular customization is to make it possible to override a message   per connector type on the traveler object.
+<p>
+<code>class
+<b>TravelMessageHandler</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TravelMessageHandler</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TravelMessageHandler</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorState.html">ActorState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AccompanyingInTravelState.html">AccompanyingInTravelState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GuidedInTravelState.html">GuidedInTravelState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AccompanyingState.html">AccompanyingState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GuidedTourState.html">GuidedTourState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConversationReadyState.html">ConversationReadyState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HermitActorState.html">HermitActorState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InConversationState.html">InConversationState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Traveler.html">Traveler</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Actor.html">Actor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UntakeableActor.html">UntakeableActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Person.html">Person</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Vehicle.html">Vehicle</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#getNominalTraveler">getNominalTraveler</a>&nbsp;
+<a href="#sayArriving">sayArriving</a>&nbsp;
+<a href="#sayArrivingDir">sayArrivingDir</a>&nbsp;
+<a href="#sayArrivingDownStairs">sayArrivingDownStairs</a>&nbsp;
+<a href="#sayArrivingLocally">sayArrivingLocally</a>&nbsp;
+<a href="#sayArrivingThroughPassage">sayArrivingThroughPassage</a>&nbsp;
+<a href="#sayArrivingUpStairs">sayArrivingUpStairs</a>&nbsp;
+<a href="#sayArrivingViaPath">sayArrivingViaPath</a>&nbsp;
+<a href="#sayDeparting">sayDeparting</a>&nbsp;
+<a href="#sayDepartingDir">sayDepartingDir</a>&nbsp;
+<a href="#sayDepartingDownStairs">sayDepartingDownStairs</a>&nbsp;
+<a href="#sayDepartingLocally">sayDepartingLocally</a>&nbsp;
+<a href="#sayDepartingThroughPassage">sayDepartingThroughPassage</a>&nbsp;
+<a href="#sayDepartingUpStairs">sayDepartingUpStairs</a>&nbsp;
+<a href="#sayDepartingViaPath">sayDepartingViaPath</a>&nbsp;
+<a href="#sayTravelingRemotely">sayTravelingRemotely</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="getNominalTraveler"></a>
+<table class=decl><tr><td><code>getNominalTraveler ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#216">216</a>]</table><div class=desc>   Get the traveler for the purposes of arrival/departure messages.   Implementations that aren't themselves the travelers should   override this to supply the correct nominal traveler. <p>
+</div>
+<a name="sayArriving"></a>
+<table class=decl><tr><td><code>sayArriving (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#219">219</a>]</table><div class=desc>generic arrival/departure - for the base TravelConnector class<p>
+</div>
+<a name="sayArrivingDir"></a>
+<table class=decl><tr><td><code>sayArrivingDir (dir, conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#233">233</a>]</table><div class=desc>directional arrival/departure - for RoomConnector<p>
+</div>
+<a name="sayArrivingDownStairs"></a>
+<table class=decl><tr><td><code>sayArrivingDownStairs (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#255">255</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayArrivingLocally"></a>
+<table class=decl><tr><td><code>sayArrivingLocally (dest, conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#223">223</a>]</table><div class=desc>generic local arrival and departure messages<p>
+</div>
+<a name="sayArrivingThroughPassage"></a>
+<table class=decl><tr><td><code>sayArrivingThroughPassage (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#237">237</a>]</table><div class=desc>arrival/departure via a ThroughPassage<p>
+</div>
+<a name="sayArrivingUpStairs"></a>
+<table class=decl><tr><td><code>sayArrivingUpStairs (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#253">253</a>]</table><div class=desc>arrival/departure up/down stairs<p>
+</div>
+<a name="sayArrivingViaPath"></a>
+<table class=decl><tr><td><code>sayArrivingViaPath (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#247">247</a>]</table><div class=desc>arrival/departure via a PathPassage<p>
+</div>
+<a name="sayDeparting"></a>
+<table class=decl><tr><td><code>sayDeparting (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#220">220</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingDir"></a>
+<table class=decl><tr><td><code>sayDepartingDir (dir, conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#234">234</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingDownStairs"></a>
+<table class=decl><tr><td><code>sayDepartingDownStairs (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#259">259</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingLocally"></a>
+<table class=decl><tr><td><code>sayDepartingLocally (dest, conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#225">225</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingThroughPassage"></a>
+<table class=decl><tr><td><code>sayDepartingThroughPassage (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#241">241</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingUpStairs"></a>
+<table class=decl><tr><td><code>sayDepartingUpStairs (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#257">257</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingViaPath"></a>
+<table class=decl><tr><td><code>sayDepartingViaPath (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#249">249</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayTravelingRemotely"></a>
+<table class=decl><tr><td><code>sayTravelingRemotely (dest, conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#229">229</a>]</table><div class=desc>generic remote travel message<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

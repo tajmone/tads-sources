@@ -1,0 +1,58 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Button</title><meta name="keywords" content="Button"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Button : <a href="thing-introduction.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="gadgets-introduction.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="labeleddial.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The Button is the simplest kind of gadget class. It is simply something you can PUSH or PRESS. By default it then simply displays a message saying "Click. ", but you'll nearly always want to override this to do something else. You do so by overriding the action method of its Push handling, i.e. either
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">myButton&nbsp;:&nbsp;Button&nbsp;'button'&nbsp;'button'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Push)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;My&nbsp;button-push&nbsp;handling&nbsp;here&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Or the functionally identical but cosmetically more compact (though arguably less clear) equivalent:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">myButton&nbsp;:&nbsp;Button&nbsp;'button'&nbsp;'button'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;actionDobjPush
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;My&nbsp;button-push&nbsp;handling&nbsp;here&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This is so simple that we have already used a couple of buttons: the first to open the <a href="hiddendoor.htm#smallbrownbutton">HiddenDoor</a> in the main cabin, and the second in the implementation of the <a href="keyedcontainer.htm#orangebutton">Autorectifying</a> device. We'll continue to use buttons on our various contraptions, notably on the <a href="dynamiclocations.htm">Tardis</a> control console, but there's no need to give another specific example here.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

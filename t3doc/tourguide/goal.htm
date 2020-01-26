@@ -1,0 +1,274 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Goal</title><meta name="keywords" content="Goal,Undiscovered,Open,Closed,closeWhen,closeWhenAchieved,closeWhenDescribed,closeWhenKnown,closeWhenRevealed,closeWhenSeen,closeWhenTrue,openWhen,openWhenAchieved,openWhenDescribed,openWhenKnown,openWhenRevealed,openWhenSeen,openWhenTrue,title,goalState,isActiveInMenu,location,menuContents"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Goal : MenuTopicItem, HintMenuObject
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="hintmenu.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="hint.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Goals are the main building blocks of your hint system. They comprise an objective the player is trying to establish, together with a list of hints to help the player towards that goal.
+<br>
+
+<br>
+The first thing to appreciate about Goals is that they may be in one of three states: <b>Undiscovered</b>, <b>Open</b> or <b>Closed</b>. A Goal is in the <i>Undiscovered</i> state before the player has got to the point where s/he knows that it might be an objective s/he needs to pursue. It is <i>Open</i> once the player is (or should be) aware that this is something s/he may need to achieve, and may require hints on it. It becomes <i>Closed</i> once the player has achieved this particular objective (and so no longer needs any hints for it). The hints relating to a Goal are offered to the player only when the Goal is Open.  While the Goal is undiscovered, displaying even the name of the goal may be giving away information prematurely, and once the Goal is fulfilled, continuing to display it is unnecessary.
+<br>
+
+<br>
+Obviously it is up to you, the author, to define when a Goal changes from being <i>Undiscovered</i> to being <i>Open</i>, and from being <i>Open</i> to being <i>Closed</i>. But the Goal class defines a number of properties to help you do this:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>closeWhen</b> - Determine if there's any condition that should close this goal. We'll check closeWhenSeen, closeWhenDescribed, and all of the other closeWhenXxx conditions; if any of these return true, then we'll return true. See OpenWhen.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>closeWhenAchieved</b>  - An optional Achievement object that closes this goal. Once the achievement is completed, this goal's state will automatically be set to Closed. This makes it easy to associate the goal with a puzzle: once the puzzle is solved, there's no need to show hints for the goal any more.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>closeWhenDescribed</b> - close the goal when the given object is described (by EXAMINE).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>closeWhenKnown</b> - an optional Topic or Thing that closes this goal when known
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>closeWhenRevealed</b> - an optional &lt;.reveal&gt; tag that closes this goal when revealed</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>closeWhenSeen</b> - An option object that, when seen by the player character, closes this goal. Many goals will be things like "how do I find the X?", in which case it's nice to close the goal when the X is found. See openWhenSeen.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>closeWhenTrue</b> - an optional general-purpose check that closes the goal
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>openWhen</b> - Determine if there's any condition that should open this goal. This checks openWhenSeen, openWhenDescribed, and all of the other openWhenXxx conditions; if any of these return true, then it returns true. Note that this should generally NOT be overridden in individual instances; normally, instances would define openWhenTrue instead. However, some games might find that they use the same special condition over and over in many goals, often enough to warrant adding a new openWhenXxx property to Goal. In these cases, you can use 'modify Goal' to override openWhen to add the new condition: simply define openWhen as (inherited || newCondition), where 'newCondition' is the new special condition you want to add.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>openWhenAchieved</b> - An optional Achievement object that opens this goal. This goal will be opened automatically once the goal is achieved, if the goal was previously undiscovered. This makes it easy to set up a hint topic that becomes available after a particular puzzle is solved, which is useful when a new puzzle only becomes known to the player after a gating puzzle has been solved.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>openWhenDescribed</b>  - this is like openWhenSeen, but opens the topic when the given object is described (with EXAMINE) .
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>openWhenKnown</b> - An optional Topic or Thing that opens this goal when the object becomes "known" to the player character. This will open the goal as soon as gPlayerChar.knowsAbout(openWhenKnown) returns true. This makes it easy to open a goal as soon as the player comes across some information in the game.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>openWhenRevealed</b>  - An optional &lt;.reveal&gt; tag name that opens this goal. If this is set to a non-nil string, we'll automatically open this goal when the tag has been revealed via &lt;.reveal&gt; (or gReveal()).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>openWhenSeen</b> - An optional object that, when seen by the player character, opens this goal. It's often convenient to declare a goal open as soon as the player enters a particular area or has encountered a particular object. For such cases, simply set this property to the room or object that opens the goal, and the goal will automatically be marked as Open the next time the player asks for a hint after seeing the referenced object. Note that this may not always work as expected, since there may be some forms of discovery (e.g. where an action by the player causes an object to be moved into scope via moveInto and a custom report) that do not result in marking the object as seen, so that openWhenSeen (and closedWhenSeen) may not become true as expected.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>openWhenTrue  </b>An optional arbitrary check that opens the goal. If this returns true, we'll open the goal. This check is made in addition to the other checks (openWhenSeen, openWhenDescribed, etc). This can be used for any custom check that doesn't fit into one of the standard openWhenXxx properties.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Arial" size="2" color="#000000"></font></font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Times New Roman" size="3" color="#000000"></font></td></tr></table><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000">To illustrate the use of openWhen and closedWhen, we'll modify Goal to add our custom openWhenMoved and closeWhenMoved conditions. These can be useful alternatives to openWhenSeen and closeWhenSeen in situations where the library may not mark an object as seen, but either the act of moving it into scope or that of the player character taking it can be relied upon to set moved = true.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Goal
+<br>
+&nbsp;&nbsp;openWhenMoved&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;closeWhenMoved&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;openWhen&nbsp;=&nbsp;(inherited&nbsp;||&nbsp;(openWhenMoved&nbsp;!=&nbsp;nil&nbsp;&amp;&amp;&nbsp;openWhenMoved.moved))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;closeWhen&nbsp;=&nbsp;(inherited&nbsp;||&nbsp;(closeWhenMoved&nbsp;!=&nbsp;nil&nbsp;&amp;&amp;&nbsp;closeWhenMoved.moved))
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Times New Roman" size="3" color="#000000"></font></td></tr></table><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000">Next we should list the other properties of Goal:</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Times New Roman" size="3" color="#000000"></font></td></tr></table><font face="Times New Roman" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Times New Roman" size="3" color="#000000"></font></font><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>title</b> - The topic question associated with the goal. The hint system shows a list of the topics for the goals that are currently open, so that the player can decide what area they want help on.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>goalState</b> - This goal's current state. We'll start off undiscovered. When a goal should be open from the very start of the game, this should be overridden and set to OpenGoal.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>isActiveInMenu </b>- we're active in our parent menu if our goal state is Open
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>location</b> - The goal's parent menu - this is usually a HintMenu object. In very simple hint systems, this could simply be a top-level hint menu container; more typically, the hint system will be structured into a menu tree that organizes the hint topics into several different submenus, for easier navigation.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>menuContents </b>- The list of hints for this topic. This should be ordered from most general to most specific; we offer the hints in the order they appear in this list, so the earlier hints should give away as little as possible, while the later hints should get progressively closer to just outright giving away the answer. Each entry in the list can be a simple (single-quoted) string, or it can be a Hint object. In most cases, a string will do. A Hint object is only needed when displaying the hint has some side effect, such as opening a new Goal.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+Normally the only properties you will need to worry about when constructing your hints are <i>title</i>,<i> menuContents</i> and the various <i>OpenWhenXXX</i> and <i>CloseWhenXXX</i> conditions. Since the first two are common to all Goal objects, they are defined on the Goal template, so that:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;Goal&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;=&nbsp;'How&nbsp;do&nbsp;I&nbsp;open&nbsp;the&nbsp;door?'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;menuContents&nbsp;=
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'First&nbsp;find&nbsp;the&nbsp;key.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Then&nbsp;try&nbsp;unlocking&nbsp;the&nbsp;door&nbsp;with&nbsp;the&nbsp;key.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Now&nbsp;open&nbsp;the&nbsp;door.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Can be written simply as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;Goal&nbsp;'How&nbsp;do&nbsp;I&nbsp;open&nbsp;the&nbsp;door?'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'First&nbsp;find&nbsp;the&nbsp;key.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Then&nbsp;try&nbsp;unlocking&nbsp;the&nbsp;door&nbsp;with&nbsp;the&nbsp;key.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Now&nbsp;open&nbsp;the&nbsp;door.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">(The <a href="goaltemplate.htm">Goal template</a> has a couple of extra optional elements, but we'll try to keep things simple here).
+<br>
+
+<br>
+After all these preliminaries, we can at last proceed to give a few examples. The first even faintly puzzling obstacle the player is likely to encounter is the large boulder preventing egress west from the main cave. It may be a good idea to provide two sets of hints for this, one pointing the player towards finding the dynamite, and the second prompting the player how to make good use of the dynamite once it's found. The boulder problem will become apparent as soon as the boulder is seen. We want to close one Goal and move on to the next once the dynamite is found, but this won't necessarily work with open/closedWhenSeen since the dynamite isn't necessarily marked as seen when the player discovers it. Instead we'll use our custom open/closedWhenMoved to do the job. CloseWhenMoved will also work nicely to close the second goal, since once the boulder's blown up it's moved into nil, but it cannot be moved by any other means:
+<br>
+
+<br>
+
+<br>
++ HintMenu 'In the First Set of Caves'
+<br>
+;
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;Goal&nbsp;'How&nbsp;do&nbsp;I&nbsp;get&nbsp;past&nbsp;the&nbsp;boulder&nbsp;in&nbsp;the&nbsp;main&nbsp;cave?'
+<br>
+&nbsp;&nbsp;[&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Well,&nbsp;you&nbsp;won\'t&nbsp;be&nbsp;able&nbsp;to&nbsp;push&nbsp;it.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'You\'ll&nbsp;need&nbsp;to&nbsp;find&nbsp;some&nbsp;way&nbsp;of&nbsp;making&nbsp;it&nbsp;disappear.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Try&nbsp;blowing&nbsp;it&nbsp;up.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'You\'ll&nbsp;need&nbsp;some&nbsp;dynamite.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'There\'s&nbsp;some&nbsp;dynamite&nbsp;not&nbsp;far&nbsp;away.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'But&nbsp;it\'s&nbsp;buried.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Seen&nbsp;a&nbsp;spade&nbsp;anywhere?&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;openWhenSeen&nbsp;=&nbsp;boulder
+<br>
+&nbsp;&nbsp;closeWhenMoved&nbsp;=&nbsp;dynamite
+<br>
+;
+<br>
+
+<br>
+++&nbsp;Goal&nbsp;'How&nbsp;do&nbsp;I&nbsp;get&nbsp;rid&nbsp;of&nbsp;that&nbsp;boulder&nbsp;in&nbsp;the&nbsp;main&nbsp;cave?'
+<br>
+&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;'What&nbsp;did&nbsp;you&nbsp;find&nbsp;in&nbsp;the&nbsp;small&nbsp;sandy&nbsp;cave&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;secret&nbsp;passage?&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'What&nbsp;might&nbsp;you&nbsp;use&nbsp;dynamite&nbsp;for?&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'Are&nbsp;there&nbsp;any&nbsp;fire&nbsp;sources&nbsp;to&nbsp;hand&nbsp;near&nbsp;the&nbsp;boulder?&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'Do&nbsp;you&nbsp;want&nbsp;to&nbsp;be&nbsp;holding&nbsp;the&nbsp;dynamite&nbsp;when&nbsp;it&nbsp;detonates?&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'Examine&nbsp;the&nbsp;boulder&nbsp;closely.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'Does&nbsp;examining&nbsp;the&nbsp;boulder&nbsp;suggest&nbsp;where&nbsp;you&nbsp;might&nbsp;put&nbsp;the&nbsp;dynamite?',
+<br>
+&nbsp;&nbsp;&nbsp;'Light&nbsp;the&nbsp;dynamite&nbsp;from&nbsp;the&nbsp;torch&nbsp;on&nbsp;the&nbsp;wall,&nbsp;put&nbsp;in&nbsp;the&nbsp;boulder,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;then&nbsp;scarper&nbsp;until&nbsp;you&nbsp;hear&nbsp;the&nbsp;explosion.&nbsp;'
+<br>
+&nbsp;]
+<br>
+&nbsp;openWhenMoved&nbsp;=&nbsp;dynamite
+<br>
+&nbsp;closeWhenMoved&nbsp;=&nbsp;boulder
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">A slightly trickier Goal to deal with is that for opening the trunk. On the one hand, at what point does the player become aware that unlocking the trunk might be a problem? It's hardly necessary to provide a hint telling the player to go and find the key as soon as s/he sees the trunk . On the other hand, once the key's been found and tried and it fails to open the trunk, the player will recognize that the problem is more complicated than it seemed. This might be a good point at which to open the Goal. But how can the Goal tell that this point has been reached? The neatest way might might be to stick a &lt;.reveal&gt; tag in the message that reports that the key fits the lock but won't turn and test for that in the openWhenRevealed property.
+<br>
+
+<br>
+On the other hand, when should this goal be closed? The tempting thing would be to test for the trunk being open or unlocked, but this <i>might</i> not work, since the player <i>could</i> close and lock the trunk again, and if the next time the library checked (i.e. the next time the player asked for hints) the trunk was re-closed or re-locked, the Goal would not be closed. But once the player has opened the trunk s/he will see its contents, so we can test for one of the items inside the trunk being seen:</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+++&nbsp;Goal&nbsp;'How&nbsp;do&nbsp;I&nbsp;unlock&nbsp;the&nbsp;trunk?&nbsp;'&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Well,&nbsp;you\'ve&nbsp;already&nbsp;found&nbsp;the&nbsp;right&nbsp;key.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'You\'ll&nbsp;have&nbsp;to&nbsp;do&nbsp;something&nbsp;to&nbsp;make&nbsp;the&nbsp;key&nbsp;work.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'It&nbsp;will&nbsp;take&nbsp;a&nbsp;long&nbsp;journey&nbsp;to&nbsp;find&nbsp;what&nbsp;you&nbsp;need.&nbsp;',&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'How&nbsp;might&nbsp;you&nbsp;gain&nbsp;access&nbsp;to&nbsp;future&nbsp;technology?'
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;openWhenRevealed&nbsp;=&nbsp;'trunk-lock'
+<br>
+&nbsp;&nbsp;closeWhenSeen&nbsp;=&nbsp;glassJar
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">The list of hints here is only partial, and would ideally need to be expanded, but instead we'll conclude with a more urgent task, namely ensuring that the appropriate &lt;.reveal&gt; tag actually gets revealed when it's meant to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">trunk&nbsp;:&nbsp;KeyedContainer,&nbsp;Heavy&nbsp;'large&nbsp;black&nbsp;trunk'&nbsp;'large&nbsp;black&nbsp;trunk'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;black&nbsp;trunk&nbsp;rests&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;initiallyLocked&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;keyList&nbsp;=&nbsp;[brassKey]&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;lockOrUnlockAction(lock)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gIobj.isBent)&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('{The&nbsp;iobj/he}&nbsp;fits&nbsp;the&nbsp;lock&nbsp;but&nbsp;won\'t&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quite&nbsp;turn&nbsp;in&nbsp;it.<b>&lt;.reveal&nbsp;trunk-lock&gt;</b>&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited(lock);
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

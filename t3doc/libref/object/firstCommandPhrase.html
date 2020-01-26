@@ -1,0 +1,15 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>firstCommandPhrase</title></head><body>
+<table class=ban><tr><td align=left><span class=title>firstCommandPhrase</span><span class=type>GrammarProd</span></table><p>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/firstCommandPhrase(askTellActorTo).html">firstCommandPhrase(askTellActorTo)</a></span> :  &nbsp; <a href="../object/FirstCommandProdWithActor.html">FirstCommandProdWithActor</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5107">5107</a>]</code></table><div class=gramrule>    ('ask' | 'tell' | 'a' | 't') singleNounOnly-&gt;actor_<br>    'to' commandPhrase-&gt;cmd_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/firstCommandPhrase(commandOnly).html">firstCommandPhrase(commandOnly)</a></span> :  &nbsp; <a href="../object/FirstCommandProd.html">FirstCommandProd</a></code>
+<td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#781">781</a>]</code></table><div class=gramrule> commandPhrase-&gt;cmd_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/firstCommandPhrase(withActor).html">firstCommandPhrase(withActor)</a></span> :  &nbsp; <a href="../object/FirstCommandProdWithActor.html">FirstCommandProdWithActor</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5095">5095</a>]</code></table><div class=gramrule>    singleNounOnly-&gt;actor_ ',' commandPhrase-&gt;cmd_<br></div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PreCond</title><meta name="keywords" content="PreCond"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="action.htm">[Previous] </a>&nbsp;&nbsp;<a href="remap.htm">[Next] </a></I></FONT></P>
+<h3>PreCond</h3>
+
+<p>There are certain necessary conditions that tend to recur commonly in IF actions. In order to read the book or examine the chest, the objects in question have to be visible. In order to hit the troll with the sword, or move the nest with the stick, or unlock the chest with the gold key, the sword, stick or key first have to be held. These common conditions are encapsulated in TADS 3 as <font face="Courier New" size="2" color="#000000">PreCondition</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects, since they represent the common preconditions of various types of a command.
+</p>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">preCond</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property in </font><font face="Courier New" size="2" color="#000000">dobjFor&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">or </font><font face="Courier New" size="2" color="#000000">iobjFor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> propertyset contains (or, if it is a routine, returns) a list of the preconditions needed for the object in question to be used in the action in question. For example, in the case of reading the book and examining the chest you might define:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">preCond&nbsp;=&nbsp;[objVisible]
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Whereas, in the case of hitting the troll or whatever, in the appropriate </font><font face="Courier New" size="2" color="#000000">iobjFor()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">section (for AttackWith, MoveWith, UnlockWith) you might define:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">preCond&nbsp;=&nbsp;[objHeld]
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The library already defines sensible default preconditions for most actions, so you often don't need to worry about them. However, as your own games become more sophisticated, you may want to adjust the preconditions that apply to a particular action on a particular object. For example, you may decide that a particular book needs to be held as well as being visible in order to be read, so you might define:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">redBook:&nbsp;Readable&nbsp;'little&nbsp;red&nbsp;book*books'&nbsp;&nbsp;&nbsp;'red&nbsp;book'
+<br>
+&#133;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">dobjFor(Read)
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;preCond&nbsp;=&nbsp;[objVisible,&nbsp;objHeld]
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&#133;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Like check() and verify() routines, preconditions can veto an action if certain conditions aren't met. Unlike check() and verify(), however, they can be used to change the game state to meet the precondition. For example, the </font><font face="Courier New" size="2" color="#000000">objHeld</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> precondition will first check to see if the object is already held; if it isn't, it will try to make the actor take the object (via an implicit action, i.e. one that is reported as '(first taking the book)' or whatever). If the implicit action succeeds, the action is allowed to proceed (provided there's nothing else preventing it). If not, the action is disallowed, with a message like '(first trying to take the book)' that explains the reason for the failure (e.g. "The book is out of reach."). Some preconditions, however simply test whether the condition is met, and disallow the action if it isn't. For example, an </font><font face="Courier New" size="2" color="#000000">objVisible</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> precondition makes no attempt to make an object visible if it isn't (in the general case it's impossible to know what implicit action, if any, could bring this about), it simply vetoes the action if the object can't be seen by the actor.
+<br>
+
+<br>
+The library defines several preconditions, including </font><font face="Courier New" size="2" color="#000000">objOpen</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">objClosed</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">objUnlocked</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">touchObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">actorStanding</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">objAudible</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. For a complete list, see the pre-conditions section of the "<a href="../techman/t3res.htm#precond" target="_top">TADS 3 Action Results</a>" section of the <i>Technical Manual</i>. It is also perfectly possible (and often useful) to define your own, although that is beyond the scope of this guide. The best way to get a full understanding of preconditions is to study the library file precond.t.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="action.htm">[Previous] </a>&nbsp;&nbsp;<a href="remap.htm">[Next] </a></I></FONT></P>
+</body></html>

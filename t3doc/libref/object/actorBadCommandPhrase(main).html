@@ -1,0 +1,97 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>actorBadCommandPhrase(main)</title></head><body>
+<table class=ban><tr><td align=left><span class=title>actorBadCommandPhrase(main)</span><span class=type>grammar</span><td align=right><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5147">5147</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   An actor-targeted command with a bad command phrase.  This is used as   a fallback if we fail to match anything on the first attempt at   parsing the first command on a line.  The point is to at least detect   the target actor phrase, if that much is valid, so that we better   customize error messages for the rest of the command.
+<p>
+<code>grammar
+<span class="gramalt"><a href="../object/actorBadCommandPhrase.html">actorBadCommandPhrase</a>(main)</span> :  &nbsp; <a href="../object/FirstCommandProdWithActor.html">FirstCommandProdWithActor</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>actorBadCommandPhrase(main)</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FirstCommandProdWithActor.html">FirstCommandProdWithActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandProdWithActor.html">CommandProdWithActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandProd.html">CommandProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FirstCommandProd.html">FirstCommandProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandProd.html">CommandProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>CommandProdWithActor</code> :<br>
+<code>
+<a href="../object/CommandProdWithActor.html#resolvedActor_">resolvedActor_</a>&nbsp;
+<a href="../object/CommandProdWithActor.html#resolver_">resolver_</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandProd</code> :<br>
+<code>
+<a href="../object/CommandProd.html#getActorPhrase">getActorPhrase</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#resolveNouns">resolveNouns</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>CommandProdWithActor</code> :<br>
+<code>
+<a href="../object/CommandProdWithActor.html#execActorPhrase">execActorPhrase</a>&nbsp;
+<a href="../object/CommandProdWithActor.html#getActorPhrase">getActorPhrase</a>&nbsp;
+<a href="../object/CommandProdWithActor.html#getResolver">getResolver</a>&nbsp;
+<a href="../object/CommandProdWithActor.html#getTargetActor">getTargetActor</a>&nbsp;
+<a href="../object/CommandProdWithActor.html#hasTargetActor">hasTargetActor</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<p>Inherited from <code>FirstCommandProd</code> :<br>
+<code>
+<a href="../object/FirstCommandProd.html#countCommands">countCommands</a>&nbsp;
+<a href="../object/FirstCommandProd.html#getCommandSepIndex">getCommandSepIndex</a>&nbsp;
+<a href="../object/FirstCommandProd.html#getCommandTokens">getCommandTokens</a>&nbsp;
+<a href="../object/FirstCommandProd.html#getNextCommandIndex">getNextCommandIndex</a>&nbsp;
+<a href="../object/FirstCommandProd.html#isEndOfSentence">isEndOfSentence</a>&nbsp;
+<a href="../object/FirstCommandProd.html#resolveFirstAction">resolveFirstAction</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="resolveNouns"></a>
+<table class=decl><tr><td><code>resolveNouns (issuingActor, targetActor, results)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#5153">5153</a>]</table><div class=desc>to resolve nouns, we merely resolve the actor<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

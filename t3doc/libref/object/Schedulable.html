@@ -1,0 +1,80 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>Schedulable</title></head><body>
+<table class=ban><tr><td align=left><span class=title>Schedulable</span><span class=type>class</span><td align=right><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#223">223</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   An item that can be scheduled for time-based notifications.  The main   scheduler loop in runScheduler() operates on objects of this class. <p>   Note that we build a list of all Schedulable instances during   pre-initialization.  If any Schedulable objects are dynamically   created, they must be added to the list explicitly after creation in   order for the event manager to schedule them for execution.  The   default constructor does this automatically, so subclasses can simply   inherit our constructor to be added to the master list.
+<p>
+<code>class
+<b>Schedulable</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>Schedulable</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>Schedulable</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Actor.html">Actor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UntakeableActor.html">UntakeableActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Person.html">Person</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/eventManager.html">eventManager</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#allSchedulables">allSchedulables</a>&nbsp;
+<a href="#gameClockTime">gameClockTime</a>&nbsp;
+<a href="#nextRunTime">nextRunTime</a>&nbsp;
+<a href="#scheduleOrder">scheduleOrder</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#calcScheduleOrder">calcScheduleOrder</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#execute">execute</a>&nbsp;
+<a href="#executeTurn">executeTurn</a>&nbsp;
+<a href="#getNextRunTime">getNextRunTime</a>&nbsp;
+<a href="#incNextRunTime">incNextRunTime</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="allSchedulables"></a>
+<table class=decl><tr><td><code>allSchedulables</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#308">308</a>]</table><div class=desc>   A list of all of the Schedulable objects in the game.  We set this   up during pre-initialization; if any Schedulable instances are   created dynamically, they must be explicitly added to this list   after creation. <p>
+</div>
+<a name="gameClockTime"></a>
+<table class=decl><tr><td><code>gameClockTime</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#300">300</a>]</table><div class=desc>   A class variable giving the current game clock time.  This is a   class variable because there's only one global game clock.  The   game clock starts at zero and increments in game time units; a   game time unit is the arbitrary quantum of time for our event   scheduling system. <p>
+</div>
+<a name="nextRunTime"></a>
+<table class=decl><tr><td><code>nextRunTime</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#291">291</a>]</table><div class=desc>my next running time, in game clock time<p>
+</div>
+<a name="scheduleOrder"></a>
+<table class=decl><tr><td><code>scheduleOrder</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#273">273</a>]</table><div class=desc>   Scheduling order.  This determines which item goes first when   multiple items are schedulable at the same time (i.e., they all   have the same getNextRunTime() values).  The item with the lowest   number here goes first. <p>   This should never be evaluated except immediately after a call to   calcScheduleOrder. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="calcScheduleOrder"></a>
+<table class=decl><tr><td><code>calcScheduleOrder ( )</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#288">288</a>]</table><div class=desc>   Calculate the scheduling order, returning the order value and   storing it in our property scheduleOrder.  This is used to   calculate and cache the value prior to sorting a list of   schedulable items.  We use this two-step approach (first   calculate, then sort) so that we avoid repeatedly evaluating a   complex calculation, if indeed there is a complex calculation to   perform. <p>   By default, we assume that the schedule order is static, so we   simply leave our scheduleOrder property unchanged and return its   present value. <p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct ( )</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#225">225</a>]</table><div class=desc>construction - add myself to the Schedulable list<p>
+</div>
+<a name="execute"></a>
+<table class=decl><tr><td><code>execute ( )</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#320">320</a>]</table><div class=desc>   Execute preinitialization.  Build a list of all of the schedulable   objects in the game, so that we can scan this list quickly during   play. <p>
+</div>
+<a name="executeTurn"></a>
+<table class=decl><tr><td><code>executeTurn ( )</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#262">262</a>]</table><div class=desc>   Notify this object that its scheduled run time has arrived.  This   should perform the scheduled task.  If the scheduled task takes   any game time, the object's internal next run time should be   updated accordingly. <p>   The scheduler will invoke this method of the same object   repeatedly for as long as its nextRunTime remains unchanged AND   this method returns true.  If the object's scheduling priority   changes relative to other schedulable objects, it should return   nil here to tell the scheduler to recalculate scheduling   priorities. <p>
+</div>
+<a name="getNextRunTime"></a>
+<table class=decl><tr><td><code>getNextRunTime ( )</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#240">240</a>]</table><div class=desc>   Get the next time (on the game clock) at which I'm eligible for   execution.  We won't receive any scheduling notifications until   this time.  If this object doesn't want any scheduling   notifications, return nil. <p>
+</div>
+<a name="incNextRunTime"></a>
+<table class=decl><tr><td><code>incNextRunTime (amt)</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#243">243</a>]</table><div class=desc>advance my next run time by the given number of clock units<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

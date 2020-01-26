@@ -1,0 +1,107 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ActorResolver</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ActorResolver</span><span class=type>class</span><td align=right><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#882">882</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Actor Resolver.  We use this to resolve the actor to whom a command   is directed: the actor must be in scope for the player character.
+<p>
+<code>class
+<b>ActorResolver</b> :  &nbsp; <a href="../object/Resolver.html">Resolver</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ActorResolver</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Resolver.html">Resolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#whichMessageObject">whichMessageObject</a>&nbsp;
+<a href="#whichObject">whichObject</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#action_">action_</a>&nbsp;
+<a href="../object/Resolver.html#actor_">actor_</a>&nbsp;
+<a href="../object/Resolver.html#equivs_">equivs_</a>&nbsp;
+<a href="../object/Resolver.html#isGlobalScope">isGlobalScope</a>&nbsp;
+<a href="../object/Resolver.html#isSubResolver">isSubResolver</a>&nbsp;
+<a href="../object/Resolver.html#issuer_">issuer_</a>&nbsp;
+<a href="../object/Resolver.html#scope_">scope_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#filterAmbiguousNounPhrase">filterAmbiguousNounPhrase</a>&nbsp;
+<a href="#filterPluralPhrase">filterPluralPhrase</a>&nbsp;
+<a href="#getAll">getAll</a>&nbsp;
+<a href="#getAllDefaults">getAllDefaults</a>&nbsp;
+<a href="#getDefaultObject">getDefaultObject</a>&nbsp;
+<a href="#getRawPronounAntecedent">getRawPronounAntecedent</a>&nbsp;
+<a href="#resolveUnknownNounPhrase">resolveUnknownNounPhrase</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#allowAll">allowAll</a>&nbsp;
+<a href="../object/Resolver.html#cacheScopeList">cacheScopeList</a>&nbsp;
+<a href="../object/Resolver.html#filterAll">filterAll</a>&nbsp;
+<a href="../object/Resolver.html#filterAmbiguousEquivalents">filterAmbiguousEquivalents</a>&nbsp;
+<a href="../object/Resolver.html#filterPossRank">filterPossRank</a>&nbsp;
+<a href="../object/Resolver.html#getAction">getAction</a>&nbsp;
+<a href="../object/Resolver.html#getPossessiveResolver">getPossessiveResolver</a>&nbsp;
+<a href="../object/Resolver.html#getPronounDefault">getPronounDefault</a>&nbsp;
+<a href="../object/Resolver.html#getQualifierResolver">getQualifierResolver</a>&nbsp;
+<a href="../object/Resolver.html#getReflexiveBinding">getReflexiveBinding</a>&nbsp;
+<a href="../object/Resolver.html#getScopeList">getScopeList</a>&nbsp;
+<a href="../object/Resolver.html#getTargetActor">getTargetActor</a>&nbsp;
+<a href="../object/Resolver.html#matchName">matchName</a>&nbsp;
+<a href="../object/Resolver.html#objInScope">objInScope</a>&nbsp;
+<a href="../object/Resolver.html#resetResolver">resetResolver</a>&nbsp;
+<a href="../object/Resolver.html#resolvePronounAntecedent">resolvePronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#selectIndefinite">selectIndefinite</a>&nbsp;
+<a href="../object/Resolver.html#withGlobals">withGlobals</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="whichMessageObject"></a>
+<table class=decl><tr><td><code>whichMessageObject</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#1048">1048</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="whichObject"></a>
+<table class=decl><tr><td><code>whichObject</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#1047">1047</a>]</table><div class=desc>we resolve target actors<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (issuingActor)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#883">883</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="filterAmbiguousNounPhrase"></a>
+<table class=decl><tr><td><code>filterAmbiguousNounPhrase (lst, requiredNum, np)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#929">929</a>]</table><div class=desc>   Filter an ambiguous list of objects.  We will filter according to   which objects are most logical as targets of commands. <p>
+</div>
+<a name="filterPluralPhrase"></a>
+<table class=decl><tr><td><code>filterPluralPhrase (lst, np)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#976">976</a>]</table><div class=desc>   Filter a plural list <p>
+</div>
+<a name="getAll"></a>
+<table class=decl><tr><td><code>getAll (np)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#912">912</a>]</table><div class=desc>   Get the "all" list - this is the list of objects that we should   use when the object of the command is the special word "all".  By   default, we'll return everything in scope. <p>
+</div>
+<a name="getAllDefaults"></a>
+<table class=decl><tr><td><code>getAllDefaults ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#919">919</a>]</table><div class=desc>get the default object list<p>
+</div>
+<a name="getDefaultObject"></a>
+<table class=decl><tr><td><code>getDefaultObject (np)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#987">987</a>]</table><div class=desc>get a default object<p>
+</div>
+<a name="getRawPronounAntecedent"></a>
+<table class=decl><tr><td><code>getRawPronounAntecedent (typ)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#1004">1004</a>]</table><div class=desc>   Get a raw pronoun antecedent list.  Since we are resolving the   target actor, pronouns are relative to the issuing actor. <p>
+</div>
+<a name="resolveUnknownNounPhrase"></a>
+<table class=decl><tr><td><code>resolveUnknownNounPhrase (tokList)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#994">994</a>]</table><div class=desc>resolve a noun phrase involving unknown words<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<html><head><link rel=stylesheet type="text/css" href="../libref.css"><title>cquotes.t</title></head><body>
+<table class=ban><tr><td><h1>cquotes.t</h1><td align=right><a href="../file/cquotes.t.html">documentation</a></table><pre>
+<a name="1"></a>#charset "us-ascii"
+<a name="2"></a>
+<a name="3"></a>/*
+<a name="4"></a>** cquotes: a TADS 3 output filter for making single curly quotes
+<a name="5"></a>**
+<a name="6"></a>** To use, just add to your project. The PreinitObject at the end
+<a name="7"></a>** of this file automatically registers the curly quote output filter.
+<a name="8"></a>**
+<a name="9"></a>** You may use this module in your own game. You may distribute
+<a name="10"></a>** modified versions of this file, though I would prefer you contact
+<a name="11"></a>** me first at stephen@granades.com and see about having me add your
+<a name="12"></a>** changes to my source.
+<a name="13"></a>**
+<a name="14"></a>** Version: 0.2 (2 Feb 2004)
+<a name="15"></a>**            Added in fixes for patIsHTMLTag and patIsFormatTag from
+<a name="16"></a>**            Matt McGlone
+<a name="17"></a>**          0.1 (27 Aug 2002)
+<a name="18"></a>**            Original release
+<a name="19"></a>**
+<a name="20"></a>** Copyright (c) 2002, 2004 by Stephen Granade.  All Rights Reserved.
+<a name="21"></a>*/
+<a name="22"></a>
+<a name="23"></a>#include &lt;tadsgen.h&gt;
+<a name="24"></a>#include &lt;systype.h&gt;
+<a name="25"></a>
+<a name="26"></a>// A filter to change single quotes "'" to curly ones. Comes in two
+<a name="27"></a>// flavors:
+<a name="28"></a>//
+<a name="29"></a>// non-aggressive: will only change the single quotes that are part
+<a name="30"></a>//     of English contractions (like "won't") into &amp;lsquo;
+<a name="31"></a>// aggressive: will change every single left quote it can find. Any
+<a name="32"></a>//     single quote that is preceeded by a letter or punctuation is
+<a name="33"></a>//     turned into &amp;lsquo;.
+<a name="34"></a>//
+<a name="35"></a>// To choose between them, set cquoteOutputFilter.aggressive to
+<a name="36"></a>// true (for aggressive changing) or nil (for non-aggressive matching).
+<a name="37"></a>//
+<a name="38"></a>// No translation is done to single quotes which a) fall within HTML
+<a name="39"></a>// tags (i.e. &lt;font face='courier'&gt;), or b) fall within
+<a name="40"></a>// formatting tags (i.e. {It's obj})
+<a name="41"></a>cquoteOutputFilter: OutputFilter
+<a name="42"></a>    aggressive = nil
+<a name="43"></a>
+<a name="44"></a>    // Patterns for our searches
+<a name="45"></a>    patIsHTMLTag = static new RexPattern('&lt;langle&gt;&lt;^rangle&gt;+&lt;squote&gt;&lt;^rangle&gt;*&lt;rangle&gt;')
+<a name="46"></a>    patIsFormatTag = static new RexPattern('{[^}]+&lt;squote&gt;[^}]*}')
+<a name="47"></a>    patAggressive = static new RexPattern('(&lt;alphanum|punct&gt;)&lt;squote&gt;')
+<a name="48"></a>    patIsCont1Tag = static new RexPattern('(&lt;alpha&gt;)&lt;squote&gt;(s|m|d|ve|re|ll)')
+<a name="49"></a>    patIsCont2Tag = static new RexPattern('(&lt;alpha&gt;)n&lt;squote&gt;t')
+<a name="50"></a>    patIsPossTag = static new RexPattern('(&lt;alpha&gt;)s&lt;squote&gt;')
+<a name="51"></a>
+<a name="52"></a>    filterText(ostr, val) {
+<a name="53"></a>	local ret;
+<a name="54"></a>
+<a name="55"></a>	// Look for an HTML tag. We only need to find the first one,
+<a name="56"></a>	// because we'll be recursing through the string
+<a name="57"></a>	ret = rexSearch(patIsHTMLTag, val);
+<a name="58"></a>	if (ret == nil) {
+<a name="59"></a>	    // Look for a formatting tag
+<a name="60"></a>	    ret = rexSearch(patIsFormatTag, val);
+<a name="61"></a>	}
+<a name="62"></a>	// If we got a match either from the HTML or the formatting
+<a name="63"></a>	// tag, ignore that match recursively; that is, run the output
+<a name="64"></a>	// filter on the text before and after the match. This is
+<a name="65"></a>	// assuming that the whole start wasn't prefixed by a backslash
+<a name="66"></a>	// (since e.g. "\&lt;font face='courier&gt;" isn't really an HTML tag)
+<a name="67"></a>	if (ret != nil &amp;&amp; (ret[1] == 1 ||
+<a name="68"></a>			   val.substr(ret[1] - 1, 1) != '\\')) {
+<a name="69"></a>	    return filterText(ostr, val.substr(1, ret[1] - 1)) + ret[3] +
+<a name="70"></a>		filterText(ostr, val.substr(ret[1] + ret[2],
+<a name="71"></a>					    val.length() - (ret[1]+ret[2])
+<a name="72"></a>					    + 1));
+<a name="73"></a>	}
+<a name="74"></a>
+<a name="75"></a>	// Do the appropriate replacements. First, aggressive
+<a name="76"></a>	if (aggressive) {
+<a name="77"></a>	    val = rexReplace(patAggressive, val, '%1&amp;rsquo;',
+<a name="78"></a>			     ReplaceAll);
+<a name="79"></a>	}
+<a name="80"></a>	else {
+<a name="81"></a>	    // We recognize the contractions 's, 'm, 'd, 've, 're,
+<a name="82"></a>	    // 'll, and n't, as well as the plural possessive s'.
+<a name="83"></a>	    // (Possessive 's is handled by the contraction.) All
+<a name="84"></a>	    // must be preceeded by a letter.
+<a name="85"></a>	    val = rexReplace(patIsCont1Tag,
+<a name="86"></a>			     val, '%1&amp;rsquo;%2', ReplaceAll);
+<a name="87"></a>	    val = rexReplace(patIsCont2Tag, val, '%1n&amp;rsquo;t',
+<a name="88"></a>			     ReplaceAll);
+<a name="89"></a>	    val = rexReplace(patIsPossTag, val, '%1s&amp;rsquo;',
+<a name="90"></a>			     ReplaceAll);
+<a name="91"></a>	}
+<a name="92"></a>
+<a name="93"></a>	return val;
+<a name="94"></a>    }
+<a name="95"></a>;
+<a name="96"></a>
+<a name="97"></a>// When we first start up, register us as an output filter
+<a name="98"></a>PreinitObject
+<a name="99"></a>    execute() {
+<a name="100"></a>	mainOutputStream.addOutputFilter(cquoteOutputFilter);
+<a name="101"></a>    }
+<a name="102"></a>;
+<a name="103"></a>
+</pre>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 1/21/2007 from TADS version 3.0.13</div>
+</body>
+</html>

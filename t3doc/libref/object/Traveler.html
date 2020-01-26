@@ -1,0 +1,143 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>Traveler</title></head><body>
+<table class=ban><tr><td align=left><span class=title>Traveler</span><span class=type>class</span><td align=right><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#273">273</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2769">2769</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A Traveler is an object that can travel.  The two main kinds of   travelers are Actors and Vehicles.  A vehicle can contain multiple   actors, so a single vehicle travel operation could move several   actors. <p>   This class is intended to be multiply inherited, since it is not based   on any simulation object class.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2769">2769</a>]:</i><br>
+   English-specific Traveler changes
+<p>
+<code>class
+<b>Traveler</b> :  &nbsp; <a href="../object/TravelMessageHandler.html">TravelMessageHandler</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>Traveler</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TravelMessageHandler.html">TravelMessageHandler</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>Traveler</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Actor.html">Actor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UntakeableActor.html">UntakeableActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Person.html">Person</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Vehicle.html">Vehicle</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#getTravelerActors">getTravelerActors</a>&nbsp;
+<a href="#getTravelerMotiveActors">getTravelerMotiveActors</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#canTravelVia">canTravelVia</a>&nbsp;
+<a href="#checkDirectlyInRoom">checkDirectlyInRoom</a>&nbsp;
+<a href="#checkMovingTravelerInto">checkMovingTravelerInto</a>&nbsp;
+<a href="#describeArrival">describeArrival</a>&nbsp;
+<a href="#describeDeparture">describeDeparture</a>&nbsp;
+<a href="#describeNpcArrival">describeNpcArrival</a>&nbsp;
+<a href="#describeNpcDeparture">describeNpcDeparture</a>&nbsp;
+<a href="#explainNoTravelVia">explainNoTravelVia</a>&nbsp;
+<a href="#forEachTravelingActor">forEachTravelingActor</a>&nbsp;
+<a href="#getNotifyTable">getNotifyTable</a>&nbsp;
+<a href="#isActorTraveling">isActorTraveling</a>&nbsp;
+<a href="#isTravelerCarrying">isTravelerCarrying</a>&nbsp;
+<a href="#travelerLocName">travelerLocName</a>&nbsp;
+<a href="#travelerPreCond">travelerPreCond</a>&nbsp;
+<a href="#travelerRemoteLocName">travelerRemoteLocName</a>&nbsp;
+<a href="#travelerSeenBy">travelerSeenBy</a>&nbsp;
+<a href="#travelerTravelTo">travelerTravelTo</a>&nbsp;
+<a href="#travelerTravelWithin">travelerTravelWithin</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TravelMessageHandler</code> :<br>
+<code>
+<a href="../object/TravelMessageHandler.html#getNominalTraveler">getNominalTraveler</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArriving">sayArriving</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDir">sayArrivingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDownStairs">sayArrivingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingLocally">sayArrivingLocally</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingThroughPassage">sayArrivingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingUpStairs">sayArrivingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingViaPath">sayArrivingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDeparting">sayDeparting</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingDir">sayDepartingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingDownStairs">sayDepartingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingLocally">sayDepartingLocally</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingThroughPassage">sayDepartingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingUpStairs">sayDepartingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingViaPath">sayDepartingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayTravelingRemotely">sayTravelingRemotely</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="getTravelerActors"></a>
+<table class=decl><tr><td><code>getTravelerActors</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#723">723</a>]</table><div class=desc>   Get the list of actors taking part in the travel.  When an actor   is the traveler, this list simply contains the actor itself; for   a vehicle or other composite traveler that moves more than one   actor at a time, this should return the list of all of the actors   involved in the travel. <p>
+</div>
+<a name="getTravelerMotiveActors"></a>
+<table class=decl><tr><td><code>getTravelerMotiveActors</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#734">734</a>]</table><div class=desc>   Get the list of actors traveling undo their own power.  In the   case of an actor traveling directly, this is just the actor; in   the case of an actor pushing something, this is likewise the   actor; in the case of a group of actors traveling together, this   is the list of traveling actors; in the case of a vehicle, this   is an empty list, since anyone traveling with the vehicle is   traveling under the vehicle's power. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="canTravelVia"></a>
+<table class=decl><tr><td><code>canTravelVia (connector, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#308">308</a>]</table><div class=desc>   Can the traveler travel via the given connector to the given   destination?  Returns true if the travel is permitted, nil if not. <p>   By default, this simply returns true to indicate that the travel   is allowed.  Individual instances can override this to enforce   limitations on what kind of travel the traveler can perform. <p>
+</div>
+<a name="checkDirectlyInRoom"></a>
+<table class=decl><tr><td><code>checkDirectlyInRoom (dest, allowImplicit)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#279">279</a>]</table><div class=desc>   Check, using pre-condition rules, that the traveler is directly   in the given room.  We'll attempt to implicitly remove the actor   from any nested rooms within the given room. <p>
+</div>
+<a name="checkMovingTravelerInto"></a>
+<table class=decl><tr><td><code>checkMovingTravelerInto (room, allowImplicit)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#289">289</a>]</table><div class=desc>   Check, using pre-condition rules, that the traveler is in the   given room, moving the traveler to the room if possible. <p>
+</div>
+<a name="describeArrival"></a>
+<table class=decl><tr><td><code>describeArrival (origin, backConnector)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#415">415</a>]</table><div class=desc>   Show my arrival message - this is shown when I'm entering a room   in view of the player character from a location where the player   character could not see me.  'backConnector' is the connector in   the destination location from which we appear to be emerging. <p>
+</div>
+<a name="describeDeparture"></a>
+<table class=decl><tr><td><code>describeDeparture (dest, connector)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#327">327</a>]</table><div class=desc>   Show my departure message - this is shown when I'm leaving a room   where the player character can see me for another room where the   player character cannot see me. <p>
+</div>
+<a name="describeNpcArrival"></a>
+<table class=decl><tr><td><code>describeNpcArrival (origin, backConnector)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#462">462</a>]</table><div class=desc>   Describe the arrival of a non-player character or any other   traveler that doesn't involve the player character. <p>
+</div>
+<a name="describeNpcDeparture"></a>
+<table class=decl><tr><td><code>describeNpcDeparture (dest, connector)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#355">355</a>]</table><div class=desc>   Describe the departure of a non-player character, or any traveler   not involving the player character. <p>
+</div>
+<a name="explainNoTravelVia"></a>
+<table class=decl><tr><td><code>explainNoTravelVia (connector, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#320">320</a>]</table><div class=desc>   Explain why the given travel is not possible.  This is called when   canTravelVia() returns nil, to display a report to the player   explaining why the travel was disallowed. <p>   By default, we do nothing, since our default canTravelVia() never   disallows any travel.  If canTravelVia() is overridden to disallow   travel under some conditions, this must be overridden to generate   an appropriate explanatory report. <p>
+</div>
+<a name="forEachTravelingActor"></a>
+<table class=decl><tr><td><code>forEachTravelingActor (func)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#710">710</a>]</table><div class=desc>invoke a callback function for each traveling actor<p>
+</div>
+<a name="getNotifyTable"></a>
+<table class=decl><tr><td><code>getNotifyTable ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#665">665</a>]</table><div class=desc>   Get a lookup table giving the set of objects to be notified of a   beforeTravel/afterTravel event.  By default, we return a table   including every object connected to the traveler by containment. <p>
+</div>
+<a name="isActorTraveling"></a>
+<table class=decl><tr><td><code>isActorTraveling (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#681">681</a>]</table><div class=desc>   Is the given actor traveling with this traveler?  Returns true if   the actor is in my getTravelerActors list. <p>
+</div>
+<a name="isTravelerCarrying"></a>
+<table class=decl><tr><td><code>isTravelerCarrying (obj)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#692">692</a>]</table><div class=desc>   Is the given object being carried by the traveler?  Returns true   if the object is inside the traveler itself, or is inside any of   the actors traveling. <p>
+</div>
+<a name="travelerLocName"></a>
+<table class=decl><tr><td><code>travelerLocName ( )</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2776">2776</a>]</table><div class=desc>   Get my location's name, from the PC's perspective, for describing   my arrival to or departure from my current location.  We'll   simply return our location's destName, or "the area" if it   doesn't have one. <p>
+</div>
+<a name="travelerPreCond"></a>
+<table class=decl><tr><td><code>travelerPreCond (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#298">298</a>]</table><div class=desc>   Get the travel preconditions specific to the traveler, for the   given connector.  By default, we return no extra conditions. <p>
+</div>
+<a name="travelerRemoteLocName"></a>
+<table class=decl><tr><td><code>travelerRemoteLocName ( )</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2792">2792</a>]</table><div class=desc>   Get my "remote" location name, from the PC's perspective.  This   returns my location name, but only if my location is remote from   the PC's perspective - that is, my location has to be outside of   the PC's top-level room.  If we're within the PC's top-level   room, we'll simply return an empty string. <p>
+</div>
+<a name="travelerSeenBy"></a>
+<table class=decl><tr><td><code>travelerSeenBy (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#675">675</a>]</table><div class=desc>   Determine if the given actor can see this traveler.  By default,   we'll simply check to see if the actor can see 'self'. <p>
+</div>
+<a name="travelerTravelTo"></a>
+<table class=decl><tr><td><code>travelerTravelTo (dest, connector, backConnector)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#555">555</a>]</table><div class=desc>   Travel to a new location.  Moves the traveler to a new location   via the given connector, triggering any side effects of the   travel. <p>   Note that this routine is not normally called directly; in most   cases, the actor's travelTo is called, and it in turn invokes   this method in the appropriate traveler. <p>   'dest' is the new location to which we're traveling.  'connector'   is the TravelConnector we're traversing from the source location   to reach the new destination; the connector is normally the   invoker of this routine.  'backConnector' is the connector in the   destination from which the actor will appear to emerge on the   other end of the travel. <p>
+</div>
+<a name="travelerTravelWithin"></a>
+<table class=decl><tr><td><code>travelerTravelWithin (actor, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#655">655</a>]</table><div class=desc>   Perform "local" travel - that is, travel between nested rooms   within a single top-level location.  By default, we simply defer   to the actor to let it perform the local travel. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

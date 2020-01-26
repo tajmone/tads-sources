@@ -1,0 +1,103 @@
+/* $Header: d:/cvsroot/tads/html/win32/htmltdb.rc,v 1.1 1999/07/11 00:46:46 MJRoberts Exp $ */
+
+/* Copyright (c) 2010 by Michael J. Roberts.  All Rights Reserved. */
+/*
+Name
+  tadsweb.rc - resource file for TADS Web browser wrapper
+Function
+
+Notes
+
+Modified
+  10/26/97 MJRoberts  - Creation
+*/
+
+#include <Windows.h>
+#include "htmlres.h"
+
+#pragma code_page(1252)
+
+/* icon for the main executable */
+IDI_EXE_ICON           ICON    DISCARDABLE      "htmltads.ico"       /* [0] */
+
+/* context menu for the web UI window */
+IDR_WEBUI_POPUP MENUEX DISCARDABLE
+BEGIN
+    POPUP "Web UI"
+    BEGIN
+        MENUITEM "Cut\tCtrl+X",                 ID_EDIT_CUT
+        MENUITEM "Copy\tCtrl+C",                ID_EDIT_COPY
+        MENUITEM "Paste\tCtrl+V",               ID_EDIT_PASTE
+        MENUITEM "Delete",                      ID_EDIT_DELETE
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Undo Typing\tCtrl+Z",         ID_EDIT_UNDO
+        MENUITEM "Select All\tCtrl+A",          ID_EDIT_SELECTALL
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Find Text...\tCtrl+F",        ID_EDIT_FIND
+        MENUITEM "",,MFT_SEPARATOR
+        POPUP "Timer"
+        BEGIN
+            MENUITEM "Show Timer",              ID_VIEW_TIMER,, MFS_CHECKED
+            MENUITEM "",,MFT_SEPARATOR
+            MENUITEM "Hours:Minutes:Seconds",   ID_VIEW_TIMER_HHMMSS,
+                                                MFT_RADIOCHECK, MFS_CHECKED
+            MENUITEM "Hours:Minutes",           ID_VIEW_TIMER_HHMM,
+                                                MFT_RADIOCHECK
+            MENUITEM "",,MFT_SEPARATOR
+            MENUITEM "Pause Timer",             ID_TIMER_PAUSE
+            MENUITEM "Reset Timer",             ID_TIMER_RESET
+        END
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "About TADS",                  ID_HELP_ABOUT
+    END
+END
+
+/* context menu for the web UI child windows */
+IDR_WEBUI_CHILD_POPUP MENUEX DISCARDABLE
+BEGIN
+    POPUP "Web UI"
+    BEGIN
+        MENUITEM "Cut\tCtrl+X",                 ID_EDIT_CUT
+        MENUITEM "Copy\tCtrl+C",                ID_EDIT_COPY
+        MENUITEM "Paste\tCtrl+V",               ID_EDIT_PASTE
+        MENUITEM "Delete",                      ID_EDIT_DELETE
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Undo Typing\tCtrl+Z",         ID_EDIT_UNDO
+        MENUITEM "Select All\tCtrl+A",          ID_EDIT_SELECTALL
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Find Text...\tCtrl+F",        ID_EDIT_FIND
+    END
+END
+
+/* statusline context menu */
+IDR_STATUSBAR_POPUP MENUEX DISCARDABLE
+BEGIN
+    POPUP "Status Line"
+    BEGIN
+        MENUITEM "Show Timer",                  ID_VIEW_TIMER,, MFS_CHECKED
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Hours:Minutes:Seconds",       ID_VIEW_TIMER_HHMMSS,
+                                                MFT_RADIOCHECK, MFS_CHECKED
+        MENUITEM "Hours:Minutes",               ID_VIEW_TIMER_HHMM,
+                                                MFT_RADIOCHECK
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Pause Timer",                 ID_TIMER_PAUSE
+        MENUITEM "Reset Timer",                 ID_TIMER_RESET
+    END
+END
+
+
+/* accelerator */
+IDR_ACCEL_WIN ACCELERATORS DISCARDABLE
+BEGIN
+    "A",      ID_EDIT_SELECTALL,     VIRTKEY, CONTROL, NOINVERT
+    "C",      ID_EDIT_COPY,          VIRTKEY, CONTROL, NOINVERT
+    "X",      ID_EDIT_CUT,           VIRTKEY, CONTROL, NOINVERT
+    "V",      ID_EDIT_PASTE,         VIRTKEY, CONTROL, NOINVERT
+    "F",      ID_EDIT_FIND,          VIRTKEY, CONTROL, NOINVERT
+    "Z",      ID_EDIT_UNDO,          VIRTKEY, CONTROL, NOINVERT
+END
+
+/* about box */
+aboutbox.htm    HTML DISCARDABLE "tadsweb_aboutbox.htm"
+aboutbkg.jpg    HTML DISCARDABLE "tadsweb_aboutbkg.jpg"

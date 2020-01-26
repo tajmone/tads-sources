@@ -1,0 +1,171 @@
+#############################################
+#  TADS Source Code Repository:             #
+#  https://github.com/tajmone/tads-sources  #
+#############################################
+
+## Repository Configuration
+###########################
+.editorconfig    text eol=lf
+.gitlab-ci.yml   text eol=lf
+.travis.yml      text eol=lf
+.gitattributes   text eol=lf
+.gitconfig       text eol=lf
+.gitignore       text eol=lf
+.gitmodules      text eol=lf
+
+## Mercurial Configurations
+###########################
+.hg*               text eol=lf
+.hg_archival.txt   text eol=lf
+
+
+## C/C++ Sources
+################
+*.c     text
+*.C     text
+*.cpp   text
+*.CPP   text
+*.h     text
+*.H     text
+
+## Make Files
+#############
+[attr]Makefile text eol=lf linguist-language=Makefile
+*.mak         Makefile
+*.mk          Makefile
+makefile      Makefile
+make-*.*      Makefile
+Makefile      Makefile
+MAKEFILE      Makefile
+makefile*.*   Makefile
+
+
+## ASM Sources
+##############
+*.asm   text
+
+
+## Windows Files
+################
+*.bat     text eol=crlf
+*.def     text eol=crlf
+*.rc      text eol=crlf
+*.redir   text eol=crlf
+*.res     binary
+
+
+## Shell Scripts
+################
+*.sh                      text eol=lf
+/tads3/unix/test/run_*    text eol=lf
+/tads3/unix/test/test_*   text eol=lf
+
+
+## HTML/WWW
+############
+*.css    text
+*.htm    text
+*.HTM    text
+*.html   text
+*.js     text
+
+
+## TADS Files
+#############
+[attr]TADS text linguist-language=TADS
+*.msg    binary
+*.t      TADS
+*.T      TADS
+*.t3m    text
+*.t3r    binary
+*.t3tz   binary
+*.tcm    binary
+*.tcs    text
+*.tdb-project-starter   TADS
+*.tl     TADS
+/tads3/lib/**/*.h       TADS
+
+## TADS Web Server
+##################
+*.php       text
+.htaccess   text
+
+## TADS Docs
+##################
+*.pdf   binary
+
+## Test Scripts
+###############
+*.IN    text
+*.in    text
+*.log   text
+*.LOG   text
+
+
+## Plain Text Docs
+##################
+*.txt          text
+*.TXT          text
+help.tdb       text
+README         text
+readtads.src   text
+
+
+## XML Files
+############
+*.xml   text eol=lf
+
+
+## Images
+#########
+*.BMP   binary
+*.bmp   binary
+*.cur   binary
+*.gif   binary
+*.ico   binary
+*.jpg   binary
+*.JPG   binary
+*.png   binary
+
+
+## Flash
+########
+*.as    text
+*.swf   binary
+
+
+######################################
+## Extensions from Scintilla Folder ##
+######################################
+scintilla/test/examples/x.*   text
+*.obj          binary
+*.pbxproj      text eol=lf
+*.pch          text
+*.plist        text eol=lf
+*.list         text eol=lf
+*.ppk          text
+*.dsp          text
+*.py           text
+*.properties   text
+*.styled       text
+*.sql          text eol=lf
+*.strings      text eol=lf
+*.xib          text eol=lf
+
+## Windows Files
+################
+*.dsp   text eol=crlf
+
+## Shell Scripts
+################
+*.iface            text eol=lf
+scintilla/tgzsrc   text eol=lf
+
+## C/C++ alt extensions:
+########################
+[attr]CPP text linguist-language=cpp
+*.cxx*  CPP
+*.m     CPP
+*.mm    CPP
+
+# EOF #

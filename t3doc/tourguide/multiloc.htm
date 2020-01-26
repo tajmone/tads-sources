@@ -1,0 +1,54 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>MultiLoc</title><meta name="keywords" content="MultiLoc,locationList"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>MultiLoc : BaseMultiLoc
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="vehiclebarrier.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="multiinstance.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A MultiLoc is an object that exists (or, at least, can exist) in several locations at once. We have already used several MultiLocs in the course of developing the game without much comment, examples including the mast in the <a href="floorlessroom.htm">FloorlessRoom</a> example, the lake in the <a href="decoration.htm#lakedecoration">Decoration</a> example, and of course the specialized subclasses of MultiLoc, the <a href="distanceconnector.htm">DistanceConnector</a> and the <a href="senseconnector.htm">SenseConnector</a>.
+<br>
+
+<br>
+Strictly speaking, a MultiLoc (as opposed to its specialized subclasses) represents a single object that exists in several locations by virtue of being situated on their boundary, like a statue at the centre of a square where the square is divided into several locations. The mast we defined earlier is a good example of that, since it's an object standing between the port deck and the starboard deck and is thus equally in both. Note that it remains physically the same mast whichever side of the deck we climb it from or whatever we do to it (e.g. chop it down).
+<br>
+
+<br>
+A second safe use for MultiLoc is for a Distant object that looks exactly the same from several locations, e.g. a distant mountain or the moon.
+<br>
+
+<br>
+Although under some circumstances you can get away with using MultiLoc for other purposes (as we have up to now), for a large object that spans many locations you should normally use <a href="multifaceted.htm">MultiFaceted</a>, and for a <a href="decoration.htm">Decoration</a> or <a href="fixture.htm">Fixture</a> you want cloned in many locations you should normally use <a href="multiinstance.htm">MultiInstance</a>. There are two main reasons for this. The first is sensory - if a MultiLoc is visible in one location it is visible in all. Suppose, for example, that your player character is wandering around a forest at night, carrying a torch. If you created a MultiLoc to represent the trees, then if the player character dropped the torch and moved to another (dark) location, the trees would still be visible, although for everything else it would be too dark (which is not want you want). The second is that a MultiLoc represents something that remains physically the same object. If you allow the player to cut a notch in a tree and this is reflected in its description, then once one MultiLoc tree is notched, every tree in the forest will appear notched.
+<br>
+
+<br>
+Of course there <i>can</i> be cases where these situations will never arise. In practice if you are creating a Decoration, Distant or other type of NonPortable with which the only possible interaction is EXAMINE and every location in which it occurs is permanently lit (or else it's an object like the moon that provides its own illumination) then no practical problems should arise from using a MultiLoc to represent the object (or objects) - but you have to be very sure that these conditions obtain and won't be changed in the course of developing the game, otherwise you should use MultiInstance or MultiFaceted. And of course, there are cases, such as the fountain at the centre of the square or the mast between two halves of the deck where MultiLoc is precisely what you do want (whatever may befall it), because it represents the same physical object.
+<br>
+
+<br>
+MultiLoc is a mix-in class, and should thus always be used with (and before) a Thing derived class, e.g. (note that this example shouldn't be added to the game):
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">statue&nbsp;:&nbsp;MultiLoc, Fixture&nbsp;'statue'&nbsp;'statue'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large&nbsp;stone&nbsp;statue&nbsp;of&nbsp;Jeremiah&nbsp;Foamwheeze.&nbsp;"
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[seSquare,&nbsp;swSquare,&nbsp;neSquare,&nbsp;nwSquare]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Even if the square is in darkness and you leave your torch in the southeast corner of the square, it's not unreasonable the torch would continue to illuminate the statue as seen from the other three corners of the square, and again, if you stick your hat on top of the statue while standing in nwSquare there's no reason why you shouldn't be able to retrieve it again while standing in swSquare.
+<br>
+
+<br>
+Note that we don't set the location property of a MultiLoc; instead we provide a list of locations in its <b>locationList</b> property, or else use one of the other methods to initialize its locations that are described in connexion with <a href="multiinstance.htm">MultiInstance</a> below. Again, note that locationList is used only to <i>initialize</i> the list of locations a MultiLoc starts in at the beginning of the game. You cannot subsequently move a MultiLoc around by directly manipulating this list (e.g. by writing statements like </font><font face="Courier New" size="2" color="#000000">locationList&nbsp;+=&nbsp;forestPath;</font><font face="Arial" size="2" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">locationList&nbsp;=&nbsp;[forestPath,&nbsp;lakeside];</font><font face="Arial" size="2" color="#000000"> ). Instead you have to use the methods <b>moveInto</b>, <b>moveIntoAdd</b>, and <b>moveOutOf.</b>  These will be described in more detail under MultiInstance (where the same thing applies).
+<br>
+
+<br>
+</font></font>
+
+</body></html>

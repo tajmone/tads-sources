@@ -1,0 +1,224 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>LockableContainer</title><meta name="keywords" content="LockableContainer,initiallyLocked,makeLocked,exit,reportFailure,gDobj,NameAsOther,targetObj,SecretFixture"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>LockableContainer : <a href="lockable.htm">Lockable</a>, <a href="openablecontainer.htm">OpenableContainer</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="notifyinsert+notifyremove.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="restrictedcontainer.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A LockableContainer is simply an OpenableContainer that can also be locked and unlocked. This is not as useful as it might sound since a LockableContainer can be locked and unlocked simply by the player issuing LOCK LOCKER and UNLOCK LOCKER commands. Moreover, even if a LockableContainer starts locked, an attempt to OPEN it will result in an implicit UNLOCK command, so that in practice, a LockableContainer behaves much like an OpenableContainer. If you want a container that's locked and unlocked with a key you need to use KeyedContainer, which we'll come to presently.
+<br>
+
+<br>
+A simple example of LockableContainer might be locker, which we'll put in the crew quarters:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">locker&nbsp;:&nbsp;LockableContainer,&nbsp;Fixture&nbsp;'(crew)&nbsp;locker'&nbsp;'locker'&nbsp;@crewQuarters
+<br>
+&nbsp;&nbsp;"The&nbsp;locker&nbsp;is&nbsp;fixed&nbsp;firmly&nbsp;to&nbsp;the&nbsp;bulkhead.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;15
+<br>
+&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'crew&nbsp;locker'
+<br>
+&nbsp;&nbsp;initiallyLocked&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that if we want a LockableContainer to start locked, we need to set its <b>initiallyLocked</b> property to true. The library does this for <a href="door.htm">Door</a> and IndirectLockable, but you need to do it for anything else (except subclasses of Door, of course).
+<br>
+
+<br>
+The sailor's cap would be a good thing to put in the locker, so let's amend its starting location:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">cap&nbsp;:&nbsp;Wearable,&nbsp;Container&nbsp;'sailor\'s&nbsp;cap'&nbsp;'sailor\'s&nbsp;cap'&nbsp;<b>@locker</b>
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large&nbsp;round&nbsp;hat&nbsp;with&nbsp;a&nbsp;white&nbsp;top&nbsp;and&nbsp;a&nbsp;small&nbsp;blue&nbsp;peak.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;isOpen&nbsp;{&nbsp;return&nbsp;!isWorn();&nbsp;}
+<br>
+&nbsp;&nbsp;iobjFor(PutIn)&nbsp;{&nbsp;preCond&nbsp;=&nbsp;static&nbsp;inherited&nbsp;+&nbsp;objNotWorn&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+At this point we should update the definition of crewQuarters to reflect the presence of the locker and the galley further forward:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">crewQuarters&nbsp;:&nbsp;DarkCabin&nbsp;'Crew&nbsp;Quarters'&nbsp;'the&nbsp;crew&nbsp;quarters'
+<br>
+&nbsp;&nbsp;"The&nbsp;crew&nbsp;quarters&nbsp;seem&nbsp;largely&nbsp;deserted<b>,&nbsp;apart&nbsp;from&nbsp;a&nbsp;single&nbsp;locker
+<br>
+&nbsp;&nbsp;&nbsp;fixed&nbsp;to&nbsp;the&nbsp;bulkhead</b>.&nbsp;There's&nbsp;an&nbsp;exit&nbsp;back&nbsp;aft&nbsp;and&nbsp;a&nbsp;ladder&nbsp;leading&nbsp;down&nbsp;into&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;hold.&nbsp;<b>Another&nbsp;exit&nbsp;leads&nbsp;foreward.</b>&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;holdLadderDown
+<br>
+&nbsp;&nbsp;&nbsp;aft&nbsp;=&nbsp;greatCabin
+<br>
+&nbsp;&nbsp;&nbsp;<b>fore&nbsp;=&nbsp;galley</b>
+<br>
+&nbsp;&nbsp;&nbsp;cannotGoThatWayInDark()&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+To make the lock on the locker a bit more worthwhile, we'll suppose that it's fastened by a latch that's rusted shut, and which will only open once we have poured some oil on it. To do this we add a custom oiled property, which we use in the <b>makeLocked </b>method. This method is called in response both to a LOCK and an UNLOCK command; its <i>stat</i> parameter is true if we want to lock something and nil if we want to unlock it. We can use this method to abort any attempt to lock or unlock the locker until the latch has been oiled. Finally, we add some handling for the PourOnto command on the latch, so that if this latch is the indirect object of PourOnto and the direct object is the oilcan, the oiled property is set to true (which will then allow the locker to be unlocked and opened). Since the player may also try to PULL or PUSH the latch, we add handling for that, making the two commands equivalent. We also redirect any attempts to OPEN, CLOSE, LOCK or UNLOCK the latch back to the locker object.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">locker&nbsp;:&nbsp;LockableContainer,&nbsp;Fixture&nbsp;'(crew)&nbsp;locker'&nbsp;'locker'&nbsp;@crewQuarters
+<br>
+&nbsp;&nbsp;"The&nbsp;locker&nbsp;is&nbsp;fixed&nbsp;firmly&nbsp;to&nbsp;the&nbsp;bulkhead.&nbsp;<b>Its&nbsp;door&nbsp;is&nbsp;fastened&nbsp;by&nbsp;a&nbsp;simple
+<br>
+&nbsp;&nbsp;&nbsp;latch&nbsp;mechanism,&nbsp;though&nbsp;the&nbsp;latch&nbsp;looks&nbsp;a&nbsp;bit&nbsp;rusty.</b>&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;15
+<br>
+&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'crew&nbsp;locker'
+<br>
+&nbsp;&nbsp;initiallyLocked&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;<b>makeLocked(stat)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!lockerLatch.oiled)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('The&nbsp;latch&nbsp;is&nbsp;stuck&nbsp;fast.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(stat);
+<br>
+&nbsp;&nbsp;}</b>&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+NameAsOther,&nbsp;<a name="secretfixture">SecretFixture&nbsp;targetObj&nbsp;=&nbsp;locker&nbsp;location&nbsp;=&nbsp;crewQuarters;
+<br>
+
+<br>
++&nbsp;lockerLatch&nbsp;:&nbsp;Component&nbsp;'(locker)&nbsp;latch'&nbsp;'latch'
+<br>
+&nbsp;&nbsp;"The&nbsp;latch&nbsp;looks&nbsp;a&nbsp;bit&nbsp;rusty.&nbsp;It's&nbsp;currently&nbsp;in&nbsp;the&nbsp;&lt;&lt;locker.isLocked
+<br>
+&nbsp;&nbsp;&nbsp;?&nbsp;nil&nbsp;:&nbsp;'un'&nbsp;&gt;&gt;locked&nbsp;position.&nbsp;"
+<br>
+&nbsp;&nbsp;iobjFor(PourOnto)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gDobj&nbsp;==&nbsp;oilCan)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;pour&nbsp;some&nbsp;oil&nbsp;onto&nbsp;the&nbsp;latch.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oiled&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It&nbsp;doesn't&nbsp;seem&nbsp;to&nbsp;do&nbsp;much.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;dobjFor(Push)&nbsp;asDobjFor(Pull)
+<br>
+&nbsp;&nbsp;dobjFor(Pull)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;locker.makeLocked(!locker.isLocked);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"This&nbsp;&lt;&lt;locker.isLocked&nbsp;?&nbsp;nil&nbsp;:&nbsp;'un'&gt;&gt;locks&nbsp;the&nbsp;locker.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;oiled&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'locker&nbsp;latch'
+<br>
+&nbsp;&nbsp;dobjFor(Open)&nbsp;remapTo(Open,&nbsp;locker)
+<br>
+&nbsp;&nbsp;dobjFor(Close)&nbsp;remapTo(Close,&nbsp;locker)
+<br>
+&nbsp;&nbsp;dobjFor(Lock)&nbsp;remapTo(Lock,&nbsp;locker)
+<br>
+&nbsp;&nbsp;dobjFor(Unlock)&nbsp;remapTo(Unlock,&nbsp;locker)
+<br>
+;
+<br>
+&nbsp;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">A fatally easy mistake to have made here would have been to</font><font face="Courier New" size="2" color="#000000">&nbsp;</font><font face="Arial" size="2" color="#000000">have made the latch a Component of the locker object. The problem with this would have been that this would have placed the latch <i>inside</i> the locker, and therefore not available until the locker was opened (and it's impossible to open the locker without access to the latch, so we'd be in a pretty fix!). For that reason we define another object for the latch to be a Component of (a better way would have been to make the locker a <a href="complexcontainer.htm">ComplexContainer</a>, but we haven't come to those yet). The player will never interact with this object directly, so it needs no vocabulary. We want it to appear to be the locker when, for example, the player attempts to TAKE THE LATCH, so we make it a <b>NameAsOther</b> (a mix-in class) and set its <b>targetObj</b> property to the locker; the effect of this is that any parser messages referring to this object will describe it in exactly the same way as the locker. We also make the object a <b>SecretFixture</b>, since it is an object we need for internal implementation, but not one the player will ever interact with directly.</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that on the locker we use </font><font face="Courier New" size="2" color="#000000">exit</font><font face="Arial" size="2" color="#000000"> to abort the UNLOCK command if latch.</font><font face="Courier New" size="2" color="#000000">oiled</font><font face="Arial" size="2" color="#000000"> is nil, and the </font><font face="Courier New" size="2" color="#000000">reportFailure</font><font face="Arial" size="2" color="#000000"> macro to explain why the unlock command has failed. The latter is important since the UNLOCK might be an implicit action when the player tries to OPEN the locker; using </font><font face="Courier New" size="2" color="#000000">reportFailure</font><font face="Arial" size="2" color="#000000"> here ensures that the implicit action report the player sees then says "(first trying to unlock the locker)" rather than "(first unlocking the locker)". The PourOnto handling is fairly straightforward: it tests whether the direct object (gDobj) is the oil can, and if so displays an appropriate message and sets the oiled property to true, otherwise it displays a non-commital message about not much happening.
+<br>
+
+<br>
+We also need to define the oil can. Here we'll provide the minimal definition to do the job. We'll elaborate it later when we use the oil for other purposes (such as fuel for a lamp).</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+oilCan&nbsp;:&nbsp;Thing&nbsp;'oil&nbsp;can/oilcan'&nbsp;'can&nbsp;of&nbsp;oil'&nbsp;@secretPassage
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;can&nbsp;full&nbsp;of&nbsp;oil.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"An&nbsp;old&nbsp;oil&nbsp;can&nbsp;lies&nbsp;abandoned&nbsp;on&nbsp;the&nbsp;ground.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(PourOnto)&nbsp;{&nbsp;verify()&nbsp;{&nbsp;}&nbsp;}
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

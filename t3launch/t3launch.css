@@ -1,0 +1,51 @@
+body {
+    background: #ffffff;
+    color: #000000;
+    font: 11pt/15pt Verdana, Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+div.topbar {
+    background: #c0c0c0 url('logo.jpg') no-repeat top left;
+    height: 28px;
+    width: 100%;
+    margin: 0px;
+}
+
+div.main {
+    padding: 2em;
+}
+
+div.errDetails {
+    margin: 1em 2em;
+    font-size: 9pt;
+}
+
+div.errOutput {
+    margin: 1em;
+    padding: 1ex;
+    background: #ffe0e0;
+}
+
+div.navFooter {
+    margin: 2em 0px;
+    font-size: 9pt;
+}
+
+h1 {
+    font-size: 140%;
+    color: #0000a0;
+    font-weight: normal;
+}
+
+div#xferStatus {
+    margin: 2em 0px;
+    color: #008080;
+    font-size: 9pt;
+}
+
+div.tryAgain {
+    margin: 1.5em 0px;
+}
+

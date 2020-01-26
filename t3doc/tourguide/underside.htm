@@ -1,0 +1,80 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Underside</title><meta name="keywords" content="Underside,allowPutUnder"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Underside : <a href="spaceoverlay.htm">SpaceOverlay</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="spaceoverlay.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="rearcontainer.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000"><i>An "underside" is a special type of container that describes its contents as being under the object. This is appropriate for objects that have a space underneath, such as a bed or a table.
+<br>
+</i>
+<br>
+Usually, an Underside is not much use by itself (since it would be the Underside of something), and one would normally use it as part of a <a href="complexcontainer.htm">ComplexContainer</a>. It is, however, possible (though more laborious) to link an Underside to another object using remapTo commands. Just to show how it could be done, we'll give the desk in the cabin an Underside by this means, and then hide the button under it, so that the player can only find it by explicitly looking under the desk:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">cabinDesk&nbsp;:&nbsp;Heavy,&nbsp;Surface&nbsp;'large&nbsp;solid&nbsp;oak&nbsp;desk'&nbsp;'desk'&nbsp;@greatCabin
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large,&nbsp;solid&nbsp;oak&nbsp;desk,&nbsp;with&nbsp;a&nbsp;single&nbsp;drawer.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>initSpecialDesc</b>&nbsp;=&nbsp;"A&nbsp;large&nbsp;oak&nbsp;desk&nbsp;sits&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cabin.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>specialDescOrder&nbsp;=&nbsp;50</b>
+<br>
+&nbsp;&nbsp;<b>dobjFor(LookUnder)&nbsp;remapTo(LookUnder,&nbsp;underDesk)
+<br>
+&nbsp;&nbsp;iobjFor(PutUnder)&nbsp;remapTo(PutUnder,&nbsp;DirectObject,&nbsp;underDesk)
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;underDesk&nbsp;:&nbsp;NameAsOther,&nbsp;Underside,&nbsp;Component
+<br>
+&nbsp;&nbsp;targetObj&nbsp;=&nbsp;cabinDesk
+<br>
+;
+<br>
+
+<br>
+++&nbsp;<b>Hidden</b>,&nbsp;Button,&nbsp;<b>Component</b>&nbsp;'small&nbsp;brown&nbsp;button'&nbsp;'small&nbsp;brown&nbsp;button'
+<br>
+&nbsp;&nbsp;"The&nbsp;small&nbsp;brown&nbsp;button&nbsp;is&nbsp;fixed&nbsp;to&nbsp;the&nbsp;underside&nbsp;of&nbsp;the&nbsp;desk.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Push)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There's&nbsp;a&nbsp;sharp&nbsp;&lt;i&gt;click&lt;/i&gt;,&nbsp;and&nbsp;a&nbsp;section&nbsp;of&nbsp;the&nbsp;foreward&nbsp;bulkhead&nbsp;slides
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;bulkheadDoor.isOpen&nbsp;?&nbsp;'closed'&nbsp;:&nbsp;'open'&gt;&gt;.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bulkheadDoor.makeOpen(!bulkheadDoor.isOpen);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;<b>isListedInContents&nbsp;=&nbsp;(discovered)
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that this anticipates the use of the <a href="hidden.htm">Hidden</a> class, which we'll be looking at in more detail later.
+<br>
+
+<br>
+Apart from a number of message properties, the main new property of interest defined on Underside is <b>allowPutUnder</b>; if this is set to true, actors (including the player character) may place objects in (i.e. under) this Underside; otherwise they may not. allowPutUnder is true by default.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

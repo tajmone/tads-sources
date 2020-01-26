@@ -1,0 +1,62 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SuggestedTellTopic</title><meta name="keywords" content="SuggestedTellTopic,timesToSuggest"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SuggestedTellTopic : <a href="suggestedtopic.htm">SuggestedTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="suggestedasktopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="suggestedgivetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A SuggestedAskTopic is the particular type of <a href="suggestedtopic.htm">SuggestedTopic</a> that prompts the player to Tell About such-and-such a thing.
+<br>
+
+<br>
+For example, you might want to tell Sarah about the rockfall blocking the obvious way back out:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;TellTopic,&nbsp;SuggestedTellTopic,&nbsp;StopEventList&nbsp;@tRockfall
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:&nbsp;"&lt;q&gt;We&nbsp;won't&nbsp;get&nbsp;out&nbsp;the&nbsp;way&nbsp;we&nbsp;came&nbsp;it,&lt;/q&gt;&nbsp;you&nbsp;warn&nbsp;her,&nbsp;&lt;q&gt;I'm
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;afraid&nbsp;there's&nbsp;just&nbsp;been&nbsp;a&nbsp;rockfall,&nbsp;blocking&nbsp;the&nbsp;way&nbsp;back&nbsp;out
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;outside&nbsp;world!&lt;/q&gt;&nbsp;&lt;&lt;sarah.setKnowsAbout(tRockfall)&gt;&gt;\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Oh&nbsp;wonderful!&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;declares,&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;your
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fault.&nbsp;"&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;The&nbsp;way&nbsp;out&nbsp;back&nbsp;through&nbsp;the&nbsp;caves&nbsp;is&nbsp;blocked&nbsp;by&nbsp;a&nbsp;rockfall.&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;say.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes,&nbsp;you&nbsp;already&nbsp;told&nbsp;me.&lt;/q&gt;&nbsp;she&nbsp;reminds&nbsp;you.&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;timesToSuggest&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'the&nbsp;rockfall'
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;entranceTunnel.blocked
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">tRockfall&nbsp;:&nbsp;Topic&nbsp;'rockfall'&nbsp;sarahKnowsAbout&nbsp;=&nbsp;nil;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Note that we set timesToSuggest here because we overrode it on <a href="suggestedtopic.htm">SuggestedTopic</a> to be the length of the list, but here only the first response is really worth seeing. In case at a later date we want any of Sarah's responses to depend on whether she knows about the rockfall or not, we call sarah.setKnowsAbout(tRockfall), although since Sarah is likely to be the only NPC interested in this we could perhaps more simply have used &lt;.reveal rockfall&gt;, which we could test with gRevealed('rockfall'). We also set isActive so that the player character can't talk about the rockfall before it happens. Note finally that we also need to define the tRockfall Topic; be careful not to mix this is with the TopicEntries, which might upset the location nesting tree.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

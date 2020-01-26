@@ -1,0 +1,317 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>predicate(AskFor)</title></head><body>
+<table class=ban><tr><td align=left><span class=title>predicate(AskFor)</span><span class=type>grammar</span><td align=right><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9430">9430</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+<i>no description available</i>
+<p>
+<code>VerbRule(AskFor) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><code>grammar
+<span class="gramalt"><a href="../object/predicate.html">predicate</a>(AskFor)</span> :  &nbsp; <a href="../object/AskForAction.html">AskForAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>predicate(AskFor)</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskForAction.html">AskForAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvTopicTAction.html">ConvTopicTAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicTAction.html">TopicTAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicActionBase.html">TopicActionBase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TAction.html">TAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Action.html">Action</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Resolver.html">Resolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#askDobjResponseProd">askDobjResponseProd</a>&nbsp;
+<a href="#askIobjResponseProd">askIobjResponseProd</a>&nbsp;
+<a href="#omitIobjInDobjQuery">omitIobjInDobjQuery</a>&nbsp;
+<a href="#verbPhrase">verbPhrase</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>TopicTAction</code> :<br>
+<code>
+<a href="../object/TopicTAction.html#needAnaphoricBinding_">needAnaphoricBinding_</a>&nbsp;
+<a href="../object/TopicTAction.html#predicateNounPhrases">predicateNounPhrases</a>&nbsp;
+<a href="../object/TopicTAction.html#topicList_">topicList_</a>&nbsp;
+<a href="../object/TopicTAction.html#topicResolver_">topicResolver_</a>&nbsp;
+<a href="../object/TopicTAction.html#whichMessageObject">whichMessageObject</a>&nbsp;
+<a href="../object/TopicTAction.html#whichMessageTopic">whichMessageTopic</a>&nbsp;
+<a href="../object/TopicTAction.html#whichObject">whichObject</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicActionBase</code> :<br>
+<code>
+<a href="../object/TopicActionBase.html#topicQualResolver_">topicQualResolver_</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TAction</code> :<br>
+<code>
+<a href="../object/TAction.html#actionAllowsAll">actionAllowsAll</a>&nbsp;
+<a href="../object/TAction.html#actionDobjProp">actionDobjProp</a>&nbsp;
+<a href="../object/TAction.html#actor_">actor_</a>&nbsp;
+<a href="../object/TAction.html#checkDobjProp">checkDobjProp</a>&nbsp;
+<a href="../object/TAction.html#dobjCur_">dobjCur_</a>&nbsp;
+<a href="../object/TAction.html#dobjInfoCur_">dobjInfoCur_</a>&nbsp;
+<a href="../object/TAction.html#dobjList_">dobjList_</a>&nbsp;
+<a href="../object/TAction.html#dobjMatch">dobjMatch</a>&nbsp;
+<a href="../object/TAction.html#dobjResolver_">dobjResolver_</a>&nbsp;
+<a href="../object/TAction.html#issuer_">issuer_</a>&nbsp;
+<a href="../object/TAction.html#preCondDobjProp">preCondDobjProp</a>&nbsp;
+<a href="../object/TAction.html#remapDobjProp">remapDobjProp</a>&nbsp;
+<a href="../object/TAction.html#verDobjProp">verDobjProp</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Action</code> :<br>
+<code>
+<a href="../object/Action.html#actionTime">actionTime</a>&nbsp;
+<a href="../object/Action.html#afterActionMainList">afterActionMainList</a>&nbsp;
+<a href="../object/Action.html#beforeAfterObjs">beforeAfterObjs</a>&nbsp;
+<a href="../object/Action.html#defaultForRecursion">defaultForRecursion</a>&nbsp;
+<a href="../object/Action.html#extraMessageParams">extraMessageParams</a>&nbsp;
+<a href="../object/Action.html#implicitMsg">implicitMsg</a>&nbsp;
+<a href="../object/Action.html#includeInUndo">includeInUndo</a>&nbsp;
+<a href="../object/Action.html#isImplicit">isImplicit</a>&nbsp;
+<a href="../object/Action.html#isRepeatable">isRepeatable</a>&nbsp;
+<a href="../object/Action.html#iterationCanceled">iterationCanceled</a>&nbsp;
+<a href="../object/Action.html#originalAction">originalAction</a>&nbsp;
+<a href="../object/Action.html#parentAction">parentAction</a>&nbsp;
+<a href="../object/Action.html#preCond">preCond</a>&nbsp;
+<a href="../object/Action.html#pronounOverride">pronounOverride</a>&nbsp;
+<a href="../object/Action.html#remappedFrom">remappedFrom</a>&nbsp;
+<a href="../object/Action.html#showDefaultReports">showDefaultReports</a>&nbsp;
+<a href="../object/Action.html#synthParamID">synthParamID</a>&nbsp;
+<a href="../object/Action.html#verbFlags">verbFlags</a>&nbsp;
+<a href="../object/Action.html#verifiedOkay">verifiedOkay</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#action_">action_</a>&nbsp;
+<a href="../object/Resolver.html#equivs_">equivs_</a>&nbsp;
+<a href="../object/Resolver.html#isGlobalScope">isGlobalScope</a>&nbsp;
+<a href="../object/Resolver.html#isSubResolver">isSubResolver</a>&nbsp;
+<a href="../object/Resolver.html#scope_">scope_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ConvTopicTAction</code> :<br>
+<code>
+<a href="../object/ConvTopicTAction.html#createTopicResolver">createTopicResolver</a>&nbsp;
+<a href="../object/ConvTopicTAction.html#getDefaultDobj">getDefaultDobj</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicTAction</code> :<br>
+<code>
+<a href="../object/TopicTAction.html#announceDefaultObject">announceDefaultObject</a>&nbsp;
+<a href="../object/TopicTAction.html#filterTopic">filterTopic</a>&nbsp;
+<a href="../object/TopicTAction.html#getAnaphoricBinding">getAnaphoricBinding</a>&nbsp;
+<a href="../object/TopicTAction.html#getCurrentObjects">getCurrentObjects</a>&nbsp;
+<a href="../object/TopicTAction.html#getMatchForRole">getMatchForRole</a>&nbsp;
+<a href="../object/TopicTAction.html#getObjectForRole">getObjectForRole</a>&nbsp;
+<a href="../object/TopicTAction.html#getOtherMessageObjectPronoun">getOtherMessageObjectPronoun</a>&nbsp;
+<a href="../object/TopicTAction.html#getOtherObjectRole">getOtherObjectRole</a>&nbsp;
+<a href="../object/TopicTAction.html#getQuestionInf">getQuestionInf</a>&nbsp;
+<a href="../object/TopicTAction.html#getRoleFromIndex">getRoleFromIndex</a>&nbsp;
+<a href="../object/TopicTAction.html#getVerbPhrase">getVerbPhrase</a>&nbsp;
+<a href="../object/TopicTAction.html#initForMissingDobj">initForMissingDobj</a>&nbsp;
+<a href="../object/TopicTAction.html#initForMissingTopic">initForMissingTopic</a>&nbsp;
+<a href="../object/TopicTAction.html#resetAction">resetAction</a>&nbsp;
+<a href="../object/TopicTAction.html#resolveNouns">resolveNouns</a>&nbsp;
+<a href="../object/TopicTAction.html#retryWithMissingTopic">retryWithMissingTopic</a>&nbsp;
+<a href="../object/TopicTAction.html#setCurrentObjects">setCurrentObjects</a>&nbsp;
+<a href="../object/TopicTAction.html#setObjectMatches">setObjectMatches</a>&nbsp;
+<a href="../object/TopicTAction.html#setResolvedObjects">setResolvedObjects</a>&nbsp;
+<a href="../object/TopicTAction.html#whatObj">whatObj</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicActionBase</code> :<br>
+<code>
+<a href="../object/TopicActionBase.html#getMessageParam">getMessageParam</a>&nbsp;
+<a href="../object/TopicActionBase.html#getTopic">getTopic</a>&nbsp;
+<a href="../object/TopicActionBase.html#getTopicQualifierResolver">getTopicQualifierResolver</a>&nbsp;
+<a href="../object/TopicActionBase.html#getTopicResolver">getTopicResolver</a>&nbsp;
+<a href="../object/TopicActionBase.html#reparseMatchAsTopic">reparseMatchAsTopic</a>&nbsp;
+<a href="../object/TopicActionBase.html#resolveTopic">resolveTopic</a>&nbsp;
+<a href="../object/TopicActionBase.html#setResolvedTopic">setResolvedTopic</a>&nbsp;
+<a href="../object/TopicActionBase.html#setTopicMatch">setTopicMatch</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TAction</code> :<br>
+<code>
+<a href="../object/TAction.html#adjustDefaultObjectPrep">adjustDefaultObjectPrep</a>&nbsp;
+<a href="../object/TAction.html#announceAllDefaultObjects">announceAllDefaultObjects</a>&nbsp;
+<a href="../object/TAction.html#canDobjResolveTo">canDobjResolveTo</a>&nbsp;
+<a href="../object/TAction.html#checkAction">checkAction</a>&nbsp;
+<a href="../object/TAction.html#checkRemapping">checkRemapping</a>&nbsp;
+<a href="../object/TAction.html#construct">construct</a>&nbsp;
+<a href="../object/TAction.html#createDobjResolver">createDobjResolver</a>&nbsp;
+<a href="../object/TAction.html#createForMissingDobj">createForMissingDobj</a>&nbsp;
+<a href="../object/TAction.html#createForRetry">createForRetry</a>&nbsp;
+<a href="../object/TAction.html#doActionMain">doActionMain</a>&nbsp;
+<a href="../object/TAction.html#execAction">execAction</a>&nbsp;
+<a href="../object/TAction.html#filterAmbiguousDobj">filterAmbiguousDobj</a>&nbsp;
+<a href="../object/TAction.html#filterPluralDobj">filterPluralDobj</a>&nbsp;
+<a href="../object/TAction.html#getAllDobj">getAllDobj</a>&nbsp;
+<a href="../object/TAction.html#getDobj">getDobj</a>&nbsp;
+<a href="../object/TAction.html#getDobjCount">getDobjCount</a>&nbsp;
+<a href="../object/TAction.html#getDobjFlags">getDobjFlags</a>&nbsp;
+<a href="../object/TAction.html#getDobjInfo">getDobjInfo</a>&nbsp;
+<a href="../object/TAction.html#getDobjResolver">getDobjResolver</a>&nbsp;
+<a href="../object/TAction.html#getDobjTokens">getDobjTokens</a>&nbsp;
+<a href="../object/TAction.html#getDobjWords">getDobjWords</a>&nbsp;
+<a href="../object/TAction.html#getObjResponseProd">getObjResponseProd</a>&nbsp;
+<a href="../object/TAction.html#getPreCondDescList">getPreCondDescList</a>&nbsp;
+<a href="../object/TAction.html#getPreCondPropForRole">getPreCondPropForRole</a>&nbsp;
+<a href="../object/TAction.html#getRemapPropForRole">getRemapPropForRole</a>&nbsp;
+<a href="../object/TAction.html#getResolvedDobjList">getResolvedDobjList</a>&nbsp;
+<a href="../object/TAction.html#getResolvedObjList">getResolvedObjList</a>&nbsp;
+<a href="../object/TAction.html#getResolveInfo">getResolveInfo</a>&nbsp;
+<a href="../object/TAction.html#getVerbPhrase1">getVerbPhrase1</a>&nbsp;
+<a href="../object/TAction.html#getVerifyPropForRole">getVerifyPropForRole</a>&nbsp;
+<a href="../object/TAction.html#initResolver">initResolver</a>&nbsp;
+<a href="../object/TAction.html#initTentative">initTentative</a>&nbsp;
+<a href="../object/TAction.html#resolvedObjectsInScope">resolvedObjectsInScope</a>&nbsp;
+<a href="../object/TAction.html#retryWithAmbiguousDobj">retryWithAmbiguousDobj</a>&nbsp;
+<a href="../object/TAction.html#retryWithMissingDobj">retryWithMissingDobj</a>&nbsp;
+<a href="../object/TAction.html#setResolvedDobj">setResolvedDobj</a>&nbsp;
+<a href="../object/TAction.html#testRetryDefaultDobj">testRetryDefaultDobj</a>&nbsp;
+<a href="../object/TAction.html#verifyAction">verifyAction</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Action</code> :<br>
+<code>
+<a href="../object/Action.html#actionOfKind">actionOfKind</a>&nbsp;
+<a href="../object/Action.html#addBeforeAfterObj">addBeforeAfterObj</a>&nbsp;
+<a href="../object/Action.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/Action.html#afterActionMain">afterActionMain</a>&nbsp;
+<a href="../object/Action.html#announceActionObject">announceActionObject</a>&nbsp;
+<a href="../object/Action.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/Action.html#beforeActionMain">beforeActionMain</a>&nbsp;
+<a href="../object/Action.html#cacheMultiObjectAnnouncements">cacheMultiObjectAnnouncements</a>&nbsp;
+<a href="../object/Action.html#callAfterActionMain">callAfterActionMain</a>&nbsp;
+<a href="../object/Action.html#callCatchAllProp">callCatchAllProp</a>&nbsp;
+<a href="../object/Action.html#callPreConditions">callPreConditions</a>&nbsp;
+<a href="../object/Action.html#callVerifyPreCond">callVerifyPreCond</a>&nbsp;
+<a href="../object/Action.html#callVerifyProp">callVerifyProp</a>&nbsp;
+<a href="../object/Action.html#cancelIteration">cancelIteration</a>&nbsp;
+<a href="../object/Action.html#checkPreConditions">checkPreConditions</a>&nbsp;
+<a href="../object/Action.html#combineRemappedVerifyResults">combineRemappedVerifyResults</a>&nbsp;
+<a href="../object/Action.html#createActionFrom">createActionFrom</a>&nbsp;
+<a href="../object/Action.html#createActionInstance">createActionInstance</a>&nbsp;
+<a href="../object/Action.html#createTopicQualifierResolver">createTopicQualifierResolver</a>&nbsp;
+<a href="../object/Action.html#doAction">doAction</a>&nbsp;
+<a href="../object/Action.html#doActionOnce">doActionOnce</a>&nbsp;
+<a href="../object/Action.html#filterAmbiguousWithVerify">filterAmbiguousWithVerify</a>&nbsp;
+<a href="../object/Action.html#filterFacets">filterFacets</a>&nbsp;
+<a href="../object/Action.html#filterPluralWithVerify">filterPluralWithVerify</a>&nbsp;
+<a href="../object/Action.html#finishResolveList">finishResolveList</a>&nbsp;
+<a href="../object/Action.html#getDefaultWithVerify">getDefaultWithVerify</a>&nbsp;
+<a href="../object/Action.html#getEnteredVerbPhrase">getEnteredVerbPhrase</a>&nbsp;
+<a href="../object/Action.html#getImplicitPhrase">getImplicitPhrase</a>&nbsp;
+<a href="../object/Action.html#getInfPhrase">getInfPhrase</a>&nbsp;
+<a href="../object/Action.html#getNotifyTable">getNotifyTable</a>&nbsp;
+<a href="../object/Action.html#getObjPreCondDescList">getObjPreCondDescList</a>&nbsp;
+<a href="../object/Action.html#getObjPreConditions">getObjPreConditions</a>&nbsp;
+<a href="../object/Action.html#getOriginalAction">getOriginalAction</a>&nbsp;
+<a href="../object/Action.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/Action.html#getParticiplePhrase">getParticiplePhrase</a>&nbsp;
+<a href="../object/Action.html#getPredicate">getPredicate</a>&nbsp;
+<a href="../object/Action.html#getPronounOverride">getPronounOverride</a>&nbsp;
+<a href="../object/Action.html#getRemappedFrom">getRemappedFrom</a>&nbsp;
+<a href="../object/Action.html#getSimpleSynonymRemap">getSimpleSynonymRemap</a>&nbsp;
+<a href="../object/Action.html#getSortedVerifyResults">getSortedVerifyResults</a>&nbsp;
+<a href="../object/Action.html#isConversational">isConversational</a>&nbsp;
+<a href="../object/Action.html#isNestedIn">isNestedIn</a>&nbsp;
+<a href="../object/Action.html#isPartOf">isPartOf</a>&nbsp;
+<a href="../object/Action.html#isRemapped">isRemapped</a>&nbsp;
+<a href="../object/Action.html#makeResolveInfo">makeResolveInfo</a>&nbsp;
+<a href="../object/Action.html#makeResolveInfoList">makeResolveInfoList</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceDefaultObject">maybeAnnounceDefaultObject</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceImplicit">maybeAnnounceImplicit</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceMultiObject">maybeAnnounceMultiObject</a>&nbsp;
+<a href="../object/Action.html#noMatch">noMatch</a>&nbsp;
+<a href="../object/Action.html#notifyBeforeAfter">notifyBeforeAfter</a>&nbsp;
+<a href="../object/Action.html#objListPronoun">objListPronoun</a>&nbsp;
+<a href="../object/Action.html#preAnnounceActionObject">preAnnounceActionObject</a>&nbsp;
+<a href="../object/Action.html#recalcSenseContext">recalcSenseContext</a>&nbsp;
+<a href="../object/Action.html#repeatAction">repeatAction</a>&nbsp;
+<a href="../object/Action.html#resolveAction">resolveAction</a>&nbsp;
+<a href="../object/Action.html#runBeforeNotifiers">runBeforeNotifiers</a>&nbsp;
+<a href="../object/Action.html#saveActionForAgain">saveActionForAgain</a>&nbsp;
+<a href="../object/Action.html#setImplicit">setImplicit</a>&nbsp;
+<a href="../object/Action.html#setMessageParam">setMessageParam</a>&nbsp;
+<a href="../object/Action.html#setMessageParams">setMessageParams</a>&nbsp;
+<a href="../object/Action.html#setNested">setNested</a>&nbsp;
+<a href="../object/Action.html#setOriginalAction">setOriginalAction</a>&nbsp;
+<a href="../object/Action.html#setPronounOverride">setPronounOverride</a>&nbsp;
+<a href="../object/Action.html#setRemapped">setRemapped</a>&nbsp;
+<a href="../object/Action.html#spPrefix">spPrefix</a>&nbsp;
+<a href="../object/Action.html#spSuffix">spSuffix</a>&nbsp;
+<a href="../object/Action.html#synthMessageParam">synthMessageParam</a>&nbsp;
+<a href="../object/Action.html#verifyHandlersExist">verifyHandlersExist</a>&nbsp;
+<a href="../object/Action.html#whatTranslate">whatTranslate</a>&nbsp;
+<a href="../object/Action.html#withVerifyResults">withVerifyResults</a>&nbsp;
+<a href="../object/Action.html#zeroActionTime">zeroActionTime</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#allowAll">allowAll</a>&nbsp;
+<a href="../object/Resolver.html#cacheScopeList">cacheScopeList</a>&nbsp;
+<a href="../object/Resolver.html#filterAll">filterAll</a>&nbsp;
+<a href="../object/Resolver.html#filterAmbiguousEquivalents">filterAmbiguousEquivalents</a>&nbsp;
+<a href="../object/Resolver.html#filterAmbiguousNounPhrase">filterAmbiguousNounPhrase</a>&nbsp;
+<a href="../object/Resolver.html#filterPluralPhrase">filterPluralPhrase</a>&nbsp;
+<a href="../object/Resolver.html#filterPossRank">filterPossRank</a>&nbsp;
+<a href="../object/Resolver.html#getAction">getAction</a>&nbsp;
+<a href="../object/Resolver.html#getAll">getAll</a>&nbsp;
+<a href="../object/Resolver.html#getAllDefaults">getAllDefaults</a>&nbsp;
+<a href="../object/Resolver.html#getDefaultObject">getDefaultObject</a>&nbsp;
+<a href="../object/Resolver.html#getPossessiveResolver">getPossessiveResolver</a>&nbsp;
+<a href="../object/Resolver.html#getPronounDefault">getPronounDefault</a>&nbsp;
+<a href="../object/Resolver.html#getQualifierResolver">getQualifierResolver</a>&nbsp;
+<a href="../object/Resolver.html#getRawPronounAntecedent">getRawPronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#getReflexiveBinding">getReflexiveBinding</a>&nbsp;
+<a href="../object/Resolver.html#getScopeList">getScopeList</a>&nbsp;
+<a href="../object/Resolver.html#getTargetActor">getTargetActor</a>&nbsp;
+<a href="../object/Resolver.html#matchName">matchName</a>&nbsp;
+<a href="../object/Resolver.html#objInScope">objInScope</a>&nbsp;
+<a href="../object/Resolver.html#resetResolver">resetResolver</a>&nbsp;
+<a href="../object/Resolver.html#resolvePronounAntecedent">resolvePronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#resolveUnknownNounPhrase">resolveUnknownNounPhrase</a>&nbsp;
+<a href="../object/Resolver.html#selectIndefinite">selectIndefinite</a>&nbsp;
+<a href="../object/Resolver.html#withGlobals">withGlobals</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="askDobjResponseProd"></a>
+<table class=decl><tr><td><code>askDobjResponseProd</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9436">9436</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="askIobjResponseProd"></a>
+<table class=decl><tr><td><code>askIobjResponseProd</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9437">9437</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="omitIobjInDobjQuery"></a>
+<table class=decl><tr><td><code>omitIobjInDobjQuery</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9435">9435</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbPhrase"></a>
+<table class=decl><tr><td><code>verbPhrase</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9434">9434</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<i>(none)</i>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

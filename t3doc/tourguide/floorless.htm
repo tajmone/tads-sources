@@ -1,0 +1,46 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Floorless</title><meta name="keywords" content="Floorless"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Floorless : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="floorlessroom.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="hiddendoor.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Floorless is a mix-in class which adds Floorless behaviour to any Room class; that is it takes away the floor from the list of <a href="roomparts.htm">room parts</a>, and provides the handling for a dropped object to end up in another location.
+<br>
+
+<br>
+Since the top of the mast is not exactly an (indoor) Room, in the sense of having four walls and a ceiling, it would be better defined using a mix of Floorless and a more appropriate class:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">topOfMast&nbsp;:&nbsp;Floorless,&nbsp;Deck&nbsp;'Top&nbsp;of&nbsp;Mast'&nbsp;'the&nbsp;top&nbsp;of&nbsp;the&nbsp;mast'
+<br>
+&nbsp;&nbsp;"From&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;mast&nbsp;you&nbsp;can&nbsp;see&nbsp;miles&nbsp;out&nbsp;across&nbsp;the&nbsp;lake&nbsp;to&nbsp;starboard
+<br>
+&nbsp;&nbsp;&nbsp;and&nbsp;the&nbsp;shore&nbsp;over&nbsp;to&nbsp;port.&nbsp;The&nbsp;deck&nbsp;below&nbsp;looks&nbsp;a&nbsp;sickeningly&nbsp;long&nbsp;way&nbsp;down.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;mainDeck
+<br>
+&nbsp;&nbsp;&nbsp;bottomRoom&nbsp;=&nbsp;(mainDeck.destination)&nbsp;
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Although the randomizing maindeck connector works fine, as you'll have seen if you've experiment with it, it is actually not a very good idea in practice. Not only will the random connector be potentially confusing to players, when we come to define an NPC who will follow the PC around, it can result in accidentally losing her (for example if the PC goes south from the foredeck and the NPC tries to follow him, she may end up on the port deck and he on the starboard, which is simply wrong if she's meant to be following him). Thus, once you've experimented with this random connector (assuming you want to), I suggest you remove its random element and change it to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">mainDeck&nbsp;:&nbsp;OneWayRoomConnector
+<br>
+&nbsp;&nbsp;destination&nbsp;=&nbsp;portDeck
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

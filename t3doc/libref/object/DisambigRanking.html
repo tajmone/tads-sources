@@ -1,0 +1,136 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>DisambigRanking</title></head><body>
+<table class=ban><tr><td align=left><span class=title>DisambigRanking</span><span class=type>class</span><td align=right><a href="../file/disambig.t.html">disambig.t</a>[<a href="../source/disambig.t.html#282">282</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Disambiguation Ranking.  This is a special version of the command   ranker that we use to rank the intepretations of a disambiguation   response.
+<p>
+<code>class
+<b>DisambigRanking</b> :  &nbsp; <a href="../object/CommandRanking.html">CommandRanking</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>DisambigRanking</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandRanking.html">CommandRanking</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ResolveResults.html">ResolveResults</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#disambigOrdinalCount">disambigOrdinalCount</a>&nbsp;
+<a href="#nounSlotCount">nounSlotCount</a>&nbsp;
+<a href="#rankingCriteria">rankingCriteria</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandRanking</code> :<br>
+<code>
+<a href="../object/CommandRanking.html#actorSpecifiedCount">actorSpecifiedCount</a>&nbsp;
+<a href="../object/CommandRanking.html#allExcludedCount">allExcludedCount</a>&nbsp;
+<a href="../object/CommandRanking.html#allowActionRemapping">allowActionRemapping</a>&nbsp;
+<a href="../object/CommandRanking.html#ambigCount">ambigCount</a>&nbsp;
+<a href="../object/CommandRanking.html#commandCount">commandCount</a>&nbsp;
+<a href="../object/CommandRanking.html#emptyButCount">emptyButCount</a>&nbsp;
+<a href="../object/CommandRanking.html#endAdjCount">endAdjCount</a>&nbsp;
+<a href="../object/CommandRanking.html#indefiniteCount">indefiniteCount</a>&nbsp;
+<a href="../object/CommandRanking.html#inSingleObjSlot">inSingleObjSlot</a>&nbsp;
+<a href="../object/CommandRanking.html#insufficientCount">insufficientCount</a>&nbsp;
+<a href="../object/CommandRanking.html#inTopicSlot">inTopicSlot</a>&nbsp;
+<a href="../object/CommandRanking.html#listForSingle">listForSingle</a>&nbsp;
+<a href="../object/CommandRanking.html#literalLength">literalLength</a>&nbsp;
+<a href="../object/CommandRanking.html#match">match</a>&nbsp;
+<a href="../object/CommandRanking.html#miscWordListCount">miscWordListCount</a>&nbsp;
+<a href="../object/CommandRanking.html#missingCount">missingCount</a>&nbsp;
+<a href="../object/CommandRanking.html#nonMatchCount">nonMatchCount</a>&nbsp;
+<a href="../object/CommandRanking.html#nonMatchPossCount">nonMatchPossCount</a>&nbsp;
+<a href="../object/CommandRanking.html#pluralTruncCount">pluralTruncCount</a>&nbsp;
+<a href="../object/CommandRanking.html#pronounCount">pronounCount</a>&nbsp;
+<a href="../object/CommandRanking.html#tokCount">tokCount</a>&nbsp;
+<a href="../object/CommandRanking.html#truncCount">truncCount</a>&nbsp;
+<a href="../object/CommandRanking.html#unknownWordCount">unknownWordCount</a>&nbsp;
+<a href="../object/CommandRanking.html#unwantedPluralCount">unwantedPluralCount</a>&nbsp;
+<a href="../object/CommandRanking.html#vocabNonMatchCount">vocabNonMatchCount</a>&nbsp;
+<a href="../object/CommandRanking.html#weaknessLevel">weaknessLevel</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#noteDisambigOrdinal">noteDisambigOrdinal</a>&nbsp;
+<a href="#noteOrdinalOutOfRange">noteOrdinalOutOfRange</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandRanking</code> :<br>
+<code>
+<a href="../object/CommandRanking.html#allNotAllowed">allNotAllowed</a>&nbsp;
+<a href="../object/CommandRanking.html#ambiguousNounPhrase">ambiguousNounPhrase</a>&nbsp;
+<a href="../object/CommandRanking.html#askMissingObject">askMissingObject</a>&nbsp;
+<a href="../object/CommandRanking.html#beginSingleObjSlot">beginSingleObjSlot</a>&nbsp;
+<a href="../object/CommandRanking.html#beginTopicSlot">beginTopicSlot</a>&nbsp;
+<a href="../object/CommandRanking.html#calcRanking">calcRanking</a>&nbsp;
+<a href="../object/CommandRanking.html#compareRanking">compareRanking</a>&nbsp;
+<a href="../object/CommandRanking.html#construct">construct</a>&nbsp;
+<a href="../object/CommandRanking.html#emptyNounPhrase">emptyNounPhrase</a>&nbsp;
+<a href="../object/CommandRanking.html#endSingleObjSlot">endSingleObjSlot</a>&nbsp;
+<a href="../object/CommandRanking.html#endTopicSlot">endTopicSlot</a>&nbsp;
+<a href="../object/CommandRanking.html#getImpliedObject">getImpliedObject</a>&nbsp;
+<a href="../object/CommandRanking.html#incCommandCount">incCommandCount</a>&nbsp;
+<a href="../object/CommandRanking.html#insufficientQuantity">insufficientQuantity</a>&nbsp;
+<a href="../object/CommandRanking.html#noMatch">noMatch</a>&nbsp;
+<a href="../object/CommandRanking.html#noMatchForAll">noMatchForAll</a>&nbsp;
+<a href="../object/CommandRanking.html#noMatchForAllBut">noMatchForAllBut</a>&nbsp;
+<a href="../object/CommandRanking.html#noMatchForListBut">noMatchForListBut</a>&nbsp;
+<a href="../object/CommandRanking.html#noMatchForLocation">noMatchForLocation</a>&nbsp;
+<a href="../object/CommandRanking.html#noMatchForPossessive">noMatchForPossessive</a>&nbsp;
+<a href="../object/CommandRanking.html#noMatchForPronoun">noMatchForPronoun</a>&nbsp;
+<a href="../object/CommandRanking.html#noMatchPossessive">noMatchPossessive</a>&nbsp;
+<a href="../object/CommandRanking.html#noteActorSpecified">noteActorSpecified</a>&nbsp;
+<a href="../object/CommandRanking.html#noteAdjEnding">noteAdjEnding</a>&nbsp;
+<a href="../object/CommandRanking.html#noteBadPrep">noteBadPrep</a>&nbsp;
+<a href="../object/CommandRanking.html#noteEmptyBut">noteEmptyBut</a>&nbsp;
+<a href="../object/CommandRanking.html#noteIndefinite">noteIndefinite</a>&nbsp;
+<a href="../object/CommandRanking.html#noteLiteral">noteLiteral</a>&nbsp;
+<a href="../object/CommandRanking.html#noteMatches">noteMatches</a>&nbsp;
+<a href="../object/CommandRanking.html#noteMiscWordList">noteMiscWordList</a>&nbsp;
+<a href="../object/CommandRanking.html#noteNounSlots">noteNounSlots</a>&nbsp;
+<a href="../object/CommandRanking.html#notePlural">notePlural</a>&nbsp;
+<a href="../object/CommandRanking.html#notePronoun">notePronoun</a>&nbsp;
+<a href="../object/CommandRanking.html#noteWeakPhrasing">noteWeakPhrasing</a>&nbsp;
+<a href="../object/CommandRanking.html#nothingInLocation">nothingInLocation</a>&nbsp;
+<a href="../object/CommandRanking.html#noVocabMatch">noVocabMatch</a>&nbsp;
+<a href="../object/CommandRanking.html#reflexiveNotAllowed">reflexiveNotAllowed</a>&nbsp;
+<a href="../object/CommandRanking.html#singleObjectRequired">singleObjectRequired</a>&nbsp;
+<a href="../object/CommandRanking.html#sortByRanking">sortByRanking</a>&nbsp;
+<a href="../object/CommandRanking.html#uniqueObjectRequired">uniqueObjectRequired</a>&nbsp;
+<a href="../object/CommandRanking.html#unknownNounPhrase">unknownNounPhrase</a>&nbsp;
+<a href="../object/CommandRanking.html#wrongReflexive">wrongReflexive</a>&nbsp;
+<a href="../object/CommandRanking.html#zeroQuantity">zeroQuantity</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="disambigOrdinalCount"></a>
+<table class=decl><tr><td><code>disambigOrdinalCount</code><td align=right><code><a href="../file/disambig.t.html">disambig.t</a>[<a href="../source/disambig.t.html#319">319</a>]</table><div class=desc>number of list ordinals in the match<p>
+</div>
+<a name="nounSlotCount"></a>
+<table class=decl><tr><td><code>nounSlotCount</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/disambig.t.html">disambig.t</a>[<a href="../source/disambig.t.html#325">325</a>]</table><div class=desc>   disambiguation commands have no verbs, so there's no verb   structure to rank; so just use an arbitrary noun slot count <p>
+</div>
+<a name="rankingCriteria"></a>
+<table class=decl><tr><td><code>rankingCriteria</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/disambig.t.html">disambig.t</a>[<a href="../source/disambig.t.html#295">295</a>]</table><div class=desc>   Add the ordinal count ranking criterion at the end of the   inherited list of ranking criteria.  If we can't find any   differences on the basis of the other criteria, choose the   interpretation that uses fewer ordinal phrases.  (We prefer an   non-ordinal interpretation, because this will prefer matches to   explicit vocabulary for objects over matches for generic   ordinals.) <p>   Insert the 'ordinal' rule just before the 'indefinite' rule -   avoiding an ordinal match is more important. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="noteDisambigOrdinal"></a>
+<table class=decl><tr><td><code>noteDisambigOrdinal ( )</code><td align=right><code><a href="../file/disambig.t.html">disambig.t</a>[<a href="../source/disambig.t.html#312">312</a>]</table><div class=desc>   note a list ordinal (i.e., "the first one" to refer to the first   item in the ambiguous list) - we take list ordinals as less   desirable than treating ordinal words as adjectives or nouns <p>
+</div>
+<a name="noteOrdinalOutOfRange"></a>
+<table class=decl><tr><td><code>noteOrdinalOutOfRange (ord)</code><td align=right><code><a href="../file/disambig.t.html">disambig.t</a>[<a href="../source/disambig.t.html#301">301</a>]</table><div class=desc>   note the an ordinal response is out of range <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

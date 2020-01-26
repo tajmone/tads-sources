@@ -1,0 +1,188 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TentativeResolveResults</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TentativeResolveResults</span><span class=type>class</span><td align=right><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3828">3828</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   "Tentative" noun resolver results gather.  This type of results   gatherer is used to perform a tentative pre-resolution of an object   of a multi-object action. <p>   Consider what happens when we resolve a two-object action, such as   "put &lt;dobj&gt; in &lt;iobj&gt;".  Since we have two objects, we obviously must   resolve one object or the other first; but this means that we must   resolve one object with no knowledge of the resolution of the other   object.  This often makes it very difficult to resolve that first   object intelligently, because we'd really like to know something   about the other object.  For example, if we first resolve the iobj of   "put &lt;dobj&gt; in &lt;iobj&gt;", it would be nice to know which dobj we're   talking about, since we could reduce the likelihood that the iobj is   the dobj's present container. <p>   Tentative resolution addresses this need by giving us some   information about a later-resolved object while resolving an   earlier-resolved object, even though we obviously can't have fully   resolved the later-resolved object.  In tentative resolution, we   perform the resolution of the later-resolved object, completely in   the dark about the earlier-resolved object(s), and come up with as   much information as we can.  The important thing about this stage of   resolution is that we don't ask any interactive questions and we   don't count anything for ranking purposes - we simply do the best we   can and note the results, leaving any ranking or interaction for the   true resolution phase that we'll perform later.
+<p>
+<code>class
+<b>TentativeResolveResults</b> :  &nbsp; <a href="../object/ResolveResults.html">ResolveResults</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TentativeResolveResults</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ResolveResults.html">ResolveResults</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#allowActionRemapping">allowActionRemapping</a>&nbsp;
+<a href="#allowEquivalentFiltering">allowEquivalentFiltering</a>&nbsp;
+<a href="#npMissing">npMissing</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#ambiguousNounPhrase">ambiguousNounPhrase</a>&nbsp;
+<a href="#askMissingLiteral">askMissingLiteral</a>&nbsp;
+<a href="#askMissingObject">askMissingObject</a>&nbsp;
+<a href="#canResolveInteractively">canResolveInteractively</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#emptyNounPhrase">emptyNounPhrase</a>&nbsp;
+<a href="#incCommandCount">incCommandCount</a>&nbsp;
+<a href="#insufficientQuantity">insufficientQuantity</a>&nbsp;
+<a href="#noMatch">noMatch</a>&nbsp;
+<a href="#noMatchForAll">noMatchForAll</a>&nbsp;
+<a href="#noMatchForAllBut">noMatchForAllBut</a>&nbsp;
+<a href="#noMatchForListBut">noMatchForListBut</a>&nbsp;
+<a href="#noMatchForLocation">noMatchForLocation</a>&nbsp;
+<a href="#noMatchForPossessive">noMatchForPossessive</a>&nbsp;
+<a href="#noMatchForPronoun">noMatchForPronoun</a>&nbsp;
+<a href="#noMatchPoss">noMatchPoss</a>&nbsp;
+<a href="#noteActorSpecified">noteActorSpecified</a>&nbsp;
+<a href="#noteAdjEnding">noteAdjEnding</a>&nbsp;
+<a href="#noteBadPrep">noteBadPrep</a>&nbsp;
+<a href="#noteEmptyBut">noteEmptyBut</a>&nbsp;
+<a href="#noteIndefinite">noteIndefinite</a>&nbsp;
+<a href="#noteLiteral">noteLiteral</a>&nbsp;
+<a href="#noteMatches">noteMatches</a>&nbsp;
+<a href="#noteMiscWordList">noteMiscWordList</a>&nbsp;
+<a href="#noteNounSlots">noteNounSlots</a>&nbsp;
+<a href="#notePronoun">notePronoun</a>&nbsp;
+<a href="#noteWeakPhrasing">noteWeakPhrasing</a>&nbsp;
+<a href="#nothingInLocation">nothingInLocation</a>&nbsp;
+<a href="#noVocabMatch">noVocabMatch</a>&nbsp;
+<a href="#reflexiveNotAllowed">reflexiveNotAllowed</a>&nbsp;
+<a href="#uniqueObjectRequired">uniqueObjectRequired</a>&nbsp;
+<a href="#unknownNounPhrase">unknownNounPhrase</a>&nbsp;
+<a href="#wrongReflexive">wrongReflexive</a>&nbsp;
+<a href="#zeroQuantity">zeroQuantity</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="allowActionRemapping"></a>
+<table class=decl><tr><td><code>allowActionRemapping</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3864">3864</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="allowEquivalentFiltering"></a>
+<table class=decl><tr><td><code>allowEquivalentFiltering</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3872">3872</a>]</table><div class=desc>   during the tentative phase, keep all equivalents - we don't want   to make any arbitrary choices among equivalents during this   phase, because doing so could improperly force a choice among   otherwise ambiguous resolutions to the other phrase <p>
+</div>
+<a name="npMissing"></a>
+<table class=decl><tr><td><code>npMissing</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3912">3912</a>]</table><div class=desc>   flag: the noun phrase we're resolving is a missing noun phrase,   which means that we'll ask for it to be filled in when we get   around to resolving it for real <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="ambiguousNounPhrase"></a>
+<table class=decl><tr><td><code>ambiguousNounPhrase (keeper, asker, txt, matchList, fullMatchList, scopeList, requiredNum, resolver)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3878">3878</a>]</table><div class=desc>   for ambiguous results, don't attempt to narrow things down - just   keep the entire list <p>
+</div>
+<a name="askMissingLiteral"></a>
+<table class=decl><tr><td><code>askMissingLiteral (action, which)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3902">3902</a>]</table><div class=desc>   no interaction is allowed, so return no tokens if we need to ask   for a literal <p>
+</div>
+<a name="askMissingObject"></a>
+<table class=decl><tr><td><code>askMissingObject (asker, resolver, responseProd)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3889">3889</a>]</table><div class=desc>   no interaction is allowed, so return nothing if we need to ask   for a missing object <p>
+</div>
+<a name="canResolveInteractively"></a>
+<table class=decl><tr><td><code>canResolveInteractively ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3905">3905</a>]</table><div class=desc>no interaction is allowed during tentative resolution<p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (target, issuer)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3829">3829</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="emptyNounPhrase"></a>
+<table class=decl><tr><td><code>emptyNounPhrase (resolver)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3851">3851</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="incCommandCount"></a>
+<table class=decl><tr><td><code>incCommandCount ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3860">3860</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="insufficientQuantity"></a>
+<table class=decl><tr><td><code>insufficientQuantity (txt, matchList, requiredNum)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3853">3853</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatch"></a>
+<table class=decl><tr><td><code>noMatch (action, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3835">3835</a>]</table><div class=desc>   ignore most resolution problems, since this is only a tentative   resolution pass <p>
+</div>
+<a name="noMatchForAll"></a>
+<table class=decl><tr><td><code>noMatchForAll ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3838">3838</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForAllBut"></a>
+<table class=decl><tr><td><code>noMatchForAllBut ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3840">3840</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForListBut"></a>
+<table class=decl><tr><td><code>noMatchForListBut ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3841">3841</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForLocation"></a>
+<table class=decl><tr><td><code>noMatchForLocation (loc, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3846">3846</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForPossessive"></a>
+<table class=decl><tr><td><code>noMatchForPossessive (owner, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3845">3845</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForPronoun"></a>
+<table class=decl><tr><td><code>noMatchForPronoun (typ, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3842">3842</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchPoss"></a>
+<table class=decl><tr><td><code>noMatchPoss (action, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3836">3836</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteActorSpecified"></a>
+<table class=decl><tr><td><code>noteActorSpecified ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3861">3861</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteAdjEnding"></a>
+<table class=decl><tr><td><code>noteAdjEnding ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3855">3855</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteBadPrep"></a>
+<table class=decl><tr><td><code>noteBadPrep ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3847">3847</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteEmptyBut"></a>
+<table class=decl><tr><td><code>noteEmptyBut ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3839">3839</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteIndefinite"></a>
+<table class=decl><tr><td><code>noteIndefinite ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3856">3856</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteLiteral"></a>
+<table class=decl><tr><td><code>noteLiteral (txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3850">3850</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteMatches"></a>
+<table class=decl><tr><td><code>noteMatches (matchList)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3859">3859</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteMiscWordList"></a>
+<table class=decl><tr><td><code>noteMiscWordList (txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3857">3857</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteNounSlots"></a>
+<table class=decl><tr><td><code>noteNounSlots (cnt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3862">3862</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="notePronoun"></a>
+<table class=decl><tr><td><code>notePronoun ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3858">3858</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteWeakPhrasing"></a>
+<table class=decl><tr><td><code>noteWeakPhrasing (level)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3863">3863</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nothingInLocation"></a>
+<table class=decl><tr><td><code>nothingInLocation (loc)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3848">3848</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noVocabMatch"></a>
+<table class=decl><tr><td><code>noVocabMatch (action, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3837">3837</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="reflexiveNotAllowed"></a>
+<table class=decl><tr><td><code>reflexiveNotAllowed (typ, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3843">3843</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="uniqueObjectRequired"></a>
+<table class=decl><tr><td><code>uniqueObjectRequired (txt, matchList)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3854">3854</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="unknownNounPhrase"></a>
+<table class=decl><tr><td><code>unknownNounPhrase (match, resolver)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3849">3849</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="wrongReflexive"></a>
+<table class=decl><tr><td><code>wrongReflexive (typ, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3844">3844</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="zeroQuantity"></a>
+<table class=decl><tr><td><code>zeroQuantity (txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#3852">3852</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

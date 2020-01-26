@@ -1,0 +1,46 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ExitPortal</title></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ExitPortal : <a href="shipboardroom.htm#leaveship">Exitable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="entryportal.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="travelbarrier.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An ExitPortal is just like an <a href="shipboardroom.htm#leaveship">Exitable</a>, except that you can go through it as well as exit it. For example:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">squareCave&nbsp;:&nbsp;DarkRoom&nbsp;'Square&nbsp;Cave'&nbsp;'the&nbsp;square&nbsp;cave'
+<br>
+&nbsp;&nbsp;&nbsp;"This&nbsp;capacious&nbsp;cave&nbsp;is&nbsp;unnaturally&nbsp;square,&nbsp;suggesting&nbsp;that&nbsp;it&nbsp;has&nbsp;been
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;artificially&nbsp;hewn&nbsp;out&nbsp;of&nbsp;the&nbsp;rock,&nbsp;an&nbsp;impression&nbsp;further&nbsp;enhanced&nbsp;by
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;carefully-constructed&nbsp;ashlar&nbsp;archway&nbsp;to&nbsp;the&nbsp;west.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;mainCave
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;asExit(west)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;ExitPortal&nbsp;-&gt;&nbsp;mainCave&nbsp;'ashlar&nbsp;arch/archway'&nbsp;'archway'
+<br>
+&nbsp;&nbsp;"The&nbsp;archway&nbsp;is&nbsp;beautifully&nbsp;constructed&nbsp;from&nbsp;dressed&nbsp;stones. "
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that ExitPortal is <i>not</i> a travel connector; -&gt; mainCave makes mainCave its connector property, not its masterObject property. For the distinction, see further on the <a href="enterable.htm">Enterable</a> class. The template used here is the <a href="exitabletemplate.htm">Exitable template</a>.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

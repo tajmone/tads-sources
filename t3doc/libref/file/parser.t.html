@@ -1,0 +1,171 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>parser.t</title></head><body>
+<table class=ban><tr><td align=left><span class=title>parser.t</span><span class=type>file</span><td align=right><a href="../source/parser.t.html">source file</a></table><p>
+<table class=nav><tr>
+<td><b>Classes</b><br><a href="#_ClassSummary_">Summary</a><br>&nbsp;<td><b>Objects</b><br><a href="#_ObjectSummary_">Summary</a><br>&nbsp;<td><b>Functions</b><br><a href="#_FunctionSummary_">Summary</a><br><a href="#_Functions_">Details</a></table><div class=fdesc>
+ <p>   TADS 3 Library: parser <p>   This modules defines the language-independent parts of the command   parser. <p>   Portions based on xiny.t, copyright 2002 by Steve Breslin and   incorporated by permission.
+</div>
+<a name="_ClassSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Classes</span> &nbsp; </div><p>
+<code>
+<a href="../object/ActorResolveResults.html">ActorResolveResults</a>&nbsp;
+<a href="../object/AllInContainerNounPhraseProd.html">AllInContainerNounPhraseProd</a>&nbsp;
+<a href="../object/AllPluralProd.html">AllPluralProd</a>&nbsp;
+<a href="../object/AmbigResponseKeeper.html">AmbigResponseKeeper</a>&nbsp;
+<a href="../object/ArbitraryNounProd.html">ArbitraryNounProd</a>&nbsp;
+<a href="../object/BasicContainerResolver.html">BasicContainerResolver</a>&nbsp;
+<a href="../object/BasicPossessiveProd.html">BasicPossessiveProd</a>&nbsp;
+<a href="../object/BasicProd.html">BasicProd</a>&nbsp;
+<a href="../object/BasicResolveResults.html">BasicResolveResults</a>&nbsp;
+<a href="../object/BothPluralProd.html">BothPluralProd</a>&nbsp;
+<a href="../object/ButPossessiveProd.html">ButPossessiveProd</a>&nbsp;
+<a href="../object/ButProd.html">ButProd</a>&nbsp;
+<a href="../object/CancelCommandLineException.html">CancelCommandLineException</a>&nbsp;
+<a href="../object/commandPhrase(ambiguousConj).html">commandPhrase(ambiguousConj)</a>&nbsp;
+<a href="../object/commandPhrase(definiteConj).html">commandPhrase(definiteConj)</a>&nbsp;
+<a href="../object/CommandProd.html">CommandProd</a>&nbsp;
+<a href="../object/CommandProdWithActor.html">CommandProdWithActor</a>&nbsp;
+<a href="../object/CommandProdWithAmbiguousConj.html">CommandProdWithAmbiguousConj</a>&nbsp;
+<a href="../object/CommandProdWithDefiniteConj.html">CommandProdWithDefiniteConj</a>&nbsp;
+<a href="../object/CommandRanking.html">CommandRanking</a>&nbsp;
+<a href="../object/CommandRankingByProblem.html">CommandRankingByProblem</a>&nbsp;
+<a href="../object/CommandRankingByWeakness.html">CommandRankingByWeakness</a>&nbsp;
+<a href="../object/CommandRankingCriterion.html">CommandRankingCriterion</a>&nbsp;
+<a href="../object/ContainerNounPhraseProd.html">ContainerNounPhraseProd</a>&nbsp;
+<a href="../object/ContainerResolver.html">ContainerResolver</a>&nbsp;
+<a href="../object/DefiniteNounProd.html">DefiniteNounProd</a>&nbsp;
+<a href="../object/DefinitePluralProd.html">DefinitePluralProd</a>&nbsp;
+<a href="../object/DirectionProd.html">DirectionProd</a>&nbsp;
+<a href="../object/DisambigPossessiveProd.html">DisambigPossessiveProd</a>&nbsp;
+<a href="../object/DisambigProd.html">DisambigProd</a>&nbsp;
+<a href="../object/EmptyLiteralPhraseProd.html">EmptyLiteralPhraseProd</a>&nbsp;
+<a href="../object/EmptyNounPhraseProd.html">EmptyNounPhraseProd</a>&nbsp;
+<a href="../object/EmptyTopicPhraseProd.html">EmptyTopicPhraseProd</a>&nbsp;
+<a href="../object/EverythingButProd.html">EverythingButProd</a>&nbsp;
+<a href="../object/EverythingProd.html">EverythingProd</a>&nbsp;
+<a href="../object/ExactQuantifiedPluralProd.html">ExactQuantifiedPluralProd</a>&nbsp;
+<a href="../object/ExactQuantifiedPossessivePluralProd.html">ExactQuantifiedPossessivePluralProd</a>&nbsp;
+<a href="../object/ExceptListProd.html">ExceptListProd</a>&nbsp;
+<a href="../object/ExceptResolver.html">ExceptResolver</a>&nbsp;
+<a href="../object/ExceptResults.html">ExceptResults</a>&nbsp;
+<a href="../object/firstCommandPhrase(commandOnly).html">firstCommandPhrase(commandOnly)</a>&nbsp;
+<a href="../object/FirstCommandProd.html">FirstCommandProd</a>&nbsp;
+<a href="../object/FirstCommandProdWithActor.html">FirstCommandProdWithActor</a>&nbsp;
+<a href="../object/HerAdjProd.html">HerAdjProd</a>&nbsp;
+<a href="../object/HerProd.html">HerProd</a>&nbsp;
+<a href="../object/HerselfProd.html">HerselfProd</a>&nbsp;
+<a href="../object/HersNounProd.html">HersNounProd</a>&nbsp;
+<a href="../object/HimProd.html">HimProd</a>&nbsp;
+<a href="../object/HimselfProd.html">HimselfProd</a>&nbsp;
+<a href="../object/HisAdjProd.html">HisAdjProd</a>&nbsp;
+<a href="../object/HisNounProd.html">HisNounProd</a>&nbsp;
+<a href="../object/ImpliedActorNounPhraseProd.html">ImpliedActorNounPhraseProd</a>&nbsp;
+<a href="../object/IndefiniteNounButProd.html">IndefiniteNounButProd</a>&nbsp;
+<a href="../object/IndefiniteNounProd.html">IndefiniteNounProd</a>&nbsp;
+<a href="../object/ItProd.html">ItProd</a>&nbsp;
+<a href="../object/ItsAdjProd.html">ItsAdjProd</a>&nbsp;
+<a href="../object/ItselfProd.html">ItselfProd</a>&nbsp;
+<a href="../object/ItsNounProd.html">ItsNounProd</a>&nbsp;
+<a href="../object/LayeredNounPhraseProd.html">LayeredNounPhraseProd</a>&nbsp;
+<a href="../object/ListButProd.html">ListButProd</a>&nbsp;
+<a href="../object/LiteralProd.html">LiteralProd</a>&nbsp;
+<a href="../object/MeProd.html">MeProd</a>&nbsp;
+<a href="../object/MineNounProd.html">MineNounProd</a>&nbsp;
+<a href="../object/MissingObjectRanking.html">MissingObjectRanking</a>&nbsp;
+<a href="../object/MyAdjProd.html">MyAdjProd</a>&nbsp;
+<a href="../object/NounListProd.html">NounListProd</a>&nbsp;
+<a href="../object/NounPhraseProd.html">NounPhraseProd</a>&nbsp;
+<a href="../object/NounPhraseWithVocab.html">NounPhraseWithVocab</a>&nbsp;
+<a href="../object/OopsResults.html">OopsResults</a>&nbsp;
+<a href="../object/ParseFailureException.html">ParseFailureException</a>&nbsp;
+<a href="../object/ParserException.html">ParserException</a>&nbsp;
+<a href="../object/PluralProd.html">PluralProd</a>&nbsp;
+<a href="../object/PossessiveNounProd.html">PossessiveNounProd</a>&nbsp;
+<a href="../object/PossessivePluralProd.html">PossessivePluralProd</a>&nbsp;
+<a href="../object/PossessivePronounAdjProd.html">PossessivePronounAdjProd</a>&nbsp;
+<a href="../object/PossessivePronounNounProd.html">PossessivePronounNounProd</a>&nbsp;
+<a href="../object/PreResolvedAmbigProd.html">PreResolvedAmbigProd</a>&nbsp;
+<a href="../object/PreResolvedLiteralProd.html">PreResolvedLiteralProd</a>&nbsp;
+<a href="../object/PreResolvedProd.html">PreResolvedProd</a>&nbsp;
+<a href="../object/PronounProd.html">PronounProd</a>&nbsp;
+<a href="../object/QuantifiedPluralProd.html">QuantifiedPluralProd</a>&nbsp;
+<a href="../object/ReflexivePronounProd.html">ReflexivePronounProd</a>&nbsp;
+<a href="../object/ReplacementCommandStringException.html">ReplacementCommandStringException</a>&nbsp;
+<a href="../object/ResolveAsker.html">ResolveAsker</a>&nbsp;
+<a href="../object/ResolveInfo.html">ResolveInfo</a>&nbsp;
+<a href="../object/ResolveResults.html">ResolveResults</a>&nbsp;
+<a href="../object/RetryCommandTokensException.html">RetryCommandTokensException</a>&nbsp;
+<a href="../object/SingleNounProd.html">SingleNounProd</a>&nbsp;
+<a href="../object/SingleNounWithListProd.html">SingleNounWithListProd</a>&nbsp;
+<a href="../object/StillToResolveItem.html">StillToResolveItem</a>&nbsp;
+<a href="../object/TerminateCommandException.html">TerminateCommandException</a>&nbsp;
+<a href="../object/TheirAdjProd.html">TheirAdjProd</a>&nbsp;
+<a href="../object/TheirsNounProd.html">TheirsNounProd</a>&nbsp;
+<a href="../object/ThemProd.html">ThemProd</a>&nbsp;
+<a href="../object/ThemselvesProd.html">ThemselvesProd</a>&nbsp;
+<a href="../object/TokenListProd.html">TokenListProd</a>&nbsp;
+<a href="../object/TopicProd.html">TopicProd</a>&nbsp;
+<a href="../object/TryAsActorResolveResults.html">TryAsActorResolveResults</a>&nbsp;
+<a href="../object/VagueContainerDefiniteNounPhraseProd.html">VagueContainerDefiniteNounPhraseProd</a>&nbsp;
+<a href="../object/VagueContainerIndefiniteNounPhraseProd.html">VagueContainerIndefiniteNounPhraseProd</a>&nbsp;
+<a href="../object/VagueContainerNounPhraseProd.html">VagueContainerNounPhraseProd</a>&nbsp;
+<a href="../object/VagueContainerResolver.html">VagueContainerResolver</a>&nbsp;
+<a href="../object/YouProd.html">YouProd</a>&nbsp;
+<a href="../object/YourAdjProd.html">YourAdjProd</a>&nbsp;
+<a href="../object/YoursNounProd.html">YoursNounProd</a>&nbsp;
+</code>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/rankByActorSpecified.html">rankByActorSpecified</a>&nbsp;
+<a href="../object/rankByAllExcluded.html">rankByAllExcluded</a>&nbsp;
+<a href="../object/rankByAmbiguity.html">rankByAmbiguity</a>&nbsp;
+<a href="../object/rankByEmptyBut.html">rankByEmptyBut</a>&nbsp;
+<a href="../object/rankByEndAdj.html">rankByEndAdj</a>&nbsp;
+<a href="../object/rankByIndefinite.html">rankByIndefinite</a>&nbsp;
+<a href="../object/rankByInsufficient.html">rankByInsufficient</a>&nbsp;
+<a href="../object/rankByListForSingle.html">rankByListForSingle</a>&nbsp;
+<a href="../object/rankByLiteralLength.html">rankByLiteralLength</a>&nbsp;
+<a href="../object/rankByMiscWordList.html">rankByMiscWordList</a>&nbsp;
+<a href="../object/rankByMissing.html">rankByMissing</a>&nbsp;
+<a href="../object/rankByNonMatch.html">rankByNonMatch</a>&nbsp;
+<a href="../object/rankByNonMatchPoss.html">rankByNonMatchPoss</a>&nbsp;
+<a href="../object/rankByPluralTrunc.html">rankByPluralTrunc</a>&nbsp;
+<a href="../object/rankByPronoun.html">rankByPronoun</a>&nbsp;
+<a href="../object/rankBySubcommands.html">rankBySubcommands</a>&nbsp;
+<a href="../object/rankByTokenCount.html">rankByTokenCount</a>&nbsp;
+<a href="../object/rankByTrunc.html">rankByTrunc</a>&nbsp;
+<a href="../object/rankByUnwantedPlural.html">rankByUnwantedPlural</a>&nbsp;
+<a href="../object/rankByVerbStructure.html">rankByVerbStructure</a>&nbsp;
+<a href="../object/rankByVocabNonMatch.html">rankByVocabNonMatch</a>&nbsp;
+<a href="../object/rankByWeakness.html">rankByWeakness</a>&nbsp;
+</code>
+<a name="FunctionSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Functions</span> &nbsp; </div><p>
+<code>
+<a href="#getResolvedObjects">getResolvedObjects</a>&nbsp;
+<a href="#intersectNounLists">intersectNounLists</a>&nbsp;
+<a href="#spliceList">spliceList</a>&nbsp;
+<a href="#tryAskingForObject">tryAskingForObject</a>&nbsp;
+<a href="#tryOops">tryOops</a>&nbsp;
+<a href="#tryOopsMain">tryOopsMain</a>&nbsp;
+</code><p>
+<a name="_Functions_"></a><p><div class=mjhd><span class=hdln>Global Functions</span> &nbsp; </div><p>
+<a name="getResolvedObjects"></a>
+<table class=decl><tr><td><code>getResolvedObjects (lst)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#485">485</a>]</table><div class=desc>   Extract the objects from a list obtained with resolveNouns().   Returns a list composed only of the objects in the resolution   information list. <p>
+</div>
+<a name="intersectNounLists"></a>
+<table class=decl><tr><td><code>intersectNounLists (lst1, lst2)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#447">447</a>]</table><div class=desc>   Intersect two resolved noun lists, returning a list consisting only   of the unique objects from the two lists. <p>
+</div>
+<a name="spliceList"></a>
+<table class=decl><tr><td><code>spliceList (lst, idx, newItems)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#4551">4551</a>]</table><div class=desc>   splice a new sublist into a list, replacing the item at 'idx' <p>
+</div>
+<a name="tryAskingForObject"></a>
+<table class=decl><tr><td><code>tryAskingForObject (issuingActor, targetActor, resolver, results, responseProd)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#4569">4569</a>]</table><div class=desc>   Try reading a response to a missing object question.  If we   successfully read a noun phrase that matches the given production   rule, we'll resolve it, stash the resolved list in the   resolvedObjects_ property of the match tree, and return the match   tree.  If they enter something that doesn't look like a response to   the question at all, we'll throw a new-command exception to process   it. <p>
+</div>
+<a name="tryOops"></a>
+<table class=decl><tr><td><code>tryOops (tokList, issuingActor, targetActor, firstTokenIndex, cmdTokenList, cmdType)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#4349">4349</a>]</table><div class=desc>   Look for an undefined word in a list of tokens, and give the player a   chance to correct a typo with "OOPS" if appropriate. <p>   If we find an unknown word and we can prompt for interactive   resolution, we'll do so, and we'll throw an appropriate exception to   handle the response.  If we can't resolve the missing word   interactively, we'll throw a parse failure exception. <p>   If there are no undefined words in the command, we'll simply return. <p>   tokList is the list of tokens under examination; this is a subset of   the full command token list.  cmdTokenList is the full command token   list, in the usual tokenizer format.  firstTokenIndex is the index of   the first token in tokList within cmdTokenList. <p>   cmdType is an rmcXxx code giving the type of input we're reading. <p>
+</div>
+<a name="tryOopsMain"></a>
+<table class=decl><tr><td><code>tryOopsMain (tokList, issuingActor, targetActor, firstTokenIndex, cmdTokenList, cmdType)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#4360">4360</a>]</table><div class=desc>main "oops" processor<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Wearable</title><meta name="keywords" content="Wearable,wornBy,isWorn"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Wearable : <a href="thing-thebasics.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="disambigname.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="containers-introduction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Wearable is simply something that can be worn by an actor. Try defining the following:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">cap&nbsp;:&nbsp;Wearable&nbsp;'sailor\'s&nbsp;cap'&nbsp;'sailor\'s&nbsp;cap'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large&nbsp;round&nbsp;hat&nbsp;with&nbsp;a&nbsp;white&nbsp;top&nbsp;and&nbsp;a&nbsp;small&nbsp;blue&nbsp;peak.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Now recompile the game, go to the mainCave, and try WEAR CAP, INVENTORY, REMOVE CAP, INVENTORY (four separate commands).
+<br>
+
+<br>
+The most interesting methods and properties that Wearable introduces are wornBy, isWorn() and isWornBy(actor). None of these are properties or methods you'd normally want to override, but you might have occasion to test their values. <b>wornBy</b> returns the actor object that is currently wearing the Wearable (or nil if it is not being worn), <b>isWorn()</b> returns true if the Wearable is being worn and nil otherwise, and <b>isWornBy(actor)</b> similarly tests for its being worn by a specific Actor. We shall make use of isWorn() shortly, when we add some complications to this cap. Also, we shan't be leaving this cap in mainCave, but it'll have to stay there till we create a new location for it.</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

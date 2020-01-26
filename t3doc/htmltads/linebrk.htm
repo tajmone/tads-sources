@@ -1,0 +1,142 @@
+<title>Word Wrapping and Line Breaking in HTML TADS</title>
+
+<h1>Word Wrapping and Line Breaking in HTML TADS</h1>
+
+<p>The HTML 3.2 standard doesn't specify how user agents (the
+standard's term for a browser) should break up long lines of text to
+make them fit into the available display width.  In practice, nearly
+all browsers use "word wrapping" to break up text lines; this means
+that the browser inserts line breaks at word boundaries only, so that
+an individual word is never split across two lines of text.
+This is the way HTML TADS works by default, too, but HTML TADS provides
+some additional features that let the game override the default
+rules and take control of how text is wrapped.  This section describes
+these advanced line breaking controls.
+
+<h2>The Two Basic Wrapping Modes</h2>
+
+<p>To start with, HTML TADS has two basic modes for text wrapping:
+word and character.
+
+<p>In word-wrapping mode, the formatter will only break a line
+between words.  This is the default mode, and is the style that almost
+always applies to languages like English that use groups of letters to
+represent words.  The formatter's rules for determining word
+boundaries are simple: a word boundary is a space, or a hyphen (but a
+break can occur only to the right of a hyphen, and only when the
+hyphen isn't followed by another hyphen).
+
+<p>In character-wrapping mode, the formatter can break a line
+anywhere.  This mode is especially applicable to languages like
+Chinese in which each character represents an entire word.  In
+Chinese, convention allows line breaks to occur almost anywhere; each
+glyph is a separate word, so there is no need to keep most pairs of
+adjacent glyphs together on one line.
+
+<h3>Selecting the Wrapping Mode: the &lt;WRAP&gt; Tag</h3>
+
+<p>The game sets the wrapping mode using the &lt;WRAP&gt; tag (which
+is a TADS extension, not a standard HTML tag).  &lt;WRAP WORD&gt; sets
+word-wrapping mode, and &lt;WRAP CHAR&gt; sets character-wrapping
+mode.  The interpreter always starts in word-wrapping mode.  This tag
+is not a container, but simply an in-line mode switch, so there is no
+&lt;/WRAP&gt; tag; to change out of the current mode, simply use another
+&lt;WRAP&gt; tag with the new mode.
+
+<h2>Overriding the Default Breaking Rules</h2>
+
+<p>The default line-breaking rules -- in both word-wrap and
+character-wrap modes -- are very simple, and aren't adequate for every
+situation.  For example, a game written in English might have some
+words that include hyphens that should always be kept together on one
+line, or a word that includes some other embedded punctuation that
+could serve as line-break points if needed.  As another example, a
+game written in Chinese wouldn't really want line breaks to occur just
+anywhere; the conventions for line-breaking in Chinese actually
+require that certain sequences of characters, such as certain groups
+of punctuation marks, be kept together, and don't allow line breaks to
+occur just before or after certain types of punctuation.
+
+<p>It would be impossible to anticipate every possible line-breaking
+rule for every language and every game, so HTML TADS doesn't even try;
+instead, the interpreter uses the rather simple set of rules outlined
+above by default, but provides a set of special control sequences that
+allow the game to override the default behavior whenever it wants.
+These special controls are described below.
+
+<h3>The Zero-Width Non-Breaking Space</h3>
+
+<p>The first special control prevents a line break, and is called the
+"zero-width non-breaking space."  This is a special markup, written as
+"&amp;zwnbsp;".  It's a "zero-width" character, which means that it
+doesn't show up on the display: it's simply invisible as far as the
+user is concerned.  The "non-breaking" part is the special feature:
+this tells the interpreter that it cannot break the line here, even if
+it otherwise could.
+
+<p>To be more specific, the zero-width non-breaking space prevents a
+line break from occurring between the two characters adjacent to it.
+Essentially, this control is a bit of glue that sticks so strongly to
+the characters on both sides that the line breaking rules can't tear
+them apart.
+
+<p>Note that the glue only sticks to one side of each adjacent
+character.  So, if you put a &amp;zwnbsp character just before a
+space, and you're in word-wrapping mode, the formatter can still break
+the line after the space.  If you want to prevent the space from being
+a line break at all, you have to put a &amp;zwnbsp character on both
+sides of the space-one before and one after.
+
+<h3>The Zero-Width Space</h3>
+
+<p>The second special control is the "zero-width space," and it does
+essentially the opposite of the zero-width non-breaking space: this
+character enables a line break where the rules would otherwise not
+allow it.  This markup is written "&amp;zwsp;".  Like &amp;zwnbsp,
+this is a zero-width character, so it's invisible on the display.
+Otherwise, though, it counts as a space -- which means that the
+formatter, even in word-wrap mode, is free to break the line between
+the two adjacent characters, as though they were separated by an
+ordinary space.
+
+<p>You can use a zero-width space to add your own rules about where
+lines can be broken.  For example, suppose your game has a bunch of
+words where you're using an equals sign as though it were a hyphen,
+and you want the formatter to be able to break to the right of these
+equals signs just like it would for hyphens.  To do this, you would
+simply insert a &amp;zwsp character immediately after each of these
+equals signs; this would tell the interpreter that it can break the
+line just after the hyphen if necessary.
+
+<h3>The Non-Breaking Space</h3>
+
+<p>Standard HTML defines its own non-breaking space character, written
+as "&amp;nbsp;".  This character is displayed exactly like an ordinary
+space (the kind you get by pressing the space bar on the keyboard),
+but it behaves as though it were a non-space character: the formatter
+never breaks a line at a non-breaking space (thus the name), it never
+combines a non-breaking space with adjacent ordinary spaces, and it
+never trims a non-breaking space from the beginning or end of a line.
+For line-breaking purposes, the non-breaking space behaves as though
+it were an alphabetic character.
+
+<p>Apart from the obvious difference in visual size, the non-breaking
+space differs from the zero-width non-breaking space in that the
+zero-width version is like glue -- it prevents a line break from being
+inserted between the adjacent characters.  The ordinary non-breaking
+space, however, merely acts like any other non-space character; if the
+line-breaking rules allow it, the formatter can break the line
+immediately before or after an ordinary non-breaking space.
+
+<h3>The Soft Hyphen</h3>
+
+<p>Standard HTML defines another special control, the "soft hyphen,"
+written as "&amp;shy;".  This character tells the interpreter that it
+can break a word with hyphenation at a particular point, but that it
+doesn't have to.
+
+<p>Soft hyphens are normally invisible, so you can freely insert them
+into words without adding visual clutter.  When the formatter decides
+to take advantage of a soft hyphen to break a line, though, the soft
+hyphen is displayed as a normal hyphen at the end of the line.
+

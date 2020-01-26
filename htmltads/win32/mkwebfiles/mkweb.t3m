@@ -1,0 +1,4 @@
+-o mkweb.t3
+-Fo obj
+-Fy obj
+-source mkweb

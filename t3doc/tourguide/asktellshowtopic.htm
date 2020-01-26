@@ -1,0 +1,74 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>AskTellShowTopic</title><meta name="keywords" content="AskTellShowTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>AskTellShowTopic : TopicOrThingMatchTopic
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="askaboutfortopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="asktellgiveshowtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An AskTellShowTopic, as you might guess, responds to ASK X ABOUT Y, TELL X ABOUT Y or SHOW Y TO X. As an example we could take the ship floating by the shore, which the player character might either ask or tell Sarah about, or else point out to her:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;AskTellShowTopic,&nbsp;StopEventList&nbsp;@ship
+<br>
+&nbsp;&nbsp;[&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Do&nbsp;you&nbsp;know&nbsp;anything&nbsp;about&nbsp;that&nbsp;ship?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Not&nbsp;really.&lt;/q&gt;&nbsp;she&nbsp;admits,&nbsp;&lt;q&gt;Only&nbsp;that&nbsp;it&nbsp;floats.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;How&nbsp;long&nbsp;has&nbsp;that&nbsp;ship&nbsp;been&nbsp;there?&lt;/q&gt;&nbsp;you&nbsp;wonder.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Well,&nbsp;it&nbsp;was&nbsp;there&nbsp;when&nbsp;I&nbsp;came,&nbsp;and&nbsp;it&nbsp;hasn\'t&nbsp;moved&nbsp;since.&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;she&nbsp;replies.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Do&nbsp;you&nbsp;think&nbsp;we&nbsp;could&nbsp;use&nbsp;that&nbsp;ship&nbsp;to&nbsp;sail&nbsp;out&nbsp;of&nbsp;here?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I&nbsp;have&nbsp;no&nbsp;idea&nbsp;-&nbsp;why&nbsp;don\'t&nbsp;you&nbsp;go&nbsp;and&nbsp;investigate?&lt;/q&gt;&nbsp;she&nbsp;suggests.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;What&nbsp;do&nbsp;you&nbsp;make&nbsp;of&nbsp;this&nbsp;ship?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Let's&nbsp;investigate&nbsp;some&nbsp;more.&lt;/q&gt;&nbsp;she&nbsp;suggests,
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;How&nbsp;about&nbsp;looking&nbsp;over&nbsp;there?&lt;/q&gt;&nbsp;she&nbsp;points&nbsp;vaguely.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(getActor.location.ofKind(Deck))
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;So,&nbsp;what&nbsp;do&nbsp;you&nbsp;think&nbsp;of&nbsp;the&nbsp;ship?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;You're&nbsp;the&nbsp;one&nbsp;that's&nbsp;sailed&nbsp;it!&lt;/q&gt;&nbsp;she&nbsp;points&nbsp;out."
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(ship.moved)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note, however, that when the ship is not explicitly in view (i.e. the ship object is not visible in the current location) SHOW SHIP will not, in fact, behave the same as ASK ABOUT SHIP or TELL ABOUT SHIP. You can verify this by ASKING Sarah ABOUT the ship and SHOWing Sarah the ship while she's standing on the shore, then getting her to follow you aboard and trying ASK SARAH ABOUT SHIP and SHOW SARAH SHIP.
+<br>
+</font></font>
+
+</body></html>

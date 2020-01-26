@@ -1,0 +1,144 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>MultiInstance</title><meta name="keywords" content="MultiInstance,locationList,instanceObject,MultiInstanceInstance,moveInto,moveIntoAdd,moveOutOf,initialLocationClass,isInitiallyIn,buildLocationList"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>MultiInstance : BaseMultiLoc
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="multiloc.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="multifaceted.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The MultiInstance class is used for creating copies of objects, typically Decorations, in multiple locations. This can often be preferable to using <a href="multiloc.htm">MultiLoc </a>for this purpose, since a MultiLoc is a single object, and thus (for example) will be lit for all locations even if it's lit only in one.
+<br>
+
+<br>
+A typical use for a MultiInstance might be for creating trees in a forest. The trees are not interestingly distinctive, but they are numerically distinct objects. To put a 'trees' Decoration object in each location where we mention the forest, we first create a MultiInstance shell object and set its <b>locationList</b> property to the list of locations we want the trees to appear in, and then set up a template trees object in its <b>instanceObject</b> property.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">MultiInstance
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[snowForest,&nbsp;nwForestPath,&nbsp;neForestPath,&nbsp;snowForestEdge]
+<br>
+&nbsp;&nbsp;instanceObject:&nbsp;Decoration&nbsp;{&nbsp;'pine&nbsp;tree/trees/pines'&nbsp;'trees'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;trees,&nbsp;mainly&nbsp;tall&nbsp;pines,&nbsp;are&nbsp;covered&nbsp;in&nbsp;snow.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This is all you have to do; the library does the rest of the work by creating an instance of your template object in each of the rooms listed in the locationList. The library also adds MultiInstanceInstance to the class list of the objects it creates (so you don't have to bother). This basically handles specialized handling for <b>moveInto</b> so you can move the instance objects around (assuming you can find a way to refer to them) and everything will be kept in sync with the MultiInstance object. Probably the more useful way to relocate MultiInstanceInstance objects dynamically is to call the <b>moveInto(loc)</b>, <b>moveIntoAdd(loc)</b>, and <b>moveOutOf(loc)</b> methods of the MultiInstance object. For example, if we wanted the forest to grow into a new location during the course of the game (which we don't), we could give the MultiInstance object a name (such as 'trees') and then call:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;trees.moveIntoAdd(newLocation);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that if we called trees.moveInto(newLocation) the trees would be removed from every other location. If on the other hand we wanted to chop down part of the forest (which we don't) we could call:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;trees.moveOutOf(neForestPath);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Finally, we don't have to use the locationList to specify the initial location of the trees. As an alternative, we could have defined a ForestRoom class for use at each of our forested locations, and then have used MultiInstance's (or rather MultiLoc's) <b>initialLocationClass</b> property to define where we wanted the trees to appear:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">MultiInstance
+<br>
+&nbsp;&nbsp;initialLocationClass&nbsp;=&nbsp;ForestRoom
+<br>
+&nbsp;&nbsp;instanceObject:&nbsp;Decoration&nbsp;{&nbsp;'pine&nbsp;tree/trees/pines'&nbsp;'trees'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;trees,&nbsp;mainly&nbsp;tall&nbsp;pines,&nbsp;are&nbsp;covered&nbsp;in&nbsp;snow.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+As a third (though in this case utterly pointless) alternative, we could simply have overridden the <b>isInitiallyIn(obj)</b> method:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">MultiInstance
+<br>
+&nbsp;&nbsp;isInitiallyIn(obj)&nbsp;{&nbsp;return&nbsp;obj&nbsp;in&nbsp;in&nbsp;(snowForest,&nbsp;nwForestPath,&nbsp;neForestPath,&nbsp;snowForestEdge);&nbsp;}
+<br>
+&nbsp;&nbsp;instanceObject:&nbsp;Decoration&nbsp;{&nbsp;'pine&nbsp;tree/trees/pines'&nbsp;'trees'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;trees,&nbsp;mainly&nbsp;tall&nbsp;pines,&nbsp;are&nbsp;covered&nbsp;in&nbsp;snow.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There may, however, be more complex cases in which this would be useful for implementing a rule for determining where the MultiInstanceInstances should start out. Lastly, and even more pointlessly in this case, you could override <b>buildLocationList()</b> to construct the initial list of locations:</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">MultiInstance&nbsp;
+<br>
+&nbsp;&nbsp;buildLocationList()&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst&nbsp;=&nbsp;new&nbsp;Vector(16);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst.append(snowForest);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst.append(nwForestPath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst.append(neForestPath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst.append(snowForestEdge);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;lst.toList();
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;instanceObject:&nbsp;Decoration&nbsp;{&nbsp;'pine&nbsp;tree/trees/pines'&nbsp;'trees'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;trees,&nbsp;mainly&nbsp;tall&nbsp;pines,&nbsp;are&nbsp;covered&nbsp;in&nbsp;snow.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Of course the method could simply have been defined:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;buildLocationList()&nbsp;{&nbsp;return&nbsp;[snowForest,&nbsp;nwForestPath,&nbsp;neForestPath,&nbsp;snowForestEdge];&nbsp;}
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">But since there is absolutely no point in overriding the method in this case anyway, we might as well make it appear more complicated to simulate a situation in which you <i>might</i> actually want to use this method; though it's hard to think of a case where this could achieve something that couldn't be achieved just as well by overriding isInitiallyIn(obj).
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

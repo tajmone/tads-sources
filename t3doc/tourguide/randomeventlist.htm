@@ -1,0 +1,24 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>RandomEventList</title><meta name="keywords" content="RandomEventList,eventPercent,eventReduceTo,eventReduceAfter"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>RandomEventList : <a href="randomfiringscript.htm">RandomFiringScript</a>, <a href="eventlist.htm">EventList</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="cycliceventlist.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="shuffledeventlist.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A RandomEventList is an EventList that randomly selects one of its items each turn its doScript method is run. In practice, the <a href="shuffledeventlist.htm">ShuffledEventList</a>, which inherits from RandomEventList, may be more useful, since it ensures that the same event will not be chosen twice in succession. The typical use of a RandomEventList might be in the atmosphereList of a <a href="room.htm">Room</a> or combined with a <a href="topicentry.htm">TopicEntry</a> to provide a series of random conversational responses.
+<br>
+
+<br>
+RandomEventList defines, (and hence ShufffledEventList inherits) three useful properties to control the frequency with which random messages are displayed (or random events occur). This is principally designed for use in a Room's atmosphereList (or perhaps an Actor's 'fidget list'), where once players have seen all the messages once or twice, they've got the general idea and may start to find them unduly repetitious.
+<br>
+
+<br>
+You can set the <b>eventPercent </b>property (an integer between 0 and 100) to define the proportion of turns in which you want one of the events (normally just displaying a string) to occur (for example, setting eventPercent = 75 would cause a random event to be selected on average in three turns out of every four).  By default, eventPercent is 100. Additionally, if you wish, you can have this percentage fall (or even rise!) to a new value, <b>eventReduceTo</b> after <b>eventReduceAfter</b> turns. If <b>eventReduceAfter</b> is nil (as it is by default) then the eventPercent never changes. This behaviour is in fact provided by <a href="randomfiringscript.htm">RandomFiringScript</a>.
+<br>
+
+<br>
+</font>
+
+</body></html>

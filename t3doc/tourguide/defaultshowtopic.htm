@@ -1,0 +1,100 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultShowTopic</title><meta name="keywords" content="DefaultShowTopic,handleTopic,rand"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultShowTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaultgivetopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultgiveshowtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A DefaultShowTopic responds to any SHOW X TO Y command when no specific response (ShowTopic or GiveShowTopic) has been provided for X. Note that, as with the DefaultGiveTopic, X must be an object in scope, but, unlike the DefaultGiveTopic, it need not be portable. Thus, in Sarah's starting location, the DefaultShowTopic will be triggered by commands such as SHOW SARAH THE DOOR and SHOW SARAH THE SHIP (but not SHOW SARAH THE LAKE, since the lake is a Decoration object).
+<br>
+
+<br>
+This means that we must either be careful not to supply any default responses that presuppose that the object shown to Sarah can be picked up and physically handed over, or else devise some method of supplying different responses for portable and non-portable items. Just for fun, we'll go down the second route, by overriding handleTopic to test whether the object matched is portable or not, and using the eventList property to list the portable responses and the topicResponse property to handle the non-portable cases.
+<br>
+
+<br>
+Here's how we'll define the DefaultShowTopic for Sarah (again, put this in sarah, not one of her ActorStates):
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;DefaultShowTopic,&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;glances&nbsp;at&nbsp;{the&nbsp;dobj/him}&nbsp;and&nbsp;remarks,&nbsp;&lt;q&gt;I'd&nbsp;say&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;it's&nbsp;{a&nbsp;dobj/he},&nbsp;&lt;&lt;rand('definitely',&nbsp;'palpably',&nbsp;'undeniably')&gt;&gt;&nbsp;{a&nbsp;dobj/he}.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;How&nbsp;&lt;&lt;rand('remarkable','quaint','nice','strange','odd')&gt;&gt;!&lt;/q&gt;&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;eventList =
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Very&nbsp;nice,&nbsp;I\'m&nbsp;sure.&lt;/q&gt;&nbsp;she&nbsp;remarks,&nbsp;with&nbsp;no&nbsp;obvious&nbsp;enthusiasm.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;How&nbsp;interesting!&lt;/q&gt;&nbsp;she&nbsp;declares.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'She&nbsp;examines&nbsp;{the&nbsp;dobj/him}&nbsp;and&nbsp;hands&nbsp;{it&nbsp;dobj/him}&nbsp;back&nbsp;to&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;It\'s&nbsp;{a&nbsp;dobj/he}.&lt;/q&gt;&nbsp;she&nbsp;observes,&nbsp;&lt;q&gt;So?&lt;/q&gt;&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;/*&nbsp;We&nbsp;override&nbsp;this&nbsp;method&nbsp;to&nbsp;distinguish&nbsp;between&nbsp;portable&nbsp;and&nbsp;other&nbsp;objects&nbsp;*/
+<br>
+&nbsp;&nbsp;handleTopic(fromActor,&nbsp;obj)&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;note&nbsp;the&nbsp;invocation&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noteInvocation(fromActor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;set&nbsp;pronoun&nbsp;antecedents&nbsp;if&nbsp;possible&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setTopicPronouns(fromActor,&nbsp;obj);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;check&nbsp;to&nbsp;see&nbsp;if&nbsp;the&nbsp;matched&nbsp;object&nbsp;is&nbsp;portable&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!obj.ofKind(NonPortable))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;invoke&nbsp;our&nbsp;script&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;doScript();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;show&nbsp;our&nbsp;simple&nbsp;response&nbsp;string&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topicResponse;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note the use of the dobj parameter substitution strings to get at the object that Sarah has been shown. Since SHOW TO is a TIAction, any valid SHOW TO action will have a valid direct object, so we can use these parameter strings to describe it (or gDobj to get at the object itself). This would also work with GIVE TO (but not with ASK ABOUT, ASK FOR, or TELL ABOUT). Note also how we use the rand() function to provide some variety to the topicResponse without actually specifying a list of separate responses. When the rand() function is supplied with the list, it selects one of the elements at random.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

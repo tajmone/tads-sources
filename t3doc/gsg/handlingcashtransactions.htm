@@ -1,0 +1,741 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Handling Cash Transactions</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="goingshopping.htm">[Previous] </a>&nbsp;&nbsp;<a href="fillinginsomegaps.htm">[Next] </a></I></FONT></P>
+<h2>Handling Cash Transactions</h2>
+
+<h3>a. Providing Goods and Money</h3>
+<p>Although we have created a shop and a shopkeeper, we have yet to program the actual purchase process. This will turn out to be one of the most complex tasks we have attempted so far; money is a surprisingly difficult thing to handle in IF. We shall first try an approach with a couple of buyable items and four coins. We shall then discuss how this might be expanded and simplified to cope with more general cases, without trying to add a more general case to our game.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">What Heidi needs to buy from the shop is a battery. To make things a bit more interesting we'll assume she can also buy a bag of sweets (that's 'candy' for all you folks on the western side of the Atlantic). The first thing to do, then, is to remove the battery from the tin (where we last left it) and to create a sweets/candy object. Remove the + sign from in front of the battery, move it after the contents of </font><font face="Courier New" size="2" color="#000000">insideShop</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and then define the bag of sweets:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">battery&nbsp;:&nbsp;Thing&nbsp;'small&nbsp;red&nbsp;battery'&nbsp;'small&nbsp;red&nbsp;battery'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;red&nbsp;battery,&nbsp;1.5v,&nbsp;manufactured&nbsp;by&nbsp;ElectroLeax
+<br>
+&nbsp;&nbsp;and&nbsp;made&nbsp;in&nbsp;the&nbsp;People's&nbsp;Republic&nbsp;of&nbsp;Erewhon.&nbsp;"
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;1
+<br>
+;
+<br>
+
+<br>
+sweetBag&nbsp;:&nbsp;Dispenser&nbsp;'bag&nbsp;of&nbsp;candy/sweets'&nbsp;'bag&nbsp;of&nbsp;sweets'
+<br>
+&nbsp;&nbsp;"A&nbsp;bag&nbsp;of&nbsp;sweets.&nbsp;"
+<br>
+&nbsp;&nbsp;canReturnItem&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;myItemClass&nbsp;=&nbsp;Sweet
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We define the bag of sweets as a </font><font face="Courier New" size="2" color="#000000">Dispenser</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> since we expect it to contain individual items (i.e. sweets) which can be taken from the bag (and returned to it, since we have defined </font><font face="Courier New" size="2" color="#000000">canReturnItem&nbsp;=&nbsp;true)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. We set </font><font face="Courier New" size="2" color="#000000">myItemClass&nbsp;=&nbsp;Sweet</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to define the type of object we expect the bag to hold. We must next define the </font><font face="Courier New" size="2" color="#000000">Sweet</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class; the following code is more or less lifted straight from the TADS 3 sample game (sample.t) changing 'coin' to 'sweet' throughout and adding a few more customisations relevant to sweets, most notably making </font><font face="Courier New" size="2" color="#000000">Sweet</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> inherit from </font><font face="Courier New" size="2" color="#000000">Food</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as well as </font><font face="Courier New" size="2" color="#000000">Dispensable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. While we're at it we'll adapt code from the sample game to make the sweets list neatly (e.g. "there are 9 sweets (3 red, 3 yellow and 3 green)" rather than "there is a red sweet, a red sweet, a red sweet, a yellow sweet etc.").  For this we need a </font><font face="Courier New" size="2" color="#000000">ListGroupParen</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and an </font><font face="Courier New" size="2" color="#000000">ItemizingCollectiveGroup&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">along with definitions of a </font><font face="Courier New" size="2" color="#000000">Sweet</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class and subclasses to define collections of basically similar objects. Since this is something of a decorative distraction from our main objective here (Heidi doesn't need the sweets for the player to win the game), I shall simply present the adaptation from the sample.t code as an example, without pausing to discuss it in any depth; if you like, you can just skip it all for now.</font><font face="Courier New" size="2" color="#000000">&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">class&nbsp;Sweet&nbsp;:&nbsp;Dispensable,&nbsp;Food&nbsp;
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"It's&nbsp;a&nbsp;small,&nbsp;round,&nbsp;clear,&nbsp;&lt;&lt;sweetGroupBaseName&gt;&gt;&nbsp;boiled&nbsp;sweet.&nbsp;"
+<br>
+&nbsp;&nbsp;vocabWords&nbsp;=&nbsp;'sweet/candy*sweets'
+<br>
+&nbsp;&nbsp;location&nbsp;=&nbsp;sweetBag
+<br>
+&nbsp;&nbsp;listWith&nbsp;=&nbsp;[sweetGroup]
+<br>
+&nbsp;&nbsp;sweetGroupBaseName&nbsp;=&nbsp;''
+<br>
+&nbsp;&nbsp;collectiveGroups&nbsp;=&nbsp;[sweetCollective]
+<br>
+&nbsp;&nbsp;sweetGroupName&nbsp;=&nbsp;('one&nbsp;'&nbsp;+&nbsp;sweetGroupBaseName)
+<br>
+&nbsp;&nbsp;countedSweetGroupName(cnt)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;return&nbsp;spellIntBelow(cnt,&nbsp;100)&nbsp;+&nbsp;'&nbsp;'&nbsp;+&nbsp;sweetGroupBaseName;&nbsp;}
+<br>
+&nbsp;&nbsp;tasteDesc&nbsp;=&nbsp;"It&nbsp;tastes&nbsp;sweet&nbsp;and&nbsp;tangy.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Eat)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;pop&nbsp;&lt;&lt;theName&gt;&gt;&nbsp;into&nbsp;your&nbsp;mouth&nbsp;and&nbsp;suck&nbsp;it.&nbsp;It&nbsp;tastes&nbsp;nice
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;it&nbsp;doesn't&nbsp;last&nbsp;as&nbsp;long&nbsp;as&nbsp;you'd&nbsp;like.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+class&nbsp;RedSweet&nbsp;:&nbsp;Sweet&nbsp;'red&nbsp;-&nbsp;'&nbsp;'red&nbsp;sweet'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isEquivalent&nbsp;=&nbsp;true&nbsp;
+<br>
+&nbsp;&nbsp;sweetGroupBaseName&nbsp;=&nbsp;'red'
+<br>
+;
+<br>
+
+<br>
+class&nbsp;GreenSweet&nbsp;:&nbsp;Sweet&nbsp;'green&nbsp;-&nbsp;'&nbsp;'green&nbsp;sweet'&nbsp;
+<br>
+&nbsp;&nbsp;isEquivalent&nbsp;=&nbsp;true&nbsp;
+<br>
+&nbsp;&nbsp;sweetGroupBaseName&nbsp;=&nbsp;'green'
+<br>
+;
+<br>
+
+<br>
+class&nbsp;YellowSweet&nbsp;:&nbsp;Sweet&nbsp;'yellow&nbsp;-&nbsp;'&nbsp;'yellow&nbsp;sweet'
+<br>
+&nbsp;&nbsp;isEquivalent&nbsp;=&nbsp;true&nbsp;
+<br>
+&nbsp;&nbsp;sweetGroupBaseName&nbsp;=&nbsp;'yellow'
+<br>
+;
+<br>
+
+<br>
+sweetGroup:&nbsp;ListGroupParen
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;showGroupCountName(lst)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;&lt;spellIntBelowExt(lst.length(),&nbsp;100,&nbsp;0,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DigitFormatGroupSep)&gt;&gt;&nbsp;sweets";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;showGroupItem(lister,&nbsp;obj,&nbsp;options,&nbsp;pov,&nbsp;info)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;say(obj.sweetGroupName);&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;showGroupItemCounted(lister,&nbsp;lst,&nbsp;options,&nbsp;pov,&nbsp;infoTab)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;say(lst[1].countedSweetGroupName(lst.length()));&nbsp;}
+<br>
+;
+<br>
+
+<br>
+sweetCollective:&nbsp;ItemizingCollectiveGroup&nbsp;'candy*sweets'&nbsp;'sweets'
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Finally, we put some sweets in the bag simply by defining a number of anonymous objects of the appropriate type; note that the class definitions already locate the sweets in the bag so the code required to create the sweets is minimal:
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">RedSweet;
+<br>
+RedSweet;
+<br>
+RedSweet;
+<br>
+RedSweet;
+<br>
+GreenSweet;
+<br>
+GreenSweet;
+<br>
+GreenSweet;
+<br>
+YellowSweet;
+<br>
+YellowSweet;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Rather than getting bogged down in a description of how all this works (for which see the comments in sample.t), we'll regard it for now as simply an exercise in copying and adapting boilerplate code and get on with the business of setting up shop (indeed, for the main purpose of the exercise you could simply skip all the above and leave the bag of sweets as a </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object, since Heidi's ability to eat, examine and taste the sweets plays no essential role in the game).
+<br>
+
+<br>
+The two objects so far created, </font><font face="Courier New" size="2" color="#000000">battery</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">sweetBag</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, are the two objects that will be handed to Heidi when as she completes her purchases. With only four pounds at her disposal, however, she is not going to buy up the shop's complete stock of these items. In other words, there should be sweets and batteries on display before and after the sale. On the other hand, it would be good if Heidi could not simply reach out and take them; placing them on shelves out of reach behind the counter and defining them to be of class </font><font face="Courier New" size="2" color="#000000">Distant</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> would achieve this object. But once they're in sight, they'll be the obvious objects for the parser to select in response to a command referring to batteries or sweets - including any command we use to indicate what Heidi is interested in buying. It would therefore be useful to define some custom properties on these items that can be used when we come to code the transactions. Add the following code so that the shelves are contained directly in the shop (e.g. by placing them directly after the definition of </font><font face="Courier New" size="2" color="#000000">+++&nbsp;Component&nbsp;'knob/button'&nbsp;'knob'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;Distant,&nbsp;Surface&nbsp;'shelf*shelves'&nbsp;'shelves'
+<br>
+&nbsp;&nbsp;"The&nbsp;shelves&nbsp;with&nbsp;the&nbsp;most&nbsp;interesting&nbsp;goodies&nbsp;are&nbsp;behind&nbsp;the&nbsp;counter.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+++&nbsp;batteries&nbsp;:&nbsp;Distant&nbsp;'battery*batteries'&nbsp;'batteries&nbsp;on&nbsp;shelf'
+<br>
+&nbsp;&nbsp;"A&nbsp;variety&nbsp;of&nbsp;batteries&nbsp;sits&nbsp;on&nbsp;the&nbsp;shelf&nbsp;behind&nbsp;the&nbsp;counter.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;salePrice&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;saleName&nbsp;=&nbsp;'torch&nbsp;battery'
+<br>
+&nbsp;&nbsp;saleItem&nbsp;=&nbsp;battery&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+++&nbsp;sweets&nbsp;:&nbsp;Distant&nbsp;'candy/sweets'&nbsp;'sweets&nbsp;on&nbsp;shelf'
+<br>
+&nbsp;&nbsp;"All&nbsp;sorts&nbsp;of&nbsp;tempting&nbsp;jars,&nbsp;bags,&nbsp;packets&nbsp;and&nbsp;boxes&nbsp;of&nbsp;sweets&nbsp;lurk&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;temptingly&nbsp;on&nbsp;the&nbsp;shelves&nbsp;behind&nbsp;the&nbsp;counter.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;salePrice&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;saleName&nbsp;=&nbsp;'bag&nbsp;of&nbsp;sweets'
+<br>
+&nbsp;&nbsp;saleItem&nbsp;=&nbsp;sweetBag
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">salePrice</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property should be fairly self explanatory; </font><font face="Courier New" size="2" color="#000000">saleItem</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> contains the object that will actually be handed over to Heidi, while </font><font face="Courier New" size="2" color="#000000">saleName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a name that will be used to describe this object in the course of the transaction. Finally, we need to put some money where Heidi will find it. Since we've taken the battery out of the tin and left it empty, let's put the cash in the tin:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;tin&nbsp;:&nbsp;OpenableContainer&nbsp;'small&nbsp;tin'&nbsp;'small&nbsp;tin'&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;square&nbsp;tin&nbsp;with&nbsp;a&nbsp;lid.&nbsp;"
+<br>
+&nbsp;&nbsp;subLocation&nbsp;=&nbsp;&amp;subSurface
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;5
+<br>
+;
+<br>
+
+<br>
+class&nbsp;Coin&nbsp;:&nbsp;Thing&nbsp;'pound&nbsp;coin/pound*coins*pounds'&nbsp;'pound&nbsp;coin'
+<br>
+&nbsp;&nbsp;"It's&nbsp;gold&nbsp;in&nbsp;colour,&nbsp;has&nbsp;the&nbsp;Queen's&nbsp;head&nbsp;on&nbsp;one&nbsp;side&nbsp;and&nbsp;&lt;q&gt;One&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;Pound&lt;/q&gt;&nbsp;written&nbsp;on&nbsp;the&nbsp;reverse.&nbsp;The&nbsp;edge&nbsp;is&nbsp;inscribed&nbsp;with&nbsp;the&nbsp;words&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;DECUS&nbsp;ET&nbsp;TUTAMEN&lt;/q&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;isEquivalent&nbsp;=&nbsp;true
+<br>
+;
+<br>
+
+<br>
++++&nbsp;&nbsp;Coin;
+<br>
++++&nbsp;&nbsp;Coin;
+<br>
++++&nbsp;&nbsp;Coin;
+<br>
++++&nbsp;&nbsp;Coin;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that we can create the Coin class between the tin and the Coin objects and still use the + notation without any difficulty (the tin object was defined previously and is repeated here only for the sake of convenience). By the way if pound coins seem just too British to you, feel free to change them to dollar bills, euro notes or anything else; the principles will remain the same (though you'll need to be sure you make your changes consistently throughout what follows).
+<br>
+
+
+
+<br>
+<h3>b. Making the Sale</h3>
+<p>What we now want to achieve is for Heidi to be able to ask for an item, be told the price, and receive the item she's asked for once she's handed over the correct money. We shall assume that once she's suggested one transaction, she can't start a second until she's completed the first. We shall also prevent her buying more than one of each item (she doesn't have enough money to buy a second battery, if she buys two bags of sweets she'll have insufficient funds left to buy the battery and the game will become unwinable, and in any case we only have one of each type of object to give her). Although we could create a separate transaction object to keep track of all this, we might as well use the shopkeeper object.
+<br>
+
+<br>
+To make things a bit easier, we'll treat an <b>ask for</b> command directed to the shopkeeper as equivalent to <b>ask about</b> (on the assumption that if Heidi asks about a battery she wants to know about buying it, which comes to much the same thing as asking for it). We'll do this when we come to it by using the combined </font><font face="Courier New" size="2" color="#000000">AskAboutForTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The next thing we have to reckon with is that if Heidi hands over more than one coin at a time (e.g. because the player types <b>give shopkeeper three pounds</b>), although this will count as one player <i>turn</i>, it will be treated as three iterations of the code handling the giving of a single coin to the shopkeeper. The problem here is that in this situation we don't want the shopkeeper to respond as each coin is handed over, but only after the complete number of coins specified in the player's command have been handed over. One way to handle this is via a fuse: the handing over of the first coin creates a new fuse; the handing over of subsequent coins merely keeps track of how many coins have been handed over. Once the specified number of coins has been handed over the player's turn is complete, and the fuse will fire - the code in the method called by the fuse can then handle the shopkeeper's response to the aggregate number of coins handed over (which might be too few, too many, or just right for the item asked for).
+<br>
+
+<br>
+The code for starting the fuse will need to be on the </font><font face="Courier New" size="2" color="#000000">GiveTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> that handles the giving of coins, but we'll code the method the fuse calls on the shopkeeper. We also need to add several custom properties to the shopkeeper object to keep track of the transaction. The code to be added to the shopkeeper is the following:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">shopkeeper&nbsp;:&nbsp;Person,&nbsp;SoundObserver&nbsp;'young&nbsp;shopkeeper/woman'&nbsp;'young&nbsp;shopkeeper'
+<br>
+&#133;
+<br>
+cashReceived&nbsp;=&nbsp;0
+<br>
+&nbsp;price&nbsp;=&nbsp;0
+<br>
+&nbsp;saleObject&nbsp;=&nbsp;nil
+<br>
+&nbsp;cashFuseID&nbsp;=&nbsp;nil
+<br>
+&nbsp;cashFuse
+<br>
+&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(saleObject&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;What's&nbsp;this&nbsp;for?&lt;/q&gt;&nbsp;asks&nbsp;{the&nbsp;shopkeeper/she},&nbsp;handing&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;money&nbsp;back,&nbsp;&lt;q&gt;Shouldn't&nbsp;you&nbsp;tell&nbsp;me&nbsp;what&nbsp;you&nbsp;want&nbsp;to&nbsp;buy&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first?&lt;/q&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cashReceived&nbsp;=&nbsp;0;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(cashReceived&nbsp;&lt;&nbsp;price)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Er,&nbsp;that's&nbsp;not&nbsp;enough.&lt;/q&gt;&nbsp;she&nbsp;points&nbsp;out,&nbsp;looking&nbsp;at&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expectantly&nbsp;while&nbsp;she&nbsp;waits&nbsp;for&nbsp;the&nbsp;balance.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;shopkeeper/she}&nbsp;takes&nbsp;the&nbsp;money&nbsp;and&nbsp;turns&nbsp;to&nbsp;take&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;saleObject.aName&gt;&gt;&nbsp;off&nbsp;the&nbsp;shelf.&nbsp;She&nbsp;hands&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;saleObject.theName&gt;&gt;&nbsp;saying,&nbsp;&lt;q&gt;Here&nbsp;you&nbsp;are&nbsp;then";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cashReceived&nbsp;&gt;&nbsp;price)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",&nbsp;and&nbsp;here's&nbsp;your&nbsp;change";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&lt;/q&gt;&lt;/p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;saleObject.moveInto(gPlayerChar);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price&nbsp;=&nbsp;0;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cashReceived&nbsp;=&nbsp;0;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;saleObject&nbsp;=&nbsp;nil;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;cashFuseID&nbsp;=&nbsp;nil;&nbsp;
+<br>
+&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">cashReceived</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property holds the number of coins that have been handed over to the shopkeeper in the current transaction; </font><font face="Courier New" size="2" color="#000000">price</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the number of coins needed in total to complete the transaction; </font><font face="Courier New" size="2" color="#000000">saleObject</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the object that will be handed over to the player on completion of the transaction; and </font><font face="Courier New" size="2" color="#000000">cashFuseID</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> points to the current fuse if there is one (we need this only so we can tell if there is a current fuse).
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">cashFuse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method is called when the fuse fires; if </font><font face="Courier New" size="2" color="#000000">saleObject</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> Heidi has handed over some money without saying what she wants to buy with it, so we simply give the shopkeeper a suitable message to display, suggesting the player specifies what she or he wants to buy, and resetting </font><font face="Courier New" size="2" color="#000000">cashReceived</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to zero ready for the next transaction. Otherwise, if a transaction is in process but the money handed over isn't enough to pay for the goods, the shopkeeper simply displays a message to the effect that she's expecting more cash. If however, there is a current transaction and enough money has been handed over, the routine moves the object requested (</font><font face="Courier New" size="2" color="#000000">saleObject</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) to the player character, displays a suitable message, and resets all the relevant properties ready for a new transaction; if the player has actually handed over too much money an additional message is displayed to that effect. Finally, whatever else has happened, </font><font face="Courier New" size="2" color="#000000">cashFuseID</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is reset to nil to show that there's no longer a current </font><font face="Courier New" size="2" color="#000000">CashFuse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+The next job is to create the </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> that will handle the handing over of coins. This will look a bit different from the </font><font face="Courier New" size="2" color="#000000">GiveShowTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> we've seen before, both because of what it has to match, and because of what it has to do. We can't use the template because we have no way of specifying an object for this topic to match; instead is has to match any object belonging to the </font><font face="Courier New" size="2" color="#000000">Coin</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class. We achieve this effect by overriding the </font><font face="Courier New" size="2" color="#000000">matchTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method; this method returns a score which is typically 100 for a good match and 0 for no match at all (the idea being that the </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> with the highest score will be the one selected for matching); for any given </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> the score is held in the </font><font face="Courier New" size="2" color="#000000">matchScore</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, so we make </font><font face="Courier New" size="2" color="#000000">matchTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> return </font><font face="Courier New" size="2" color="#000000">matchScore</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> if an object is of class </font><font face="Courier New" size="2" color="#000000">Coin</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and 0 otherwise. This is also a good occasion for using the </font><font face="Courier New" size="2" color="#000000">handleTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method rather than the </font><font face="Courier New" size="2" color="#000000">TopicResponse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to handle the action, since it gives us access to the object that we want to manipulate, (as the </font><font face="Courier New" size="2" color="#000000">obj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> parameter):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;GiveShowTopic
+<br>
+&nbsp;&nbsp;&nbsp;matchTopic(fromActor,&nbsp;obj)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;obj.ofKind(Coin)&nbsp;?&nbsp;matchScore&nbsp;:&nbsp;0;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;handleTopic(fromActor,&nbsp;obj)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(shopkeeper.cashFuseID&nbsp;==&nbsp;nil)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.cashFuseID&nbsp;=&nbsp;new&nbsp;Fuse(shopkeeper,&nbsp;&amp;cashFuse,&nbsp;0);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.cashReceived&nbsp;++;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(shopkeeper.cashReceived&nbsp;&gt;&nbsp;1)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"number&nbsp;&lt;&lt;shopkeeper.cashReceived&gt;&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(shopkeeper.cashReceived&nbsp;&lt;=&nbsp;shopkeeper.price)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj.moveInto(shopkeeper);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">handleTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method will be called once for every coin that's handed over; for example, if the player types <b>give three pound coins to shopkeeper</b>, it will be run three times. We want a new Fuse created only the first time, so we first check whether </font><font face="Courier New" size="2" color="#000000">shopkeeper.cashFuseID</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> before creating a new fuse and pointing the </font><font face="Courier New" size="2" color="#000000">shopkeeper.cashFuseID</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property to it. We want to know how many coins are being handed over, so we increment </font><font face="Courier New" size="2" color="#000000">shopkeeper.cashReceived</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> each time through the loop. If the command involves multiple coins, the game will print "pound coin:" on a new line for each pass through the loop; to make this look slightly less superfluous we make it look like the coins are being counted out by printing "number two" etc. just after the "pound coin" display, but we don't do this the first time, in order to avoid an unnecessary "number one" if only one coin is handed over. Finally, we want to transfer the coins from the player character to the shopkeeper, but only up to the number of coins needed to meet the price asked for; any surplus coins are left in the player character's inventory. The whole </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> should go in with the other topic entries under the </font><font face="Courier New" size="2" color="#000000">sallyTalking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> state.
+<br>
+
+<br>
+The final stage is to create the </font><font face="Courier New" size="2" color="#000000">AskAboutForTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects (which will respond to either <b>ask for</b> or <b>ask about</b>) that will allow Heidi to request either a battery or a bag of sweets. The logic in each case is a little complicated, since there will be several things to check for (as we shall see). To avoid having to code this complicated logic twice over, we shall define a custom </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class (descended from </font><font face="Courier New" size="2" color="#000000">AskAboutForTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) which will handle all the complications, then simply create two </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects, one for the battery and one for the sweets. Normally, one would use </font><font face="Courier New" size="2" color="#000000">AltTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to avoid burdening </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects with a lots of </font><font face="Courier New" size="2" color="#000000">if&#133;&nbsp;else&#133;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> type constructions, but since we want to encapsulate all the complexities of the behaviour in one class, we shall have to resort to </font><font face="Courier New" size="2" color="#000000">if</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">else</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the definition of that class:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">class&nbsp;BuyTopic&nbsp;:&nbsp;AskAboutForTopic
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(matchObj.saleItem.moved)&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alreadyBought();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;(shopkeeper.saleObject&nbsp;==&nbsp;matchObj.saleItem)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Can&nbsp;I&nbsp;have&nbsp;the&nbsp;&lt;&lt;matchObj.saleName&gt;&gt;,&nbsp;please?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I&nbsp;need&nbsp;another&nbsp;&lt;&lt;currencyString(shopkeeper.price&nbsp;-&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.cashReceived)&gt;&gt;&nbsp;from&nbsp;you.&lt;/q&gt;&nbsp;she&nbsp;points&nbsp;out.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;(shopkeeper.saleObject&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Oh,&nbsp;and&nbsp;I'd&nbsp;like&nbsp;a&nbsp;&lt;&lt;matchObj.saleName&gt;&gt;&nbsp;too,&nbsp;please.&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;announce.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Shall&nbsp;we&nbsp;finish&nbsp;dealing&nbsp;with&nbsp;the&nbsp;&lt;&lt;shopkeeper.saleObject.name&gt;&gt;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first?&lt;/q&gt;&nbsp;{the&nbsp;shopkeeper/she}&nbsp;suggests.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;purchaseRequest();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;purchaseResponse();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.price&nbsp;=&nbsp;matchObj.salePrice;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.saleObject&nbsp;=&nbsp;matchObj.saleItem;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;alreadyBought&nbsp;=&nbsp;"You've&nbsp;already&nbsp;bought&nbsp;a&nbsp;&lt;&lt;matchObj.saleName&gt;&gt;.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;purchaseRequest&nbsp;=&nbsp;"&lt;q&gt;I'd&nbsp;like&nbsp;a&nbsp;&lt;&lt;matchObj.saleName&gt;&gt;&nbsp;please,&lt;/q&gt;&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;request.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;purchaseResponse&nbsp;=&nbsp;"&lt;q&gt;Certainly,&nbsp;that'll&nbsp;be&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;currencyString(matchObj.salePrice)&gt;&gt;,&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{the&nbsp;shopkeeper/she}&nbsp;informs&nbsp;you.&lt;.p&gt;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We provide the properties </font><font face="Courier New" size="2" color="#000000">alreadyBought</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">purchaseRequest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">purchaseResponse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to allow easy customization of the messages displayed by a </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, while at the same time providing acceptable default values for these properties that will allow a </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to be used without any customization. Note that we are using </font><font face="Courier New" size="2" color="#000000">matchObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to get at the actual object that a given </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> matches.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">topicResponse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method then runs through a series of checks to trap the conditions under which we should not initiate a new transaction. First of all we check whether we've already purchased this object - note that the way we've things up the object purchased (moved into the player character's inventory) won't be the </font><font face="Courier New" size="2" color="#000000">matchObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> itself (which refers to the items sitting on the shelf) but the object referred to in the </font><font face="Courier New" size="2" color="#000000">matchObj's</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">saleItem</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, so we check whether the latter has been moved; if it has, it's already been sold so we simply display the message defined in </font><font face="Courier New" size="2" color="#000000">alreadyBought</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and take no further action.
+<br>
+
+<br>
+The next condition we check for is whether the player is already part of the way through paying for the object requested. E.g. if the player typed <b>ask shopkeeper for battery</b> and then <b>give her two pounds</b>, there'd still be one pound to pay; here we trap the possibility that the player then types <b>ask shopkeeper for battery</b> again. If the transaction is already under way but incomplete, the </font><font face="Courier New" size="2" color="#000000">saleObject</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of the shopkeeper will have been set to the object asked for, so we test for this being the same as the </font><font face="Courier New" size="2" color="#000000">saleItem</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> corresponding to the </font><font face="Courier New" size="2" color="#000000">matchObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. If it is, we display a message telling the player how much there is still to pay and take no further action.
+<br>
+
+<br>
+The third possibility we have to eliminate is that the player may ask for one item, and then ask for another before the first transaction is complete; e.g. by entering the commands, <b>ask shopkeeper for battery</b>, <b>give her one pound</b>, <b>ask her for sweets</b>. If a transaction is in progress </font><font face="Courier New" size="2" color="#000000">shopkeeper.saleObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will point to the object being purchased, since we have already tested for this being the object associated with </font><font face="Courier New" size="2" color="#000000">matchObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, if we reach this point and </font><font face="Courier New" size="2" color="#000000">shopkeeper.saleObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is not nil, it must be some other object. We accordingly display a message suggesting that the player should concentrate on buying one thing at a time.
+<br>
+
+<br>
+Finally, if we have fallen at none of the preceding hurdles, we are in the position to set up a new transaction. This is fairly simple. First we display the player character's request (defined in </font><font face="Courier New" size="2" color="#000000">purchaseRequest</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), which should normally say what Heidi wants to buy, then the shopkeeper's response (defined in </font><font face="Courier New" size="2" color="#000000">purchaseResponse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), which should say what the price is; the default values we define for these two properties will do this automatically, but these properties can be overridden to allow a greater variety of conversational interchanges at this point. Finally we set up the transaction by setting the two appropriate properties on the shopkeeper.
+<br>
+
+<br>
+In a couple of places the code employs a custom function </font><font face="Courier New" size="2" color="#000000">currencyString(amount)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which simply returns a string spelling out an amount in pounds (e.g. </font><font face="Courier New" size="2" color="#000000">currencyString(3)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> would return 'three pounds'). We can use the library function spellInt to do most of the work, so this function is defined simply as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">currencyString(amount)
+<br>
+{&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;return&nbsp;spellInt(amount)&nbsp;+&nbsp;'&nbsp;'&nbsp;&nbsp;+&nbsp;((amount&gt;1)&nbsp;?&nbsp;'pounds'&nbsp;:&nbsp;'pound');&nbsp;&nbsp;
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you are using dollars, euros, yen or denarii instead of pounds, remember to change this function accordingly.
+<br>
+
+<br>
+Finally, we need to define the two BuyTopics to cope with the battery and the sweets. This then becomes very straightforward:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;BuyTopic&nbsp;@batteries
+<br>
+&nbsp;&nbsp;&nbsp;alreadyBought&nbsp;=&nbsp;"You&nbsp;only&nbsp;need&nbsp;one&nbsp;battery,&nbsp;and&nbsp;you've&nbsp;already&nbsp;bought&nbsp;it.&lt;.p&gt;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;BuyTopic&nbsp;@sweets
+<br>
+&nbsp;&nbsp;&nbsp;alreadyBought&nbsp;=&nbsp;"You've&nbsp;already&nbsp;bought&nbsp;one&nbsp;bag&nbsp;of&nbsp;sweets.&nbsp;Think&nbsp;of&nbsp;your
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;figure!&nbsp;Think&nbsp;of&nbsp;your&nbsp;teeth!&lt;.p&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">And this, apart from a few minor tweaks we shall be looking at in the next chapter, takes <i>The Further Adventures of Heidi</i> as far as this Guide is going to take them. If you compile and run the game again (after correcting any syntax errors and the other mysterious bugs that may have arisen through your mistyping or your computer's intrinsic cussedness), you should now be able to play it all the way through (which may take all of five minutes).
+<br>
+<h3>c. Generalizing Financial Transactions</h3>
+<p>The way we have defined </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> would make it relatively easy to add to the items that Heidi could buy. All you would need to do is to define another object to sit on the shelf, a corresponding item to be handed over to Heidi, and the corresponding </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; to give a minimalist example:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">/*&nbsp;Put&nbsp;this&nbsp;just&nbsp;after&nbsp;the&nbsp;shelf&nbsp;*/
+<br>
+++&nbsp;pears&nbsp;:&nbsp;Distant&nbsp;'pear*pears'&nbsp;'pears&nbsp;on&nbsp;shelf'
+<br>
+"A&nbsp;basket&nbsp;of&nbsp;fresh&nbsp;pears&nbsp;sits&nbsp;on&nbsp;the&nbsp;shelf&nbsp;behind&nbsp;the&nbsp;counter.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;salePrice&nbsp;=&nbsp;2
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;saleName&nbsp;=&nbsp;'pear'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;saleItem&nbsp;=&nbsp;pear
+<br>
+;
+<br>
+
+<br>
+pear&nbsp;:&nbsp;Food&nbsp;'pear'&nbsp;'pear'
+<br>
+&nbsp;&nbsp;"It's&nbsp;fresh-looking,&nbsp;green,&nbsp;and&nbsp;somewhat&nbsp;pear-shaped.&nbsp;"
+<br>
+&nbsp;;
+<br>
+
+<br>
+/*Make&nbsp;sure&nbsp;this&nbsp;gets&nbsp;contained&nbsp;in&nbsp;sallyTalking&nbsp;*/
+<br>
+BuyTopic&nbsp;@pears;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Provided you also add to the stock of pound coins (or whatever currency you're using) to cover the cost of all the items that could be purchased, it would be reasonably easy to going on adding as many buyable items as you wanted - provided they could all be priced in a small number of round pounds (or dollars, yen, roubles, drachmae, sesterces, euro, shekalim or whatever other currency takes your fancy). As soon as you want to start handling large amounts of money, and/or prices in pounds and pence (or dollars and cents etc.) the whole thing will start to become quite unwieldy. You certainly don't want to have to cope with handling individual twenty pound notes, ten pound notes, five pound notes, two pound coins, one pound coins, 50p, 20p, 10p, 5p, 2p and 1p coins in all possible combinations and permutations (dollars, dimes, nickels, quarters and cents would be quite bad enough). You'd do far better to define a single money object, with a value property stating how much money it represents at any one time, e.g.:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">money&nbsp;:&nbsp;Thing&nbsp;'cash/money'&nbsp;'money'
+<br>
+&nbsp;&nbsp;@outsideCottage
+<br>
+&nbsp;&nbsp;"A&nbsp;quick&nbsp;count&nbsp;reveals&nbsp;that&nbsp;it&nbsp;comes&nbsp;to&nbsp;&lt;&lt;currencyString(value)&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;value&nbsp;=&nbsp;1204&nbsp;
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that here we've chosen to store the value in the lowest denomination (pence, cents etc.) so any calculations can be handled as integer arithmetic (although you could always experiment with the </font><font face="Courier New" size="2" color="#000000">BigNumber</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class as an alternative). One would then need to redefine the function </font><font face="Courier New" size="2" color="#000000">currencyString</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to convert a value in pence, say, to a &#163;12.04 display format.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">function&nbsp;currencyString(amount)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;local&nbsp;valStr&nbsp;=&nbsp;'&nbsp;&amp;#163;';&nbsp;&nbsp;/*&nbsp;&#163;&nbsp;sign;&nbsp;for&nbsp;dollars&nbsp;you&nbsp;could&nbsp;simply&nbsp;use
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'$'&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;valStr&nbsp;+=&nbsp;(amount&nbsp;/&nbsp;100);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;valStr&nbsp;+=&nbsp;'.';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;pence&nbsp;=&nbsp;amount&nbsp;%&nbsp;100;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(pence&nbsp;&lt;&nbsp;10)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valStr&nbsp;+=&nbsp;'0';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;valStr&nbsp;+=&nbsp;pence;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;valStr;
+<br>
+}
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+The implementation of transactions would then become easier. They could be set up in exactly the same way (with a </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), but then one could implement a routine to respond simply to <b>give money to shopkeeper</b> or <b>pay shopkeeper</b>. This would simply have to check that enough money was available, and, if so, deduct it, e.g.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;GiveTopic&nbsp;@money
+<br>
+topicResponse
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;money.value&nbsp;-=&nbsp;shopkeeper.price;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;hand&nbsp;over&nbsp;the&nbsp;money&nbsp;and&nbsp;the&nbsp;shopkeeper&nbsp;gives&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;shopkeeper.saleObject.theName&gt;&gt;.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.saleObject.moveInto(gPlayerChar);
+<br>
+&nbsp;&nbsp;&nbsp;if(money.value&nbsp;==&nbsp;0)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"But&nbsp;you've&nbsp;used&nbsp;all&nbsp;your&nbsp;money!&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;money.moveInto(nil);
+<br>
+&nbsp;&nbsp;}
+<br>
+}
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;&nbsp;"You&nbsp;don't&nbsp;have&nbsp;enough&nbsp;money&nbsp;to&nbsp;pay.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(shopkeeper.price&nbsp;&gt;&nbsp;money.value)
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;What's&nbsp;this&nbsp;for?&lt;/q&gt;&nbsp;asks&nbsp;{the&nbsp;shopkeeper/she},&nbsp;handing&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;money&nbsp;back,&nbsp;&lt;q&gt;Shouldn't&nbsp;you&nbsp;tell&nbsp;me&nbsp;what&nbsp;you&nbsp;want&nbsp;to&nbsp;buy
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first?&lt;/q&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(shopkeeper.saleObject&nbsp;==&nbsp;nil)
+<br>
+;
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that with this method there's no longer any need to use a fuse, so that all the </font><font face="Courier New" size="2" color="#000000">shopkeeper.cashFuse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method could be eliminated altogether. Similarly, since with this revised model there's no possibility of the player character issuing a command mid-transaction, so the definition of BuyTopic could be simplified considerably:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">class&nbsp;BuyTopic&nbsp;:&nbsp;AskTopic
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;if(matchObj.saleItem.moved)&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alreadyBought();&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;purchaseRequest();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;purchaseResponse();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.price&nbsp;=&nbsp;matchObj.salePrice;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.saleObject&nbsp;=&nbsp;matchObj.saleItem;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;alreadyBought&nbsp;=&nbsp;"You've&nbsp;already&nbsp;bought&nbsp;a&nbsp;&lt;&lt;matchObj.saleName&gt;&gt;.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;purchaseRequest&nbsp;=&nbsp;"&lt;q&gt;I'd&nbsp;like&nbsp;a&nbsp;&lt;&lt;matchObj.saleName&gt;&gt;&nbsp;please,&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;request.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;purchaseResponse&nbsp;=&nbsp;"&lt;q&gt;Certainly,&nbsp;that'll&nbsp;be&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;&lt;currencyString(matchObj.salePrice)&gt;&gt;,&lt;/q&gt;
+<br>
+&nbsp;&nbsp;{the&nbsp;shopkeeper/she}&nbsp;informs&nbsp;you.&lt;.p&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">In this way, the handling of the apparently more general and complex situation could actually be made rather simpler than the code we needed to handle four pound coins!
+<br>
+
+<br>
+If you'd like to experiment with this, you could try it out in the Heidi game as an alternative to handling the four pound coins separately. Since most of the principles have now been spelt out, this may once again be left as an exercise for the reader.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="goingshopping.htm">[Previous] </a>&nbsp;&nbsp;<a href="fillinginsomegaps.htm">[Next] </a></I></FONT></P>
+</body></html>

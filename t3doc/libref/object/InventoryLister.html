@@ -1,0 +1,100 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>InventoryLister</title></head><body>
+<table class=ban><tr><td align=left><span class=title>InventoryLister</span><span class=type>class</span><td align=right><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1547">1547</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Base class for inventory listers.  This lister uses a special listing   method to show the items, so that items can be shown with special   notations in an inventory list that might not appear in other types   of listings.
+<p>
+<code>class
+<b>InventoryLister</b> :  &nbsp; <a href="../object/Lister.html">Lister</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>InventoryLister</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Lister.html">Lister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>InventoryLister</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DividedInventoryLister.html">DividedInventoryLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InventorySublister.html">InventorySublister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/WearingLister.html">WearingLister</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/WearingSublister.html">WearingSublister</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/actorSingleInventoryLister.html">actorSingleInventoryLister</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<p>Inherited from <code>Lister</code> :<br>
+<code>
+<a href="../object/Lister.html#nextCustomFlag">nextCustomFlag</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#isListed">isListed</a>&nbsp;
+<a href="#showContentsList">showContentsList</a>&nbsp;
+<a href="#showInlineContentsList">showInlineContentsList</a>&nbsp;
+<a href="#showListItem">showListItem</a>&nbsp;
+<a href="#showListItemCounted">showListItemCounted</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Lister</code> :<br>
+<code>
+<a href="../object/Lister.html#contentsListed">contentsListed</a>&nbsp;
+<a href="../object/Lister.html#contentsListedSeparately">contentsListedSeparately</a>&nbsp;
+<a href="../object/Lister.html#getArrangedListCardinality">getArrangedListCardinality</a>&nbsp;
+<a href="../object/Lister.html#getArrangedListNounPhraseCount">getArrangedListNounPhraseCount</a>&nbsp;
+<a href="../object/Lister.html#getContents">getContents</a>&nbsp;
+<a href="../object/Lister.html#getFilteredList">getFilteredList</a>&nbsp;
+<a href="../object/Lister.html#getListedContents">getListedContents</a>&nbsp;
+<a href="../object/Lister.html#getListGrouping">getListGrouping</a>&nbsp;
+<a href="../object/Lister.html#getTopLister">getTopLister</a>&nbsp;
+<a href="../object/Lister.html#listCardinality">listCardinality</a>&nbsp;
+<a href="../object/Lister.html#listSepEnd">listSepEnd</a>&nbsp;
+<a href="../object/Lister.html#listSepMiddle">listSepMiddle</a>&nbsp;
+<a href="../object/Lister.html#listSepTwo">listSepTwo</a>&nbsp;
+<a href="../object/Lister.html#listWith">listWith</a>&nbsp;
+<a href="../object/Lister.html#longListSepEnd">longListSepEnd</a>&nbsp;
+<a href="../object/Lister.html#longListSepMiddle">longListSepMiddle</a>&nbsp;
+<a href="../object/Lister.html#longListSepTwo">longListSepTwo</a>&nbsp;
+<a href="../object/Lister.html#showArrangedList">showArrangedList</a>&nbsp;
+<a href="../object/Lister.html#showList">showList</a>&nbsp;
+<a href="../object/Lister.html#showListAll">showListAll</a>&nbsp;
+<a href="../object/Lister.html#showListContentsPrefixTall">showListContentsPrefixTall</a>&nbsp;
+<a href="../object/Lister.html#showListEmpty">showListEmpty</a>&nbsp;
+<a href="../object/Lister.html#showListIndent">showListIndent</a>&nbsp;
+<a href="../object/Lister.html#showListPrefixTall">showListPrefixTall</a>&nbsp;
+<a href="../object/Lister.html#showListPrefixWide">showListPrefixWide</a>&nbsp;
+<a href="../object/Lister.html#showListSeparator">showListSeparator</a>&nbsp;
+<a href="../object/Lister.html#showListSimple">showListSimple</a>&nbsp;
+<a href="../object/Lister.html#showListSuffixWide">showListSuffixWide</a>&nbsp;
+<a href="../object/Lister.html#showSeparateContents">showSeparateContents</a>&nbsp;
+<a href="../object/Lister.html#showTallListNewline">showTallListNewline</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="isListed"></a>
+<table class=decl><tr><td><code>isListed (obj)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1549">1549</a>]</table><div class=desc>list items in inventory according to their isListedInInventory<p>
+</div>
+<a name="showContentsList"></a>
+<table class=decl><tr><td><code>showContentsList (pov, obj, options, indent, infoTab)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1566">1566</a>]</table><div class=desc>   Show contents of the items in the inventory.  We customize this   so that we can differentiate inventory contents lists from other   contents lists. <p>
+</div>
+<a name="showInlineContentsList"></a>
+<table class=decl><tr><td><code>showInlineContentsList (pov, obj, options, indent, infoTab)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1576">1576</a>]</table><div class=desc>   Show the contents in-line, for an inventory listing. <p>
+</div>
+<a name="showListItem"></a>
+<table class=decl><tr><td><code>showListItem (obj, options, pov, infoTab)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1555">1555</a>]</table><div class=desc>   Show list items using the inventory name, which might differ from   the regular nmae of the object. <p>
+</div>
+<a name="showListItemCounted"></a>
+<table class=decl><tr><td><code>showListItemCounted (lst, options, pov, infoTab)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1558">1558</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>InConversationState</title><meta name="keywords" content="InConversationState,nextState,attentionSpan"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>InConversationState : <a href="overview-actorstates.htm">ActorState</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="guidedintravelstate.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="conversationreadystate.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The InConversationState is, as its name suggests, the state to use when an NPC is in conversation with the player character. Each InConversationState is normally associated with a <a href="conversationreadystate.htm">ConversationReadyState</a>, and the library automatically handles switching between the two depending on whether a conversation is in progress or not. Addressing an actor who is in a ConversationReadyState will automatically cause the actor to switch into the related InConversationState. When a conversation is terminated, the actor switches back into the ConversationReadyState (or else some other state defined in the nextState property). The conversation is normally terminated for one of four reasons: (1) the PC explicitly says goodbye; (2) the PC moves to another location; (3) the PC fails to continue the conversation for a number of turns and the NPC's attention span is exhausted; (4) the NPC decides to terminate the conversation.
+<br>
+
+<br>
+In addition to the methods and properties defined on ActorState, which InConversationState inherits, the properties and methods you are most likely to want to work with are:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>attentionSpan</b> - this is an integer giving the number of turns the actor should wait before giving up on the conversation. The default is 4. If the other character doesn't talk to the NPC for this many turns, the NPC will automatically terminate the conversation, switching to the next state. If you want the NPC's attention span to be infinite, set attentionSpan to nil.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>nextState</b> - this is an ActorState object, which should normally be of the ConversationReadyState class, which follows the conversation's termination. When we terminate the conversation, we'll switch to this state. You don't have to override this; if you don't, the game will remember the state that the actor was in just before the conversation, and switch back to that when the conversation ends.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>endConversation (actor, reason)</b> - Exit the in-conversation state. 'reason' indicates why we're leaving the conversation - this is one of the <a href="endconvxxxcodes.htm">endConvXxx</a> enums defined in adv3.h. This method is a convenience only; you aren't required to call this method to end the conversation, since you can simply switch to another actor state directly if you prefer. This method's main purpose is to display an appropriate message terminating the conversation while switching to the new state. If you want to display your own message directly from the code that's changing the state, there's no reason to call this. This returns true if you want to allow the conversation to end, nil if not.</font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Times New Roman" size="3" color="#000000"></font></td><td></td></tr></table><font face="Times New Roman" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">Armed with information, we can set about creating InConversationState objects for various of our NPCs, starting with Sarah (so this should be nested in the sarah object):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;sarahTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"Sarah&nbsp;is&nbsp;looking&nbsp;at&nbsp;you,&nbsp;waiting&nbsp;for&nbsp;you&nbsp;to&nbsp;speak.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;waiting&nbsp;for&nbsp;you&nbsp;to&nbsp;speak.&nbsp;"
+<br>
+&nbsp;&nbsp;attentionSpan&nbsp;=&nbsp;5
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Similarly we can define for the curator (remembering to make sure it's nested in the curator object):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;curatorTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;looking&nbsp;straight&nbsp;at&nbsp;you,&nbsp;head&nbsp;cocked&nbsp;slightly&nbsp;to&nbsp;one&nbsp;side.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{&nbsp;inherited;&nbsp;stateDesc;&nbsp;}
+<br>
+&nbsp;&nbsp;attentionSpan&nbsp;=&nbsp;3
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And likewise for King Solomon, who, being so famous for his wisdom, and not being caught up in the frenetic pace of modern living, we'll give a rather greater attention span to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;solomonTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;solomon/he}&nbsp;is&nbsp;looking&nbsp;up&nbsp;at&nbsp;you&nbsp;with&nbsp;a&nbsp;thoughtful&nbsp;expression
+<br>
+&nbsp;&nbsp;&nbsp;on&nbsp;his&nbsp;face.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;looking&nbsp;up&nbsp;at&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;attentionSpan&nbsp;=&nbsp;20
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Conversely, we'll assume that the demons are peculiarly impatient, and also not at all keen on letting you progress down to the plain:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;demonsChattering&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"The&nbsp;demons&nbsp;are&nbsp;chattering&nbsp;away&nbsp;madly&nbsp;as&nbsp;they&nbsp;block&nbsp;your&nbsp;path.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"They're&nbsp;chattering&nbsp;and&nbsp;blocking&nbsp;your&nbsp;path&nbsp;at&nbsp;the&nbsp;same&nbsp;time.&nbsp;"
+<br>
+&nbsp;&nbsp;attentionSpan&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;beforeTravel(traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(connector&nbsp;==&nbsp;hellPathDown)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;demons&nbsp;crowd&nbsp;in&nbsp;on&nbsp;you,&nbsp;chattering&nbsp;away&nbsp;and&nbsp;blocking&nbsp;your&nbsp;path
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all&nbsp;the&nbsp;more&nbsp;insistently.&nbsp;&lt;q&gt;You&nbsp;can't&nbsp;come&nbsp;this&nbsp;way!&nbsp;You&nbsp;can't&nbsp;come
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;way!&lt;/q&gt;&nbsp;they&nbsp;chorus.&nbsp;&lt;q&gt;We'll&nbsp;eat&nbsp;your&nbsp;flesh!&nbsp;We'll&nbsp;eat&nbsp;your&nbsp;flesh!&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;some&nbsp;of&nbsp;them&nbsp;add,&nbsp;leering&nbsp;at&nbsp;you&nbsp;hungrily.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(traveler,&nbsp;connector);
+<br>
+&nbsp;&nbsp;}
+<br>
+;&nbsp;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Obviously, this code needs to be placed just after the demons object.
+<br>
+
+<br>
+Finally, we'll give our ghost an InConversationState:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;ghostTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"The&nbsp;ghost&nbsp;is&nbsp;hovering&nbsp;over&nbsp;its&nbsp;tomb,&nbsp;staring&nbsp;at&nbsp;you&nbsp;intently.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"It's&nbsp;hovering&nbsp;over&nbsp;its&nbsp;tomb.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

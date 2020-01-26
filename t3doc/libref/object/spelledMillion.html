@@ -1,0 +1,21 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>spelledMillion</title></head><body>
+<table class=ban><tr><td align=left><span class=title>spelledMillion</span><span class=type>GrammarProd</span></table><p>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledMillion(aMillion).html">spelledMillion(aMillion)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7838">7838</a>]</code></table><div class=gramrule> 'a' 'million'</div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledMillion(aMillionAndSmall).html">spelledMillion(aMillionAndSmall)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7842">7842</a>]</code></table><div class=gramrule>    'a' 'million' 'and' spelledSmallNumber-&gt;num_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledMillion(millions).html">spelledMillion(millions)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7827">7827</a>]</code></table><div class=gramrule> spelledHundred-&gt;mil_ 'million'</div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledMillion(millionsAndSmall).html">spelledMillion(millionsAndSmall)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7848">7848</a>]</code></table><div class=gramrule>    spelledHundred-&gt;mil_ 'million' 'and' spelledSmallNumber-&gt;num_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/spelledMillion(millionsPlus).html">spelledMillion(millionsPlus)</a></span> :  &nbsp; <a href="../object/NumberProd.html">NumberProd</a></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#7831">7831</a>]</code></table><div class=gramrule>    spelledHundred-&gt;mil_ 'million'<br>    (spelledThousand-&gt;nxt_ | spelledHundred-&gt;nxt_)<br></div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

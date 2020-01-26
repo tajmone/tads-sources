@@ -1,0 +1,23 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Action</title><meta name="keywords" content="Action"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="check.htm">[Previous] </a>&nbsp;&nbsp;<a href="precond.htm">[Next] </a></I></FONT></P>
+
+<h3>Action</h3>
+
+<p>The action() routine is in a sense the most straightforward to understand, it's the routine that does the actual work of carrying out an action (once it's passed the verify, precondition and check stages). However, depending on the nature of the action, it may contain the most complex code, since it's here that the game state may actually be changed. We have already seen several examples of <TT>action()</TT> routines, most recently that for drinking the poison on p. 72 above. The only complication to bear in mind is that if you define <TT>action()&nbsp;</TT>routines on both the direct and indirect objects of an action, both action routines will be carried out (the indirect object's first), so you need to make sure that their combination does what you want; normally, it's better to define an action routine on one or the other of the objects involved in a two-object command, but not both.
+</p>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="check.htm">[Previous] </a>&nbsp;&nbsp;<a href="precond.htm">[Next] </a></I></FONT></P>
+</body></html>

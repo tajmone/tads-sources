@@ -1,0 +1,32 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>BasicDoor</title><meta name="keywords" content="BasicDoor"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>BasicDoor: <a href="basicopenable.htm">BasicOpenable</a>, <a href="throughpassage.htm">ThroughPassage</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="door.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="notravelmessage.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A BasicDoor encapsulates the behaviour common to both <a href="door.htm">Door</a> and <a href="secretdoor.htm">SecretDoor</a> and their descendents, and is thus intended as an abstract class containing the common behaviour of door-like objects, rather than as a class that a game author would use directly in a game. If you wanted to a special kind of door that didn't fit either Door or SecretDoor (and their descendents) you might want to derive it from this class.
+<br>
+
+<br>
+The framework provided by BasicDoor does the following:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">Provides a getFacets routine which makes both sides of a BasicDoor facets of each other (assuming one of the doors points to the other as its other side).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">Overrided makeOpen to keep both sides of a BasicDoor in sync with each other when one side is opened or closed.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">Provides routines for noting and describing a remote opening of the door (to cope with the situation where a door is opened or closed from the other side from that on which the player character is on).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">Provides handling for executing TravelVia the BasicDoor
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">Boost the likelihood that this door is the object of commands like LOCK or CLOSE if this is the last door-like object the PC has traversed.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

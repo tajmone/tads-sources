@@ -1,0 +1,229 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Startup Code : gameMain</title><meta name="keywords" content="gameMain,Startup Code,verboseMode,showExitsInStatusLine,allowYouMeMixing,allVerbsAllowAll,actionAllowsAll,usePastTense,bibliographical metadata,metadata,IFID"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Startup Code : gameMain
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="templates.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="introduction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Before we can start writing the game proper, we need to provide a tiny amount of startup code. Since TADS 3.0.6n the startup code you have to supply for a game has been reduced to a minimum. Basically all you have to do is to define a gameMain object that specifies the player character, perhaps sets some options, and (optionally) shows the introductory and concluding messages, something like:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">gameMain&nbsp;:&nbsp;GameMainDef
+<br>
+&nbsp;&nbsp;&nbsp;initialPlayerChar&nbsp;=&nbsp;me
+<br>
+&nbsp;&nbsp;&nbsp;showIntro()
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Finding&nbsp;yourself&nbsp;at&nbsp;a&nbsp;loose&nbsp;end&nbsp;in&nbsp;the&nbsp;Parser&nbsp;Valley,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;have&nbsp;wandered&nbsp;up&nbsp;to&nbsp;take&nbsp;a&nbsp;look&nbsp;at&nbsp;the&nbsp;famous
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Eerhtsdat&nbsp;Caves.&nbsp;You're&nbsp;not&nbsp;entirely&nbsp;sure&nbsp;what&nbsp;they're
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;famous&nbsp;for,&nbsp;or&nbsp;why&nbsp;they&nbsp;should&nbsp;be&nbsp;worth&nbsp;a&nbsp;look,&nbsp;but&nbsp;that's
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;what&nbsp;it&nbsp;said&nbsp;the&nbsp;guidebook&nbsp;you&nbsp;found&nbsp;abandoned&nbsp;on&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;back&nbsp;seat&nbsp;of&nbsp;the&nbsp;bus,&nbsp;so&nbsp;it&nbsp;must&nbsp;be&nbsp;true.&nbsp;Anyway,&nbsp;you're
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;here&nbsp;now,&nbsp;so&nbsp;you&nbsp;reckon&nbsp;you&nbsp;may&nbsp;as&nbsp;well&nbsp;take&nbsp;a&nbsp;look.\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;setAboutBox()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;ABOUTBOX&gt;&lt;CENTER&gt;The&nbsp;Quest&nbsp;of&nbsp;the&nbsp;Golden&nbsp;Banana\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v&nbsp;&lt;&lt;versionInfo.version&gt;&gt;\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(c)&nbsp;2004&nbsp;Eric&nbsp;Eve\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/CENTER&gt;&lt;/ABOUTBOX&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;showGoodBye()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;.p&gt;Thanks&nbsp;for&nbsp;playing!";
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You can do more than this on gameMain. Later on, for example, we'll be discussing how you can set up the <a href="maxscore.htm">maximum score</a> and a <a href="scoreranktable.htm">score rank table</a> here. You can also set the properties <b>allowYouMeMixing</b>  (true by default),  and <b>allVerbsAllowAll</b> (also true by default) In case it isn't obvious what these do, here's how the comments in the library code describe them:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>allowYouMeMixing</b> - Option flag: allow the player to use "you" and "me" interchangeably in referring to the player character. We set this true by default, so that the player can refer to the player character in either the first or second person, as long as the player character normally uses either or these (in other words, this option is meaningless in a game when the narration refers to the player character in the third person). If desired, the game can set this flag to nil to force the player to use the correct pronoun to refer to the player character. We set the default to allow using "you" and "me" interchangeably because this will create no confusion in most games, and because most experienced IF players will be accustomed to using "me" to refer to the player character (because the majority of IF refers to the player character in the second person, and expects the player to conflate the player character with the player and hence to refer to the player character in the first person). It is relatively unconventional for a game to refer to the player character in the first person in the narration, and thus to expect the player to use the second person to refer to the PC; as a result, experienced players might tend to use the first person out of habit in such games, and might find it jarring to find the usage unacceptable. Furthermore, in games that use a first-person narration, it seems unlikely that there will also be a second-person element to the narration; as long as both aren't present, it will cause no confusion for the game to accept either "you" or "me" as equivalent in commands. However, the library provides this option in case such as situation does arise.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>allVerbsAllowAll</b> - if this option flag is set to nil, ALL (as in TAKE ALL or X ALL) will only be allowed with the basic inventory management commands TAKE, TAKE FROM, DROP, PUT IN and PUT ON. By default allVerbsAllowAll is true, which means that ALL can be used with all verbs that allow multiple direct objects (or multiple indirect objects if your game defines any such verbs). If you wish, you can also override the <b>actionAllowsAll</b> property on individual actions to determine which of them will and will not accept ALL as a noun phrase.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>initialPlayerChar</b> - The initial player character. Each game's 'gameMain' object MUST define this to refer to the Actor object that serves as the initial player character.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>usePastTense</b> - Flag: if true, the game will be narrated in the <a href="pasttense.htm">past tense </a>instead of the present tense (e.g. "On the table was a banana" instead of "On the table is a banana"). This flag can also be switched in-game to switch between past-tense and present-tense narration.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>verboseMode</b> - Prior to version 3.0.9 this was a logical (true/nil) flag; if it was true, the full room description was displayed each time the player enters a room, regardless of whether or not the player has seen the room before; if nil, the full description is only displayed on the player's first entry to a room, and only the short description on re-entry. Note that the library provides VERBOSE and TERSE commands that let the player change this setting dynamically. From TADS 3.0.9 this property has become a BinarySettingsItem that shouldn't be overridden by the game author, first because doing so will almost certainly cause a run-time error, and second because the intention with the mechanism introduced in version 3.0.9 is that it is up to players rather than authors to set the default they require. The moral: leave this property alone unless you're <i>very</i> sure what you're doing and have a very good reason for doing it. Moreover, if you're upgrading an existing game from a pre-3.0.9 version to 3.0.9 or later, make sure your gameMain <i>doesn't</i> override this property.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+Our gameMain object has defined the player character as an object called me, so we next need to define this object, which, at a minimum, means assigning it to an appropriate class and providing it with an initial location:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">me:&nbsp;Actor
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;"You&nbsp;look&nbsp;even&nbsp;better&nbsp;than&nbsp;the&nbsp;last&nbsp;time&nbsp;you&nbsp;looked.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;the&nbsp;initial&nbsp;location&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;outsideCave&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<a name="versioninfo">We'll get round to defining the <a href="outdoorroom.htm">outsideCave</a> location shortly. In the meantime there's one more job we might want to get out of the way at this stage, and that is to define the versionInfo object, which provides important information about the game:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">versionInfo:&nbsp;GameID
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IFID&nbsp;=&nbsp;'cd03d4a8-f39b-ae69-693d-5fddc65f6dd8'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'The&nbsp;Quest&nbsp;of&nbsp;the&nbsp;Golden&nbsp;Banana'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;byline&nbsp;=&nbsp;'by&nbsp;Eric&nbsp;Eve'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;htmlByline&nbsp;=&nbsp;'by&nbsp;&lt;a&nbsp;href="eric.eve@hmc.ox.ac.uk"&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Eric&nbsp;Eve&lt;/a&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;=&nbsp;'1.0'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;authorEmail&nbsp;=&nbsp;'Eric&nbsp;Eve&nbsp;&lt;eric.eve@hmc.ox.ac.uk&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;'A&nbsp;combination&nbsp;of&nbsp;cave&nbsp;exploration&nbsp;and&nbsp;time-travel&nbsp;with&nbsp;clear
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allusions&nbsp;both&nbsp;to&nbsp;the&nbsp;Lord&nbsp;of&nbsp;the&nbsp;Rings&nbsp;and&nbsp;Dr&nbsp;Who,&nbsp;this&nbsp;game&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;primarily&nbsp;an&nbsp;example&nbsp;game&nbsp;to&nbsp;provide&nbsp;a&nbsp;tutorial&nbsp;on&nbsp;the&nbsp;adv3&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;library&nbsp;for&nbsp;aspiring&nbsp;TADS&nbsp;3&nbsp;game&nbsp;authors.'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;htmlDesc&nbsp;=&nbsp;'A&nbsp;combination&nbsp;of&nbsp;cave&nbsp;exploration&nbsp;and&nbsp;time-travel&nbsp;with&nbsp;clear
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allusions&nbsp;both&nbsp;to&nbsp;&lt;i&gt;The&nbsp;Lord&nbsp;of&nbsp;the&nbsp;Rings&lt;/i&gt;&nbsp;and&nbsp;&lt;i&gt;Dr&nbsp;Who&lt;/i&gt;,&nbsp;this&nbsp;game&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;primarily&nbsp;an&nbsp;example&nbsp;game&nbsp;to&nbsp;provide&nbsp;a&nbsp;tutorial&nbsp;on&nbsp;the&nbsp;adv3&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;library&nbsp;for&nbsp;aspiring&nbsp;TADS&nbsp;3&nbsp;game&nbsp;authors.'
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;showCredit()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;show&nbsp;our&nbsp;credits&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"TADS&nbsp;3&nbsp;language&nbsp;and&nbsp;library&nbsp;by&nbsp;Michael&nbsp;J.&nbsp;Roberts&nbsp;";
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;The&nbsp;game&nbsp;credits&nbsp;are&nbsp;displayed&nbsp;first,&nbsp;but&nbsp;the&nbsp;library&nbsp;will
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;display&nbsp;additional&nbsp;credits&nbsp;for&nbsp;library&nbsp;modules.&nbsp;&nbsp;It's&nbsp;a&nbsp;good
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;idea&nbsp;to&nbsp;show&nbsp;a&nbsp;blank&nbsp;line&nbsp;after&nbsp;the&nbsp;game&nbsp;credits&nbsp;to&nbsp;separate
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;them&nbsp;visually&nbsp;from&nbsp;the&nbsp;(usually&nbsp;one-liner)&nbsp;library&nbsp;credits
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;that&nbsp;follow.&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;showAbout()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Although&nbsp;this&nbsp;game&nbsp;is&nbsp;winnable,&nbsp;and&nbsp;some&nbsp;players&nbsp;may&nbsp;find&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tolerably&nbsp;entertaining,&nbsp;it&nbsp;is&nbsp;primarily&nbsp;designed&nbsp;as&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sample&nbsp;game&nbsp;and&nbsp;programming&nbsp;exercise&nbsp;to&nbsp;accompany&nbsp;the&nbsp;&lt;i&gt;TADS&nbsp;3
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tour&nbsp;Guide&lt;/i&gt;.&nbsp;The&nbsp;game&nbsp;has&nbsp;thus&nbsp;been&nbsp;designed&nbsp;to&nbsp;give
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;authors&nbsp;a&nbsp;reasonably&nbsp;comprehensive&nbsp;tour&nbsp;of&nbsp;the&nbsp;library,&nbsp;rather
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;as&nbsp;a&nbsp;satisfactory&nbsp;playing&nbsp;experience&nbsp;by&nbsp;the&nbsp;standards
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;modern&nbsp;IF.&nbsp;This&nbsp;may&nbsp;result&nbsp;in&nbsp;(a)&nbsp;a&nbsp;certain&nbsp;quirkiness&nbsp;about
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;whole&nbsp;game,&nbsp;(b)&nbsp;somewhat&nbsp;bizarre&nbsp;and&nbsp;derivative&nbsp;plotting&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(c)&nbsp;incomplete&nbsp;implementation&nbsp;of&nbsp;non-essential&nbsp;aspects&nbsp;of&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;game&nbsp;such&nbsp;as&nbsp;hints,&nbsp;scoring,&nbsp;and&nbsp;decoration&nbsp;objects.&nbsp;This&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;because&nbsp;the&nbsp;game's&nbsp;primary&nbsp;audience&nbsp;-&nbsp;people&nbsp;trying&nbsp;to&nbsp;learn
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;to&nbsp;program&nbsp;with&nbsp;the&nbsp;TADS&nbsp;3&nbsp;library&nbsp;-&nbsp;only&nbsp;need&nbsp;a&nbsp;limited
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;examples&nbsp;of&nbsp;each&nbsp;feature.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There&nbsp;should,&nbsp;however,&nbsp;be&nbsp;no&nbsp;actual&nbsp;bugs&nbsp;in&nbsp;the&nbsp;game&nbsp;(that&nbsp;is,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;there&nbsp;are&nbsp;not&nbsp;&lt;i&gt;meant&lt;/i&gt;&nbsp;to&nbsp;be&nbsp;any&nbsp;actual&nbsp;bugs,&nbsp;although&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;there&nbsp;almost&nbsp;certainly&nbsp;&lt;i&gt;will&lt;/i&gt;&nbsp;be&nbsp;some&nbsp;in&nbsp;practice),&nbsp;so&nbsp;should
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;encounter&nbsp;any,&nbsp;the&nbsp;author&nbsp;would&nbsp;be&nbsp;grateful&nbsp;for&nbsp;a&nbsp;bug
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;report.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The first half of this object definition basically defines the bibliographical metadata for the game (for a full explanation see the 'Bibliographical Metadata' article in the <i>Technical Manual</i>). Note in particular the first field, <b>IFID</b>. This is a unique identifier for your game (a little like an ISBN number for published books), which must be unique to your game. It is essentially a set of random hexadecimal digits (0-9, a-f) in the format </font><font face="Courier New" size="2" color="#000000">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.&nbsp;</font><font face="Arial" size="2" color="#000000">If you create a project in Workbench this number will automatically be generated for you. If you are creating your project by some other means, you will need to ensure that you add such a number to your definition of versionInfo. To obtain an IFID that is guaranteed to be truly random, as this needs to be (to ensure the avoidance with IFID numbers assigned to other games), you can use the TADS IFID generator at <a href=" http://www.tads.org/ifidgen/ifidgen" TARGET="_top">http://www.tads.org/ifidgen/ifidgen</A>. The other bibliographical data (such as the name of the game and its author) should be fairly self-explanatory (but see the '<a href="../techman/gameinfo.htm" target="_top">Bibliographical Metadata</a>' article for full details). The final two methods contain the text that should be displayed in response to the <b>credits</b> and <b>about</b> command. Of course, you may prefer the latter to launch a menu rather than just display a text dump.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,66 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultTellTopic</title><meta name="keywords" content="DefaultTellTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultTellTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaultasktopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultasktelltopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A DefaultTellTopic responds to any TELL X ABOUT Y command when no specific response (TellTopic or AskTellTopic) has been provided for Y.
+<br>
+
+<br>
+A DefaultTellTopic is relatively easy to devise, since it need comprise no more than a non-commital response to whatever the player character chooses to talk about. Here's how we might implement a DefaultTellTopic for Sarah (which we'll put directly in the sarah object, not one of her ActorStates).
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;DefaultTellTopic,&nbsp;ShuffledEventList&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;listens&nbsp;politely&nbsp;while&nbsp;you&nbsp;rattle&nbsp;on.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;How&nbsp;interesting!&lt;/q&gt;&nbsp;she&nbsp;declares,&nbsp;&lt;q&gt;You&nbsp;must&nbsp;tell&nbsp;me&nbsp;more&nbsp;some&nbsp;time.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Really!&lt;/q&gt;&nbsp;she&nbsp;declares,&nbsp;&lt;q&gt;how&nbsp;fascinating!&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;does&nbsp;her&nbsp;best&nbsp;to&nbsp;suppress&nbsp;a&nbsp;yawn&nbsp;but&nbsp;can\'t&nbsp;quite
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;manage&nbsp;it.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;listens&nbsp;attentively,&nbsp;apparently&nbsp;hanging&nbsp;on&nbsp;your&nbsp;every
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;word.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Yes,&nbsp;I&nbsp;see,&lt;/q&gt;&nbsp;she&nbsp;nods&nbsp;understandingly.&nbsp;',&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Well,&nbsp;well!&lt;/q&gt;&nbsp;she&nbsp;smiles.&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Of course this will not be entirely player-proof, in that the determined player can generate some fairly bizarre exchanges, such as
+<br>
+
+<br>
+<b>&gt;tell sarah about the worst experience you've ever had
+<br>
+</b>"Well, well!" she smiles.
+<br>
+
+<br>
+But it will probably do well enough for most game-related exchanges.
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

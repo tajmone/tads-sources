@@ -1,0 +1,229 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Other Responses to Actions</title><meta name="keywords" content="actorAction,roomAfterAction,roomBeforeAction,afterAction"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="messages.htm">[Previous] </a>&nbsp;&nbsp;<a href="settingthescene.htm">[Next] </a></I></FONT></P>
+<h3>Other Responses to Actions</h3>
+
+<p>So far we have concentrated on how you can customise the responses to actions on objects directly involved in those actions as direct or indirect object, and that will probably be the most common type of action customisation you'll perform. But there are other types of response we should look at for the sake of completeness. (<b><font color="#ff0033">NOTE</font></b>: This discussion assumes that <tt>gameMain.beforeRunsBeforeCheck</tt> is <tt>nil</tt>, otherwise stopping an action in <tt>check()</tt> will not prevent <tt>beforeAction()</tt> and <tt>roomBeforeAction()</tt> from being called on other objects, although everything else will be the same).
+</p>
+
+<br>
+If you want an object not directly involved in a command to respond to it, you can use
+<tt>beforeAction()</tt> or <tt>afterAction()</tt>. As their names suggest, the first of these responds to the action just before it's performed (i.e. just before the appropriate action routine is invoked) while afterAction() is called just after an action is performed. These two routines are called on every object that's in the actor's scope when the action is performed, but only if the command reaches the action stage (i.e. it hasn't already been ruled out by <font face="Courier New" size="2" color="#000000">verify()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">check(),</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">preCond</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+color="#000000">). Thus, if you want another object to respond to an action that fails, you must make it fail in <tt>action()</tt>, rather than before, e.g.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2"
+color="#000000">wickedWitch:&nbsp;Person&nbsp;'wicked&nbsp;ugly&nbsp;witch'&nbsp;'wicked&nbsp;witch'
+<br>
+&nbsp;&nbsp;"Boy&nbsp;is&nbsp;she&nbsp;ugly!&nbsp;"
+<br>
+&nbsp;&nbsp;isHer&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;dobjFor(Kiss)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('You&nbsp;move&nbsp;your&nbsp;lips&nbsp;towards&nbsp;hers,&nbsp;but&nbsp;your
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nerve&nbsp;fails&nbsp;you&nbsp;at&nbsp;the&nbsp;last&nbsp;moment.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2"
+color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2"
+color="#000000">bob:&nbsp;Person&nbsp;'&nbsp;fine&nbsp;young&nbsp;man&nbsp;/bob'&nbsp;&nbsp;'Bob'
+<br>
+&nbsp;&nbsp;&nbsp;"He&nbsp;looks&nbsp;a&nbsp;fine&nbsp;young&nbsp;man.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;isHim&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;isProperName&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;beforeAction()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIs(Kiss)&nbsp;&amp;&amp;&nbsp;gDobj&nbsp;==&nbsp;wickedWitch)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Hey,&nbsp;what&nbsp;do&nbsp;you&nbsp;&nbsp;think&nbsp;you\'re&nbsp;doing!&lt;/q&gt;&nbsp;cries&nbsp;Bob,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grabbing&nbsp;you&nbsp;by&nbsp;the&nbsp;arm&nbsp;and&nbsp;pulling&nbsp;you&nbsp;back,&nbsp;&lt;q&gt;Don\'t&nbsp;you
+<br>
+&nbsp
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;know&nbsp;that&nbsp;kissing&nbsp;her&nbsp;will&nbsp;turn&nbsp;you&nbsp;into&nbsp;a&nbsp;lump&nbsp;of&nbsp;vile&nbsp;green
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blancmange?&lt;/q&gt;&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif"
+size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If the PC tries to kiss the wicked witch while Bob is present we'll get:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"><b>&gt;kiss witch
+<br>
+</b>"Hey, what do you  think you're doing!" cries Bob,  grabbing you by the arm and pulling you back, "Don't
+you  know that kissing her will turn you into a lump of vile green blancmange?"
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Whereas if the PC tries to kiss her when Bob is elsewhere we'll get:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"><b>&gt;kiss witch
+<br>
+</b>You move your lips towards hers, but your nerve fails you at the last moment.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td
+width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note the use of the </font><font face="Courier New" size="2" color="#000000">exit</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro in Bob's beforeAction() routine to veto the action before it takes place. We could alternatively have given Bob an afterAction() routine to give his reaction after the event:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif"
+size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2"
+color="#000000">&nbsp;&nbsp;afterAction()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIs(Kiss)&nbsp;&amp;&amp;&nbsp;gDobj&nbsp;==&nbsp;wickedWitch)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Wise&nbsp;decision&lt;/q&gt;&nbsp;Bob&nbsp;approves,&nbsp;&lt;q&gt;I&nbsp;suppose&nbsp;you&nbsp;realize
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;if&nbsp;you&nbsp;had&nbsp;gone&nbsp;ahead&nbsp;and&nbsp;kissed&nbsp;her&nbsp;you\'d&nbsp;have&nbsp;been
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turned&nbsp;into&nbsp;a&nbsp;lump&nbsp;of&nbsp;vile&nbsp;green&nbsp;blancmange!&lt;/q&gt;&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You can also allow the actor's location (Room or NestedRoom) to respond to actions in a similar way, but in that case you need to use roomBeforeAction() or roomAfterAction, e.g.:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2"
+color="#000000">topOfTree&nbsp;:&nbsp;OutdoorRoom&nbsp;'At&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree'
+<br>
+&nbsp;&nbsp;&nbsp;"You&nbsp;cling&nbsp;precariously&nbsp;to&nbsp;the&nbsp;trunk,&nbsp;next&nbsp;to&nbsp;a&nbsp;firm,&nbsp;narrow&nbsp;branch."
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;clearing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;enteringRoom(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!traveler.hasSeen(self)&nbsp;&amp;&amp;&nbsp;traveler&nbsp;==&nbsp;gPlayerChar)&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(1,&nbsp;'reaching&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree.&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&n
+bsp;roomBeforeAction()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIs(Jump))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failCheck('Not&nbsp;here&nbsp;--&nbsp;you&nbsp;might&nbsp;fall&nbsp;to&nbsp;the&nbsp;ground&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hurt&nbsp;yourself.&nbsp;');&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;roomAfterAction()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIs(Yell))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Your&nbsp;shout&nbsp;is&nbsp;lost&nbsp;on&nbsp;the&nbsp;breeze.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">;
+<br>
+<table
+border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Finally, you can also use the actorAction() method on the actor performing the  action to interfere with or otherwise repond to an action the actor is about to perform. For example, suppose at some point in your game your player character is tied up, and while he's tied up he can't perform any actions other that system actions (like <b>quit</b>, <b>save</b> and <b>undo</b>) and <b>look</b>, <b>inventory</b> or
+<b>examine</b>; you might achieve this by adding an </font><font face="Courier New" size="2" color="#000000">isTiedUp</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property to your Player Character object (normally </font><font face="Courier New" size="2" color="#000000">me</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), and then adding the following </font><font face="Courier New" size="2" color="#000000">actorAction()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine:
+<p><pre>
+actorAction()
+{
+    if(isTiedUp && !gAction.ofKind(SystemAction)
+        && !gActionIn(Look, Inventory, Examine)
+     {
+           "You can't do that while you're tied up. ";
+            exit;
+     }
+}
+
+</pre>
+<p>Finally, note that we've introduced a few more of those things beginning with g in the
+last page or so. Remember that <code>gAction</code> means the current action; <code>gActionIs(Whatever)</code> tests whether <code>gAction</code> is <code>Whatever</code> and returns true or nil accordingly; <code>gActionIn(Foo, Bar, Whatsit)</code> tests whether <code>gAction</code> is either <code>Foo</code> or <code>Bar</code> or <code>Whatsit</code> and returns true if it is or nil otherwise. The other one, <code>gMessageParams(obj)</code>, is a bit different; it's used to allow <code>obj</code> to be used in message parameter strings (like <code>'{the obj/him}'</code>) where <code>obj</code> is the name of an existing local variable. This allows us to write:
+<p><pre>
+cannotPutComponentMsg(obj)
+{
+    gMessageParams(obj);
+    return 'You can\'t do that, because it\'s part of {the obj/him}. ';
+}
+</pre>
+<p>Instead of:
+<p><pre>
+cannotPutComponentMsg(obj)
+{
+    return 'You can\'t do that,
+because it\'s part of '
+       + obj.theName + '. ';
+}
+</pre>
+
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="messages.htm">[Previous] </a>&nbsp;&nbsp;<a href="settingthescene.htm">[Next] </a></I></FONT></P>
+</body></html>
+

@@ -1,0 +1,208 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SuggestedTopic</title><meta name="keywords" content="SuggestedTopic,name,timesToSuggest,&lt;.topics&gt;,suggestTopics"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SuggestedTopic : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaultanytopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="suggestedasktopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Although the player can ASK or TELL NPCs about anything, ASK THEM for anything, or attempt to GIVE or SHOW them anything that's available to be given or shown, only a comparatively few of these topics are likely to be implemented in your game. That may be fine if you want the players to have to guess what to ASK ABOUT etc., or because it should be reasonably obvious, but in some circumstances it may degenerate into a game of "guess the topic" (or even, "guess the wording of the topic"), which players may find simply frustrating.
+<br>
+
+<br>
+To avoid this, you can provide players with a list of suggested topics, using subclasses of the SuggestedTopic class:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Arial" size="2" color="#000000"></font><font face="Courier New" size="2" color="#000000"><a href="suggestedasktopic.htm">SuggestedAskTopic</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000"><a href="suggestedgivetopic.htm">SuggestedGiveTopic</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000"><a href="suggestednotopic.htm">SuggestedNoTopic</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000"><a href="suggestedshowtopic.htm">SuggestedShowTopic</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000"><a href="suggestedtelltopic.htm">SuggestedTellTopic</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000"><a href="suggestedtopictree.htm">SuggestedTopicTree</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000"><a href="suggestedyestopic.htm">SuggestedYesTopic</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that there are no composite types of SuggestedTopic (such as SuggestedAskTellTopic), because we shall either Suggest asking or telling, but not both on the same topic (even if it's a composite kind of topic like an AskTellTopic). Which brings us to the point that SuggestedTopic is a <i>mix-in</i> class, which means that you add particular type of SuggestedTopic you want to the class list of the TopicEntry in question. For example, to make the TopicEntry for asking Sarah about her diamond ring a SuggestedAskTopic, we can change it to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic,&nbsp;<b>SuggestedAskTopic,</b>&nbsp;StopEventList&nbsp;@diamondRing
+<br>
+&nbsp;&nbsp;[&nbsp;'&lt;q&gt;What&nbsp;does&nbsp;your&nbsp;ring&nbsp;look&nbsp;like?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;It\'s&nbsp;a&nbsp;plain&nbsp;platinum&nbsp;band&nbsp;with&nbsp;a&nbsp;solitaire&nbsp;diamond.&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;This&nbsp;ring&nbsp;-&nbsp;it\'s&nbsp;important&nbsp;to&nbsp;you?&lt;/q&gt;&nbsp;you&nbsp;inquire.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Oh&nbsp;yes!&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;declares,&nbsp;&lt;q&gt;It\'s&nbsp;not&nbsp;it\'s&nbsp;monetary&nbsp;value,&nbsp;so
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;much;&nbsp;it\'s&nbsp;more&nbsp;a&nbsp;sentimental&nbsp;thing&nbsp;-&nbsp;you&nbsp;can\'t&nbsp;replace&nbsp;that&nbsp;with&nbsp;insurance
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;money.&nbsp;Besides,&nbsp;I&nbsp;was&nbsp;so&nbsp;&lt;i&gt;incensed&lt;/i&gt;&nbsp;when&nbsp;this&nbsp;bloke&nbsp;snatched&nbsp;it&nbsp;off&nbsp;me&nbsp;-
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;why&nbsp;should&nbsp;he&nbsp;get&nbsp;away&nbsp;with&nbsp;it?&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;function&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Have&nbsp;you&nbsp;any&nbsp;idea&nbsp;where&nbsp;your&nbsp;ring&nbsp;might&nbsp;be?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Perhaps&nbsp;he&nbsp;dropped&nbsp;it&nbsp;back&nbsp;in&nbsp;there,&lt;/q&gt;&nbsp;she&nbsp;suggests,&nbsp;nodding&nbsp;towards
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;open&nbsp;door,&lt;q&gt;let's&nbsp;go&nbsp;and&nbsp;see.&lt;/q&gt;&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sarah.setCurState(sarahGuide1);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;And&nbsp;the&nbsp;missing&nbsp;ring...&lt;/q&gt;&nbsp;you&nbsp;begin.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;...&nbsp;is&nbsp;a&nbsp;plain&nbsp;platinum&nbsp;band&nbsp;with&nbsp;a&nbsp;solitaire&nbsp;diamond.&lt;/q&gt;&nbsp;she&nbsp;reminds&nbsp;you.&nbsp;'
+<br>
+&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;<b>name&nbsp;=&nbsp;'the&nbsp;diamond&nbsp;ring'
+<br>
+&nbsp;&nbsp;timesToSuggest&nbsp;=&nbsp;3
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then when player types TALK TO WOMAN to start a conversation, or uses the TOPICS command in the course of a conversation, the game will respond with "You could ask her about the diamond ring. " In this case it will suggest it three times (because we have set timesToSuggest to 3) and then stop.
+<br>
+
+<br>
+The properties you may want to set on SuggestedTopic are:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>name</b> - the name that will be given to this topic in the list of suggestions, after the phrase "You could ask about/ask for/tell about/show/give" You should <i>always</i> supply a value for this property, unless for some reason you override fullName.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>fullName</b> - the title of the suggestion, suitable for following after "You could " (e.g. "You could ask about the diamond ring. "). You don't normally need to override this, since the library will construct a suitable phrase from the name property and the type of SuggestedTopic. If, however, you were creating your own custom kind of SuggestedTopic it might be useful to override this.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>timesToSuggest</b> - rather than assuming that we have infinite curiosity about any particular topic, the game will assume we've exhausted our curiosity about it, that is it will stop suggesting it, after we have asked/told about (or shown or given) it this number of times. If you want this topic to go on being suggested <i>ad infinitum</i>, then set timesToSuggest to nil. By default, it's set to 1.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+The default value of timesToSuggest<i> may</i> not be what you want where you have mixed in a Script class with a TopicEntry class to provide a list of responses. It may be that the subsequent responses are not significant and are just provided for variety in case the player should raise the topic again. Or it may be that they are sufficiently important that you want the player to work through them all. If the latter predominate among the SpecialTopics in your game, it may become just a little tedious to keep having to count the number of items in all the list and override timesToSuggest with the appropriate number. You may prefer it if the game automatically suggested a topic for the number of times there were fresh items in the list; in other words, instead of having timesToSuggest default to 1, you might prefer it to default to the number of different responses in the topic.
+<br>
+
+<br>
+If you could prefer this, you can modify SuggestedTopic accordingly:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">/*&nbsp;If&nbsp;the&nbsp;TopicEntry&nbsp;associated&nbsp;with&nbsp;a&nbsp;SuggestedTopic&nbsp;is&nbsp;also&nbsp;an&nbsp;EventList
+<br>
+&nbsp;*&nbsp;keep&nbsp;on&nbsp;suggesting&nbsp;till&nbsp;we've&nbsp;been&nbsp;right&nbsp;through&nbsp;the&nbsp;list&nbsp;-&nbsp;i.e.
+<br>
+&nbsp;*&nbsp;make&nbsp;timesToSuggest&nbsp;correspond&nbsp;to&nbsp;the&nbsp;length&nbsp;of&nbsp;the&nbsp;list.
+<br>
+&nbsp;*/
+<br>
+
+<br>
+modify&nbsp;SuggestedTopic
+<br>
+&nbsp;&nbsp;timesToSuggest&nbsp;=&nbsp;(ofKind(EventList)&nbsp;?&nbsp;eventList.length()&nbsp;:&nbsp;1)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Bear in mind, though, that this may still not always give the behaviour you want, and that you will probably still need or want to override timesToSuggest manually on at least some SuggestedTopics.
+<br>
+
+<br>
+The occasions when the game will display the currently active SuggestedTopics are:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></font></td><td><font face="Arial" size="2" color="#000000">When the player types a TALK TO, GREET or HELLO command
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">When the player issue a TOPICS command
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">Inside a <a href="convnode.htm">ConvNode</a> when there is an active <a href="specialtopic.htm">SpecialTopic</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">Under programmer control, following the use of a &lt;.topics&gt; tag in any output
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><font face="Symbol" size="2" color="#000000">&#183;</font></font></td><td><font face="Arial" size="2" color="#000000">By a call to the NPC's <b>suggestTopics(explicit) </b>method (where explicit is either true or nil, as in a TOPICS or a TALK TO command respectively)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+It's perfectly feasible to add a new SuggestedTopic class to match a new TopicEntry class. For example, a little while back we showed how to implement a custom <a href="misctopic.htm">PraiseTopic</a>. The only problem with it is that the player might never know it's there, or that PRAISE SARAH (for example) is a valid conversational command. The ideal solution to this is to create a SuggestedPraiseTopic that can be mixed in with PraiseTopic so that the player can discover its existence. Here's the definition we need:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">SuggestedPraiseTopic&nbsp;:&nbsp;SuggestedTopic
+<br>
+&nbsp;&nbsp;suggestionGroup&nbsp;=&nbsp;[suggestionPraiseGroup]
+<br>
+&nbsp;&nbsp;fullName&nbsp;=&nbsp;'praise&nbsp;{it&nbsp;targetActor/him}'
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'{it&nbsp;targetActor/him}'
+<br>
+;
+<br>
+
+<br>
+suggestionPraiseGroup&nbsp;:&nbsp;SuggestionListGroup
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;groupPrefix&nbsp;=&nbsp;"praise&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Add SuggestedPraiseTopic to the class list of all the PraiseTopics (and any AltTopics associated with them), and you now find 'praise her' among the list of conversational commands you can address to Sarah; for example:
+<br>
+
+<br><pre></font><font face="Courier New" size="2" color="#000000">
+++ PraiseTopic, <b>SuggestedPraiseTopic,</b> StopEventList
+    [
+        '&lt;q&gt;It\'s really very good of you to come with me.&lt;/q&gt; you
+        tell her.\b
+        &lt;q&gt;Not at all,&lt;/q&gt; she replies, &lt;q&gt;I\'m just hoping you are
+        going to find the way out of here.&lt;/q&gt;',
+        '&lt;q&gt;I\'m really glad you\'re with me - whatever your reasons.&lt;/q&gt;
+        you remark, &lt;q&gt;Quite frankly, I\'m glad of your company.&lt;/q&gt;\b
+        &lt;q&gt;Me too,&lt;/q&gt; she admits.',
+        '&lt;q&gt;I do like you, you know.&lt;/q&gt; you tell her.\b
+        &lt;q&gt;Now, don\'t go all sentimental on me!&lt;/q&gt; she complains, though
+        there\'s a warm twinkle in her eye as she says it.',
+        '&lt;q&gt;I\'m afraid I can\'t help finding you very attractive.&lt;/q&gt; you
+        confess.\b
+        &lt;q&gt;I daresay neither of us can help that - what you find attractive,
+        I mean.&lt;/q&gt; she replies matter-of-factly. ',
+        '&lt;q&gt;I really do appreciate having you around.&lt;/q&gt; you tell her.\b
+        &lt;q&gt;So you keep saying,&lt;/q&gt; she observes. '
+    ]
+    isActive = (getActor.isProperName)
+;
+
+
++++ AltTopic, <b>SuggestedPraiseTopic,</b> StopEventList
+    [
+        '<q>You\'ve been pretty brave about that ghost - after all it
+        was scary!</q> you remark.\b
+        <q>It was,</q> she agrees, <q>and you\'ve been pretty brave too!</q>',
+
+        '<q>You know, I really <i>am</i> glad you\'re with me.</q> you tell her.\b
+        <q>Me too!</q> she agrees warmly, giving your arm a little squeeze. '
+    ]
+    isActive = (getActor.hasSeen(ghost))
+;
+</pre?
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,146 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Dynamite</title><meta name="keywords" content="Dynamite,sayBurnedOut,canBeTouchedBy,fuelLevel,callWithSenseContext,finishGameMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Dynamite : <a href="candle.htm">Candle</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="matchstick+matchbook.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="hiding+fiding-introduction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">For some time now we've had that pesky boulder blocking the cave to the west of main cave, and we've had to allow the player to pick it up in the absence of any way to blow it up. Well, now the time has come to try for a more explosive solution.
+<br>
+
+<br>
+Not only might a stick of dynamite look a little like a candle, in some ways it behaves a little like one, except that something a bit different happens when it burns down. We could probably thus make a reasonable stab at a stick of dynamite by adapting a Candle and overriding sayBurnedOut() for the explosion. The main complication is handling all the different situations that could arise when the dynamite explodes. To keep things manageable, we'll handle just four. If the player character is still holding the dynamite when it explodes, s/he's killed. If the player character is close enough to the dynamite to touch it when it explodes, s/he's still killed, but with a different message. If the dynamite explodes when it's in a position to destroy the boulder, the boulder is destroyed and the dynamite removed. That leaves the situation where the dynamite explodes when the player character is at a safe distance, but is not in the right place to destroy the boulder. If we simply removed the stick of dynamite this would leave the player character alive, but the game unwinnable, so we need instead to allow the player to retrieve it again (under the guise of another stick of dynamite). We shall simply ignore the question of what damage the explosion might do to any other objects in the game, since to implement it would probably be too complicated.
+<br>
+
+<br>
+One thing at a time; first we need to amend the definition of the boulder:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;boulder&nbsp;:&nbsp;Container,&nbsp;Heavy&nbsp;'boulder/crack'&nbsp;'boulder'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;huge&nbsp;boulder&nbsp;is&nbsp;blocking&nbsp;the&nbsp;exit&nbsp;to&nbsp;the&nbsp;west;&nbsp;there&nbsp;seems&nbsp;to&nbsp;be&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;small&nbsp;crack&nbsp;in&nbsp;it.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;2&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We make the boulder a Container as well as Heavy so that we can insert the dynamite in it, and we describe it as having a crack to give the player a clear hint that that's what s/he's meant to do.
+<br>
+
+<br>
+We'll give the dynamite a short fuse and not much illumination when lit, and an appropriate description. The complication comes in the sayBurnedOut() method. We'll first test for the player character holding the dynamite and kill him or her if s/he is. We'll then do the same but with a different message if the player character is in a position to touch the dynamite, which we can test with the dynamite's <b>canBeTouchedBy</b> method. We'll then see if the dynamite is in the boulder. If it is we'll replace the boulder with boulder fragments. Penultimately we'll move the Dynamite back into nil and reset its fuelLevel to 3 in case we need to reuse it.
+<br>
+
+<br>
+The really tricky bit is how to let the player know that the dynamite has exploded. Since the sayBurnedOut() method is called by a SenseDaemon, it or any method called by it won't display any text unless the dynamite is in scope for the player character; but if the dynamite were in scope, the player character would already be dead. But we don't want to keep the player guessing how long it takes for the dynamite to explode. Since the fuse is so short we can virtually guarantee that the player character will still be in earshot when the dynamite explodes, so we don't want to get involved in complex sense path calculations or the setting up of lots of SenseConnectors and SensoryEvents. The simplest way to get round the sensory context set up by the SenseDaemon used on the Candle class is to use the <b>callWithSenseContext</b> function to set up a temporary, different sense context:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">dynamite&nbsp;:&nbsp;Candle&nbsp;'stick&nbsp;dynamite/fuse'&nbsp;'stick&nbsp;of&nbsp;dynamite'&nbsp;
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;white&nbsp;cylinder&nbsp;with&nbsp;a&nbsp;short&nbsp;fuse.&nbsp;&lt;&lt;isLit&nbsp;?
+<br>
+&nbsp;&nbsp;'The&nbsp;fuse&nbsp;is&nbsp;lit&nbsp;and&nbsp;burning&nbsp;down&nbsp;fast.&nbsp;'&nbsp;:&nbsp;nil&nbsp;&gt;&gt;"
+<br>
+&nbsp;&nbsp;fuelLevel&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;brightnessOn&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;sayBurnedOut()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isHeldBy(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;dynamite&nbsp;explodes&nbsp;with&nbsp;a&nbsp;mighty&nbsp;bang&nbsp;and&nbsp;blows&nbsp;your&nbsp;hand&nbsp;off.&nbsp;But
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;since&nbsp;you're&nbsp;killed&nbsp;by&nbsp;the&nbsp;blast&nbsp;you&nbsp;probably&nbsp;won't&nbsp;be&nbsp;needing&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;more.\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(canBeTouchedBy(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;dynamite&nbsp;denotates&nbsp;close&nbsp;by,&nbsp;but&nbsp;you&nbsp;are&nbsp;killed&nbsp;by&nbsp;the&nbsp;blast&nbsp;almost
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;you&nbsp;hear&nbsp;the&nbsp;bang.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isIn(boulder))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boulderFragments.moveInto(boulder.location);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boulder.moveInto(nil);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;callWithSenseContext&nbsp;(nil,&nbsp;nil,&nbsp;{:"You&nbsp;hear&nbsp;a&nbsp;muffled&nbsp;explosion&nbsp;nearby.&nbsp;"});
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;moveInto(nil);&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fuelLevel&nbsp;=&nbsp;3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If the first two parameters (source and sense) of callWithSenseContext are nil then we effectively creating a universal, unrestricted sense context, allowing whatever happens in the function forming the third argument to be sensed from anywhere. We use the short form of this function definition, which means precisely the same as if we had written </font><font face="Courier New" size="2" color="#000000">new&nbsp;Function&nbsp;{&nbsp;"You&nbsp;hear&nbsp;a&nbsp;muffled&nbsp;explosion&nbsp;nearby.&nbsp;";&nbsp;}.&nbsp;</font><font face="Arial" size="2" color="#000000">We could have avoided all this complication had we used a Fuse on the dynamite, instead of trying to adapt the Candle. We'll remodel the dynamite using a <a href="fuse.htm">Fuse</a> in due course.
+<br>
+
+<br>
+Finally, we need to define the boulderFragments object that is to replace the boulder when the dynamite detonates:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">boulderFragments&nbsp;:&nbsp;Decoration&nbsp;'boulder&nbsp;larger&nbsp;fragments/chunks'&nbsp;'boulder&nbsp;fragments'
+<br>
+&nbsp;&nbsp;"Most&nbsp;of&nbsp;the&nbsp;fragments&nbsp;are&nbsp;tiny,&nbsp;though&nbsp;there&nbsp;are&nbsp;a&nbsp;few&nbsp;larger&nbsp;chunks.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;They&nbsp;are&nbsp;scattered&nbsp;everywhere.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;inRoomDesc&nbsp;=&nbsp;"Fragments&nbsp;of&nbsp;a&nbsp;boulder&nbsp;are&nbsp;littered&nbsp;all&nbsp;over&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that this once again makes use of our custom inRoomDesc property (which adds itself to the room description). A game that hadn't implemented this device would probably have to use specialDesc instead.
+<br>
+
+<br>
+There is still one task left to achieve, namely to provide the player with a way of finding the dynamite in the first place. We'll cover that as the first task in the next chapter. In the meanwhile, if you want to try it out, you can temporarily set the dynamite's starting location to somewhere convenient like mainCave - but don't forget to set it back again (to nil) before starting the next section.
+<br>
+
+<br>
+Finally, for the endGame() function,</font><font face="Courier New" size="2" color="#000000">&nbsp;</font><font face="Arial" size="2" color="#000000">see above on <a href="cannotgothatwayindark.htm">cannotGoThatWayInDark</a>, where we first defined it.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

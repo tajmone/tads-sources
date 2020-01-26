@@ -1,0 +1,127 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Controlling the Action</title><meta name="keywords" content="propertysets,macros,dobjFor,iobjFor"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="rewardingtheeffort.htm">[Previous] </a>&nbsp;&nbsp;<a href="verify.htm">[Next] </a></I></FONT></P>
+<h2>Controlling the Action</h2>
+
+<p>The TADS 3 library defines a fair number of actions (see the end of the en_us.t library file for their grammar definitions, which will give you some idea of the range of actions available), together with default responses. For some standard actions like TAKE, DROP, EXAMINE, OPEN, LOCK and PUT ON the standard responses are often all you need; for many of the others, such as BREAK, CLEAN, JUMP OVER or POUR the standard response is merely a message saying that the proposed action is impossible or that it has no effect.
+<p>As we have seen over the last few pages, you won't get very far in writing a game in TADS 3 without customizing the standard library behaviour for various actions under particular circumstances. Indeed, a substantial part of writing IF-code consists in just this task (writing custom action handling). Over the course of this chapter we've covered quite a few of the concepts and methods used to customize actions in TADS 3, but before we carry on to anything else, we should first review what we have learned in a more systematic fashion, filling in all the most significant gaps as we go.
+<p>So, to start again from the beginning. Customizing actions in TADS 3 generally involves using the <code>dobjFor()</code> and <code>iobjFor()</code> constructs. Wherever you see dobj and iobj in TADS 3, remember that they are abbreviations for <b>d</b>irect <b>obj</b>ect and <b>i</b>ndirect <b>obj</b>ect. IF typically has three kinds of commands: simple commands like <b>look</b> and <b>inventory</b> that have no objects at all, single-object commands like <b>climb tree</b> or <b>take stick</b> that have one object, called the direct object, and two-object commands like <b>move nest with stick</b> or <b>put nest on branch</b> or <b>hit troll with sword</b> that have both a direct object (in these examples the nest or the troll) and an indirect object (in these examples the stick, the branch or the sword). The direct object is normally the one that immediately follows the verb, while the indirect object is usually the second of the two objects, and usually comes after a preposition such as 'with' or 'on'. I say 'usually' because English sometimes allows more than one phrasing: <b>give fred the book</b> means the same as <b>give the book to fred</b>, and in both cases the book would be the direct object and Fred would be the indirect object. If in doubt, always think of the longer version of the command phrasing that includes the preposition (such as 'to') when deciding which object is the direct object and which the indirect object.
+<p>Customizing the behaviour of a single-object command, like <b>enter the cottage</b> or <b>climb the tree</b> is relatively straightforward. You simply need to define <code>dobjFor(Whatever)</code> on the direct object of the command and then specify what happens (how exactly we do that is something we'll get to in a minute or two). For a two-object command such as <b>move nest with stick</b> it's more complicated; you often need to define <code>dobjFor(Whatever)</code> on the direct object and <code>iobjFor(Whatever)</code> on the indirect object. At the very least, if you want the action to go ahead, you need to ensure that both of the objects involved in the action will allow it, so that the play doesn't get a message like "You can't move the nest" or "You can't move anything with the stick".</p>
+<p>A further complication, which we won't go into very far here, is that there can be things that look like direct or indirect objects but are considered to be something else by TADS 3. For example in the command <b>ask fred about the weather</b>, Fred is indeed the direct object, but 'the weather' is the <i>topic object</i>. In the command <b>enter qwerty on keyboard</b>, the keyboard is actually the direct object and 'qwerty' is the <i>literal object</i>). Beyond making sure that you're aware of this complication, we can afford to ignore it for now (when you want the full story, read the article on <a href="..\techman\t3verb.htm">How to Create Verbs</a> in the Technical Manual).
+
+<p>
+
+<br>
+Before considering how to use the <code>iobjFor()</code> and <code>dobjFor()</code> macros, it may be a good idea to take a closer look at what they actually mean. They are, in fact, macros that define <i>propertysets</i>, which are simply a short-hand device for defining a set of properties which have a common element in their name (e.g. fooTake, fooDrop and fooBar, all of which start with foo). In the case of the dobjFor and iobjFor macros, it's the name of the action (e.g. Take) plus the role of the action (dobj or iobj) that's the common element. So if you write:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">dobjFor(Take)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;foo&nbsp;=&nbsp;'poop'&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;bar()&nbsp;{&nbsp;say(foo);&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This is exactly the same, so far as the compiler is concerned, as if you had written:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">fooDobjTake&nbsp;=&nbsp;'poop'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">barDobjTake()&nbsp;{&nbsp;say(foo);&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The above example is not especially useful, since the library makes no use of  these property and method names (although you could always define them to do something useful in your own code); the library does, however, call a number of properties and methods on the direction object and indirect object of any action. For example, if the action is TakeWith the following properties/methods will be invoked respectively on the direct and indirect objects of the command:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">remapDobjTakeWith&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remapIobjTakeWith
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">preCondDobjTakeWith&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preCondIobjTakeWith
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">verifyDobjTakeWith()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verifyIobjTakeWith()
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">checkDobjTakeWith()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;checkIobjTakeWith()
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">actionDobjTakeWith()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actionIobjTakeWith()
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Any of these properties/methods may be defined (or invoked) using these names (and sometimes it may be useful to do so); dobjFor and iobjFor merely provide a convenient way of defining these properties without having to remember their full names, and for grouping the related methods together in the code layout; e.g.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">dobjFor(TakeWith)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;remap&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;preCond&nbsp;=&nbsp;[touchObj]
+<br>
+&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(heldBy&nbsp;==&nbsp;gActor)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogicalAlready('{You/he}&nbsp;{is}&nbsp;already&nbsp;holding&nbsp;{the&nbsp;dobj/him}.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gDobj&nbsp;==&nbsp;poisonousSnake)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failCheck('You&nbsp;think&nbsp;better&nbsp;of&nbsp;it.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;take{s}&nbsp;{the&nbsp;dobj/him}&nbsp;with&nbsp;{the&nbsp;iobj/him}.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gDobj.moveInto(gActor);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The <a href="verify.htm">verify()</a>, <a href="check.htm">check()</a>, <a href="action.htm">action()</a> and <a href="precond.htm">preCondition</a> methods are described in some detail in the articles "<a href="../techman/t3verb.htm" target="_top">How to Create Verbs in TADS 3</a>", "<a href="../techman/t3res.htm" target="_top">TADS 3 Action results</a>" and "<a href="../techman/t3verchk.htm" target="_top">On good usage of verify() and check() in TADS 3 games</a>" in the <i>Technical Manual</i>. These are all articles you will want to read sooner rather than later; you might find it particularly useful to read the "TADS 3 Actions results" article at the end of this chapter if you want more help on the ground we're about to cover.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="rewardingtheeffort.htm">[Previous] </a>&nbsp;&nbsp;<a href="verify.htm">[Next] </a></I></FONT></P>
+</body></html>

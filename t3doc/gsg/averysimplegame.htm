@@ -1,0 +1,202 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>A Very Simple Game</title><meta name="keywords" content="roomName,desc"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="chapter2.htm">[Previous] </a>&nbsp;&nbsp;<a href="addingitemstothegame.htm">[Next] </a></I></FONT></P>
+<h2>A Very Simple Game</h2>
+
+<p>We'll start with about the simplest game possible: two rooms, and no objects. (We could conceivably start with only one room, to make things even simpler, but then there would be nothing to do while playing the game; with two rooms, we at least can move between them.)
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The basis for the game we shall be developing is the so-called 'advanced' starter game starta3.t, which should be located in the samples subdirectory of your TADS 3 directory. If you are using the TADS 3 Workbench, select New Project, choose the 'advanced' rather than the 'beginner' option, call the new file you are about to create 'goldskull.t' and locate it in whichever directory you want to work (it's probably a good idea to create a new directory called Goldskull or the like for the purpose). Otherwise, if you are not using Workbench, copy starta3.t to your new Goldskull directory and rename it goldskull.t.  Again, if you are <i>not</i> using Workbench you will need to use your text editor to create a file called goldskull.t3m (in the same location) containing the following:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="1" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="1" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="1" color="#000000"></font><font face="Courier New" size="2" color="#000000">-DLANGUAGE=en_us
+<br>
+-DMESSAGESTYLE=neu
+<br>
+-Fy&nbsp;obj&nbsp;-Fo&nbsp;obj
+<br>
+-o&nbsp;goldskull.t3
+<br>
+-lib&nbsp;system
+<br>
+-lib&nbsp;adv3/adv3
+<br>
+-source&nbsp;goldskull
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="1" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="1" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="1" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Now open goldskull.t in Workbench (if you’re using Workbench) or else in text editor of your choice; the TADS Compiler will accept an ASCII file produced with any editor.  Then remove (or modify as shown below) the definition of startroom, i.e. the lines that read:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">startRoom:&nbsp;Room&nbsp;'Start&nbsp;Room'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"This&nbsp;is&nbsp;the&nbsp;starting&nbsp;room.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you started from starta3.t your file should already contain the vital lines:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">#charset&nbsp;"us-ascii"
+<br>
+#include&nbsp;&lt;adv3.h&gt;
+<br>
+#include&nbsp;&lt;en_us.h&gt;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If not, you will need to add them. You will also need to ensure that your source file contains:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">gameMain:&nbsp;GameMainDef
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;the&nbsp;initial&nbsp;player&nbsp;character&nbsp;is&nbsp;'me'&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;initialPlayerChar&nbsp;=&nbsp;me
+<br>
+;
+<br>
+
+<br>
+/*&nbsp;You&nbsp;could&nbsp;customize&nbsp;this&nbsp;if&nbsp;you&nbsp;wished&nbsp;*/
+<br>
+versionInfo:&nbsp;GameID&nbsp;&nbsp;
+<br>
+&nbsp;/*&nbsp;The&nbsp;IFID&nbsp;can&nbsp;be&nbsp;any&nbsp;random&nbsp;set&nbsp;of&nbsp;hexadecimal&nbsp;digits&nbsp;in&nbsp;this&nbsp;format&nbsp;*/
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">      </font><font face="Courier New" size="2" color="#000000">IFID&nbsp;=&nbsp;'5b252939-8c87-0a51-dd3f-eafb1c07da05'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'Gold&nbsp;Skull'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;byline&nbsp;=&nbsp;'by&nbsp;A&nbsp;TADS&nbsp;3&nbsp;Tyro'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;htmlByline&nbsp;=&nbsp;'by&nbsp;&lt;a&nbsp;href="mailto:$EMAIL$"&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$AUTHOR$&lt;/a&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;=&nbsp;'1'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;authorEmail&nbsp;=&nbsp;'$AUTHOR$&nbsp;&lt;$EMAIL$&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;'$DESC$'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;htmlDesc&nbsp;=&nbsp;'$HTMLDESC$'
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Then you can start adding the new code (or adapting the definition of </font><font face="Courier New" size="2" color="#000000">startroom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> that starta3.t already provides):
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+startroom:&nbsp;Room&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;we&nbsp;could&nbsp;call&nbsp;this&nbsp;anything&nbsp;we&nbsp;liked&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'Outside&nbsp;cave'&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;the&nbsp;"name"&nbsp;of&nbsp;the&nbsp;room&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;"You're&nbsp;standing&nbsp;in&nbsp;the&nbsp;bright&nbsp;sunlight&nbsp;just
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;of&nbsp;a&nbsp;large,&nbsp;dark,&nbsp;foreboding&nbsp;cave,&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lies&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;cave&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;the&nbsp;room&nbsp;called&nbsp;"cave"&nbsp;lies&nbsp;to&nbsp;the&nbsp;north&nbsp;*/
+<br>
+&nbsp;&nbsp;;
+<br>
+
+<br>
++&nbsp;me:&nbsp;Actor&nbsp;/*&nbsp;This&nbsp;may&nbsp;already&nbsp;be&nbsp;there&nbsp;if&nbsp;you&nbsp;started&nbsp;from&nbsp;starta3.t&nbsp;*/
+<br>
+;
+<br>
+
+<br>
+cave:&nbsp;Room
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'Cave'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;"You're&nbsp;inside&nbsp;a&nbsp;dark&nbsp;and&nbsp;musty&nbsp;cave.&nbsp;Sunlight
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pours&nbsp;in&nbsp;from&nbsp;a&nbsp;passage&nbsp;to&nbsp;the&nbsp;south.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;south&nbsp;=&nbsp;startroom
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">To run this example, all you have to do is compile it with </font><font face="Courier New" size="2" color="#000000">t3make</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the TADS 3 Compiler, and run it with </font><font face="Courier New" size="2" color="#000000">t3run</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the TADS 3 Run-time system. If you are using Workbench, this is all handled for you; you can simply choose the 'Compile and Run' from the 'Build' menu (or click the appropriate icons on the task bar). If you're not using Workbench, then on most operating systems you can compile your game by typing this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td><td></td><td width="25"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="40"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">t3make&nbsp;-d&nbsp;-f&nbsp;goldskull
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="40"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and you can run it by typing this:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="42"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">t3run&nbsp;mygame&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="42"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you have difficulty getting this to work, consult the README file that came with your distribution. It's possible, for example, that you may need to manually create a subdirectory called obj under you main game directory (Workbench handles this automatically).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Now we'll walk through the sample game line by line.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">#include</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> command inserts another sourcefile into your program. The file called </font><font face="Courier New" size="2" color="#000000">adv3.h</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a set of basic definitions that allows your game to work properly with the adv3 library (note that the library files themselves are <i>not</i> included; for a full explanation of this see the article on 'Separate Compilation' in the <i>Technical Manual</i>, but there's no need to do that right now). The actual adv3 library files are included in your project by virtue of your goldskull.t3m file (which Workbench will have created for you automatically, if you are using Workbench). You should be able to use these definitions, with few changes, for most adventure games. By incorporating the </font><font face="Courier New" size="2" color="#000000">adv3</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> library in your game, you don't need to worry about definitions for basic words such as "the," a large set of verbs (such as "take," "north," and so forth), and many object classes (more on these in a bit).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></b></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><b></b></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The line including </font><font face="Courier New" size="2" color="#000000">en_us.h</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is similar; it contains some additional standard definitions to interface with the parts of the library that are specific to the English language. The reason for placing these definitions in a separate file is that it is then much easier to customize TADS 3 to work with other languages.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The line that says </font><font face="Courier New" size="2" color="#000000">startroom:&nbsp;Room</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> tells the compiler that you're going to define a room named "startroom". Now, a </font><font face="Courier New" size="2" color="#000000">Room&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is nothing special to the TADS 3 <i>language</i>, but the </font><font face="Courier New" size="2" color="#000000">adv3</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> <i>library</i> that you incorporated defines what a </font><font face="Courier New" size="2" color="#000000">Room&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is. A </font><font face="Courier New" size="2" color="#000000">Room&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is one of those object classes we mentioned. The next line defines the </font><font face="Courier New" size="2" color="#000000">roomName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> for this room. A </font><font face="Courier New" size="2" color="#000000">roomName&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is a short description; for a room, it is normally displayed whenever a player enters the room. The </font><font face="Courier New" size="2" color="#000000">desc&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is the long description; it is normally displayed the first time a player enters the room, and can be displayed by the player by typing "look". Finally, the </font><font face="Courier New" size="2" color="#000000">north&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">definition says that another room, called </font><font face="Courier New" size="2" color="#000000">cave</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, is reached when the player types <b>north</b> while in </font><font face="Courier New" size="2" color="#000000">startroom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">A bit of terminology: </font><font face="Courier New" size="2" color="#000000">startroom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">cave&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">are <i>objects</i>, belonging to the <i>class</i> </font><font face="Courier New" size="2" color="#000000">Room</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; </font><font face="Courier New" size="2" color="#000000">roomName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">desc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">north</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and the like are <i>properties</i> of their respective objects. In the context of TADS programming, an object is a named entity which is defined like </font><font face="Courier New" size="2" color="#000000">startroom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; each object has a class, which defines how the object behaves and what kind of data it contains. Note that our usage is sometimes a little loose, and we will also use "object" the way a player would, to refer to something in the game that a player can manipulate. In fact, each item that the player thinks of as an object is actually represented by a TADS object (sometimes several, in fact); but your TADS program will contain many objects that the player doesn't directly manipulate, such as rooms.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you're familiar with other programming languages, you may notice that the program above appears to be entirely definitions of objects; you may wonder where the program starts running. The answer is that the program doesn't have an obvious beginning in the code we typed.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">TADS 3 employs a style of programming different from that you may have encountered before; this new style may take a little getting used to, but you'll find that it is quite powerful for writing adventure games and simplifies the task considerably. Most programming languages are "procedural"; you specify a series of steps that the computer executes in sequence. TADS, on the other hand, is more "declarative"; you describe objects to the system. While TADS programs usually have procedural sections, in which steps are executed in sequence, the overall program doesn't have a beginning or an end; or rather it does, but these are buried deep inside the adv3 library and taken care of for you.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The reason TADS 3 programs aren't procedural is that the player is always in control of the game. When the game first starts, the library calls a bit of procedural code in your program that displays any introductory text you wish the player to see, then the system waits for a command from the player. Based on the command, the system will manipulate the objects you defined according to how you declare these objects should behave. You don't have to worry about what the player types; you just have to specify how your objects behave and how they interact with one another.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="chapter2.htm">[Previous] </a>&nbsp;&nbsp;<a href="addingitemstothegame.htm">[Next] </a></I></FONT></P>
+</body></html>

@@ -1,0 +1,1477 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>playerActionMessages</title></head><body>
+<table class=ban><tr><td align=left><span class=title>playerActionMessages</span><span class=type>object</span><td align=right><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2561">2561</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Verb messages for standard library verb implementations for actions   performed by the player character.  These return strings suitable for   use in VerifyResult objects as well as for action reports   (defaultReport, mainReport, and so on). <p>   Most of these messages are generic enough to be used for player and   non-player character alike.  However, some of the messages either are   too terse (such as the default reports) or are phrased awkwardly for   NPC use, so the NPC verb messages override those.
+<p>
+<code><b>playerActionMessages</b> :  &nbsp; <a href="../object/MessageHelper.html">MessageHelper</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>playerActionMessages</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MessageHelper.html">MessageHelper</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#alreadyAttachedMsg">alreadyAttachedMsg</a>&nbsp;
+<a href="#alreadyBurningMsg">alreadyBurningMsg</a>&nbsp;
+<a href="#alreadyClosedMsg">alreadyClosedMsg</a>&nbsp;
+<a href="#alreadyHoldingMsg">alreadyHoldingMsg</a>&nbsp;
+<a href="#alreadyInLocMsg">alreadyInLocMsg</a>&nbsp;
+<a href="#alreadyLockedMsg">alreadyLockedMsg</a>&nbsp;
+<a href="#alreadyLyingMsg">alreadyLyingMsg</a>&nbsp;
+<a href="#alreadyLyingOnMsg">alreadyLyingOnMsg</a>&nbsp;
+<a href="#alreadyOpenMsg">alreadyOpenMsg</a>&nbsp;
+<a href="#alreadyPulledMsg">alreadyPulledMsg</a>&nbsp;
+<a href="#alreadyPushedMsg">alreadyPushedMsg</a>&nbsp;
+<a href="#alreadyPutBehindMsg">alreadyPutBehindMsg</a>&nbsp;
+<a href="#alreadyPutInMsg">alreadyPutInMsg</a>&nbsp;
+<a href="#alreadyPutOnMsg">alreadyPutOnMsg</a>&nbsp;
+<a href="#alreadyPutUnderMsg">alreadyPutUnderMsg</a>&nbsp;
+<a href="#alreadySittingMsg">alreadySittingMsg</a>&nbsp;
+<a href="#alreadySittingOnMsg">alreadySittingOnMsg</a>&nbsp;
+<a href="#alreadyStandingMsg">alreadyStandingMsg</a>&nbsp;
+<a href="#alreadyStandingOnMsg">alreadyStandingOnMsg</a>&nbsp;
+<a href="#alreadySwitchedOffMsg">alreadySwitchedOffMsg</a>&nbsp;
+<a href="#alreadySwitchedOnMsg">alreadySwitchedOnMsg</a>&nbsp;
+<a href="#alreadyUnlockedMsg">alreadyUnlockedMsg</a>&nbsp;
+<a href="#alreadyWearingMsg">alreadyWearingMsg</a>&nbsp;
+<a href="#askVagueMsg">askVagueMsg</a>&nbsp;
+<a href="#candleNotLitMsg">candleNotLitMsg</a>&nbsp;
+<a href="#candleOutOfFuelMsg">candleOutOfFuelMsg</a>&nbsp;
+<a href="#cannotAskSelfForMsg">cannotAskSelfForMsg</a>&nbsp;
+<a href="#cannotAskSelfMsg">cannotAskSelfMsg</a>&nbsp;
+<a href="#cannotAttachKeyToMsg">cannotAttachKeyToMsg</a>&nbsp;
+<a href="#cannotAttachMsg">cannotAttachMsg</a>&nbsp;
+<a href="#cannotAttachToMsg">cannotAttachToMsg</a>&nbsp;
+<a href="#cannotAttachToSelfMsg">cannotAttachToSelfMsg</a>&nbsp;
+<a href="#cannotBoardMsg">cannotBoardMsg</a>&nbsp;
+<a href="#cannotBurnDobjWithMsg">cannotBurnDobjWithMsg</a>&nbsp;
+<a href="#cannotBurnMsg">cannotBurnMsg</a>&nbsp;
+<a href="#cannotBurnWithMsg">cannotBurnWithMsg</a>&nbsp;
+<a href="#cannotCleanMsg">cannotCleanMsg</a>&nbsp;
+<a href="#cannotCleanWithMsg">cannotCleanWithMsg</a>&nbsp;
+<a href="#cannotClimbMsg">cannotClimbMsg</a>&nbsp;
+<a href="#cannotCloseMsg">cannotCloseMsg</a>&nbsp;
+<a href="#cannotConsultMsg">cannotConsultMsg</a>&nbsp;
+<a href="#cannotCutWithMsg">cannotCutWithMsg</a>&nbsp;
+<a href="#cannotDetachFromMsg">cannotDetachFromMsg</a>&nbsp;
+<a href="#cannotDetachMsg">cannotDetachMsg</a>&nbsp;
+<a href="#cannotDetachPermanentMsg">cannotDetachPermanentMsg</a>&nbsp;
+<a href="#cannotDigMsg">cannotDigMsg</a>&nbsp;
+<a href="#cannotDigWithMsg">cannotDigWithMsg</a>&nbsp;
+<a href="#cannotDoFromHereMsg">cannotDoFromHereMsg</a>&nbsp;
+<a href="#cannotDoThatMsg">cannotDoThatMsg</a>&nbsp;
+<a href="#cannotDrinkMsg">cannotDrinkMsg</a>&nbsp;
+<a href="#cannotEatMsg">cannotEatMsg</a>&nbsp;
+<a href="#cannotEnterHeldMsg">cannotEnterHeldMsg</a>&nbsp;
+<a href="#cannotEnterMsg">cannotEnterMsg</a>&nbsp;
+<a href="#cannotEnterOnMsg">cannotEnterOnMsg</a>&nbsp;
+<a href="#cannotExtinguishMsg">cannotExtinguishMsg</a>&nbsp;
+<a href="#cannotFastenMsg">cannotFastenMsg</a>&nbsp;
+<a href="#cannotFastenToMsg">cannotFastenToMsg</a>&nbsp;
+<a href="#cannotFindTopicMsg">cannotFindTopicMsg</a>&nbsp;
+<a href="#cannotFlipMsg">cannotFlipMsg</a>&nbsp;
+<a href="#cannotFollowSelfMsg">cannotFollowSelfMsg</a>&nbsp;
+<a href="#cannotGetOffOfMsg">cannotGetOffOfMsg</a>&nbsp;
+<a href="#cannotGetOutMsg">cannotGetOutMsg</a>&nbsp;
+<a href="#cannotGiveToItselfMsg">cannotGiveToItselfMsg</a>&nbsp;
+<a href="#cannotGiveToMsg">cannotGiveToMsg</a>&nbsp;
+<a href="#cannotGiveToSelfMsg">cannotGiveToSelfMsg</a>&nbsp;
+<a href="#cannotGoBackMsg">cannotGoBackMsg</a>&nbsp;
+<a href="#cannotGoThatWayInDarkMsg">cannotGoThatWayInDarkMsg</a>&nbsp;
+<a href="#cannotGoThatWayMsg">cannotGoThatWayMsg</a>&nbsp;
+<a href="#cannotGoThroughMsg">cannotGoThroughMsg</a>&nbsp;
+<a href="#cannotJumpOffHereMsg">cannotJumpOffHereMsg</a>&nbsp;
+<a href="#cannotJumpOffMsg">cannotJumpOffMsg</a>&nbsp;
+<a href="#cannotJumpOverMsg">cannotJumpOverMsg</a>&nbsp;
+<a href="#cannotKissMsg">cannotKissMsg</a>&nbsp;
+<a href="#cannotKissSelfMsg">cannotKissSelfMsg</a>&nbsp;
+<a href="#cannotLieOnMsg">cannotLieOnMsg</a>&nbsp;
+<a href="#cannotLightMsg">cannotLightMsg</a>&nbsp;
+<a href="#cannotLockMsg">cannotLockMsg</a>&nbsp;
+<a href="#cannotLockWithMsg">cannotLockWithMsg</a>&nbsp;
+<a href="#cannotLookBehindMsg">cannotLookBehindMsg</a>&nbsp;
+<a href="#cannotLookInClosedMsg">cannotLookInClosedMsg</a>&nbsp;
+<a href="#cannotLookThroughMsg">cannotLookThroughMsg</a>&nbsp;
+<a href="#cannotLookUnderMsg">cannotLookUnderMsg</a>&nbsp;
+<a href="#cannotMoveActorMsg">cannotMoveActorMsg</a>&nbsp;
+<a href="#cannotMoveFixtureMsg">cannotMoveFixtureMsg</a>&nbsp;
+<a href="#cannotMoveHeavyMsg">cannotMoveHeavyMsg</a>&nbsp;
+<a href="#cannotMoveImmovableMsg">cannotMoveImmovableMsg</a>&nbsp;
+<a href="#cannotMovePersonMsg">cannotMovePersonMsg</a>&nbsp;
+<a href="#cannotMovePushableMsg">cannotMovePushableMsg</a>&nbsp;
+<a href="#cannotMoveWithMsg">cannotMoveWithMsg</a>&nbsp;
+<a href="#cannotOpenLockedMsg">cannotOpenLockedMsg</a>&nbsp;
+<a href="#cannotOpenMsg">cannotOpenMsg</a>&nbsp;
+<a href="#cannotPlugInMsg">cannotPlugInMsg</a>&nbsp;
+<a href="#cannotPlugInToMsg">cannotPlugInToMsg</a>&nbsp;
+<a href="#cannotPourIntoMsg">cannotPourIntoMsg</a>&nbsp;
+<a href="#cannotPourMsg">cannotPourMsg</a>&nbsp;
+<a href="#cannotPourOntoMsg">cannotPourOntoMsg</a>&nbsp;
+<a href="#cannotPushTravelMsg">cannotPushTravelMsg</a>&nbsp;
+<a href="#cannotPutActorMsg">cannotPutActorMsg</a>&nbsp;
+<a href="#cannotPutBehindMsg">cannotPutBehindMsg</a>&nbsp;
+<a href="#cannotPutBehindRestrictedMsg">cannotPutBehindRestrictedMsg</a>&nbsp;
+<a href="#cannotPutBehindSelfMsg">cannotPutBehindSelfMsg</a>&nbsp;
+<a href="#cannotPutFixtureMsg">cannotPutFixtureMsg</a>&nbsp;
+<a href="#cannotPutHeavyMsg">cannotPutHeavyMsg</a>&nbsp;
+<a href="#cannotPutImmovableMsg">cannotPutImmovableMsg</a>&nbsp;
+<a href="#cannotPutInDispenserMsg">cannotPutInDispenserMsg</a>&nbsp;
+<a href="#cannotPutInRestrictedMsg">cannotPutInRestrictedMsg</a>&nbsp;
+<a href="#cannotPutInSelfMsg">cannotPutInSelfMsg</a>&nbsp;
+<a href="#cannotPutOnRestrictedMsg">cannotPutOnRestrictedMsg</a>&nbsp;
+<a href="#cannotPutOnSelfMsg">cannotPutOnSelfMsg</a>&nbsp;
+<a href="#cannotPutPersonMsg">cannotPutPersonMsg</a>&nbsp;
+<a href="#cannotPutPushableMsg">cannotPutPushableMsg</a>&nbsp;
+<a href="#cannotPutUnderMsg">cannotPutUnderMsg</a>&nbsp;
+<a href="#cannotPutUnderRestrictedMsg">cannotPutUnderRestrictedMsg</a>&nbsp;
+<a href="#cannotPutUnderSelfMsg">cannotPutUnderSelfMsg</a>&nbsp;
+<a href="#cannotRemoveHeldMsg">cannotRemoveHeldMsg</a>&nbsp;
+<a href="#cannotReturnToDispenserMsg">cannotReturnToDispenserMsg</a>&nbsp;
+<a href="#cannotScrewMsg">cannotScrewMsg</a>&nbsp;
+<a href="#cannotScrewWithMsg">cannotScrewWithMsg</a>&nbsp;
+<a href="#cannotSetToMsg">cannotSetToMsg</a>&nbsp;
+<a href="#cannotShowToItselfMsg">cannotShowToItselfMsg</a>&nbsp;
+<a href="#cannotShowToMsg">cannotShowToMsg</a>&nbsp;
+<a href="#cannotShowToSelfMsg">cannotShowToSelfMsg</a>&nbsp;
+<a href="#cannotSitOnMsg">cannotSitOnMsg</a>&nbsp;
+<a href="#cannotSleepMsg">cannotSleepMsg</a>&nbsp;
+<a href="#cannotStandOnMsg">cannotStandOnMsg</a>&nbsp;
+<a href="#cannotStandOnPathMsg">cannotStandOnPathMsg</a>&nbsp;
+<a href="#cannotSwitchMsg">cannotSwitchMsg</a>&nbsp;
+<a href="#cannotTakeActorMsg">cannotTakeActorMsg</a>&nbsp;
+<a href="#cannotTakeFixtureMsg">cannotTakeFixtureMsg</a>&nbsp;
+<a href="#cannotTakeHeavyMsg">cannotTakeHeavyMsg</a>&nbsp;
+<a href="#cannotTakeImmovableMsg">cannotTakeImmovableMsg</a>&nbsp;
+<a href="#cannotTakeLocationMsg">cannotTakeLocationMsg</a>&nbsp;
+<a href="#cannotTakePersonMsg">cannotTakePersonMsg</a>&nbsp;
+<a href="#cannotTakePushableMsg">cannotTakePushableMsg</a>&nbsp;
+<a href="#cannotTalkToSelfMsg">cannotTalkToSelfMsg</a>&nbsp;
+<a href="#cannotTasteActorMsg">cannotTasteActorMsg</a>&nbsp;
+<a href="#cannotTastePersonMsg">cannotTastePersonMsg</a>&nbsp;
+<a href="#cannotTellSelfMsg">cannotTellSelfMsg</a>&nbsp;
+<a href="#cannotThrowAtContentsMsg">cannotThrowAtContentsMsg</a>&nbsp;
+<a href="#cannotThrowAtSelfMsg">cannotThrowAtSelfMsg</a>&nbsp;
+<a href="#cannotThrowToMsg">cannotThrowToMsg</a>&nbsp;
+<a href="#cannotTurnMsg">cannotTurnMsg</a>&nbsp;
+<a href="#cannotTurnOffMsg">cannotTurnOffMsg</a>&nbsp;
+<a href="#cannotTurnOnMsg">cannotTurnOnMsg</a>&nbsp;
+<a href="#cannotTurnWithMsg">cannotTurnWithMsg</a>&nbsp;
+<a href="#cannotTypeOnMsg">cannotTypeOnMsg</a>&nbsp;
+<a href="#cannotUnboardMsg">cannotUnboardMsg</a>&nbsp;
+<a href="#cannotUnfastenFromMsg">cannotUnfastenFromMsg</a>&nbsp;
+<a href="#cannotUnfastenMsg">cannotUnfastenMsg</a>&nbsp;
+<a href="#cannotUnlockMsg">cannotUnlockMsg</a>&nbsp;
+<a href="#cannotUnlockWithMsg">cannotUnlockWithMsg</a>&nbsp;
+<a href="#cannotUnplugFromMsg">cannotUnplugFromMsg</a>&nbsp;
+<a href="#cannotUnplugMsg">cannotUnplugMsg</a>&nbsp;
+<a href="#cannotUnscrewMsg">cannotUnscrewMsg</a>&nbsp;
+<a href="#cannotUnscrewWithMsg">cannotUnscrewWithMsg</a>&nbsp;
+<a href="#cutNoEffectMsg">cutNoEffectMsg</a>&nbsp;
+<a href="#dontThrowDirMsg">dontThrowDirMsg</a>&nbsp;
+<a href="#droppingSelfMsg">droppingSelfMsg</a>&nbsp;
+<a href="#flashlightOnButDarkMsg">flashlightOnButDarkMsg</a>&nbsp;
+<a href="#followAlreadyHereInDarkMsg">followAlreadyHereInDarkMsg</a>&nbsp;
+<a href="#followAlreadyHereMsg">followAlreadyHereMsg</a>&nbsp;
+<a href="#followUnknownMsg">followUnknownMsg</a>&nbsp;
+<a href="#giveAlreadyHasMsg">giveAlreadyHasMsg</a>&nbsp;
+<a href="#keyDoesNotFitLockMsg">keyDoesNotFitLockMsg</a>&nbsp;
+<a href="#keyNotDetachableMsg">keyNotDetachableMsg</a>&nbsp;
+<a href="#keyNotOnKeyringMsg">keyNotOnKeyringMsg</a>&nbsp;
+<a href="#matchNotLitMsg">matchNotLitMsg</a>&nbsp;
+<a href="#moveNoEffectMsg">moveNoEffectMsg</a>&nbsp;
+<a href="#moveToNoEffectMsg">moveToNoEffectMsg</a>&nbsp;
+<a href="#mustBeStandingMsg">mustBeStandingMsg</a>&nbsp;
+<a href="#mustSpecifyTurnToMsg">mustSpecifyTurnToMsg</a>&nbsp;
+<a href="#newlyDarkMsg">newlyDarkMsg</a>&nbsp;
+<a href="#noKeyNeededMsg">noKeyNeededMsg</a>&nbsp;
+<a href="#noRoomToLieMsg">noRoomToLieMsg</a>&nbsp;
+<a href="#noRoomToSitMsg">noRoomToSitMsg</a>&nbsp;
+<a href="#noRoomToStandMsg">noRoomToStandMsg</a>&nbsp;
+<a href="#notAContainerMsg">notAContainerMsg</a>&nbsp;
+<a href="#notASurfaceMsg">notASurfaceMsg</a>&nbsp;
+<a href="#notAttachedToMsg">notAttachedToMsg</a>&nbsp;
+<a href="#notAWeaponMsg">notAWeaponMsg</a>&nbsp;
+<a href="#notCarryingMsg">notCarryingMsg</a>&nbsp;
+<a href="#notDoffableMsg">notDoffableMsg</a>&nbsp;
+<a href="#notFollowableMsg">notFollowableMsg</a>&nbsp;
+<a href="#nothingBehindMsg">nothingBehindMsg</a>&nbsp;
+<a href="#nothingBeyondDoorMsg">nothingBeyondDoorMsg</a>&nbsp;
+<a href="#nothingInsideMsg">nothingInsideMsg</a>&nbsp;
+<a href="#nothingThroughMsg">nothingThroughMsg</a>&nbsp;
+<a href="#nothingThroughPassageMsg">nothingThroughPassageMsg</a>&nbsp;
+<a href="#nothingToHearMsg">nothingToHearMsg</a>&nbsp;
+<a href="#nothingToSmellMsg">nothingToSmellMsg</a>&nbsp;
+<a href="#nothingUnderMsg">nothingUnderMsg</a>&nbsp;
+<a href="#notOnPlatformMsg">notOnPlatformMsg</a>&nbsp;
+<a href="#notWearableMsg">notWearableMsg</a>&nbsp;
+<a href="#notWearingMsg">notWearingMsg</a>&nbsp;
+<a href="#objNotForKeyringMsg">objNotForKeyringMsg</a>&nbsp;
+<a href="#okayAttachToMsg">okayAttachToMsg</a>&nbsp;
+<a href="#okayBurnCandleMsg">okayBurnCandleMsg</a>&nbsp;
+<a href="#okayBurnMatchMsg">okayBurnMatchMsg</a>&nbsp;
+<a href="#okayCloseMsg">okayCloseMsg</a>&nbsp;
+<a href="#okayDetachFromMsg">okayDetachFromMsg</a>&nbsp;
+<a href="#okayDoffMsg">okayDoffMsg</a>&nbsp;
+<a href="#okayDropMsg">okayDropMsg</a>&nbsp;
+<a href="#okayEatMsg">okayEatMsg</a>&nbsp;
+<a href="#okayExtinguishCandleMsg">okayExtinguishCandleMsg</a>&nbsp;
+<a href="#okayExtinguishMatchMsg">okayExtinguishMatchMsg</a>&nbsp;
+<a href="#okayJumpMsg">okayJumpMsg</a>&nbsp;
+<a href="#okayLockMsg">okayLockMsg</a>&nbsp;
+<a href="#okayNotStandingOnMsg">okayNotStandingOnMsg</a>&nbsp;
+<a href="#okayOpenMsg">okayOpenMsg</a>&nbsp;
+<a href="#okayPullLeverMsg">okayPullLeverMsg</a>&nbsp;
+<a href="#okayPullSpringLeverMsg">okayPullSpringLeverMsg</a>&nbsp;
+<a href="#okayPushButtonMsg">okayPushButtonMsg</a>&nbsp;
+<a href="#okayPushLeverMsg">okayPushLeverMsg</a>&nbsp;
+<a href="#okayPutBehindMsg">okayPutBehindMsg</a>&nbsp;
+<a href="#okayPutInMsg">okayPutInMsg</a>&nbsp;
+<a href="#okayPutOnMsg">okayPutOnMsg</a>&nbsp;
+<a href="#okayPutUnderMsg">okayPutUnderMsg</a>&nbsp;
+<a href="#okayTakeMsg">okayTakeMsg</a>&nbsp;
+<a href="#okayTurnOffMsg">okayTurnOffMsg</a>&nbsp;
+<a href="#okayTurnOnMsg">okayTurnOnMsg</a>&nbsp;
+<a href="#okayUnlockMsg">okayUnlockMsg</a>&nbsp;
+<a href="#okayWearMsg">okayWearMsg</a>&nbsp;
+<a href="#okayYellMsg">okayYellMsg</a>&nbsp;
+<a href="#pullNoEffectMsg">pullNoEffectMsg</a>&nbsp;
+<a href="#pushNoEffectMsg">pushNoEffectMsg</a>&nbsp;
+<a href="#puttingSelfMsg">puttingSelfMsg</a>&nbsp;
+<a href="#sayGoodbyeMsg">sayGoodbyeMsg</a>&nbsp;
+<a href="#sayHelloMsg">sayHelloMsg</a>&nbsp;
+<a href="#sayNoMsg">sayNoMsg</a>&nbsp;
+<a href="#sayYesMsg">sayYesMsg</a>&nbsp;
+<a href="#setToInvalidMsg">setToInvalidMsg</a>&nbsp;
+<a href="#shouldNotBreakMsg">shouldNotBreakMsg</a>&nbsp;
+<a href="#shouldNotThrowAtFloorMsg">shouldNotThrowAtFloorMsg</a>&nbsp;
+<a href="#stairwayNotDownMsg">stairwayNotDownMsg</a>&nbsp;
+<a href="#stairwayNotUpMsg">stairwayNotUpMsg</a>&nbsp;
+<a href="#takeFromNotBehindMsg">takeFromNotBehindMsg</a>&nbsp;
+<a href="#takeFromNotInActorMsg">takeFromNotInActorMsg</a>&nbsp;
+<a href="#takeFromNotInMsg">takeFromNotInMsg</a>&nbsp;
+<a href="#takeFromNotOnMsg">takeFromNotOnMsg</a>&nbsp;
+<a href="#takeFromNotUnderMsg">takeFromNotUnderMsg</a>&nbsp;
+<a href="#takingSelfMsg">takingSelfMsg</a>&nbsp;
+<a href="#tellVagueMsg">tellVagueMsg</a>&nbsp;
+<a href="#throwingSelfMsg">throwingSelfMsg</a>&nbsp;
+<a href="#timePassesMsg">timePassesMsg</a>&nbsp;
+<a href="#tooDarkMsg">tooDarkMsg</a>&nbsp;
+<a href="#turnToInvalidMsg">turnToInvalidMsg</a>&nbsp;
+<a href="#unknownHowToLockMsg">unknownHowToLockMsg</a>&nbsp;
+<a href="#unknownHowToUnlockMsg">unknownHowToUnlockMsg</a>&nbsp;
+<a href="#unlockRequiresKeyMsg">unlockRequiresKeyMsg</a>&nbsp;
+<a href="#uselessToAttackMsg">uselessToAttackMsg</a>&nbsp;
+<a href="#whereToGoMsg">whereToGoMsg</a>&nbsp;
+<a href="#wrongAttachmentMsg">wrongAttachmentMsg</a>&nbsp;
+<a href="#wrongDetachmentMsg">wrongDetachmentMsg</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#actorCannotSeeMsg">actorCannotSeeMsg</a>&nbsp;
+<a href="#becomingTooLargeForActorMsg">becomingTooLargeForActorMsg</a>&nbsp;
+<a href="#becomingTooLargeForContainerMsg">becomingTooLargeForContainerMsg</a>&nbsp;
+<a href="#cannotBeWearingMsg">cannotBeWearingMsg</a>&nbsp;
+<a href="#cannotDoFromMsg">cannotDoFromMsg</a>&nbsp;
+<a href="#cannotEnterExitOnlyMsg">cannotEnterExitOnlyMsg</a>&nbsp;
+<a href="#cannotFitIntoOpeningMsg">cannotFitIntoOpeningMsg</a>&nbsp;
+<a href="#cannotFitOutOfOpeningMsg">cannotFitOutOfOpeningMsg</a>&nbsp;
+<a href="#cannotFollowFromHereMsg">cannotFollowFromHereMsg</a>&nbsp;
+<a href="#cannotGoThatWayInVehicleMsg">cannotGoThatWayInVehicleMsg</a>&nbsp;
+<a href="#cannotGoThroughClosedDoorMsg">cannotGoThroughClosedDoorMsg</a>&nbsp;
+<a href="#cannotHearMsg">cannotHearMsg</a>&nbsp;
+<a href="#cannotMoveComponentMsg">cannotMoveComponentMsg</a>&nbsp;
+<a href="#cannotMoveThroughClosedMsg">cannotMoveThroughClosedMsg</a>&nbsp;
+<a href="#cannotMoveThroughContainerMsg">cannotMoveThroughContainerMsg</a>&nbsp;
+<a href="#cannotMoveThroughMsg">cannotMoveThroughMsg</a>&nbsp;
+<a href="#cannotPushObjectNestedMsg">cannotPushObjectNestedMsg</a>&nbsp;
+<a href="#cannotPushObjectThatWayMsg">cannotPushObjectThatWayMsg</a>&nbsp;
+<a href="#cannotPutComponentMsg">cannotPutComponentMsg</a>&nbsp;
+<a href="#cannotReachIntoOpeningMsg">cannotReachIntoOpeningMsg</a>&nbsp;
+<a href="#cannotReachObjectMsg">cannotReachObjectMsg</a>&nbsp;
+<a href="#cannotReachOutOfOpeningMsg">cannotReachOutOfOpeningMsg</a>&nbsp;
+<a href="#cannotReachThroughMsg">cannotReachThroughMsg</a>&nbsp;
+<a href="#cannotSmellMsg">cannotSmellMsg</a>&nbsp;
+<a href="#cannotTakeComponentMsg">cannotTakeComponentMsg</a>&nbsp;
+<a href="#cannotTasteMsg">cannotTasteMsg</a>&nbsp;
+<a href="#cannotThrowThroughMsg">cannotThrowThroughMsg</a>&nbsp;
+<a href="#cannotTouchThroughClosedMsg">cannotTouchThroughClosedMsg</a>&nbsp;
+<a href="#cannotTouchThroughContainerMsg">cannotTouchThroughContainerMsg</a>&nbsp;
+<a href="#circularlyBehindMsg">circularlyBehindMsg</a>&nbsp;
+<a href="#circularlyInMsg">circularlyInMsg</a>&nbsp;
+<a href="#circularlyOnMsg">circularlyOnMsg</a>&nbsp;
+<a href="#circularlyUnderMsg">circularlyUnderMsg</a>&nbsp;
+<a href="#containerBecomingTooFullMsg">containerBecomingTooFullMsg</a>&nbsp;
+<a href="#containerTooFullMsg">containerTooFullMsg</a>&nbsp;
+<a href="#decorationNotImportantMsg">decorationNotImportantMsg</a>&nbsp;
+<a href="#doorClosesBehindMsg">doorClosesBehindMsg</a>&nbsp;
+<a href="#droppingObjMsg">droppingObjMsg</a>&nbsp;
+<a href="#floorlessDropMsg">floorlessDropMsg</a>&nbsp;
+<a href="#foundKeyOnKeyringMsg">foundKeyOnKeyringMsg</a>&nbsp;
+<a href="#foundNoKeyOnKeyringMsg">foundNoKeyOnKeyringMsg</a>&nbsp;
+<a href="#handsBecomingTooFullForMsg">handsBecomingTooFullForMsg</a>&nbsp;
+<a href="#handsTooFullForMsg">handsTooFullForMsg</a>&nbsp;
+<a href="#heardButNotSeenMsg">heardButNotSeenMsg</a>&nbsp;
+<a href="#invalidStagingContainerActorMsg">invalidStagingContainerActorMsg</a>&nbsp;
+<a href="#invalidStagingContainerMsg">invalidStagingContainerMsg</a>&nbsp;
+<a href="#invalidStagingLocationMsg">invalidStagingLocationMsg</a>&nbsp;
+<a href="#lookInVaporousMsg">lookInVaporousMsg</a>&nbsp;
+<a href="#movedKeysToKeyringMsg">movedKeysToKeyringMsg</a>&nbsp;
+<a href="#movedKeyToKeyringMsg">movedKeyToKeyringMsg</a>&nbsp;
+<a href="#mustBeBurningMsg">mustBeBurningMsg</a>&nbsp;
+<a href="#mustBeCarryingMsg">mustBeCarryingMsg</a>&nbsp;
+<a href="#mustBeClosedMsg">mustBeClosedMsg</a>&nbsp;
+<a href="#mustBeEmptyMsg">mustBeEmptyMsg</a>&nbsp;
+<a href="#mustBeHoldingMsg">mustBeHoldingMsg</a>&nbsp;
+<a href="#mustBeInMsg">mustBeInMsg</a>&nbsp;
+<a href="#mustBeOpenMsg">mustBeOpenMsg</a>&nbsp;
+<a href="#mustBeUnlockedMsg">mustBeUnlockedMsg</a>&nbsp;
+<a href="#mustBeVisibleMsg">mustBeVisibleMsg</a>&nbsp;
+<a href="#mustDetachMsg">mustDetachMsg</a>&nbsp;
+<a href="#mustGetOnMsg">mustGetOnMsg</a>&nbsp;
+<a href="#mustLieOnMsg">mustLieOnMsg</a>&nbsp;
+<a href="#mustOpenDoorMsg">mustOpenDoorMsg</a>&nbsp;
+<a href="#mustSitOnMsg">mustSitOnMsg</a>&nbsp;
+<a href="#nestedRoomTooHighMsg">nestedRoomTooHighMsg</a>&nbsp;
+<a href="#nestedRoomTooHighToExitMsg">nestedRoomTooHighToExitMsg</a>&nbsp;
+<a href="#noiseSourceMsg">noiseSourceMsg</a>&nbsp;
+<a href="#noResponseFromMsg">noResponseFromMsg</a>&nbsp;
+<a href="#notAddressableMsg">notAddressableMsg</a>&nbsp;
+<a href="#notInterestedMsg">notInterestedMsg</a>&nbsp;
+<a href="#notWithIntangibleMsg">notWithIntangibleMsg</a>&nbsp;
+<a href="#notWithVaporousMsg">notWithVaporousMsg</a>&nbsp;
+<a href="#npcDescMsg">npcDescMsg</a>&nbsp;
+<a href="#objCannotHearActorMsg">objCannotHearActorMsg</a>&nbsp;
+<a href="#odorSourceMsg">odorSourceMsg</a>&nbsp;
+<a href="#okayFollowInSightMsg">okayFollowInSightMsg</a>&nbsp;
+<a href="#okayPostureChangeMsg">okayPostureChangeMsg</a>&nbsp;
+<a href="#okayPushTravelMsg">okayPushTravelMsg</a>&nbsp;
+<a href="#okaySetToMsg">okaySetToMsg</a>&nbsp;
+<a href="#okayTurnToMsg">okayTurnToMsg</a>&nbsp;
+<a href="#rearTooFullMsg">rearTooFullMsg</a>&nbsp;
+<a href="#refuseCommand">refuseCommand</a>&nbsp;
+<a href="#roomOkayPostureChangeMsg">roomOkayPostureChangeMsg</a>&nbsp;
+<a href="#smelledButNotSeenMsg">smelledButNotSeenMsg</a>&nbsp;
+<a href="#surfaceTooFullMsg">surfaceTooFullMsg</a>&nbsp;
+<a href="#takenAndMovedToKeyringMsg">takenAndMovedToKeyringMsg</a>&nbsp;
+<a href="#thingDescMsg">thingDescMsg</a>&nbsp;
+<a href="#thingSmellDescMsg">thingSmellDescMsg</a>&nbsp;
+<a href="#thingSoundDescMsg">thingSoundDescMsg</a>&nbsp;
+<a href="#throwCatchMsg">throwCatchMsg</a>&nbsp;
+<a href="#throwFallMsg">throwFallMsg</a>&nbsp;
+<a href="#throwFallShortMsg">throwFallShortMsg</a>&nbsp;
+<a href="#throwHitFallMsg">throwHitFallMsg</a>&nbsp;
+<a href="#throwHitMsg">throwHitMsg</a>&nbsp;
+<a href="#throwShortMsg">throwShortMsg</a>&nbsp;
+<a href="#tooDistantMsg">tooDistantMsg</a>&nbsp;
+<a href="#tooHeavyForActorMsg">tooHeavyForActorMsg</a>&nbsp;
+<a href="#tooLargeForActorMsg">tooLargeForActorMsg</a>&nbsp;
+<a href="#tooLargeForContainerMsg">tooLargeForContainerMsg</a>&nbsp;
+<a href="#tooLargeForRearMsg">tooLargeForRearMsg</a>&nbsp;
+<a href="#tooLargeForUndersideMsg">tooLargeForUndersideMsg</a>&nbsp;
+<a href="#totalTooHeavyForMsg">totalTooHeavyForMsg</a>&nbsp;
+<a href="#undersideTooFullMsg">undersideTooFullMsg</a>&nbsp;
+<a href="#unthingNotHereMsg">unthingNotHereMsg</a>&nbsp;
+<a href="#vehicleCannotDoFromMsg">vehicleCannotDoFromMsg</a>&nbsp;
+<a href="#willNotCatchMsg">willNotCatchMsg</a>&nbsp;
+<a href="#willNotLetGoMsg">willNotLetGoMsg</a>&nbsp;
+</code><p>
+<p>Inherited from <code>MessageHelper</code> :<br>
+<code>
+<a href="../object/MessageHelper.html#askDisambigList">askDisambigList</a>&nbsp;
+<a href="../object/MessageHelper.html#shortTIMsg">shortTIMsg</a>&nbsp;
+<a href="../object/MessageHelper.html#shortTMsg">shortTMsg</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="alreadyAttachedMsg"></a>
+<table class=decl><tr><td><code>alreadyAttachedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3827">3827</a>]</table><div class=desc>cannot attach because we're already attached to the given object<p>
+</div>
+<a name="alreadyBurningMsg"></a>
+<table class=decl><tr><td><code>alreadyBurningMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3804">3804</a>]</table><div class=desc>object is already burning<p>
+</div>
+<a name="alreadyClosedMsg"></a>
+<table class=decl><tr><td><code>alreadyClosedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3889">3889</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="alreadyHoldingMsg"></a>
+<table class=decl><tr><td><code>alreadyHoldingMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2877">2877</a>]</table><div class=desc>taking something already being held<p>
+</div>
+<a name="alreadyInLocMsg"></a>
+<table class=decl><tr><td><code>alreadyInLocMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3983">3983</a>]</table><div class=desc>actor is already in a location<p>
+</div>
+<a name="alreadyLockedMsg"></a>
+<table class=decl><tr><td><code>alreadyLockedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3892">3892</a>]</table><div class=desc>already locked/unlocked<p>
+</div>
+<a name="alreadyLyingMsg"></a>
+<table class=decl><tr><td><code>alreadyLyingMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3990">3990</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="alreadyLyingOnMsg"></a>
+<table class=decl><tr><td><code>alreadyLyingOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3991">3991</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="alreadyOpenMsg"></a>
+<table class=decl><tr><td><code>alreadyOpenMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3888">3888</a>]</table><div class=desc>already open/closed<p>
+</div>
+<a name="alreadyPulledMsg"></a>
+<table class=decl><tr><td><code>alreadyPulledMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3663">3663</a>]</table><div class=desc>lever is already in pulled state<p>
+</div>
+<a name="alreadyPushedMsg"></a>
+<table class=decl><tr><td><code>alreadyPushedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3652">3652</a>]</table><div class=desc>lever is already in pushed state<p>
+</div>
+<a name="alreadyPutBehindMsg"></a>
+<table class=decl><tr><td><code>alreadyPutBehindMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2904">2904</a>]</table><div class=desc>we can't put the dobj behind the iobj because it's already there<p>
+</div>
+<a name="alreadyPutInMsg"></a>
+<table class=decl><tr><td><code>alreadyPutInMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2895">2895</a>]</table><div class=desc>we can't put the dobj in the iobj because it's already there<p>
+</div>
+<a name="alreadyPutOnMsg"></a>
+<table class=decl><tr><td><code>alreadyPutOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2898">2898</a>]</table><div class=desc>we can't put the dobj on the iobj because it's already there<p>
+</div>
+<a name="alreadyPutUnderMsg"></a>
+<table class=decl><tr><td><code>alreadyPutUnderMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2901">2901</a>]</table><div class=desc>we can't put the dobj under the iobj because it's already there<p>
+</div>
+<a name="alreadySittingMsg"></a>
+<table class=decl><tr><td><code>alreadySittingMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3988">3988</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="alreadySittingOnMsg"></a>
+<table class=decl><tr><td><code>alreadySittingOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3989">3989</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="alreadyStandingMsg"></a>
+<table class=decl><tr><td><code>alreadyStandingMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3986">3986</a>]</table><div class=desc>actor is already standing/sitting on/lying on<p>
+</div>
+<a name="alreadyStandingOnMsg"></a>
+<table class=decl><tr><td><code>alreadyStandingOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3987">3987</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="alreadySwitchedOffMsg"></a>
+<table class=decl><tr><td><code>alreadySwitchedOffMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3725">3725</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="alreadySwitchedOnMsg"></a>
+<table class=decl><tr><td><code>alreadySwitchedOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3724">3724</a>]</table><div class=desc>switch is already on/off<p>
+</div>
+<a name="alreadyUnlockedMsg"></a>
+<table class=decl><tr><td><code>alreadyUnlockedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3893">3893</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="alreadyWearingMsg"></a>
+<table class=decl><tr><td><code>alreadyWearingMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2846">2846</a>]</table><div class=desc>already wearing item<p>
+</div>
+<a name="askVagueMsg"></a>
+<table class=decl><tr><td><code>askVagueMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3581">3581</a>]</table><div class=desc>vague ASK/TELL (for ASK/TELL &lt;actor&gt; &lt;topic&gt; syntax errors)<p>
+</div>
+<a name="candleNotLitMsg"></a>
+<table class=decl><tr><td><code>candleNotLitMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3764">3764</a>]</table><div class=desc>extinguishing a candle that isn't lit<p>
+</div>
+<a name="candleOutOfFuelMsg"></a>
+<table class=decl><tr><td><code>candleOutOfFuelMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3757">3757</a>]</table><div class=desc>trying to light a candle with no fuel<p>
+</div>
+<a name="cannotAskSelfForMsg"></a>
+<table class=decl><tr><td><code>cannotAskSelfForMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3547">3547</a>]</table><div class=desc>can't ask yourself for anything<p>
+</div>
+<a name="cannotAskSelfMsg"></a>
+<table class=decl><tr><td><code>cannotAskSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3543">3543</a>]</table><div class=desc>can't ask yourself about anything<p>
+</div>
+<a name="cannotAttachKeyToMsg"></a>
+<table class=decl><tr><td><code>cannotAttachKeyToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3955">3955</a>]</table><div class=desc>cannot attach key (dobj) to (iobj)<p>
+</div>
+<a name="cannotAttachMsg"></a>
+<table class=decl><tr><td><code>cannotAttachMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3817">3817</a>]</table><div class=desc>cannot attach object to object<p>
+</div>
+<a name="cannotAttachToMsg"></a>
+<table class=decl><tr><td><code>cannotAttachToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3819">3819</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotAttachToSelfMsg"></a>
+<table class=decl><tr><td><code>cannotAttachToSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3823">3823</a>]</table><div class=desc>cannot attach to self<p>
+</div>
+<a name="cannotBoardMsg"></a>
+<table class=decl><tr><td><code>cannotBoardMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3967">3967</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotBurnDobjWithMsg"></a>
+<table class=decl><tr><td><code>cannotBurnDobjWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3800">3800</a>]</table><div class=desc>cannot burn this specific direct object with this specific iobj<p>
+</div>
+<a name="cannotBurnMsg"></a>
+<table class=decl><tr><td><code>cannotBurnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3795">3795</a>]</table><div class=desc>cannot burn<p>
+</div>
+<a name="cannotBurnWithMsg"></a>
+<table class=decl><tr><td><code>cannotBurnWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3796">3796</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotCleanMsg"></a>
+<table class=decl><tr><td><code>cannotCleanMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3948">3948</a>]</table><div class=desc>cannot clean object<p>
+</div>
+<a name="cannotCleanWithMsg"></a>
+<table class=decl><tr><td><code>cannotCleanWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3951">3951</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotClimbMsg"></a>
+<table class=decl><tr><td><code>cannotClimbMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3879">3879</a>]</table><div class=desc>cannot climb object<p>
+</div>
+<a name="cannotCloseMsg"></a>
+<table class=decl><tr><td><code>cannotCloseMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3884">3884</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotConsultMsg"></a>
+<table class=decl><tr><td><code>cannotConsultMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3770">3770</a>]</table><div class=desc>cannot consult object<p>
+</div>
+<a name="cannotCutWithMsg"></a>
+<table class=decl><tr><td><code>cannotCutWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3876">3876</a>]</table><div class=desc>can't use iobj to cut anything<p>
+</div>
+<a name="cannotDetachFromMsg"></a>
+<table class=decl><tr><td><code>cannotDetachFromMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3857">3857</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotDetachMsg"></a>
+<table class=decl><tr><td><code>cannotDetachMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3856">3856</a>]</table><div class=desc>cannot detach object from object<p>
+</div>
+<a name="cannotDetachPermanentMsg"></a>
+<table class=decl><tr><td><code>cannotDetachPermanentMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3861">3861</a>]</table><div class=desc>no obvious way to detach a permanent attachment<p>
+</div>
+<a name="cannotDigMsg"></a>
+<table class=decl><tr><td><code>cannotDigMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2870">2870</a>]</table><div class=desc>cannot dig here<p>
+</div>
+<a name="cannotDigWithMsg"></a>
+<table class=decl><tr><td><code>cannotDigWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2873">2873</a>]</table><div class=desc>not a digging implement<p>
+</div>
+<a name="cannotDoFromHereMsg"></a>
+<table class=decl><tr><td><code>cannotDoFromHereMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3364">3364</a>]</table><div class=desc>cannot carry out a command from this location<p>
+</div>
+<a name="cannotDoThatMsg"></a>
+<table class=decl><tr><td><code>cannotDoThatMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2567">2567</a>]</table><div class=desc>   generic "can't do that" message - this is used when verification   fails because an object doesn't define the action ("doXxx")   method for the verb <p>
+</div>
+<a name="cannotDrinkMsg"></a>
+<table class=decl><tr><td><code>cannotDrinkMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3944">3944</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotEatMsg"></a>
+<table class=decl><tr><td><code>cannotEatMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3943">3943</a>]</table><div class=desc>not edible/drinkable<p>
+</div>
+<a name="cannotEnterHeldMsg"></a>
+<table class=decl><tr><td><code>cannotEnterHeldMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3976">3976</a>]</table><div class=desc>cannot sit/lie/stand on something being held<p>
+</div>
+<a name="cannotEnterMsg"></a>
+<table class=decl><tr><td><code>cannotEnterMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4043">4043</a>]</table><div class=desc>cannot enter/go through<p>
+</div>
+<a name="cannotEnterOnMsg"></a>
+<table class=decl><tr><td><code>cannotEnterOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3777">3777</a>]</table><div class=desc>cannot enter anything on object<p>
+</div>
+<a name="cannotExtinguishMsg"></a>
+<table class=decl><tr><td><code>cannotExtinguishMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3807">3807</a>]</table><div class=desc>cannot extinguish<p>
+</div>
+<a name="cannotFastenMsg"></a>
+<table class=decl><tr><td><code>cannotFastenMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4019">4019</a>]</table><div class=desc>cannot fasten/unfasten<p>
+</div>
+<a name="cannotFastenToMsg"></a>
+<table class=decl><tr><td><code>cannotFastenToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4020">4020</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotFindTopicMsg"></a>
+<table class=decl><tr><td><code>cannotFindTopicMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3511">3511</a>]</table><div class=desc>failed to find a topic in a consultable object<p>
+</div>
+<a name="cannotFlipMsg"></a>
+<table class=decl><tr><td><code>cannotFlipMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3783">3783</a>]</table><div class=desc>cannot flip object<p>
+</div>
+<a name="cannotFollowSelfMsg"></a>
+<table class=decl><tr><td><code>cannotFollowSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3604">3604</a>]</table><div class=desc>cannot follow yourself<p>
+</div>
+<a name="cannotGetOffOfMsg"></a>
+<table class=decl><tr><td><code>cannotGetOffOfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3969">3969</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotGetOutMsg"></a>
+<table class=decl><tr><td><code>cannotGetOutMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3980">3980</a>]</table><div class=desc>cannot get out (of current location)<p>
+</div>
+<a name="cannotGiveToItselfMsg"></a>
+<table class=decl><tr><td><code>cannotGiveToItselfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3559">3559</a>]</table><div class=desc>can't give something to itself<p>
+</div>
+<a name="cannotGiveToMsg"></a>
+<table class=decl><tr><td><code>cannotGiveToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3571">3571</a>]</table><div class=desc>can't give/show something to a non-actor<p>
+</div>
+<a name="cannotGiveToSelfMsg"></a>
+<table class=decl><tr><td><code>cannotGiveToSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3555">3555</a>]</table><div class=desc>can't give yourself something<p>
+</div>
+<a name="cannotGoBackMsg"></a>
+<table class=decl><tr><td><code>cannotGoBackMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3360">3360</a>]</table><div class=desc>we don't know the way back for a GO BACK<p>
+</div>
+<a name="cannotGoThatWayInDarkMsg"></a>
+<table class=decl><tr><td><code>cannotGoThatWayInDarkMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3356">3356</a>]</table><div class=desc>travel attempted in the dark in a direction with no exit<p>
+</div>
+<a name="cannotGoThatWayMsg"></a>
+<table class=decl><tr><td><code>cannotGoThatWayMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3353">3353</a>]</table><div class=desc>travel attempted in a direction with no exit<p>
+</div>
+<a name="cannotGoThroughMsg"></a>
+<table class=decl><tr><td><code>cannotGoThroughMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4045">4045</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotJumpOffHereMsg"></a>
+<table class=decl><tr><td><code>cannotJumpOffHereMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3507">3507</a>]</table><div class=desc>cannot jump off (with no direct object) from here<p>
+</div>
+<a name="cannotJumpOffMsg"></a>
+<table class=decl><tr><td><code>cannotJumpOffMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3504">3504</a>]</table><div class=desc>cannot jump off object<p>
+</div>
+<a name="cannotJumpOverMsg"></a>
+<table class=decl><tr><td><code>cannotJumpOverMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3501">3501</a>]</table><div class=desc>cannot jump over object<p>
+</div>
+<a name="cannotKissMsg"></a>
+<table class=decl><tr><td><code>cannotKissMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4134">4134</a>]</table><div class=desc>cannot kiss something<p>
+</div>
+<a name="cannotKissSelfMsg"></a>
+<table class=decl><tr><td><code>cannotKissSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4141">4141</a>]</table><div class=desc>cannot kiss yourself<p>
+</div>
+<a name="cannotLieOnMsg"></a>
+<table class=decl><tr><td><code>cannotLieOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3964">3964</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotLightMsg"></a>
+<table class=decl><tr><td><code>cannotLightMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3792">3792</a>]</table><div class=desc>cannot light<p>
+</div>
+<a name="cannotLockMsg"></a>
+<table class=decl><tr><td><code>cannotLockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3899">3899</a>]</table><div class=desc>object is not lockable/unlockable<p>
+</div>
+<a name="cannotLockWithMsg"></a>
+<table class=decl><tr><td><code>cannotLockWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3912">3912</a>]</table><div class=desc>object is not a key<p>
+</div>
+<a name="cannotLookBehindMsg"></a>
+<table class=decl><tr><td><code>cannotLookBehindMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2804">2804</a>]</table><div class=desc>this is an object we can't look behind/through<p>
+</div>
+<a name="cannotLookInClosedMsg"></a>
+<table class=decl><tr><td><code>cannotLookInClosedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3896">3896</a>]</table><div class=desc>cannot look in container because it's closed<p>
+</div>
+<a name="cannotLookThroughMsg"></a>
+<table class=decl><tr><td><code>cannotLookThroughMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2806">2806</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotLookUnderMsg"></a>
+<table class=decl><tr><td><code>cannotLookUnderMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2805">2805</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotMoveActorMsg"></a>
+<table class=decl><tr><td><code>cannotMoveActorMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3006">3006</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotMoveFixtureMsg"></a>
+<table class=decl><tr><td><code>cannotMoveFixtureMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2910">2910</a>]</table><div class=desc>   trying to move a Fixture to a new container by some means (take,   drop, put in, put on, etc) <p>
+</div>
+<a name="cannotMoveHeavyMsg"></a>
+<table class=decl><tr><td><code>cannotMoveHeavyMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2925">2925</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotMoveImmovableMsg"></a>
+<table class=decl><tr><td><code>cannotMoveImmovableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2920">2920</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotMovePersonMsg"></a>
+<table class=decl><tr><td><code>cannotMovePersonMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3013">3013</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotMovePushableMsg"></a>
+<table class=decl><tr><td><code>cannotMovePushableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2951">2951</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotMoveWithMsg"></a>
+<table class=decl><tr><td><code>cannotMoveWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3692">3692</a>]</table><div class=desc>cannot use object as an implement to move something<p>
+</div>
+<a name="cannotOpenLockedMsg"></a>
+<table class=decl><tr><td><code>cannotOpenLockedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3905">3905</a>]</table><div class=desc>attempting to open a locked object<p>
+</div>
+<a name="cannotOpenMsg"></a>
+<table class=decl><tr><td><code>cannotOpenMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3883">3883</a>]</table><div class=desc>object is not openable/closable<p>
+</div>
+<a name="cannotPlugInMsg"></a>
+<table class=decl><tr><td><code>cannotPlugInMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4027">4027</a>]</table><div class=desc>cannot plug/unplug<p>
+</div>
+<a name="cannotPlugInToMsg"></a>
+<table class=decl><tr><td><code>cannotPlugInToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4028">4028</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPourIntoMsg"></a>
+<table class=decl><tr><td><code>cannotPourIntoMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3811">3811</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPourMsg"></a>
+<table class=decl><tr><td><code>cannotPourMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3810">3810</a>]</table><div class=desc>cannot pour/pour in/pour on<p>
+</div>
+<a name="cannotPourOntoMsg"></a>
+<table class=decl><tr><td><code>cannotPourOntoMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3813">3813</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPushTravelMsg"></a>
+<table class=decl><tr><td><code>cannotPushTravelMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3682">3682</a>]</table><div class=desc>cannot push an object through travel<p>
+</div>
+<a name="cannotPutActorMsg"></a>
+<table class=decl><tr><td><code>cannotPutActorMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3007">3007</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutBehindMsg"></a>
+<table class=decl><tr><td><code>cannotPutBehindMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3223">3223</a>]</table><div class=desc>nothing can be put behind the given object<p>
+</div>
+<a name="cannotPutBehindRestrictedMsg"></a>
+<table class=decl><tr><td><code>cannotPutBehindRestrictedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3247">3247</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutBehindSelfMsg"></a>
+<table class=decl><tr><td><code>cannotPutBehindSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3237">3237</a>]</table><div class=desc>trying to put something behind itself<p>
+</div>
+<a name="cannotPutFixtureMsg"></a>
+<table class=decl><tr><td><code>cannotPutFixtureMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2916">2916</a>]</table><div class=desc>trying to put a Fixture in something<p>
+</div>
+<a name="cannotPutHeavyMsg"></a>
+<table class=decl><tr><td><code>cannotPutHeavyMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2926">2926</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutImmovableMsg"></a>
+<table class=decl><tr><td><code>cannotPutImmovableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2921">2921</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutInDispenserMsg"></a>
+<table class=decl><tr><td><code>cannotPutInDispenserMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3255">3255</a>]</table><div class=desc>wrong item type for dispenser<p>
+</div>
+<a name="cannotPutInRestrictedMsg"></a>
+<table class=decl><tr><td><code>cannotPutInRestrictedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3241">3241</a>]</table><div class=desc>can't put something in/on/etc a restricted container/surface/etc<p>
+</div>
+<a name="cannotPutInSelfMsg"></a>
+<table class=decl><tr><td><code>cannotPutInSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3227">3227</a>]</table><div class=desc>trying to put something in itself<p>
+</div>
+<a name="cannotPutOnRestrictedMsg"></a>
+<table class=decl><tr><td><code>cannotPutOnRestrictedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3243">3243</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutOnSelfMsg"></a>
+<table class=decl><tr><td><code>cannotPutOnSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3230">3230</a>]</table><div class=desc>trying to put something on itself<p>
+</div>
+<a name="cannotPutPersonMsg"></a>
+<table class=decl><tr><td><code>cannotPutPersonMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3015">3015</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutPushableMsg"></a>
+<table class=decl><tr><td><code>cannotPutPushableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2955">2955</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutUnderMsg"></a>
+<table class=decl><tr><td><code>cannotPutUnderMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3219">3219</a>]</table><div class=desc>can't put anything under iobj<p>
+</div>
+<a name="cannotPutUnderRestrictedMsg"></a>
+<table class=decl><tr><td><code>cannotPutUnderRestrictedMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3245">3245</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotPutUnderSelfMsg"></a>
+<table class=decl><tr><td><code>cannotPutUnderSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3233">3233</a>]</table><div class=desc>trying to put something under itself<p>
+</div>
+<a name="cannotRemoveHeldMsg"></a>
+<table class=decl><tr><td><code>cannotRemoveHeldMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2963">2963</a>]</table><div class=desc>can't REMOVE something that's being held<p>
+</div>
+<a name="cannotReturnToDispenserMsg"></a>
+<table class=decl><tr><td><code>cannotReturnToDispenserMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3251">3251</a>]</table><div class=desc>trying to return something to a remove-only dispenser<p>
+</div>
+<a name="cannotScrewMsg"></a>
+<table class=decl><tr><td><code>cannotScrewMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4035">4035</a>]</table><div class=desc>cannot screw/unscrew<p>
+</div>
+<a name="cannotScrewWithMsg"></a>
+<table class=decl><tr><td><code>cannotScrewWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4036">4036</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotSetToMsg"></a>
+<table class=decl><tr><td><code>cannotSetToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3696">3696</a>]</table><div class=desc>cannot set object to setting<p>
+</div>
+<a name="cannotShowToItselfMsg"></a>
+<table class=decl><tr><td><code>cannotShowToItselfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3567">3567</a>]</table><div class=desc>can't show something to itself<p>
+</div>
+<a name="cannotShowToMsg"></a>
+<table class=decl><tr><td><code>cannotShowToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3572">3572</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotShowToSelfMsg"></a>
+<table class=decl><tr><td><code>cannotShowToSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3563">3563</a>]</table><div class=desc>can't show yourself something<p>
+</div>
+<a name="cannotSitOnMsg"></a>
+<table class=decl><tr><td><code>cannotSitOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3962">3962</a>]</table><div class=desc>cannot sit/lie/stand/get on/get out of<p>
+</div>
+<a name="cannotSleepMsg"></a>
+<table class=decl><tr><td><code>cannotSleepMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3959">3959</a>]</table><div class=desc>actor cannot sleep<p>
+</div>
+<a name="cannotStandOnMsg"></a>
+<table class=decl><tr><td><code>cannotStandOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3966">3966</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotStandOnPathMsg"></a>
+<table class=decl><tr><td><code>cannotStandOnPathMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3972">3972</a>]</table><div class=desc>standing on a PathPassage<p>
+</div>
+<a name="cannotSwitchMsg"></a>
+<table class=decl><tr><td><code>cannotSwitchMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3780">3780</a>]</table><div class=desc>cannot switch object<p>
+</div>
+<a name="cannotTakeActorMsg"></a>
+<table class=decl><tr><td><code>cannotTakeActorMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3005">3005</a>]</table><div class=desc>try to take/move/put/taste an untakeable actor<p>
+</div>
+<a name="cannotTakeFixtureMsg"></a>
+<table class=decl><tr><td><code>cannotTakeFixtureMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2913">2913</a>]</table><div class=desc>trying to take a Fixture<p>
+</div>
+<a name="cannotTakeHeavyMsg"></a>
+<table class=decl><tr><td><code>cannotTakeHeavyMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2924">2924</a>]</table><div class=desc>trying to take/move/put a Heavy object<p>
+</div>
+<a name="cannotTakeImmovableMsg"></a>
+<table class=decl><tr><td><code>cannotTakeImmovableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2919">2919</a>]</table><div class=desc>trying to take/move/put an Immovable object<p>
+</div>
+<a name="cannotTakeLocationMsg"></a>
+<table class=decl><tr><td><code>cannotTakeLocationMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2959">2959</a>]</table><div class=desc>can't take something while occupying it<p>
+</div>
+<a name="cannotTakePersonMsg"></a>
+<table class=decl><tr><td><code>cannotTakePersonMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3011">3011</a>]</table><div class=desc>trying to take/move/put/taste a person<p>
+</div>
+<a name="cannotTakePushableMsg"></a>
+<table class=decl><tr><td><code>cannotTakePushableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2949">2949</a>]</table><div class=desc>specialized Immovable messages for TravelPushables<p>
+</div>
+<a name="cannotTalkToSelfMsg"></a>
+<table class=decl><tr><td><code>cannotTalkToSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3539">3539</a>]</table><div class=desc>can't talk to yourself<p>
+</div>
+<a name="cannotTasteActorMsg"></a>
+<table class=decl><tr><td><code>cannotTasteActorMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3008">3008</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotTastePersonMsg"></a>
+<table class=decl><tr><td><code>cannotTastePersonMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3017">3017</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotTellSelfMsg"></a>
+<table class=decl><tr><td><code>cannotTellSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3551">3551</a>]</table><div class=desc>can't tell yourself about anything<p>
+</div>
+<a name="cannotThrowAtContentsMsg"></a>
+<table class=decl><tr><td><code>cannotThrowAtContentsMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4053">4053</a>]</table><div class=desc>can't throw something at an object inside itself<p>
+</div>
+<a name="cannotThrowAtSelfMsg"></a>
+<table class=decl><tr><td><code>cannotThrowAtSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4049">4049</a>]</table><div class=desc>can't throw something at itself<p>
+</div>
+<a name="cannotThrowToMsg"></a>
+<table class=decl><tr><td><code>cannotThrowToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4123">4123</a>]</table><div class=desc>we're not a suitable target for THROW TO (because we're not an NPC)<p>
+</div>
+<a name="cannotTurnMsg"></a>
+<table class=decl><tr><td><code>cannotTurnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3706">3706</a>]</table><div class=desc>cannot turn object<p>
+</div>
+<a name="cannotTurnOffMsg"></a>
+<table class=decl><tr><td><code>cannotTurnOffMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3788">3788</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotTurnOnMsg"></a>
+<table class=decl><tr><td><code>cannotTurnOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3786">3786</a>]</table><div class=desc>cannot turn object on/off<p>
+</div>
+<a name="cannotTurnWithMsg"></a>
+<table class=decl><tr><td><code>cannotTurnWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3713">3713</a>]</table><div class=desc>cannot turn anything with object<p>
+</div>
+<a name="cannotTypeOnMsg"></a>
+<table class=decl><tr><td><code>cannotTypeOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3774">3774</a>]</table><div class=desc>cannot type anything on object<p>
+</div>
+<a name="cannotUnboardMsg"></a>
+<table class=decl><tr><td><code>cannotUnboardMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3968">3968</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotUnfastenFromMsg"></a>
+<table class=decl><tr><td><code>cannotUnfastenFromMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4023">4023</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotUnfastenMsg"></a>
+<table class=decl><tr><td><code>cannotUnfastenMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4022">4022</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotUnlockMsg"></a>
+<table class=decl><tr><td><code>cannotUnlockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3901">3901</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotUnlockWithMsg"></a>
+<table class=decl><tr><td><code>cannotUnlockWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3914">3914</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotUnplugFromMsg"></a>
+<table class=decl><tr><td><code>cannotUnplugFromMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4031">4031</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotUnplugMsg"></a>
+<table class=decl><tr><td><code>cannotUnplugMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4030">4030</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotUnscrewMsg"></a>
+<table class=decl><tr><td><code>cannotUnscrewMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4038">4038</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotUnscrewWithMsg"></a>
+<table class=decl><tr><td><code>cannotUnscrewWithMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4039">4039</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cutNoEffectMsg"></a>
+<table class=decl><tr><td><code>cutNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3873">3873</a>]</table><div class=desc>cannot cut that<p>
+</div>
+<a name="dontThrowDirMsg"></a>
+<table class=decl><tr><td><code>dontThrowDirMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4068">4068</a>]</table><div class=desc>THROW &lt;obj&gt; &lt;direction&gt; isn't supported; use THROW AT instead<p>
+</div>
+<a name="droppingSelfMsg"></a>
+<table class=decl><tr><td><code>droppingSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2886">2886</a>]</table><div class=desc>actor dropping self<p>
+</div>
+<a name="flashlightOnButDarkMsg"></a>
+<table class=decl><tr><td><code>flashlightOnButDarkMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3732">3732</a>]</table><div class=desc>flashlight is on but doesn't light up<p>
+</div>
+<a name="followAlreadyHereInDarkMsg"></a>
+<table class=decl><tr><td><code>followAlreadyHereInDarkMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3615">3615</a>]</table><div class=desc>   following an object that we *think* is in our same location (in   other words, we're already in the location where we thought we   last saw the object go), but it's too dark to see if that's   really true <p>
+</div>
+<a name="followAlreadyHereMsg"></a>
+<table class=decl><tr><td><code>followAlreadyHereMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3607">3607</a>]</table><div class=desc>following an object that's in the same location as the actor<p>
+</div>
+<a name="followUnknownMsg"></a>
+<table class=decl><tr><td><code>followUnknownMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3619">3619</a>]</table><div class=desc>trying to follow an object, but don't know where it went from here<p>
+</div>
+<a name="giveAlreadyHasMsg"></a>
+<table class=decl><tr><td><code>giveAlreadyHasMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3536">3536</a>]</table><div class=desc>trying to give something to someone who already has the object<p>
+</div>
+<a name="keyDoesNotFitLockMsg"></a>
+<table class=decl><tr><td><code>keyDoesNotFitLockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3924">3924</a>]</table><div class=desc>the key (iobj) does not fit the lock (dobj)<p>
+</div>
+<a name="keyNotDetachableMsg"></a>
+<table class=decl><tr><td><code>keyNotDetachableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3266">3266</a>]</table><div class=desc>can't detach key (with no iobj specified) because it's not on a ring<p>
+</div>
+<a name="keyNotOnKeyringMsg"></a>
+<table class=decl><tr><td><code>keyNotOnKeyringMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3263">3263</a>]</table><div class=desc>the dobj isn't on the keyring<p>
+</div>
+<a name="matchNotLitMsg"></a>
+<table class=decl><tr><td><code>matchNotLitMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3746">3746</a>]</table><div class=desc>match not lit<p>
+</div>
+<a name="moveNoEffectMsg"></a>
+<table class=decl><tr><td><code>moveNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3676">3676</a>]</table><div class=desc>moving object has no effect<p>
+</div>
+<a name="moveToNoEffectMsg"></a>
+<table class=decl><tr><td><code>moveToNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3679">3679</a>]</table><div class=desc>cannot move object to other object<p>
+</div>
+<a name="mustBeStandingMsg"></a>
+<table class=decl><tr><td><code>mustBeStandingMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2667">2667</a>]</table><div class=desc>actor must be standing before doing that<p>
+</div>
+<a name="mustSpecifyTurnToMsg"></a>
+<table class=decl><tr><td><code>mustSpecifyTurnToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3709">3709</a>]</table><div class=desc>must specify setting to turn object to<p>
+</div>
+<a name="newlyDarkMsg"></a>
+<table class=decl><tr><td><code>newlyDarkMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4144">4144</a>]</table><div class=desc>it is now dark at actor's location<p>
+</div>
+<a name="noKeyNeededMsg"></a>
+<table class=decl><tr><td><code>noKeyNeededMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2664">2664</a>]</table><div class=desc>no key is needed to lock or unlock this object<p>
+</div>
+<a name="noRoomToLieMsg"></a>
+<table class=decl><tr><td><code>noRoomToLieMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4001">4001</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noRoomToSitMsg"></a>
+<table class=decl><tr><td><code>noRoomToSitMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3999">3999</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noRoomToStandMsg"></a>
+<table class=decl><tr><td><code>noRoomToStandMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3997">3997</a>]</table><div class=desc>no room to stand/sit/lie on dobj<p>
+</div>
+<a name="notAContainerMsg"></a>
+<table class=decl><tr><td><code>notAContainerMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3212">3212</a>]</table><div class=desc>trying to put an object in a non-container<p>
+</div>
+<a name="notASurfaceMsg"></a>
+<table class=decl><tr><td><code>notASurfaceMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3215">3215</a>]</table><div class=desc>trying to put an object on a non-surface<p>
+</div>
+<a name="notAttachedToMsg"></a>
+<table class=decl><tr><td><code>notAttachedToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3865">3865</a>]</table><div class=desc>dobj isn't attached to iobj<p>
+</div>
+<a name="notAWeaponMsg"></a>
+<table class=decl><tr><td><code>notAWeaponMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3640">3640</a>]</table><div class=desc>obj is not a weapon<p>
+</div>
+<a name="notCarryingMsg"></a>
+<table class=decl><tr><td><code>notCarryingMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2883">2883</a>]</table><div class=desc>dropping an object not being carried<p>
+</div>
+<a name="notDoffableMsg"></a>
+<table class=decl><tr><td><code>notDoffableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2842">2842</a>]</table><div class=desc>doffing something that isn't wearable<p>
+</div>
+<a name="notFollowableMsg"></a>
+<table class=decl><tr><td><code>notFollowableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3601">3601</a>]</table><div class=desc>not a followable object<p>
+</div>
+<a name="nothingBehindMsg"></a>
+<table class=decl><tr><td><code>nothingBehindMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2798">2798</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nothingBeyondDoorMsg"></a>
+<table class=decl><tr><td><code>nothingBeyondDoorMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2813">2813</a>]</table><div class=desc>there's nothing on the other side of a door we just opened<p>
+</div>
+<a name="nothingInsideMsg"></a>
+<table class=decl><tr><td><code>nothingInsideMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2794">2794</a>]</table><div class=desc>generic messages for looking prepositionally<p>
+</div>
+<a name="nothingThroughMsg"></a>
+<table class=decl><tr><td><code>nothingThroughMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2800">2800</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nothingThroughPassageMsg"></a>
+<table class=decl><tr><td><code>nothingThroughPassageMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2809">2809</a>]</table><div class=desc>looking through an open passage<p>
+</div>
+<a name="nothingToHearMsg"></a>
+<table class=decl><tr><td><code>nothingToHearMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2821">2821</a>]</table><div class=desc>there's nothing here with a specific noise<p>
+</div>
+<a name="nothingToSmellMsg"></a>
+<table class=decl><tr><td><code>nothingToSmellMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2817">2817</a>]</table><div class=desc>there's nothing here with a specific odor<p>
+</div>
+<a name="nothingUnderMsg"></a>
+<table class=decl><tr><td><code>nothingUnderMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2796">2796</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="notOnPlatformMsg"></a>
+<table class=decl><tr><td><code>notOnPlatformMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3994">3994</a>]</table><div class=desc>getting off something you're not on<p>
+</div>
+<a name="notWearableMsg"></a>
+<table class=decl><tr><td><code>notWearableMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2838">2838</a>]</table><div class=desc>an item is not wearable<p>
+</div>
+<a name="notWearingMsg"></a>
+<table class=decl><tr><td><code>notWearingMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2849">2849</a>]</table><div class=desc>not wearing (item being doffed)<p>
+</div>
+<a name="objNotForKeyringMsg"></a>
+<table class=decl><tr><td><code>objNotForKeyringMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3259">3259</a>]</table><div class=desc>the dobj doesn't fit on this keyring<p>
+</div>
+<a name="okayAttachToMsg"></a>
+<table class=decl><tr><td><code>okayAttachToMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3850">3850</a>]</table><div class=desc>default message for successful Attachable attachment<p>
+</div>
+<a name="okayBurnCandleMsg"></a>
+<table class=decl><tr><td><code>okayBurnCandleMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3761">3761</a>]</table><div class=desc>lighting a candle<p>
+</div>
+<a name="okayBurnMatchMsg"></a>
+<table class=decl><tr><td><code>okayBurnMatchMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3749">3749</a>]</table><div class=desc>lighting a match<p>
+</div>
+<a name="okayCloseMsg"></a>
+<table class=decl><tr><td><code>okayCloseMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2860">2860</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="okayDetachFromMsg"></a>
+<table class=decl><tr><td><code>okayDetachFromMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3853">3853</a>]</table><div class=desc>default message for successful Attachable detachment<p>
+</div>
+<a name="okayDoffMsg"></a>
+<table class=decl><tr><td><code>okayDoffMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2855">2855</a>]</table><div class=desc>default response to 'doff obj'<p>
+</div>
+<a name="okayDropMsg"></a>
+<table class=decl><tr><td><code>okayDropMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2971">2971</a>]</table><div class=desc>default 'drop' response<p>
+</div>
+<a name="okayEatMsg"></a>
+<table class=decl><tr><td><code>okayEatMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3736">3736</a>]</table><div class=desc>default acknowledgment for eating something<p>
+</div>
+<a name="okayExtinguishCandleMsg"></a>
+<table class=decl><tr><td><code>okayExtinguishCandleMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3767">3767</a>]</table><div class=desc>extinguishing a candle<p>
+</div>
+<a name="okayExtinguishMatchMsg"></a>
+<table class=decl><tr><td><code>okayExtinguishMatchMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3753">3753</a>]</table><div class=desc>extinguishing a match<p>
+</div>
+<a name="okayJumpMsg"></a>
+<table class=decl><tr><td><code>okayJumpMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3497">3497</a>]</table><div class=desc>"jump"<p>
+</div>
+<a name="okayLockMsg"></a>
+<table class=decl><tr><td><code>okayLockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2864">2864</a>]</table><div class=desc>default response to lock/unlock<p>
+</div>
+<a name="okayNotStandingOnMsg"></a>
+<table class=decl><tr><td><code>okayNotStandingOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4016">4016</a>]</table><div class=desc>default report for getting off of a platform<p>
+</div>
+<a name="okayOpenMsg"></a>
+<table class=decl><tr><td><code>okayOpenMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2858">2858</a>]</table><div class=desc>default response to open/close<p>
+</div>
+<a name="okayPullLeverMsg"></a>
+<table class=decl><tr><td><code>okayPullLeverMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3667">3667</a>]</table><div class=desc>default acknowledgment to pulling a lever<p>
+</div>
+<a name="okayPullSpringLeverMsg"></a>
+<table class=decl><tr><td><code>okayPullSpringLeverMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3671">3671</a>]</table><div class=desc>default acknowledgment to pulling a spring-loaded lever<p>
+</div>
+<a name="okayPushButtonMsg"></a>
+<table class=decl><tr><td><code>okayPushButtonMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3649">3649</a>]</table><div class=desc>default 'push button' acknowledgment<p>
+</div>
+<a name="okayPushLeverMsg"></a>
+<table class=decl><tr><td><code>okayPushLeverMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3656">3656</a>]</table><div class=desc>default acknowledgment to pushing a lever<p>
+</div>
+<a name="okayPutBehindMsg"></a>
+<table class=decl><tr><td><code>okayPutBehindMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3001">3001</a>]</table><div class=desc>default successful 'put behind' response<p>
+</div>
+<a name="okayPutInMsg"></a>
+<table class=decl><tr><td><code>okayPutInMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2989">2989</a>]</table><div class=desc>default successful 'put in' response<p>
+</div>
+<a name="okayPutOnMsg"></a>
+<table class=decl><tr><td><code>okayPutOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2993">2993</a>]</table><div class=desc>default successful 'put on' response<p>
+</div>
+<a name="okayPutUnderMsg"></a>
+<table class=decl><tr><td><code>okayPutUnderMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2997">2997</a>]</table><div class=desc>default successful 'put under' response<p>
+</div>
+<a name="okayTakeMsg"></a>
+<table class=decl><tr><td><code>okayTakeMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2967">2967</a>]</table><div class=desc>default 'take' response<p>
+</div>
+<a name="okayTurnOffMsg"></a>
+<table class=decl><tr><td><code>okayTurnOffMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3729">3729</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="okayTurnOnMsg"></a>
+<table class=decl><tr><td><code>okayTurnOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3728">3728</a>]</table><div class=desc>default acknowledgment for switching on/off<p>
+</div>
+<a name="okayUnlockMsg"></a>
+<table class=decl><tr><td><code>okayUnlockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2866">2866</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="okayWearMsg"></a>
+<table class=decl><tr><td><code>okayWearMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2852">2852</a>]</table><div class=desc>default response to 'wear obj'<p>
+</div>
+<a name="okayYellMsg"></a>
+<table class=decl><tr><td><code>okayYellMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3494">3494</a>]</table><div class=desc>"yell"<p>
+</div>
+<a name="pullNoEffectMsg"></a>
+<table class=decl><tr><td><code>pullNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3660">3660</a>]</table><div class=desc>pulling object has no effect<p>
+</div>
+<a name="pushNoEffectMsg"></a>
+<table class=decl><tr><td><code>pushNoEffectMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3646">3646</a>]</table><div class=desc>pushing object has no effect<p>
+</div>
+<a name="puttingSelfMsg"></a>
+<table class=decl><tr><td><code>puttingSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2889">2889</a>]</table><div class=desc>actor putting self in something<p>
+</div>
+<a name="sayGoodbyeMsg"></a>
+<table class=decl><tr><td><code>sayGoodbyeMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3479">3479</a>]</table><div class=desc>"goodbye" with no target actor<p>
+</div>
+<a name="sayHelloMsg"></a>
+<table class=decl><tr><td><code>sayHelloMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3476">3476</a>]</table><div class=desc>"hello" with no target actor<p>
+</div>
+<a name="sayNoMsg"></a>
+<table class=decl><tr><td><code>sayNoMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3483">3483</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayYesMsg"></a>
+<table class=decl><tr><td><code>sayYesMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3482">3482</a>]</table><div class=desc>"yes"/"no" with no target actor<p>
+</div>
+<a name="setToInvalidMsg"></a>
+<table class=decl><tr><td><code>setToInvalidMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3699">3699</a>]</table><div class=desc>invalid setting for generic Settable<p>
+</div>
+<a name="shouldNotBreakMsg"></a>
+<table class=decl><tr><td><code>shouldNotBreakMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3869">3869</a>]</table><div class=desc>breaking object would serve no purpose<p>
+</div>
+<a name="shouldNotThrowAtFloorMsg"></a>
+<table class=decl><tr><td><code>shouldNotThrowAtFloorMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4064">4064</a>]</table><div class=desc>shouldn't throw something at the floor<p>
+</div>
+<a name="stairwayNotDownMsg"></a>
+<table class=decl><tr><td><code>stairwayNotDownMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3470">3470</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="stairwayNotUpMsg"></a>
+<table class=decl><tr><td><code>stairwayNotUpMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3469">3469</a>]</table><div class=desc>the stairway does not go up/down<p>
+</div>
+<a name="takeFromNotBehindMsg"></a>
+<table class=decl><tr><td><code>takeFromNotBehindMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3335">3335</a>]</table><div class=desc>taking dobj from behind something, but dobj isn't behind iobj<p>
+</div>
+<a name="takeFromNotInActorMsg"></a>
+<table class=decl><tr><td><code>takeFromNotInActorMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3339">3339</a>]</table><div class=desc>taking dobj from an actor, but actor doesn't have iobj<p>
+</div>
+<a name="takeFromNotInMsg"></a>
+<table class=decl><tr><td><code>takeFromNotInMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3325">3325</a>]</table><div class=desc>taking dobj from iobj, but dobj isn't in iobj<p>
+</div>
+<a name="takeFromNotOnMsg"></a>
+<table class=decl><tr><td><code>takeFromNotOnMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3328">3328</a>]</table><div class=desc>taking dobj from surface, but dobj isn't on iobj<p>
+</div>
+<a name="takeFromNotUnderMsg"></a>
+<table class=decl><tr><td><code>takeFromNotUnderMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3331">3331</a>]</table><div class=desc>taking dobj from under something, but dobj isn't under iobj<p>
+</div>
+<a name="takingSelfMsg"></a>
+<table class=decl><tr><td><code>takingSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2880">2880</a>]</table><div class=desc>actor taking self ("take me")<p>
+</div>
+<a name="tellVagueMsg"></a>
+<table class=decl><tr><td><code>tellVagueMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3583">3583</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="throwingSelfMsg"></a>
+<table class=decl><tr><td><code>throwingSelfMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2892">2892</a>]</table><div class=desc>actor throwing self<p>
+</div>
+<a name="timePassesMsg"></a>
+<table class=decl><tr><td><code>timePassesMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3473">3473</a>]</table><div class=desc>"wait"<p>
+</div>
+<a name="tooDarkMsg"></a>
+<table class=decl><tr><td><code>tooDarkMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2577">2577</a>]</table><div class=desc>it's too dark to do that<p>
+</div>
+<a name="turnToInvalidMsg"></a>
+<table class=decl><tr><td><code>turnToInvalidMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3717">3717</a>]</table><div class=desc>invalid setting for dial<p>
+</div>
+<a name="unknownHowToLockMsg"></a>
+<table class=decl><tr><td><code>unknownHowToLockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3918">3918</a>]</table><div class=desc>we don't know how to lock/unlock this<p>
+</div>
+<a name="unknownHowToUnlockMsg"></a>
+<table class=decl><tr><td><code>unknownHowToUnlockMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3920">3920</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="unlockRequiresKeyMsg"></a>
+<table class=decl><tr><td><code>unlockRequiresKeyMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3908">3908</a>]</table><div class=desc>object requires a key to unlock<p>
+</div>
+<a name="uselessToAttackMsg"></a>
+<table class=decl><tr><td><code>uselessToAttackMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3643">3643</a>]</table><div class=desc>no effect attacking obj<p>
+</div>
+<a name="whereToGoMsg"></a>
+<table class=decl><tr><td><code>whereToGoMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3350">3350</a>]</table><div class=desc>must say which way to go<p>
+</div>
+<a name="wrongAttachmentMsg"></a>
+<table class=decl><tr><td><code>wrongAttachmentMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3834">3834</a>]</table><div class=desc>   dobj and/or iobj can be attached to certain things, but not to   each other <p>
+</div>
+<a name="wrongDetachmentMsg"></a>
+<table class=decl><tr><td><code>wrongDetachmentMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3838">3838</a>]</table><div class=desc>dobj and iobj are attached, but they can't be taken apart<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="actorCannotSeeMsg"></a>
+<table class=decl><tr><td><code>actorCannotSeeMsg (actor, obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3594">3594</a>]</table><div class=desc>actor cannot see object being shown to actor<p>
+</div>
+<a name="becomingTooLargeForActorMsg"></a>
+<table class=decl><tr><td><code>becomingTooLargeForActorMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3107">3107</a>]</table><div class=desc>the object is becoming too large for the actor to hold<p>
+</div>
+<a name="becomingTooLargeForContainerMsg"></a>
+<table class=decl><tr><td><code>becomingTooLargeForContainerMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3193">3193</a>]</table><div class=desc>the current action would make obj too large for its container<p>
+</div>
+<a name="cannotBeWearingMsg"></a>
+<table class=decl><tr><td><code>cannotBeWearingMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2624">2624</a>]</table><div class=desc>must remove an article of clothing before a command<p>
+</div>
+<a name="cannotDoFromMsg"></a>
+<table class=decl><tr><td><code>cannotDoFromMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3411">3411</a>]</table><div class=desc>cannot carry out a command from a nested room<p>
+</div>
+<a name="cannotEnterExitOnlyMsg"></a>
+<table class=decl><tr><td><code>cannotEnterExitOnlyMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3447">3447</a>]</table><div class=desc>cannot enter an exit-only passage<p>
+</div>
+<a name="cannotFitIntoOpeningMsg"></a>
+<table class=decl><tr><td><code>cannotFitIntoOpeningMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3045">3045</a>]</table><div class=desc>cannot fit obj into cont through cont's opening<p>
+</div>
+<a name="cannotFitOutOfOpeningMsg"></a>
+<table class=decl><tr><td><code>cannotFitOutOfOpeningMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3053">3053</a>]</table><div class=desc>cannot fit obj out of cont through cont's opening<p>
+</div>
+<a name="cannotFollowFromHereMsg"></a>
+<table class=decl><tr><td><code>cannotFollowFromHereMsg (srcLoc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3626">3626</a>]</table><div class=desc>   we're trying to follow an actor, but we last saw the actor in the   given other location, so we have to go there to follow <p>
+</div>
+<a name="cannotGoThatWayInVehicleMsg"></a>
+<table class=decl><tr><td><code>cannotGoThatWayInVehicleMsg (traveler)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3426">3426</a>]</table><div class=desc>cannot go that way in a vehicle<p>
+</div>
+<a name="cannotGoThroughClosedDoorMsg"></a>
+<table class=decl><tr><td><code>cannotGoThroughClosedDoorMsg (door)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3367">3367</a>]</table><div class=desc>can't travel through a close door<p>
+</div>
+<a name="cannotHearMsg"></a>
+<table class=decl><tr><td><code>cannotHearMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2603">2603</a>]</table><div class=desc>cannot hear object<p>
+</div>
+<a name="cannotMoveComponentMsg"></a>
+<table class=decl><tr><td><code>cannotMoveComponentMsg (loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2929">2929</a>]</table><div class=desc>trying to move a component object<p>
+</div>
+<a name="cannotMoveThroughClosedMsg"></a>
+<table class=decl><tr><td><code>cannotMoveThroughClosedMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3037">3037</a>]</table><div class=desc>cannot move obj because cont is closed<p>
+</div>
+<a name="cannotMoveThroughContainerMsg"></a>
+<table class=decl><tr><td><code>cannotMoveThroughContainerMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3029">3029</a>]</table><div class=desc>cannot move obj in our out of container cont<p>
+</div>
+<a name="cannotMoveThroughMsg"></a>
+<table class=decl><tr><td><code>cannotMoveThroughMsg (obj, obs)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3021">3021</a>]</table><div class=desc>cannot move obj through obstructor<p>
+</div>
+<a name="cannotPushObjectNestedMsg"></a>
+<table class=decl><tr><td><code>cannotPushObjectNestedMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3440">3440</a>]</table><div class=desc>cannot push an object to a nested room<p>
+</div>
+<a name="cannotPushObjectThatWayMsg"></a>
+<table class=decl><tr><td><code>cannotPushObjectThatWayMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3433">3433</a>]</table><div class=desc>cannot push an object that way<p>
+</div>
+<a name="cannotPutComponentMsg"></a>
+<table class=decl><tr><td><code>cannotPutComponentMsg (loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2942">2942</a>]</table><div class=desc>trying to put a component in something<p>
+</div>
+<a name="cannotReachIntoOpeningMsg"></a>
+<table class=decl><tr><td><code>cannotReachIntoOpeningMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3077">3077</a>]</table><div class=desc>actor cannot fit hand into cont through cont's opening<p>
+</div>
+<a name="cannotReachObjectMsg"></a>
+<table class=decl><tr><td><code>cannotReachObjectMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2755">2755</a>]</table><div class=desc>   cannot reach (i.e., touch) an object that is to be manipulated in   a command - this is a generic message used when we cannot   identify the specific reason that the object is in scope but   cannot be touched <p>
+</div>
+<a name="cannotReachOutOfOpeningMsg"></a>
+<table class=decl><tr><td><code>cannotReachOutOfOpeningMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3085">3085</a>]</table><div class=desc>actor cannot fit hand into cont through cont's opening<p>
+</div>
+<a name="cannotReachThroughMsg"></a>
+<table class=decl><tr><td><code>cannotReachThroughMsg (obj, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2762">2762</a>]</table><div class=desc>cannot reach an object through an obstructor<p>
+</div>
+<a name="cannotSmellMsg"></a>
+<table class=decl><tr><td><code>cannotSmellMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2610">2610</a>]</table><div class=desc>cannot smell object<p>
+</div>
+<a name="cannotTakeComponentMsg"></a>
+<table class=decl><tr><td><code>cannotTakeComponentMsg (loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2935">2935</a>]</table><div class=desc>trying to take a component object<p>
+</div>
+<a name="cannotTasteMsg"></a>
+<table class=decl><tr><td><code>cannotTasteMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2617">2617</a>]</table><div class=desc>cannot taste object<p>
+</div>
+<a name="cannotThrowThroughMsg"></a>
+<table class=decl><tr><td><code>cannotThrowThroughMsg (target, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4057">4057</a>]</table><div class=desc>can't throw through a sense connector<p>
+</div>
+<a name="cannotTouchThroughClosedMsg"></a>
+<table class=decl><tr><td><code>cannotTouchThroughClosedMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3069">3069</a>]</table><div class=desc>actor 'obj' cannot reach through cont because cont is closed<p>
+</div>
+<a name="cannotTouchThroughContainerMsg"></a>
+<table class=decl><tr><td><code>cannotTouchThroughContainerMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3061">3061</a>]</table><div class=desc>actor 'obj' cannot reach in our out of container 'cont'<p>
+</div>
+<a name="circularlyBehindMsg"></a>
+<table class=decl><tr><td><code>circularlyBehindMsg (x, y)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3317">3317</a>]</table><div class=desc>putting y in x when x is already behind y<p>
+</div>
+<a name="circularlyInMsg"></a>
+<table class=decl><tr><td><code>circularlyInMsg (x, y)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3293">3293</a>]</table><div class=desc>putting y in x when x is already in y<p>
+</div>
+<a name="circularlyOnMsg"></a>
+<table class=decl><tr><td><code>circularlyOnMsg (x, y)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3301">3301</a>]</table><div class=desc>putting y in x when x is already on y<p>
+</div>
+<a name="circularlyUnderMsg"></a>
+<table class=decl><tr><td><code>circularlyUnderMsg (x, y)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3309">3309</a>]</table><div class=desc>putting y in x when x is already under y<p>
+</div>
+<a name="containerBecomingTooFullMsg"></a>
+<table class=decl><tr><td><code>containerBecomingTooFullMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3204">3204</a>]</table><div class=desc>   the current action would increase obj's bulk so that container is   too full <p>
+</div>
+<a name="containerTooFullMsg"></a>
+<table class=decl><tr><td><code>containerTooFullMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3162">3162</a>]</table><div class=desc>container doesn't have room for object<p>
+</div>
+<a name="decorationNotImportantMsg"></a>
+<table class=decl><tr><td><code>decorationNotImportantMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2708">2708</a>]</table><div class=desc>generic "that's not important" message for decorations<p>
+</div>
+<a name="doorClosesBehindMsg"></a>
+<table class=decl><tr><td><code>doorClosesBehindMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3461">3461</a>]</table><div class=desc>door closes behind actor during travel through door<p>
+</div>
+<a name="droppingObjMsg"></a>
+<table class=decl><tr><td><code>droppingObjMsg (dropobj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2975">2975</a>]</table><div class=desc>dropping an object<p>
+</div>
+<a name="floorlessDropMsg"></a>
+<table class=decl><tr><td><code>floorlessDropMsg (dropobj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2982">2982</a>]</table><div class=desc>default receiveDrop suffix for floorless rooms<p>
+</div>
+<a name="foundKeyOnKeyringMsg"></a>
+<table class=decl><tr><td><code>foundKeyOnKeyringMsg (ring, key)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3927">3927</a>]</table><div class=desc>found key on keyring<p>
+</div>
+<a name="foundNoKeyOnKeyringMsg"></a>
+<table class=decl><tr><td><code>foundNoKeyOnKeyringMsg (ring)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3935">3935</a>]</table><div class=desc>failed to find a key on keyring<p>
+</div>
+<a name="handsBecomingTooFullForMsg"></a>
+<table class=decl><tr><td><code>handsBecomingTooFullForMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3115">3115</a>]</table><div class=desc>the object is becoming large enough that the actor's hands are full<p>
+</div>
+<a name="handsTooFullForMsg"></a>
+<table class=decl><tr><td><code>handsTooFullForMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3100">3100</a>]</table><div class=desc>the actor doesn't have room to hold the object<p>
+</div>
+<a name="heardButNotSeenMsg"></a>
+<table class=decl><tr><td><code>heardButNotSeenMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2587">2587</a>]</table><div class=desc>object can be heard but not seen<p>
+</div>
+<a name="invalidStagingContainerActorMsg"></a>
+<table class=decl><tr><td><code>invalidStagingContainerActorMsg (cont, dest)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3383">3383</a>]</table><div class=desc>cannot carry out travel while 'cont' (an actor) is holding 'dest'<p>
+</div>
+<a name="invalidStagingContainerMsg"></a>
+<table class=decl><tr><td><code>invalidStagingContainerMsg (cont, dest)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3375">3375</a>]</table><div class=desc>cannot carry out travel while 'dest' is within 'cont'<p>
+</div>
+<a name="invalidStagingLocationMsg"></a>
+<table class=decl><tr><td><code>invalidStagingLocationMsg (dest)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3391">3391</a>]</table><div class=desc>can't carry out travel because 'dest' isn't a valid staging location<p>
+</div>
+<a name="lookInVaporousMsg"></a>
+<table class=decl><tr><td><code>lookInVaporousMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2743">2743</a>]</table><div class=desc>look in/look under/look through/look behind/search vaporous<p>
+</div>
+<a name="movedKeysToKeyringMsg"></a>
+<table class=decl><tr><td><code>movedKeysToKeyringMsg (keyring, keys)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3284">3284</a>]</table><div class=desc>we moved several keys to a keyring automatically<p>
+</div>
+<a name="movedKeyToKeyringMsg"></a>
+<table class=decl><tr><td><code>movedKeyToKeyringMsg (keyring)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3277">3277</a>]</table><div class=desc>we attached a key to a keyring automatically<p>
+</div>
+<a name="mustBeBurningMsg"></a>
+<table class=decl><tr><td><code>mustBeBurningMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3739">3739</a>]</table><div class=desc>object must be burning before doing that<p>
+</div>
+<a name="mustBeCarryingMsg"></a>
+<table class=decl><tr><td><code>mustBeCarryingMsg (obj, actor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2700">2700</a>]</table><div class=desc>actor must be holding the object before we can do that<p>
+</div>
+<a name="mustBeClosedMsg"></a>
+<table class=decl><tr><td><code>mustBeClosedMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2648">2648</a>]</table><div class=desc>object must be closed before doing that<p>
+</div>
+<a name="mustBeEmptyMsg"></a>
+<table class=decl><tr><td><code>mustBeEmptyMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2632">2632</a>]</table><div class=desc>all contents must be removed from object before doing that<p>
+</div>
+<a name="mustBeHoldingMsg"></a>
+<table class=decl><tr><td><code>mustBeHoldingMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2570">2570</a>]</table><div class=desc>must be holding something before a command<p>
+</div>
+<a name="mustBeInMsg"></a>
+<table class=decl><tr><td><code>mustBeInMsg (obj, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2692">2692</a>]</table><div class=desc>object must be in loc before doing that<p>
+</div>
+<a name="mustBeOpenMsg"></a>
+<table class=decl><tr><td><code>mustBeOpenMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2640">2640</a>]</table><div class=desc>object must be opened before doing that<p>
+</div>
+<a name="mustBeUnlockedMsg"></a>
+<table class=decl><tr><td><code>mustBeUnlockedMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2656">2656</a>]</table><div class=desc>object must be unlocked before doing that<p>
+</div>
+<a name="mustBeVisibleMsg"></a>
+<table class=decl><tr><td><code>mustBeVisibleMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2580">2580</a>]</table><div class=desc>object must be visible<p>
+</div>
+<a name="mustDetachMsg"></a>
+<table class=decl><tr><td><code>mustDetachMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3842">3842</a>]</table><div class=desc>must detach the object before proceeding<p>
+</div>
+<a name="mustGetOnMsg"></a>
+<table class=decl><tr><td><code>mustGetOnMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2685">2685</a>]</table><div class=desc>must get on/in object<p>
+</div>
+<a name="mustLieOnMsg"></a>
+<table class=decl><tr><td><code>mustLieOnMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2678">2678</a>]</table><div class=desc>must be lying on/in object<p>
+</div>
+<a name="mustOpenDoorMsg"></a>
+<table class=decl><tr><td><code>mustOpenDoorMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3454">3454</a>]</table><div class=desc>must open door before going that way<p>
+</div>
+<a name="mustSitOnMsg"></a>
+<table class=decl><tr><td><code>mustSitOnMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2671">2671</a>]</table><div class=desc>must be sitting on/in chair<p>
+</div>
+<a name="nestedRoomTooHighMsg"></a>
+<table class=decl><tr><td><code>nestedRoomTooHighMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3398">3398</a>]</table><div class=desc>destination is too high to enter from here<p>
+</div>
+<a name="nestedRoomTooHighToExitMsg"></a>
+<table class=decl><tr><td><code>nestedRoomTooHighToExitMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3405">3405</a>]</table><div class=desc>enclosing room is too high to reach by GETTING OUT OF here<p>
+</div>
+<a name="noiseSourceMsg"></a>
+<table class=decl><tr><td><code>noiseSourceMsg (src)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2824">2824</a>]</table><div class=desc>a sound appears to be coming from a source<p>
+</div>
+<a name="noResponseFromMsg"></a>
+<table class=decl><tr><td><code>noResponseFromMsg (other)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3529">3529</a>]</table><div class=desc>actor won't respond to a request or other communicative gesture<p>
+</div>
+<a name="notAddressableMsg"></a>
+<table class=decl><tr><td><code>notAddressableMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3522">3522</a>]</table><div class=desc>cannot talk to an object (because it makes no sense to do so)<p>
+</div>
+<a name="notInterestedMsg"></a>
+<table class=decl><tr><td><code>notInterestedMsg (actor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3575">3575</a>]</table><div class=desc>actor isn't interested in something being given/shown<p>
+</div>
+<a name="notWithIntangibleMsg"></a>
+<table class=decl><tr><td><code>notWithIntangibleMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2729">2729</a>]</table><div class=desc>generic "no can do" message for intangibles<p>
+</div>
+<a name="notWithVaporousMsg"></a>
+<table class=decl><tr><td><code>notWithVaporousMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2736">2736</a>]</table><div class=desc>generic failure message for varporous objects<p>
+</div>
+<a name="npcDescMsg"></a>
+<table class=decl><tr><td><code>npcDescMsg (npc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2786">2786</a>]</table><div class=desc>default description of a non-player character<p>
+</div>
+<a name="objCannotHearActorMsg"></a>
+<table class=decl><tr><td><code>objCannotHearActorMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3587">3587</a>]</table><div class=desc>object cannot hear actor<p>
+</div>
+<a name="odorSourceMsg"></a>
+<table class=decl><tr><td><code>odorSourceMsg (src)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2831">2831</a>]</table><div class=desc>an odor appears to be coming from a source<p>
+</div>
+<a name="okayFollowInSightMsg"></a>
+<table class=decl><tr><td><code>okayFollowInSightMsg (loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3633">3633</a>]</table><div class=desc>acknowledge a 'follow' for a target that was in sight<p>
+</div>
+<a name="okayPostureChangeMsg"></a>
+<table class=decl><tr><td><code>okayPostureChangeMsg (posture)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4005">4005</a>]</table><div class=desc>default report for standing up/sitting down/lying down<p>
+</div>
+<a name="okayPushTravelMsg"></a>
+<table class=decl><tr><td><code>okayPushTravelMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3685">3685</a>]</table><div class=desc>acknowledge pushing an object through travel<p>
+</div>
+<a name="okaySetToMsg"></a>
+<table class=decl><tr><td><code>okaySetToMsg (val)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3702">3702</a>]</table><div class=desc>default 'set to' acknowledgment<p>
+</div>
+<a name="okayTurnToMsg"></a>
+<table class=decl><tr><td><code>okayTurnToMsg (val)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3720">3720</a>]</table><div class=desc>default 'turn to' acknowledgment<p>
+</div>
+<a name="rearTooFullMsg"></a>
+<table class=decl><tr><td><code>rearTooFullMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3185">3185</a>]</table><div class=desc>rear surface/space doesn't have room for object<p>
+</div>
+<a name="refuseCommand"></a>
+<table class=decl><tr><td><code>refuseCommand (targetActor, issuingActor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3515">3515</a>]</table><div class=desc>an actor doesn't accept a command from another actor<p>
+</div>
+<a name="roomOkayPostureChangeMsg"></a>
+<table class=decl><tr><td><code>roomOkayPostureChangeMsg (posture, obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4009">4009</a>]</table><div class=desc>default report for standing/sitting/lying in/on something<p>
+</div>
+<a name="smelledButNotSeenMsg"></a>
+<table class=decl><tr><td><code>smelledButNotSeenMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2595">2595</a>]</table><div class=desc>object can be smelled but not seen<p>
+</div>
+<a name="surfaceTooFullMsg"></a>
+<table class=decl><tr><td><code>surfaceTooFullMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3169">3169</a>]</table><div class=desc>surface doesn't have room for object<p>
+</div>
+<a name="takenAndMovedToKeyringMsg"></a>
+<table class=decl><tr><td><code>takenAndMovedToKeyringMsg (keyring)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3269">3269</a>]</table><div class=desc>we took a key and attached it to a keyring<p>
+</div>
+<a name="thingDescMsg"></a>
+<table class=decl><tr><td><code>thingDescMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2770">2770</a>]</table><div class=desc>generic long description of a Thing<p>
+</div>
+<a name="thingSmellDescMsg"></a>
+<table class=decl><tr><td><code>thingSmellDescMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2782">2782</a>]</table><div class=desc>generic "smell" description of a Thing<p>
+</div>
+<a name="thingSoundDescMsg"></a>
+<table class=decl><tr><td><code>thingSoundDescMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2778">2778</a>]</table><div class=desc>generic LISTEN TO description of a Thing<p>
+</div>
+<a name="throwCatchMsg"></a>
+<table class=decl><tr><td><code>throwCatchMsg (obj, target)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4115">4115</a>]</table><div class=desc>target catches object<p>
+</div>
+<a name="throwFallMsg"></a>
+<table class=decl><tr><td><code>throwFallMsg (projectile, target)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4083">4083</a>]</table><div class=desc>thrown object lands on target<p>
+</div>
+<a name="throwFallShortMsg"></a>
+<table class=decl><tr><td><code>throwFallShortMsg (projectile, target, dest)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4107">4107</a>]</table><div class=desc>thrown object falls short of distant target<p>
+</div>
+<a name="throwHitFallMsg"></a>
+<table class=decl><tr><td><code>throwHitFallMsg (projectile, target, dest)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4090">4090</a>]</table><div class=desc>thrown object bounces off target and falls to destination<p>
+</div>
+<a name="throwHitMsg"></a>
+<table class=decl><tr><td><code>throwHitMsg (projectile, target)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4075">4075</a>]</table><div class=desc>thrown object bounces off target (short report)<p>
+</div>
+<a name="throwShortMsg"></a>
+<table class=decl><tr><td><code>throwShortMsg (projectile, target)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4099">4099</a>]</table><div class=desc>thrown object falls short of distant target (sentence prefix only)<p>
+</div>
+<a name="tooDistantMsg"></a>
+<table class=decl><tr><td><code>tooDistantMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2722">2722</a>]</table><div class=desc>generic "that's too far away" message for Distant items<p>
+</div>
+<a name="tooHeavyForActorMsg"></a>
+<table class=decl><tr><td><code>tooHeavyForActorMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3123">3123</a>]</table><div class=desc>the object is too heavy (all by itself) for the actor to hold<p>
+</div>
+<a name="tooLargeForActorMsg"></a>
+<table class=decl><tr><td><code>tooLargeForActorMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3093">3093</a>]</table><div class=desc>the object is too large for the actor to hold<p>
+</div>
+<a name="tooLargeForContainerMsg"></a>
+<table class=decl><tr><td><code>tooLargeForContainerMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3141">3141</a>]</table><div class=desc>object is too large for container<p>
+</div>
+<a name="tooLargeForRearMsg"></a>
+<table class=decl><tr><td><code>tooLargeForRearMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3155">3155</a>]</table><div class=desc>object is too large to fit behind object<p>
+</div>
+<a name="tooLargeForUndersideMsg"></a>
+<table class=decl><tr><td><code>tooLargeForUndersideMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3148">3148</a>]</table><div class=desc>object is too large to fit under object<p>
+</div>
+<a name="totalTooHeavyForMsg"></a>
+<table class=decl><tr><td><code>totalTooHeavyForMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3133">3133</a>]</table><div class=desc>   the object is too heavy (in combination with everything else   being carried) for the actor to pick up <p>
+</div>
+<a name="undersideTooFullMsg"></a>
+<table class=decl><tr><td><code>undersideTooFullMsg (obj, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3177">3177</a>]</table><div class=desc>underside doesn't have room for object<p>
+</div>
+<a name="unthingNotHereMsg"></a>
+<table class=decl><tr><td><code>unthingNotHereMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#2715">2715</a>]</table><div class=desc>generic "you don't see that" message for "unthings"<p>
+</div>
+<a name="vehicleCannotDoFromMsg"></a>
+<table class=decl><tr><td><code>vehicleCannotDoFromMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3418">3418</a>]</table><div class=desc>cannot carry out a command from within a vehicle in a nested room<p>
+</div>
+<a name="willNotCatchMsg"></a>
+<table class=decl><tr><td><code>willNotCatchMsg (catcher)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#4126">4126</a>]</table><div class=desc>target does not want to catch anything<p>
+</div>
+<a name="willNotLetGoMsg"></a>
+<table class=decl><tr><td><code>willNotLetGoMsg (holder, obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#3343">3343</a>]</table><div class=desc>actor won't let go of a possession<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

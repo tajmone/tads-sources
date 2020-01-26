@@ -1,0 +1,76 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>cannotGoThatWay</title><meta name="keywords" content="cannotGoThatWay,dir,direction,cannotGoThatWayMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>cannotGoThatWay
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="roomparts.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="cannotgothatwayindark.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">BasicLocation.cannotGoThatWay is called whenever an actor (usually the PC) attempts travel in a direction that is not currently available (except in the dark, when <a href="cannotgothatwayindark.htm">cannotGoThatWayInDark</a> is used instead). By default this simply displays a message saying you can't go that way, and listing the exits that are available from the current location. There may be occasions, however, when you'd like a different message displayed.
+<br>
+
+<br>
+Consider our shipboard locations, the Decks and Cabins. Just as a shipboard direction such as PORT or AFT is that meaningful on dry land, we may feel that compass directions such as NORTH or SW are not that relevant to moving around a ship. We could therefore override the cannotGoThatWay method of Deck to display a more appropriate message when travel in a compass direction is attempted:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;Deck&nbsp;:&nbsp;ShipboardRoom,&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;roomParts&nbsp;=&nbsp;[defaultDeck,&nbsp;caveSky]
+<br>
+&nbsp;&nbsp;<b>cannotGoThatWay()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gAction.parentAction.dirMatch.dir.ofKind(CompassDirection))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Compass&nbsp;directions&nbsp;aren't&nbsp;that&nbsp;useful&nbsp;for&nbsp;getting&nbsp;about&nbsp;ship;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try&nbsp;fore,&nbsp;aft,&nbsp;port&nbsp;and&nbsp;starboard&nbsp;instead.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The complicated part here is getting at what kind of direction the player typed, but the above seems to work. The easy part is extending this behaviour to the Cabin class; simply make Cabin inherit from Deck instead of from ShipboardRoom and Room. Since Deck inherits from ShipboardRoom and OutdoorRoom, the only difference between Room and OutdoorRoom is the list of roomParts, and Cabin overwrites roomParts anyway, this change is perfectly safe.
+<br>
+
+<br>
+More generally, if you want to provide custom "Can't go that way" in a number of different locations, you may just need to provide a cannotGoThatWayMsg:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">squareCave&nbsp;:&nbsp;DarkRoom&nbsp;'Square&nbsp;Cave'&nbsp;'the&nbsp;square&nbsp;cave'
+<br>
+&nbsp;&nbsp;&nbsp;"This&nbsp;capacious&nbsp;cave&nbsp;is&nbsp;unnaturally&nbsp;square,&nbsp;suggesting&nbsp;that&nbsp;it&nbsp;has&nbsp;been
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;artificially&nbsp;hewn&nbsp;out&nbsp;of&nbsp;the&nbsp;rock,&nbsp;an&nbsp;impression&nbsp;further&nbsp;enhanced&nbsp;by
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;carefully-constructed&nbsp;ashlar&nbsp;archway&nbsp;to&nbsp;the&nbsp;west.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;mainCave
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;asExit(west)
+<br>
+&nbsp;&nbsp;&nbsp;<b>cannotGoThatWayMsg&nbsp;=&nbsp;'You&nbsp;can\'t&nbsp;go&nbsp;through&nbsp;solid&nbsp;rock!&nbsp;'
+<br>
+</b>;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Where the property is not overridden, however, the default "You can't go that way" message will be displayed as before.</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

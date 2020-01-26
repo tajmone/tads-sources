@@ -1,0 +1,150 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TopicResolver</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TopicResolver</span><span class=type>class</span><td align=right><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6332">6332</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Topic Resolver
+<p>
+<code>class
+<b>TopicResolver</b> :  &nbsp; <a href="../object/Resolver.html">Resolver</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TopicResolver</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Resolver.html">Resolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TopicResolver</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvTopicResolver.html">ConvTopicResolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TActionTopicResolver.html">TActionTopicResolver</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#isGlobalScope">isGlobalScope</a>&nbsp;
+<a href="#qualifierResolver_">qualifierResolver_</a>&nbsp;
+<a href="#topicProd">topicProd</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#action_">action_</a>&nbsp;
+<a href="../object/Resolver.html#actor_">actor_</a>&nbsp;
+<a href="../object/Resolver.html#equivs_">equivs_</a>&nbsp;
+<a href="../object/Resolver.html#isSubResolver">isSubResolver</a>&nbsp;
+<a href="../object/Resolver.html#issuer_">issuer_</a>&nbsp;
+<a href="../object/Resolver.html#scope_">scope_</a>&nbsp;
+<a href="../object/Resolver.html#whichMessageObject">whichMessageObject</a>&nbsp;
+<a href="../object/Resolver.html#whichObject">whichObject</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#filterAmbiguousNounPhrase">filterAmbiguousNounPhrase</a>&nbsp;
+<a href="#filterPluralPhrase">filterPluralPhrase</a>&nbsp;
+<a href="#filterPossRank">filterPossRank</a>&nbsp;
+<a href="#getAll">getAll</a>&nbsp;
+<a href="#getAllDefaults">getAllDefaults</a>&nbsp;
+<a href="#getDefaultObject">getDefaultObject</a>&nbsp;
+<a href="#getPossessiveResolver">getPossessiveResolver</a>&nbsp;
+<a href="#getQualifierResolver">getQualifierResolver</a>&nbsp;
+<a href="#noMatch">noMatch</a>&nbsp;
+<a href="#noMatchPoss">noMatchPoss</a>&nbsp;
+<a href="#noVocabMatch">noVocabMatch</a>&nbsp;
+<a href="#objInPhysicalScope">objInPhysicalScope</a>&nbsp;
+<a href="#objInScope">objInScope</a>&nbsp;
+<a href="#packageTopicList">packageTopicList</a>&nbsp;
+<a href="#resetResolver">resetResolver</a>&nbsp;
+<a href="#resolveTopic">resolveTopic</a>&nbsp;
+<a href="#resolveUnknownNounPhrase">resolveUnknownNounPhrase</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#allowAll">allowAll</a>&nbsp;
+<a href="../object/Resolver.html#cacheScopeList">cacheScopeList</a>&nbsp;
+<a href="../object/Resolver.html#filterAll">filterAll</a>&nbsp;
+<a href="../object/Resolver.html#filterAmbiguousEquivalents">filterAmbiguousEquivalents</a>&nbsp;
+<a href="../object/Resolver.html#getAction">getAction</a>&nbsp;
+<a href="../object/Resolver.html#getPronounDefault">getPronounDefault</a>&nbsp;
+<a href="../object/Resolver.html#getRawPronounAntecedent">getRawPronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#getReflexiveBinding">getReflexiveBinding</a>&nbsp;
+<a href="../object/Resolver.html#getScopeList">getScopeList</a>&nbsp;
+<a href="../object/Resolver.html#getTargetActor">getTargetActor</a>&nbsp;
+<a href="../object/Resolver.html#matchName">matchName</a>&nbsp;
+<a href="../object/Resolver.html#resolvePronounAntecedent">resolvePronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#selectIndefinite">selectIndefinite</a>&nbsp;
+<a href="../object/Resolver.html#withGlobals">withGlobals</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="isGlobalScope"></a>
+<table class=decl><tr><td><code>isGlobalScope</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6405">6405</a>]</table><div class=desc>   our scope is global, because we don't limit the scope to the   physical senses <p>
+</div>
+<a name="qualifierResolver_"></a>
+<table class=decl><tr><td><code>qualifierResolver_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6385">6385</a>]</table><div class=desc>our qualifier resolver<p>
+</div>
+<a name="topicProd"></a>
+<table class=decl><tr><td><code>topicProd</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6531">6531</a>]</table><div class=desc>the production match tree for the topic phrase we're resolving<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (action, issuingActor, targetActor, prod, which, qualifierResolver)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6333">6333</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="filterAmbiguousNounPhrase"></a>
+<table class=decl><tr><td><code>filterAmbiguousNounPhrase (lst, requiredNum, np)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6459">6459</a>]</table><div class=desc>   Filter an ambiguous noun list. <p>   It is almost always undesirable from a user interface perspective   to ask for help disambiguating a topic phrase.  In the first   place, since all topics tend to be in scope all the time, we   might reveal too much about the inner model of the story if we   were to enumerate all of the topic matches to a phrase.  In the   second place, topics are used in conversational contexts, so it   almost never make sense for the parser to ask for clarification -   the other member of the conversation might ask, but not the   parser.  So, we'll always filter the list to the required number,   even if it means we choose arbitrarily. <p>   As a first cut, we prefer objects that are physically in scope to   those not in scope: if the player is standing next to a control   panel and types "ask bob about control panel," it makes little   sense to consider any other control panels in the simulation. <p>   As a second cut, we'll ask the actor to filter the list.  Games   that keep track of the actor's knowledge can use this to filter   according to topics the actor is likely to know about. <p>
+</div>
+<a name="filterPluralPhrase"></a>
+<table class=decl><tr><td><code>filterPluralPhrase (lst, np)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6503">6503</a>]</table><div class=desc>filter a plural<p>
+</div>
+<a name="filterPossRank"></a>
+<table class=decl><tr><td><code>filterPossRank (lst, num)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6431">6431</a>]</table><div class=desc>   Filter an ambiguous noun phrase list using the strength of   possessive qualification, if any.  For a topic phrase, we want to   keep all of the possibilities. <p>
+</div>
+<a name="getAll"></a>
+<table class=decl><tr><td><code>getAll (np)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6527">6527</a>]</table><div class=desc>we don't allow ALL or provide defaults<p>
+</div>
+<a name="getAllDefaults"></a>
+<table class=decl><tr><td><code>getAllDefaults ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6528">6528</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getDefaultObject"></a>
+<table class=decl><tr><td><code>getDefaultObject (np)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6515">6515</a>]</table><div class=desc>get a default object<p>
+</div>
+<a name="getPossessiveResolver"></a>
+<table class=decl><tr><td><code>getPossessiveResolver ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6389">6389</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getQualifierResolver"></a>
+<table class=decl><tr><td><code>getQualifierResolver ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6388">6388</a>]</table><div class=desc>get our qualifier resolver<p>
+</div>
+<a name="noMatch"></a>
+<table class=decl><tr><td><code>noMatch (action, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6523">6523</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchPoss"></a>
+<table class=decl><tr><td><code>noMatchPoss (action, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6524">6524</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noVocabMatch"></a>
+<table class=decl><tr><td><code>noVocabMatch (action, txt)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6522">6522</a>]</table><div class=desc>it's fine not to match a topic phrase<p>
+</div>
+<a name="objInPhysicalScope"></a>
+<table class=decl><tr><td><code>objInPhysicalScope (obj)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6417">6417</a>]</table><div class=desc>   Determine if an object is in physical scope.  We'll accept   anything that's in physical scope, and we'll also accept any topic   object that the actor knows about. <p>   Note that this isn't part of the basic Resolver interface.  It's   instead provided as a service routine for our subclasses, so that   they can easily determine the physical scope of an object if   needed. <p>
+</div>
+<a name="objInScope"></a>
+<table class=decl><tr><td><code>objInScope (obj)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6399">6399</a>]</table><div class=desc>   Determine if the object is in scope.  We consider any vocabulary   match to be in scope for the purposes of a topic phrase, since the   subject matter of topics is mere references to things, not the   things themselves; we can, for example, ASK ABOUT things that   aren't physically present, or even about completely abstract   ideas. <p>
+</div>
+<a name="packageTopicList"></a>
+<table class=decl><tr><td><code>packageTopicList (lst, match)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6365">6365</a>]</table><div class=desc>   package a resolved topic list - if it's not already represented as   a ResolvedTopic object, we'll apply that wrapping <p>
+</div>
+<a name="resetResolver"></a>
+<table class=decl><tr><td><code>resetResolver ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6352">6352</a>]</table><div class=desc>remember the resolver for qualifier phrases<p>
+</div>
+<a name="resolveTopic"></a>
+<table class=decl><tr><td><code>resolveTopic (lst, requiredNum, np)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6478">6478</a>]</table><div class=desc>   Resolve the topic phrase.  This returns a ResolvedTopic object   encapsulating the resolution of the phrase. <p>   This default base class implementation simply creates a resolved   topic list with the whole set of possible matches   undifferentiated.  Subclasses for specialized actions might want   to differentiate the items in the list, based on things like the   actor's knowledge so far or what's in physical scope. <p>
+</div>
+<a name="resolveUnknownNounPhrase"></a>
+<table class=decl><tr><td><code>resolveUnknownNounPhrase (tokList)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6489">6489</a>]</table><div class=desc>   Resolve an unknown phrase.  We allow unknown words to be used in   topics; we simply return a ResolvedTopic that doesn't refer to   any simulation objects at all. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

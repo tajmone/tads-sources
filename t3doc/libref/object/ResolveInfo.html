@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ResolveInfo</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ResolveInfo</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#345">345</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   The resolveNouns() method returns a list of ResolveInfo objects   describing the objects matched to the noun phrase.
+<p>
+<code>class
+<b>ResolveInfo</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ResolveInfo</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/dummyTentativeInfo.html">dummyTentativeInfo</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#flags_">flags_</a>&nbsp;
+<a href="#multiAnnounce">multiAnnounce</a>&nbsp;
+<a href="#np_">np_</a>&nbsp;
+<a href="#obj_">obj_</a>&nbsp;
+<a href="#possRank_">possRank_</a>&nbsp;
+<a href="#pronounType_">pronounType_</a>&nbsp;
+<a href="#quant_">quant_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#isDistEquivInList">isDistEquivInList</a>&nbsp;
+<a href="#isEquivalentInList">isEquivalentInList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="flags_"></a>
+<table class=decl><tr><td><code>flags_</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#393">393</a>]</table><div class=desc>flags describing how we matched the object<p>
+</div>
+<a name="multiAnnounce"></a>
+<table class=decl><tr><td><code>multiAnnounce</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#440">440</a>]</table><div class=desc>   The pre-calculated multi-object announcement text for this object.   When we iterate over the object list in a command with multiple   direct or indirect objects (TAKE THE BOOK, BELL, AND CANDLE), we   calculate the little announcement messages ("book:") for the   objects BEFORE we execute the actual commands.  We then use the   pre-calculated announcements during our iteration.  This ensures   consistency in the basis for choosing the names, which is   important in cases where the names include state-dependent   information for the purposes of distinguishing one object from   another.  The relevant state can change over the course of   executing the command on the objects in the iteration, so if we   calculated the names on the fly we could end up with inconsistent   naming.  The user thinks of the objects in terms of their state at   the start of the command, so the pre-calculation approach is not   only more internally consistent, but is also more consistent with   the user's perspective. <p>
+</div>
+<a name="np_"></a>
+<table class=decl><tr><td><code>np_</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#420">420</a>]</table><div class=desc>the noun phrase we parsed to come up with this object<p>
+</div>
+<a name="obj_"></a>
+<table class=decl><tr><td><code>obj_</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#390">390</a>]</table><div class=desc>the object matched<p>
+</div>
+<a name="possRank_"></a>
+<table class=decl><tr><td><code>possRank_</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#414">414</a>]</table><div class=desc>   The possessive ranking, if applicable.  If this object is   qualified by a possessive phrase ("my books"), we'll set this to   a value indicating how strongly the possession applies to our   object: 2 indicates that the object is explicitly owned by the   object indicated in the possessive phrase, 1 indicates that it's   directly held by the named possessor but not explicitly owned,   and 0 indicates all else.  In cases where there's no posessive   qualifier, this will simply be zero. <p>
+</div>
+<a name="pronounType_"></a>
+<table class=decl><tr><td><code>pronounType_</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#417">417</a>]</table><div class=desc>the pronoun type we matched, if any (as a PronounXxx enum)<p>
+</div>
+<a name="quant_"></a>
+<table class=decl><tr><td><code>quant_</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#402">402</a>]</table><div class=desc>   By default, each ResolveInfo counts as one object, for the   purposes of a quantity specifier (as in "five coins" or "both   hats").  However, in some cases, a single resolved object might   represent a collection of discrete objects and thus count as more   than one for the purposes of the quantifier. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (obj, flags, np, =, nil)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#346">346</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="isDistEquivInList"></a>
+<table class=decl><tr><td><code>isDistEquivInList (lst, dist)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#378">378</a>]</table><div class=desc>   Look for a ResolveInfo item in a list of ResolveInfo items that   is equivalent to us according to a particular Distinguisher. <p>
+</div>
+<a name="isEquivalentInList"></a>
+<table class=decl><tr><td><code>isEquivalentInList (lst)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#363">363</a>]</table><div class=desc>   Look for a ResolveInfo item in a list of ResolveInfo items that   is equivalent to us.  Returns true if we find such an item, nil   if not. <p>   Another ResolveInfo is equivalent to us if it refers to the same   underlying game object that we do, or if it refers to a game   object that is indistinguishable from our underlying game object. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

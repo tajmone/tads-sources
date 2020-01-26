@@ -1,0 +1,49 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>RoomPartItem</title></head><body>
+<table class=ban><tr><td align=left><span class=title>RoomPartItem</span><span class=type>class</span><td align=right><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#5532">5532</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A "room part item" is an object that's specially described as being   part of, or attached to, a RoomPart (a wall, ceiling, floor, or the   like).  This is a mix-in class that can be combined with any ordinary   object class (but usually with something non-portable, such as a   Fixture or Immovable).  The effect of adding RoomPartItem to an   object's superclasses is that a command like EXAMINE EAST WALL (or   whichever room part the object is associated with) will display the   object's specialDesc, but a simple LOOK will not.  This class is   sometimes useful for things like doors, windows, ceiling fans, and   other things attached to the room. <p>   Note that this is a mix-in class, so you should always combine it with   a regular Thing-based class. <p>   When using this class, you should define two properties in the object:   specialNominalRoomPartLocation, which you should set to the RoomPart   (such as a wall) where the object should be described; and   specialDesc, which is the description to show when the room part is   examined.  Alternatively (or in addition), you can define   initNominalRoomPartLocation and initSpecialDesc - these work the same   way, but will only be in effect until the object is moved.
+<p>
+<code>class
+<b>RoomPartItem</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>RoomPartItem</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#useSpecialDescInContents">useSpecialDescInContents</a>&nbsp;
+<a href="#useSpecialDescInRoom">useSpecialDescInRoom</a>&nbsp;
+<a href="#useSpecialDescInRoomPart">useSpecialDescInRoomPart</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="useSpecialDescInContents"></a>
+<table class=decl><tr><td><code>useSpecialDescInContents (cont)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#5566">5566</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="useSpecialDescInRoom"></a>
+<table class=decl><tr><td><code>useSpecialDescInRoom (room)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#5565">5565</a>]</table><div class=desc>   don't use the special description in room descriptions, or in   examining any other container <p>
+</div>
+<a name="useSpecialDescInRoomPart"></a>
+<table class=decl><tr><td><code>useSpecialDescInRoomPart (part)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#5537">5537</a>]</table><div class=desc>   show our special description when examining our associated room   part, as long as we actually define a special description <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

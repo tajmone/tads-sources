@@ -1,0 +1,58 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>BasicEventManager</title></head><body>
+<table class=ban><tr><td align=left><span class=title>BasicEventManager</span><span class=type>class</span><td align=right><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#342">342</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Basic Event Manager.  This is a common base class for the game-time   and real-time event managers.  This class handles the details of   managing the event queue; the subclasses must define the specifics of   event timing.
+<p>
+<code>class
+<b>BasicEventManager</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>BasicEventManager</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/eventManager.html">eventManager</a>&nbsp;
+<a href="../object/realTimeManager.html">realTimeManager</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#events_">events_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#addEvent">addEvent</a>&nbsp;
+<a href="#removeCurrentEvent">removeCurrentEvent</a>&nbsp;
+<a href="#removeEvent">removeEvent</a>&nbsp;
+<a href="#removeMatchingEvents">removeMatchingEvents</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="events_"></a>
+<table class=decl><tr><td><code>// events_</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#418">418</a>]</table><div class=desc>event list - each instance must initialize this to a vector<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="addEvent"></a>
+<table class=decl><tr><td><code>addEvent (event)</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#344">344</a>]</table><div class=desc>add an event<p>
+</div>
+<a name="removeCurrentEvent"></a>
+<table class=decl><tr><td><code>removeCurrentEvent ( )</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#411">411</a>]</table><div class=desc>   Remove the current event - this is provided for convenience so   that an event can cancel itself in the course of its execution. <p>   Note that this has no effect on the current event execution -   this simply prevents the event from receiving additional   notifications in the future. <p>
+</div>
+<a name="removeEvent"></a>
+<table class=decl><tr><td><code>removeEvent (event)</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#351">351</a>]</table><div class=desc>remove an event<p>
+</div>
+<a name="removeMatchingEvents"></a>
+<table class=decl><tr><td><code>removeMatchingEvents (obj, prop)</code><td align=right><code><a href="../file/events.t.html">events.t</a>[<a href="../source/events.t.html#375">375</a>]</table><div class=desc>   Remove events matching the given object and property combination.   We remove all events that match both the object and property   (events matching only the object or only the property are not   affected). <p>   This is provided mostly as a convenience for cases where an event   is known to be uniquely identifiable by its object and property   values; this saves the caller the trouble of keeping track of the   Event object created when the event was first registered. <p>   When a particular object/property combination might be used in   several different events, it's better to keep a reference to the   Event object representing each event, and use removeEvent() to   remove the specific Event object of interest. <p>   Returns true if we find any matching events, nil if not. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

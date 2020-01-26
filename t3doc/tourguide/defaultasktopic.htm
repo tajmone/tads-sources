@@ -1,0 +1,50 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultAskTopic</title><meta name="keywords" content="DefaultAskTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultAskTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaulttopics-overview.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaulttelltopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A DefaultAskTopic responds to any ASK X ABOUT Y command when no specific response (AskTopic or AskTellTopic) has been provided for Y.
+<br>
+
+<br>
+The trick with a DefaultAskTopic is to provide a series of responses that won't jar too much no matter what's asked. That means it's no good having NPCs claiming they don't know the answer to the question, since the player could ask something they plainly do know about (e.g. ASK SARAH ABOUT HER MOTHER). Instead, one must have the NPC ignore the question, refuse to answer (graciously, politely, rudely, indignantly or however else you want the NPC portrayed) or give some completely neutral and uninformative reply (however wrapped up). Thus, for Sarah, we could define a DefaultAskTopic (on the sarah object) thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;DefaultAskTopic,&nbsp;ShuffledEventList&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Can&nbsp;we&nbsp;talk&nbsp;about&nbsp;something&nbsp;else?&lt;/q&gt;&nbsp;she&nbsp;suggests.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;mutters&nbsp;something&nbsp;you&nbsp;don\'t&nbsp;quite&nbsp;catch.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'In&nbsp;reply&nbsp;she&nbsp;merely&nbsp;cocks&nbsp;one&nbsp;eyebrow&nbsp;and&nbsp;gives&nbsp;an&nbsp;enigmatic&nbsp;smile.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'m&nbsp;sorry,&lt;/q&gt;&nbsp;she&nbsp;says,&nbsp;&lt;q&gt;my&nbsp;mind&nbsp;was&nbsp;elsewhere.&nbsp;Did&nbsp;you&nbsp;say&nbsp;something?&lt;/q&gt;&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Let\'s&nbsp;discuss&nbsp;that&nbsp;some&nbsp;other&nbsp;time.&lt;/q&gt;&nbsp;she&nbsp;replies.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Just&nbsp;at&nbsp;that&nbsp;moment,&nbsp;{the&nbsp;sarah/she}&nbsp;appears&nbsp;to&nbsp;be&nbsp;overcome&nbsp;by&nbsp;a&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fit&nbsp;of&nbsp;coughing.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'She&nbsp;appears&nbsp;not&nbsp;to&nbsp;hear&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Well,&lt;/q&gt;&nbsp;she&nbsp;says,&nbsp;proceeding&nbsp;to&nbsp;give&nbsp;a&nbsp;brief&nbsp;reply.&nbsp;'
+<br>
+&nbsp;&nbsp;]&nbsp;
+<br>
+;&nbsp;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Ideally, it would be good to extend the list, since the player is likely to see its members a good number of times, though it becomes difficult to think of many new ways of not saying anything. In this kind of case, nevertheless, you almost certainly want to use a ShuffledEventList to vary the responses.
+<br>
+</font></font>
+
+</body></html>

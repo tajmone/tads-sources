@@ -1,0 +1,262 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Counting the Cash</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="fillinginsomegaps.htm">[Previous] </a>&nbsp;&nbsp;<a href="lookingthroughthewindow.htm">[Next] </a></I></FONT></P>
+<h2>Counting the Cash</h2>
+
+<p>That the handling of cash could actually be simplified if one stops to think about implementing a more general solution shows that there's often more than one way to make a mousetrap in code, and that the first workable solution one comes up with isn't necessarily the best, the easiest or the most elegant. Even if we wanted to stick to having four coins in our game rather than a more abstract concept of money, we could have handled it better, and produced a better-looking output as a result. So for the sake of completeness we'll look at another way this could have been handed, although it is not exactly for the faint-hearted and introduces some techniques that are really rather advanced for a <i>Getting Started</i> guide; it may thus be this is something you'll want to skip on first reading.
+</p>
+
+<br>
+The way we went about it before, using a fuse to sum up the result of handing over multiple coins in one turn, is perfectly workable, but the library does offer another way of doing it which, if not a great deal simpler, at least offers better control over what is displayed to the player. This is illustrated by the routine for handing coins to Bob in the sample game. We can adapt that code to our situation by redefining the shopkeeper's <font face="Courier New" size="2" color="#000000">GiveTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object for coins thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;GiveShowTopic
+<br>
+&nbsp;&nbsp;&nbsp;matchTopic(fromActor,&nbsp;obj)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;obj.ofKind(Coin)&nbsp;?&nbsp;matchScore&nbsp;:&nbsp;0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;handleTopic(fromActor,&nbsp;obj)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.cashReceived&nbsp;++;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currency&nbsp;=&nbsp;obj;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(shopkeeper.cashReceived&nbsp;&lt;=&nbsp;shopkeeper.price)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj.moveInto(shopkeeper);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;add&nbsp;our&nbsp;special&nbsp;report&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gTranscript.addReport(new&nbsp;GiveCoinReport(obj));
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;register&nbsp;for&nbsp;collective&nbsp;handling&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;command&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gAction.callAfterActionMain(self);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;afterActionMain()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;adjust&nbsp;the&nbsp;transcript&nbsp;by&nbsp;summarizing&nbsp;consecutive&nbsp;coin
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;acceptance&nbsp;reports&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gTranscript.summarizeAction(
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{x:&nbsp;x.ofKind(GiveCoinReport)},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{vec:&nbsp;'You&nbsp;hand&nbsp;over&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;spellInt(vec.length())+'&nbsp;'&nbsp;+&nbsp;currency.name+'s.\n'&nbsp;});
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(shopkeeper.saleObject&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;What's&nbsp;this&nbsp;for?&lt;/q&gt;&nbsp;asks&nbsp;{the&nbsp;shopkeeper/she},&nbsp;handing&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;money&nbsp;back,&nbsp;&lt;q&gt;Shouldn't&nbsp;you&nbsp;tell&nbsp;me&nbsp;what&nbsp;you&nbsp;want&nbsp;to&nbsp;buy&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first?&lt;/q&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.cashReceived&nbsp;=&nbsp;0;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(shopkeeper.cashReceived&nbsp;&lt;&nbsp;shopkeeper.price)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Er,&nbsp;that's&nbsp;not&nbsp;enough.&lt;/q&gt;&nbsp;she&nbsp;points&nbsp;out,&nbsp;looking&nbsp;at&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expectantly&nbsp;while&nbsp;she&nbsp;waits&nbsp;for&nbsp;the&nbsp;balance.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;shopkeeper/she}&nbsp;takes&nbsp;the&nbsp;money&nbsp;and&nbsp;turns&nbsp;to&nbsp;take
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;shopkeeper.saleObject.aName&gt;&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;off&nbsp;the&nbsp;shelf.&nbsp;She&nbsp;hands&nbsp;you&nbsp;&lt;&lt;shopkeeper.saleObject.theName&gt;&gt;&nbsp;saying,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Here&nbsp;you&nbsp;are&nbsp;&nbsp;then";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(shopkeeper.cashReceived&nbsp;&gt;&nbsp;shopkeeper.price)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",&nbsp;and&nbsp;here's&nbsp;your&nbsp;change";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&lt;/q&gt;&lt;/p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.saleObject.moveInto(gPlayerChar);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.price&nbsp;=&nbsp;0;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.cashReceived&nbsp;=&nbsp;0;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.saleObject&nbsp;=&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;currency&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The first thing you should notice about this is that we have effectively moved the code from the shopkeeper's </font><font face="Courier New" size="2" color="#000000">cashFuse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method into the new </font><font face="Courier New" size="2" color="#000000">afterActionMain()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method of the </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This does mean that we now have to refer to all the properties involved as </font><font face="Courier New" size="2" color="#000000">shopkeeper.whatever</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> instead of just </font><font face="Courier New" size="2" color="#000000">whatever</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which makes it look a bit more complicated (this might be an argument for redefining these all as properties of the </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but that would involve corresponding changes on the </font><font face="Courier New" size="2" color="#000000">BuyTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> definition, so we shall not do it here). It also means that we can remove the </font><font face="Courier New" size="2" color="#000000">cashFuse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> code from the shopkeeper object and that we no longer need  to set up the fuse at all.
+<br>
+
+<br>
+Clearly this is not the whole story; we have also replaced the entire fuse mechanism. In effect the call to </font><font face="Courier New" size="2" color="#000000">gAction.callAfterActionMain(self)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">  in </font><font face="Courier New" size="2" color="#000000">handleTopic&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">does a job analogous to the call to </font><font face="Courier New" size="2" color="#000000">shopkeeper.cashFuseID&nbsp;=&nbsp;new&nbsp;Fuse(shopkeeper,&nbsp;&amp;cashFuse,&nbsp;0)&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">that it replaces, in that it registers that once we have iterated over all the coins being given in this command, we want to handle the aggregate result of the transaction in the </font><font face="Courier New" size="2" color="#000000">afterActionMain()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of </font><font face="Courier New" size="2" color="#000000">self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, i.e. the current object. Note that unlike the code to create a new fuse, there is no need to check that this has not been called on a previous iteration, since the registration will only be effective first time round. So far, there is not a great gain of simplicity compared with using the fuse to do the same job, but we are at least using a library mechanism designed to do the job we want, rather than trying to invent our own ad hoc mechanism, and this does allow all the code for handling the giving of coins to be put on the appropriate </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+But we have not exhausted what this alternative way of designing this a particular mousetrap can do for us, even though the part that remains is frankly not the easiest thing to grasp first time round. The trouble with the way we did it before was that for each coin Heidi handed over to Sally the shopkeeper (if there were several), the game reported "pound coin: " on a new line. We mitigated this a little by trying to make it look as if the coins were being counted out:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">pound coin:
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">pound coin: number 2
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">pound coin: number 3
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">But it really would have been better to do away with that repeating 'pound coin:' altogether (especially in a situation where you might want to hand over dozens of the things at a time), and simply to have one summary report that says something like "You hand over three pound coins." Well, this is what this new way of doing things allows us to do.
+<br>
+
+<br>
+Firstly, we define what our own output for each line should be through the call to </font><font face="Courier New" size="2" color="#000000">gTranscript.addReport(new&nbsp;GiveCoinReport(obj))</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This actually does two things for us; first it allows us to define what will reported if only a single coin is handed over, and secondly it gives us a class name we have defined ourselves (</font><font face="Courier New" size="2" color="#000000">GiveCoinReport</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) which we'll be able to use to manipulate the final report displayed if there's more than one </font><font face="Courier New" size="2" color="#000000">coin</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> handed over.
+<br>
+
+<br>
+For this to work, we need to define the </font><font face="Courier New" size="2" color="#000000">GiveCoinReport</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">class&nbsp;GiveCoinReport:&nbsp;MainCommandReport
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;construct(obj)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;remember&nbsp;the&nbsp;coin&nbsp;we&nbsp;accepted&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coinObj&nbsp;=&nbsp;obj;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;inherit&nbsp;the&nbsp;default&nbsp;handling&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gMessageParams(obj);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited('You&nbsp;hand&nbsp;over&nbsp;{a&nbsp;obj/him}.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;my&nbsp;coin&nbsp;object&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;coinObj&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The construct method - the object constructor - is called when we create a new object of the </font><font face="Courier New" size="2" color="#000000">GiveCoinReport</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class through a call to </font><font face="Courier New" size="2" color="#000000">new</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">GiveCoinReport(obj)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; the new object's </font><font face="Courier New" size="2" color="#000000">coinObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property is set to the obj passed as a parameter, and, more interestingly for our purposes, we can customize the message that would be displayed each time a coin is handed over, but which will in fact only be displayed if a single coin is handed over in the turn. Here we customize it so it will read "You hand over a pound coin." (By using the parameter string </font><font face="Courier New" size="2" color="#000000">{a&nbsp;obj/him}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather than the string literal 'pound coin' here we ensure that we'll still get a decent message if someone changes the coin name to 'dollar bill' or whatever).
+<br>
+
+<br>
+Then comes the really clever (and complicated part); in order to replace the multiple reports of "You hand over a pound coin" that we'd otherwise see, we include the following code in the </font><font face="Courier New" size="2" color="#000000">afterActionMain()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">gTranscript.summarizeAction(
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{x:&nbsp;x.ofKind(GiveCoinReport)},
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{vec:&nbsp;'You&nbsp;hand&nbsp;over&nbsp;'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;spellInt(vec.length())+'&nbsp;'&nbsp;+&nbsp;currency.name+'s.\n'&nbsp;});
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This may well look Greek to you (unless you happen to know some Greek), but in brief we can at least say what it <i>does</i>: what it does is to remove every instance of the "You hand over a pound coin" report that would otherwise be displayed and instead prints the aggregate report "You hand over three pound coins." (or however many coins it was).  We defined a custom </font><font face="Courier New" size="2" color="#000000">currency</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property on the </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> which is updated with the current object being handled every time </font><font face="Courier New" size="2" color="#000000">handleTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is invoked; that means that the currency property will refer to a coin object and we can use it to get at the name of the currency (rather than just assuming it's still called 'pound coin' after you've patriotically renamed it to dollar, euro or whatever). We form the plural by simply appending an 's', which will work as well for dollar bills as for pound coins; if, however, you've decided that your currency really has to be </font><font face="SPIonic" size="3" color="#000000">draxmai/</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (yes, that's what Greek <i>really</i> looks like) for your game set in ancient Athens then you'd need to handle it a bit differently; perhaps by defining a </font><font face="Courier New" size="2" color="#000000">pluralName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property for your </font><font face="Courier New" size="2" color="#000000">Coin</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class and using that instead of the </font><font face="Courier New" size="2" color="#000000">name</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property here). The </font><font face="Courier New" size="2" color="#000000">spellInt(vec.length())&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">part of this string becomes a bit more manageable if one breaks it down step by step: the spellInt function takes an integer as an argument and returns the equivant spelt-out string (e.g. </font><font face="Courier New" size="2" color="#000000">spellInt(5)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> returns 'five'). </font><font face="Courier New" size="2" color="#000000">vec</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is going to be a vector (a kind of dynamically resizeable array) containing all the instances of the "You hand over a pound coin" message, so the length of the vector, i.e. the number of elements it contains, is equivalent to the number of coins handed over.
+<br>
+
+<br>
+Even so, unless you're familiar with the code structure here, the line we're examining may <i>still</i> look rather like an arcane magical incantation; well, it's not <i>quite</i> that, but it's close to being the next best thing - a method call involving anonymous callback functions (if you don't feel any the wiser for being told that, don't worry; this is <i>not</i> the most self-evident topic).  Rather than confuse you any further by trying to explain exactly what anonymous callback function are, I'll try to offer some explanation for what they do here. </font><font face="Courier New" size="2" color="#000000">gTranscript</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is an object of the </font><font face="Courier New" size="2" color="#000000">CommandTranscript</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class. We are invoking its </font><font face="Courier New" size="2" color="#000000">summarizeAction(cond,&nbsp;report)&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method. But </font><font face="Courier New" size="2" color="#000000">cond</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">report</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> are not any old common-or-garden parameters of the sort we were all brought up or feel at least moderately comfortable with; it turns out that they are functions, functions that the </font><font face="Courier New" size="2" color="#000000">summarizeAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method will use in the form </font><font face="Courier New" size="2" color="#000000">cond(cur)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">report(vec)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The first of these defines the condition that must apply to the report lines that we want to replace with our single summary report, and the second defines what that summary report will look like.
+<br>
+
+<br>
+Our call to </font><font face="Courier New" size="2" color="#000000">gTranscript.SummarizeAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is thus passing two arguments that are in effect short form function definitions. The first parameter, </font><font face="Courier New" size="2" color="#000000">{x:&nbsp;x.ofKind(GiveCoinReport)}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, in effect tells the </font><font face="Courier New" size="2" color="#000000">SummarizeAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method to treat </font><font face="Courier New" size="2" color="#000000">cond()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as if it were defined as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cond(x)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;x.ofKind(GiveCoinReport);
+<br>
+}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You may remember that </font><font face="Courier New" size="2" color="#000000">GiveCoinReport</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> was the custom report class we defined a little way back, so what we're effectively telling the </font><font face="Courier New" size="2" color="#000000">SummarizeAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> with this is "look out for those reports of the </font><font face="Courier New" size="2" color="#000000">GiveCoinReport</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, they're the ones we want you to count up and replace for us."
+<br>
+
+<br>
+Similarly, the second parameter is passed as </font><font face="Courier New" size="2" color="#000000">{vec:&nbsp;'You&nbsp;hand&nbsp;over&nbsp;'&nbsp;+&nbsp;spellInt(vec.length())+'&nbsp;'&nbsp;+&nbsp;currency.name+'s.\n'&nbsp;}.&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This effectively tells </font><font face="Courier New" size="2" color="#000000">SummarizeAction&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to treat </font><font face="Courier New" size="2" color="#000000">report(vec)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as if it had been defined as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">report(vec)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'You&nbsp;hand&nbsp;over&nbsp;'&nbsp;+&nbsp;spellInt(vec.length())+'&nbsp;'&nbsp;+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currency.name+'s.\n';
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Since the wizardry performed by </font><font face="Courier New" size="2" color="#000000">SummarizeAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will have gathered up each instance of a </font><font face="Courier New" size="2" color="#000000">GiveCoinReport</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> into </font><font face="Courier New" size="2" color="#000000">vec</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, when it uses this function to print the summary report, we'll get the result we want. If you don't understand all this at a first read-through, don't worry; reach for the nearest bottle of aspirins and read the description of anonymous functions and callbacks in the <i>System Manual</i>. If it still doesn't make too much sense to you first time round, you're doubtless in good company. But even if it takes you a little time to feel reasonably confident that you actually <i>understand</i> it, you may hopefully be able to <i>use</i> this example by treating the relevant code as piece of boilerplate in which you can slot in what you need for your own purposes; hopefully it'll soon become clear enough for you to see where you need to slot in what, even if the rest of it still seems less than intuitively obvious. In particular, what you need to do is to (a) define a </font><font face="Courier New" size="2" color="#000000">MyReport</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class (substitute the name you actually use!); (b) supply the first argument to </font><font face="Courier New" size="2" color="#000000">gTranscript.summarizeTranscript</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as </font><font face="Courier New" size="2" color="#000000">{x:&nbsp;x.ofKind(MyReport)}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and (c) supply the third argument as </font><font face="Courier New" size="2" color="#000000">{vec:</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">'My&nbsp;description&nbsp;of&nbsp;what&nbsp;happens&nbsp;to&nbsp;the&nbsp;'&nbsp;&nbsp;+&nbsp;spellInt(vec.length())+'&nbsp;&nbsp;thingies&nbsp;that&nbsp;have&nbsp;been&nbsp;processed.\n'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="fillinginsomegaps.htm">[Previous] </a>&nbsp;&nbsp;<a href="lookingthroughthewindow.htm">[Next] </a></I></FONT></P>
+</body></html>

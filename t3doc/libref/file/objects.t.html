@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>objects.t</title></head><body>
+<table class=ban><tr><td align=left><span class=title>objects.t</span><span class=type>file</span><td align=right><a href="../source/objects.t.html">source file</a></table><p>
+<table class=nav><tr>
+<td><b>Classes</b><br><a href="#_ClassSummary_">Summary</a><br>&nbsp;<td><b>Objects</b><br><a href="#_ObjectSummary_">Summary</a><br>&nbsp;<td><b>Functions</b><br><a href="#_FunctionSummary_">Summary</a><br><a href="#_Functions_">Details</a></table><div class=fdesc>
+ <br> Portions based on work by Kevin Forchione, used by permission. <p>   TADS 3 Library - objects <p>   This module defines the basic physical simulation objects (apart from   Thing, the base class for most game objects, which is so large that   it's defined in its own separate module for convenience).  We define   such basic classes as containers, surfaces, fixed-in-place objects,   openables, and lockables.
+</div>
+<a name="_ClassSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Classes</span> &nbsp; </div><p>
+<code>
+<a href="../object/BaseMultiLoc.html">BaseMultiLoc</a>&nbsp;
+<a href="../object/BasicContainer.html">BasicContainer</a>&nbsp;
+<a href="../object/BasicOpenable.html">BasicOpenable</a>&nbsp;
+<a href="../object/BulkLimiter.html">BulkLimiter</a>&nbsp;
+<a href="../object/Button.html">Button</a>&nbsp;
+<a href="../object/Collective.html">Collective</a>&nbsp;
+<a href="../object/CollectiveGroup.html">CollectiveGroup</a>&nbsp;
+<a href="../object/Component.html">Component</a>&nbsp;
+<a href="../object/Consultable.html">Consultable</a>&nbsp;
+<a href="../object/ConsultTopic.html">ConsultTopic</a>&nbsp;
+<a href="../object/Container.html">Container</a>&nbsp;
+<a href="../object/CustomFixture.html">CustomFixture</a>&nbsp;
+<a href="../object/CustomImmovable.html">CustomImmovable</a>&nbsp;
+<a href="../object/Decoration.html">Decoration</a>&nbsp;
+<a href="../object/DefaultConsultTopic.html">DefaultConsultTopic</a>&nbsp;
+<a href="../object/Dial.html">Dial</a>&nbsp;
+<a href="../object/Distant.html">Distant</a>&nbsp;
+<a href="../object/FillMedium.html">FillMedium</a>&nbsp;
+<a href="../object/Fixture.html">Fixture</a>&nbsp;
+<a href="../object/Flashlight.html">Flashlight</a>&nbsp;
+<a href="../object/Food.html">Food</a>&nbsp;
+<a href="../object/Heavy.html">Heavy</a>&nbsp;
+<a href="../object/Hidden.html">Hidden</a>&nbsp;
+<a href="../object/Immovable.html">Immovable</a>&nbsp;
+<a href="../object/IndirectLockable.html">IndirectLockable</a>&nbsp;
+<a href="../object/Intangible.html">Intangible</a>&nbsp;
+<a href="../object/ItemizingCollectiveGroup.html">ItemizingCollectiveGroup</a>&nbsp;
+<a href="../object/KeyedContainer.html">KeyedContainer</a>&nbsp;
+<a href="../object/LabeledDial.html">LabeledDial</a>&nbsp;
+<a href="../object/Lever.html">Lever</a>&nbsp;
+<a href="../object/LightSource.html">LightSource</a>&nbsp;
+<a href="../object/Linkable.html">Linkable</a>&nbsp;
+<a href="../object/LocateInParent.html">LocateInParent</a>&nbsp;
+<a href="../object/Lockable.html">Lockable</a>&nbsp;
+<a href="../object/LockableContainer.html">LockableContainer</a>&nbsp;
+<a href="../object/LockableWithKey.html">LockableWithKey</a>&nbsp;
+<a href="../object/MultiFaceted.html">MultiFaceted</a>&nbsp;
+<a href="../object/MultiFacetedFacet.html">MultiFacetedFacet</a>&nbsp;
+<a href="../object/MultiInstance.html">MultiInstance</a>&nbsp;
+<a href="../object/MultiInstanceInstance.html">MultiInstanceInstance</a>&nbsp;
+<a href="../object/MultiLoc.html">MultiLoc</a>&nbsp;
+<a href="../object/Noise.html">Noise</a>&nbsp;
+<a href="../object/NonPortable.html">NonPortable</a>&nbsp;
+<a href="../object/NumberedDial.html">NumberedDial</a>&nbsp;
+<a href="../object/Odor.html">Odor</a>&nbsp;
+<a href="../object/OnOffControl.html">OnOffControl</a>&nbsp;
+<a href="../object/Openable.html">Openable</a>&nbsp;
+<a href="../object/OpenableContainer.html">OpenableContainer</a>&nbsp;
+<a href="../object/OutOfReach.html">OutOfReach</a>&nbsp;
+<a href="../object/Readable.html">Readable</a>&nbsp;
+<a href="../object/RestrictedContainer.html">RestrictedContainer</a>&nbsp;
+<a href="../object/RestrictedHolder.html">RestrictedHolder</a>&nbsp;
+<a href="../object/RestrictedSurface.html">RestrictedSurface</a>&nbsp;
+<a href="../object/SecretFixture.html">SecretFixture</a>&nbsp;
+<a href="../object/SensoryEmanation.html">SensoryEmanation</a>&nbsp;
+<a href="../object/SensoryEvent.html">SensoryEvent</a>&nbsp;
+<a href="../object/Settable.html">Settable</a>&nbsp;
+<a href="../object/SightEvent.html">SightEvent</a>&nbsp;
+<a href="../object/SightObserver.html">SightObserver</a>&nbsp;
+<a href="../object/SimpleNoise.html">SimpleNoise</a>&nbsp;
+<a href="../object/SimpleOdor.html">SimpleOdor</a>&nbsp;
+<a href="../object/SingleContainer.html">SingleContainer</a>&nbsp;
+<a href="../object/SmellEvent.html">SmellEvent</a>&nbsp;
+<a href="../object/SmellObserver.html">SmellObserver</a>&nbsp;
+<a href="../object/SoundEvent.html">SoundEvent</a>&nbsp;
+<a href="../object/SoundObserver.html">SoundObserver</a>&nbsp;
+<a href="../object/SpringLever.html">SpringLever</a>&nbsp;
+<a href="../object/Surface.html">Surface</a>&nbsp;
+<a href="../object/Switch.html">Switch</a>&nbsp;
+<a href="../object/Unthing.html">Unthing</a>&nbsp;
+<a href="../object/Vaporous.html">Vaporous</a>&nbsp;
+<a href="../object/Wearable.html">Wearable</a>&nbsp;
+</code>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="FunctionSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Functions</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Functions_"></a><p><div class=mjhd><span class=hdln>Global Functions</span> &nbsp; </div><p>
+<i>(none)</i>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

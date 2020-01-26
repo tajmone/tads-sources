@@ -1,0 +1,179 @@
+<html>
+<head>
+<title>Customizing TADS Workbench</title>
+<link rel=stylesheet href="wbdoc.css">
+</head>
+
+<body>
+
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+
+
+<center>
+<br><br><br><img src='../htmltads.jpg'>
+<br><h1>Customizing Workbench</h1>
+<br><br>
+</center>
+
+<p>Workbench offers a number of option settings that let you customize
+the environment to suit your working style.
+
+
+<h2>
+Customizing the Keyboard
+</h2>
+
+<p>Workbench has a system that lets you change the keyboard layout to
+your liking.  If you're accustomed to a particular keyboard layout
+from another program, such as from another text editor you use
+frequently, you can take advantage of the keyboard mapping scheme to
+make Workbench behave more like what you're used to.
+
+<p>Use the Keyboard page of the Options dialog to define custom keys.
+You can change any of the default key bindings and you can add new
+bindings of your own.
+
+<p>Refer to <a href="wbcmd.htm">Workbench Commands</a> for a complete
+list of the commands and their descriptions.
+
+<h3>Context-sensitive keys</h3>
+
+<p>Workbench defines a number of "contexts" for keyboard commands.
+Each context can have its own separate key mappings - when you press a
+key, Workbench interprets it according to the key definitions for the
+active context.  The current window you're working in usually
+determines the context.  The point of context-sensitive keys is that
+it lets you re-use the same key in different contexts; this is often
+convenient, because it means you can re-use easy-to-press keys for
+different purposes, rather than having to come up with complex
+Alt+Ctrl+Shift combinations to avoid key conflicts.
+
+<p>The contexts are:
+
+<ul>
+
+<li>Global: this is the default context; it's used in all windows that
+don't use a different context.
+
+<li>Text Editor: this context is used in source text editor windows.
+This context inherits from the Global context, meaning that any key
+not defined in the Text Editor context inherits its meaning from the
+Global context.
+
+<li>Incremental Search: this context is used in a text editor window
+only during an incremental search operation.  This context inherits
+from the Text Editor context.
+
+</ul>
+
+<p>In the keyboard customization dialog, the context for an existing
+key binding is always shown in parentheses after the key or command
+name.  When you select a command in the command listbox, the current
+keys for the command will be shown in the "Current shortcut" drop-down
+list like so:
+
+<p><pre>
+   Ctrl+F5 (Global)
+</pre>
+
+<p>This means that Ctrl+F5 (i.e., the F5 key pressed while the Ctrl
+key is being held down) is bound to the currently selected command
+in the Global context.
+
+<p>Similarly, when you press a new key sequence in the "New shortcut"
+box, the "Current command" drop-down list will show each command, key,
+and context like so:
+
+<p><pre>
+   Build.CompileAndRun (Ctrl+F5 (Global))
+</pre>
+
+<p>This means that Ctrl+F5 is bound in the Global context to the
+command Build.CompileAndRun.  There might be other bindings for the
+same key in other contexts, in which case they'll be shown in the
+drop-down list as well.
+
+<p>When you define a new key, use the drop-down list labeled "Use new
+shortcut in:" to select the context for the new binding.  The new key
+you define will replace any existing definition of the key, but only
+in the context you select - if the key is also defined in other
+contexts, the other context definitions won't be affected.
+
+<h3>Multi-key sequences</h3>
+
+<p>If you're accustomed to an editor like Emacs that uses multi-key
+sequences for some commands, you'll be pleased to learn that
+Workbench's key binding system lets you define sequences of up to two
+keys.  In the Command Keys dialog, you can enter a multi-key sequence
+simply by going to the "New key" box and pressing the keys in
+sequence.
+
+<h3>Pre-defined layouts</h3>
+
+<p>You'll find a couple of pre-defined key layout files in the
+Workbench directory - look for files with names ending in ".keymap".
+If you want to use one of these layouts, you can load it using the
+"Load Key Map" button.  You can also save a layout to a file if you
+think you might want to switch back to it later after trying some
+changes.
+
+<h2>Toolbar arrangement</h2>
+
+<p>Workbench provides several toolbars, grouping related commands in
+each toolbar.  You can change the arrangement of the toolbars by using
+the mouse to drag the toolbar to a new position.  To drag a toolbar,
+click the mouse on the grab-bar control at the left edge of the
+toolbar.  Note that the main menu is itself a toolbar, so you can
+change its placement as well.  You can arrange the toolbars on one
+line or on multiple lines.
+
+<p>You can also hide toolbars entirely, if you'd prefer to free up
+more screen space for content windows.  Right-click on the toolbar
+background to bring up a menu that lets you select which toolbars are
+visible, or use the View - Toolbars submenu.
+
+<p>If you hide the main menu, you can still access the menu by
+right-clicking on the main Workbench window's title bar.  This will
+bring up the main menu as a pop-up menu any time the menu bar is
+hidden.
+
+<h2>Automatically hiding and showing tool windows</h2>
+
+<p>Workbench has two main working modes: "Design" and "Debug."  When
+you're running your project, you're in Debug mode, which allows you to
+step through code, inspect variables, and so on.  When the project
+isn't running, you're in Design mode.
+
+<p>Most of the tool windows are only useful (or mostly useful) in one
+mode or the other.  The stack, local variables, and expression-watch
+tool windows are of little use in Design mode, since there's no stack
+or variables to inspect.  Likewise, the project window is more useful
+in Design mode than in Debug mode.
+
+<p>For your convenience, Workbench can automatically show and hide
+tool windows whenever you switch between modes (that is, when you
+start running the program, and when the program exits).  This gives
+you more room to work by eliminating windows that aren't useful at the
+moment, while saving you the trouble of manually opening the windows
+that you need.
+
+<p>To customize the tool window hide/show options, go to the Tool
+Windows page of the Options dialog.  This lets you specify what
+happens on each mode switch to each tool window.  For each window, you
+can elect for each mode change to open it automatically, close it
+automatically, or leave it as it is.
+
+<br><br><br><br><br>
+<hr>
+<br>
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+<font size=-1>
+Copyright &copy;1999, 2007 by Michael J. Roberts.
+</font>
+
+</body>
+</html>

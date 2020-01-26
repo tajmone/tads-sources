@@ -1,0 +1,52 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>sight</title></head><body>
+<table class=ban><tr><td align=left><span class=title>sight</span><span class=type>object</span><td align=right><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#252">252</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   The senses.  We define sight, sound, smell, and touch.  We do not   define a separate sense for taste, since it would add nothing to our   model: you can taste something if and only if you can touch it. <p>   To add a new sense, you must do the following: <p>   - Define the sense object itself, in parallel to the senses defined   below. <p>   - Modify class Material to set the default transparency level for   this sense by defining the property xxxThru - for most senses, the   default transparency level is 'opaque', but you must decide on the   appropriate default for your new sense. <p>   - Modify class Thing to set the default xxxSize setting, if desired. <p>   - Modify class Thing to set the default xxxPresence setting, if   desired. <p>   - Modify each instance of class 'Material' that should have a   non-default transparency for the sense by defining the property   xxxThru for the material. <p>   - Modify class Actor to add the sense to the default mySenses list;   this is only necessary if the sense is one that all actors should   have by default.
+<p>
+<code><b>sight</b> :  &nbsp; <a href="../object/Sense.html">Sense</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>sight</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Sense.html">Sense</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#ambienceProp">ambienceProp</a>&nbsp;
+<a href="#presenceProp">presenceProp</a>&nbsp;
+<a href="#sizeProp">sizeProp</a>&nbsp;
+<a href="#thruProp">thruProp</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+</code><p>
+<p>Inherited from <code>Sense</code> :<br>
+<code>
+<a href="../object/Sense.html#canObjBeSensed">canObjBeSensed</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="ambienceProp"></a>
+<table class=decl><tr><td><code>ambienceProp</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#256">256</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="presenceProp"></a>
+<table class=decl><tr><td><code>presenceProp</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#255">255</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sizeProp"></a>
+<table class=decl><tr><td><code>sizeProp</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#254">254</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="thruProp"></a>
+<table class=decl><tr><td><code>thruProp</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#253">253</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<i>(none)</i>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

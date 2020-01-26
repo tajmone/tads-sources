@@ -1,0 +1,162 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Noise</title><meta name="keywords" content="Noise,descWithoutSource,hereWithoutSource,displaySchedule,isMasked"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Noise : SensoryEmanation
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="odor.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="senseconnector.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The Noise class works precisely like the <a href="odor.htm">Odor</a> class, except that it is used for sounds rather than smells. Precisely the same properties are available to customise it. We can continue our illustration by making the volcano the source of a sound as well as a smell:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;Noise&nbsp;'ominous&nbsp;sound/rumble/rumbling'&nbsp;'rumble'
+<br>
+&nbsp;&nbsp;sourceDesc&nbsp;=&nbsp;"Mount&nbsp;Gloom&nbsp;seems&nbsp;to&nbsp;be&nbsp;the&nbsp;source&nbsp;of&nbsp;the&nbsp;ominous&nbsp;rumbling.&nbsp;"
+<br>
+&nbsp;&nbsp;descWithSource&nbsp;=&nbsp;"The&nbsp;continuous&nbsp;bass&nbsp;rumble&nbsp;is&nbsp;punctuated&nbsp;by&nbsp;percussive
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;explosions&nbsp;at&nbsp;irregular&nbsp;intervals.&nbsp;"
+<br>
+&nbsp;&nbsp;hereWithSource&nbsp;=&nbsp;"An&nbsp;ominous&nbsp;rumble&nbsp;shakes&nbsp;the&nbsp;vast&nbsp;cavern.&nbsp;"
+<br>
+&nbsp;&nbsp;displaySchedule&nbsp;=&nbsp;[1,2,2,4]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The only thing we have done new here is to add a sourceDesc, which you should see added to the description of the volcano when you EXAMINE MOUNT GLOOM.
+<br>
+
+<br>
+To illustrate the descWithoutSource and hereWithoutSource properties we'll go back and add a ticking sound to the <a href="sensefuse.htm">bomb</a> we buried under a pile of rubble some time back, at the same time expanding what the bomb does when it explodes.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;bomb&nbsp;:&nbsp;Hidden,&nbsp;Immovable&nbsp;'unexploded&nbsp;bomb/cylinder'&nbsp;'bomb'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;fat,&nbsp;round-nosed&nbsp;cylinder&nbsp;with&nbsp;tail&nbsp;fins,&nbsp;on&nbsp;a&nbsp;couple&nbsp;of&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;painted&nbsp;tiny&nbsp;swastikas.&nbsp;"
+<br>
+&nbsp;&nbsp;discover()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;SenseFuse(self,&nbsp;&amp;explode,&nbsp;3,&nbsp;self,&nbsp;sight);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;explode()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;bomb&nbsp;explodes,&nbsp;the&nbsp;blast&nbsp;sending&nbsp;chunks&nbsp;of&nbsp;masonry&nbsp;flying&nbsp;in&nbsp;all
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directions,&nbsp;one&nbsp;piece&nbsp;of&nbsp;strikes&nbsp;you&nbsp;square&nbsp;on&nbsp;the&nbsp;head.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gPlayerChar.isIn(location))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>respiratorBox.moveInto(location);&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;respiratorBox.moved&nbsp;=&nbsp;nil;&nbsp;
+<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveInto(nil);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'You&nbsp;must&nbsp;be&nbsp;joking!&nbsp;'
+<br>
+&nbsp;&nbsp;cannotPushMsg&nbsp;=&nbsp;'That&nbsp;might&nbsp;set&nbsp;it&nbsp;off.&nbsp;'
+<br>
+&nbsp;&nbsp;cannotMoveMsg&nbsp;=&nbsp;'It\'s&nbsp;probably&nbsp;safest&nbsp;to&nbsp;leave&nbsp;it&nbsp;just&nbsp;where&nbsp;it&nbsp;is.&nbsp;'
+<br>
+;
+<br>
+
+<br>
+++&nbsp;Noise&nbsp;'tick/ticking'&nbsp;'ticking'
+<br>
+&nbsp;&nbsp;&nbsp;sourceDesc&nbsp;=&nbsp;"It's&nbsp;ticking.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;descWithSource&nbsp;=&nbsp;"The&nbsp;ticking&nbsp;is&nbsp;coming&nbsp;from&nbsp;the&nbsp;bomb.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;descWithoutSource&nbsp;=&nbsp;"The&nbsp;ticking&nbsp;seems&nbsp;to&nbsp;be&nbsp;coming&nbsp;from&nbsp;the&nbsp;pile&nbsp;of&nbsp;rubble.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;hereWithSource&nbsp;=&nbsp;"The&nbsp;bomb&nbsp;is&nbsp;ticking.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;hereWithoutSource&nbsp;=&nbsp;"A&nbsp;ticking&nbsp;comes&nbsp;from&nbsp;the&nbsp;direction&nbsp;of&nbsp;the&nbsp;rubble.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;displaySchedule&nbsp;=&nbsp;[1]
+<br>
+;
+<br>
+
+<br>
+respiratorBox&nbsp;:&nbsp;OpenableContainer&nbsp;'small&nbsp;(respirator)&nbsp;khaki&nbsp;bag/box'&nbsp;'khaki&nbsp;bag'
+<br>
+&nbsp;&nbsp;"The&nbsp;square&nbsp;bag&nbsp;is&nbsp;made&nbsp;of&nbsp;coarse&nbsp;khaki&nbsp;fabric&nbsp;and&nbsp;has&nbsp;a&nbsp;pair&nbsp;of&nbsp;carrying&nbsp;straps.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;khaki&nbsp;bag&nbsp;lies&nbsp;in&nbsp;the&nbsp;street,&nbsp;perhaps&nbsp;dislodged&nbsp;from&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rubble&nbsp;by&nbsp;the&nbsp;recent&nbsp;explosion.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;gasMask&nbsp;:&nbsp;Wearable&nbsp;'gas&nbsp;mask/respirator/gas-mask/gasmask'&nbsp;'gas&nbsp;mask'
+<br>
+&nbsp;&nbsp;"It's&nbsp;an&nbsp;ungainly-looking&nbsp;thing&nbsp;with&nbsp;round&nbsp;glass&nbsp;circles&nbsp;for&nbsp;seeing&nbsp;through
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;a&nbsp;kind&nbsp;of&nbsp;cylindrical&nbsp;snout&nbsp;to&nbsp;fit&nbsp;over&nbsp;nose&nbsp;and&nbsp;mouth,&nbsp;all&nbsp;held&nbsp;together
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;a&nbsp;black&nbsp;rubber&nbsp;face-mask.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The descWithoutSource and hereWithoutSource properties contain what is displayed while the bomb is still hidden in the rubble. Once the player investigates the source of the tick by looking in or under the rubble, the bomb is revealed and the descWithSource and hereWithSource messages are used instead. We set the displaySchedule to [1] to display the hereWith/WithoutSource message each turn, since the ticking can reasonably be expected to engage the player's attention.
+<br>
+
+<br>
+Now that we've defined the gas mask, we can (provisionally) define what it means for an actor to be masked:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Actor
+<br>
+&nbsp;&nbsp;canSmell(obj)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isMasked)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;inherited(obj);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>isMasked&nbsp;=&nbsp;(gasMask.isWornBy(self))
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

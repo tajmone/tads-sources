@@ -1,0 +1,149 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>SpecialTopic</title></head><body>
+<table class=ban><tr><td align=left><span class=title>SpecialTopic</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3751">3751</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2743">2743</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A "special" topic.  This is a topic that responds to its own unique,   custom command input.  In other words, rather than responding to a   normal command like ASK ABOUT or SHOW TO, we'll respond to a command   for which we define our own syntax.  Our special syntax doesn't have   to follow any of the ordinary parsing conventions, because whenever   our ConvNode is active, we get a shot at parsing player input before   the regular parser gets to see it. <p>   A special topic MUST be part of a ConvNode, because these are   inherently meaningful only in context.  A special topic is active   only when its conversation node is active. <p>   Special topics are automatically Suggested Topics as well as Topic   Entries.  Because special topics use their own custom grammar, it's   unreasonable to expect a player to guess at the custom grammar, so we   should always provide a topic inventory suggestion for every special   topic.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2743">2743</a>]:</i><br>
+   For SpecialTopic matches, treat some strings as "weak": if the user's   input consists of just one of these weak strings and nothing else,   don't match the topic.
+<p>
+<code>class
+<b>SpecialTopic</b> :  &nbsp; <a href="../object/TopicEntry.html">TopicEntry</a> &nbsp; <a href="../object/SuggestedTopicTree.html">SuggestedTopicTree</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>SpecialTopic</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicEntry.html">TopicEntry</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedTopicTree.html">SuggestedTopicTree</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedTopic.html">SuggestedTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#fullName">fullName</a>&nbsp;
+<a href="#includeInList">includeInList</a>&nbsp;
+<a href="#keywordList">keywordList</a>&nbsp;
+<a href="#matchPat">matchPat</a>&nbsp;
+<a href="#name">name</a>&nbsp;
+<a href="#timesToSuggest">timesToSuggest</a>&nbsp;
+<a href="#weakPat">weakPat</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicEntry</code> :<br>
+<code>
+<a href="../object/TopicEntry.html#altTalkCount">altTalkCount</a>&nbsp;
+<a href="../object/TopicEntry.html#altTopicList">altTopicList</a>&nbsp;
+<a href="../object/TopicEntry.html#impliesGreeting">impliesGreeting</a>&nbsp;
+<a href="../object/TopicEntry.html#isActive">isActive</a>&nbsp;
+<a href="../object/TopicEntry.html#isConversational">isConversational</a>&nbsp;
+<a href="../object/TopicEntry.html#matchObj">matchObj</a>&nbsp;
+<a href="../object/TopicEntry.html#matchScore">matchScore</a>&nbsp;
+<a href="../object/TopicEntry.html#talkCount">talkCount</a>&nbsp;
+<a href="../object/TopicEntry.html#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="../object/TopicEntry.html#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+<a href="../object/TopicEntry.html#topicResponse">topicResponse</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>SuggestedTopic</code> :<br>
+<code>
+<a href="../object/SuggestedTopic.html#associatedTopic">associatedTopic</a>&nbsp;
+<a href="../object/SuggestedTopic.html#curiositySatisfied">curiositySatisfied</a>&nbsp;
+<a href="../object/SuggestedTopic.html#location">location</a>&nbsp;
+<a href="../object/SuggestedTopic.html#suggestionGroup">suggestionGroup</a>&nbsp;
+<a href="../object/SuggestedTopic.html#suggestTo">suggestTo</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#getConvNode">getConvNode</a>&nbsp;
+<a href="#initializeSpecialTopic">initializeSpecialTopic</a>&nbsp;
+<a href="#isMatchPossible">isMatchPossible</a>&nbsp;
+<a href="#matchPreParse">matchPreParse</a>&nbsp;
+<a href="#matchTopic">matchTopic</a>&nbsp;
+<a href="#noteSuggestion">noteSuggestion</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicEntry</code> :<br>
+<code>
+<a href="../object/TopicEntry.html#addAltTopic">addAltTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#addTopic">addTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#adjustScore">adjustScore</a>&nbsp;
+<a href="../object/TopicEntry.html#anyAltIsActive">anyAltIsActive</a>&nbsp;
+<a href="../object/TopicEntry.html#breakTopicTie">breakTopicTie</a>&nbsp;
+<a href="../object/TopicEntry.html#checkIsActive">checkIsActive</a>&nbsp;
+<a href="../object/TopicEntry.html#deferToEntry">deferToEntry</a>&nbsp;
+<a href="../object/TopicEntry.html#getActor">getActor</a>&nbsp;
+<a href="../object/TopicEntry.html#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="../object/TopicEntry.html#handleTopic">handleTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#initializeTopicEntry">initializeTopicEntry</a>&nbsp;
+<a href="../object/TopicEntry.html#noteAltInvocation">noteAltInvocation</a>&nbsp;
+<a href="../object/TopicEntry.html#noteInvocation">noteInvocation</a>&nbsp;
+<a href="../object/TopicEntry.html#setTopicPronouns">setTopicPronouns</a>&nbsp;
+</code><p>
+<p>Inherited from <code>SuggestedTopicTree</code> :<br>
+<code>
+<a href="../object/SuggestedTopicTree.html#associatedTopicIsActive">associatedTopicIsActive</a>&nbsp;
+<a href="../object/SuggestedTopicTree.html#associatedTopicTalkCount">associatedTopicTalkCount</a>&nbsp;
+</code><p>
+<p>Inherited from <code>SuggestedTopic</code> :<br>
+<code>
+<a href="../object/SuggestedTopic.html#associatedTopicCanMatch">associatedTopicCanMatch</a>&nbsp;
+<a href="../object/SuggestedTopic.html#findEnclosingSuggestedTopic">findEnclosingSuggestedTopic</a>&nbsp;
+<a href="../object/SuggestedTopic.html#findOuterSuggestedTopic">findOuterSuggestedTopic</a>&nbsp;
+<a href="../object/SuggestedTopic.html#fromEnclosingSuggestedTopic">fromEnclosingSuggestedTopic</a>&nbsp;
+<a href="../object/SuggestedTopic.html#initializeSuggestedTopic">initializeSuggestedTopic</a>&nbsp;
+<a href="../object/SuggestedTopic.html#isSuggestionActive">isSuggestionActive</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="fullName"></a>
+<table class=decl><tr><td><code>fullName</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3816">3816</a>]</table><div class=desc>   our suggestion (topic inventory) full name is usually the same as   the base name; special topics usually aren't grouped in topic   suggestion listings, since each topic usually has its own unique,   custom syntax <p>
+</div>
+<a name="includeInList"></a>
+<table class=decl><tr><td><code>includeInList</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3822">3822</a>]</table><div class=desc>include in the specialTopics list of our parent topic database<p>
+</div>
+<a name="keywordList"></a>
+<table class=decl><tr><td><code>keywordList</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3766">3766</a>]</table><div class=desc>   Our keyword list.  Each special topic instance must define a list   of strings giving the keywords we match.  The special topic will   match user input if the user input consists exclusively of words   from this keyword list.  The user input doesn't have to include   all of the words defined here, but all of the words in the user's   input have to appear here to match. <p>   Alternatively, an instance can specifically define its own custom   regular expression pattern instead of using the keyword list; the   regular expression allows the instance to include punctuation in   the syntax, or apply more restrictive criteria than simply   matching the keywords. <p>
+</div>
+<a name="matchPat"></a>
+<table class=decl><tr><td><code>matchPat</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3805">3805</a>]</table><div class=desc>   our regular expression pattern - we'll build this automatically   from the keyword list if this isn't otherwise defined <p>
+</div>
+<a name="name"></a>
+<table class=decl><tr><td><code>name</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3808">3808</a>]</table><div class=desc>our suggestion (topic inventory) base name<p>
+</div>
+<a name="timesToSuggest"></a>
+<table class=decl><tr><td><code>timesToSuggest</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3830">3830</a>]</table><div class=desc>   By default, don't limit the number of times we'll suggest this   topic.  Since a special topic is valid only in a particular   ConvNode context, we normally want all of the topics in that   context to be available, even if they've been used before. <p>
+</div>
+<a name="weakPat"></a>
+<table class=decl><tr><td><code>weakPat</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2762">2762</a>]</table><div class=desc>   Our "weak" strings - 'i', 'l', 'look': these are weak because a   user typing one of these strings by itself is probably actually   trying to enter the command of the same name, rather than entering   a special topic.  These come up in cases where the special topic   is something like "say I don't know" or "tell him you'll look into   it". <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="getConvNode"></a>
+<table class=decl><tr><td><code>getConvNode ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3900">3900</a>]</table><div class=desc>find our enclosing ConvNode object<p>
+</div>
+<a name="initializeSpecialTopic"></a>
+<table class=decl><tr><td><code>initializeSpecialTopic ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3780">3780</a>]</table><div class=desc>   Initialize the special topic.  This runs during   pre-initialization, to give us a chance to do pre-game set-up. <p>   This routine adds the topic's keywords to the global dictionary,   under the 'special' token type.  Since a special topic's keywords   are accepted when the special topic is active, it would be wrong   for the parser to claim that the words are unknown when the   special topic isn't active.  By adding the keywords to the   dictionary, we let the parser know that they're valid words, so   that it won't claim that they're unknown. <p>
+</div>
+<a name="isMatchPossible"></a>
+<table class=decl><tr><td><code>isMatchPossible (actor, scopeList)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3860">3860</a>]</table><div class=desc>   a special topic is always matchable, since we match on literal   text <p>
+</div>
+<a name="matchPreParse"></a>
+<table class=decl><tr><td><code>matchPreParse (str, procStr)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3867">3867</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2744">2744</a>]</table><div class=desc>   Match a string during pre-parsing.  By default, we'll match the   string if all of its words (as defined by the regular expression   parser) match our keywords. <p>
+</div>
+<a name="matchTopic"></a>
+<table class=decl><tr><td><code>matchTopic (fromActor, topic)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3833">3833</a>]</table><div class=desc>check for a match<p>
+</div>
+<a name="noteSuggestion"></a>
+<table class=decl><tr><td><code>noteSuggestion ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3819">3819</a>]</table><div class=desc>on being suggested, update the special topic history<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

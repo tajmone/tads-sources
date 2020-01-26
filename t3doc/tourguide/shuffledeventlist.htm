@@ -1,0 +1,36 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ShuffledEventList</title><meta name="keywords" content="ShuffledEventList,shuffleFirst,firstEvents"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ShuffledEventList : <a href="randomfiringscript.htm">RandomFiringScript</a>, <a href="eventlist.htm">EventList</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="randomeventlist.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="externaleventlist.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The Shuffled event list is just like a random event list, except that it fires its events in a "shuffled" order rather than an independently random order. "Shuffled order" means that events are fired in random order; once an event is fired it is not fired again until all of the other events have been fired. The effect is similar to dealing from a pack (UK) / deck (USA) of cards.
+<br>
+
+<br>
+For the first time through the main list, the strings are normally shuffled immediately at startup, but this is optional. If <b>shuffleFirst </b>is set to nil, the events will <i>not</i> be shuffled the first time through;  they'll be run through once in the order listed, then shuffled for the next time through, then shuffled again for the next, and so on. So, if you want a specific order for the first time through, just define the list in the desired order and set shuffleFirst to nil.
+<br>
+
+<br>
+You can optionally specify a separate list of one-time-only sequential strings in the property <b>firstEvents</b>. This list of events will be run through once, much like a standard <a href="eventlist.htm">EventList</a>. Once they've been exhausted, the ShuffledEventList will switch to the main eventList list, showing it one time through in its given order, then shuffling it and running through it again, and so on. The firstEvents list is never shuffled - it's always shown in exactly the order given. This combination of a list in a fixed order followed by a list which gets shuffled is particularly useful in connexion with <a href="topicentry.htm">TopicEntries</a>, when you want an NPC to give a specific sequence of responses (probably conveying relatively important information), followed by a series of randomly-ordered responses (perhaps indicating that the NPC has nothing further to say on the subject).
+<br>
+
+<br>
+We saw an example of a ShuffledEventList right at the start in the definition of our first <a href="outdoorroom.htm">OutdoorRoom</a>, where we used one for the atmosphere list. We'll also be encountering examples in connection with <a href="asktopic.htm">AskTopic</a>, <a href="askaboutfortopic.htm">AskForAboutTopic</a>, <a href="defaultasktopic.htm">DefaultAskTopic</a>, <a href="defaulttelltopic.htm">DefaultTellTopic</a>, <a href="defaultasktelltopic.htm">DefaultAskTellTopic</a>, and most of the other DefaultTopics.
+<br>
+
+<br>
+The ShuffledEventList has its own <a href="shuffledeventlisttemplate.htm">template</a> to allow easy definition of its firstEvents and eventList properties.
+<br>
+
+<br>
+Since ShuffledEventList inherits from <a href="randomfiringscript.htm">RandomFiringScript</a>, it can also use the same eventPercent, eventReduceTo, and eventReduceAfter properties that were described on <a href="randomeventlist.htm">RandomEventList</a>.
+<br>
+
+<br>
+</font>
+
+</body></html>

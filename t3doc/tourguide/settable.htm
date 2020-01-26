@@ -1,0 +1,84 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Settable</title><meta name="keywords" content="Settable,Component,makeSetting,isValidSetting,setToInvalidMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Settable : <a href="thing-introduction.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="springlever.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="numbereddial.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Settable is the base class for the various types of Dial, like the <a href="labeleddial.htm">LabeledDial</a> we constructed a couple of sections back. It can also be used to construct any other kind of settable control we care to devise. Here we'll use it to implement a slider on the Tardis control console; after all, now we've got the ship to sail round the lake, it's time to see what we get the Tardis to do.
+<br>
+
+<br>
+What we want to achieve is quite complicated. Ultimately the Tardis will be controlled by a combination of a slider that can be set to any letter from A to Z and a dial that can be turned to any number from 0 to 9. The Tardis's destination will be decided by a combination of both settings (making 260 in all), but unless the fluid link is refilled with mercury, the slider setting will have no effect. Some of the Tardis's destinations will be predefined (the interesting ones), while we'll dynamically create (rather boring) ones for when the player goes to an undefined destination. This makes it very hard for players to find the useful destinations by trying settings at random - instead they'll have to find the suitably planted list of useful destinations.
+<br>
+
+<br>
+So much for the summary, now let's get on with the implementation. As promised, we'll first make the slider. Make sure the following code is positioned in your code so that the slider is a Component of the tardisConsole object:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;tardisSlider&nbsp;:&nbsp;Settable,&nbsp;Component&nbsp;'slider'&nbsp;'slider'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;slider&nbsp;can&nbsp;be&nbsp;set&nbsp;to&nbsp;any&nbsp;letter&nbsp;of&nbsp;the&nbsp;alphabet.
+<br>
+&nbsp;&nbsp;&nbsp;It's&nbsp;currently&nbsp;set&nbsp;to&nbsp;&lt;&lt;curSetting&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;curSetting&nbsp;=&nbsp;'A'
+<br>
+&nbsp;&nbsp;&nbsp;makeSetting(val)
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curSetting&nbsp;=&nbsp;val.toUpper;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;isValidSetting(val)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;=&nbsp;val.toUpper;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(val&nbsp;&gt;=&nbsp;'A')&nbsp;&amp;&amp;&nbsp;(val&nbsp;&lt;=&nbsp;'Z')&nbsp;&amp;&amp;&nbsp;(val.length==1);
+<br>
+&nbsp;&nbsp;}&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;setToInvalidMsg&nbsp;=&nbsp;'The&nbsp;slider&nbsp;can&nbsp;be&nbsp;set&nbsp;only&nbsp;to&nbsp;a&nbsp;single&nbsp;letter&nbsp;from&nbsp;A&nbsp;to&nbsp;Z.&nbsp;'&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Once again we override <b>makeSetting</b> to convert a lower case entry to an upper case one. The only new factor here is the need to override the <b>isValidSetting</b> method to define what settings we'll accept. In this case we want to accept any single character setting between A and Z inclusive, so we test accordingly. Finally, we override the <b>setToInvalidMsg</b> to display a more meaningful message in the event of the player attempting to set the slider to an inappropriate setting, such as SET SLIDER TO 9 or SET SLIDER TO OMEGA.
+<br>
+
+<br>
+As things stands, the only verb that can be used to set the slider is SET; players might legitimately try to MOVE, PUSH or PULL the slider to a new setting. To cater for this we'll expand the vocabulary for the SetTo action:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;VerbRule(SetTo)
+<br>
+&nbsp;&nbsp;('move'&nbsp;|&nbsp;'push'|&nbsp;'pull'&nbsp;|&nbsp;'set')&nbsp;singleDobj&nbsp;'to'&nbsp;singleLiteral
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This might be a bit more liberal than we'd ideally like (e.g. since you can SET DIAL TO 7 you'll now also be able to PUSH DIAL TO 7, PULL DIAL TO 7 or MOVE DIAL TO 7 as well), but erring a little on the side of liberality in allowing player commands is probably no bad thing.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

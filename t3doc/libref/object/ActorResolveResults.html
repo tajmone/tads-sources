@@ -1,0 +1,110 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ActorResolveResults</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ActorResolveResults</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5703">5703</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Specialized noun-phrase resolution results gatherer for resolving a   command actor (i.e., the target actor of a command).
+<p>
+<code>class
+<b>ActorResolveResults</b> :  &nbsp; <a href="../object/BasicResolveResults.html">BasicResolveResults</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ActorResolveResults</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicResolveResults.html">BasicResolveResults</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ResolveResults.html">ResolveResults</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#allowActionRemapping">allowActionRemapping</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicResolveResults</code> :<br>
+<code>
+<a href="../object/BasicResolveResults.html#allowEquivalentFiltering">allowEquivalentFiltering</a>&nbsp;
+<a href="../object/BasicResolveResults.html#issuingActor_">issuingActor_</a>&nbsp;
+<a href="../object/BasicResolveResults.html#targetActor_">targetActor_</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#getImpliedObject">getImpliedObject</a>&nbsp;
+<a href="#singleObjectRequired">singleObjectRequired</a>&nbsp;
+<a href="#uniqueObjectRequired">uniqueObjectRequired</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicResolveResults</code> :<br>
+<code>
+<a href="../object/BasicResolveResults.html#allNotAllowed">allNotAllowed</a>&nbsp;
+<a href="../object/BasicResolveResults.html#ambiguousNounPhrase">ambiguousNounPhrase</a>&nbsp;
+<a href="../object/BasicResolveResults.html#askMissingLiteral">askMissingLiteral</a>&nbsp;
+<a href="../object/BasicResolveResults.html#askMissingObject">askMissingObject</a>&nbsp;
+<a href="../object/BasicResolveResults.html#beginSingleObjSlot">beginSingleObjSlot</a>&nbsp;
+<a href="../object/BasicResolveResults.html#beginTopicSlot">beginTopicSlot</a>&nbsp;
+<a href="../object/BasicResolveResults.html#canResolveInteractively">canResolveInteractively</a>&nbsp;
+<a href="../object/BasicResolveResults.html#emptyNounPhrase">emptyNounPhrase</a>&nbsp;
+<a href="../object/BasicResolveResults.html#endSingleObjSlot">endSingleObjSlot</a>&nbsp;
+<a href="../object/BasicResolveResults.html#endTopicSlot">endTopicSlot</a>&nbsp;
+<a href="../object/BasicResolveResults.html#filterWithDistinguisher">filterWithDistinguisher</a>&nbsp;
+<a href="../object/BasicResolveResults.html#incCommandCount">incCommandCount</a>&nbsp;
+<a href="../object/BasicResolveResults.html#insufficientQuantity">insufficientQuantity</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noMatch">noMatch</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noMatchForAll">noMatchForAll</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noMatchForAllBut">noMatchForAllBut</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noMatchForListBut">noMatchForListBut</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noMatchForLocation">noMatchForLocation</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noMatchForPossessive">noMatchForPossessive</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noMatchForPronoun">noMatchForPronoun</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noMatchPossessive">noMatchPossessive</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteActorSpecified">noteActorSpecified</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteAdjEnding">noteAdjEnding</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteBadPrep">noteBadPrep</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteEmptyBut">noteEmptyBut</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteIndefinite">noteIndefinite</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteLiteral">noteLiteral</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteMatches">noteMatches</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteMiscWordList">noteMiscWordList</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteNounSlots">noteNounSlots</a>&nbsp;
+<a href="../object/BasicResolveResults.html#notePlural">notePlural</a>&nbsp;
+<a href="../object/BasicResolveResults.html#notePronoun">notePronoun</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noteWeakPhrasing">noteWeakPhrasing</a>&nbsp;
+<a href="../object/BasicResolveResults.html#nothingInLocation">nothingInLocation</a>&nbsp;
+<a href="../object/BasicResolveResults.html#noVocabMatch">noVocabMatch</a>&nbsp;
+<a href="../object/BasicResolveResults.html#reflexiveNotAllowed">reflexiveNotAllowed</a>&nbsp;
+<a href="../object/BasicResolveResults.html#setActors">setActors</a>&nbsp;
+<a href="../object/BasicResolveResults.html#unknownNounPhrase">unknownNounPhrase</a>&nbsp;
+<a href="../object/BasicResolveResults.html#wrongReflexive">wrongReflexive</a>&nbsp;
+<a href="../object/BasicResolveResults.html#zeroQuantity">zeroQuantity</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="allowActionRemapping"></a>
+<table class=decl><tr><td><code>allowActionRemapping</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5740">5740</a>]</table><div class=desc>don't allow action remapping while resolving the actor<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5704">5704</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getImpliedObject"></a>
+<table class=decl><tr><td><code>getImpliedObject (np, resolver)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5718">5718</a>]</table><div class=desc>   set the initial actor context to the PC - this type of   resolver is set up to determine the actor context, so we don't   usually know the actual actor context yet when setting up this   resolver <p>
+</div>
+<a name="singleObjectRequired"></a>
+<table class=decl><tr><td><code>singleObjectRequired (txt)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5733">5733</a>]</table><div class=desc>an actor phrase must address a single actor<p>
+</div>
+<a name="uniqueObjectRequired"></a>
+<table class=decl><tr><td><code>uniqueObjectRequired (txt, matchList)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5727">5727</a>]</table><div class=desc>   there's no default for the actor - it's usually simply a   syntax error when the actor is omitted <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

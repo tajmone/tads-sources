@@ -1,0 +1,62 @@
+body {
+  background: #ffffff;
+  font-family: Arial, Helvetica, Sans-Serif;
+  color: #000000;
+  line-height: 1.4;
+}
+
+h1 {
+  font-family: Verdana, Arial, Helvetica, Sans-Serif;
+  size: 125%;
+  font-weight: normal;
+  color: #000080;
+}
+
+h2 {
+  font-family: Verdana, Arial, Helvetica, Sans-Serif;
+  font-size: 110%;
+  font-weight: normal;
+  color: #000080;
+}
+
+table.downloads h3 {
+  font-family: Verdana, Arial, Helvetica, Sans-Serif;
+  font-weight: bold;
+  font-size: 110%;
+  color: #000080;
+  margin: 0 0 0 0;
+}
+
+table.downloads {
+  background: #F0F0F0;
+}
+
+table.downloads td {
+  font-size: 80%;
+}
+
+table.downloads table td {
+  padding-top: 1em;
+}
+
+td.coverart {
+  padding-right: 1em;
+}
+
+td.dltext {
+  font-size: 80%;
+  padding-left: 1em;
+}
+
+span.details {
+  font-size: 85%;
+}
+
+span.notes {
+  font-size: 90%;
+  color: #606060;
+}
+
+span.fileinfo {
+  font-size: 90%;
+}

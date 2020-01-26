@@ -1,0 +1,53 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>awardPoints</title><meta name="keywords" content="awardPoints"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>awardPoints
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="simpleachievement.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="awardpointsonce.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">As an alternative to calling <a href="addtoscore.htm">addToScore</a> or <a href="achievement.htm">addToScoreOnce</a>, you can call awardPoints or <a href="awardpointsonce.htm">awardPointsOnce</a> on an Achievement object. This then automatically awards the number of points associated with the Achievement (i.e. defined in the points property of the Achievement object). For example, to have the player awarded 2 points for disposing of the demons, we might change the appropriate ShowTopic thus:
+<br>
+
+<br><pre><font face="Courier New" size="2" color="#000000">
+++ GiveShowTopic @baarasRoot
+   topicResponse
+   {
+     "As you produce the baaras root and hold it up before their demonic little
+       eyes, it starts to glow an eerie pink colour...
+      ...
+      ...   they
+      shimmer and dissolve, turning into plumes of oily black smoke which
+      vanishes like a mist. ";
+      demons.moveInto(nil);
+      <b>achievement.awardPoints();</b>
+   }
+
+  <b> achievement : Achievement { +2 "exorcizing the demons" }</b>
+;
+</font></pre>
+<br>
+
+<br><font face="Arial" size="2" color="#000000">
+Note that since the demons can only ever be exorcized once, we don't need any checks to prevent the points being awarded several times over. Otherwise, it would be more convenient to use <a href="awardpointsonce.htm">awardPointsOnce</a>. Note also the use of the <a href="achievementtemplate.htm">Achievement template</a>.
+<br>
+
+<br>
+So why do we need awardPoints and awardPointsOnce in addition to addToScore and addToScoreOnce? There are two implications here:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="6"></td><td width="45"><font face="Arial" size="2" color="#000000">1.</font></td><td><font face="Arial" size="2" color="#000000">With awardPoints and awardPointsOnce the Achievement object determines the number of points awarded. With addToScore and addToScoreOnce the function/method call determines the number of points awarded.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="6"></td><td width="45"><font face="Arial" size="2" color="#000000">2.</font></td><td><font face="Arial" size="2" color="#000000">Which set of methods you use can have implications for the calculation of the <a href="maxscore.htm">maximum score</a>.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="6"></td><td width="45"><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

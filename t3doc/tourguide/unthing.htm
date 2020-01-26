@@ -1,0 +1,98 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Unthing</title><meta name="keywords" content="Unthing,getFacets,notHereMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Unthing : <a href="decoration.htm">Decoration</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="distant.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="immovable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An Unthing is a special kind of Decoration used to represent something that <i>isn't</i> present, but to which the player might try to refer; it then displays its <font face="Courier New" size="2" color="#000000">notHereMsg</font><font face="Arial" size="2" color="#000000"> to explain why it isn't there. The most common use for an Unthing is to represent the absence of something that has just disappeared. For example suppose we plant what appears to be treasure in mainCave, but have it disappear when the player attempts to take it. We might then move an Unthing into its place to describe its absence if the player continues to refer to it:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">fakeTreasure&nbsp;:&nbsp;Thing&nbsp;'huge&nbsp;great&nbsp;golden&nbsp;gold&nbsp;banana/treasure'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'golden&nbsp;banana'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;fantastic&nbsp;treasure,&nbsp;over&nbsp;two&nbsp;feet&nbsp;long,&nbsp;and&nbsp;by&nbsp;the&nbsp;look&nbsp;of&nbsp;it,&nbsp;solid
+<br>
+&nbsp;&nbsp;&nbsp;gold.&nbsp;It&nbsp;must&nbsp;be&nbsp;worth&nbsp;an&nbsp;absolute&nbsp;fortune!"
+<br>
+&nbsp;&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;huge&nbsp;treasure&nbsp;-&nbsp;a&nbsp;great&nbsp;golden&nbsp;banana&nbsp;-&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Take)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"All&nbsp;that&nbsp;glisters&nbsp;is&nbsp;not&nbsp;gold,&nbsp;and&nbsp;as&nbsp;you&nbsp;try&nbsp;to&nbsp;take&nbsp;the&nbsp;great&nbsp;golden
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;banana&nbsp;it&nbsp;crumbles&nbsp;into&nbsp;dust&nbsp;and&nbsp;vanishes&nbsp;away.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noTreasure.moveInto(location);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveInto(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;getFacets()&nbsp;{&nbsp;return&nbsp;[noTreasure];&nbsp;}
+<br>
+;
+<br>
+
+<br>
+noTreasure&nbsp;:&nbsp;Unthing&nbsp;&nbsp;'huge&nbsp;great&nbsp;golden&nbsp;gold&nbsp;treasure/banana/dust'&nbsp;'golden&nbsp;banana'
+<br>
+&nbsp;&nbsp;'The&nbsp;illusory&nbsp;golden&nbsp;banana&nbsp;vanished&nbsp;into&nbsp;fine&nbsp;dust&nbsp;that&nbsp;is&nbsp;no
+<br>
+&nbsp;&nbsp;&nbsp;longer&nbsp;visible.&nbsp;'&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note the use of getFacets on fakeTreasure, so that if a player types TAKE BANANA followed by, say, X IT, the parser will know that IT now refers to the noTreasure object that's just been substituted for the fakeTreasure. In this case there's no need to add a getFacets method to noTreasure, since the fakeTreasure will never reappear to be referred to as IT. Note also the range of vocabulary words we have given to both objects, and that we added' dust' to the list of words by which the noTreasure object can be referred to.
+<br>
+
+<br>
+Note that the third property we have defined on Unthing is <i>single-quoted string</i>, not a double-quoted string. This is because there is a special <a href="unthingtemplate.htm">Unthing template</a> which puts the notHereMsg instead of desc in third place. We don't want to define desc on an Unthing, because it's not generally useful, we just want to define the </font><font face="Courier New" size="2" color="#000000">notHereMsg</font><font face="Arial" size="2" color="#000000"> which will be used for any command that tries to interact with the Unthing. The above definition of noTreasure is equivalent to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">noTreasure&nbsp;:&nbsp;Unthing&nbsp;&nbsp;'huge&nbsp;great&nbsp;golden&nbsp;gold&nbsp;treasure/banana/dust'&nbsp;'golden&nbsp;banana'
+<br>
+&nbsp;&nbsp;notHereMsg&nbsp;=&nbsp;'The&nbsp;illusory&nbsp;golden&nbsp;banana&nbsp;vanished&nbsp;into&nbsp;fine&nbsp;dust&nbsp;that&nbsp;is&nbsp;no
+<br>
+&nbsp;&nbsp;&nbsp;longer&nbsp;visible.&nbsp;'&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Or to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">noTreasure&nbsp;:&nbsp;Unthing&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;vocabWords&nbsp;=&nbsp;'huge&nbsp;great&nbsp;golden&nbsp;gold&nbsp;treasure/banana/dust'&nbsp;
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'golden&nbsp;banana'
+<br>
+&nbsp;&nbsp;notHereMsg&nbsp;=&nbsp;'The&nbsp;illusory&nbsp;golden&nbsp;banana&nbsp;vanished&nbsp;into&nbsp;fine&nbsp;dust&nbsp;that&nbsp;is&nbsp;no
+<br>
+&nbsp;&nbsp;&nbsp;longer&nbsp;visible.&nbsp;'&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,102 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TopicMatchTopic</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TopicMatchTopic</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2783">2783</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A "topic match" topic entry.  This is a topic entry that matches topic   phrases in the grammar. <p>   Handling topic phrases is a bit tricky, because they can't be resolved   to definitive game-world objects the way ordinary noun phrases can.   Topic phrases can refer to things that aren't physically present, but   which are known to the actor performing the command; they can refer to   abstract Topic objects, that have no physical existence in the game   world at all; and they can ever be arbitrary text that doesn't match   any vocabulary defined by the game. <p>   Our strategy in matching topics is to first narrow the list down to   the physical and abstract game objects that both match the vocabulary   used in the command and are part of the memory of the actor performing   the command.  That much is handled by the normal topic phrase   resolution rules, and gives us a list of possible matches.  Then,   given this narrowed list of possibilities, we look through the list of   objects that we're associated with; we effectively intersect the two   lists, and if the result is non-empty, we consider it a match.   Finally, we also consider any regular expression that we're associated   with; if we have one, and the topic phrase text in the command matches   the input, we'll consider it a match.
+<p>
+<code>class
+<b>TopicMatchTopic</b> :  &nbsp; <a href="../object/TopicEntry.html">TopicEntry</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TopicMatchTopic</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicEntry.html">TopicEntry</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TopicMatchTopic</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellTopic.html">AskTellTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskAboutForTopic.html">AskAboutForTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskForTopic.html">AskForTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellAboutForTopic.html">AskTellAboutForTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTopic.html">AskTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TellTopic.html">TellTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConsultTopic.html">ConsultTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicOrThingMatchTopic.html">TopicOrThingMatchTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellGiveShowTopic.html">AskTellGiveShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellShowTopic.html">AskTellShowTopic</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#matchExactCase">matchExactCase</a>&nbsp;
+<a href="#matchPattern">matchPattern</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicEntry</code> :<br>
+<code>
+<a href="../object/TopicEntry.html#altTalkCount">altTalkCount</a>&nbsp;
+<a href="../object/TopicEntry.html#altTopicList">altTopicList</a>&nbsp;
+<a href="../object/TopicEntry.html#impliesGreeting">impliesGreeting</a>&nbsp;
+<a href="../object/TopicEntry.html#includeInList">includeInList</a>&nbsp;
+<a href="../object/TopicEntry.html#isActive">isActive</a>&nbsp;
+<a href="../object/TopicEntry.html#isConversational">isConversational</a>&nbsp;
+<a href="../object/TopicEntry.html#matchObj">matchObj</a>&nbsp;
+<a href="../object/TopicEntry.html#matchScore">matchScore</a>&nbsp;
+<a href="../object/TopicEntry.html#talkCount">talkCount</a>&nbsp;
+<a href="../object/TopicEntry.html#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="../object/TopicEntry.html#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+<a href="../object/TopicEntry.html#topicResponse">topicResponse</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#findMatchObj">findMatchObj</a>&nbsp;
+<a href="#isMatchPossible">isMatchPossible</a>&nbsp;
+<a href="#matchTopic">matchTopic</a>&nbsp;
+<a href="#setTopicPronouns">setTopicPronouns</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicEntry</code> :<br>
+<code>
+<a href="../object/TopicEntry.html#addAltTopic">addAltTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#addTopic">addTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#adjustScore">adjustScore</a>&nbsp;
+<a href="../object/TopicEntry.html#anyAltIsActive">anyAltIsActive</a>&nbsp;
+<a href="../object/TopicEntry.html#breakTopicTie">breakTopicTie</a>&nbsp;
+<a href="../object/TopicEntry.html#checkIsActive">checkIsActive</a>&nbsp;
+<a href="../object/TopicEntry.html#deferToEntry">deferToEntry</a>&nbsp;
+<a href="../object/TopicEntry.html#getActor">getActor</a>&nbsp;
+<a href="../object/TopicEntry.html#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="../object/TopicEntry.html#handleTopic">handleTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#initializeTopicEntry">initializeTopicEntry</a>&nbsp;
+<a href="../object/TopicEntry.html#noteAltInvocation">noteAltInvocation</a>&nbsp;
+<a href="../object/TopicEntry.html#noteInvocation">noteInvocation</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="matchExactCase"></a>
+<table class=decl><tr><td><code>matchExactCase</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2800">2800</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="matchPattern"></a>
+<table class=decl><tr><td><code>matchPattern</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2799">2799</a>]</table><div class=desc>   A regular expression pattern that we'll match to the actual topic   text as entered in the command.  If 'matchExactCase' is true,   we'll match the exact text in its original upper/lower case   rendering; otherwise, we'll convert the player input to lower-case   before matching it against the pattern.  In most cases, we'll want   to match the input no matter what combination of upper and lower   case the player entered, so matchExactCase is nil by default. <p>   Note that both the object (or object list) and the regular   expression pattern can be included for a single topic entry   object.  This allows a topic entry to match several different ways   of entering the topic name, or to match several different topics   with the same response. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="findMatchObj"></a>
+<table class=decl><tr><td><code>findMatchObj (obj, rt)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2876">2876</a>]</table><div class=desc>   Match an individual item from our match list to the given   ResolvedTopic object.  We'll check each object in the resolved   topic's "in scope" and "likely" lists. <p>
+</div>
+<a name="isMatchPossible"></a>
+<table class=decl><tr><td><code>isMatchPossible (actor, scopeList)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2893">2893</a>]</table><div class=desc>   It's possible for us to match if any of our matchObj objects are   known to the actor.  If we have no matchObj objects, we must be   matching on a regular expression or on a custom condition, so we   can't speculate on matchability; we'll simply return true in those   cases. <p>
+</div>
+<a name="matchTopic"></a>
+<table class=decl><tr><td><code>matchTopic (fromActor, topic)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2814">2814</a>]</table><div class=desc>   Match the topic.  By default, we'll match to either the simulation   object or objects in matchObj, or the pattern in matchPattern.   Note that we always try both ways of matching, so a single   AskTellTopic can define both a pattern and an object list. <p>   'topic' is a ResolvedTopic object describing the player's text   input and the list of objects that the parser matched to the text. <p>   Subclasses can override this as desired to use other ways of   matching. <p>
+</div>
+<a name="setTopicPronouns"></a>
+<table class=decl><tr><td><code>setTopicPronouns (fromActor, topic)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2926">2926</a>]</table><div class=desc>set the topic pronouns<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

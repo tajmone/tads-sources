@@ -1,0 +1,68 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>roomXxxxAction</title><meta name="keywords" content="roomBeforeAction,roomAfterAction,gActionIn,gActionIs,exit,parameter substitution,afterAction,beforeAction"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>roomXxxxAction
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="travelconnector.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="roomparts.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We have now explored all the main types of Room and TravelConnector in the standard library that an author is likely to use (we have not included classes such as BasicLocation, Passage and Stairway that are unlikely to be used directly, since one would normally use one of their subclasses). But before leaving the topic of rooms it may be worth looking at one or two of the methods and properties that can be overridden on them to customise their behaviour.
+<br>
+
+<br>
+We have already seen how to customise the <a href="outdoorroom.htm">atmosphereList</a> and <a href="secretdoor.htm">brightness</a> properties, so we shall start with the roomAfterAction and roomBeforeAction methods. These are called on the room object whenever an action is performed within that room, either after or before the action. In addition, the roomBeforeAction can abort an action by calling the exit macro. As ever, this is probably best illustrated by means of an example, which we'll provide by adding roomBeforeAction and roomAfterAction methods to the Cabin class:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;Cabin&nbsp;:&nbsp;ShipboardRoom,&nbsp;Room
+<br>
+&nbsp;&nbsp;roomBeforeAction()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIs(Jump))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;had&nbsp;better&nbsp;not&nbsp;try&nbsp;jumping&nbsp;here,&nbsp;{you/he}&nbsp;might&nbsp;hit
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{your}&nbsp;head&nbsp;on&nbsp;the&nbsp;deck&nbsp;beams.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;roomAfterAction
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIn(Look,&nbsp;Examine))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"\nThe&nbsp;ship&nbsp;creaks&nbsp;ominously.\n";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The gActionIs macro tests for the action that is about to be performed in the room. If the Player Character attempts to jump in the cabin he or she is warned that doing so might result in a collision of head and deck beams and the action is aborted. We use the parameter substitution syntax ( {You/he} etc. ) to deal with the possibility that an NPC is made to jump in the cabin. The gActionIn macro tests for an action matching any of the actions in a list; we use it in roomAfterAction, which tests for either a LOOK or an EXAMINE command being performed, and then displays a message about the ship creaking after the results of the LOOK or EXAMINE. This example is somewhat contrived, and one would probably use some other method to describe the creaking of the ship (although this one may well do well enough) or else have roomAfterAction call the doScript method of an EventList object to vary the message displayed, but the example will suffice to give the general idea. If you like, you can compile and run the game to see what happens in a cabin when you try to JUMP, LOOK or EXAMINE there.
+<br>
+
+<br>
+Perhaps the most important point to remember here is to use the roomAfterAction and roomBeforeAction methods for this type of effect; using afterAction or beforeAction on a Room doesn't work.
+<br>
+
+<br>
+Note also that in the above code snippet I've put brackets after </font><font face="Courier New" size="2" color="#000000">roomBeforeAction()</font><font face="Arial" size="2" color="#000000"> but not after </font><font face="Courier New" size="2" color="#000000">roomAfterAction</font><font face="Arial" size="2" color="#000000">. Where a method takes no parameters either is correct (brackets or no brackets) and it makes no difference which you use.
+<br>
+</font></font>
+
+</body></html>

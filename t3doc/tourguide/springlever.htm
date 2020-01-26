@@ -1,0 +1,114 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SpringLever</title><meta name="keywords" content="SpringLever"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SpringLever : <a href="lever.htm">Lever</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="labeleddial.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="settable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A SpringLever is a lever that returns to its original position after being pulled. It is functionally similar to a Button, except that it responds to PULL instead of PRESS or PUSH. Apart from giving SpringLever the usual vocabulary, name and description properties, all one need normally do is to override its actionDobjPull method with whatever one wants to happen when the lever is pulled. In this case we want nothing to happen unless the hexagonal crystal is in the hexagonal hole and the wheel points to a destination other than where the ship already is, so we first test for these cases. If the conditions for setting sail are met, we display a suitable message making use of wheel.curDirection (defined in the <a href="labeleddial.htm">LabeledDial</a> example above) to describe the direction of travel, and then move the ship into its new destination as defined by wheel.curDestination:
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;SpringLever,&nbsp;Component&nbsp;'long&nbsp;silver&nbsp;(black)&nbsp;lever/knob/plaque'&nbsp;'lever'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;long&nbsp;silver&nbsp;lever&nbsp;with&nbsp;a&nbsp;black&nbsp;knob&nbsp;on&nbsp;the&nbsp;end.&nbsp;A&nbsp;silver&nbsp;plaque
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screwed&nbsp;just&nbsp;underneath&nbsp;it&nbsp;is&nbsp;inscribed&nbsp;AUTOPILOT.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Pull)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!hexCrystal.isIn(hexHole)&nbsp;||&nbsp;wheel.curDestination&nbsp;==&nbsp;ship.location)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Nothing&nbsp;happens.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&nbsp;hum&nbsp;starts&nbsp;up&nbsp;deep&nbsp;in&nbsp;the&nbsp;bowels&nbsp;of&nbsp;the&nbsp;ship.&nbsp;With&nbsp;a&nbsp;reluctant&nbsp;creak,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;capstan&nbsp;turns,&nbsp;drawing&nbsp;up&nbsp;the&nbsp;anchor.&nbsp;The&nbsp;ship&nbsp;judders,&nbsp;then&nbsp;starts
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gliding&nbsp;out&nbsp;into&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;lake.&nbsp;From&nbsp;there
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it&nbsp;continues&nbsp;&lt;&lt;wheel.curDirection&gt;&gt;&nbsp;until&nbsp;it&nbsp;comes&nbsp;to&nbsp;rest&nbsp;by&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;wheel.curDirection&gt;&gt;ern&nbsp;shore,&nbsp;where&nbsp;the&nbsp;capstan&nbsp;lowers&nbsp;the&nbsp;anchor,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;the&nbsp;ship&nbsp;moors&nbsp;itself&nbsp;up,&nbsp;port&nbsp;side&nbsp;to&nbsp;the&nbsp;shore.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ship.moveInto(wheel.curDestination);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Before trying this out, it would be well to define the three new locations that can now be reached by the ship. If you are splitting your code into separate source files, you might like to start a fresh source file for each of these rooms, since each will be the start of a new region of the map:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">eastShore&nbsp;:&nbsp;Room&nbsp;'Stone&nbsp;Jetty'&nbsp;'the&nbsp;stone&nbsp;jetty'
+<br>
+&nbsp;&nbsp;"This&nbsp;bleak&nbsp;stone&nbsp;jetty&nbsp;is&nbsp;little&nbsp;more&nbsp;than&nbsp;a&nbsp;narrow&nbsp;corridor&nbsp;between&nbsp;the&nbsp;lake&nbsp;to
+<br>
+&nbsp;&nbsp;the&nbsp;west&nbsp;and&nbsp;the&nbsp;rough&nbsp;cave&nbsp;wall&nbsp;to&nbsp;the&nbsp;east.&nbsp;A&nbsp;broad&nbsp;flight&nbsp;of&nbsp;stone&nbsp;steps&nbsp;leads
+<br>
+&nbsp;&nbsp;down&nbsp;to&nbsp;the&nbsp;north,&nbsp;while&nbsp;a&nbsp;much&nbsp;narrower&nbsp;flight&nbsp;leads&nbsp;up&nbsp;to&nbsp;the&nbsp;south.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+westShore&nbsp;:&nbsp;Room&nbsp;'Sandy&nbsp;Beach'&nbsp;'the&nbsp;sandy&nbsp;beach'
+<br>
+&nbsp;&nbsp;&nbsp;"For&nbsp;an&nbsp;underground&nbsp;lake&nbsp;this&nbsp;section&nbsp;of&nbsp;shore&nbsp;forms&nbsp;a&nbsp;surprisingly&nbsp;large&nbsp;beach.&nbsp;The
+<br>
+&nbsp;&nbsp;&nbsp;lake&nbsp;laps&nbsp;the&nbsp;shore&nbsp;to&nbsp;the&nbsp;east,&nbsp;while&nbsp;a&nbsp;pair&nbsp;of&nbsp;paths&nbsp;lead&nbsp;up&nbsp;from&nbsp;the&nbsp;beach&nbsp;to&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;cave&nbsp;complex&nbsp;beyond,&nbsp;one&nbsp;to&nbsp;the&nbsp;northwest&nbsp;and&nbsp;the&nbsp;other&nbsp;to&nbsp;the&nbsp;southwest.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+southShore&nbsp;:&nbsp;Room&nbsp;'Rocky&nbsp;shore'&nbsp;'the&nbsp;rocky&nbsp;shore'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;rocky&nbsp;shore&nbsp;looks&nbsp;so&nbsp;barren&nbsp;here&nbsp;as&nbsp;to&nbsp;be&nbsp;scarcely&nbsp;worth&nbsp;visiting,&nbsp;apart
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;a&nbsp;narrow&nbsp;tunnel&nbsp;leading&nbsp;off&nbsp;to&nbsp;the&nbsp;south.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note: depending on when you last recompiled the game you may need to do a complete recompile (Build -&gt; Full Recompile for Debugging) after adding these locations. Having done so, you can try sailing the ship round the lake.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

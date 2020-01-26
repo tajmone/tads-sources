@@ -1,0 +1,278 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Basic Travel</title><meta name="keywords" content="Fixture,connector,FakeConnector"></meta>
+<LINK href="main.css" type=text/css rel=stylesheet></LINK>
+</head>
+<body bgcolor="#ffffff">
+
+<div class="topbar"><A href="index.html"><IMG src="topbar.jpg" border=0></A></div>
+
+
+
+<div class="main">
+
+<P><FONT SIZE=-1><A href="index.html">[Main]</A><BR>
+
+<I><A href="tyingupsomeloosestrings.htm">[Previous] </A>&nbsp;&nbsp;<A href="climbingthetree.htm">[Next] </A></I></FONT></P>
+
+<H1>Chapter 4 - Moving Around</H1>
+
+
+
+<H2>Moving Around</H2>
+
+
+
+<p>The next step is to expand the map to a few more locations (rooms) so we can start moving around. We'll begin by adding the other three locations that feature in the original <i>Adventures of Heidi</i>. We have already covered most of what we need to know in order to do this. Add the following code to the end of the existing program. An explanation of new features follows.</p>
+
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+
+&nbsp;<br>
+
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2"
+
+color="#000000">forest&nbsp;:&nbsp;OutdoorRoom&nbsp;'Deep&nbsp;in&nbsp;the&nbsp;Forest'
+
+<br>
+
+&nbsp;&nbsp;&nbsp;"Through&nbsp;the&nbsp;deep&nbsp;foliage&nbsp;you&nbsp;glimpse&nbsp;a&nbsp;building&nbsp;to&nbsp;the&nbsp;west.
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;track&nbsp;leads&nbsp;to&nbsp;the&nbsp;northeast,&nbsp;and&nbsp;a&nbsp;path&nbsp;leads&nbsp;south.&nbsp;"
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;outsideCottage
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;northeast&nbsp;=&nbsp;clearing&nbsp;&nbsp;
+
+<br>
+
+;
+
+<br>
+
+
+
+<br>
+
+clearing&nbsp;:&nbsp;OutdoorRoom&nbsp;'Clearing'&nbsp;&nbsp;&nbsp;&nbsp;
+
+<br>
+
+&nbsp;&nbsp;&nbsp;"A&nbsp;tall&nbsp;sycamore&nbsp;tree&nbsp;stands&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;this&nbsp;clearing.
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;One&nbsp;path&nbsp;winds&nbsp;to&nbsp;the&nbsp;southwest,&nbsp;and&nbsp;another&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;southwest&nbsp;=&nbsp;forest
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;topOfTree
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;north&nbsp;:&nbsp;FakeConnector&nbsp;{"You&nbsp;decide&nbsp;against&nbsp;going&nbsp;that&nbsp;way&nbsp;right
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;now.&nbsp;"}
+
+<br>
+
+;
+
+<br>
+
+
+
+<br>
+
+
+
+<br>
+
++&nbsp;tree&nbsp;:&nbsp;Fixture&nbsp;'tall&nbsp;sycamore&nbsp;tree'&nbsp;'tree'
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;"Standing&nbsp;proud&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;clearing,&nbsp;the&nbsp;stout
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tree&nbsp;looks&nbsp;like&nbsp;it&nbsp;should&nbsp;be&nbsp;easy&nbsp;to&nbsp;climb.&nbsp;"&nbsp;&nbsp;&nbsp;
+
+<br>
+
+;
+
+<br>
+
+
+
+<br>
+
+topOfTree&nbsp;:&nbsp;OutdoorRoom&nbsp;'At&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;tree'
+
+<br>
+
+&nbsp;&nbsp;&nbsp;"You&nbsp;cling&nbsp;precariously&nbsp;to&nbsp;the&nbsp;trunk,&nbsp;next&nbsp;to&nbsp;a&nbsp;firm,&nbsp;narrow
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;branch.&nbsp;"
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;clearing
+
+<br>
+
+;
+
+<br>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+
+&nbsp;
+
+</font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+
+&nbsp;
+
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The room definitions and the definition of the tree object should need little explanation. The important new concept that has been introduced here is that of a <I>travel connector</I>. A travel connector is an object that controls what happens if an actor attempts to travel via it. To define what happens when an actor tries to move in a certain direction we must attach a travel connector to the appropriate direction property. For example, to define what happens when the player character is in the forest and the player types <STRONG>west</STRONG> we attach the connector called <CODE>outsideCottage</CODE> to the west property of <CODE>forest</CODE>. You may object that <CODE>outsideCottage</CODE> is simply a room, the room we started by defining; but <I>Rooms</I> are in fact a special kind of <I>TravelConnector</I>, connectors that point to themselves as destination. Traveling via a
+<I>Room</I> thus means traveling to that <I>Room</I>. So if we want movement to take place directly from one room to another, we simply set the appropriate direction property to the destination room. Note that unlike TADS 2, in TADS 3 the direction properties <CODE>northwest</CODE>, <CODE>northeast</CODE>, <CODE>southwest</CODE>, and <CODE>southeast</CODE> must be spelled out in full; the other direction properties you will commonly use are <CODE>north</CODE>, <CODE>south</CODE>, <CODE>east</CODE>,
+<CODE>west</CODE>, <CODE>up</CODE>, <CODE>down</CODE>, <CODE>in </CODE>and
+<CODE>out</CODE>.
+
+<br>
+
+
+
+<br>
+
+You have probably noticed that the north property from the clearing uses a different kind of connector, a <TT>FakeConnector</TT>. A <TT>FakeConnector </TT>is what it sounds like, a connector that only appears to go somewhere. An attempt to travel via a <TT>FakeConnector </TT>results in its <TT>travelDesc </TT>message being displayed without any travel actually taking place. One use of a <TT>FakeConnector </TT>might be to create 'soft boundaries' to your map, to make it look as if it extends further than it really does.  But in this case we're using a <TT>FakeConnector </TT>because the room description mentions a path to the north, which we shall eventually want to implement, but do not wish to implement yet.
+
+<br>
+
+
+
+<br>
+
+The code using this connector would have looked more like that using rooms as connectors if we had defined the <TT>FakeConnector</TT> as a separate object thus:
+
+<br>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+
+&nbsp;<br>
+
+</font></font></TD></TR></TBODY></TABLE><table
+
+border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">fakePath&nbsp;:&nbsp;FakeConnector
+
+<br>
+
+&nbsp;&nbsp;&nbsp;travelDesc&nbsp;=&nbsp;"You&nbsp;decide&nbsp;against&nbsp;going&nbsp;that&nbsp;way&nbsp;right
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;now.&nbsp;"
+
+
+
+<br>
+
+;
+
+<br>
+
+
+
+<br>
+
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The clearing would then be defined with
+
+<br>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+
+color="#000000">
+
+&nbsp;<br>
+
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">north&nbsp;=&nbsp;fakePath
+
+&nbsp;<br>
+
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+
+&nbsp;<br>
+
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">What we in fact
+
+did was to make <TT>fakePath</TT> both an <i>anonymous object</i> and a <i>nested object</i> (all nested objects are in fact anonymous, though the reverse is not true). A nested object is simply an object whose definition is nested inside another object definition. In this case the definition of the <TT>FakeConnector</TT> is nested within the definition of the <TT>clearing</TT>. The definition of a nested object must be enclosed within braces (and not terminated with a semicolon). <TT>FakeConnector</TT> uses a template for which a double-quoted string is its <TT>travelDesc</TT> property (the message that displays when one tries to travel via that connector). The definition of the <TT>north</TT> property of <TT>clearing</TT> is thus a convenient shorthand way of saying 'travel north from here is via an anonymous object of class <TT>FakeConnector</TT> whose <TT>travelDesc</TT> property is  "You decide against going that way right now. "  Although this <TT>FakeConnector</TT> has no name of its own, it can be referred to as <TT>clearing.north</TT>, i.e. the value of the <TT>north&nbsp;</TT>property of the <TT>clearing</TT> object. Since this kind of shortcut definition is exceedingly common in TADS 3 it is worth introducing at this early stage. We shall meet several more examples as we go on to develop the game.
+
+<br>
+
+
+
+<br>
+
+If you compile and run the game as it is it will look as if nothing has changed from the previous chapter; the new rooms we have added won't appear. The reason for this (which you've probably guessed already) is that we haven't added a connector out of the original </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> room (a bug waiting to happen when
+
+adding more rooms to an already complex map). This is easy enough to put right; just add the following to the definition of </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, between the room description and the terminating semicolon:
+
+<br>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+  <TBODY><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+
+&nbsp;<br>
+
+</font></font></TD></TR></TBODY></TABLE><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">east&nbsp;=&nbsp;forest
+
+&nbsp;<br>
+
+</font></td></tr></table><table border="0" cellpadding="0"
+
+cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+
+&nbsp;<br>
+
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The game should now work as expected.
+
+<br>
+
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+
+<br>
+
+</font></font>
+
+
+
+<HR>
+
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+
+<A href="index.html">[Main]</A><BR>
+
+<I><A href="tyingupsomeloosestrings.htm">[Previous] </A>&nbsp;&nbsp;<A href="climbingthetree.htm">[Next] </A></I></FONT></P></FONT></FONT></FONT></FONT></div>
+
+</body></html>
+
+
+

@@ -1,0 +1,178 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ConversationReadyState</title><meta name="keywords" content="ConversationReadyState,inConvState"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ConversationReadyState : <a href="overview-actorstates.htm">ActorState</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="inconversationstate.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="greetingprotocols.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A ConversationReadyState, as its name suggests, is the kind of ActorState is in when the actor is not actually talking to the PC but is prepared to do so. When a conversational command (ASK ABOUT, TELL ABOUT, ASK FOR, SHOW TO, GIVE TO, TALK TO) is addressed to an actor who's in a ConversationReadyState, the actor automatically switches into the associated InConversationState. What the associated state is may be defined either explicitly by setting the <b>inConvState</b> property, or implicitly by nesting the ConversationReadyState inside its associated <a href="inconversationstate.htm">InConversationState</a>. Here we'll use the latter method, even though here, as typically, the ConversationReadyStates we'll be defining are the initial states of the actors in question.
+<br>
+
+<br>
+We'll continue where we left off, with the demons (who must still block your path in this state too). This code follows immediately after the demonsChattering state:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;demonsPrancing&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;gaggle&nbsp;of&nbsp;demons&nbsp;is&nbsp;prancing&nbsp;around&nbsp;on&nbsp;the&nbsp;rocks&nbsp;near&nbsp;the&nbsp;steps&nbsp;down
+<br>
+&nbsp;&nbsp;&nbsp;towards&nbsp;the&nbsp;basalt&nbsp;plain,&nbsp;pretending&nbsp;to&nbsp;ignore&nbsp;you,&nbsp;but&nbsp;keeping&nbsp;a&nbsp;careful&nbsp;watch&nbsp;on
+<br>
+&nbsp;&nbsp;&nbsp;you&nbsp;just&nbsp;the&nbsp;same.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"They're&nbsp;prancing&nbsp;around&nbsp;near&nbsp;the&nbsp;steps&nbsp;down&nbsp;to&nbsp;the&nbsp;plain.&nbsp;"
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;beforeTravel(traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(connector&nbsp;==&nbsp;hellPathDown)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;demons&nbsp;bunch&nbsp;together&nbsp;and&nbsp;shriek&nbsp;at&nbsp;you,&nbsp;driving&nbsp;you&nbsp;back&nbsp;from&nbsp;the&nbsp;steps.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(traveler,&nbsp;connector);&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The initial ConversationReady states for Sarah and Solomon are rather more straightforward (again, each one should be nested within the corresponding InConversationState):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;sarahLooking&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{A&nbsp;sarah/she}&nbsp;is&nbsp;standing&nbsp;by&nbsp;the&nbsp;shore,&nbsp;apparently
+<br>
+&nbsp;&nbsp;&nbsp;looking&nbsp;at&nbsp;something,&nbsp;though&nbsp;she&nbsp;occasionally&nbsp;throws&nbsp;a&nbsp;curious
+<br>
+&nbsp;&nbsp;&nbsp;glance&nbsp;your&nbsp;way.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She&nbsp;seems&nbsp;to&nbsp;be&nbsp;looking&nbsp;for&nbsp;something.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;solomonExamining&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{inherited;&nbsp;stateDesc;&nbsp;}
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;staring&nbsp;at&nbsp;the&nbsp;table,&nbsp;deep&nbsp;in&nbsp;thought.&nbsp;"
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+While that of the curator is a little more complicated:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;curatorWatching&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;watching&nbsp;you&nbsp;carefully.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{&nbsp;inherited;&nbsp;stateDesc;&nbsp;}
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;beforeTravel(traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(traveler,&nbsp;connector);&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(traveler&nbsp;==&nbsp;gPlayerChar)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(connector)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;museum:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getActor.moveIntoForTravel(byCases);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;curator/he}&nbsp;follows&nbsp;you&nbsp;into&nbsp;the&nbsp;museum.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;museumLobby:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getActor.moveIntoForTravel(behindTable);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;curator/he}&nbsp;follows&nbsp;you&nbsp;into&nbsp;the&nbsp;lobby.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;benefactorsRoom:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;I'm&nbsp;afraid&nbsp;you&nbsp;can't&nbsp;go&nbsp;in&nbsp;there,&lt;/q&gt;&nbsp;{the&nbsp;curator/he}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;intercepts&nbsp;you,&nbsp;&lt;q&gt;That's&nbsp;the&nbsp;&lt;i&gt;benefactors'&lt;/i&gt;&nbsp;room;&nbsp;only
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;our&nbsp;benefactors&nbsp;are&nbsp;allowed&nbsp;in&nbsp;there&nbsp;to&nbsp;see&nbsp;the&nbsp;special
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exhibits.&lt;/q&gt;&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In order to make this travel checking occur on the related InConversationState without having to repeat all the code we can simply call this method thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;curatorTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;looking&nbsp;straight&nbsp;at&nbsp;you,&nbsp;head&nbsp;cocked&nbsp;slightly&nbsp;to&nbsp;one&nbsp;side.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{&nbsp;inherited;&nbsp;stateDesc;&nbsp;}
+<br>
+&nbsp;&nbsp;attentionSpan&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;<b>beforeTravel(traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;curatorWatching.beforeTravel(traveler,&nbsp;connector);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(traveler,&nbsp;connector);
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

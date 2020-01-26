@@ -1,0 +1,160 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Decoration</title><meta name="keywords" content="Decoration,notImportantMsg,* (plural marker),plurals,roomParts,MultiLoc,initNominalRoomPartLocation,isListedInRoomPart,RoomPartItem,specialNominalRoomPartLocation"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Decoration : <a href="fixture.htm">Fixture</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="customfixture.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="distant.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The normal purpose of a Decoration object is to provide a description of an object mentioned in a room description or other object description, when the object is of no real importance to the game but ought to be implemented for the sake of completeness. For example, consider the following transcript:
+<br>
+
+<br>
+&gt; LOOK
+<br>
+<b>Entrance Cave</b>
+<br>
+This large cave forms the main entrance to the whole underground complex.
+<br>
+A red sign on one wall points to the north; next to it is a blue sign.
+<br>
+A sturdy steel ladder leads down through a large round hole in the floor,
+<br>
+and a narrow ledge is carved into one wall.
+<br>
+
+<br>
+&gt;X RED SIGN
+<br>
+You see no red sign here.
+<br>
+
+<br>
+Even if the red sign is of no importance to the game, this is frustrating to the player. A Decoration object gets round this by providing something that produces a description in response to an EXAMINE command and a message like 'The red sign is not important.' in response to any other action attempted upon it. We could thus implement the two signs mentioned in the entranceCave as follows:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Decoration&nbsp;'red&nbsp;sign*signs'&nbsp;'red&nbsp;sign'&nbsp;@entranceCave
+<br>
+&nbsp;"\n&lt;FONT&nbsp;COLOR=WHITE&nbsp;BGCOLOR=RED&nbsp;FACE='Tads-Typewriter'&gt;WAY&nbsp;OUT&nbsp;-&gt;&lt;/FONT&gt;\n"
+<br>
+&nbsp;&nbsp;dobjFor(Read)&nbsp;asDobjFor(Examine)
+<br>
+;
+<br>
+
+<br>
+Decoration&nbsp;'blue&nbsp;sign*signs'&nbsp;'blue&nbsp;sign'&nbsp;@entranceCave
+<br>
+&nbsp;&nbsp;"\n&lt;FONT&nbsp;BGCOLOR=BLUE&nbsp;COLOR=WHITE&nbsp;FACE='TADS-Typewriter'&gt;
+<br>
+&nbsp;&nbsp;&nbsp;WELCOME&nbsp;TO&amp;ensp;THE\nEERHTSDAT&nbsp;CAVES&lt;/FONT&gt;\n"
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Read)&nbsp;asDobjFor(Examine)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we have remapped READ to EXAMINE for these signs since a player might quite reasonably expect to be able to read a sign as well as examine it. Note also the </font><font face="Courier New" size="2" color="#000000">*signs</font><font face="Arial" size="2" color="#000000"> syntax in the vocabulary of these objects. Any word after an asterisk (*) in an object's vocabulary is considered a plural (or other collective noun) for that object. In this instance this allows a player type X SIGNS or READ SIGNS and have both signs described by the same command.
+<br>
+
+<br>
+According to the room description of mainCave, the torch is simply fixed to the wall. If the player examines the torch however, he or she is told that the torch is fixed to the wall by means of a steel bracket. Players are not meant to interact with the bracket in any other way, but since they may try to, it is a good candidate for a Decoration object.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Decoration&nbsp;'steel&nbsp;bracket'&nbsp;'steel&nbsp;bracket'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"The&nbsp;steel&nbsp;bracket&nbsp;is&nbsp;fixed&nbsp;securely&nbsp;to&nbsp;the&nbsp;wall;&nbsp;there&nbsp;doesn't&nbsp;appear&nbsp;to&nbsp;be
+<br>
+&nbsp;&nbsp;&nbsp;any&nbsp;way&nbsp;it&nbsp;could&nbsp;be&nbsp;detached.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Included in the description of longCave is the notice that "Some words have been crudely scratched on the south wall." A Decoration object may well be  just the thing to represent these words, but this requires a little more thought. By default if we try to do anything to these words but EXAMINE them, the game will report "The words aren't important." This may not be the message we want to convey here, since what the writing on the wall says may actually have some significance. To deal with this need we need to override the Decoration's <b>notImportantMsg</b> property with something more appropriate. Moreover, it would be reasonable for the player to attempt to READ the words as well as EXAMINE them; as in the case of the two signs in the Entrance Cave, we want READ to be treated like EXAMINE rather than displaying whatever we put into notImportantMsg, so once again we need dobjFor(Read) asDobjFor(Examine). There is one further complication: the writing is described as being scratched on the south wall, so it ought to be described if the player examines the south wall; to achieve this we need to associate the words with the south wall of the cave:
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+longCaveWords&nbsp;:&nbsp;Decoration&nbsp;'words/writing'&nbsp;'words'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;"The&nbsp;writing&nbsp;on&nbsp;the&nbsp;wall&nbsp;declares:\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;One&nbsp;banana&nbsp;to&nbsp;rule&nbsp;them&nbsp;all\nAnd&nbsp;in&nbsp;the&nbsp;darkness&nbsp;bind&nbsp;them.&lt;/q&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;notImportantMsg&nbsp;=&nbsp;'That\'s&nbsp;not&nbsp;the&nbsp;sort&nbsp;of&nbsp;thing&nbsp;you&nbsp;can&nbsp;do&nbsp;to&nbsp;them.&nbsp;'&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Read)&nbsp;asDobjFor(Examine)
+<br>
+&nbsp;&nbsp;&nbsp;initNominalRoomPartLocation&nbsp;=&nbsp;defaultSouthWall&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">The last line of this definition (excluding the final semicolon) tells the system that the longCaveWords are nominally on the south wall. This allows the player to EXAMINE WORDS ON SOUTH WALL as well as EXAMINE WORDS and have the description displayed. It also causes the words to be mentioned when the player types EXAMINE SOUTH WALL (note that prior to version 3.0.9 it would also have been necessary to override isListedInRoomPart to achieve this effect, but this is no longer necessary in 3.0.9).
+<br>
+
+<br>
+A further refinement offered in version 3.0.9 is the new mix-in class RoomPartItem. This allows us to set up an item that displays its specialDesc (or initSpecialDesc) only when the room part to which its nominally attached is examined. This is useful for objects such as doors and windows that might already be included in the general room description, or for objects that are not worth listing in their own right but which are worth a mentioned when the room part to which they are attached is examined. The advantage of using specialDesc (or initSpecialDesc) for this purpose is that we can customise the way the fixture is described, instead of producing something a bit ungainly like, "On the north wall is a red door. " As an example, we might further customise the bracket object so that when the north wall of the cave is examined we see "A steel bracket containing a flaming torch is attached to the wall. ":
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">bracket&nbsp;:&nbsp;<b>RoomPartItem</b>,&nbsp;Decoration&nbsp;'steel&nbsp;bracket'&nbsp;'steel&nbsp;bracket'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"The&nbsp;steel&nbsp;bracket&nbsp;is&nbsp;fixed&nbsp;securely&nbsp;to&nbsp;the&nbsp;wall;&nbsp;there&nbsp;doesn't&nbsp;appear&nbsp;to&nbsp;be
+<br>
+&nbsp;&nbsp;&nbsp;any&nbsp;way&nbsp;it&nbsp;could&nbsp;be&nbsp;detached.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;<b>specialNominalRoomPartLocation&nbsp;=&nbsp;defaultNorthWall
+<br>
+&nbsp;&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;steel&nbsp;bracket&nbsp;containing&nbsp;a&nbsp;flaming&nbsp;torch&nbsp;is&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall.&nbsp;"
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that in this case, since the bracket will never move, it doesn't matter whether we use specialNominalRoomPartLocation and specialDesc, or  initNominalRoomPartLocation and initSpecialDesc, as long as we use one pair or the other and don't try to mix them. If the bracket could be removed from the wall, we'd probably want to use initNominalRoomPartLocation and initSpecialDesc.</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<a name="lakedecoration">Finally, a simple example of a Decoration would be the lake as seen from the shore. There seems little reason why the lake should look any different from lakeRoom and  pathEnd; rather than define the same decoration twice, we can thus take a shortcut by making it a MultiLoc; strictly speaking, it should perhaps be a MultiInstance, but in this case no harm will come of using MultiLoc and it's slightly simpler.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">MultiLoc,&nbsp;Decoration&nbsp;'great&nbsp;(giant)&nbsp;underground&nbsp;lake/water'&nbsp;'lake'
+<br>
+&nbsp;&nbsp;"The&nbsp;lake,&nbsp;which&nbsp;stretches&nbsp;as&nbsp;far&nbsp;south&nbsp;as&nbsp;you&nbsp;can
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see,&nbsp;looks&nbsp;almost&nbsp;as&nbsp;flat&nbsp;as&nbsp;a&nbsp;millpond,&nbsp;although&nbsp;the&nbsp;occasional
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ripple&nbsp;runs&nbsp;across&nbsp;its&nbsp;surface.&nbsp;It&nbsp;is&nbsp;also&nbsp;strikingly
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;phosphorescent,&nbsp;casting&nbsp;an&nbsp;eerie&nbsp;green&nbsp;glow&nbsp;over&nbsp;the&nbsp;whole
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vast&nbsp;cavern.&nbsp;"
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[lakeRoom,&nbsp;pathEnd]
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">The point to bear in mind here is that a <a href="multiloc.htm">MultiLoc</a> represents a single physical object present in more than one location, and one that is sufficiently small that, for example, if it is lit in one location it is lit in all and if something is put in it in one location it can be retrieved from it in another. The lake meets the first of these conditions, but not the second. Because, however, it's a Decoration, the only relevant consideration is lighting. If one part of the lake might be in darkness while another was lit, it would inappropriate to use a MultiLoc to represent it (since what was meant to be the dark part of the lake would appear as lit). In this game, however, all parts of the lake will be permanently lit, so it's safe to make it a MultiLoc.
+<br>
+
+<br>
+The general principle here is that it's safe to make a Decoration a MultiLoc if and only if the lighting conditions are always the same in all the locations where the Decoration exists (it's fine if all the lighting conditions change simultaneously, but they must always be the same in each location at any one time). If this condition is not met, use a <a href="multiinstance.htm">MultiInstance</a> instead.
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

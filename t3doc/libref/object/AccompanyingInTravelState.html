@@ -1,0 +1,180 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>AccompanyingInTravelState</title></head><body>
+<table class=ban><tr><td align=left><span class=title>AccompanyingInTravelState</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5365">5365</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   "Accompanying in-travel" state - this is an actor state used when an   actor is taking part in a group travel operation.  This state lasts   only as long as the single turn - which belongs to the lead actor -   that it takes to carry out the group travel.  Once our turn comes   around, we'll restore the actor to the previous state - or, we can set   the actor to a different state, if desired.  Setting the actor to a   different state is useful when the group travel triggers a new   scripted activity in the new room.
+<p>
+<code>class
+<b>AccompanyingInTravelState</b> :  &nbsp; <a href="../object/ActorState.html">ActorState</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>AccompanyingInTravelState</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorState.html">ActorState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TravelMessageHandler.html">TravelMessageHandler</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorTopicDatabase.html">ActorTopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicDatabase.html">TopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>AccompanyingInTravelState</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GuidedInTravelState.html">GuidedInTravelState</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#leadActor">leadActor</a>&nbsp;
+<a href="#nextState">nextState</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorState</code> :<br>
+<code>
+<a href="../object/ActorState.html#autoSuggest">autoSuggest</a>&nbsp;
+<a href="../object/ActorState.html#getImpliedConvState">getImpliedConvState</a>&nbsp;
+<a href="../object/ActorState.html#isInitState">isInitState</a>&nbsp;
+<a href="../object/ActorState.html#location">location</a>&nbsp;
+<a href="../object/ActorState.html#stateDesc">stateDesc</a>&nbsp;
+<a href="../object/ActorState.html#stateSuggestedTopics">stateSuggestedTopics</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ActorTopicDatabase</code> :<br>
+<code>
+<a href="../object/ActorTopicDatabase.html#askForTopics">askForTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#askTopics">askTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#commandTopics">commandTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#giveTopics">giveTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#initiateTopics">initiateTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#miscTopics">miscTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#showTopics">showTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#specialTopics">specialTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#tellTopics">tellTopics</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicDatabase</code> :<br>
+<code>
+<a href="../object/TopicDatabase.html#limitSuggestions">limitSuggestions</a>&nbsp;
+<a href="../object/TopicDatabase.html#suggestedTopics">suggestedTopics</a>&nbsp;
+<a href="../object/TopicDatabase.html#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="../object/TopicDatabase.html#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#initiateTopic">initiateTopic</a>&nbsp;
+<a href="#sayArrivingLocally">sayArrivingLocally</a>&nbsp;
+<a href="#sayDeparting">sayDeparting</a>&nbsp;
+<a href="#sayDepartingDir">sayDepartingDir</a>&nbsp;
+<a href="#sayDepartingDownStairs">sayDepartingDownStairs</a>&nbsp;
+<a href="#sayDepartingLocally">sayDepartingLocally</a>&nbsp;
+<a href="#sayDepartingThroughPassage">sayDepartingThroughPassage</a>&nbsp;
+<a href="#sayDepartingUpStairs">sayDepartingUpStairs</a>&nbsp;
+<a href="#sayDepartingViaPath">sayDepartingViaPath</a>&nbsp;
+<a href="#specialDesc">specialDesc</a>&nbsp;
+<a href="#takeTurn">takeTurn</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorState</code> :<br>
+<code>
+<a href="../object/ActorState.html#activateState">activateState</a>&nbsp;
+<a href="../object/ActorState.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/ActorState.html#afterTravel">afterTravel</a>&nbsp;
+<a href="../object/ActorState.html#arrivingTurn">arrivingTurn</a>&nbsp;
+<a href="../object/ActorState.html#arrivingWithDesc">arrivingWithDesc</a>&nbsp;
+<a href="../object/ActorState.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/ActorState.html#beforeTravel">beforeTravel</a>&nbsp;
+<a href="../object/ActorState.html#deactivateState">deactivateState</a>&nbsp;
+<a href="../object/ActorState.html#distantSpecialDesc">distantSpecialDesc</a>&nbsp;
+<a href="../object/ActorState.html#endConversation">endConversation</a>&nbsp;
+<a href="../object/ActorState.html#getActor">getActor</a>&nbsp;
+<a href="../object/ActorState.html#getNominalTraveler">getNominalTraveler</a>&nbsp;
+<a href="../object/ActorState.html#getSuggestedTopicList">getSuggestedTopicList</a>&nbsp;
+<a href="../object/ActorState.html#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="../object/ActorState.html#handleConversation">handleConversation</a>&nbsp;
+<a href="../object/ActorState.html#initializeActorState">initializeActorState</a>&nbsp;
+<a href="../object/ActorState.html#justFollowed">justFollowed</a>&nbsp;
+<a href="../object/ActorState.html#notifyTopicResponse">notifyTopicResponse</a>&nbsp;
+<a href="../object/ActorState.html#obeyCommand">obeyCommand</a>&nbsp;
+<a href="../object/ActorState.html#remoteSpecialDesc">remoteSpecialDesc</a>&nbsp;
+<a href="../object/ActorState.html#showSpecialDescInContents">showSpecialDescInContents</a>&nbsp;
+<a href="../object/ActorState.html#specialDescListWith">specialDescListWith</a>&nbsp;
+<a href="../object/ActorState.html#suggestTopicsFor">suggestTopicsFor</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TravelMessageHandler</code> :<br>
+<code>
+<a href="../object/TravelMessageHandler.html#sayArriving">sayArriving</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDir">sayArrivingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDownStairs">sayArrivingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingThroughPassage">sayArrivingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingUpStairs">sayArrivingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingViaPath">sayArrivingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayTravelingRemotely">sayTravelingRemotely</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorTopicDatabase</code> :<br>
+<code>
+<a href="../object/ActorTopicDatabase.html#showTopicResponse">showTopicResponse</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicDatabase</code> :<br>
+<code>
+<a href="../object/TopicDatabase.html#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#addTopic">addTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#addTopicToList">addTopicToList</a>&nbsp;
+<a href="../object/TopicDatabase.html#compareVocabMatch">compareVocabMatch</a>&nbsp;
+<a href="../object/TopicDatabase.html#findTopicResponse">findTopicResponse</a>&nbsp;
+<a href="../object/TopicDatabase.html#handleTopic">handleTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeSuggestedTopic">removeSuggestedTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeTopic">removeTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeTopicFromList">removeTopicFromList</a>&nbsp;
+<a href="../object/TopicDatabase.html#showSuggestedTopicList">showSuggestedTopicList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="leadActor"></a>
+<table class=decl><tr><td><code>leadActor</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5377">5377</a>]</table><div class=desc>the lead actor of the group travel<p>
+</div>
+<a name="nextState"></a>
+<table class=decl><tr><td><code>nextState</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5383">5383</a>]</table><div class=desc>   the next state - we'll switch our actor to this state after the   travel has been completed <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (actor, lead, next)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5366">5366</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="initiateTopic"></a>
+<table class=decl><tr><td><code>initiateTopic (obj)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5413">5413</a>]</table><div class=desc>initiate a topic - defer to the next state<p>
+</div>
+<a name="sayArrivingLocally"></a>
+<table class=decl><tr><td><code>sayArrivingLocally (dest, conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5454">5454</a>]</table><div class=desc>   Describe local travel using our standard departure message as   well.  This is used to describe our travel when our origin and   destination locations are both visible to the PC; in these cases,   we don't describe the departure separately because the whole   process of travel from departure to arrival is visible to the PC   and thus is best handled with a single message, which we generate   here.  In our case, since the "accompanying" state describes even   normal travel as though it were visible all along, we can use our   standard "departing" message to describe local travel as well. <p>
+</div>
+<a name="sayDeparting"></a>
+<table class=decl><tr><td><code>sayDeparting (conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5435">5435</a>]</table><div class=desc>   Override our departure messages.  When we're accompanying another   actor on a group travel, the lead actor will, as part of its turn,   send each accompanying actor (including us) on ahead.  This means   that the lead actor will see us departing from the starting   location, because we'll leave before the lead actor has itself   departed.  Rather than using the normal "Bob leaves to the west"   departure report, customize the departure reports to indicate   specifically that we're going with the lead actor.  (Note that we   only have to handle the departing messages, since group travel   always sends accompanying actors on ahead of the main actor, hence   the accompanying actors will always be seen departing, not   arriving.) <p>   Note that all of these call our generic sayDeparting() method by   default, so a subclass can catch all of the departure types at   once just by overriding sayDeparting().  Overriding the individual   methods is still desirable, of course, if you want separate   messages for the different departure types. <p>
+</div>
+<a name="sayDepartingDir"></a>
+<table class=decl><tr><td><code>sayDepartingDir (dir, conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5437">5437</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingDownStairs"></a>
+<table class=decl><tr><td><code>sayDepartingDownStairs (conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5441">5441</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingLocally"></a>
+<table class=decl><tr><td><code>sayDepartingLocally (dest, conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5455">5455</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingThroughPassage"></a>
+<table class=decl><tr><td><code>sayDepartingThroughPassage (conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5438">5438</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingUpStairs"></a>
+<table class=decl><tr><td><code>sayDepartingUpStairs (conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5440">5440</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="sayDepartingViaPath"></a>
+<table class=decl><tr><td><code>sayDepartingViaPath (conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5439">5439</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="specialDesc"></a>
+<table class=decl><tr><td><code>specialDesc ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5389">5389</a>]</table><div class=desc>   Show our "I am here" description.  By default, we'll use the   arrivingWithDesc of the *next* state object. <p>
+</div>
+<a name="takeTurn"></a>
+<table class=decl><tr><td><code>takeTurn ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#5392">5392</a>]</table><div class=desc>take our turn<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

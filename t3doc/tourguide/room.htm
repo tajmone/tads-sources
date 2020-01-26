@@ -1,0 +1,58 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Room</title><meta name="keywords" content="Room,destName"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Room : <a href="fixture.htm">Fixture</a>, BasicLocation, <a href="roomautoconnector.htm">RoomAutoConnector</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="enterable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="stairwaydown.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We can now define the second room in the game. Since this will be an interior room (albeit inside a cave rather than a building) we'll make it of the Room class:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room&nbsp;'Entrance&nbsp;Cave'&nbsp;'the&nbsp;entrance&nbsp;cave'
+<br>
+&nbsp;&nbsp;"Compared&nbsp;with&nbsp;the&nbsp;narrow&nbsp;tunnel&nbsp;leading&nbsp;out&nbsp;to&nbsp;the&nbsp;north,&nbsp;this&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;rough-walled&nbsp;cave&nbsp;seems&nbsp;positively&nbsp;spacious.&nbsp;A&nbsp;red&nbsp;sign&nbsp;fixed&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;one&nbsp;wall&nbsp;suggests&nbsp;that&nbsp;the&nbsp;narrow&nbsp;tunnel&nbsp;is&nbsp;the&nbsp;only&nbsp;way&nbsp;back&nbsp;out&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;valley,&nbsp;while&nbsp;a&nbsp;blue&nbsp;sign&nbsp;next&nbsp;to&nbsp;it&nbsp;welcomes&nbsp;you&nbsp;to&nbsp;the&nbsp;cave.
+<br>
+&nbsp;&nbsp;&nbsp;Directly&nbsp;under&nbsp;the&nbsp;signs&nbsp;a&nbsp;narrow&nbsp;ledge&nbsp;has&nbsp;been&nbsp;carved&nbsp;into&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;wall.&nbsp;There&nbsp;appear&nbsp;to&nbsp;be&nbsp;no&nbsp;other&nbsp;caves&nbsp;at&nbsp;this&nbsp;level,&nbsp;but&nbsp;a&nbsp;sturdy&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;steel&nbsp;ladder&nbsp;leads&nbsp;down&nbsp;through&nbsp;a&nbsp;large&nbsp;round&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor.&nbsp;"
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;entranceTunnel&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;asExit(north)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Note that the cave's north property points to the previously defined <a href="roomconnector.htm">RoomConnector</a>, and that we use the <a href="asexit.htm">asExit</a> macro to allow OUT as a synonym for NORTH.
+<br>
+
+<br>
+Once again, note the use of the <a href="roomtemplate.htm">Room template</a> to define the common properties of this Room. The first single-quoted string, 'Entrance Cave' is the name of the Room. The second 'the entrance cave' (which is optional - we could just leave it out) is its destName (the name that will appear in exit listings). The double quoted string that follows, "Compared with the narrow... ", is the room description.
+<br>
+
+<br>
+Although this is an underground cave, we assume it will be permanently lit by some means or other. In more complex situations you might want to override the brightness property to vary according to circumstance (as is exemplified in the definition of the <a href="secretdoor.htm">secretPassage</a>, which comes later).
+<br>
+
+<br>
+At this point it should be possible to compile and test the game once more.
+<br>
+</font></font>
+
+</body></html>

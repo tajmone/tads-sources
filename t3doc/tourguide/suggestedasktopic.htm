@@ -1,0 +1,180 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SuggestedAskTopic</title><meta name="keywords" content="SuggestedAskTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SuggestedAskTopic : <a href="suggestedtopic.htm">SuggestedTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="suggestedtopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="suggestedtelltopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A SuggestedAskTopic is the particular type of <a href="suggestedtopic.htm">SuggestedTopic</a> that prompts the player to Ask About such-and-such a thing.
+<br>
+
+<br>
+For example, in addition to making the diamond ring a suggested topic for Sarah, we could do the same for asking about herself:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic,&nbsp;<b>SuggestedAskTopic</b>,&nbsp;StopEventList&nbsp;@sarah
+<br>
+&nbsp;&nbsp;[&nbsp;{:&nbsp;"&lt;q&gt;What&nbsp;brings&nbsp;you&nbsp;here?&lt;/q&gt;&nbsp;you&nbsp;wonder,\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I&nbsp;was&nbsp;just&nbsp;taking&nbsp;a&nbsp;walk&nbsp;in&nbsp;the&nbsp;valley&nbsp;when&nbsp;some&nbsp;madman&nbsp;snatched&nbsp;my&nbsp;ring
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;off&nbsp;me&nbsp;and&nbsp;ran&nbsp;in&nbsp;here,&nbsp;shouting&nbsp;at&nbsp;me&nbsp;to&nbsp;come&nbsp;and&nbsp;find&nbsp;it&nbsp;if&nbsp;I&nbsp;wanted&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;back.&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you,&nbsp;&lt;q&gt;So&nbsp;I&nbsp;followed&nbsp;him&nbsp;in.&nbsp;Now&nbsp;I
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;just&nbsp;want&nbsp;to&nbsp;find&nbsp;my&nbsp;ring&nbsp;and&nbsp;get&nbsp;out&nbsp;of&nbsp;here.&lt;/q&gt;&lt;&lt;gSetKnown(diamondRing)&gt;&gt;"&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{:&nbsp;"&lt;q&gt;And&nbsp;you&nbsp;are...?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;&lt;&lt;sarah.makeProper&gt;&gt;,&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you,&nbsp;&lt;q&gt;My&nbsp;name's&nbsp;Sarah.&nbsp;Pleased
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;meet&nbsp;you&nbsp;-&nbsp;and&nbsp;I'll&nbsp;be&nbsp;even&nbsp;more&nbsp;pleased&nbsp;if&nbsp;you&nbsp;help&nbsp;me&nbsp;find&nbsp;my&nbsp;ring.&lt;/q&gt;"&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;So&nbsp;you&nbsp;you\'ve&nbsp;never&nbsp;been&nbsp;in&nbsp;these&nbsp;caves&nbsp;before?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;No,&nbsp;never,&lt;/q&gt;&nbsp;she&nbsp;replies,&nbsp;&lt;q&gt;and&nbsp;I&nbsp;wouldn\'t&nbsp;be&nbsp;here&nbsp;now&nbsp;if&nbsp;my&nbsp;ring
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hadn\'t&nbsp;been&nbsp;stolen.&nbsp;Caves&nbsp;aren\'t&nbsp;really&nbsp;my&nbsp;thing,&nbsp;though&nbsp;these
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aren\'t&nbsp;at&nbsp;all&nbsp;what&nbsp;I&nbsp;expected!&lt;/q&gt;&nbsp;she&nbsp;nods&nbsp;towards&nbsp;the&nbsp;lake&nbsp;and&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ship,&nbsp;and&nbsp;a&nbsp;pensive&nbsp;expression&nbsp;crosses&nbsp;her&nbsp;face,&nbsp;&lt;q&gt;I&nbsp;suppose&nbsp;it&nbsp;might
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;interesting&nbsp;to&nbsp;explore&nbsp;-&nbsp;but&nbsp;I&nbsp;really&nbsp;should&nbsp;get&nbsp;back.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;What&nbsp;are&nbsp;you&nbsp;so&nbsp;anxious&nbsp;to&nbsp;get&nbsp;back&nbsp;to?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Fresh&nbsp;air&nbsp;and&nbsp;open&nbsp;sky,&nbsp;for&nbsp;a&nbsp;start!&lt;/q&gt;&nbsp;she&nbsp;laughs.&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;<b>name&nbsp;=&nbsp;'herself'</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+(I'm assuming here that we've adopted my suggested modification to <a href="suggestedtopic.htm">SuggestedTopic</a>, so that we don't need to set timesToSuggest by hand).
+<br>
+
+<br>
+When the player character is conversing with Solomon, there's a couple of interesting objects he'll probably want to ask about anyway, but as we haven't provided any responses for them as yet, they'll furnish good examples of further SuggestedAskTopics. In both case they should be located inside the solomonTalking state. First the carbuncle:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTellTopic,&nbsp;SuggestedAskTopic,&nbsp;StopEventList&nbsp;@carbuncle
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;That\'s&nbsp;a&nbsp;very&nbsp;fine&nbsp;looking&nbsp;carbuncle&nbsp;you&nbsp;have&nbsp;there.&lt;/q&gt;&nbsp;you&nbsp;remark.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Indeed&nbsp;it&nbsp;is,&lt;/q&gt;&nbsp;{the&nbsp;solomon/he}&nbsp;concurs,&nbsp;&lt;q&gt;I\'m&nbsp;told&nbsp;there\'s&nbsp;not
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;another&nbsp;like&nbsp;it&nbsp;under&nbsp;the&nbsp;sun.&lt;/q&gt;',
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;How&nbsp;did&nbsp;you&nbsp;come&nbsp;by&nbsp;that&nbsp;carbuncle?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;It&nbsp;was&nbsp;one&nbsp;of&nbsp;the&nbsp;gifts&nbsp;the&nbsp;Queen&nbsp;of&nbsp;Sheba&nbsp;gave&nbsp;me&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;she&nbsp;came&nbsp;to&nbsp;be&nbsp;dazzled&nbsp;by&nbsp;my&nbsp;great&nbsp;wisdom.&lt;/q&gt;&nbsp;he&nbsp;tells&nbsp;you.\b',&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;That&nbsp;gem&nbsp;must&nbsp;be&nbsp;worth&nbsp;a&nbsp;fortune.&lt;/q&gt;&nbsp;you&nbsp;observe.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;No&nbsp;doubt.&lt;/q&gt;&nbsp;the&nbsp;king&nbsp;concurs&nbsp;dryly.&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'the&nbsp;carbuncle'
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(!carbuncle.moved)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we make this a SuggestedAskTopic although it's also an AskTellTopic; the player could TELL SOLOMON ABOUT CARBUNCLE as well as ASK SOLOMON ABOUT CARBUNCLE, but we only suggest one or the other (in this case ASK ABOUT). Note also that we provide an isActive condition that makes the topic (and hence the corresponding suggestion) active only until the carbuncle has been moved.
+<br>
+
+<br>
+We should also add an entry to deal with the Baaras Root:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic,&nbsp;SuggestedAskTopic,&nbsp;StopEventList&nbsp;@baarasRoot
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;What&nbsp;is&nbsp;that&nbsp;curious&nbsp;root&nbsp;you&nbsp;&lt;&lt;baarasRoot.moved&nbsp;?&nbsp;'had'&nbsp;:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'have'&gt;&gt;&nbsp;there?&lt;/q&gt;&nbsp;you&nbsp;inquire.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;It&nbsp;grows&nbsp;in&nbsp;a&nbsp;ravine&nbsp;near&nbsp;a&nbsp;place&nbsp;called&nbsp;Baaras,&nbsp;hence&nbsp;we&nbsp;call
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it&nbsp;the&nbsp;Baaras-root&nbsp;-&nbsp;though&nbsp;the&nbsp;heathen&nbsp;call&nbsp;it&nbsp;Mandragora.&lt;/q&gt;&nbsp;he
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tells&nbsp;you,&nbsp;&lt;q&gt;It&nbsp;has&nbsp;many&nbsp;interesting&nbsp;properties.&lt;/q&gt;'&nbsp;,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Tell&nbsp;me&nbsp;more&nbsp;about&nbsp;the&nbsp;properties&nbsp;of&nbsp;this&nbsp;Baaras-root,&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Well,&lt;/q&gt;&nbsp;{the&nbsp;solomon/he}&nbsp;explains,&nbsp;&lt;q&gt;when&nbsp;growing,&nbsp;it&nbsp;emits
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;bright&nbsp;light&nbsp;towards&nbsp;evening.&nbsp;At&nbsp;any&nbsp;time&nbsp;of&nbsp;day&nbsp;it&nbsp;proves&nbsp;hard
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;pick,&nbsp;for&nbsp;it&nbsp;shrinks&nbsp;up&nbsp;to&nbsp;elude&nbsp;the&nbsp;grasp&nbsp;of&nbsp;anyone&nbsp;who&nbsp;approaches
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;the&nbsp;intention&nbsp;of&nbsp;plucking&nbsp;it&nbsp;from&nbsp;the&nbsp;ground&nbsp;-&nbsp;although&nbsp;it&nbsp;can
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;made&nbsp;to&nbsp;sit&nbsp;still&nbsp;by&nbsp;pouring&nbsp;on&nbsp;it,&nbsp;er,&nbsp;certain&nbsp;secretions&nbsp;of&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;human&nbsp;body.&nbsp;Even&nbsp;then&nbsp;it&nbsp;is&nbsp;highly&nbsp;dangerous&nbsp;to&nbsp;obtain.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;So&nbsp;why&nbsp;is&nbsp;the&nbsp;Baaras&nbsp;root&nbsp;so&nbsp;dangerous&nbsp;to&nbsp;pick?&lt;/q&gt;&nbsp;you&nbsp;wonder.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Why&nbsp;-&nbsp;because&nbsp;unless&nbsp;you&nbsp;manage&nbsp;to&nbsp;carry&nbsp;off&nbsp;the&nbsp;root,&nbsp;suspending&nbsp;it&nbsp;from
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;your&nbsp;hand,&nbsp;the&nbsp;mere&nbsp;touch&nbsp;proves&nbsp;fatal.&lt;/q&gt;&nbsp;he&nbsp;tells&nbsp;you,&nbsp;&lt;q&gt;That\'s
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;why&nbsp;we&nbsp;normally&nbsp;use&nbsp;a&nbsp;dog&nbsp;-&nbsp;if&nbsp;you&nbsp;tie&nbsp;a&nbsp;dog&nbsp;to&nbsp;the&nbsp;root&nbsp;and&nbsp;walk
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;away,&nbsp;the&nbsp;dog&nbsp;will&nbsp;try&nbsp;to&nbsp;run&nbsp;after&nbsp;you,&nbsp;pulling&nbsp;the&nbsp;root&nbsp;from&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ground.&nbsp;It\'s&nbsp;instant&nbsp;death&nbsp;for&nbsp;the&nbsp;dog,&nbsp;of&nbsp;course,&nbsp;but&nbsp;it\'s
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then&nbsp;perfectly&nbsp;safe&nbsp;to&nbsp;pick&nbsp;up&nbsp;the&nbsp;root&nbsp;and&nbsp;carry&nbsp;it&nbsp;away.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;So&nbsp;what&nbsp;on&nbsp;earth&nbsp;makes&nbsp;the&nbsp;Baaras&nbsp;root&nbsp;worth&nbsp;all&nbsp;the&nbsp;bother
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;plucking&nbsp;it&nbsp;up&nbsp;from&nbsp;the&nbsp;ground?&nbsp;Especially&nbsp;since&nbsp;it&nbsp;seems&nbsp;so
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deadly!&lt;/q&gt;&nbsp;you&nbsp;wonder.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Ah.&nbsp;Its&nbsp;value&nbsp;is&nbsp;that&nbsp;it&nbsp;is&nbsp;also&nbsp;fatal&nbsp;to&nbsp;demons.&lt;/q&gt;&nbsp;{the&nbsp;solomon/he}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tells&nbsp;you.&nbsp;&lt;q&gt;It\'s&nbsp;one&nbsp;of&nbsp;the&nbsp;most&nbsp;effective&nbsp;counters&nbsp;to&nbsp;demons&nbsp;I&nbsp;know.&lt;/q&gt;',&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;So&nbsp;the&nbsp;Baaras&nbsp;root&nbsp;is&nbsp;good&nbsp;against&nbsp;demons?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Highly&nbsp;effective.&lt;/q&gt;&nbsp;he&nbsp;assures&nbsp;you,&nbsp;&lt;q&gt;Nothing&nbsp;better.&lt;/q&gt;'&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'the&nbsp;root'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In case you're wondering where I obtained these bizarre details, they come (more or less) straight from Josephus, <i>Jewish War</i>, 7.180-85. Although Josephus is there talking about first-century CE Palestine, he elsewhere notes (<i>Jewish Antiquities</i> 8.45-49) that God had granted Solomon particular expertise in the art of expelling demons, and that he, Josephus, had witnessed a fellow Jew successfully employing the incantations and the <i>root</i> prescribed by Solomon in an exorcism. It's a fair guess, then, that Josephus envisages Solomon prescribing the Baaras root for use against demons (which, of course, is not at all the same as supposing that Solomon actually ever did anything of the sort - but once again we are depicting the Solomon of legend here).
+<br>
+</font></font>
+
+</body></html>

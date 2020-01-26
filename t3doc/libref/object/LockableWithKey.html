@@ -1,0 +1,120 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>LockableWithKey</title></head><body>
+<table class=ban><tr><td align=left><span class=title>LockableWithKey</span><span class=type>class</span><td align=right><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4021">4021</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   LockableWithKey: a mix-in class that can be combined with an object's   other superclasses to make the object respond to the verbs "lock" and   "unlock," with a key as an indirect object.  A LockableWithKey cannot   be locked or unlocked except with the keys listed in the keyList   property. <p>   Note that LockableWithKey should usually go BEFORE a Thing-derived   class in the superclass list.
+<p>
+<code>class
+<b>LockableWithKey</b> :  &nbsp; <a href="../object/Lockable.html">Lockable</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>LockableWithKey</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Lockable.html">Lockable</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Linkable.html">Linkable</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>LockableWithKey</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/KeyedContainer.html">KeyedContainer</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#keyList">keyList</a>&nbsp;
+<a href="#knownKeyList">knownKeyList</a>&nbsp;
+<a href="#lockStatusObvious">lockStatusObvious</a>&nbsp;
+<a href="#rememberKnownKeys">rememberKnownKeys</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Lockable</code> :<br>
+<code>
+<a href="../object/Lockable.html#autoUnlockOnOpen">autoUnlockOnOpen</a>&nbsp;
+<a href="../object/Lockable.html#initiallyLocked">initiallyLocked</a>&nbsp;
+<a href="../object/Lockable.html#isLocked_">isLocked_</a>&nbsp;
+<a href="../object/Lockable.html#lockedDesc">lockedDesc</a>&nbsp;
+<a href="../object/Lockable.html#lockStatusReportable">lockStatusReportable</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#autoUnlockOnOpen">autoUnlockOnOpen</a>&nbsp;
+<a href="#dobjFor(Lock)">dobjFor(Lock)</a>&nbsp;
+<a href="#dobjFor(LockWith)">dobjFor(LockWith)</a>&nbsp;
+<a href="#dobjFor(Unlock)">dobjFor(Unlock)</a>&nbsp;
+<a href="#dobjFor(UnlockWith)">dobjFor(UnlockWith)</a>&nbsp;
+<a href="#getKnownKeyList">getKnownKeyList</a>&nbsp;
+<a href="#getKnownKeyOwner">getKnownKeyOwner</a>&nbsp;
+<a href="#isKeyKnown">isKeyKnown</a>&nbsp;
+<a href="#keyFitsLock">keyFitsLock</a>&nbsp;
+<a href="#keyIsPlausible">keyIsPlausible</a>&nbsp;
+<a href="#lockOrUnlockAction">lockOrUnlockAction</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Lockable</code> :<br>
+<code>
+<a href="../object/Lockable.html#dobjFor(Open)">dobjFor(Open)</a>&nbsp;
+<a href="../object/Lockable.html#examineStatus">examineStatus</a>&nbsp;
+<a href="../object/Lockable.html#initializeThing">initializeThing</a>&nbsp;
+<a href="../object/Lockable.html#isLocked">isLocked</a>&nbsp;
+<a href="../object/Lockable.html#makeLocked">makeLocked</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Linkable</code> :<br>
+<code>
+<a href="../object/Linkable.html#masterObject">masterObject</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="keyList"></a>
+<table class=decl><tr><td><code>keyList</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4070">4070</a>]</table><div class=desc>the list of objects that can serve as keys for this object<p>
+</div>
+<a name="knownKeyList"></a>
+<table class=decl><tr><td><code>knownKeyList</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4077">4077</a>]</table><div class=desc>   The list of keys which the player knows will fit this lock.  This   is used to make key disambiguation automatic once the player   knows the correct key for a lock. <p>
+</div>
+<a name="lockStatusObvious"></a>
+<table class=decl><tr><td><code>lockStatusObvious</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4138">4138</a>]</table><div class=desc>   By default, the locked/unlocked status of a keyed lockable is nil.   In most cases, an object that's locked and unlocked using a key   doesn't have a visible indication of the status; for example, you   usually can't tell just by looking at it from the outside whether   or not an exterior door to a building is locked.  Usually, the   only way to tell from the outside that an exterior door is locked   is to try opening it and see if it opens. <p>
+</div>
+<a name="rememberKnownKeys"></a>
+<table class=decl><tr><td><code>rememberKnownKeys</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4120">4120</a>]</table><div class=desc>   Flag: remember my keys after they're successfully used.  If this   is true, whenever a key is successfully used to lock or unlock   this object, we'll add the key to our known key list;   subsequently, whenever we try to use a key in this lock, we will   automatically disambiguate the key based on the keys known to   work previously. <p>   Some authors might prefer not to assume that the player should   remember which keys operate which locks, so this property can be   changed to nil to eliminate this memory feature.  By default we   set this to true, since it shouldn't generally give away any   secrets or puzzles for the game to assume that a key that was   used successfully once with a given lock is the one to be used   subsequently with the same lock. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="autoUnlockOnOpen"></a>
+<table class=decl><tr><td><code>autoUnlockOnOpen ( )</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4148">4148</a>]</table><div class=desc>   Should we automatically unlock on OPEN?  We will if our inherited   handling says so, OR if the current actor is carrying a key   that's known to work with this object.  We automatically unlock   when a known key is present as a convenience: if we have a known   key, then there's no mystery in unlocking this object, and thus   for playability we want to make its operation fully automatic. <p>
+</div>
+<a name="dobjFor(Lock)"></a>
+<table class=decl><tr><td><code>dobjFor(Lock)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4158">4158</a>]</table><div class=desc>   Action handling <p>
+</div>
+<a name="dobjFor(LockWith)"></a>
+<table class=decl><tr><td><code>dobjFor(LockWith)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4265">4265</a>]</table><div class=desc>"lock with"<p>
+</div>
+<a name="dobjFor(Unlock)"></a>
+<table class=decl><tr><td><code>dobjFor(Unlock)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4184">4184</a>]</table><div class=desc>"unlock"<p>
+</div>
+<a name="dobjFor(UnlockWith)"></a>
+<table class=decl><tr><td><code>dobjFor(UnlockWith)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4281">4281</a>]</table><div class=desc>"unlock with"<p>
+</div>
+<a name="getKnownKeyList"></a>
+<table class=decl><tr><td><code>getKnownKeyList ( )</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4083">4083</a>]</table><div class=desc>   Get my known key list.  This simply returns the known key list   from the known key owner. <p>
+</div>
+<a name="getKnownKeyOwner"></a>
+<table class=decl><tr><td><code>getKnownKeyOwner ( )</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4091">4091</a>]</table><div class=desc>   Get the object that own our known key list.  If we explicitly have   our own non-empty known key list, we own the key list; otherwise,   our master object owns the list, as long as it has a non-nil key   list at all. <p>
+</div>
+<a name="isKeyKnown"></a>
+<table class=decl><tr><td><code>isKeyKnown (key)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4127">4127</a>]</table><div class=desc>   Determine if the player knows that the given key operates this   lock.  Returns true if the key is in our known key list, nil if   not. <p>
+</div>
+<a name="keyFitsLock"></a>
+<table class=decl><tr><td><code>keyFitsLock (key)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4027">4027</a>]</table><div class=desc>   Determine if the key fits this lock.  Returns true if so, nil if   not.  By default, we'll return true if the key is in my keyList.   This can be overridden to use other key selection criteria. <p>
+</div>
+<a name="keyIsPlausible"></a>
+<table class=decl><tr><td><code>keyIsPlausible (key)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4067">4067</a>]</table><div class=desc>   Determine if the key is plausibly of the right type for this   lock.  This doesn't check to see if the key actually fits the   lock - rather, this checks to see if the key is generally the   kind of object that might plausibly be used with this lock. <p>   The point of this routine is to make this class concerned only   with the abstract notion of objects that serve to lock and unlock   other objects, without requiring that the key objects resemble   little notched metal sticks or that the lock objects resemble   cylinders with pins - or, more specifically, without requiring   that all of the kinds of keys in a game remotely resemble one   another. <p>   For example, one kind of "key" in a game might be a plastic card   with a magnetic stripe, and the corresponding lock would be a   card slot; another kind of key might the traditional notched   metal stick.  Clearly, no one would ever think to use a plastic   card with a conventional door lock, nor would one try to put a   house key into a card slot (not with the expectation that it   would actually work, anyway).  This routine is meant to   facilitate this kind of distinction: the card slot can use this   routine to indicate that only plastic card objects are plausible   as keys, and door locks can indicate that only metal keys are   plausible. <p>   This routine can be used for disambiguation and other purposes   when we must programmatically select a key that is not specified   or is only vaguely specified.  For example, the keyring searcher   uses it so that, when we're searching for a key on a keyring to   open this lock, we implicitly try only the kinds of keys that   would be plausibly useful for this kind of lock. <p>   By default, we'll simply return true.  Subclasses specific to a   game (such as the "card reader" base class or the "door lock"   base class) can override this to discriminate among the   game-specific key classes. <p>
+</div>
+<a name="lockOrUnlockAction"></a>
+<table class=decl><tr><td><code>lockOrUnlockAction (lock)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#4220">4220</a>]</table><div class=desc>   perform the action processing for LockWith or UnlockWith - these   are highly symmetrical, in that the only thing that varies is the   new lock state we establish <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

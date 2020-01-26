@@ -1,0 +1,156 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>AltTopic</title><meta name="keywords" content="AltTopic,isActive,gRevealed,&lt;.reveal key&gt;"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>AltTopic : <a href="topicentry.htm">TopicEntry</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="giveshowtopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="initiatetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We use AltTopic topic to provide one or more alternative responses to conversational commands (ASK ABOUT, ASK FOR, TELL ABOUT, SHOW TO, GIVE TO) depending on some condition specified in the AltTopic's isActive property. AltTopics are nested within their corresponding TopicEntry, and the order in which they appear is significant: the last entry for which isActive is true is the one that is used. For example, supposed one had this structure:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">bob&nbsp;:&nbsp;Person&nbsp;'bob'&nbsp;'Bob'
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+&nbsp;
+<br>
++&nbsp;bobTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
+++&nbsp;ShowTopic&nbsp;@letter
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"Bob&nbsp;glances&nbsp;at&nbsp;the&nbsp;envelope&nbsp;and&nbsp;then&nbsp;pushes&nbsp;it&nbsp;away,&nbsp;&lt;q&gt;I&nbsp;don't&nbsp;read&nbsp;other&nbsp;people's&nbsp;correspondence&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;he&nbsp;says."
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"Bob&nbsp;snatches&nbsp;the&nbsp;letter&nbsp;from&nbsp;your&nbsp;grasp&nbsp;and&nbsp;peruses&nbsp;it&nbsp;eagerly&nbsp;before&nbsp;handing&nbsp;it&nbsp;back.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;My&nbsp;goodness!&lt;/q&gt;&nbsp;he&nbsp;declares.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(gRevealed('exciting-scandal'))
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;&nbsp;"Bob&nbsp;stares&nbsp;at&nbsp;the&nbsp;letter&nbsp;disdainfully.&nbsp;&lt;q&gt;That's&nbsp;not&nbsp;much&nbsp;use&nbsp;now...&lt;/q&gt;&nbsp;he&nbsp;complains."
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(letter.isTorn)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If we show the letter to bob when letter.isTorn is nil and the exciting scandal is yet to be revealed, then we'll see the "Bob glances at the envelope and pushes it away" response. If somewhere in the game &lt;.reveal exciting-scandal&gt; or gReveal('exciting-scandal') has been used, but letter.isTorn is still nil, then we'll see the "Bob snatches the letter from your grasp" response. If, however, letter.isTorn is true, we'll see the "Bob stares at the letter disdainfully" response regardless of the value of gRevealed('exciting-scandal').
+<br>
+
+<br>
+Let's now put this to good use with Sarah, the ring, and the diamond:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;GiveShowTopic&nbsp;@diamond
+<br>
+&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;studies&nbsp;the&nbsp;gem&nbsp;carefully,&nbsp;&lt;q&gt;That&nbsp;certainly&nbsp;looks&nbsp;like&nbsp;it&nbsp;could
+<br>
+&nbsp;&nbsp;&nbsp;be&nbsp;the&nbsp;diamond&nbsp;from&nbsp;my&nbsp;ring,&lt;/q&gt;&nbsp;she&nbsp;decides,&nbsp;&lt;q&gt;But&nbsp;where's&nbsp;the&nbsp;ring?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;.reveal&nbsp;diamond-shown&gt;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Yes,&nbsp;I&nbsp;think&nbsp;that's&nbsp;the&nbsp;diamond.&lt;/q&gt;&nbsp;she&nbsp;nods&nbsp;eagerly,&nbsp;&lt;q&gt;Have&nbsp;you&nbsp;tried
+<br>
+&nbsp;&nbsp;&nbsp;whether&nbsp;it&nbsp;fits&nbsp;the&nbsp;ring?&lt;/q&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;gRevealed('ring-shown')
+<br>
+;&nbsp;
+<br>
+
+<br>
+++&nbsp;GiveShowTopic&nbsp;@ring
+<br>
+&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;nods&nbsp;eagerly,&nbsp;&lt;q&gt;Yes,&nbsp;that's&nbsp;my&nbsp;ring!&lt;/q&gt;&nbsp;she&nbsp;declares,&nbsp;but&nbsp;then
+<br>
+&nbsp;&nbsp;&nbsp;her&nbsp;hand&nbsp;flies&nbsp;to&nbsp;her&nbsp;mouth,&nbsp;&lt;q&gt;But&nbsp;-&nbsp;oh&nbsp;my&nbsp;goodness&nbsp;-&nbsp;the&nbsp;diamond&nbsp;is&nbsp;missing!&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;.reveal&nbsp;ring-shown&gt;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic&nbsp;
+<br>
+&nbsp;&nbsp;"&lt;q&gt;That's&nbsp;my&nbsp;ring,&nbsp;all&nbsp;right!&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;declares,&nbsp;&lt;q&gt;But&nbsp;you&nbsp;haven't
+<br>
+&nbsp;&nbsp;&nbsp;fitted&nbsp;the&nbsp;diamond!&lt;/q&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;gRevealed('diamond-shown')
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The sequence of responses if the player shows first the ring, then the diamond, and then the reassembled ring to Sarah (and then finally gives her the ring) may not be absolutely perfect, but it's now starting to get within the bounds of the tolerable, and improving on it further can be left as yet another exercise for the dedicated reader: the first step would probably be to replace the single responses with EventLists; you might also want to test gRevealed('ring-shown') and gRevealed('diamond-shown') on the diamondRing GiveTopic and ShowTopic.
+<br>
+
+<br>
+A little way back we provided a slightly complex GiveTopic to allow the player character to hand Sarah a gas mask. We need her to accept one gas mask, but not both of them, so it would be good to provide an AltTopic that makes Sarah decline the second gas mask if she already has the first. We can achieve this by checking whether anything in Sarah's inventory is of class GasMask, but to do that we need to make isActive a slightly more complex method than normal:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;No&nbsp;thanks,&lt;/q&gt;&nbsp;she&nbsp;declines,&nbsp;&lt;q&gt;I&nbsp;think&nbsp;one&nbsp;gas&nbsp;mask's&nbsp;enough&nbsp;for&nbsp;anyone,&nbsp;
+<br>
+&nbsp;&nbsp;don't&nbsp;you?&lt;/q&gt;&nbsp;"
+<br>
+&nbsp;&nbsp;isActive
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;obj&nbsp;in&nbsp;getActor.contents)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(obj.ofKind(GasMask))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nil;
+<br>
+&nbsp;&nbsp;}
+<br>
+;&nbsp;&nbsp;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Obviously, this should go straight after the relevant GiveTopic.
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

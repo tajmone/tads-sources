@@ -1,0 +1,94 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Greeting Protocols</title><meta name="keywords" content="Greeting Protocols,HelloTopic,ByeTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Greeting Protocols
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="conversationreadystate.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="topicentry.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">To walk up to an NPC and start a conversation with an ASK ABOUT, and then, after a few more conversational commands, to terminate the conversation by simply walking away or ceasing to converse can make the game transcript seem a bit abrupt and not very life-like. In real life one normally starts a conversation with "Hello" or "Excuse me" or something else designed to open the channel of communication, and then concludes it with a similar winding-up exchange to signal that it's now over.
+<br>
+
+<br>
+In order to handle the beginning and end of conversations, you put a <a href="hellotopic.htm">HelloTopic </a>and a <a href="byetopic.htm">ByeTopic</a> in the <a href="conversationreadystate.htm">ConversationReadyState</a>, for example:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;sarahLooking&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{A&nbsp;sarah/she}&nbsp;is&nbsp;standing&nbsp;by&nbsp;the&nbsp;shore,&nbsp;apparently
+<br>
+&nbsp;&nbsp;&nbsp;looking&nbsp;at&nbsp;something,&nbsp;though&nbsp;she&nbsp;occasionally&nbsp;throws&nbsp;a&nbsp;curious
+<br>
+&nbsp;&nbsp;&nbsp;glance&nbsp;your&nbsp;way.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She&nbsp;seems&nbsp;to&nbsp;be&nbsp;looking&nbsp;for&nbsp;something.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;HelloTopic,&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;[&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Hello&nbsp;there,&lt;/q&gt;&nbsp;you&nbsp;say.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Hello.&lt;/q&gt;&nbsp;she&nbsp;smiles&nbsp;at&nbsp;you,&nbsp;slightly&nbsp;quizzically.'
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Hello&nbsp;again.&lt;/q&gt;&nbsp;you&nbsp;greet&nbsp;her.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Hi!&lt;/q&gt;&nbsp;she&nbsp;replies.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;It\'s&nbsp;me&nbsp;again.&lt;/q&gt;&nbsp;you&nbsp;tell&nbsp;her.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;So&nbsp;I&nbsp;noticed.&lt;/q&gt;&nbsp;she&nbsp;answers.',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Er...&lt;/q&gt;&nbsp;you&nbsp;start.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes?&lt;/q&gt;&nbsp;she&nbsp;asks.&nbsp;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+;
+<br>
+
+<br>
++++&nbsp;ByeTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Cheerio,&nbsp;then!&lt;/q&gt;&nbsp;you&nbsp;say.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;See&nbsp;you!&lt;/q&gt;&nbsp;she&nbsp;replies.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+
+<br>
++++&nbsp;ImpByeTopic
+<br>
+&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;gives&nbsp;a&nbsp;little&nbsp;shrug&nbsp;and&nbsp;goes&nbsp;back&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;searching&nbsp;her&nbsp;surroundings.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">The effect of this is that when the player character strikes up a conversation with Sarah, either explicitly through a GREET SARAH, TALK TO SARAH or SARAH, HELLO command, or implicitly by addressing a conversational command to her like ASK SARAH ABOUT HERSELF or TELL SARAH ABOUT BANANA, the greeting message from the <a href="hellotopic.htm">HelloTopic</a> will be displayed, and then Sarah will switch into the associated InConversationState. Conversely, once the conversation is over, Sarah will switch back into the ConversationReadyState and either the <a href="byetopic.htm">ByeTopic</a> or the <a href="impbyetopic.htm">ImpByeTopic</a> will be displayed, depending on whether the player ended the conversation explicitly with a BYE command, or implicitly by either leaving the location or failing to address a conversational command to Sarah for the number of turns needed to exhaust her attention span.
+<br>
+
+<br>
+We'll be giving more examples of this later.</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

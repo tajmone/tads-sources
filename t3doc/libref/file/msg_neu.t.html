@@ -1,0 +1,102 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>msg_neu.t</title></head><body>
+<table class=ban><tr><td align=left><span class=title>msg_neu.t</span><span class=type>file</span><td align=right><a href="../source/msg_neu.t.html">source file</a></table><p>
+<table class=nav><tr>
+<td><b>Classes</b><br><a href="#_ClassSummary_">Summary</a><br>&nbsp;<td><b>Objects</b><br><a href="#_ObjectSummary_">Summary</a><br>&nbsp;<td><b>Functions</b><br><a href="#_FunctionSummary_">Summary</a><br><a href="#_Functions_">Details</a></table><div class=fdesc>
+ <p>   TADS 3 Library - "neutral" messages for US English <p>   This module provides standard library messages with a parser/narrator   that's as invisible (neutral) as possible.  These messages are designed   to reduce the presence of the computer as mediator in the story, to   give the player the most direct contact that we can with the scenario. <p>   The parser almost always refers to itself in the third person (by   calling itself something like "this story") rather than in the first   person, and, whenever possible, avoids referring to itself in the first   place.  Our ideal phrasing is either second-person, describing things   directly in terms of the player character's experience, or "no-person,"   simply describing things without mentioning the speaker or listener at   all.  For example, rather than saying "I don't see that here," we say   "you don't see that here," or "that's not here."  We occasionally stray   from this ideal where achieving it would be too awkward. <p>   In the earliest days of adventure games, the parser was usually a   visible presence: the early parsers frequently reported things in the   first person, and some even had specific personalities.  This   conspicuous parser style has become less prevalent in modern games,   though, and authors now usually prefer to treat the parser as just   another part of the user interface, which like all good UI's is best   when the user doesn't notice it.
+</div>
+<a name="_ClassSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Classes</span> &nbsp; </div><p>
+<code>
+<a href="../object/BaseContentsLister.html">BaseContentsLister</a>&nbsp;
+<a href="../object/BaseInlineContentsLister.html">BaseInlineContentsLister</a>&nbsp;
+<a href="../object/BaseRearContentsLister.html">BaseRearContentsLister</a>&nbsp;
+<a href="../object/BaseSurfaceContentsLister.html">BaseSurfaceContentsLister</a>&nbsp;
+<a href="../object/BaseThingContentsLister.html">BaseThingContentsLister</a>&nbsp;
+<a href="../object/BaseUndersideContentsLister.html">BaseUndersideContentsLister</a>&nbsp;
+<a href="../object/CustomRoomLister.html">CustomRoomLister</a>&nbsp;
+<a href="../object/ExitLister1.html">ExitLister</a>&nbsp;
+<a href="../object/LookWhereContentsLister.html">LookWhereContentsLister</a>&nbsp;
+<a href="../object/MajorAttachmentLister.html">MajorAttachmentLister</a>&nbsp;
+<a href="../object/RemoteRoomLister.html">RemoteRoomLister</a>&nbsp;
+<a href="../object/SimpleAttachmentLister.html">SimpleAttachmentLister</a>&nbsp;
+<a href="../object/SuggestedTopicLister.html">SuggestedTopicLister</a>&nbsp;
+<a href="../object/SuggestionListGroup.html">SuggestionListGroup</a>&nbsp;
+</code>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/aboardVehicleLister.html">aboardVehicleLister</a>&nbsp;
+<a href="../object/actorHoldingDescInventoryListerLong.html">actorHoldingDescInventoryListerLong</a>&nbsp;
+<a href="../object/actorHoldingDescInventoryListerShort.html">actorHoldingDescInventoryListerShort</a>&nbsp;
+<a href="../object/actorInventoryLister.html">actorInventoryLister</a>&nbsp;
+<a href="../object/actorSingleInventoryLister.html">actorSingleInventoryLister</a>&nbsp;
+<a href="../object/darkRoomLister.html">darkRoomLister</a>&nbsp;
+<a href="../object/equivalentStateLister.html">equivalentStateLister</a>&nbsp;
+<a href="../object/exitsTip.html">exitsTip</a>&nbsp;
+<a href="../object/explicitExitLister.html">explicitExitLister</a>&nbsp;
+<a href="../object/finishOptionsLister.html">finishOptionsLister</a>&nbsp;
+<a href="../object/footnotesTip.html">footnotesTip</a>&nbsp;
+<a href="../object/fullScoreTip.html">fullScoreTip</a>&nbsp;
+<a href="../object/implicitAnnouncementGrouper.html">implicitAnnouncementGrouper</a>&nbsp;
+<a href="../object/inlineListingContentsLister.html">inlineListingContentsLister</a>&nbsp;
+<a href="../object/keyringExamineContentsLister.html">keyringExamineContentsLister</a>&nbsp;
+<a href="../object/keyringInlineContentsLister.html">keyringInlineContentsLister</a>&nbsp;
+<a href="../object/libMessages.html">libMessages</a>&nbsp;
+<a href="../object/lookAroundExitLister.html">lookAroundExitLister</a>&nbsp;
+<a href="../object/lookAroundTerseExitLister.html">lookAroundTerseExitLister</a>&nbsp;
+<a href="../object/npcActionMessages.html">npcActionMessages</a>&nbsp;
+<a href="../object/npcDeferredMessages.html">npcDeferredMessages</a>&nbsp;
+<a href="../object/npcDeferredMessagesDirect.html">npcDeferredMessagesDirect</a>&nbsp;
+<a href="../object/npcMessages.html">npcMessages</a>&nbsp;
+<a href="../object/npcMessagesDirect.html">npcMessagesDirect</a>&nbsp;
+<a href="../object/oopsTip.html">oopsTip</a>&nbsp;
+<a href="../object/openableDescContentsLister.html">openableDescContentsLister</a>&nbsp;
+<a href="../object/openableOpeningLister.html">openableOpeningLister</a>&nbsp;
+<a href="../object/otherExitLister.html">otherExitLister</a>&nbsp;
+<a href="../object/playerActionMessages.html">playerActionMessages</a>&nbsp;
+<a href="../object/playerMessages.html">playerMessages</a>&nbsp;
+<a href="../object/rearAbandonContentsLister.html">rearAbandonContentsLister</a>&nbsp;
+<a href="../object/rearContentsLister.html">rearContentsLister</a>&nbsp;
+<a href="../object/rearDescContentsLister.html">rearDescContentsLister</a>&nbsp;
+<a href="../object/rearInlineContentsLister.html">rearInlineContentsLister</a>&nbsp;
+<a href="../object/rearLookBehindLister.html">rearLookBehindLister</a>&nbsp;
+<a href="../object/roomLister.html">roomLister</a>&nbsp;
+<a href="../object/roomPartContentsLister.html">roomPartContentsLister</a>&nbsp;
+<a href="../object/roomPartDescContentsLister.html">roomPartDescContentsLister</a>&nbsp;
+<a href="../object/roomPartLookInLister.html">roomPartLookInLister</a>&nbsp;
+<a href="../object/scoreChangeTip.html">scoreChangeTip</a>&nbsp;
+<a href="../object/statuslineExitLister.html">statuslineExitLister</a>&nbsp;
+<a href="../object/suggestionAskForGroup.html">suggestionAskForGroup</a>&nbsp;
+<a href="../object/suggestionAskGroup.html">suggestionAskGroup</a>&nbsp;
+<a href="../object/suggestionGiveGroup.html">suggestionGiveGroup</a>&nbsp;
+<a href="../object/suggestionShowGroup.html">suggestionShowGroup</a>&nbsp;
+<a href="../object/suggestionTellGroup.html">suggestionTellGroup</a>&nbsp;
+<a href="../object/suggestionYesNoGroup.html">suggestionYesNoGroup</a>&nbsp;
+<a href="../object/surfaceContentsLister.html">surfaceContentsLister</a>&nbsp;
+<a href="../object/surfaceDescContentsLister.html">surfaceDescContentsLister</a>&nbsp;
+<a href="../object/surfaceInlineContentsLister.html">surfaceInlineContentsLister</a>&nbsp;
+<a href="../object/surfaceLookInLister.html">surfaceLookInLister</a>&nbsp;
+<a href="../object/thingContentsLister.html">thingContentsLister</a>&nbsp;
+<a href="../object/thingDescContentsLister.html">thingDescContentsLister</a>&nbsp;
+<a href="../object/thingLookInLister.html">thingLookInLister</a>&nbsp;
+<a href="../object/undersideAbandonContentsLister.html">undersideAbandonContentsLister</a>&nbsp;
+<a href="../object/undersideContentsLister.html">undersideContentsLister</a>&nbsp;
+<a href="../object/undersideDescContentsLister.html">undersideDescContentsLister</a>&nbsp;
+<a href="../object/undersideInlineContentsLister.html">undersideInlineContentsLister</a>&nbsp;
+<a href="../object/undersideLookUnderLister.html">undersideLookUnderLister</a>&nbsp;
+<a href="../object/undoTip.html">undoTip</a>&nbsp;
+</code>
+<a name="FunctionSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Functions</span> &nbsp; </div><p>
+<code>
+<a href="#buildParam">buildParam</a>&nbsp;
+<a href="#buildSynthParam">buildSynthParam</a>&nbsp;
+</code><p>
+<a name="_Functions_"></a><p><div class=mjhd><span class=hdln>Global Functions</span> &nbsp; </div><p>
+<a name="buildParam"></a>
+<table class=decl><tr><td><code>buildParam (typeString, nm)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#53">53</a>]</table><div class=desc>   Build a message parameter string with the given parameter type and   name. <p>   This is useful when we have a name from a variable, and we need to   build the message substitution string for embedding in a larger   string.  We can't just embed the name variable using &lt;&lt;var&gt;&gt;, because   that would process the output piecewise - the output filter needs to   see the whole {typ var} expression in one go.  So, instead of writing   this: <p> <br>    {The/he &lt;&lt;var&gt;&gt;} {is} ... <p>   write this: <p> <br>    &lt;&lt;buildParam('The/he', var)&gt;&gt; {is} ... <p>
+</div>
+<a name="buildSynthParam"></a>
+<table class=decl><tr><td><code>buildSynthParam (typeString, obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#66">66</a>]</table><div class=desc>   Synthesize a message parameter, and build it into a parameter string   with the given substitution type. <p>   For example, buildSynthParam('abc', obj) returns '{abc xxx}', where   'xxx' is a synthesized message parameter name (created using   gSynthMessageParam) for the object obj. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

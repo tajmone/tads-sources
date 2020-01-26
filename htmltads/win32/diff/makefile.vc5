@@ -1,0 +1,49 @@
+!ifdef COMPILE_FOR_DEBUG
+CFLAGS_DEBUG = -Zi -Od
+LDFLAGS_DEBUG = /Debug
+!else
+CFLAGS_DEBUG =
+LDFLAGS_DEBUG =
+!endif
+
+!ifndef LIBDIR
+LIBDIR = .
+!endif
+
+CC = cl
+CFLAGS = $(CFLAGS_DEBUG)
+LD = link
+LDFLAGS = $(LDFLAGS_DEBUG)
+AR = lib
+ARFLAGS =
+
+DIFFOBJS = \
+	allocator.obj \
+	diff.obj \
+	suba.obj \
+	varray.obj
+
+all: difftest.exe $(LIBDIR)\diff.lib
+
+clean:
+	if exist *.obj del *.obj
+	if exist *.lib del *.lib
+	if exist *.exe del *.exe
+
+difftest.exe: diff.lib difftest.obj
+	$(LD) $(LDFLAGS) /out:$@ $**
+
+$(LIBDIR)\diff.lib: $(DIFFOBJS)
+	$(AR) $(ARFLAGS) /out:$@ $**
+
+allocator.obj: allocator.c
+diff.obj: diff.c
+difftest.obj: difftest.c
+suba.obj: suba.c
+varray.obj: varray.c
+
+.SUFFIXES: .c .obj
+
+.c.obj:
+	$(CC) $(CFLAGS) -c -Fo$@ $<
+

@@ -1,0 +1,72 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultAskTellTopic</title><meta name="keywords" content="DefaultAskTellTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultAskTellTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaulttelltopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultgivetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Default AskTellTopic effectively combines the functionality of a DefaultAskTopic and a DefaultTellTopic, i.e. it will handle any ASK ABOUT or TELL ABOUT command for which no specific TopicEntry has been provided.
+<br>
+
+<br>
+It can be convenient to have a single DefaultTopic to handle both sets of commands, thus avoiding the need for a separate DefaultAskTopic and DefaultTellTopic, although it may be slightly harder to devise a series of bland responses that look equally convincing in response to both ASK ABOUT and TELL ABOUT. The DefaultAskTellTopic is perhaps best used in situations where the author does not expect it to be so heavily employed, perhaps on relatively minor NPCs, or in little-used ActorStates, or as a means of catching irrelevant responses in a <a href="conversationnodes-overview.htm">Conversation Node</a> (see below).
+<br>
+
+<br>
+By way of illustration, we'll provide DefaultAskTellTopics for the curator and Solomon, which would be placed in their respective InConversationStates. We'll start with the curator:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;DefaultAskTellTopic,&nbsp;ShuffledEventList&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;[&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Right,&lt;/q&gt;&nbsp;{the&nbsp;curator/he}&nbsp;nods.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Hm.&lt;/q&gt;&nbsp;he&nbsp;replies.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;never&nbsp;discuss&nbsp;that&nbsp;sort&nbsp;of&nbsp;thing&nbsp;when&nbsp;on&nbsp;duty.&lt;/q&gt;&nbsp;he&nbsp;tells&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;curator/he}&nbsp;breaks&nbsp;into&nbsp;a&nbsp;long,&nbsp;boring&nbsp;and&nbsp;utterly&nbsp;incomprehensible&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explanation&nbsp;that&nbsp;you&nbsp;rapidly&nbsp;stop&nbsp;listening&nbsp;to.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;curator/he}&nbsp;proceeds&nbsp;to&nbsp;tell&nbsp;you&nbsp;everything&nbsp;he&nbsp;knows&nbsp;about&nbsp;'&nbsp;+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gTopicText&nbsp;+&nbsp;',&nbsp;until&nbsp;you&nbsp;wish&nbsp;you\'d&nbsp;never&nbsp;raised&nbsp;the&nbsp;subject.&nbsp;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+It should be pointed out, of course, that a list of default responses such as this will in any case seem less jarring if the author has anticipated the topics players are likely to raise and provided answers for them. In reality, we should, at the very least, have provided AskTopics to cover the exhibits in general, the specific exhibits on display, and the golden banana. The only reason for not doing so is that such further examples of AskTopics would serve no useful purpose in the course of this tutorial, so that, once again, they must be left as an exercise for the reader.
+<br>
+
+<br>
+It is, of course, possible to write a DefaultAskTellTopic with a single response. Since King Solomon allegedly enjoyed an encyclopedic knowledge of every subject under the sun, one might almost get away with:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultAskTellTopic
+<br>
+&nbsp;&nbsp;"{The&nbsp;solomon/he}&nbsp;nods&nbsp;sagely&nbsp;and&nbsp;proceeds&nbsp;to&nbsp;treat&nbsp;you&nbsp;to&nbsp;the&nbsp;breadth
+<br>
+&nbsp;&nbsp;&nbsp;and&nbsp;depth&nbsp;of&nbsp;his&nbsp;wisdom&nbsp;on&nbsp;the&nbsp;subject&nbsp;of&nbsp;&lt;&lt;gTopicText&gt;&gt;.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The player may feel this default response becomes inappropriate if Solomon is asked about nuclear physics, George W. Bush, or human cloning, but a player who raises such topics in the course of a conversation with the ancient Israelite king can hardly expect very sensible responses. Again, this kind of default response will be a bit less jarring if we supply suitable AskTopics and TellTopics to cover things the player could reasonably be expected to try conversing with Solomon about.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

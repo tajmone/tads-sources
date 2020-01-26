@@ -1,0 +1,40 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SpaceOverlay</title><meta name="keywords" content="SpaceOverlay,abandonLocation,alwaysListOnMove"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SpaceOverlay : <a href="bulklimiter.htm">BulkLimiter</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="stretchycontainer.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="underside.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">You are unlikely to use a SpaceOverlay directly (except perhaps to derive your own subclass from it). The main function of the SpaceOverlay class is to provide common functionality for its subclasses: <a href="underside.htm">Underside</a>, <a href="rearcontainer.htm">RearContainer</a>, and <a href="rearsurface.htm">RearSurface</a>. It is worth considering the SpaceOverlay before its subclasses, however, in order to be aware of the common behaviour they all inherit.
+<br>
+
+<br>
+According to the comments in the library code:
+<br>
+<i>A "space overlay" is a special type of container whose contents are supposed to be adjacent to the container object (i.e., self), but are not truly contained in the usual sense. This is used to model spatial relationships such as UNDER and BEHIND, which aren't directly supported in the normal containment model.
+<br>
+
+<br>
+The special feature of a space overlay is that the contents aren't truly attached to the container object, so they don't move with it the way that the contents of an ordinary container do. For example, suppose we have a space overlay representing a bookcase and the space behind it, so that we can hide a painting behind the bookcase: in this case, moving the bookcase should leave the painting where it was, because it was just sitting there in that space. In the real world, of course, the painting was sitting on the floor all along, so moving the bookcase would have no effect on it; but our spatial relationship model isn't quite as good as reality's, so we have to resort to an extra fix-up step. Specifically, when we move a space overlay, we always check to see if its contents need to be relocated to the place where they were really supposed to be all along.</i>
+<br>
+
+<br>
+SpaceOverlay defines the following properties that are inherited by its subclasses:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>abandonLocation</b> - This is the location where objects located in a SpaceOverlay (Underside, RearContainer or RearSurface) end up when the SpaceOverlay is moved. By default, this will be the immediate container of the SpaceOverlay. For example, if the SpaceOverlay represents the underside or rear of a dressing table, if the dressing table is moved, then we would expect whatever was behind it to stay put in the dressing table's original location. You can override abandonLocation to some other location if that's where objects in the SpaceOverlay should fetch up, or set it to nil if you want objects in the SpaceOverlay to move with the SpaceOverlay (because they're to be considered attached to the underside or rear of the object that's moved). In addition, any object of class Component in a SpaceOverlay will always move with the SpaceOverlay, since a Component is assumed to be attached to its parent object.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>alwaysListOnMove</b> - If this property is set to nil (the default), the SpaceOverlay only lists its contents the first time it's moved (on the basis that if you moved, say, a piece of furniture, you would then see what was behind it or underneath it). If alwaysListOnMove is set to true, on the other hand, then the contents of the SpaceOverlay are listed every time it is moved.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+Note that a SpaceOverlay will generally be implemented as a Component of a <a href="complexcontainer.htm">ComplexContainer</a>: in such a case the 'it' that will actually be moved (causing SpaceOverlays such as its Underside or RearSurface) will be the ComplexContainer (though it will of course take its SpaceOverlays with it).
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,112 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Immovable</title><meta name="keywords" content="Immovable,HiddenDoor,cannotTakeMsg,cannotPushMsg,cannotMoveMsg,initDesc,specialDesc,moved,Immovable"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Immovable : <a href="nonportableintroduction.htm">NonPortable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="unthing.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="customimmovable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An Immovable object is one that can't be moved but isn't obviously fixed in place. The practical difference between a <a href="fixture.htm">Fixture</a> and an Immovable is that moving the former is forbidden in the verify method, while moving the latter is disallowed in the action method.
+<br>
+
+<br>
+The messages that are displayed when the player attempts to TAKE, PUT or otherwise MOVE (e.g. PUSH or PULL) an Immovable can be changed by overriding cannotTakeMsg, cannotPutMsg and cannotMoveMsg respectively.
+<br>
+
+<br>
+A simple Immovable would be something like a piece of furniture that the player's not allowed to take or move. However, we'll make our example a bit more interesting than that: we'll put a rug in the roundCave that starts by covering the hole in the floor. The player cannot take the rug but he or she can pull it (once only) to reveal the hole beneath. Later we'll also hide a key under this rug:
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">rug&nbsp;:&nbsp;Immovable&nbsp;'large&nbsp;rectangular&nbsp;chinese&nbsp;rug/pattern/leaves/dragons'&nbsp;'Chinese&nbsp;rug'
+<br>
+&nbsp;&nbsp;&nbsp;@roundCave
+<br>
+&nbsp;&nbsp;"The&nbsp;rectangular&nbsp;rug&nbsp;is&nbsp;patterned&nbsp;in&nbsp;pastel&nbsp;colours,&nbsp;mainly&nbsp;turquoise&nbsp;round&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;edge&nbsp;and&nbsp;principally&nbsp;golds&nbsp;and&nbsp;browns&nbsp;within.&nbsp;The&nbsp;patterns&nbsp;consists&nbsp;mainly
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;leaves&nbsp;and&nbsp;dragons.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;Chinese&nbsp;rug&nbsp;covers&nbsp;the&nbsp;centre&nbsp;of&nbsp;the&nbsp;floor.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"The&nbsp;Chinese&nbsp;rug&nbsp;has&nbsp;been&nbsp;pulled&nbsp;over&nbsp;to&nbsp;one&nbsp;side&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'You&nbsp;probably&nbsp;could&nbsp;roll&nbsp;the&nbsp;carpet&nbsp;up&nbsp;and&nbsp;drag&nbsp;it&nbsp;around,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;you&nbsp;don\'t&nbsp;want&nbsp;to&nbsp;be&nbsp;encumbered&nbsp;with&nbsp;it.&nbsp;'
+<br>
+&nbsp;&nbsp;dobjFor(Pull)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(moved)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;can't&nbsp;pull&nbsp;the&nbsp;rug&nbsp;any&nbsp;further,&nbsp;it's&nbsp;already&nbsp;at&nbsp;the&nbsp;edge&nbsp;of&nbsp;the&nbsp;cave.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Pulling&nbsp;the&nbsp;rug&nbsp;over&nbsp;to&nbsp;the&nbsp;edge&nbsp;of&nbsp;the&nbsp;cave&nbsp;reveals&nbsp;a&nbsp;square&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moved&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There a few things to note here. First, we have used the <b>moved</b> property of the rug to determine whether or not the rug has been pulled to one side. This isn't its normal function, since normally moved is used to track whether an object has moved into another location. However, it's convenient here, both because we don't need rug.moved for any other purpose and also because setting moved = true when the rug has been pulled also means that thereafter the specialDesc will be displayed in place of the initSpecialDesc, which happens to be just what we want (since it describes the changed state of the carpet). We have overridden cannotTakeMsg to provide a custom response, and, more importantly, we have overridden the dobjFor(Pull) handling to allow the rug to be pulled a single time to reveal the hole.
+<br>
+
+<br>
+This does, of course, require some change to the definition of the hole object so that it appears and can be traversed only when the rug has been pulled aside. The easiest way to achieve this is to change it from a ThroughPassage to a HiddenDoor and to set its isOpen property to rug.moved (since moving this rug effectively opens this previously hidden passage). We also need to change the room description of roundCave so that the hole is mentioned only when the rug has been pulled:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">roundCave&nbsp;:&nbsp;DarkRoom&nbsp;'Round&nbsp;Cave'&nbsp;'the&nbsp;round&nbsp;cave'
+<br>
+&nbsp;&nbsp;"This&nbsp;round,&nbsp;rocky&nbsp;cave&nbsp;has&nbsp;a&nbsp;narrow&nbsp;exit&nbsp;to&nbsp;the&nbsp;east<b>&lt;&lt;rug.moved&nbsp;?
+<br>
+&nbsp;&nbsp;&nbsp;'&nbsp;and&nbsp;a&nbsp;strange&nbsp;square&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor'&nbsp;:&nbsp;nil&gt;&gt;</b>.&nbsp;"
+<br>
+&nbsp;&nbsp;east&nbsp;=&nbsp;mainCave
+<br>
+&nbsp;&nbsp;down&nbsp;=&nbsp;squareHole&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;squareHole&nbsp;:&nbsp;TravelWithMessage,&nbsp;<b>HiddenDoor</b>&nbsp;'square&nbsp;hole/chute'&nbsp;'square&nbsp;Hole'
+<br>
+&nbsp;&nbsp;"The&nbsp;hole&nbsp;is&nbsp;just&nbsp;about&nbsp;large&nbsp;enough&nbsp;for&nbsp;one&nbsp;person&nbsp;to&nbsp;fit&nbsp;through.&nbsp;A&nbsp;glint
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;something&nbsp;metallic&nbsp;can&nbsp;be&nbsp;seen&nbsp;just&nbsp;through&nbsp;the&nbsp;hole.&nbsp;"
+<br>
+&nbsp;&nbsp;travelDesc&nbsp;=&nbsp;"You&nbsp;find&nbsp;yourself&nbsp;sliding&nbsp;down&nbsp;a&nbsp;long,&nbsp;slippery&nbsp;metal&nbsp;chute;
+<br>
+&nbsp;&nbsp;&nbsp;After&nbsp;a&nbsp;short&nbsp;ride&nbsp;you&nbsp;are&nbsp;ejected&nbsp;into&nbsp;another&nbsp;cave.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;<b>isOpen&nbsp;=&nbsp;(rug.moved)</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

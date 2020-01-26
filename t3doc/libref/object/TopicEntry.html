@@ -1,0 +1,198 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TopicEntry</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TopicEntry</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2133">2133</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A topic database entry.  Actors and actor state objects store topic   databases; a topic database is essentially a set of these entries. <p>   A TopicEntry can go directly inside an Actor, in which case it's part   of the actor's global set of topics; or, it can go inside an   ActorState, in which case it's part of the state's database and is   only active when the state is active; or, it can go inside a   TopicGroup, which is a set of topics with a common controlling   condition; or, it can go inside a ConvNode, in which case it's in   effect only when the conversation node is active. <p>   Each entry is a relationship between a topic, which is something that   can come up in an ASK or TELL action, and a handling for the topic.   In addition, each entry determines what kind or kinds of actions it   responds to. <p>   Note that TopicEntry objects are *not* simulation objects.  Rather,   these are abstract objects; they can be associated with simulation   objects via the matching mechanism, but these are separate from the   actual simulation objects.  The reason for this separation is that a   given simulation object might have many different response - the   response could vary according to who's being asked the question, who's   asking, and what else is happening in the game. <p>   An entry decides for itself if it matches a topic.  By default, an   entry can match based on either a simulation object, which we'll match   to anything in the topic's "in scope" or "likely" match lists, or   based on a regular expression string, which we'll match to the actual   topic text entered in the player's command. <p>   An entry can decide how strongly it matches a topic.  The database   will choose the strongest match when multiple entries match the same   topic.  The strength of the match is given by a numeric score; the   higher the score, the stronger the match.  The match strength makes it   easy to specify a hierarchy of topics from specific to general, so   that we provide general responses to general topic areas, but can   still respond to particular topics areas more specifically.  For   example, we might want to provide a specific match to the FROBNOZ   SPELL object, talking about that particular magic spell, but provide a   generic '.* spell' pattern to response to questions about any old   spell.  We'd give the generic pattern a lower score, so that the   specific FROBNOZ SPELL response would win when it matches, but we'd   fall back on the generic pattern in other cases.
+<p>
+<code>class
+<b>TopicEntry</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TopicEntry</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TopicEntry</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AltTopic.html">AltTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandTopic.html">CommandTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultTopic.html">DefaultTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultAnyTopic.html">DefaultAnyTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultAskForTopic.html">DefaultAskForTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultAskTellTopic.html">DefaultAskTellTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultAskTopic.html">DefaultAskTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultCommandTopic.html">DefaultCommandTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultConsultTopic.html">DefaultConsultTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultGiveShowTopic.html">DefaultGiveShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultGiveTopic.html">DefaultGiveTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultInitiateTopic.html">DefaultInitiateTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultShowTopic.html">DefaultShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultTellTopic.html">DefaultTellTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MiscTopic.html">MiscTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorByeTopic.html">ActorByeTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorHelloTopic.html">ActorHelloTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BoredByeTopic.html">BoredByeTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ByeTopic.html">ByeTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HelloGoodbyeTopic.html">HelloGoodbyeTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HelloTopic.html">HelloTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ImpByeTopic.html">ImpByeTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ImpHelloTopic.html">ImpHelloTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LeaveByeTopic.html">LeaveByeTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/YesNoTopic.html">YesNoTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NoTopic.html">NoTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/YesTopic.html">YesTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SpecialTopic.html">SpecialTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThingMatchTopic.html">ThingMatchTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GiveShowTopic.html">GiveShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GiveTopic.html">GiveTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ShowTopic.html">ShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InitiateTopic.html">InitiateTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicOrThingMatchTopic.html">TopicOrThingMatchTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellGiveShowTopic.html">AskTellGiveShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellShowTopic.html">AskTellShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicMatchTopic.html">TopicMatchTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellTopic.html">AskTellTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskAboutForTopic.html">AskAboutForTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskForTopic.html">AskForTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellAboutForTopic.html">AskTellAboutForTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTopic.html">AskTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TellTopic.html">TellTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConsultTopic.html">ConsultTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicOrThingMatchTopic.html">TopicOrThingMatchTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellGiveShowTopic.html">AskTellGiveShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskTellShowTopic.html">AskTellShowTopic</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#altTalkCount">altTalkCount</a>&nbsp;
+<a href="#altTopicList">altTopicList</a>&nbsp;
+<a href="#impliesGreeting">impliesGreeting</a>&nbsp;
+<a href="#includeInList">includeInList</a>&nbsp;
+<a href="#isActive">isActive</a>&nbsp;
+<a href="#isConversational">isConversational</a>&nbsp;
+<a href="#matchObj">matchObj</a>&nbsp;
+<a href="#matchScore">matchScore</a>&nbsp;
+<a href="#talkCount">talkCount</a>&nbsp;
+<a href="#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+<a href="#topicResponse">topicResponse</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#addAltTopic">addAltTopic</a>&nbsp;
+<a href="#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="#addTopic">addTopic</a>&nbsp;
+<a href="#adjustScore">adjustScore</a>&nbsp;
+<a href="#anyAltIsActive">anyAltIsActive</a>&nbsp;
+<a href="#breakTopicTie">breakTopicTie</a>&nbsp;
+<a href="#checkIsActive">checkIsActive</a>&nbsp;
+<a href="#deferToEntry">deferToEntry</a>&nbsp;
+<a href="#getActor">getActor</a>&nbsp;
+<a href="#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="#handleTopic">handleTopic</a>&nbsp;
+<a href="#initializeTopicEntry">initializeTopicEntry</a>&nbsp;
+<a href="#isMatchPossible">isMatchPossible</a>&nbsp;
+<a href="#matchTopic">matchTopic</a>&nbsp;
+<a href="#noteAltInvocation">noteAltInvocation</a>&nbsp;
+<a href="#noteInvocation">noteInvocation</a>&nbsp;
+<a href="#setTopicPronouns">setTopicPronouns</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="altTalkCount"></a>
+<table class=decl><tr><td><code>altTalkCount</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2317">2317</a>]</table><div class=desc>   The number of times this topic or any nested AltTopic has been   invoked by the player.  Each time the player asks/tells/etc about   this topic OR any of its AltTopic children, we'll increment this   count. <p>
+</div>
+<a name="altTopicList"></a>
+<table class=decl><tr><td><code>altTopicList</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2373">2373</a>]</table><div class=desc>our list of AltTopic children<p>
+</div>
+<a name="impliesGreeting"></a>
+<table class=decl><tr><td><code>impliesGreeting</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2175">2175</a>]</table><div class=desc>   Do we imply a greeting?  By default, all conversational topics   imply a greeting.  We separate this out so that the implied   greeting can be controlled independently of whether or not we're   actually conversational, if desired. <p>
+</div>
+<a name="includeInList"></a>
+<table class=decl><tr><td><code>includeInList</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2294">2294</a>]</table><div class=desc>   The set of database lists we're part of.  This is a list of   property pointers, giving the TopicDatabase properties of the   lists we participate in. <p>
+</div>
+<a name="isActive"></a>
+<table class=decl><tr><td><code>isActive</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2152">2152</a>]</table><div class=desc>   Is this topic active?  This can be used to control how an actor   can respond without have to worry about adding and removing topics   manually at key events, or storing the topics in state objects.   Sometimes, it's easier to just put a topic entry in the actor's   database from the start, and test some condition dynamically when   the topic is actually queried.  To do this, override this method   to test the condition that determines when the topic entry should   become active.  We'll never show the topic's response when   isActive returns nil.  By default, we simply return true to   indicate that the topic entry is active. <p>
+</div>
+<a name="isConversational"></a>
+<table class=decl><tr><td><code>isConversational</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2167">2167</a>]</table><div class=desc>   Flag: we are a "conversational" topic.  This is true by default.   When this is set to nil, a ConversationReadyState will NOT show   its greeting and will not enter its InConversationState to show   this topic entry's response. <p>   This should be set to nil when the topic entry's response is   non-conversational, in which case a greeting would be   undesirable.  This is appropriate for responses like "You don't   think he'd want to talk about that", where the response indicates   that the player character didn't even ask a question (or   whatever). <p>
+</div>
+<a name="matchObj"></a>
+<table class=decl><tr><td><code>matchObj</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2138">2138</a>]</table><div class=desc>   My matching simulation object or objects.  This can be either a   single object or a list of objects. <p>
+</div>
+<a name="matchScore"></a>
+<table class=decl><tr><td><code>matchScore</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2287">2287</a>]</table><div class=desc>   Our match strength score.  By default, we'll use a score of 100,   which is just an arbitrary base score. <p>
+</div>
+<a name="talkCount"></a>
+<table class=decl><tr><td><code>talkCount</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2309">2309</a>]</table><div class=desc>   The number of times this topic has invoked by the player.  Each   time the player asks/tells/etc about this topic, we'll increment   this count. <p>
+</div>
+<a name="topicGroupActive"></a>
+<table class=decl><tr><td><code>topicGroupActive</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2370">2370</a>]</table><div class=desc>check the group isActive status (for AltTopics nested within)<p>
+</div>
+<a name="topicGroupScoreAdjustment"></a>
+<table class=decl><tr><td><code>topicGroupScoreAdjustment</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2367">2367</a>]</table><div class=desc>get the topic group score adjustment (for AltTopics nested within)<p>
+</div>
+<a name="topicResponse"></a>
+<table class=decl><tr><td><code>topicResponse</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2302">2302</a>]</table><div class=desc>   Our response.  This is displayed when we're the topic entry   selected to handle an ASK or TELL.  Each topic entry must override   this to show our response text (or, alternatively, an entry can   override handleTopic so that it doesn't call this property). <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="addAltTopic"></a>
+<table class=decl><tr><td><code>addAltTopic (entry)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2360">2360</a>]</table><div class=desc>   Add an AltTopic entry.  This is called by our AltTopic children   during initialization; we'll simply add the entry to our list of   AltTopic children. <p>
+</div>
+<a name="addSuggestedTopic"></a>
+<table class=decl><tr><td><code>addSuggestedTopic (t)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2550">2550</a>]</table><div class=desc>   Add a suggested topic.  A suggested topic can be nested within a   topic entry; doing this associates the suggested topic with the   topic entry, and automatically associates the suggested topic   with the entry's actor or actor state. <p>
+</div>
+<a name="addTopic"></a>
+<table class=decl><tr><td><code>addTopic (entry)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2348">2348</a>]</table><div class=desc>add a topic nested within us<p>
+</div>
+<a name="adjustScore"></a>
+<table class=decl><tr><td><code>adjustScore (score)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2252">2252</a>]</table><div class=desc>   Adjust my score value for any hierarchical adjustments.  We'll add   the score adjustment for each enclosing object. <p>
+</div>
+<a name="anyAltIsActive"></a>
+<table class=decl><tr><td><code>anyAltIsActive ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2228">2228</a>]</table><div class=desc>   Check to see if any alternative in the alternative group is   active.  This returns true if we're active or if any of our nested   AltTopics is active. <p>
+</div>
+<a name="breakTopicTie"></a>
+<table class=decl><tr><td><code>breakTopicTie (matchList, topic, fromActor, toks)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2443">2443</a>]</table><div class=desc>   Break a tie among matching topics entries.  The topic database   searcher calls this on each matching topic entry when it finds   multiple entries tied for first place, based on their match   scores.  This gives the entries a chance to figure out which one   is actually the best match for the input, given the other entries   that also matched. <p>   This method returns a TopicEntry object - one of the objects from   the match list - if it has an opinion as to which one should take   precedence.  It returns nil if it doesn't know or doesn't care.   Returning nil gives the other topics in the match list a chance to   make the selection.  If all of the objects in the list return nil,   the topic database searcher simply picks one of the topic matches   arbitrarily. <p>   'matchList' is the list of tied TopicEntry objects.  'topic' is   the ResolvedTopic object from the parser, representing the   player's input phrase that we're matching.  'fromActor' is the   actor performing the command.  'toks' is a list of strings giving   the word tokens of the noun phrase. <p>   The topic database searcher calls this method for each matching   topic entry in the case of a tie, and simply accepts the opinion   of the first one that expresses an opinion by returning a non-nil   value.  There's no voting; whoever happens to get *and use* the   first say also gets the last word.  We expect that this won't be a   problem in practice: when this comes up at all, it's because there   are a couple of closely related topic entries that are active in a   particular context, and you need a special bit of tweaking to pick   the right one for a given input phrase.  Simply pick one of the   involved entries and define this method there. <p>
+</div>
+<a name="checkIsActive"></a>
+<table class=decl><tr><td><code>checkIsActive ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2205">2205</a>]</table><div class=desc>   Determine if this topic is active.  This checks the isActive   property, and also takes into account our relationship to   alternative entries for the topic.  Generally, you should *define*   (override) isActive, and *call* this method. <p>
+</div>
+<a name="deferToEntry"></a>
+<table class=decl><tr><td><code>// deferToEntry (other)</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2281">2281</a>]</table><div class=desc>   Check to see if we want to defer to the given topic from an   inferior topic database.  By default, we never defer to a topic   from an inferior database: we choose a matching topic from the top   database in the hierarchy where we find a match. <p>   The database hierarchy, for most purposes, starts with the   ConvNode at the highest level, then the ActorState, then the   Actor.  We search those databases, in that order, and we take the   first match we find.  By default, if there's another match in a   lower-level database, it doesn't matter what its matchScore is: we   always pick the one from the highest-level database where we find   a match.  You can override this method to change this behavior. <p>   We don't actually define this method here, because the presence of   the method is significant.  If the method isn't defined at all, we   won't bother looking for a possible deferral, saving the trouble   of searching the other databases in the hierarchy. <p>
+</div>
+<a name="getActor"></a>
+<table class=decl><tr><td><code>getActor ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2184">2184</a>]</table><div class=desc>   Get the actor associated with the topic, if any.  By default,   we'll return our enclosing database's topic owner, if it's an   actor - in almost all cases, if there's any actor associated with   a topic, it's simply the owner of the database containing the   topic. <p>
+</div>
+<a name="getTopicOwner"></a>
+<table class=decl><tr><td><code>getTopicOwner ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2323">2323</a>]</table><div class=desc>   the owner of any AltTopic nested within me is the same as my own   topic owner, which we take from our location <p>
+</div>
+<a name="handleTopic"></a>
+<table class=decl><tr><td><code>handleTopic (fromActor, topic)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2492">2492</a>]</table><div class=desc>   Handle the topic.  This is called when we find that this is the   best topic entry for the current topic. <p>   By default, we'll do one of two things: <p>   - If 'self' inherits from Script, then we'll simply invoke our   doScript() method.  This makes it especially easy to set up a   topic entry that shows a series of responses: just add EventList   or one of its subclasses to the base class list when defining the   topic, and define the eventList property as a list of string   responses.  For example: <p> <br>    + TopicEntry, StopEventList @blackBook <br>       ['&lt;q&gt;What makes you think I know anything about it?&lt;/q&gt; <br>        he says, his voice shaking. ', <br>        '&lt;q&gt;No! You can\'t make me tell you!&lt;/q&gt; he wails. ', <br>        '&lt;q&gt;All right, fine! I\'ll tell you, but I warn you, <br>        this is knowledge mortal men were never meant to know.&lt;/q&gt; ', <br>        // and so on <br>       ] <br>    ; <p>   - Otherwise, we'll call our topicResponse property, which should   simply be a double-quoted string to display.  This is the simplest   way to define a topic with just one response. <p>   Note that 'topic' will vary by subclass, depending on the type of   command used with the topic type.  For example, for ASK and TELL   commands, 'topic' is a ResolvedTopic object; for GIVE and SHOW,   it's a simulation object (i.e., generally a Thing subclass). <p>
+</div>
+<a name="initializeTopicEntry"></a>
+<table class=decl><tr><td><code>initializeTopicEntry ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2336">2336</a>]</table><div class=desc>   Initialize.  If we have a location property, we'll assume that the   location is a topic database object, and we'll add ourselves to   that database. <p>
+</div>
+<a name="isMatchPossible"></a>
+<table class=decl><tr><td><code>// isMatchPossible (actor, scopeList)</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2408">2408</a>]</table><div class=desc>   Check to see if a match to this topic entry is *possible* right   now for the given actor.  For most subclasses, this is inherently   imprecise, because the 'match' function simply isn't reversible in   general: to know if we can be matched, we'd have to determine if   there's a non-empty set of possible inputs that can match us.   This method is complementary to matchTopic(), so subclasses must   override with a corresponding implementation. <p>   'actor' is the actor to whom we're making the suggestion.   'scopeList' is the list of objects that are in scope for the   actor. <p>   The library only uses this to determine if a suggestion should be   offered.  So, specialized topic instances with non-standard match   rules don't have to worry about this unless they're used as   suggestions, or unless the game itself needs this information for   some other reason. <p>
+</div>
+<a name="matchTopic"></a>
+<table class=decl><tr><td><code>// matchTopic (fromActor, topic)</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2387">2387</a>]</table><div class=desc>   Match a topic.  This is abstract in this base class; it must be   defined by each concrete subclass.  This returns nil if there's no   match, or an integer value if there's a match.  The higher the   number's value, the stronger the match. <p>   This is abstract in the base class because the meaning of 'topic'   varies by subclass, according to which type of command it's used   with.  For example, in ASK and TELL commands, 'topic' is a   ResolvedTopic describing the topic in the player's command; for   GIVE and SHOW commands, it's the resolved simulation object. <p>
+</div>
+<a name="noteAltInvocation"></a>
+<table class=decl><tr><td><code>noteAltInvocation (fromActor, alt)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2532">2532</a>]</table><div class=desc>   Note that something in our entire alternative group has been   invoked.  We count as a member of our own group, so this is   invoked when we're invoked; this is also invoked when any AltTopic   child of ours is invoked. <p>
+</div>
+<a name="noteInvocation"></a>
+<table class=decl><tr><td><code>noteInvocation (fromActor)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2514">2514</a>]</table><div class=desc>note that we've been invoked<p>
+</div>
+<a name="setTopicPronouns"></a>
+<table class=decl><tr><td><code>setTopicPronouns (fromActor, topic)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2458">2458</a>]</table><div class=desc>   Set pronouns for the topic, if possible.  If the topic corresponds   to a game-world object, then we should set the pronoun antecedent   to the game object.  This must be handled per subclass because of   the range of possible meanings of 'topic'. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

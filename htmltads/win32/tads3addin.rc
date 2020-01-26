@@ -1,0 +1,23 @@
+/* Copyright (c) 2006 by Michael J. Roberts.  All Rights Reserved. */
+/*
+Name
+  tads3addin.rc - Workbench TADS3 addin - resources
+Function
+  This is a TADS Workbench add-in that provides customized indenting and
+  styling for TADS 3 source files opened in Workbench's integrated Scintilla
+  editor.
+
+  See itadsworkbench.h for details on how to create Workbench extensions.
+Notes
+
+Modified
+  10/05/06 MJRoberts  - Creation
+*/
+
+#include <windows.h>
+#include "tads3addin.h"
+
+ICON_T_FILE   ICON DISCARDABLE "T file.ico"
+ICON_H_FILE   ICON DISCARDABLE "H file.ico"
+ICON_TL_FILE  ICON DISCARDABLE "TL file.ico"
+ICON_JS_FILE  ICON DISCARDABLE "JS file.ico"

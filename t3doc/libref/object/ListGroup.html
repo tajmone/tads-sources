@@ -1,0 +1,74 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ListGroup</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ListGroup</span><span class=type>class</span><td align=right><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1877">1877</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   List Group Interface.  An instance of this object is created for each   set of objects that are to be grouped together.
+<p>
+<code>class
+<b>ListGroup</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ListGroup</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>ListGroup</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ListGroupCustom.html">ListGroupCustom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ListGroupEquivalent.html">ListGroupEquivalent</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ListGroupSorted.html">ListGroupSorted</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ListGroupParen.html">ListGroupParen</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ListGroupPrefixSuffix.html">ListGroupPrefixSuffix</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestionListGroup.html">SuggestionListGroup</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RoomActorGrouper.html">RoomActorGrouper</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#groupDisplaysSublist">groupDisplaysSublist</a>&nbsp;
+<a href="#minGroupSize">minGroupSize</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#createGroupSublister">createGroupSublister</a>&nbsp;
+<a href="#groupCardinality">groupCardinality</a>&nbsp;
+<a href="#groupNounPhraseCount">groupNounPhraseCount</a>&nbsp;
+<a href="#showGroupItem">showGroupItem</a>&nbsp;
+<a href="#showGroupItemCounted">showGroupItemCounted</a>&nbsp;
+<a href="#showGroupList">showGroupList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="groupDisplaysSublist"></a>
+<table class=decl><tr><td><code>groupDisplaysSublist</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1933">1933</a>]</table><div class=desc>   Determine if showing the group list will introduce a sublist into   an enclosing list.  This should return true if we will show a   sublist without some kind of grouping, so that the caller knows   to introduce some extra grouping into its enclosing list.  This   should return nil if the sublist we display will be clearly set   off in some way (for example, by being enclosed in parentheses). <p>
+</div>
+<a name="minGroupSize"></a>
+<table class=decl><tr><td><code>minGroupSize</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1945">1945</a>]</table><div class=desc>   The minimum number of elements for which we should retain the   group in a listing.  By default, we need two elements to display a   group; any group with only one element is discarded, and the   single element is moved into the 'singles' list.  This can be   overridden to allow single-element groups to be retained.  In most   cases, it's undesirable to retain single-element groups, but when   grouping is used to partition a list into two or more fixed   portions, single-element groups become desirable. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="createGroupSublister"></a>
+<table class=decl><tr><td><code>createGroupSublister (parentLister)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1999">1999</a>]</table><div class=desc>   Create the group sublister. <p>   In most cases, when a group displays a list of the items in the   group as a sublist, it will not want to use the same lister that   was used to show the enclosing group, because the enclosing lister   will usually have different prefix/suffix styles than the sublist.   However, the group list and the enclosing list might share many   other attributes, such as the style of name to use when displaying   items in the list.  The default sublister we create,   GroupSublister, is a hybrid that uses the enclosing lister's   attributes except for a few, such as the prefix and suffix, that   usually need to be changed for the sublist. <p>   This can be overridden to use a completely customized Lister   object for the group list, if desired. <p>
+</div>
+<a name="groupCardinality"></a>
+<table class=decl><tr><td><code>groupCardinality (lister, lst)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1968">1968</a>]</table><div class=desc>   Determine the cardinality of the group listing, grammatically   speaking.  This is the number of items that the group seems to be   for the purposes of grammatical agreement.  For example, if the   group is displayed as "$1.38 in change", it would be singular for   grammatical agreement, hence would return 1 here; if it displays   "five coins (two copper, three gold)," it would count as five   items for grammatical agreement. <p>   For languages (like English) that grammatically distinguish   number only between singular and plural, it is sufficient for   this to return 1 for singular and anything higher for plural.   For the sake of languages that make more elaborate number   distinctions for grammatical agreement, though, this should   return as accurate a count as is possible. <p>   By default, we return the number of items to be displayed in the   list group.  This should be overridden when necessary, such as   when the group message is singular in usage even if the list has   multiple items (as in "$1.38 in change"). <p>
+</div>
+<a name="groupNounPhraseCount"></a>
+<table class=decl><tr><td><code>groupNounPhraseCount (lister, lst)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1980">1980</a>]</table><div class=desc>   Get the number of noun phrases this group will display.  This   differs from the cardinality in that it doesn't matter how many   *objects* the phrases represent; it only matters how many phrases   are displayed.  For example, "five coins" has cardinality 5 but   only displays one noun phrase. <p>   By default, we simply return the number of items in the group,   since most groups individually list their items. <p>
+</div>
+<a name="showGroupItem"></a>
+<table class=decl><tr><td><code>showGroupItem (sublister, obj, options, pov, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1909">1909</a>]</table><div class=desc>   Show an item in the group's sublist.  The sublister calls this to   display each item in the group when the group calls the sublister   to display the group list.  By default, we simply let the   sublister handle the request, which gives items in our group   sublist the same appearance they would have had in the sublist to   begin with.  We can customize this behavior to give our list   items a different appearance special to the group sublist. <p>   Note that the same customization could be accomplished by   creating a specialized subclass of GroupSublister in   createGroupSublister(), and overriding showListItem() in the   specialized GroupSublister subclass.  We use this mechanism as a   convenience, so that a separate group sublister class doesn't   have to be created simply to customize the display of group   items. <p>
+</div>
+<a name="showGroupItemCounted"></a>
+<table class=decl><tr><td><code>showGroupItemCounted (sublister, lst, options, pov, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1919">1919</a>]</table><div class=desc>   Show a counted item in our group list.  This is the counted item   equivalent of showGroupItem. <p>
+</div>
+<a name="showGroupList"></a>
+<table class=decl><tr><td><code>showGroupList (pov, lister, lst, options, indent, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1890">1890</a>]</table><div class=desc>   Show a list of items from this group.  All of the items in the   list will be members of this list group; we are to display a   sentence fragment showing the items in the list, suitable for   embedding in a larger list. <p>   'options', 'indent', and 'infoTab' have the same meaning as they   do for showList(). <p>   Note that we are not to display any separator before or after our   list; the caller is responsible for that. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>TravelConnector</title><meta name="keywords" content="connectorStagingLocation,isCircularPassage,travelBarrier,TravelConnector,isConnectorListed,checkTravelBarriers,connectorBack,connectorTravelPreCond,createUnlistedProxy,darkTravel,describeArrival,describeDeparture,explainTravelBarrier,fixedSource,getApparentDestination,getDestination,isConnectorApparent,isConnectorPassable,isConnectorVisibleInDark,noteTraversal,rememberTravel"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>TravelConnector: <a href="thing-thebasics.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="askconnector.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="roomxxxxaction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">TravelConnector is the base class from which all the connectors we have been looking at ultimately derive. You will probably not define any objects of the TravelConnector class (as opposed to one of its subclasses) in your games, since a raw TravelConnector doesn't actually lead anywhere. It's possible that you might define your own subclass of TravelConnector for some particular purpose, or you could use a TravelConnector object in your game and override, say, its actionDobjTravelVia method or its getDestinationMethod to produce the result you want (though in most cases you'll probably want to use one of its subclasses rather than reinventing a wheel that's already in the library).
+<br>
+
+<br>
+The main importance of TravelConnector, however, is that it defines a large number of the properties and methods used on all its subclasses. These are listed below for the sake of reference, using descriptions taken from the comments in the library code:
+<br>
+
+<br>
+<i>Properties:</i>
+<br>
+<b>connectorStagingLocation:</b>  The "staging location" for travel through this connector. By default, if we have a location, that's our staging location; if we don't have a location (in which case we probably an outermost room), we don't have a staging location.
+<br>
+
+<br>
+<b>isCircularPassage:</b> Is this a "circular" passage? A circular passage is one that explicitly connects back to its origin, so that traveling through the connector leaves us where we started. When a passage is marked as circular, we'll describe travel through the passage exactly as though we had actually gone somewhere. By default, if traveling through a passage leaves us where we started, we assume that nothing happened, so we don't describe any travel.
+<br>
+Circular passages don't often occur in ordinary settings; these are mostly useful in disorienting environments, such as twisty cave networks, where a passage between locations can change direction and even loop back on itself.
+<br>
+
+<br>
+<b>isConnectorListed:</b>  Is this connector listed? This indicates whether or not the exit is allowed to be displayed in lists of exits, such as in the status line or in "you can't go that way" messages. By default, all exits are allowed to appear in listings.
+<br>
+Note that this indicates if listing is ALLOWED - it doesn't guarantee that listing actually occurs. A connector can be listed only if this is true, AND the point-of-view actor for the listing can perceive the exit (which means that isConnectorApparent must return true, and there must be sufficient light to see the exit).
+<br>
+
+<br>
+<b>travelBarrier:</b>   Barrier or barriers to travel. This property can be set to a single <a href="travelbarrier.htm">TravelBarrier</a> object or to a list of TravelBarrier objects. checkTravelBarriers() checks each barrier specified here.
+<br>
+
+<br>
+<b>travelMemory:</b>  Our "travel memory" table. If this contains a non-nil lookup table object, we'll store a record of each successful traversal of a travel connector here - we'll record the destination keyed by the combination of actor, origin, and connector, so that we can later check to see if the actor has any memory of where a given connector goes from a given origin. * We keep this information by default, which is why we statically create the table here. Keeping this information does involve some overhead, so some authors might want to get rid of this table (by setting the property to nil) if the game doesn't make any use of the information. Note that this table is stored just once, in the TravelConnector class itself - there's not a separate table per connector.
+<br>
+
+<br>
+
+<br>
+<i>Methods:</i>
+<br>
+<b>actorTravelPreCond (actor):</b>  Get the travel preconditions that this connector requires for travel by the given actor. In most cases, this won't depend on the actor, but it's provided as a parameter anyway; in most cases, this will just apply the conditions that are relevant to actors as travelers.
+<br>
+By default, we require actors to be "travel ready" before traversing a connector. The exact meaning of "travel ready" is provided by the actor's immediate location, but it usually simply means that the actor is standing. This ensures that the actor isn't sitting in a chair or lying down or something like that. Some connectors might not require this, so this routine can be overridden per connector.
+<br>
+Note that this will only be called when an actor is the traveler. When a vehicle or other kind of traveler is doing the travel, this will not be invoked.
+<br>
+
+<br>
+<b>canTravelerPass (traveler):</b>  Check to see if the Traveler object is allowed to travel through this connector. Returns true if travel is allowed, nil if not.
+<br>
+This is called from checkTravelBarriers() to check any conditions coded directly into the TravelConnector. By default, we simply return true; subclasses can override this to apply special conditions.
+<br>
+If an override wants to disallow travel, it should return nil here, and then provide an override for explainTravelBarrier() to provide a descriptive message explaining why the travel isn't allowed.
+<br>
+Conditions here serve essentially the same purpose as barrier conditions. The purpose of providing this additional place for the same type of conditions is simply to improve the convenience of defining travel conditions for cases where barriers are unnecessary. The main benefit of using a barrier is that the same barrier object can be re-used with multiple connectors, so if the same set of travel conditions apply to several different connectors, barriers allow the logic to be defined once in a single barrier object and then re-used easily in each place it's needed. However, when a particular condition is needed in only one place, creating a barrier to represent the condition is a bit verbose; in such cases, the condition can be placed in this method more conveniently.
+<br>
+
+<br>
+<b>checkTravelBarriers (dest):</b>  Check barriers. The TravelVia check() routine must call this to enforce barriers.
+<br>
+
+<br>
+<b>connectorBack (traveler, dest): </b> Find a connector in the destination location that connects back as the source of travel from the given connector when traversed from the source location. Returns nil if there is no such connector. This must be called while the traveler is still in the source location; we'll attempt to find the connector back to the traveler's current location.
+<br>
+The purpose of this routine is to identify the connector by which the traveler arrives in the new location. This can be used, for example, to generate a connector-specific message describing the traveler's emergence from the connector (so we can say one thing if the traveler arrives via a door, and another if the traveler arrives by climbing up a ladder).
+<br>
+By default, we'll try to find a travel link in the destination that links us back to this same connector, in which case we'll return 'self' as the connector from which the traveler emerges in the new location. Failing that, we'll look for a travel link whose apparent source is the origin location. This should be overridden for any connector with an explicit complementary connector. For example, it is common to implement a door using a pair of objects, one representing each side of the door; in such cases, each door object would simply return its twin here. Note that a complementary connector doesn't actually have to go anywhere, since it's still useful to have a connector back simply for describing travelers arriving on the connector.
+<br>
+This <i>must</i> be overridden when the destination location doesn't have a simple connector whose apparent source is this connector, because in such cases we won't be able to find the reverse connector with our direction search.
+<br>
+
+<br>
+<b>connectorGetConnectorTo (origin, traveler, dest):</b>  Get the travel connector leading to the given destination from the given origin and for the given travel. Return nil if we don't know a connector leading there.
+<br>
+By default, we simply return 'self' if our destination is the given destination, or nil if not.
+<br>
+Some subclasses might encapsulate one or more "secondary" connectors - that is, the main connector might choose among multiple other connectors. In these cases, the secondary connectors typically won't be linked to directions on their own, so the room can't see them directly - it can only find them through us, since we're effectively a wrapper for the secondary connectors. In these cases, we won't have any single destination ourself, so getDestination() will have to return nil. But we <i>can</i> work backwards: given a destination, we can find the secondary connector that points to that destination. That's what this routine is for.
+<br>
+
+<br>
+<b>connectorTravelPreCond ( ):</b>   Get any connector-specific pre-conditions for travel via this connector.
+<br>
+
+<br>
+<b>createUnlistedProxy ( ) :</b>   Get an unlisted proxy for this connector. This is normally called from the <font face="Courier New" size="2" color="#000000">asExit()</font><font face="Arial" size="2" color="#000000"> macro to set up one room exit direction as an unlisted synonym for another.
+<br>
+
+<br>
+<b>darkTravel (actor, dest):</b>  Handle travel in the dark. Specifically, this is called when an actor attempts travel from one dark location to another dark location. (We don't invoke this in any other case: light-to-light, light-to-dark, and dark-to-light travel are all allowed without any special checks.)
+<br>
+By default, we will prohibit dark-to-dark travel by calling the location's darkTravel handler. Individual connectors can override this to allow such travel or apply different handling.
+<br>
+
+<br>
+<b>describeArrival (traveler, origin, dest):</b>  Describe an actor's arrival through the connector from the given origin into the given destination. This description is from the point of view of another actor in the destination.
+<br>
+Note that this is called on the connector that reverses the travel, NOT on the connector the actor is actually traversing - that is, 'self' is the backwards connector, leading from the destination back to the origin location. So, if we have two sides to a door, and the actor traverses the first side, this will be called on the second side - the one that links the destination back to the origin.
+<br>
+
+<br>
+<b>describeDeparture (traveler, origin, dest)</b>:  Describe an actor's departure through the connector from the given origin to the given destination. This description is from the point of view of another actor in the origin location.
+<br>
+
+<br>
+<b>describeLocalArrival (traveler, origin, dest)</b>:  Describe a "local arrival" via this connector. This is called when the traveler moves around entirely within the field of view of the player character - that is, the traveler's origin is visible to the player character when we arrive in our destination. We'll describe the travel not in terms of arriving, since the traveler was already here to start with, but rather as entering the destination.
+<br>
+
+<br>
+<b>dobjFor (TravelVia):</b>  Action handler for the internal "TravelVia" action. This is not a real action, but is instead a pseudo-action that we implement generically for travel via the connector. Subclasses that want to handle real actions by traveling via the connector can use remapTo(TravelVia) to implement the real action handlers. Note that remapTo should be used (rather than, say, asDobjFor), since this will ensure that every type of travel through the connector actually looks like a TravelVia action, which is useful for intercepting travel actions generically in other code.
+<br>
+
+<br>
+<b>explainTravelBarrier (traveler):</b>  Explain why canTravelerPass() returned nil. This is called to display an explanation of why travel is not allowed by self.canTravelerPass().
+<br>
+Since the default canTravelerPass() always allows travel, the default implementation of this method does nothing. Whenever canTravelerPass() is overridden to return nil, this should also be overridden to provide an appropriate explanation.
+<br>
+
+<br>
+<b>fixedSource (dest, traveler)</b> Get the "fixed" source for travelers emerging from this connector, if possible. This can return nil if the connector does not have a fixed relationship with another connector.
+<br>
+The purpose of this routine is to find complementary connectors for simple static map connections. This is especially useful for direct room-to-room connections.
+<br>
+When a connector relationship other than a simple static mapping exists, the connectors must generally override connectorBack(), in which case this routine will not be needed (at least, this routine won't be needed as long as the overridden connectorBack() doesn't call it). Whenever it is not clear how to implement this routine, don't - implement connectorBack() instead.
+<br>
+
+<br>
+<b>getApparentDestination (origin, actor)</b>:   Get the apparent destination of travel by the actor to the given origin. This returns the location to which the connector travels, AS FAR AS THE ACTOR KNOWS. If the actor does not know and cannot tell where the connector leads, this should return nil.
+<br>
+Note that this method does NOT necessarily return the actual destination, because we obviously can't know the destination for certain until we traverse the connection. Rather, the point of this routine is to return as much information as the actor is supposed to have. This can be used for purposes like auto-mapping, where we'd want to show what the player character knows of the map, and NPC goal-seeking, where an NPC tries to figure out how to get from one point to another based on the NPC's knowledge of the map. In these sorts of applications, it's important to use only knowledge that the actor is supposed to have within the parameters of the simulation.
+<br>
+Callers should always test isConnectorApparent() before calling this routine. This routine does not check to ensure that the connector is apparent, so it could return misleading information if used independently of isConnectorApparent(); for example, if the connector <i>formerly</i> worked but has now disappeared, and the actor has a memory of the former destination, we'll return the remembered destination.
+<br>
+The actor can know the destination by a number of means:
+<br>
+1. The location is familiar to the character. For example, if the setting is the character's own house, the character would obviously know the house well, so would know where you'd end up going east from the living room or south from the kitchen. We use the origin method actorKnowsDestination() to determine this.
+<br>
+2. The destination is readily visible from the origin location, or is clearly marked. For example, in an outdoor setting, it might be clear that going east from the field takes you to the hilltop. In an indoor setting, an open passage might make it clear that going east from the living room takes you to the dining room. We use the origin method actorKnowsDestination() to determine this.
+<br>
+3. The actor has been through the connector already in the course of the game, and so remembers the connection by virtue of recent experience. If our travelMemory class property is set to a non-nil lookup table object, then we'll automatically use the lookup table to remember the destination each time an actor travels via a connector, and use this information by default to provide apparent destination information.
+<br>
+
+<br>
+<b>getDestination (origin, traveler):</b>  Get our destination, given the traveler and the origin location.
+<br>
+This method is required to return the current destination for the travel. If the connector doesn't go anywhere, this should return nil. The results of this method must be stable for the extent of a turn, up until the time travel actually occurs; in other words, it must be possible to call this routine simply for information purposes, to determine where the travel will end up.
+<br>
+This method should not trigger any side effects, since it's necessary to be able to call this method more than once in the course of a given travel command. If it's necessary to trigger side effects when the connector is actually traversed, apply the side effects in noteTraversal().
+<br>
+For auto-mapping and the like, note that getApparentDestination() is a better choice, since this method has internal information that might not be apparent to the characters in the game and thus shouldn't be revealed through something like an auto-map. This method is intended for internal use in the course of processing a travel action, since it knows the true destination of the travel.
+<br>
+<i>Note that on the TravelConnector class this method simply returns nil, which is why a raw TravelConnector won't get you anywhere. This method is overridden on subclasses to do something more useful. </i>
+<br>
+
+<br>
+<b>isConnectorApparent (origin, actor):</b>  Determine if the travel connection is apparent - as a travel connector - to the actor in the given origin location. This doesn't indicate whether or not travel is possible, or where travel goes, or that the actor can tell where the passage goes; this merely indicates whether or not the actor should realize that the passage exists at all.
+<br>
+A closed door, for example, would return true, because even a closed door makes it clear that travel is possible in the direction, even if it's not possible currently. A secret door, on the other hand, would return nil while closed, because it would not be apparent to the actor that the object is a door at all.
+<br>
+
+<br>
+<b>isConnectorPassable (origin, traveler):</b>  Determine if the travel connection is passable by the given traveler in the current state. For example, a door would return true when open, nil when closed.
+<br>
+This information is intended to help game code probing the structure of the map. This information is NOT used in actor travel; for actor travel, we rely on custom checks in the connector's TravelVia handler to enforce the conditions of travel. Actor travel uses TravelVia customizations rather than this method because that allows better specificity in reporting failures. This method lets game code get at the same information, but in a more coarse-grained fashion.
+<br>
+
+<br>
+<b>isConnectorVisibleInDark (origin, actor)</b>:  Can the given actor see this connector in the dark, looking from the given origin? Returns true if so, nil if not.
+<br>
+This is used to determine if the actor can travel from the given origin via this connector when the actor (in the origin location) is in darkness.
+<br>
+By default, we implement the usual convention, which is that travel from a dark room is possible only when the destination is lit. If we can't determine our destination, we will assume that the connector is not visible.
+<br>
+
+<br>
+<b>noteTraversal (traveler):</b>    Note that the connector is being traversed. This is invoked just before the traveler is moved; this notification is fired after the other travel-related notifications (beforeTravel, actorTravel, travelerLeaving). This is a good place to display any special messages describing what happens during the travel, because any messages displayed here will come after any messages related to reactions from other objects. (By default this method does nothing, and can be freely overridden with your own code; note, however, that it is overridden by the library in TravelWithMessage, and hence in the subclasses of <a href="travelwithmessage.htm">TravelWithMessage</a>, such as <a href="travelmessage.htm">TravelMessage</a>, <a href="notravelmessage.htm">NoTravelMessage</a>, and <a href="fakeconnector.htm">FakeConnector</a>, as well).
+<br>
+
+<br>
+<b>rememberTravel (origin, actor, dest):</b>  Service routine: add a memory of a successful traversal of a travel connector. If we have a travel memory table, we'll add the traversal to the table, so that we can find it later.
+<br>
+This is called from Traveler.travelerTravelTo() on successful travel. We're called for each actor participating in the travel.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

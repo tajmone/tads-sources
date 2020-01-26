@@ -1,0 +1,303 @@
+<title>Introduction to HTML TADS</title>
+
+<h1>Introduction to HTML TADS</h1>
+
+This document is a brief introduction to HTML TADS, a text
+adventure interpreter based on TADS.
+
+<ul>
+<li><a href="#docOverview">Documentation overview</a>
+<li><a href="#contact">Contacting the author</a>
+<li><a href="#whatIsIt">What is HTML TADS?</a>
+<li><a href="#whatDoINeed">What software do I need?</a>
+<li><a href="#compatibility">Compatibility between HTML TADS
+                             and standard TADS</a>
+<li><a href="#whither">Whither the standard TADS?</a>
+<li><a href="#why">Why HTML?</a>
+<li><a href="#acks">Acknowledgments</a>
+</ul>
+
+<hr>
+<a name=docOverview></a>
+<h3>HTML TADS Documentation Overview</h3>
+<p>
+For your browsing convenience,
+here's a list of the documentation included with HTML TADS.
+
+<ul>
+<li><a href="start.htm">Getting Started with HTML TADS</a>
+<li><a href="../changes.htm">Recent changes to HTML TADS</a>
+<li><a href="../wb/wbcont.htm">TADS Workbench and the TADS Debugger</a>
+<li><a href="deviate.htm">HTML TADS additions to and deviations from
+standard HTML</a>
+<li><a href="linebrk.htm">Word Wrapping and Line Breaking</a>
+<li><a href="tables.htm">Table Layout Rules</a>
+<li><a href="convert.htm">Converting a regular TADS 2 game to HTML TADS</a>
+<li><a href="res.htm">Using Resources in HTML TADS</a>
+<li><a href="sound.htm">Using Sound in HTML TADS</a>
+<li><a href="dist.htm">Distributing your game</a>
+<li><a href="charmode.htm">Playing HTML TADS games with the standard
+TADS Interpreter</a>
+<li><a href="../../license.txt">Copyright and License information</a>
+</ul>
+
+If you're interested in porting HTML TADS to a new operating system,
+you can refer to the <a href="porting.htm">porting notes</a> (which
+you need not consult to write or play games with HTML TADS).
+
+<a name="contact"></a>
+<h3>Contacting the author</h3>
+
+<p>If you encounter any problems, or would like to offer suggestions
+for improvements, please contact the author at
+<a href='mailto:mjr_@hotmail.com'>mjr_@hotmail.com</a>.  When
+reporting a problem, please provide as complete a description as
+possible of the problem and the exact steps needed to reproduce it.
+
+<p>For more general advice and information about interactive fiction,
+you may be interested in consulting the usenet newsgroup
+<a href="news:rec.arts.int-fiction">rec.arts.int-fiction</a>, which
+is concerned with all aspects of interactive fiction, and in particular
+the technical and artistic details of designing and developing adventure
+games.
+
+<p><hr>
+<a name=whatIsIt></a>
+<h3>What is HTML TADS?</h3>
+
+HTML TADS is an interpreter for games created with TADS, the Text
+Adventure Development System.  HTML TADS is an extension of the
+standard TADS interpreter that allows a game author to use HTML
+markups to control the appearance of the game.
+
+<p>
+HTML TADS is simply a different user interface on the standard TADS
+interpreter engine.  You create a game for use with HTML TADS in
+the same way as with the standard TADS; the only difference is
+that you can use HTML markups to format the text of your game.
+
+<p>
+HTML TADS allows a TADS game to use many features that have not
+traditionally been available in text adventure systems:
+
+<ul>
+<li>Fancy text formatting.  HTML TADS allows you to use most of the
+features of HTML to format your text.  Whereas plain TADS only has a few
+very limited formatting features, HTML TADS allows you to set
+fonts and font sizes, text colors, background colors, and all sorts
+of text attributes like boldface, italics, and underlining.
+
+<li>Graphics.  HTML TADS lets you to integrate graphics into your
+game.  You can use a picture for the window background, and you
+can insert pictures into the text, with various alignment possibilities.
+Unlike some older adventure game systems that divided the screen into
+panels, some of which showed text and others of which showed graphics,
+HTML TADS uses the much more natural approach of intermixing text
+and graphics freely.  The Web has demonstrated how effective graphics
+can be when used this way.
+
+<li>Music and sound effects.  With HTML TADS, you can play MIDI music
+files, WAV-format digitized sound effects, MPEG 2.0 Audio files (such
+as MP3's), and Ogg Vorbis (a compressed digital sound format similar
+to MP3, but developed as an open-source project, and said to have
+compression and fidelity characteristics superior to MP3).  It's
+extremely easy to play music and sound from within your game, because
+you access these features through HTML tags; HTML TADS automatically
+takes care of all of the queuing and timing issues.
+
+<li>Hypertext.  HTML TADS allows you to set up hyperlinks in your
+text and pictures; these hyperlinks contain commands that are
+activated when the user clicks on them.  This lets you set up a
+game that can be played with a lot less typing, since a user can,
+for example, click on the name of an item in a room description to
+see more information on the item.
+
+<li>More control over the screen layout.  HTML TADS lets you define
+"banners," which are subwindows that you can arrange around the edges
+of the main game window.  Banners don't scroll with the main window,
+and you can update the contents of a banner at any time, so you can
+use banners to display dynamic information in parallel with the main
+game window.  Banners give you the basic functionality of the status
+line in the traditional character-mode version of TADS, but open up
+numerous new possibilities as well.  (In TADS 3, banners are
+controlled through a function-call interface rather than with HTML
+codes.)
+
+</ul>
+
+<a name="whatDoINeed"></a>
+<h3>What software do I need?</h3>
+
+<p>If you've installed the TADS Author's Kit for Windows, you already
+have everything you need to create and run HTML TADS games.  If not,
+you'll need the following software:
+
+<ul>
+<li>The standard TADS compiler, version 2.2.5 or higher.  You use exactly
+the same compiler to produce HTML TADS games and normal TADS games.
+
+<li>The HTML TADS interpreter.
+</ul>
+
+<p>You might also want TADS Workbench, if you're using Windows.  This
+is a development environment that integrates the interactive TADS
+Debugger with the full HTML TADS display environment, facilitating
+debugging and testing of games that use HTML formatting.  This is
+included in the TADS Author's Kit.
+
+<p>If you're using TADS 2, you'll also want the <i>TADS Author's
+Manual</i>, which provides information on how to develop a game with
+TADS.  You should be able to get the <i>Author's Manual</i> in
+electronic form from the same place you got TADS; try the Interactive
+Fiction Archive at ftp.ifarchive.org (<a
+href='ftp://ftp.ifarchive.org/if-archive/programming/tads2'>
+ftp://ftp.ifarchive.org/if-archive/programming/tads2</a>) if you're
+not sure where to look.  The manual is also available on the Web in
+HTML format (thanks to Neil K. Guy, who converted the manual from the
+original TeX version) at <a
+href='http://www.tela.bc.ca/tela/tads-manual/'>
+http://www.tela.bc.ca/tela/tads-manual/</a>.  You may also want to get
+a book on HTML version 3.2, so that you can learn how to use HTML to
+format your game's display.
+
+<p>If you're using TADS 3, you'll want the User's Manuals.  These are
+bundled with the "full documentation" version of the TADS 3 Author's
+Kit, or can be downloaded separately.  You should be able to find
+these at the <a href='http://www.ifarchive.org/'>IF Archive</a>
+or through the <a href='http://www.tads.org/'>tads.org</a> site.
+
+<p>Once you have the software and manuals you need, refer to <a
+href='start.htm'>Getting Started with HTML TADS</a> for an
+introduction to using the HTML features in HTML TADS.
+
+<p>
+Since HTML TADS is an extension to the normal TADS, you can use what
+you already know about TADS to write a HTML TADS game -- refer
+to <a href='convert.htm'>Converting a Game to HTML TADS</a> for
+information about how to put HTML features in your existing TADS games.
+
+
+<p><hr>
+<a name="compatibility"></a>
+<h3>Compatibility between HTML TADS and standard TADS</h3>
+
+<p>
+HTML TADS is an extension of the standard TADS.  The core language
+system is the same in both versions; the only difference is the way
+the two systems interpret and display text.  Even though HTML TADS
+uses a very different display system than the standard TADS, the
+two versions are highly compatible.
+
+<p>
+<b>Playing standard TADS games with the HTML interpreter:</b>
+HTML TADS is fully compatible with games written for the standard
+TADS.  Standard games will naturally not take full advantage of the
+HTML features, but HTML TADS interprets all of the standard
+TADS formatting codes correctly.  With a standard TADS game, HTML
+TADS simply acts as a Windows version of the interpreter.
+
+<p>
+<b>Playing HTML-enabled games with the standard interpreter:</b>
+Recent versions (2.2.4 or higher) of the standard TADS interpreter
+also provide a degree of compatibility with games written for
+HTML TADS.  Refer to <a href='charmode.htm'>this document</a>
+for details.
+
+
+<a name="whither"></a>
+<h3>Whither the standard TADS?</h3>
+
+I don't want to use terms like "old-style" to describe existing,
+non-HTML TADS games, because HTML TADS is just one variation of TADS;
+the standard TADS will continue to exist, and some authors may choose
+to write new games using the standard TADS system.  HTML TADS is
+not yet implemented on as many operating systems as the
+standard TADS interpreter, and probably won't ever be as widely
+ported as the standard TADS interpreter due to its additional complexity.
+As a result, some authors will want to use the standard
+system so that their game can be played by more people.
+
+<p>
+I plan on continuing to support the standard TADS; fortunately,
+supporting both the HTML and standard versions will will involve very
+little additional work beyond only the HTML version.  HTML TADS uses exactly
+the same interpreter engine as the standard TADS; the only difference
+is in the user interface code.  So, as changes are made to the
+TADS language and the interpreter system, they'll more or less
+automatically show up at the same time in the standard and HTML
+versions of TADS.  The only area that will probably receive less
+attention than it would have in the absence of HTML TADS is in
+enhancing the standard TADS DOS interpreter environment's user
+interface; however, because of the widespread deployment of the
+TADS interpreter, the user interface has been essentially frozen for
+several years anyway, so this isn't really going to change anything.
+
+
+<p><hr>
+<a name=why></a>
+<h3>Why HTML?</h3>
+
+<p>
+One of the main improvements that TADS authors have been requesting for
+some time is more control over formatting, ideally including support
+for graphics and sound.  There are many ways I could have added
+these features, but the emergence of HTML as a ubiquitous text formatting
+language made it a clear choice.
+
+<p> HTML is a "markup language" that's become widely used, thanks to
+the popularity of the World Wide Web.  HTML documents are text files
+that have embedded "markups," which are special sequences within the
+text that specify formatting commands.  The language has been refined
+over several years based on the experiences and needs of a vast number
+of users, and it's proved to be very flexible and useful.
+
+<p>
+I chose HTML as the new formatting language for TADS
+because of these advantages.  I didn't want to invent a new markup
+language; even though HTML isn't perfect, it would be difficult
+to do so much better that it would justify the work of creating
+a new language and the cost to game authors of learning a
+new language.
+
+<p><hr>
+<a name=acks></a>
+<h3>Acknowledgments</h3>
+
+<p> HTML TADS incorporates several high-quality third-party libraries
+that made possible some of its sophisticated graphical features.  In
+particular, HTML TADS incorporates the work of the Independent JPEG
+Group; the PNG Reference Library, developed by Andreas Dilger, Guy
+Eric Schalnat, and other Contributing Authors; the ZLIB compression
+library, written by Jean-loup Gailly and Mark Adler; and, in the
+Windows version, the amp MPEG audio decoder by Tomislav Uzelac; the
+libvorbis reference Ogg Vorbis decoder by Xiphophorus; and the
+reference MNG library, libmng, by Gerard Juyn.  The author would like
+to express his appreciation to the developers of these libraries for
+their fine work and their generosity in making their work freely
+available.
+
+<p>
+The author would like to thank everyone who has offered bug reports,
+suggestions, advice, and encouragement during the course of this project.
+All of your ideas have made this a much better system than it ever could
+have been otherwise.
+
+<p>
+For their comments and suggestions during the HTML TADS
+development process, the author wishes to express his appreciation
+to David Baggett and Andrew Plotkin.
+For their help and patience testing early versions of the software,
+I'd also like to thank G. Kevin Wilson and Neil deMause.
+
+<p> Special thanks go to Chris Nebel, for first suggesting to me the
+idea of using HTML as a formatting language for text adventures, and
+for his work porting TADS to the Macintosh; and to Iain Merrick and
+Andrew Pontious, for bringing HyperTADS to Macintosh.  Finally, I'd
+especially like to thank Neil K. Guy, author of <i>The Golden
+Skull</i> and of the acclaimed 1999 Interactive Fiction Competition
+entry <i>Six Stories</i>, and Stephen Granade, author of the
+delightful and award-winning 1998 IF Competition entry
+<i>Arrival</i>, for their pioneering work with this software, as well
+as their long-standing generosity in sharing their TADS expertise
+with other game authors.
+

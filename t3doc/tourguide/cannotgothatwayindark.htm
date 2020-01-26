@@ -1,0 +1,86 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>cannotGoThatWayInDark</title><meta name="keywords" content="cannotGoThatWayInDark,endGame,finishGameMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>cannotGoThatWayInDark
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="cannotgothatway.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="roomdarktravel.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">By default, the cannotGoThatWayInDark method of a Room (or BasicLocation) displays a message to the effect that you can't see where you're  going in the dark. We might want to change that in particular cases. For example, the description of the crewQuarters suggests that there's a ladder leading down into the hold. If the player character goes blundering about the crewQuarters in the dark there's always the danger that he or she will end up falling down the ladder and kill themselves. To be fair, though, we may first want to warn the player character that wandering around in the dark could prove dangerous, so we might do it this way:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">crewQuarters&nbsp;:&nbsp;DarkCabin&nbsp;'Crew&nbsp;Quarters'&nbsp;'the&nbsp;crew&nbsp;quarters'
+<br>
+&nbsp;&nbsp;"The&nbsp;crew&nbsp;quarters&nbsp;seem&nbsp;largely&nbsp;deserted.&nbsp;There's&nbsp;an&nbsp;exit&nbsp;back&nbsp;aft&nbsp;and&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;ladder&nbsp;leading&nbsp;down&nbsp;into&nbsp;the&nbsp;hold.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;holdLadderDown
+<br>
+&nbsp;&nbsp;&nbsp;aft&nbsp;=&nbsp;greatCabin
+<br>
+&nbsp;&nbsp;&nbsp;<b>cannotGoThatWayInDark()&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;darkEvents.doScript();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;darkEvents&nbsp;:&nbsp;StopEventList&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Blundering&nbsp;about&nbsp;a&nbsp;ship&nbsp;in&nbsp;the&nbsp;dark&nbsp;could&nbsp;prove&nbsp;dangerous.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;function
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Blundering&nbsp;around&nbsp;in&nbsp;the&nbsp;dark&nbsp;you&nbsp;fall&nbsp;down&nbsp;a&nbsp;ladder&nbsp;into&nbsp;the&nbsp;hold
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;break&nbsp;your&nbsp;neck.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that the endGame function isn't part of the standard library; it's used here as a convenient wrapper for the finishGameMsg function., so the next job is to define this function:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">function&nbsp;endGame(msg)
+<br>
+{
+<br>
+&nbsp;&nbsp;finishGameMsg(msg,&nbsp;[finishOptionUndo,&nbsp;finishOptionFullScore]);
+<br>
+}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The purpose is to avoid having to specify the same options (finishOptionUndo, finishOptionFullScore) each time we want to end the game. The call to endGame(ftDeath) prints a "YOU HAVE DIED" message and ends the game with a set of options such as UNDO, RESTART, FULL SCORE or QUIT; endGame(ftVictory) would do the same but with the message "YOU HAVE WON". You can also supply your own message by supplying a single-quoted string as the msg argument, e.g. endGame('YOU HAVE FAILED DISMALLY').
+<br>
+
+<br>
+Note also that there is one situation that the code above does not handle, namely if the player tries to go DOWN from the crewQuarters. We'll fix that next by overriding <a href="roomdarktravel.htm">roomDarkTravel</a>.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

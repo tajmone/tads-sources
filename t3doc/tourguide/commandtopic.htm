@@ -1,0 +1,70 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>CommandTopic</title><meta name="keywords" content="CommandTopic,matchTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>CommandTopic : <a href="topicentry.htm">TopicEntry</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="overview-commandingnpcs.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultcommandtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A CommandTopic is a kind of TopicEntry that can be used to provide an actor's response to a command directed to that actor. At its simplest it merely allows us to customize the message shown when an NPC declines to handle a command. For example, we could decide that Sarah, being a basically non-violent person, will refuse all commands to attack anything or anyone. We can therefore define the following CommandTopic for her (which we'll locate in the sarah object itself, since Sarah is never violent whatever state she's in):
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;CommandTopic,&nbsp;ShuffledEventList&nbsp;@AttackAction
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'m&nbsp;really&nbsp;not&nbsp;a&nbsp;violent&nbsp;person.&lt;/q&gt;&nbsp;she&nbsp;protests.&lt;.p&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;No,&nbsp;I&nbsp;never&nbsp;resort&nbsp;to&nbsp;violence.&lt;/q&gt;&nbsp;she&nbsp;refuses.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;told&nbsp;you,&nbsp;I&nbsp;don\'t&nbsp;like&nbsp;violence!&lt;/q&gt;&nbsp;she&nbsp;reminds&nbsp;you.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;couldn\'t,&nbsp;I&nbsp;just&nbsp;couldn\'t.&nbsp;&lt;/q&gt;&nbsp;she&nbsp;shakes&nbsp;her&nbsp;head.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;No&nbsp;way!&lt;/q&gt;&nbsp;she&nbsp;replies.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+With a bit of effort, we can extend this so that a CommandTopic matches a specific command directed to a specific object. For example, suppose we want Sarah to make a particular response to SARAH, FOLLOW ME while she's in the sarahTalking state. We can make a CommandTopic match this by overriding its <b>matchTopic</b> method:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;CommandTopic&nbsp;@FollowAction
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;I'm&nbsp;not&nbsp;going&nbsp;anywhere&nbsp;till&nbsp;I've&nbsp;found&nbsp;my&nbsp;ring.&lt;/q&gt;&nbsp;she
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tells&nbsp;you.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;matchTopic(fromActor,&nbsp;action)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;action.ofKind(matchObj)&nbsp;&amp;&amp;&nbsp;action.dobjList_[1].obj_==&nbsp;fromActor
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?&nbsp;matchScore&nbsp;:&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We can be quite sure that this will work, since FOLLOW can only take a single direct object; if the player tries typing the command SARAH, FOLLOW THE SHIP AND ME it will simply be rejected.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

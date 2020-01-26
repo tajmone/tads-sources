@@ -1,0 +1,396 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Easing Testing and Debugging</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="lookingthroughthewindow.htm">[Previous] </a>&nbsp;&nbsp;<a href="wheretogofromhere.htm">[Next] </a></I></FONT></P>
+<h2>Easing Testing and Debugging</h2>
+
+<p>A section headed 'testing and debugging' is always in danger of provoking a yawn from the reader of programming guides, so be assured that I shall be offering no general exhortations to good testing practice or complicated descriptions of debugging techniques. Instead I shall simply assume that you recognize at least some need to test and debug your creations and might be interested in one or tools that can make the process a bit less painful.
+</p>
+
+<br>
+Even with a game as brief as <i>The Further Adventures of Heidi</i>, it can become quite tedious to have to keep retyping a whole sequence of commands to reach the point of the game at which you want to put something to the test (e.g., an alternative implementation of the way the chair object lets Heidi climb the tree). In a much larger game the prospect of having to do this would be simply horrendous. TADS 3 has a built-in mechanism for easing this pain: you can record a series of commands in a command (cmd) file and play them back on subsequent occasions. So, for example, if you wanted to test alternative chair implementations you might start up the game, and as the very first command type: <b>record</b>. A dialogue box will then appear asking you to supply a file name (you might call it 'chairtest'). You then carrying on issuing commands until to the point at which you want to make repeated tests, at which point you enter the command <b>record off</b>.
+<br>
+
+<br>
+Then, on subsequent occasions, you can use the commands <b>replay</b>, <b>replay quiet</b> or <b>replay nonstop</b> to replay your command file to bring you back to the same point in the game. The first form of the command shows all the responses to each command as its read from the file, pausing to make you hit the space bar with every page-full of output; <b>replay nonstop</b>, as you might expect, does much the same thing, but without waiting for any keypresses (you can always scroll back the output window to read further back if you want to). Finally, <b>replay quiet</b> plays back the command file with no output to the screen at all; normally you'll want to issue a <b>look</b> command after a <b>replay quiet</b> command to check where it's brought you to. As with the <b>record</b> command, all three forms of the <b>replay</b> command provide you with a dialogue box to select the file you want to play back (although this can also be specified on the command line). There is also an analogous <b>script </b>which can be used to copy the entire output (player commands and game responses) to a log file; to stop outputting to the file you use the command <b>script off</b>. You might use this after making changes to a game to check that there were no unexpected changes to its transcript (perhaps by comparing before and after versions of the log file with a file comparison utility).
+<br>
+
+<br>
+Although these are all helpful, it can also be useful (for testing purposes) to be able to teleport around the map or cause useful objects to teleport into the player character's hands from anywhere in the game world. Inform provides <b>gonear</b> and <b>purloin</b> verbs for just this purpose, but no such verbs exist in the TADS 3 library. It is perfectly possible to implement your own versions, though; the main complication being that it is far from immediately obvious how to redefine the normal scoping rules to allow a command to refer to and act on an object that would normally not be considered in scope.
+<br>
+
+<br>
+The quick and dirty way round this would be to override the <font face="Courier New" size="2" color="#000000">objInScope</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of the purloin and gonear actions:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">DefineTAction(Gonear)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;objInScope(obj)&nbsp;{&nbsp;return&nbsp;true;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+This works perfectly well, but it's theoretically less than ideal; we don't actually want <i>every</i> object to be in scope for a <b>purloin</b> or <b>gonear</b> command, since it makes no sense to use these verbs with (say) Topics, ActorStates or TopicEntrys. A theoretically more rigorous approach, which we'll look at just to see how it's done, is to build our own list of objects we want considered in scope for these commands, and then use that:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">#ifdef&nbsp;__DEBUG
+<br>
+
+<br>
+/*&nbsp;The&nbsp;purpose&nbsp;of&nbsp;the&nbsp;everything&nbsp;object&nbsp;is&nbsp;to&nbsp;contain&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;usable&nbsp;game&nbsp;objects
+<br>
+&nbsp;&nbsp;&nbsp;which&nbsp;can&nbsp;be&nbsp;used&nbsp;as&nbsp;a&nbsp;list&nbsp;of&nbsp;objects&nbsp;in&nbsp;scope&nbsp;for&nbsp;certain&nbsp;debugging&nbsp;verb.
+<br>
+&nbsp;Everything&nbsp;caches&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;relevant&nbsp;objects&nbsp;the&nbsp;first&nbsp;time&nbsp;its&nbsp;lst&nbsp;method&nbsp;is&nbsp;called.&nbsp;*/
+<br>
+
+<br>
+everything&nbsp;:&nbsp;object
+<br>
+&nbsp;&nbsp;/*&nbsp;lst_&nbsp;will&nbsp;contain&nbsp;the&nbsp;list&nbsp;of&nbsp;all&nbsp;relevant&nbsp;objects.&nbsp;We&nbsp;initialize&nbsp;it&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nil&nbsp;to&nbsp;show&nbsp;that&nbsp;the&nbsp;list&nbsp;is&nbsp;yet&nbsp;to&nbsp;be&nbsp;cached&nbsp;*/
+<br>
+&nbsp;&nbsp;lst_&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;lst_&nbsp;method&nbsp;checks&nbsp;whether&nbsp;the&nbsp;list&nbsp;of&nbsp;objects&nbsp;has&nbsp;been&nbsp;cached&nbsp;yet.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;If&nbsp;so,&nbsp;it&nbsp;simply&nbsp;returns&nbsp;it;&nbsp;if&nbsp;not,&nbsp;it&nbsp;calls&nbsp;initLst&nbsp;to&nbsp;build&nbsp;it&nbsp;first&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;(and&nbsp;then&nbsp;returns&nbsp;it).&nbsp;*/&nbsp;
+<br>
+
+<br>
+&nbsp;&nbsp;lst()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(lst_&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initLst();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;lst_;
+<br>
+&nbsp;&nbsp;}
+<br>
+
+<br>
+&nbsp;&nbsp;/*&nbsp;initLst&nbsp;loops&nbsp;through&nbsp;every&nbsp;game&nbsp;object&nbsp;and&nbsp;adds&nbsp;it&nbsp;to&nbsp;lst_,&nbsp;unless&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;it's&nbsp;a&nbsp;Topic,&nbsp;which&nbsp;we&nbsp;don't&nbsp;want&nbsp;included&nbsp;even&nbsp;in&nbsp;this&nbsp;universal&nbsp;scope.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;*/
+<br>
+
+<br>
+&nbsp;&nbsp;initLst()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lst_&nbsp;=&nbsp;new&nbsp;Vector(50);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;obj&nbsp;=&nbsp;firstObj();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(obj&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(obj.ofKind(Thing))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst_.append(obj);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj&nbsp;=&nbsp;nextObj(obj);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst_&nbsp;=&nbsp;lst_.toList();
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There should not be a great deal that requires explanation. We head the section with the preprocessor directive </font><font face="Courier New" size="2" color="#000000">#ifdef&nbsp;__DEBUG</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (note the double underscore before DEBUG) to ensure that our debugging verbs are compiled only into the debugging version of the game we use for testing, not in the final release version. The </font><font face="Courier New" size="2" color="#000000">initList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method uses a vector rather than a list since this is slightly faster in execution; the routine converts </font><font face="Courier New" size="2" color="#000000">lst_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to a list right at the end. The built-in functions </font><font face="Courier New" size="2" color="#000000">firstObj()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and </font><font face="Courier New" size="2" color="#000000">nextObj()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> are used to iterate through every object we have defined in the game, and we use a test to include only objects descended from Thing (i.e. programming objects that represent physical game objects). Since all the objects are defined in the game code there is no need to build this list more than once, so the code builds the list only the first time the </font><font face="Courier New" size="2" color="#000000">lst()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method is called; otherwise it simply returns the </font><font face="Courier New" size="2" color="#000000">lst_</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> previously constructed. A game that used dynamically created objects might have to use a slightly different approach.
+<br>
+
+<br>
+Defining the purloin verb is then only slightly more complex than defining another new verb:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">DefineTAction(Purloin)
+<br>
+&nbsp;&nbsp;cacheScopeList()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope_&nbsp;=&nbsp;everything.lst();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+
+<br>
+VerbRule(Purloin)
+<br>
+&nbsp;&nbsp;('purloin'|'pn')&nbsp;dobjList&nbsp;
+<br>
+&nbsp;&nbsp;:PurloinAction
+<br>
+&nbsp;&nbsp;verbPhrase&nbsp;=&nbsp;'purloin/purloining&nbsp;(what)'
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;dobjFor(Purloin)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isHeldBy(gActor))&nbsp;illogicalNow('{You/he}&nbsp;{is}&nbsp;already&nbsp;holding&nbsp;it.&nbsp;');&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;action
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mainReport('{The/he&nbsp;dobj}&nbsp;pops&nbsp;into&nbsp;your&nbsp;hands.\n&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveInto(gActor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Fixture
+<br>
+&nbsp;&nbsp;dobjFor(Purloin)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify&nbsp;{illogical&nbsp;('That&nbsp;is&nbsp;not&nbsp;something&nbsp;you&nbsp;can&nbsp;purloin&nbsp;-&nbsp;it&nbsp;is&nbsp;fixed&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;place.');&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;Immovable
+<br>
+&nbsp;&nbsp;dobjFor(Purloin)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;can't&nbsp;take&nbsp;{the/him&nbsp;dobj}.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This definition assumes that we want to be able to <b>purloin</b> the kinds of things that you could normally expect to pick up and carry around, but not things that are fixed in place. If the behaviour you want is different from this, you can define </font><font face="Courier New" size="2" color="#000000">dobjFor(Purloin)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routines accordingly.
+<br>
+
+<br>
+The definition for <b>gonear</b> is similar:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;DefineTAction(Gonear)
+<br>
+&nbsp;&nbsp;&nbsp;cacheScopeList()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope_&nbsp;=&nbsp;everything.lst();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+VerbRule(Gonear)
+<br>
+&nbsp;&nbsp;('gonear'|'gn'|'go'&nbsp;'near')&nbsp;singleDobj&nbsp;
+<br>
+&nbsp;&nbsp;:GonearAction
+<br>
+&nbsp;&nbsp;verbPhrase&nbsp;=&nbsp;'gonear/going&nbsp;near&nbsp;(what)'
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;dobjFor(Gonear)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;obj&nbsp;=&nbsp;getOutermostRoom();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(obj&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;{are}&nbsp;miraculously&nbsp;transported...&lt;/p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replaceAction(TravelVia,&nbsp;obj);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;can't&nbsp;go&nbsp;there.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Decoration
+<br>
+&nbsp;&nbsp;dobjFor(Gonear)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()&nbsp;{inherited;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;Distant
+<br>
+&nbsp;&nbsp;dobjFor(Gonear)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()&nbsp;{inherited;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">What the gonear verb does is to transport the player character to the room in which the direct object of the gonear command is located (e.g. <b>gonear burner</b> would transport you the fire clearing). Using </font><font face="Courier New" size="2" color="#000000">getOutermostRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the </font><font face="Courier New" size="2" color="#000000">action</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of </font><font face="Courier New" size="2" color="#000000">dobjFor(Gonear)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> ensures that you are transported to the outermost container (the room), not the immediate container, which might be some other object. For example, if you enter the command <b>gonear torch</b> you'll end up inside the shed, not the cupboard (assuming the torch hasn't moved). If you added vocabulary words to particular rooms, you could also use the gonear verb with the room name to go straight to a room. We add definitions on </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">Distant</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> since it makes perfectly good sense to gonear objects of these classes, but the library definition of these classes, which makes use of </font><font face="Courier New" size="2" color="#000000">dobjFor(Default)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, would otherwise annul the definition of </font><font face="Courier New" size="2" color="#000000">dobjFor(Gonear)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> we put on </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+There may be other classes for which you'd want to add special handling for these verbs, but one in particular we need to consider is </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Allowing a </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to be purloined might create havoc with your game world, while attempting to gonear a </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> has no defined outcome; we thus need to define special handling to deal with these cases:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;MultiLoc
+<br>
+&nbsp;&nbsp;dobjFor(Gonear)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;illogical('{You/he}&nbsp;cannot&nbsp;gonear&nbsp;{the&nbsp;dobj/him},&nbsp;since&nbsp;it
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;exists&nbsp;in&nbsp;more&nbsp;than&nbsp;one&nbsp;location.&nbsp;');&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;dobjFor(Purloin)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;illogical('{You/he}&nbsp;cannot&nbsp;purloin&nbsp;{the&nbsp;dobj/him},&nbsp;since&nbsp;it&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">exists&nbsp;&nbsp;&nbsp;in&nbsp;more&nbsp;than&nbsp;one&nbsp;location.&nbsp;');&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+#endif
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We could simply have excluded MultiLocs from the scope list built by </font><font face="Courier New" size="2" color="#000000">everything.initLst()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but this would result in slightly odd messages of the sort "You see no stream here" even when the stream is patently present in the location at which you issue an ill-advised <b>purloin stream</b> or <b>gonear stream</b> command. Allowing MultiLocs to be in scope and then providing a meaningful message explaining why the action is forbidden seems just that much neater. To be on the safe side you could add a similar modfication for MultiInstance (to trap <b>gonear trees</b> and <b>purloin trees</b>), but you'll find the game traps these for other reasons anyway.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">#endif</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> preprocessor directive at the end balances the </font><font face="Courier New" size="2" color="#000000">#ifdef&nbsp;__DEBUG</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> at the start, thereby enclosing the entire block of code we've just defined to implement our two new testing and debugging verbs.
+<br>
+
+<br>
+Note that have made this more complicated than strictly necessary; if you want to create this kind of thing for your own use you can dispense with the </font><font face="Courier New" size="2" color="#000000">everything</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object and just define </font><font face="Courier New" size="2" color="#000000">objInScope(obj)&nbsp;{&nbsp;return&nbsp;true;&nbsp;}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on the </font><font face="Courier New" size="2" color="#000000">TAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> classes of your special debugging verbs; we have gone the longer route here to show how to build a custom scope list for cases where the blanket "put everything in scope" approach may not be what you want.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="lookingthroughthewindow.htm">[Previous] </a>&nbsp;&nbsp;<a href="wheretogofromhere.htm">[Next] </a></I></FONT></P>
+</body></html>

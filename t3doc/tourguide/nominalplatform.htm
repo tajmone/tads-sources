@@ -1,0 +1,196 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>NominalPlatform</title><meta name="keywords" content="NominalPlatform,actorInPrep,posture"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>NominalPlatform : <a href="fixture.htm">Fixture</a>, <a href="platform.htm">Platform</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="platform.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="bed.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A NominalPlatform is a named place where an NPC can stand (or sit, or lie). This can be used to have NPCs described as standing in relation to a particular part of the room, e.g. "by the door" or "under the ceiling light". By default the NPC will be described as standing "on" the NominalPlatform, but this can easily changed by defining the <b>actorInPrep</b> to something other than 'on'. For example, to allow an NPC to be described as "standing behind the table" in the museum lobby, we could add this after the room definition:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;behindTable&nbsp;:&nbsp;NominalPlatform&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'table'
+<br>
+&nbsp;&nbsp;actorInPrep&nbsp;=&nbsp;'behind'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we do not give this NominalPlatform any description or vocabWords, since it is not an object the player is meant to interact with directly. We thus have to assign the name property explicitly.
+<br>
+
+<br>
+To see this actually doing anything, we need to add an NPC; since we have not yet reached the Actor class, we'll make him about as minimal as we can:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Person&nbsp;'curator'&nbsp;'curator'&nbsp;@behindTable
+<br>
+&nbsp;&nbsp;"The&nbsp;curator&nbsp;is&nbsp;a&nbsp;ferret-faced&nbsp;little&nbsp;man&nbsp;in&nbsp;is&nbsp;mid-forties.&nbsp;"
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+When you visit the museum lobby you will now see that the curator is described as standing behind the table. At this point, though, you may be wondering whether this was really worth the bother; why not simply state this in the curator's description? The answer is that we might want the actor to move around, so that we don't always want him to be described as standing behind the table. We can demonstrate this by starting to define the museum proper and adding another NominalPlatform there:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">museum&nbsp;:&nbsp;Room&nbsp;'Museum&nbsp;of&nbsp;Curious&nbsp;Antiquities'&nbsp;'the&nbsp;main&nbsp;museum'
+<br>
+&nbsp;"Many&nbsp;display&nbsp;cases&nbsp;line&nbsp;this&nbsp;long&nbsp;chamber,&nbsp;each&nbsp;containing&nbsp;its&nbsp;own&nbsp;curious
+<br>
+&nbsp;&nbsp;exhibit.&nbsp;There&nbsp;seems&nbsp;to&nbsp;be&nbsp;another&nbsp;chamber&nbsp;off&nbsp;to&nbsp;the&nbsp;south,&nbsp;marked&nbsp;by
+<br>
+&nbsp;&nbsp;a&nbsp;sign&nbsp;saying&nbsp;&lt;q&gt;Benefactors'&nbsp;Exhibition&lt;/q&gt;,&nbsp;while&nbsp;the&nbsp;main&nbsp;exit&nbsp;is&nbsp;to&nbsp;the&nbsp;east.&nbsp;"
+<br>
+&nbsp;east&nbsp;=&nbsp;museumLobby&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;byCases&nbsp;:&nbsp;NominalPlatform
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'display&nbsp;cases'
+<br>
+&nbsp;&nbsp;actorInPrep&nbsp;=&nbsp;'by'&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+To show this at work we need to move the curator from one place to the other. To do this we'll have the curator follow the player character in and out of the museum:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">curator&nbsp;:&nbsp;Person&nbsp;'curator'&nbsp;'curator'&nbsp;@behindTable
+<br>
+&nbsp;&nbsp;"The&nbsp;curator&nbsp;is&nbsp;a&nbsp;ferret-faced&nbsp;little&nbsp;man&nbsp;in&nbsp;is&nbsp;mid-forties.&nbsp;"
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;<b>beforeTravel(traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;inherited(traveler,&nbsp;connector);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(traveler==gPlayerChar&nbsp;&amp;&amp;&nbsp;connector&nbsp;is&nbsp;in&nbsp;(museum,&nbsp;museumLobby))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;curator&nbsp;follows&nbsp;you&nbsp;&lt;&lt;connector==museum&nbsp;?&nbsp;'in'&nbsp;:&nbsp;'out'&gt;&gt;.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(connector&nbsp;==&nbsp;museum)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveIntoForTravel(byCases);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveIntoForTravel(behindTable);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If you want to have the curator standing by the display cases but sitting behind the table, you could add the line posture = sitting to the initial definition of the curator, and then posture = standing; and posture = sitting; after the two moveIntoForTravel statements, i.e.:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Arial" size="2" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">if(connector&nbsp;==&nbsp;museum)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveIntoForTravel(byCases);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posture&nbsp;=&nbsp;standing;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveIntoForTravel(behindTable);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posture&nbsp;=&nbsp;sitting;&nbsp;&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="28"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Arial" size="2" color="#000000">
+<br>
+Although raises the question of what the curator is sitting on, and whether one should not then implement a chair object to place him in, instead of a NominalPlatform.
+<br>
+
+<br>
+The standard postures defined in the library are standing, sitting and lying, so if you want to have an NPC described as doing anything else in a NominalPlatform (such as leaning against the doorpost), you'll either have to define a new posture (which would be rather laborious for a one-off use) or else override a batch of methods on the NominalPlatform. According to the comments in the library code, 'For more elaborate customizations, such as "leaning against the streetlamp", you'll need to override actorStandingHere, statusStanding, actorStandingDesc, listActorStanding, and actorStandingGroupPrefix/Suffix'. Unfortunately the last two don't appear to be properties of NominalPlatform, (they're actually methods of the libMessages object and can hardly be customised on a per NominalPlatform basis). One can, however, override all the rest on a custom class:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;VNominalPlatform&nbsp;:&nbsp;NominalPlatform
+<br>
+&nbsp;&nbsp;postureName&nbsp;=&nbsp;'standing'
+<br>
+&nbsp;&nbsp;actorInPrep&nbsp;=&nbsp;'on'
+<br>
+&nbsp;&nbsp;statusStanding(actor)&nbsp;{&nbsp;"&nbsp;(&lt;&lt;postureName&gt;&gt;&nbsp;&lt;&lt;actorInName&gt;&gt;)";&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;actorStandingDesc(actor)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"\^&lt;&lt;actor.itIs&gt;&gt;&nbsp;&lt;&lt;postureName&gt;&gt;&nbsp;&lt;&lt;actorInName&gt;&gt;.&nbsp;";&nbsp;}
+<br>
+&nbsp;&nbsp;actorStandingHere(actor)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"\^&lt;&lt;actor.nameIs&gt;&gt;&nbsp;&lt;&lt;postureName&gt;&gt;&nbsp;&lt;&lt;actorInName&gt;&gt;.&nbsp;";&nbsp;}&nbsp;
+<br>
+&nbsp;&nbsp;listActorStanding(actor)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"\^&lt;&lt;actor.nameIs&gt;&gt;&nbsp;&lt;&lt;postureName&gt;&gt;&nbsp;&lt;&lt;actorInName&gt;&gt;.&nbsp;";&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then if one wanted to describe the curator as "leaning against the display cases" you could simply change that NominalPlatform to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;byCases&nbsp;:&nbsp;VNominalPlatform
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'display&nbsp;cases'
+<br>
+&nbsp;&nbsp;actorInPrep&nbsp;=&nbsp;'against'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;postureName&nbsp;=&nbsp;'leaning'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And it will probably work well enough (and remove the need to set curator.posture). Whether this is worth the effort for a single case is debatable, but it may become worthwhile if you wanted to make a lot of use of NominalPlatforms describing various postures.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

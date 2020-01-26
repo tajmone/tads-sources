@@ -1,0 +1,168 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>StringPreParser</title><meta name="keywords" content="StringPreParser"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>StringPreParser
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="amodifieddefaultcommandtopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="telltoaction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A StringPreParser object is a class that takes a command string and optionally transforms it into another string before it's passed to the parser. We could, for example, use this to transform any command of the form TELL SARAH TO OPEN THE DOOR into SARAH, OPEN DOOR. Experienced players will know that they're meant to try the latter form, but less experienced players will inevitably try commands like ASK SARAH TO GO NORTH or TELL SARAH TO FOLLOW ME and feel aggrieved that the game doesn't understand them.
+<br>
+
+<br>
+Using a StringPreParser to massage an input string is always a slightly fragile mechanism, since the player may always enter something you hadn't thought of which will result in the string being transformed into something you certainly didn't want; but here's a StringPreParser that makes a fair shot of turning TELL X TO Y or ASK X TO Y into X, Y:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">StringPreParser
+<br>
+&nbsp;&nbsp;doParsing(str,&nbsp;which)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;workStr&nbsp;=&nbsp;str.toLower();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;First&nbsp;check&nbsp;that&nbsp;the&nbsp;string&nbsp;starts&nbsp;with&nbsp;'tell'&nbsp;or&nbsp;'ask'&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!workStr.startsWith('tell&nbsp;')&nbsp;||&nbsp;!workStr.startsWith('ask&nbsp;'))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;str;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;If&nbsp;the&nbsp;string&nbsp;contains&nbsp;'about&nbsp;'&nbsp;assume&nbsp;it's&nbsp;a&nbsp;TELL&nbsp;ABOUT&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;or&nbsp;ASK&nbsp;ABOUT&nbsp;command
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(workStr.find('&nbsp;about&nbsp;'))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;str;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;If&nbsp;the&nbsp;string&nbsp;doesn't&nbsp;contain&nbsp;'to'&nbsp;it&nbsp;can't&nbsp;be&nbsp;a&nbsp;TELL&nbsp;TO&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;ASK&nbsp;TO&nbsp;command&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;locTo&nbsp;=&nbsp;workStr.find('&nbsp;to&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(locTo&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;str;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;locSpace&nbsp;=&nbsp;workStr.find('&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;=&nbsp;workStr.substr(locSpace&nbsp;+&nbsp;1,&nbsp;locTo&nbsp;-&nbsp;locSpace&nbsp;-&nbsp;1)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;','&nbsp;+&nbsp;workStr.substr(locTo&nbsp;+&nbsp;3);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;finally,&nbsp;replace&nbsp;'you'&nbsp;with&nbsp;'me'&nbsp;in&nbsp;case&nbsp;the&nbsp;player
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;typed&nbsp;TELL&nbsp;X&nbsp;TO&nbsp;X&nbsp;YOU&nbsp;or&nbsp;the&nbsp;like
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;=&nbsp;str.findReplace('&nbsp;you&nbsp;',&nbsp;'&nbsp;me&nbsp;',&nbsp;ReplaceAll);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(str.endsWith('&nbsp;you'))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;=&nbsp;str.findReplace('&nbsp;you',&nbsp;'&nbsp;me',&nbsp;ReplaceOnce,&nbsp;str.length-5);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;str;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+One weakness of this is that it will not work with TELL HER TO OPEN THE DOOR even in contexts where it is obvious what HER refers to. A rather more robust way of handling this is to define a <a href="telltoaction.htm">TellToAction</a> which does the job, which we'll look at in the next section.
+<br>
+
+<br>
+On the other hand, a StringPreParser may be the only way you could straightforwardly translate X, GIVE ME Y into ASK X FOR Y.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">StringPreParser
+<br>
+&nbsp;&nbsp;runOrder&nbsp;=&nbsp;110
+<br>
+&nbsp;&nbsp;doParsing(str,&nbsp;which)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;workStr&nbsp;=&nbsp;str.toLower;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;iComma&nbsp;=&nbsp;workStr.find(',');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;iGiveMe&nbsp;=&nbsp;workStr.find('give&nbsp;me');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(iComma&nbsp;==&nbsp;nil&nbsp;||&nbsp;iGiveMe&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;str;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;=&nbsp;'ask&nbsp;'&nbsp;+&nbsp;workStr.substr(1,&nbsp;iComma-1)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;'&nbsp;for&nbsp;'&nbsp;+&nbsp;workStr.substr(iGiveMe&nbsp;+&nbsp;8);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;str;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+To see this in action, let's define an AskForTopic that turns ASK SARAH FOR A KISS into SARAH, KISS ME; then you can try SARAH, GIVE ME A KISS, which will be turned into ASK SARAH FOR KISS and thence into SARAH, KISS ME.
+<br>
+
+<br>
+First, we need a kiss topic:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">tKiss&nbsp;:&nbsp;Topic&nbsp;'kiss';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then we can define our AskForTopic for Sarah (directly located in sarah):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;AskForTopic&nbsp;@tKiss
+<br>
+&nbsp;&nbsp;topicResponse()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Give&nbsp;us&nbsp;a&nbsp;kiss.&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;tokList&nbsp;=&nbsp;Tokenizer.tokenize('kiss&nbsp;me');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;executeCommand(getActor,&nbsp;gActor,&nbsp;tokList,&nbsp;true);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,62 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>disambigName</title><meta name="keywords" content="disambigName"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>disambigName
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="food.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="wearable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">If you haven't tried compiling and running the game for a while, now would be a good time to try. Try going into the square cave (using the MEGA or FIAT LUX command to light your path) and then try TASTE BANANA, SMELL BANANA, FEEL BANANA and LISTEN TO BANANA. Then try taking the banana, moving west back into the main cave, dropping the banana, and then trying to take it again with a TAKE BANANA command. At this point you should encounter the following problem:
+<br>
+
+<br>
+&gt;<b>take banana</b>
+<br>
+Which banana do you mean, the banana, or the golden banana?
+<br>
+
+<br>
+&gt;<b>banana</b>
+<br>
+Which banana do you mean, the banana, or the golden banana?
+<br>
+
+<br>
+&gt;
+<br>
+
+<br>
+Since we have called our edible banana simply 'banana' there is nothing we can call it that will distinguish it from the golden banana, so in this situation nothing we type will enable us to take the (edible) banana. We could, of course, add edible to its vocabWords, but that won't be apparent to the player, and actually calling it 'edible banana' in its name property would look a bit clumsy. In a case like this the solution is to give it a <b>disambigName</b> property, a name that will be used solely for the purpose of disambiguation. We might amend our banana thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Food&nbsp;'<b>(edible)</b>&nbsp;banana'&nbsp;'banana'&nbsp;@squareCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;yellow,&nbsp;about&nbsp;six&nbsp;inches&nbsp;long,&nbsp;and&nbsp;slightly&nbsp;curved.&nbsp;And&nbsp;It&nbsp;looks
+<br>
+&nbsp;&nbsp;&nbsp;reasonably&nbsp;fresh.&nbsp;"
+<br>
+&nbsp;&nbsp;tasteDesc&nbsp;=&nbsp;"It's&nbsp;distinctly&nbsp;banana-flavoured.&nbsp;"
+<br>
+&nbsp;&nbsp;smellDesc&nbsp;=&nbsp;"It&nbsp;has&nbsp;a&nbsp;kind&nbsp;of&nbsp;faint,&nbsp;fruity&nbsp;smell.&nbsp;"
+<br>
+&nbsp;&nbsp;feelDesc&nbsp;=&nbsp;"The&nbsp;banana&nbsp;skin&nbsp;feels&nbsp;firm&nbsp;but&nbsp;smooth.&nbsp;"
+<br>
+&nbsp;&nbsp;soundDesc&nbsp;=&nbsp;"The&nbsp;banana&nbsp;is&nbsp;strangely&nbsp;silent.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>disambigName&nbsp;=&nbsp;'edible&nbsp;banana'</b>
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"Someone&nbsp;has&nbsp;left&nbsp;a&nbsp;banana&nbsp;here.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If you now compile and run the game again, you'll see how using disambigName (coupled with adding 'edible' to the banana's vocabulary) has solved the problem.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

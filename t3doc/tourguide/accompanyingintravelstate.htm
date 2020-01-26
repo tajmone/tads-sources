@@ -1,0 +1,92 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>AccompanyingInTravelState</title><meta name="keywords" content="AccompanyingInTravelState,sayDeparting,specialDesc,getAccompanyingTravelState"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>AccompanyingInTravelState : <a href="overview-actorstates.htm">ActorState</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="accompanyingstate.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="guidedtourstate.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">You'll have noticed that when Sarah follows you around, you see a message "The young woman comes with you." This is a decent enough default message for the purpose, but if you wanted to change it, here's how.
+<br>
+
+<br>
+First, we need to define a custom class derived from AccompanyingInTravelState, then we need to override its <b>sayDeparting(conn)</b> method to display whatever message we want in place of "The young woman comes with you. " We can also override the <b>specialDesc</b> property to display whatever we'd like shown in the room description to describe Sarah's presence on the arriving turn. We could, for example, take advantage of this to vary randomly the message displayed each time in an effort to make it look a little less repetitive and mechanical:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;SarahInTravelState&nbsp;:&nbsp;AccompanyingInTravelState
+<br>
+&nbsp;&nbsp;sayDeparting(conn)&nbsp;{&nbsp;departMessages.doScript;&nbsp;}
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{&nbsp;arriveMessages.doScript;&nbsp;}
+<br>
+&nbsp;&nbsp;departMessages&nbsp;:&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;{&nbsp;['{The&nbsp;sarah/she}&nbsp;comes&nbsp;with&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;follows&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;trails&nbsp;faithfully&nbsp;along&nbsp;behind.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;follows&nbsp;hot&nbsp;on&nbsp;your&nbsp;heels.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;walks&nbsp;along&nbsp;beside&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;accompanies&nbsp;you.'
+<br>
+&nbsp;&nbsp;]&nbsp;}
+<br>
+&nbsp;&nbsp;arriveMessages&nbsp;:&nbsp;ShuffledEventList&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;[&nbsp;'{The&nbsp;sarah/she}&nbsp;is&nbsp;at&nbsp;your&nbsp;side.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;is&nbsp;still&nbsp;with&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;is&nbsp;standing&nbsp;close&nbsp;by.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;takes&nbsp;a&nbsp;quick&nbsp;look&nbsp;around.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;looks&nbsp;at&nbsp;you&nbsp;expectantly.&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+For this to do anything, we need to change the AccompanyingState to make use of this new AccompanyingInTravel state by overriding its <b>getAccompanyingTravelState(leadActor, conn)</b> method:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;sarahFollowing&nbsp;:&nbsp;AccompanyingState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;sarah/she}&nbsp;is&nbsp;standing&nbsp;beside&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;standing&nbsp;beside&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+&nbsp;&nbsp;<b>getAccompanyingTravelState(leadActor,&nbsp;conn)
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;return&nbsp;new&nbsp;SarahInTravelState(location,&nbsp;leadActor,&nbsp;self);&nbsp;}&nbsp;&nbsp;
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that the third parameter (self) in this new SarahInTravelState call is the ActorState to which the Actor will return on completion of travel; normally we want this to be the AccompanyingState (hence 'self') that set the AccompanyingInTravelState up, but we could, if special circumstances warranted it, insert some other ActorState here if we wanted the actor to change into some other state at this point (perhaps after traversing a particular connector).
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

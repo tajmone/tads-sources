@@ -1,0 +1,94 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>inputManager</title><meta name="keywords" content="inputManager,tads-io,morePrompt,inputLine,inputKey,pauseForMore,getKey,getInputLine"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>inputManager
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="messagesubstitutionparameters.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="mainoutputstream.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The inputManager is one of the best-kept secrets of TADS 3. It provides (arguably) more usable alternatives to some of the input methods listed in the "tads-io" function set.
+<br>
+
+<br>
+This tads-io function set includes functions like <b>morePrompt</b>,  which displays a MORE prompt and waits for the player to press a key; <b>inputKey</b>, which waits for the player to press a key and returns the key pressed, and <b>inputLine</b>, which reads a whole line of text from the player (up to the point the player presses the ENTER or RETURN key) and then returns the string entered.
+<br>
+
+<br>
+The trouble is, as you soon discover, that these functions don't entirely work as you want them to. The problem typically is that you place, say. morePrompt in a the middle of some text to create a dramatic pause, but what actually happens is that you see all the text, and only then the more prompt. E.g. you write code like:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font><font face="Courier New" size="2" color="#000000">"The&nbsp;evil&nbsp;baby-eating&nbsp;villain&nbsp;points&nbsp;his&nbsp;splat-gun&nbsp;at&nbsp;you,&nbsp;pulls&nbsp;the&nbsp;trigger&nbsp;and...";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">morePrompt();
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">"...&nbsp;suffers&nbsp;a&nbsp;sudden&nbsp;fatal&nbsp;heart&nbsp;attack!&nbsp;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Arial" size="2" color="#000000">
+<br>
+But find the more prompt is actually displayed <i>after</i> the second line of text, defeating your dramatic pause.
+<br>
+
+<br>
+One way to deal with this is to toggle the transcript off and on:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;gTranscript.deactivate();
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;"The&nbsp;evil&nbsp;baby-eating&nbsp;villain&nbsp;points&nbsp;his&nbsp;splat-gun&nbsp;at&nbsp;you,&nbsp;pulls&nbsp;the&nbsp;trigger&nbsp;and...";
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;morePrompt();
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;"...&nbsp;suffers&nbsp;a&nbsp;sudden&nbsp;fatal&nbsp;heart&nbsp;attack!&nbsp;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;gTranscript.activate();
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+But this is a little awkward. The simpler way, would be to use an inputManager method:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">"The&nbsp;evil&nbsp;baby-eating&nbsp;villain&nbsp;points&nbsp;his&nbsp;splat-gun&nbsp;at&nbsp;you,&nbsp;pulls&nbsp;the&nbsp;trigger&nbsp;and...";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">inputManager.pauseForMore(true);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000">"...&nbsp;suffers&nbsp;a&nbsp;sudden&nbsp;fatal&nbsp;heart&nbsp;attack!&nbsp;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Arial" size="2" color="#000000">
+<br>
+And you should find this more works as you want.
+<br>
+
+<br>
+In general, instead of the tads-io functions you'll always want to use the corresponding inputManager methods thus:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000">Instead of </font></font><font face="Courier New" size="2" color="#000000">morePrompt()</font><font face="Arial" size="2" color="#000000"> use </font><font face="Courier New" size="2" color="#000000">inputManager.pauseForMore(true);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Arial" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font></td></tr></table><font face="Arial" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000">Instead of </font></font><font face="Courier New" size="2" color="#000000">inputKey()</font><font face="Arial" size="2" color="#000000"> use </font><font face="Courier New" size="2" color="#000000">inputManager.getKey(nil,&nbsp;nil)</font><font face="Arial" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000">Instead of </font><font face="Courier New" size="2" color="#000000">inputLine()</font><font face="Arial" size="2" color="#000000"> use </font><font face="Courier New" size="2" color="#000000">inputManager.getInputLine(nil,&nbsp;nil);</font><font face="Arial" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="14"></td><td><font face="Arial" size="2" color="#000000"></font></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+The parameters of these methods will only be of interest to you if you want to allow real time events to continue in the background while waiting for user input; this is a complication we shan't go into here - if you need real time processing look at the definition of inputManager in input.t and follow the comments in the library code.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

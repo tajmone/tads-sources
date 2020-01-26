@@ -1,0 +1,258 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>TopicEntry</title><meta name="keywords" content="TopicEntry,matchTopic,matchObj,matchPattern,isActive,isConversational,matchScore,topicResponse,handleTopic,ThingMatchTopic,TopicMatchTopic,isMatchPossible"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>TopicEntry : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="greetingprotocols.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="givetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">One way to handle conversational commands such as ASK FRED ABOUT TREASURE or SHOW ROTTEN APPLE TO MAVIS might be to override the actionIobjAskAbout and actionIobjShowTo methods on Fred and Mavis with long and complicated statements, probably starting with switch(gDobj) and then going on to have complex IF ... ELSE IF spaghetti within the more complex cases, until the whole thing becomes a nightmare to code, an impossibility to debug, and a disincentive to attempt any kind of sophisticated conversation with an NPC. Fortunately TADS 3 makes such spaghetti nightmares a thing of the past, thanks mainly to the TopicEntry.
+<br>
+
+<br>
+To handle conversations in TADS 3 there is no need to override a single action method on any NPC (unless you're attempting something not covered by the library). The commands ASK ABOUT, ASK FOR, TELL ABOUT, SHOW TO and GIVE TO can all be handled with TopicEntry objects (as can some other constructs we'll be meeting later). These objects define the response an actor gives to a particular command concerning a particular object (for example an object defined as <font face="Courier New" size="2" color="#000000">AskTopic&nbsp;@carbuncle&nbsp;</font><font face="Arial" size="2" color="#000000">would define a response to an ASK ABOUT CARBUNCLE command). TopicEntry objects may be nested directly inside the Actor whose responses they represent, but they may also be nested inside ActorStates, to form the set of responses the Actor gives when in that state, or else within TopicGroups, to form a set of responses the actor gives when certain conditions obtain. TopicEntry objects may also be placed within TopicGroups within ActorStates. Again, each TopicEntry may be allocated a condition that must obtain before it is used as a response, or may be assigned one or more alternative entries (AltTopics) that will be used under different conditions. Again, a TopicEntry may (depending on circumstances) match a physical game object (such as the carbuncle), an abstract topic (such as 'the meaning of life'),  a set of objects or topics, or a regular expression. If none of these is suitable, the author can override the TopicEntry's <b>matchTopic</b> method to provide custom matching (for example, to match any object belonging to a certain class). As if that were not enough, the TopicEntry system can also cater for NPCs being proactive and posing questions to the player character, to which any set of responses may be defined (via SpecialTopic).
+<br>
+
+<br>
+The above explanation is probably too abstract and dense to be terribly meaningful at first reading. For a more digestible explanation you may want to read the article on <a href="../techman/t3conv.htm" target="_top">Programming Conversations with NPCs</a> in the <i>Technical Manual</i>. In any case, hopefully the dense, abstract explanation given above will begin to make more sense when we start giving concrete examples.
+<br>
+
+<br>
+The first thing to note is that game authors are most unlikely to use raw TopicEntry objects (unless they're devising a custom TopicEntry class of their own). In practice one uses one of the subclasses of TopicEntry:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">TopicEntry
+<br>
+&nbsp;&nbsp;&nbsp;<a href="alttopic.htm">AltTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="commandtopic.htm">CommandTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="defaultaskfortopic.htm">DefaultAskForTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="defaultasktelltopic.htm">DefaultAskTellTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="defaultasktopic.htm">DefaultAskTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DefaultCommandTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="defaultconsulttopic.htm">DefaultConsultTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="defaultgiveshowtopic.htm">DefaultGiveShowTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="defaultgivetopic.htm">DefaultGiveTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DefaultInitiateTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="defaultshowtopic.htm">DefaultShowTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="defaulttelltopic.htm">DefaultTellTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="specialtopic.htm">SpecialTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;ThingMatchTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="giveshowtopic.htm">GiveShowTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="givetopic.htm">GiveTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="showtopic.htm">ShowTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="initiatetopic.htm">InitiateTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;TopicMatchTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="asktelltopic.htm">AskTellTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="askaboutfortopic.htm">AskForAboutTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="askfortopic.htm">AskForTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AskTellAboutForTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="asktopic.htm">AskTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="telltopic.htm">TellTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="consulttopic.htm">ConsultTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;TopicOrThingMatchTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="asktellgiveshowtopic.htm">AskTellGiveShowTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="asktellshowtopic.htm">AskTellShowTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="misctopic.htm">MiscTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="byetopic.htm">ByeTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="hellogoodbyetopic.htm">HelloGoodbyeTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="hellotopic.htm">HelloTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="impbyetopic.htm">ImpByeTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="imphellotopic.htm">ImpHelloTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YesNoTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="notopic.htm">NoTopic</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="yestopic.htm">YesTopic</a>
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The structure of this inheritance tree is important, because it gives a clear indication of the different subcategories of TopicEntry, each one of which is subtly different and has a slightly different use and purpose. The first distinction to be clear about is between ThingMatchTopics and TopicMatchTopics; the former match game objects (generally of class Thing or one of its subclasses) while the latter match ResolvedTopics. The main consequence of this is that a ThingMatchTopic can only match an object that's in scope (this makes sense - you can't give or show an object to someone unless the object is there to be given or shown), whereas a TopicMatchTopic can match any object that's been defined (including a Topic), since something doesn't have to be physically present to be asked about, asked for, or told about. The distinction between ThingMatchTopic and TopicMatchTopic is also important if you override certain of their methods, as we'll see presently.
+<br>
+
+<br>
+We'll come across the other main types of TopicEntry in due course. <a href="alttopic.htm">AltTopic</a> is used to provide an alternative response to another TopicEntry under author-defined conditions. <a href="defaulttopics-overview.htm">DefaultTopics</a> match any input relating to the command in question, (i.e. a DefaultAskTopic matches ASK FRED ABOUT X whatever X is), and is activated by anything for which a more specific response has not been defined. <a href="specialtopic.htm">SpecialTopic</a> responds to any author-defined string (e.g. PRAISE SARAH, TELL CURATOR A LIE or RECITE A POEM), but works only in the context of a Conversation Node.
+<br>
+
+<br>
+TopicEntries have the following methods and properties which you either will or may need to use:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>matchObj</b> - The matching simulation object or objects; this can either be a single object or a list of objects.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>matchPattern</b> - a regular expression pattern that this TopicEntry matches (as an alternative to matchObj)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>matchScore</b> - the match strength score. By default this is 100 (except on DefaultTopics, where it's 1, 2 or 3). If more than one TopicEntry is a possible match to a conversational command, the one with the highest matchScore is used.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>getActor()</b> - The Actor object to which this TopicEntry ultimately belongs (you'll never want to override this but you may want to refer to it).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>topicResponse</b> - The response to ASK, TELL, GIVE or SHOW. You override this to show the response text (normally in a double-quoted string, but you can define this as a method if you need something more complicated), alternatively you can override handleTopic to do the job.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>isActive</b> - The condition that must be true for this TopicEntry to be matched. This is true by default but can be set to anything you like to make matching conditional; while this property evaluates to nil its response will not be shown. For example, you might want a particular response to be used only if Sarah has seen the ghost, in which case you could define isActive = sarah.hasSeen(ghost).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>isConversational</b> - true by default, this property determines whether this response is treated as conversational. If this property is set to nil then matching this topic will not trigger any greeting protocols. For example, if the player attempts to ASK SARAH FOR BANANA when the PC is already carrying the banana, instead of having Sarah deliver a sarcastic reply you may simply want the game to report "You already have the banana." Since this would not constitute a conversational exchange between Sarah and the PC you'd probably want to set isConversational = nil on this response.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>handleTopic(fromActor, topic)</b> - By default this either calls doScript (if the TopicEntry also inherits from a Script class - e.g. if it was defined as AskTopic, StopEventList) or else (if the TopicEntry is not also a Script) simply calls topicResponse. The first parameter (fromActor) is the actor (normally the player character) doing the asking, showing, giving or telling. The meaning of the second parameter depends on the type of TopicEntry. For a ThingMatchTopic (GiveTopic, ShowTopic or InitiateTopic) the parameter is the actual game object that the TopicEntry matched (this can be useful, e.g. in a Give command if you want to move the object matched into the actor it's been given to). For a TopicMatchTopic (AskTopic, TellTopic, AskForTopic), however, the second parameter is a ResolvedTopic object (though you may be able to get at the actual game object matched by calling topic.getBestMatch).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>matchTopic(fromActor, topic)</b> - By default this matches the TopicEntry according to what you have defined in matchObj or matchPattern, so you don't need to worry about overriding it. On occasion, however, you may have a special case that's most easily dealt with by overriding this method. For example, if you defined a custom Coin class and then wanted a GiveTopic that matched any member of the Coin class you could override matchTopic(fromActor, obj) to return matchScore if obj is ofKind(Coin). Note that the parameters to this method mean the same as those for handleTopic, so that the meaning of the second parameter depends on whether we're using a TopicMatchTopic or a ThingMatchTopic.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>isMatchPossible(actor, scopeList)</b> - This method decides whether the TopicEntry can be matched. For a TopicMatchTopic it returns true if the matchObj (or any of the objects in the matchObj list if it is a list) is either in scope (in the scopeList) or is known to actor, or if matchObj is nil (which means that the TopicEntry is being matched by a pattern or a custom method). For a ThingMatchTopic it returns true only if matchObj or one of the objects in the matchObj list is in scope. Most of the time you probably won't want to change this behaviour.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+This may look a bit daunting, but in practice the use of templates makes the definition of the majority of TopicEntries pretty straightforward. To ask about a single object, for example, one might define an AskTopic thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;AskTopic&nbsp;@cheese
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Do&nbsp;you&nbsp;like&nbsp;cheese?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Only&nbsp;if&nbsp;it's&nbsp;blue&nbsp;cheese.&lt;/q&gt;&nbsp;she&nbsp;replies.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The object following the @ sign is the matchObj, and the double-quoted string that follows is the topicResponse.
+<br>
+
+<br>
+If you want a TopicEntry that matches a list of items, you enclose that list in square brackets instead of using the @ sign, e.g.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;AskTopic&nbsp;[cheese,&nbsp;bread]
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;Do&nbsp;you&nbsp;like&nbsp;cheese&nbsp;on&nbsp;your&nbsp;bread?&lt;/q&gt;&nbsp;you&nbsp;enquire.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;That&nbsp;depends&nbsp;on&nbsp;the&nbsp;cheese.&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you."
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If you wanted a different response that takes preference under special circumstances you could use a higher matchScore by placing it after a + sign before the matchObj:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;AskTopic&nbsp;+110&nbsp;@cheese
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Do&nbsp;you&nbsp;like&nbsp;this&nbsp;cheese?&lt;/q&gt;&nbsp;you&nbsp;ask,&nbsp;holding&nbsp;out&nbsp;the&nbsp;lump&nbsp;you're&nbsp;holding.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Ooh!&nbsp;Blue&nbsp;Stilton!&nbsp;lovely!&lt;/q&gt;&nbsp;she&nbsp;exclaims.&nbsp;"
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(cheese.isHeldBy(gPlayerChar))
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In all these examples the player will always see the same response to the same command. For more realism you may prefer to use a list of responses, which you can do by adding a Script class to the class list of the TopicEntry and supplying a list of responses in square brackets instead of a single response in a double-quoted string:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;AskTopic,&nbsp;StopEventList&nbsp;[cheese,&nbsp;bread]
+<br>
+&nbsp;&nbsp;[&nbsp;'&lt;q&gt;Do&nbsp;you&nbsp;like&nbsp;cheese&nbsp;on&nbsp;your&nbsp;bread?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;That&nbsp;depends&nbsp;on&nbsp;the&nbsp;cheese&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&nbsp;',
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;So,&nbsp;what&nbsp;kind&nbsp;of&nbsp;cheese&nbsp;do&nbsp;you&nbsp;like&nbsp;with&nbsp;your&nbsp;bread?&lt;/q&gt;&nbsp;you&nbsp;enquire.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Blue&nbsp;cheese.&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;firmly.&nbsp;',
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;can\'t&nbsp;interest&nbsp;you&nbsp;in&nbsp;some&nbsp;nice&nbsp;gooey&nbsp;brie&nbsp;on&nbsp;a&nbsp;fresh&nbsp;crusty&nbsp;piece
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;wholemeal&nbsp;then?&lt;/q&gt;&nbsp;you&nbsp;suggest\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;No&nbsp;-&nbsp;but&nbsp;if&nbsp;you&nbsp;made&nbsp;that&nbsp;a&nbsp;nice&nbsp;smelly&nbsp;piece&nbsp;of&nbsp;Blue&nbsp;Stilton&nbsp;on&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fresh&nbsp;crusty&nbsp;piece&nbsp;of&nbsp;wholemeal&nbsp;that'd&nbsp;be&nbsp;a&nbsp;different&nbsp;matter.&lt;/q&gt;&nbsp;she&nbsp;smiles.&nbsp;',
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;So&nbsp;-&nbsp;only&nbsp;blue&nbsp;cheese&nbsp;on&nbsp;your&nbsp;bread&nbsp;will&nbsp;do.&lt;/q&gt;&nbsp;you&nbsp;surmise.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;That\'s&nbsp;right.&lt;/q&gt;&nbsp;she&nbsp;affirms.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Finally, you might want to override topicResponse with a method if it needs to do something more complicated than merely displaying a piece of text, for example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;GiveTopic&nbsp;@cheese
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Here,&nbsp;have&nbsp;this,&lt;/q&gt;&nbsp;you&nbsp;say,&nbsp;handing&nbsp;over&nbsp;the&nbsp;lump&nbsp;of&nbsp;stilton.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Thanks!&lt;/q&gt;&nbsp;she&nbsp;beams,&nbsp;then&nbsp;proceeds&nbsp;to&nbsp;eat&nbsp;the&nbsp;lot.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cheese.moveInto(getActor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedActorAction(getActor,&nbsp;Eat,&nbsp;cheese);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Having looked at TopicEntries in the abstract, we can now go on to see how we might use the various types of TopicEntry in our game.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

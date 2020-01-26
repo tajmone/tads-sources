@@ -1,0 +1,86 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ImplicitActionAnnouncement</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ImplicitActionAnnouncement</span><span class=type>class</span><td align=right><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#511">511</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Implicit action announcement.  This is displayed when we perform a   command implicitly, which we usually do to fulfill a precondition of   an action. <p>   In English, we usually show an implied action as the verb participle   phrase ("opening the door"), prefixed with "first", and enclosed in   parentheses on a line by itself (hence, "(first opening the door)").
+<p>
+<code>class
+<b>ImplicitActionAnnouncement</b> :  &nbsp; <a href="../object/CommandAnnouncement.html">CommandAnnouncement</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ImplicitActionAnnouncement</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandAnnouncement.html">CommandAnnouncement</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandReport.html">CommandReport</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#justAsking">justAsking</a>&nbsp;
+<a href="#justTrying">justTrying</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandAnnouncement</code> :<br>
+<code>
+<a href="../object/CommandAnnouncement.html#messageProp_">messageProp_</a>&nbsp;
+<a href="../object/CommandAnnouncement.html#messageText_">messageText_</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandReport</code> :<br>
+<code>
+<a href="../object/CommandReport.html#action_">action_</a>&nbsp;
+<a href="../object/CommandReport.html#isFailure">isFailure</a>&nbsp;
+<a href="../object/CommandReport.html#isQuestion">isQuestion</a>&nbsp;
+<a href="../object/CommandReport.html#iter_">iter_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#makeSilent">makeSilent</a>&nbsp;
+<a href="#noteJustTrying">noteJustTrying</a>&nbsp;
+<a href="#noteQuestion">noteQuestion</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandAnnouncement</code> :<br>
+<code>
+<a href="../object/CommandAnnouncement.html#getMessageText">getMessageText</a>&nbsp;
+<a href="../object/CommandAnnouncement.html#showMessage">showMessage</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandReport</code> :<br>
+<code>
+<a href="../object/CommandReport.html#getAction">getAction</a>&nbsp;
+<a href="../object/CommandReport.html#isActionImplicit">isActionImplicit</a>&nbsp;
+<a href="../object/CommandReport.html#isActionNestedIn">isActionNestedIn</a>&nbsp;
+<a href="../object/CommandReport.html#isPartOf">isPartOf</a>&nbsp;
+<a href="../object/CommandReport.html#setAction">setAction</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="justAsking"></a>
+<table class=decl><tr><td><code>justAsking</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#582">582</a>]</table><div class=desc>flag: the action was interrupted with an interactive question<p>
+</div>
+<a name="justTrying"></a>
+<table class=decl><tr><td><code>justTrying</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#579">579</a>]</table><div class=desc>   Flag: we're just attempting the action; this is set when we   determine that the implicit action has failed, in which case we   want an announcement indicating that we're merely attempting the   action, not actually performing it.  Presume that we're actually   going to perform the action; the action can change this if   necessary. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (action, msg)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#512">512</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="makeSilent"></a>
+<table class=decl><tr><td><code>makeSilent ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#530">530</a>]</table><div class=desc>   Make this announcement silent.  This eliminates any announcement   for this action, but makes it otherwise behave like a normal   implied action. <p>
+</div>
+<a name="noteJustTrying"></a>
+<table class=decl><tr><td><code>noteJustTrying ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#548">548</a>]</table><div class=desc>   Note that the action we're attempting is merely an attempt that   failed.  This will change our report to indicate that we're only   trying the action, rather than suggesting that we actually carried   it out. <p>
+</div>
+<a name="noteQuestion"></a>
+<table class=decl><tr><td><code>noteQuestion ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#562">562</a>]</table><div class=desc>   Note that the action we're attempting is incomplete, as it was   interupted for interactive input (such as asking for a missing   object). <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

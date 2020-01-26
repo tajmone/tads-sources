@@ -1,0 +1,152 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>NearbyAttachable</title><meta name="keywords" content="NearbyAttachable,cannotAttachMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>NearbyAttachable : <a href="attachable.htm">Attachable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="attachable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="plugattachable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A NearbyAttachable is an Attachable with some further specialization added. In particular, a NearbyAttachable enforces the condition that the attached objects must share the same immediate container. If one of the attached objects is moved out of their common container, the objects are automatically detached (this is enforced in NearbyAttachable.moveWhileAttached, which NearbyAttachable overrides). Conversely, if an ATTACH command is issued to a NearbyAttachable, one precondition of the action is that the direct object is in the same container as the indirect object; this means that when the command ATTACH X to Y is issued, if X is not already in the same container as Y, the attempt will be made to move it there as an implicit action. If the implicit action succeeds, the attachment is carried out, otherwise it fails.
+<br>
+
+<br>
+This is precisely what we want with the wires behind the switch; for the black wire we need to attach to the red and green wires to be attached to them, it must be in the same container as those other two wires. Next we define that container, a tiny hole in the button fitting that's revealed when the button is detached:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++++&nbsp;wireHole&nbsp;:&nbsp;RestrictedContainer,&nbsp;Fixture&nbsp;'tiny&nbsp;square&nbsp;hole*holes'&nbsp;'tiny&nbsp;hole'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;tiny&nbsp;hole&nbsp;is&nbsp;just&nbsp;over&nbsp;an&nbsp;inch&nbsp;square.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;validContents&nbsp;=&nbsp;[redWire,&nbsp;greenWire,&nbsp;blackWire]&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;isListedInContents&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This definition should, of course, follow directly on from that of the buttonFitting object, so that the nesting works correctly. Next we define the red and green wires that go inside:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;ColouredWire&nbsp;:&nbsp;Attachable,&nbsp;Fixture
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"\^&lt;&lt;theName&gt;&gt;&nbsp;protrudes&nbsp;from&nbsp;the&nbsp;&lt;&lt;LorR&gt;&gt;&nbsp;hand&nbsp;side&nbsp;of&nbsp;the&nbsp;tiny&nbsp;hole.&nbsp;It&nbsp;looks&nbsp;like
+<br>
+&nbsp;&nbsp;&nbsp;it's&nbsp;been&nbsp;cut.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;isListedInContents&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;explainCannotAttachTo(obj)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(obj.ofKind(ColouredWire))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tooShortMsg;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited(obj);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;tooShortMsg&nbsp;=&nbsp;"The&nbsp;red&nbsp;and&nbsp;green&nbsp;wires&nbsp;aren\'t&nbsp;quite&nbsp;long&nbsp;enough&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;reach&nbsp;each&nbsp;other.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+
+<br>
++++++&nbsp;redWire&nbsp;:&nbsp;ColouredWire&nbsp;'red&nbsp;wire*wires'&nbsp;'red&nbsp;wire'
+<br>
+&nbsp;&nbsp;LorR&nbsp;=&nbsp;'left'&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++++++&nbsp;greenWire&nbsp;:&nbsp;ColouredWire&nbsp;'green&nbsp;wire*wires'&nbsp;'green&nbsp;wire'
+<br>
+&nbsp;&nbsp;LorR&nbsp;=&nbsp;'right'&nbsp;
+<br>
+;&nbsp;&nbsp;&nbsp;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Because the definition of the two wires is so similar we define a ColouredWire class for the common handling and then create a couple of instances of it.  Finally, we need the piece of black wire that will join up the other two:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">blackWire&nbsp;:&nbsp;NearbyAttachable,&nbsp;Thing&nbsp;'short&nbsp;piece&nbsp;black&nbsp;wire*wires'&nbsp;'short&nbsp;piece&nbsp;of&nbsp;black&nbsp;wire'
+<br>
+&nbsp;&nbsp;&nbsp;@smallHoleInWall
+<br>
+&nbsp;&nbsp;"It's&nbsp;about&nbsp;an&nbsp;inch&nbsp;long,&nbsp;covered&nbsp;with&nbsp;black&nbsp;insulation,&nbsp;but&nbsp;with&nbsp;the&nbsp;naked
+<br>
+&nbsp;&nbsp;&nbsp;wire&nbsp;showing&nbsp;at&nbsp;each&nbsp;end.&nbsp;"
+<br>
+&nbsp;&nbsp;canAttachTo(obj)&nbsp;{&nbsp;return&nbsp;obj&nbsp;is&nbsp;in&nbsp;(redWire,&nbsp;greenWire);&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Because NearbyAttachable (unlike Attachable) already enforces most of the special conditions we need, the only thing we need to define on the blackWire is the list of objects that it can be attached to (alternatively, we could have added </font><font face="Courier New" size="2" color="#000000">canAttachTo(obj)&nbsp;{&nbsp;return&nbsp;obj&nbsp;==&nbsp;blackWire;&nbsp;}</font><font face="Arial" size="2" color="#000000"> to the definition of the ColouredWire class). We let the black wire start life in the small hole in the wall behind the mirror in the cave, so it's not immediately obvious what it's for. We'll also be sneaky and make it of class Hidden, since it's quite feasible that the player wouldn't notice it unless he deliberately looks in the hole (and it also stops the wire announcing its presence before we're ready for it!).
+<br>
+
+<br>
+That's all we need to do to get the button to work, but at the moment there's nothing on the other side of the door, which won't make it that rewarding to open. We can rectify that forthwith:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brightCorridor&nbsp;:&nbsp;Room&nbsp;'Brightly-lit&nbsp;Corridor'
+<br>
+&nbsp;&nbsp;"The&nbsp;corridor&nbsp;continues&nbsp;both&nbsp;east&nbsp;and&nbsp;west&nbsp;from&nbsp;here&lt;&lt;openDoorway.isOpen&nbsp;?
+<br>
+&nbsp;&nbsp;',&nbsp;and&nbsp;there&nbsp;is&nbsp;an&nbsp;open&nbsp;doorway&nbsp;to&nbsp;the&nbsp;north'&nbsp;:&nbsp;''&gt;&gt;.&nbsp;A&nbsp;large&nbsp;sign&nbsp;on&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;wall&nbsp;points&nbsp;west&nbsp;towards&nbsp;the&nbsp;Museum&nbsp;Entrance&nbsp;and&nbsp;east&nbsp;towards&nbsp;the&nbsp;Exit.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;openDoorway
+<br>
+;
+<br>
+
+<br>
++&nbsp;Decoration&nbsp;'large&nbsp;sign'&nbsp;'large&nbsp;sign'
+<br>
+&nbsp;&nbsp;"MUSEUM&nbsp;ENTRANCE&nbsp;--&amp;gt;\n&amp;lt;--&nbsp;WAY&nbsp;OUT\n"
+<br>
+;
+<br>
+
+<br>
++&nbsp;openDoorway&nbsp;:&nbsp;SecretDoor&nbsp;-&gt;&nbsp;blankSteelDoor&nbsp;'open&nbsp;doorway'&nbsp;'open&nbsp;doorway'
+<br>
+&nbsp;&nbsp;"&lt;&lt;isOpen&nbsp;?&nbsp;'The&nbsp;door&nbsp;has&nbsp;slid&nbsp;open,&nbsp;revealing&nbsp;a&nbsp;dark&nbsp;tunnel&nbsp;beyond'
+<br>
+&nbsp;&nbsp;&nbsp;:&nbsp;'It\'s&nbsp;a&nbsp;featureless&nbsp;sheet&nbsp;of&nbsp;grey&nbsp;steel'&gt;&gt;.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The openDoorway could almost have been made a ThroughPassage, since there's no way to approach it except from tunnelEnd when its other side is open, but we'll make it a SecretDoor just in case; there's no way of opening or closing it from this side, but at least it'll be open and closed in sync with its other side.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

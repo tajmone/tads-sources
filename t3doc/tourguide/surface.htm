@@ -1,0 +1,62 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Surface</title><meta name="keywords" content="Surface,Fixture,bulkCapacity,Readable"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Surface : <a href="bulklimiter.htm">BulkLimiter</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="bulklimiter.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="basiccontainer.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Perhaps the simplest kind of container, or BulkLimiter, is the Surface, which is simply something you can put things on. The description of entranceCave mentions a narrow ledge carved into one wall, and this would be a good candidate for a Surface; in this case the Surface will also be a Fixture since it's plainly not something we can carry around:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Surface,&nbsp;Fixture&nbsp;'narrow&nbsp;ledge'&nbsp;'narrow&nbsp;ledge'&nbsp;@entranceCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;about&nbsp;a&nbsp;foot&nbsp;wide&nbsp;and&nbsp;two&nbsp;feet&nbsp;long.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;25
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Setting the bulk capacity to 25 isn't essential here, but since the ledge is described as narrow, there must presumably be some limit to how much can be placed on it. If you like you can try running the game and putting things on the ledge.
+<br>
+
+<br>
+Another good candidate for a Surface is the desk in the cabin, which is plainly something one could put things on. While we're at it, we'll put something on it:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">cabinDesk&nbsp;:&nbsp;Heavy,&nbsp;<b>Surface</b>&nbsp;'large&nbsp;solid&nbsp;oak&nbsp;desk'&nbsp;'desk'&nbsp;@greatCabin
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large,&nbsp;solid&nbsp;oak&nbsp;desk.&nbsp;A&nbsp;button&nbsp;is&nbsp;fixed&nbsp;underneath&nbsp;it.&nbsp;"
+<br>
+&nbsp;&nbsp;inRoomDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;oak&nbsp;desks&nbsp;sits&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cabin.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;chart&nbsp;:&nbsp;Readable&nbsp;'chart'&nbsp;'chart'
+<br>
+&nbsp;&nbsp;"It&nbsp;appears&nbsp;to&nbsp;be&nbsp;a&nbsp;chart&nbsp;of&nbsp;the&nbsp;lake.&nbsp;"
+<br>
+&nbsp;&nbsp;readDesc&nbsp;=&nbsp;"According&nbsp;to&nbsp;the&nbsp;chart&nbsp;the&nbsp;lake&nbsp;is&nbsp;roughly&nbsp;circular.&nbsp;There&nbsp;appears&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;be&nbsp;one&nbsp;landing&nbsp;spot&nbsp;each&nbsp;on&nbsp;the&nbsp;north,&nbsp;south,&nbsp;east&nbsp;and&nbsp;west&nbsp;shores&nbsp;of&nbsp;the&nbsp;lake.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;chart&nbsp;lies&nbsp;open&nbsp;on&nbsp;the&nbsp;desk.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note the use of the + location here; anything located <i>in</i> a Surface is considered to be <i>on </i>it. Technically this should cause a problem for our previously defined <a href="hiddendoor.htm">Button</a> object (used to unlock the hidden door in the bulkhead), but the way we've described the desk and the button, together with the fact that the button is a <a href="component.htm">Component</a> means that we can in fact get away with it, although later we'll look at a way of tying up this potential loose end.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

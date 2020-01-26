@@ -1,0 +1,158 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>GiveTopic</title><meta name="keywords" content="GiveTopic,matchTopic,handleTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>GiveTopic : <a href="giveshowtopic.htm">GiveShowTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="topicentry.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="showtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We use a GiveTopic to handle GIVE TO commands, instead of writing iobjFor(GiveTo) handlers on the actor. Like other TopicEntries, GiveTopics can be put in particular ActorStates so that they represent the handling particular to that state.
+<br>
+
+<br>
+We can now rip out all the iobjFor(GiveTo) handling from the sarah object, and achieve the same result with a GiveTopic instead:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">sarah&nbsp;:&nbsp;Person&nbsp;'attractive&nbsp;young&nbsp;woman/brunette'&nbsp;'young&nbsp;woman'&nbsp;@lakeRoom
+<br>
+&nbsp;&nbsp;"She's&nbsp;an&nbsp;attractive&nbsp;brunette,&nbsp;somewhere&nbsp;in&nbsp;her&nbsp;mid-twenties.&nbsp;"
+<br>
+&nbsp;&nbsp;isHer&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;properName&nbsp;=&nbsp;'Sarah'
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'sarah'&nbsp;&nbsp;
+<br>
+;
+<br>
+&nbsp;...
+<br>
+
+<br>
++&nbsp;sarahTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"Sarah&nbsp;is&nbsp;looking&nbsp;at&nbsp;you,&nbsp;waiting&nbsp;for&nbsp;you&nbsp;to&nbsp;speak.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;waiting&nbsp;for&nbsp;you&nbsp;to&nbsp;speak.&nbsp;"
+<br>
+&nbsp;&nbsp;attentionSpan&nbsp;=&nbsp;5
+<br>
+;
+<br>
+
+<br>
+++&nbsp;GiveTopic&nbsp;@diamondRing
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Great!&nbsp;Thanks!&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;declares,&nbsp;&lt;q&gt;I've&nbsp;been&nbsp;looking&nbsp;for&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;i&gt;every&lt;/i&gt;where!&lt;/q&gt;&nbsp;She&nbsp;slips&nbsp;the&nbsp;ring&nbsp;on&nbsp;her&nbsp;finger,&nbsp;then&nbsp;continues,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Well,&nbsp;I&nbsp;suppose&nbsp;the&nbsp;next&nbsp;thing&nbsp;is&nbsp;to&nbsp;find&nbsp;a&nbsp;way&nbsp;out&nbsp;of&nbsp;here.&nbsp;You&nbsp;seem&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;know&nbsp;how&nbsp;to&nbsp;find&nbsp;things,&nbsp;so&nbsp;I&nbsp;guess&nbsp;I'd&nbsp;best&nbsp;follow&nbsp;you.&lt;/q&gt;&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gDobj.moveInto(getActor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gDobj.makeWornBy(getActor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;getActor.setCurState(sarahFollowing);&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At some point the player will need to give Sarah one of the gas masks if she's to follow him into Hell Fire Cavern. The problem here is that we have two identical gas masks and we could equally well give her either of them. Again, we don't know what ActorState she'll be in when we give the gas mask (it's likely to be the sarahFollowing state, but the player character could conceivably hand Sarah a gas mask before giving her the diamond ring that makes her start following him around). For this reason it might be safer to put this GiveTopic directly inside the sarah object (where it'll be accessible from all of her ActorStates). Be careful with the nesting though - don't put it between an ActorState and something that belongs inside that ActorState, or things will start to go awry. To solve the two gas-mask problem we need to write custom matchTopic and handleTopic methods (note that the kind of method we've used here will only work on TopicEntries that handle resolved objects rather than resolved topics, that is GiveTopic, ShowTopic, GiveShowTopic and their Default equivalents):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;GiveTopic
+<br>
+&nbsp;&nbsp;matchTopic(fromActor,&nbsp;obj)
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;return&nbsp;obj.ofKind(GasMask)&nbsp;?&nbsp;matchScore&nbsp;:&nbsp;nil;&nbsp;}
+<br>
+&nbsp;&nbsp;handleTopic(fromActor,&nbsp;obj)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;obj.moveInto(getActor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Thanks,&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;remarks&nbsp;dubiously&nbsp;as&nbsp;she&nbsp;accepts&nbsp;it&nbsp;from&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;you,&nbsp;&lt;q&gt;I'm&nbsp;sure&nbsp;it'll&nbsp;-&nbsp;er&nbsp;-&nbsp;come&nbsp;in&nbsp;very&nbsp;useful.&lt;/q&gt;&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The curator is anxious to add Solomon's purple carbuncle to his collection, so we can add an appropriate GiveTopic to the curator's curatorTalking state:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;GiveTopic&nbsp;@carbuncle
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;"{The&nbsp;curator/he}&nbsp;takes&nbsp;the&nbsp;carbuncle&nbsp;and&nbsp;examines&nbsp;it&nbsp;carefully,&nbsp;then&nbsp;declares,
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Wunderbar!&nbsp;Ausgezeichnet!&nbsp;This&nbsp;is&nbsp;the&nbsp;famous&nbsp;purple&nbsp;carbuncle&nbsp;of&nbsp;King&nbsp;Solomon,
+<br>
+&nbsp;&nbsp;&nbsp;nicht&nbsp;wahr?&nbsp;And&nbsp;you&nbsp;are&nbsp;giving&nbsp;it&nbsp;to&nbsp;the&nbsp;museum?&nbsp;How&nbsp;kind,&nbsp;how&nbsp;very&nbsp;kind!&lt;/q&gt;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;Pausing&nbsp;just&nbsp;to&nbsp;wipe&nbsp;the&nbsp;tears&nbsp;of&nbsp;excitement&nbsp;and&nbsp;gratitude&nbsp;out&nbsp;of&nbsp;his&nbsp;eyes,&nbsp;he
+<br>
+&nbsp;&nbsp;&nbsp;continues,&nbsp;&lt;q&gt;I&nbsp;shall&nbsp;enroll&nbsp;you&nbsp;on&nbsp;our&nbsp;roll&nbsp;of&nbsp;honoured&nbsp;benefactors&nbsp;&lt;i&gt;at&nbsp;once&lt;/i&gt;!
+<br>
+&nbsp;&nbsp;&nbsp;Please,&nbsp;please,&nbsp;do&nbsp;feel&nbsp;free&nbsp;to&nbsp;inspect&nbsp;the&nbsp;special&nbsp;treasures&nbsp;in&nbsp;our&nbsp;benefactors'
+<br>
+&nbsp;&nbsp;&nbsp;exhibition&nbsp;room&nbsp;any&nbsp;time&nbsp;you&nbsp;please!&lt;/q&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;carbuncle.moveInto(getActor);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Of course giving the wrong thing to the wrong people could have disastrous consequences. If the player is foolish enough to hand the banana over to the demons, he or she richly deserves to lose, so we can code this in a GiveTopic (which, like all the TopicEntries relating to the demons, should be placed under the demonsChattering state).
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;GiveTopic&nbsp;@goldenBanana
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Yes!&lt;/q&gt;&nbsp;the&nbsp;demons&nbsp;cry&nbsp;as&nbsp;you&nbsp;hand&nbsp;them&nbsp;the&nbsp;Golden&nbsp;Banana&nbsp;of&nbsp;Discord.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;It's&nbsp;back&nbsp;where&nbsp;it&nbsp;belongs&nbsp;-&nbsp;with&nbsp;us,&nbsp;the&nbsp;demonic&nbsp;cabal!&lt;/q&gt;\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;dawns&nbsp;on&nbsp;you&nbsp;that&nbsp;you&nbsp;may&nbsp;just&nbsp;have&nbsp;made&nbsp;a&nbsp;ghastly&nbsp;mistake&nbsp;-&nbsp;probably
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;worst&nbsp;you've&nbsp;ever&nbsp;made.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;But&nbsp;at&nbsp;least&nbsp;it'll&nbsp;probably&nbsp;be&nbsp;your&nbsp;last.\b&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame('YOU&nbsp;HAVE&nbsp;FAILED&nbsp;DISMALLY');
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font></font>
+
+</body></html>

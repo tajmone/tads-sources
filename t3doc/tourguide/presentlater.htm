@@ -1,0 +1,136 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PresentLater</title><meta name="keywords" content="PresentLater,moved,makePresent,makePresentIf,eventualLocation,makePresentByKey,makePresentByKeyIf,plKey,initiallyPresent"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PresentLater : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="hidden.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="gadgets-introduction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The PresentLater class is slightly more complicated than the Hidden class, although it can be used in ways that look much the same to the player. The official purpose of a PresentLater is to define an object that is not yet where you place it. That is, you can give a PresentLater object a starting location where you want it to appear subsequently, but at the preinitialization stage this location will be stored in its <b>eventualLocation</b> property and the object moved into nil. At the point in your game when you want it to appear in its predefined location you call its <b>makePresent()</b> method. Thus we could have implemented hiding the brass key by making it a PresentLater, Thing (note that PresentLater is a mix-in class - it does not descend from Thing itself) instead of a Hidden, by calling brassKey.makePresent() instead of brassKey.discover, and by testing if(brassKey.moved) instead of if(brassKey.discovered). The effect (in terms of the transcript seen by the player) would have been identical. The main difference is that by using Hidden the brass key was in roundCave all along (but not visible until discovered), whereas by using PresentLater the brass key would not have been in roundCave until makePresent() was called.
+<br>
+
+<br>
+There is one important distinction to bear in mind here, though, and that is that calling makePresent() on a PresentLater sets its <b>moved</b> property to true (since makePresent calls moveInto) while calling discover on a Hidden does not (because a Hidden is not moved when it is discovered).
+<br>
+
+<br>
+In a simple case like that of the brass key where Hidden will do the job, it's probably best to use Hidden, unless there's some reason why you actually want the object concerned to be moved rather than simply made visible. In more complex cases, however, PresentLater may be the better choice, since it has a number of other methods we have yet to explore, and which make it a rather more powerful class than might appear from what we have seen so far.
+<br>
+
+<br>
+In addition to its makePresent, method, PresentLater has a <b>makePresentIf(cond)</b> method; this moves an object from nil to its eventualLocation if cond is true, otherwise it moves it into nil. We can illustrate this by adding a console to the Tardis control room; the console has a panel behind which is a shallow compartment. Effectively, the compartment is only present in the control room if the panel is open, so we could use makePresentIf(cond) to bring it into the control room when the panel is opened and back into nil (in this case, out of sight) when the panel is closed:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">tardisConsole:&nbsp;Fixture&nbsp;'(tardis)&nbsp;hexagonal&nbsp;control&nbsp;console'&nbsp;'console'&nbsp;@tardisControlRoom
+<br>
+&nbsp;&nbsp;"The&nbsp;six-sided&nbsp;console&nbsp;stands&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;room.&nbsp;Amongst&nbsp;its&nbsp;controls
+<br>
+&nbsp;&nbsp;&nbsp;are&nbsp;a&nbsp;slider,&nbsp;a&nbsp;dial, a switch,&nbsp;and&nbsp;a&nbsp;big&nbsp;red&nbsp;button.&nbsp;Beneath&nbsp;these&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;panel&nbsp;set&nbsp;in&nbsp;the&nbsp;side&nbsp;of&nbsp;the&nbsp;lower&nbsp;part&nbsp;of&nbsp;the&nbsp;console.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;tardisPanel&nbsp;:&nbsp;Openable,&nbsp;Component&nbsp;'panel'&nbsp;'panel'
+<br>
+&nbsp;&nbsp;makeOpen(stat)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(stat);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tardisPanelCompartment.makePresentIf(stat);&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(stat)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Opening&nbsp;the&nbsp;panel&nbsp;reveals&nbsp;a&nbsp;shallow&nbsp;compartment&nbsp;behind.&nbsp;";
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;tardisPanelCompartment&nbsp;:&nbsp;PresentLater,&nbsp;RestrictedContainer,&nbsp;Fixture&nbsp;'shallow&nbsp;compartment'
+<br>
+&nbsp;&nbsp;&nbsp;'shallow&nbsp;compartment'&nbsp;"It's&nbsp;about&nbsp;four&nbsp;inches&nbsp;deep.&nbsp;"
+<br>
+&nbsp;&nbsp;validContents&nbsp;=&nbsp;[fluidLink]&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+++&nbsp;fluidLink&nbsp;:&nbsp;Thing&nbsp;'fluid&nbsp;link'&nbsp;'fluid&nbsp;link'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;long&nbsp;transparent&nbsp;tube,&nbsp;half&nbsp;full&nbsp;of&nbsp;mercury.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We'll do more with the fluid link later. For the moment let's continue to explore PresentLater. Let's suppose that in addition to the compartment we want a notice on the back of the panel that's only visible when the panel is open. We can make this a PresentLater too, and we could simply add tardisPanelNotice.makePresent(stat) to the definition of tardisPanel.makeOpen. But there is an alternative if we want to make several objects present at once: we can use <b>makePresentByKey(key)</b>. To use this you need to define a </font><font face="Courier New" size="2" color="#000000"><b>plKey</b></font><font face="Arial" size="2" color="#000000"> on each of the PresentLater objects you want controlled by the single statement; e.g. you could define </font><font face="Courier New" size="2" color="#000000">plKey&nbsp;=&nbsp;'tardis'</font><font face="Arial" size="2" color="#000000"> on both the compartment and the notice. To make all objects whose </font><font face="Courier New" size="2" color="#000000">plKey</font><font face="Arial" size="2" color="#000000"> is 'tardis' present at once you would then call </font><font face="Courier New" size="2" color="#000000">PresentLater.makePresentByKey('tardis');</font><font face="Arial" size="2" color="#000000"> note that this method is called on the PresentLater <i>class</i>. In this case, however, we need to go one better still and use the <b>makePresentByKeyIf(key, cond)</b> method:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;tardisPanel&nbsp;:&nbsp;Openable,&nbsp;Component&nbsp;'panel'&nbsp;'panel'
+<br>
+&nbsp;&nbsp;makeOpen(stat)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(stat);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>PresentLater.makePresentByKeyIf('tardis',&nbsp;stat);</b>&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(stat)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Opening&nbsp;the&nbsp;panel&nbsp;reveals&nbsp;a&nbsp;shallow&nbsp;compartment&nbsp;behind&nbsp;<b>and&nbsp;a&nbsp;notice&nbsp;on
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;back&nbsp;of&nbsp;the&nbsp;panel</b>.&nbsp;";
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+<b>++&nbsp;tardisPanelNotice&nbsp;:&nbsp;PresentLater,&nbsp;Component&nbsp;'notice'&nbsp;'notice'
+<br>
+&nbsp;&nbsp;"The&nbsp;notice&nbsp;reads:\bFor&nbsp;best&nbsp;results&nbsp;ensure&nbsp;the&nbsp;fluid&nbsp;link&nbsp;is&nbsp;full&nbsp;of&nbsp;mercury.&nbsp;"
+<br>
+&nbsp;&nbsp;plKey&nbsp;=&nbsp;'tardis'
+<br>
+;</b>
+<br>
+
+<br>
++&nbsp;tardisPanelCompartment&nbsp;:&nbsp;PresentLater,&nbsp;RestrictedContainer,&nbsp;Fixture&nbsp;'shallow&nbsp;compartment'
+<br>
+&nbsp;&nbsp;&nbsp;'shallow&nbsp;compartment'&nbsp;"It's&nbsp;about&nbsp;four&nbsp;inches&nbsp;deep.&nbsp;"
+<br>
+&nbsp;&nbsp;validContents&nbsp;=&nbsp;[fluidLink]&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;<b>plKey&nbsp;=&nbsp;'tardis'</b>
+<br>
+;
+<br>
+
+<br>
+++&nbsp;fluidLink&nbsp;:&nbsp;Thing&nbsp;'fluid&nbsp;link'&nbsp;'fluid&nbsp;link'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;long&nbsp;transparent&nbsp;tube,&nbsp;half&nbsp;full&nbsp;of&nbsp;mercury.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+One final point about PresentLater, which we'll describe without illustrating in our game, is that it's possible to use this class for an object that <i>starts</i> present and subsequently disappears. To do this we set its <b>initiallyPresent</b> property to true. It can then be made to disappear by calling makePresentIf(nil), and to reappear again by calling makePresent.
+<br>
+</font></font>
+
+</body></html>

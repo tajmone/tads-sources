@@ -1,0 +1,34 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>StretchyContainer</title><meta name="keywords" content="StretchyContainer,minBulk,getBulk,bulkCapacity"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>StretchyContainer : <a href="container.htm">Container</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="dispenser.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="spaceoverlay.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A StretchyContainer is simply a Container that changes bulk according to its contents. An example might be a sack, which would have virtually no bulk when empty, but becomes bulkier the more is put in it. We can leave one in the squareCave, which could be used for carting things around in:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">sack&nbsp;:&nbsp;StretchyContainer&nbsp;'coarse&nbsp;brown&nbsp;sack'&nbsp;'coarse&nbsp;brown&nbsp;sack'&nbsp;@squareCave
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;coarse&nbsp;brown&nbsp;sack&nbsp;lies&nbsp;crumpled&nbsp;in&nbsp;the&nbsp;corner.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;30
+<br>
+&nbsp;&nbsp;minBulk&nbsp;=&nbsp;1
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Presumably not even a StretchyContainer is infinitely elastic, so we give it a finite <b>bulkCapacity</b>. We can also set a <b>minBulk</b> which is the bulk of the sack when empty.
+<br>
+
+<br>
+Note that if we want to find out how bulky the sack has become at any point in our game code we need to test its <b>getBulk()</b> method, not its bulk property (which never changes).
+<br>
+</font></font>
+
+</body></html>

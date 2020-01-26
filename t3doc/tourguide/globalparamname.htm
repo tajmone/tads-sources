@@ -1,0 +1,94 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>globalParamName</title><meta name="keywords" content="globalParamName,aName"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>globalParamName
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="initdesc+initspecialdesc.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="specialdesc.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The brassCoin is a little unusual in that it changes its name when it is first examined. This really ought to be reflected in the initSpecialDesc property which could instead have been defined as:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">initSpecialDesc&nbsp;=&nbsp;"\^&lt;&lt;aName&gt;&gt;&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground&nbsp;in&nbsp;a&nbsp;dim&nbsp;corner&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Then, before the coin is examined it will be listed in a room description as:
+<br>
+
+<br>
+"A small brassy object lies on the ground in a dim corner of the cave. "
+<br>
+
+<br>
+Whereas if it is examined before being picked up and another LOOK command is issued, it will then appear listed as:
+<br>
+
+<br>
+"A small brass coin lies on the ground in a dim corner of the cave."
+<br>
+
+<br>
+Which more accurately describes the player's state of knowledge of the object. This is fine, but globalParamName allows a slightly neater way of doing the same thing. It's really only useful on objects that change their name in the course of the game (which is likely to be a small minority), and they allow the object to be referred to in a <a href=" http://www.tads.org/howto/t3msg.htm " TARGET="_top">parameter substitution string</A>. This works by setting the globalParamName property to a single-quoted string that can be anything we like, but which must be unique (in the realm of parameter names). The globalParamName thus set can then be used as a message parameter which refers to this particular object, just as the library parameter dobj and iobj refer to the direct and indirect objects of the current command. This means we can then rewrite initSpecialDesc as
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">initSpecialDesc&nbsp;=&nbsp;"{A&nbsp;coin/he}&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground&nbsp;in&nbsp;a&nbsp;dim&nbsp;corner&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+The definition of the brass coin object then becomes:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brassy&nbsp;object'&nbsp;'small&nbsp;brassy&nbsp;object'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;<b>initSpecialDesc&nbsp;=&nbsp;"{A&nbsp;coin/he}&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground&nbsp;in&nbsp;a&nbsp;dim&nbsp;corner&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+</b>&nbsp;&nbsp;&nbsp;initDesc&nbsp;=&nbsp;"It&nbsp;looks&nbsp;like&nbsp;it&nbsp;might&nbsp;be&nbsp;a&nbsp;coin&nbsp;of&nbsp;some&nbsp;sort.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;<b>globalParamName&nbsp;=&nbsp;'coin'</b>
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Examine)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;changeName();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;changeName()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'small&nbsp;brass&nbsp;coin';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmdDict.removeWord(self,&nbsp;'object',&nbsp;&amp;noun);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initializeVocabWith('brass&nbsp;coin/groat*coins');
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;
+<br>
+;
+<br>
+
+<br>
+</font></font>
+
+</body></html>

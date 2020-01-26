@@ -1,0 +1,210 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Basic Actors</title><meta name="keywords" content="Person,isHer,makeProper,globalParamName,isProperName,isHim,itIt"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Basic Actors
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="overview-actors+npcs.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="actorcustomization.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Without further ado, we'll start defining the basic Actor (actually Person) objects we'll be needing in this game. Because, with all their associated helper objects (ActorStates, TopicEntries, ConvNodes, TopicGroups and AgendaItems) actor definitions can end up getting long and complicated, it is generally worth defining each but the very simplest NPC in its own source file. We'll begin the Sarah, the young lady who will become the player character's companion and helper:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">sarah&nbsp;:&nbsp;Person&nbsp;'attractive&nbsp;young&nbsp;woman/brunette'&nbsp;'young&nbsp;woman'&nbsp;@lakeRoom
+<br>
+&nbsp;&nbsp;"She's&nbsp;an&nbsp;attractive&nbsp;brunette,&nbsp;somewhere&nbsp;in&nbsp;her&nbsp;mid-twenties.&nbsp;"
+<br>
+&nbsp;&nbsp;isHer&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;properName&nbsp;=&nbsp;'Sarah'
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'sarah'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Often, this is all that is needed in the definition of the basic Actor object. We define </font><font face="Courier New" size="2" color="#000000"><b>isHer</b>&nbsp;=&nbsp;true&nbsp;</font><font face="Arial" size="2" color="#000000">so that the parser knows this NPC is female (and can be referred to with feminine pronouns such as 'she' and 'her'). Adding a <b>globalParamName</b> to an actor is nearly always useful, particularly in a case like this where the woman will change from 'the young woman' to 'Sarah' once we get to know her; it allows us to use whatever we have defined as the globalParamName in parameterised strings like "{The sarah/she} smiles at you warmly" and have the game display "The young woman smiles at you warmly" or "Sarah smiles at you warmly" as appropriate to our knowledge of her name. The other property we have define, <b>properName</b>, is not a library property at all, but one we are using for our own purposes to store the name the young woman will eventually be known by. To make this useful we need to add a corresponding custom method to the actor class:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Actor
+<br>
+&nbsp;&nbsp;makeProper()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(properName&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;properName;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initializeVocabWith(properName);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isProperName&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;name;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+What the makeProper method does is (provided properName is non nil) change the name property to the properName (e.g. "young woman" to "Sarah"), add properName to the vocabulary words for the actor (so henceforth we can also refer to the young woman as "sarah" in commands), and sets the library property <b>isProperName</b> to true so that the game knows that the actor's name is now a proper name and will display messages like "Sarah is here" rather than "The Sarah is here". Finally the method returns the name of the actor as it now is; this means it can be used in conversational text such us "&lt;q&gt;Hello, I'm &lt;&lt;sarah.makeProper&gt;&gt;.&lt;/q&gt; the young woman introduces herself" both to display the name and to update the Actor object appropriately at the same time. Unfortunately, we'll have to wait till we get into programming conversations to see this in action (unless you want to add some temporary code to try it out, e.g. by making it a response in sarah.actionDobjKiss).
+<br>
+
+<br>
+We have already made a temporary definition of the curator, but let's move him to his own file and set him up similarly:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">curator&nbsp;:&nbsp;Person&nbsp;'curator'&nbsp;'curator'&nbsp;@behindTable
+<br>
+&nbsp;&nbsp;"The&nbsp;curator&nbsp;is&nbsp;a&nbsp;ferret-faced&nbsp;little&nbsp;man&nbsp;in&nbsp;is&nbsp;mid-forties.&nbsp;"
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;properName&nbsp;=&nbsp;'Professor&nbsp;Altmeister'
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'curator'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we have stripped out the code that moves him around, as we'll be implementing it differently. Obviously, for the male curator we set <b>isHim</b> = true. Once again we add a globalParamName.
+<br>
+
+<br>
+The other character we've already met is King Solomon; here he is as we'll now create him:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">solomon&nbsp;:&nbsp;Person&nbsp;'middle-aged&nbsp;middle&nbsp;aged&nbsp;man/king'&nbsp;'middle-aged&nbsp;man'&nbsp;@solomonChair
+<br>
+&nbsp;&nbsp;"He's&nbsp;quite&nbsp;good-looking&nbsp;in&nbsp;a&nbsp;middle-eastern&nbsp;sort&nbsp;of&nbsp;way,&nbsp;with&nbsp;long&nbsp;curly
+<br>
+&nbsp;&nbsp;&nbsp;black&nbsp;hair&nbsp;that's&nbsp;just&nbsp;starting&nbsp;to&nbsp;go&nbsp;grey,&nbsp;and&nbsp;a&nbsp;neatly&nbsp;kept&nbsp;beard.&nbsp;He's
+<br>
+&nbsp;&nbsp;&nbsp;dressed&nbsp;in&nbsp;a&nbsp;purple&nbsp;cloak.&nbsp;"
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;posture&nbsp;=&nbsp;sitting
+<br>
+&nbsp;&nbsp;properName&nbsp;=&nbsp;'King&nbsp;Solomon'
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'solomon'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We can also use a single Person object to represent a group of NPCs, especially when there's no particular need to distinguish one from another:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">demons&nbsp;:&nbsp;Person&nbsp;'bunch&nbsp;crowd&nbsp;gaggle&nbsp;demons'&nbsp;'demons'&nbsp;@hellPath
+<br>
+&nbsp;&nbsp;"They're&nbsp;an&nbsp;ugly&nbsp;bunch&nbsp;of&nbsp;mis-shapen,&nbsp;semi-substantial&nbsp;beings,&nbsp;slightly
+<br>
+&nbsp;&nbsp;&nbsp;green&nbsp;in&nbsp;tinge&nbsp;with&nbsp;glaring&nbsp;red&nbsp;eyes&nbsp;and&nbsp;tiny&nbsp;forked&nbsp;tails.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'demons'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Since we've put the demons in a location we haven't created yet, we'd better add this new location:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">hellPath&nbsp;:&nbsp;OutdoorRoom&nbsp;'Path&nbsp;down&nbsp;Hell&nbsp;Fire&nbsp;Cavern'&nbsp;'the&nbsp;path'
+<br>
+&nbsp;&nbsp;"About&nbsp;halfway&nbsp;down&nbsp;the&nbsp;track&nbsp;from&nbsp;the&nbsp;summit&nbsp;to&nbsp;the&nbsp;basalt&nbsp;plain&nbsp;below&nbsp;the&nbsp;track&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;flattens&nbsp;to&nbsp;a&nbsp;small&nbsp;ledge.&nbsp;Stone&nbsp;steps&nbsp;continue&nbsp;upwards&nbsp;towards&nbsp;the&nbsp;top&nbsp;and&nbsp;down
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;bleak&nbsp;basalt&nbsp;plain&nbsp;below,&nbsp;while&nbsp;across&nbsp;the&nbsp;plain&nbsp;to&nbsp;the&nbsp;north&nbsp;Mount&nbsp;Gloom
+<br>
+&nbsp;&nbsp;&nbsp;continues&nbsp;to&nbsp;belch&nbsp;smoke&nbsp;and&nbsp;flame.&nbsp;"
+<br>
+&nbsp;&nbsp;up&nbsp;=&nbsp;hellPathUp
+<br>
+&nbsp;&nbsp;down&nbsp;=&nbsp;hellPathDown
+<br>
+;
+<br>
+
+<br>
++&nbsp;hellPathUp&nbsp;:&nbsp;StairwayUp&nbsp;-&gt;roughStaircase&nbsp;'stone&nbsp;upward&nbsp;up&nbsp;steps'&nbsp;'upward&nbsp;steps'
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;a&nbsp;rough&nbsp;ascent,&nbsp;possibly&nbsp;treacherous&nbsp;in&nbsp;places,&nbsp;but&nbsp;probably&nbsp;passable
+<br>
+&nbsp;&nbsp;&nbsp;with&nbsp;care.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+
+<br>
++&nbsp;hellPathDown&nbsp;:&nbsp;StairwayDown&nbsp;'stone&nbsp;downward&nbsp;down&nbsp;steps'&nbsp;'downward&nbsp;steps'
+<br>
+&nbsp;&nbsp;"The&nbsp;rough&nbsp;steps&nbsp;downwards&nbsp;to&nbsp;the&nbsp;basalt&nbsp;plain&nbsp;look&nbsp;even&nbsp;less&nbsp;inviting&nbsp;than&nbsp;those
+<br>
+&nbsp;&nbsp;&nbsp;leading&nbsp;up,&nbsp;but&nbsp;they&nbsp;appear&nbsp;to&nbsp;be&nbsp;just&nbsp;about&nbsp;negotiable.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You might also want to add hellPath to the locationList property of the MultiLoc, Distant volcano object defined earlier.
+<br>
+
+<br>
+While we're in the business of the inhuman NPC, here's our final actor:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">ghost&nbsp;:&nbsp;Person&nbsp;'ghost'&nbsp;'ghost'&nbsp;
+<br>
+&nbsp;&nbsp;"It's&nbsp;as&nbsp;insubstantial&nbsp;as&nbsp;you'd&nbsp;expect&nbsp;a&nbsp;ghost&nbsp;to&nbsp;be,&nbsp;a&nbsp;pale&nbsp;white&nbsp;shape&nbsp;you&nbsp;can
+<br>
+&nbsp;&nbsp;&nbsp;almost&nbsp;see&nbsp;through,&nbsp;with&nbsp;just&nbsp;a&nbsp;hint&nbsp;of&nbsp;washed-out&nbsp;colour.&nbsp;The&nbsp;wan&nbsp;face&nbsp;bears
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;once-regal&nbsp;demeanour,&nbsp;and&nbsp;its&nbsp;features&nbsp;vaguely&nbsp;resemble&nbsp;those&nbsp;on&nbsp;the&nbsp;golden
+<br>
+&nbsp;&nbsp;&nbsp;statue&nbsp;in&nbsp;the&nbsp;grotto.&nbsp;"
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;isIt&nbsp;=&nbsp;true&nbsp;
+<br>
+&nbsp;&nbsp;properName&nbsp;=&nbsp;'Benedict'
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'ghost'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We have deliberately not given this ghost a location, since it will only appear (in the cemetery) after the gold statue has been toppled (which is why we can be sure it's safe to refer to the statue in the description). Note that we can make the ghost both a "him" and an "it" by setting both isHim and isIt to true, since players may think of the ghost as being either neuter or masculine (or may change from one to the other once the ghost introduces himself as Benedict).
+<br>
+
+<br>
+Five NPCs may constitute a fairly sparse population for the size of game world we are implementing, but they will suffice for the plot (such as it is) and to illustrate how NPCs can be implemented. Over the course of the next several sections we shall gradually bring them to life.
+<br>
+</font></font>
+
+</body></html>

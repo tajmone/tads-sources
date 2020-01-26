@@ -1,0 +1,40 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PromptDaemon</title><meta name="keywords" content="PromptDaemon,removeEvent"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PromptDaemon : Event
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="sensedaemon.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="onetimepromptdaemon.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A PromptDaemon is a special kind of daemon that runs once each turn, just before the command prompt is displayed. This may be useful, for example, where you want to check each turn whether some condition has become true and take appropriate action if so. Since the PromptDaemon runs every turn, there is no need to specify its frequency, so you can set one up simply with the command:
+<br>
+
+<br>
+ <font face="Courier New" size="2" color="#000000">&nbsp;newPromptDaemon(obj,&nbsp;&amp;prop);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Which will call obj.prop each turn, just before the command prompt is displayed. Again it may be useful to make a note of a reference to the PromptDaemon so that it can be removed from the list of active events once its job is done, e.g.
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">daemonID&nbsp;=&nbsp;newPromptDaemon(obj,&nbsp;&amp;prop);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then, when you've finished with the promptDaemon you can simply call:
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">daemonID.removeEvent();</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+An example of the possible use of a PromptDaemon is given later in connexion with a <a href="senseconnector.htm">bomb</a>.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

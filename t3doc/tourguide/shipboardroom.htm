@@ -1,0 +1,212 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Shipboard</title><meta name="keywords" content="ShipboardRoom,ships,Enterable,specialDesc,getFacets,Exitable,OneWayRoomConnector,Shipboard"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Shipboard : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="pathpassage.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="floorlessroom.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Shipboard is a mix-in class that can be added to other room classes to indicate that shipboard directions (port, starboard, fore and aft) are meaningful in such locations. Clearly, the principal use of this class will be when constructing locations aboard a ship.
+<br>
+
+<br>
+To illustrate the use of this class, we first need a ship. Fortunately, we already have a lake we can float it on, so we can begin by defining it thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">ship&nbsp;:&nbsp;Enterable&nbsp;-&gt;portDeck&nbsp;'large&nbsp;wooden&nbsp;sailing&nbsp;ship'&nbsp;'ship'&nbsp;@lakeRoom
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large&nbsp;wooden&nbsp;sailing&nbsp;ship,&nbsp;close&nbsp;enough&nbsp;to&nbsp;the&nbsp;shore&nbsp;to&nbsp;board.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;wooden&nbsp;ship&nbsp;floats&nbsp;on&nbsp;the&nbsp;lake,&nbsp;just&nbsp;by&nbsp;the&nbsp;shore.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Board)&nbsp;asDobjFor(Enter)&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;getFacets&nbsp;{&nbsp;return&nbsp;[leaveShip];&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There are a number of points to note about this short definition. The first is the use of the @ notation as an alternative means of specifying the ship's initial location. Although the ship is notionally on the lake, we in fact place it in lakeRoom since we want it to be visible and enterable from there (before it moves). However, since we always want the ship to be <i>described</i> as floating on the lake, we add a specialDesc to that effect; this is how the ship will then always be described when listed in room descriptions. Although the ship will not always remain in <i>this</i> location, it will always be in some location close to the shore, and our description is sufficiently general to cover that. Next, a player is as likely to type BOARD SHIP as ENTER SHIP in order to enter the vessel, so we add dobjFor(Board) asDobjFor(Enter) to make BOARD equivalent to ENTER here. Finally, we'll assume that on boarding the ship we arrive on the port deck, so we use the -&gt; notation of the Enterable template to indicate that portDeck is the location this Enterable takes us to. We'll explain the mysterious <b>getFacets </b>in just a minute.
+<br>
+
+<br>
+We next need to define the portDeck location. Since there'll be several other deck locations, all of which will use the Shipboard mix-in class, we can save ourselves a bit of typing if we first define a custom Deck class:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;Deck&nbsp;:&nbsp;Shipboard,&nbsp;OutdoorRoom;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We can then define the portDeck thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">portDeck&nbsp;:&nbsp;Deck&nbsp;'Port&nbsp;Deck'&nbsp;'the&nbsp;main&nbsp;deck'
+<br>
+&nbsp;&nbsp;&nbsp;"This&nbsp;part&nbsp;of&nbsp;the&nbsp;main&nbsp;deck&nbsp;is&nbsp;on&nbsp;the&nbsp;port&nbsp;side&nbsp;of&nbsp;the&nbsp;ship,&nbsp;close&nbsp;to&nbsp;the&nbsp;shore.&nbsp;The
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;deck&nbsp;continues&nbsp;to&nbsp;fore,&nbsp;aft&nbsp;and&nbsp;starboard,&nbsp;and&nbsp;a&nbsp;tall&nbsp;mast&nbsp;towers&nbsp;up&nbsp;from
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;main&nbsp;deck.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fore&nbsp;=&nbsp;foreDeck
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;aft&nbsp;=&nbsp;quarterDeck
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;starboard&nbsp;=&nbsp;starboardDeck
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;=&nbsp;(ship.location)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;mast
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<a name="leaveship">We'll be defining the destinations referred to shortly; for now the only one to note is that attached to the </font><font face="Courier New" size="2" color="#000000">out</font><font face="Arial" size="2" color="#000000"> property. This is set to (ship.location) so that whenever we type OUT from portDeck we'll end up in whatever location the ship object is in; this provides an easy way of moving the entire ship. But of course, just as players may type BOARD SHIP to enter the ship, they may also want to type LEAVE SHIP or GET OUT OF SHIP to disembark. The way to handle this is to provide at EXITABLE object for SHIP to refer to in these circumstances:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;leaveShip&nbsp;:&nbsp;Exitable&nbsp;-&gt;(ship.location)&nbsp;'ship'&nbsp;'ship'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large&nbsp;wooden&nbsp;sailing&nbsp;vessel,&nbsp;which&nbsp;stretches&nbsp;fore,&nbsp;aft&nbsp;and&nbsp;to&nbsp;starboard&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;port&nbsp;deck.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;getFacets&nbsp;{&nbsp;return&nbsp;[ship];&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that (ship.location) needs to be enclosed in parentheses when using the template -&gt;connector syntax here, since it is an expression. Otherwise, the Exitable behaves pretty much the same way as the <a href="enterable.htm">Enterable</a> we encountered before (except that it handles EXIT so-and-so instead of ENTER so-and-so). The main point to note here is the use of the <b>getFacets</b> method. The point of this is that although they are separate programming objects, both <i>ship</i> and <i>leaveShip</i> refer to the same physical object. In this case the two programming objects could be regarded as two different facets of the same ship seen from the shore or from its port deck. The getFacets method, which returns a list of the other facets of an object, is the means by which we can specify this relation to the parser. The practical effect of this is that the player can type BOARD SHIP followed by LEAVE IT, and the parser will be able to work out that IT should now refer to the leaveShip object. Without the use of getFacets the LEAVE IT command would fail, since the original ship would no longer be in scope to be the object of the LEAVE command, and would not handle the command properly even if it were. Note that for doors and other passage-like objects that the library recognizes as double-sided entities this getFacets mechanism is automatically set up by the library, so it is only in less standard contexts such as the present one that game authors need to worry about it.
+<br>
+
+<br>
+With these complications out of the way, the definition of the starboard part of the deck is fairly straightforward:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">starboardDeck&nbsp;:&nbsp;Deck&nbsp;'Starboard&nbsp;Deck'&nbsp;'the&nbsp;main&nbsp;deck'
+<br>
+&nbsp;&nbsp;"From&nbsp;the&nbsp;starboard&nbsp;side&nbsp;of&nbsp;the&nbsp;ship&nbsp;there's&nbsp;a&nbsp;clear&nbsp;view&nbsp;over&nbsp;the&nbsp;lake&nbsp;as&nbsp;far&nbsp;as
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;eye&nbsp;can&nbsp;see&nbsp;to&nbsp;starboard.&nbsp;The&nbsp;deck&nbsp;continues&nbsp;forward,&nbsp;aft&nbsp;and&nbsp;to&nbsp;port,&nbsp;and&nbsp;a&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;tall&nbsp;&nbsp;mast&nbsp;rises&nbsp;up&nbsp;from&nbsp;the&nbsp;centre&nbsp;of&nbsp;the&nbsp;main&nbsp;deck.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;port&nbsp;=&nbsp;portDeck
+<br>
+&nbsp;&nbsp;&nbsp;fore&nbsp;=&nbsp;foreDeck
+<br>
+&nbsp;&nbsp;&nbsp;aft&nbsp;=&nbsp;quarterDeck
+<br>
+&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;mast
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The foreDeck and quarterDeck would be even more straightforward but for one complication. The way we have defined our ship, the main deck straddles its central portion and is divided into a port side and a starboard side. Going aft from either side takes us to the quarterDeck, which going foreward from either side takes us to the foreDeck. So where should we end up if we come aft from the foreDeck or forward from the quarterDeck? Clearly we should arrive somewhere on the main deck, but should it be on the port or the starboard side? It could be either but there seems no clear reason why it should be on or the other. One way to handle this is for travel aft from the foreDeck or forward from the quarterDeck to bring the PC to either location, chosen at random on each location (which will also give the player something else to figure out!). The neatest way to implement that is by using a OneWayRoomConnector that produces this result:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">mainDeck&nbsp;:&nbsp;OneWayRoomConnector
+<br>
+&nbsp;&nbsp;destination&nbsp;=&nbsp;(rand(portDeck,&nbsp;starboardDeck))
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+The definition of the other two deck sections then becomes straightforward:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">foreDeck&nbsp;:&nbsp;Deck&nbsp;'Fore&nbsp;Deck'&nbsp;'the&nbsp;fore&nbsp;deck'
+<br>
+&nbsp;&nbsp;"The&nbsp;foredeck&nbsp;is&nbsp;at&nbsp;the&nbsp;front&nbsp;of&nbsp;the&nbsp;ship,&nbsp;overlooking&nbsp;the&nbsp;bows.&nbsp;Most&nbsp;of&nbsp;the
+<br>
+&nbsp;&nbsp;ship&nbsp;is&nbsp;aft&nbsp;from&nbsp;here.&nbsp;"
+<br>
+&nbsp;&nbsp;aft&nbsp;=&nbsp;mainDeck
+<br>
+;
+<br>
+
+<br>
+quarterDeck&nbsp;:&nbsp;Deck&nbsp;'Quarterdeck'&nbsp;'the&nbsp;quarterdeck'
+<br>
+&nbsp;&nbsp;"The&nbsp;quarterdeck&nbsp;is&nbsp;a&nbsp;raised&nbsp;portion&nbsp;of&nbsp;the&nbsp;deck&nbsp;near&nbsp;the&nbsp;stern&nbsp;of&nbsp;the&nbsp;ship,&nbsp;and&nbsp;separated
+<br>
+&nbsp;&nbsp;&nbsp;from&nbsp;the&nbsp;deck&nbsp;further&nbsp;foreward&nbsp;by&nbsp;a&nbsp;wooden&nbsp;rail&nbsp;on&nbsp;which&nbsp;is&nbsp;mounted&nbsp;a&nbsp;panel.&nbsp;A&nbsp;flight
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;steps&nbsp;leads&nbsp;down&nbsp;below.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;fore&nbsp;=&nbsp;mainDeck
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;deckSteps
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;deckSteps&nbsp;:&nbsp;StairwayDown&nbsp;'flight&nbsp;steps'&nbsp;'steps'
+<br>
+&nbsp;&nbsp;"The&nbsp;steps&nbsp;lead&nbsp;down&nbsp;into&nbsp;a&nbsp;cabin&nbsp;below.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+That said, when the player goes fore from the quarterDeck, it will normally be with the intention of leaving the ship, via the port deck. The random selection of destinations in this case will quickly become an annoyance, so it is probably better to define:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">quarterDeck&nbsp;:&nbsp;Deck&nbsp;'Quarterdeck'&nbsp;'the&nbsp;quarterdeck'
+<br>
+&nbsp;&nbsp;"The&nbsp;quarterdeck&nbsp;is&nbsp;a&nbsp;raised&nbsp;portion&nbsp;of&nbsp;the&nbsp;deck&nbsp;near&nbsp;the&nbsp;stern&nbsp;of&nbsp;the&nbsp;ship,&nbsp;and&nbsp;separated
+<br>
+&nbsp;&nbsp;&nbsp;from&nbsp;the&nbsp;deck&nbsp;further&nbsp;foreward&nbsp;by&nbsp;a&nbsp;wooden&nbsp;rail&nbsp;on&nbsp;which&nbsp;is&nbsp;mounted&nbsp;a&nbsp;panel.&nbsp;A&nbsp;flight
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;steps&nbsp;leads&nbsp;down&nbsp;below.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;<b>fore&nbsp;=&nbsp;portDeck
+<br>
+&nbsp;&nbsp;&nbsp;port&nbsp;=&nbsp;portDeck
+<br>
+&nbsp;&nbsp;&nbsp;starboard&nbsp;=&nbsp;starboardDeck
+<br>
+</b>&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;deckSteps
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<b>Note</b>: Shipboard and ShipboardRoom: prior to TADS 3.0.8 the class now called Shipboard was called ShipboardRoom. The name was changed because Shipboard is a mix-in class designed to be used with Rooms, but not actually a type of Room, so it seemed illogical to include Room in its name.
+<br>
+
+<br>
+TADS 3 still defines a ShipboardRoom class (for convenience), but it now means something slightly different, being defined simply as a combination of Shipboard and Room:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;ShipboardRoom&nbsp;:&nbsp;Shipboard,&nbsp;Room
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

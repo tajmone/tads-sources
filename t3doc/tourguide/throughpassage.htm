@@ -1,0 +1,82 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ThroughPassage</title><meta name="keywords" content="ThroughPassage,destination,remapTo"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ThroughPassage : Passage
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="secretdoor.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="darkroom.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The secretPassage room refers to a tunnel leading north. The tunnel itself isn't an interesting location, it's simply a route for getting elsewhere. The player may however try to refer to it, so we can usefully implement it as a ThroughPassage - something that you can ENTER or GO THROUGH and that takes you directly to its destination. This time we shan't implement a corresponding Passage object at the other end, so we need to set the tunnel's destination property to the room where we'll end up if we traverse the tunnel, the yet-to-be defined <a href="darkroom.htm">smallCave</a> room.
+<br>
+
+<br>
+Since we envisage this as quite a long tunnel, however, we could display a message representing the long walk down it when we travel through it; this could be achieved simply by overriding noteTraversal, but instead we'll take the opportunity to illustrate a simpler use of TravelWithMessage. All we need to do is to override travelDesc with the message we want displayed.
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;tunnel&nbsp;:&nbsp;TravelWithMessage,&nbsp;ThroughPassage&nbsp;'tunnel'&nbsp;'tunnel'
+<br>
+&nbsp;&nbsp;"The&nbsp;dark&nbsp;tunnel&nbsp;looks&nbsp;large&nbsp;enough&nbsp;for&nbsp;a&nbsp;single&nbsp;person&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;walk&nbsp;through.&nbsp;"
+<br>
+&nbsp;&nbsp;travelDesc&nbsp;=&nbsp;"You&nbsp;walk&nbsp;down&nbsp;the&nbsp;tunnel&nbsp;for&nbsp;some&nbsp;way&nbsp;and&nbsp;finally
+<br>
+&nbsp;&nbsp;&nbsp;arrive&nbsp;in&nbsp;a&nbsp;small&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;destination&nbsp;=&nbsp;smallCave&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Since the tunnel is described as running north from the secretPassage, the player may simply type N or NORTH to enter it, so we need to add the following to the definition of secretRoom:
+<br>
+
+<br>
+   </font><font face="Courier New" size="2" color="#000000">north&nbsp;=&nbsp;tunnel
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">We could also use a couple of anonymous ThroughPassage objects to represent the tunnel and the hole that are mentioned in the description of the entranceCave. At first sight there may seem to be a problem with this: we don't want GO THROUGH TUNNEL to bypass the RoomConnector we've set up for returning to the valley, and we'd probably want GO THROUGH HOLE to be equivalent to CLIMB DOWN LADDER. The easiest answer here is probably to remap the TravelVia of both ThroughPassages to the connectors we actually want employed:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;ThroughPassage&nbsp;'large&nbsp;hole'&nbsp;'large&nbsp;hole'
+<br>
+&nbsp;&nbsp;"The&nbsp;hole&nbsp;is&nbsp;easily&nbsp;large&nbsp;enough&nbsp;for&nbsp;even&nbsp;a&nbsp;portly&nbsp;giant&nbsp;to&nbsp;pass&nbsp;through.
+<br>
+&nbsp;&nbsp;&nbsp;Looking&nbsp;through&nbsp;it&nbsp;you&nbsp;can&nbsp;see&nbsp;a&nbsp;large,&nbsp;rough&nbsp;cave&nbsp;below,&nbsp;lit&nbsp;by&nbsp;the&nbsp;flickering
+<br>
+&nbsp;&nbsp;&nbsp;flames&nbsp;of&nbsp;a&nbsp;torch.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(LookThrough)&nbsp;asDobjFor(Examine)&nbsp;
+<br>
+&nbsp;&nbsp;dobjFor(TravelVia)&nbsp;remapTo(TravelVia,&nbsp;downLadder)
+<br>
+;
+<br>
+
+<br>
++&nbsp;ThroughPassage&nbsp;'narrow&nbsp;tunnel'&nbsp;'narrow&nbsp;tunnel'
+<br>
+&nbsp;&nbsp;"The&nbsp;tunnel&nbsp;evidently&nbsp;tapers&nbsp;from&nbsp;the&nbsp;outside&nbsp;to&nbsp;the&nbsp;inside,&nbsp;since
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;tunnel&nbsp;visible&nbsp;from&nbsp;here&nbsp;is&nbsp;quite&nbsp;narrow.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(TravelVia)&nbsp;remapTo(TravelVia,&nbsp;entranceTunnel);
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Obviously, you should make sure that both these objects are located in entranceCave.</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

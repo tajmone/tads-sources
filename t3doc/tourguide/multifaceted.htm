@@ -1,0 +1,114 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>MultiFaceted</title><meta name="keywords" content="MultiFaceted,MultiFacetedFacet"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>MultiFaceted : <a href="multiinstance.htm">MultiInstance</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="multiinstance.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="collectivegroup.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">MultiFaceted is almost identical to <a href="multiinstance.htm">MultiInstance</a>, except that it is used to place copies of what is notionally the <i>same</i> object in multiple locations, rather than copies of what are similar but numerically distinct objects. For example, although the forest contains many trees, it is only one forest, so that if we might want to refer to both the trees and the forest throughout its extent we should use a <a href="multiinstance.htm">MultiInstance</a> to represent the trees and a MultiFaceted to represent the forest:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">MultiFaceted
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[snowForest,&nbsp;nwForestPath,&nbsp;neForestPath,&nbsp;snowForestEdge]
+<br>
+&nbsp;&nbsp;instanceObject&nbsp;:&nbsp;Fixture&nbsp;{'frosty&nbsp;forest'&nbsp;'forest'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;frosty&nbsp;forest&nbsp;is&nbsp;full&nbsp;of&nbsp;tall&nbsp;snow-laden&nbsp;pines&nbsp;growing&nbsp;close&nbsp;together.&nbsp;"
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The only real difference here is that the objects set up as instances by the MultiFaceted class have MultiFacetedFacet instead of MultiInstanceInstance as their mix-in class (again this is all handled by the library so you don't have to worry about it), which in turn means that the instances are regarded as facets of one another. The <i>practical</i> upshot of this is that you can EXAMINE FOREST in one location, go to any other location in which the forest exists, and type EXAMINE IT and the parser will know that you're still talking about the forest, whereas if you EXAMINE TREES in one location, the parser won't know what you're talking about if you immediately try to EXAMINE THEM in another.
+<br>
+
+<br>
+Apart from this difference, everything said about <a href="multiinstance.htm">MultiInstance</a> applies to MultiFaceted and need not be repeated. You can use exactly the same methods to move MultiFaceted objects around dynamically, or specify the initial locations the instance objects should occupy.
+<br>
+
+<br>
+Some time back we defined a lake decoration object thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">MultiLoc,&nbsp;Decoration&nbsp;'great&nbsp;(giant)&nbsp;underground&nbsp;lake/water'&nbsp;'lake'
+<br>
+&nbsp;&nbsp;"The&nbsp;lake&nbsp;looks&nbsp;as&nbsp;flat&nbsp;as&nbsp;a&nbsp;millpond.&nbsp;"
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[lakeRoom,&nbsp;pathEnd]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This is actually harmless in this case, but to be on the safe side we could make it a MultiFaceted, and we could even take advantage of the change to vary the description of the lake depending on where it's being viewed from:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">MultiFaceted&nbsp;
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[lakeRoom,&nbsp;pathEnd,&nbsp;starboardDeck,&nbsp;westShore,&nbsp;eastShore,&nbsp;southShore]&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;instanceObject&nbsp;:&nbsp;Decoration
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'great&nbsp;(giant)&nbsp;underground&nbsp;lake/water'&nbsp;'lake'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;lake,&nbsp;which&nbsp;stretches&nbsp;as&nbsp;far&nbsp;&lt;&lt;whichDirection&gt;&gt;&nbsp;as&nbsp;you&nbsp;can
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see,&nbsp;looks&nbsp;almost&nbsp;as&nbsp;flat&nbsp;as&nbsp;a&nbsp;millpond,&nbsp;although&nbsp;the&nbsp;occasional
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ripple&nbsp;runs&nbsp;across&nbsp;its&nbsp;surface.&nbsp;It&nbsp;is&nbsp;also&nbsp;strikingly
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;phosphorescent,&nbsp;casting&nbsp;an&nbsp;eerie&nbsp;green&nbsp;glow&nbsp;over&nbsp;the&nbsp;whole
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vast&nbsp;cavern.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whichDirection&nbsp;=&nbsp;(miParent.whichDirection(location))
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;whichDirection(loc)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(loc)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;lakeRoom&nbsp;:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;pathEnd:&nbsp;return&nbsp;'south';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;westShore&nbsp;:&nbsp;return&nbsp;'east';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;southShore&nbsp;:&nbsp;return&nbsp;'north';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;eastShore&nbsp;:&nbsp;return&nbsp;'west';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;starboardDeck&nbsp;:&nbsp;return&nbsp;'to&nbsp;starboard';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;:&nbsp;return&nbsp;'away';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

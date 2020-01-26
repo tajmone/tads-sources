@@ -1,0 +1,1 @@
+﻿#include <tads.h>    main(args)  {     "This is a test of a Unicode-encoded file!\n";  }    

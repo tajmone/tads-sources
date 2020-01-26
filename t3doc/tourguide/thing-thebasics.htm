@@ -1,0 +1,84 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Thing - The Basics</title><meta name="keywords" content="Thing,name,desc"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Thing - The Basics
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="thing-introduction.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="vocabwords.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The basic properties that apply to almost all Thing objects (and objects using many of the classes inheriting from Thing) are vocabWords, name, location, and desc. These are so common the standard <a href="thingtemplate.htm">Thing template</a> allows them to be defined without naming them, thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">myObject&nbsp;:&nbsp;Thing&nbsp;'vocabWords_'&nbsp;'name'&nbsp;@location
+<br>
+&nbsp;&nbsp;&nbsp;"desc"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And for the most basic portable objects, this type of definition will often suffice without the need to define any other properties or methods. For example, we shall leave a coin for the player to find in the longCave room (using the <a href="thingtemplate.htm">Thing template</a>):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brass&nbsp;coin/groat*coins'&nbsp;'small&nbsp;brass&nbsp;coin'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+By now, most of these properties should be familiar. The <b>desc</b> (description) property is what is displayed in response to an EXAMINE command; the only real complication is that you may sometimes want to define desc as a <i>method</i>, in which case it must be explicitly defined as a named method outside the template.
+<br>
+
+<br>
+The <b>name</b> property is the what will normally appear when the object is listed in the contents of rooms, containers or inventory, or when the parser needs to refer to the object (E.g. "Which coin do you mean, the brass coin or the gold coin?").
+<br>
+
+<br>
+For a Thing the <b>location</b> is normally the object's physical container, which may be a room, an actor (including the Player Character) who is carrying or wearing the object, or some other form of physical container (such as a jar or the top surface of a table). The location can also be specified by using the + notation; e.g. to put the coin in longCave we could have written
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">longCave&nbsp;:&nbsp;DarkRoom&nbsp;'Long&nbsp;Cave'&nbsp;...
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brass&nbsp;coin/groat*coins'&nbsp;'small&nbsp;brass&nbsp;coin'&nbsp;
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that if both the + notation and the @location notation are used on the same object, the + notation takes precedence. But if the + notation is used with an explicit setting of the location property, the explicitly named location property takes precedence. For example, in the case of the brassCoin with the + notation, if I added </font><font face="Courier New" size="2" color="#000000">@entranceCave</font><font face="Arial" size="2" color="#000000"> to the object definition after 'brass coin' the coin would remain in longCave, but if I added </font><font face="Courier New" size="2" color="#000000">location=entranceCave</font><font face="Arial" size="2" color="#000000"> the brass coin would start life in the entranceCave, despite the + property. This can sometimes be useful if you have a sequence of objects nested within one another using the + notation and you want to define an object that doesn't belong in the containment hierarchy amongst those that do.
+<br>
+
+<br>
+Note also that if location is an expression or method, it must be explicitly defined as a named property outside the template, e.g. </font><font face="Courier New" size="2" color="#000000">location&nbsp;=&nbsp;(ship.location)</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">The <a href="vocabwords.htm">vocabWords</a> property is perhaps the most complex of the four, so we shall discuss it in a separate section. </font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

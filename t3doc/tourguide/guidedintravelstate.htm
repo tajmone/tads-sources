@@ -1,0 +1,64 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>GuidedInTravelState</title><meta name="keywords" content="GuidedInTravelState"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>GuidedInTravelState : <a href="accompanyingintravelstate.htm">AccompanyingInTravelState</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="guidedtourstate.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="inconversationstate.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The GuidedInTravelState is the version of AccompanyingInTravelState for use with the GuidedTourState. According to the comments in the library code, it is:
+<br>
+
+<br>
+<i>A subclass of the basic accompanying travel state specifically designed for guided tours. This is almost the same as the basic accompanying travel state, but provides customized messages to describe the departure of our associated actor, which is the actor serving as the tour guide.
+<br>
+</i>
+<br>
+This is how we might customize the messages from the last stage of Sarah's brief guided tour, making use of the GuidedInTravelState:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;sarahGuide4&nbsp;:&nbsp;GuidedTourState
+<br>
+&nbsp;&nbsp;stateAfterEscort&nbsp;=&nbsp;sarahTalking
+<br>
+&nbsp;&nbsp;escortDest&nbsp;=&nbsp;lakeDoor
+<br>
+&nbsp;&nbsp;arrivingWithDesc&nbsp;=&nbsp;"{The&nbsp;sarah/she}&nbsp;walks&nbsp;briskly&nbsp;over&nbsp;to&nbsp;the&nbsp;door,
+<br>
+&nbsp;&nbsp;&nbsp;then&nbsp;stops&nbsp;to&nbsp;wait&nbsp;for&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;waiting&nbsp;for&nbsp;you&nbsp;by&nbsp;the&nbsp;door.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{inherited;&nbsp;stateDesc;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>escortStateClass&nbsp;=&nbsp;sarahGuidedState
+<br>
+</b>;&nbsp;
+<br>
+
+<br>
+class&nbsp;sarahGuidedState&nbsp;:&nbsp;GuidedInTravelState
+<br>
+&nbsp;sayDepartingThroughPassage(conn)
+<br>
+&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;goes&nbsp;out&nbsp;through&nbsp;the&nbsp;door.&nbsp;";
+<br>
+&nbsp;}
+<br>
+&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;sarah/she}&nbsp;stops&nbsp;by&nbsp;the&nbsp;lakeside&nbsp;and&nbsp;starts
+<br>
+&nbsp;&nbsp;&nbsp;searching&nbsp;the&nbsp;ground&nbsp;once&nbsp;more.&nbsp;"&nbsp;
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Note that we have to override sayDepartingThroughPassage(conn) here because Sarah will be going through the door.
+<br>
+</font></font>
+
+</body></html>

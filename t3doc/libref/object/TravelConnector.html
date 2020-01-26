@@ -1,0 +1,796 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TravelConnector</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TravelConnector</span><span class=type>class</span><td align=right><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#775">775</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A Travel Connector is a special connection interface that allows for   travel from one location to another.  Most actor movement, except for   movement between locations related by containment (such as from a room   to sitting in a chair within the room) are handled through travel   connector objects. <p>   Travel connectors are used in the directional link properties in rooms   - north, south, east, west, in, out, etc.  A room direction link   property is always set to a travel connector - but note that a room is   itself a travel connector, so a travel link in one room can simply be   set to point directly to another room.  In many cases, rooms   themselves serve as travel connectors, so that one room can point a   direction link property directly to another room. <p>   Some travel connectors are physical objects in the simulation, such as   doors or stairways; other connectors are just abstract objects that   represent connections, but don't appear as manipulable objects in the   game. <p>   A travel connector provides several types of information about travel   through its connection: <p>   - For actors actually traveling, the connector provides a method that   moves an actor through the connector.  This method can trigger any   side effects of the travel. <p>   - For automatic map builders, actor scripts, and other callers who   want to learn what can be known about the link without actually   traversing it, the connector provides an "apparent destination"   method.  This method returns the destination of travel through the   connector that a given actor would expect just by looking at the   connector.  The important thing about this routine is that it doesn't   trigger any side effects, but simply indicates whether travel is   apparently possible, and if so what the destination of the travel   would be.
+<p>
+<code>class
+<b>TravelConnector</b> :  &nbsp; <a href="../object/Thing.html">Thing</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TravelConnector</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Thing.html">Thing</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/VocabObject.html">VocabObject</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TravelConnector</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskConnector.html">AskConnector</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DefaultAskConnector.html">DefaultAskConnector</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Passage.html">Passage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Stairway.html">Stairway</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/StairwayDown.html">StairwayDown</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/StairwayUp.html">StairwayUp</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThroughPassage.html">ThroughPassage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicDoor.html">BasicDoor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Door.html">Door</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AutoClosingDoor.html">AutoClosingDoor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SecretDoor.html">SecretDoor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HiddenDoor.html">HiddenDoor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ExitOnlyPassage.html">ExitOnlyPassage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PathPassage.html">PathPassage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RoomConnector.html">RoomConnector</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/OneWayRoomConnector.html">OneWayRoomConnector</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RoomAutoConnector.html">RoomAutoConnector</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Room.html">Room</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DarkRoom.html">DarkRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FloorlessRoom.html">FloorlessRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/OutdoorRoom.html">OutdoorRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ShipboardRoom.html">ShipboardRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TravelMessage.html">TravelMessage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DeadEndConnector.html">DeadEndConnector</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NoTravelMessage.html">NoTravelMessage</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FakeConnector.html">FakeConnector</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/noTravel.html">noTravel</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#connectorStagingLocation">connectorStagingLocation</a>&nbsp;
+<a href="#isCircularPassage">isCircularPassage</a>&nbsp;
+<a href="#isConnectorListed">isConnectorListed</a>&nbsp;
+<a href="#rememberCircularPassage">rememberCircularPassage</a>&nbsp;
+<a href="#travelBarrier">travelBarrier</a>&nbsp;
+<a href="#travelMemory">travelMemory</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Thing</code> :<br>
+<code>
+<a href="../object/Thing.html#actorInAName">actorInAName</a>&nbsp;
+<a href="../object/Thing.html#actorInName">actorInName</a>&nbsp;
+<a href="../object/Thing.html#actorInPrep">actorInPrep</a>&nbsp;
+<a href="../object/Thing.html#actorIntoName">actorIntoName</a>&nbsp;
+<a href="../object/Thing.html#actorOutOfName">actorOutOfName</a>&nbsp;
+<a href="../object/Thing.html#actorOutOfPrep">actorOutOfPrep</a>&nbsp;
+<a href="../object/Thing.html#aDisambigName">aDisambigName</a>&nbsp;
+<a href="../object/Thing.html#allStates">allStates</a>&nbsp;
+<a href="../object/Thing.html#aName">aName</a>&nbsp;
+<a href="../object/Thing.html#brightness">brightness</a>&nbsp;
+<a href="../object/Thing.html#bulk">bulk</a>&nbsp;
+<a href="../object/Thing.html#canBeHeard">canBeHeard</a>&nbsp;
+<a href="../object/Thing.html#canBeSeen">canBeSeen</a>&nbsp;
+<a href="../object/Thing.html#canBeSmelled">canBeSmelled</a>&nbsp;
+<a href="../object/Thing.html#canBeTouched">canBeTouched</a>&nbsp;
+<a href="../object/Thing.html#canMatchHer">canMatchHer</a>&nbsp;
+<a href="../object/Thing.html#canMatchHim">canMatchHim</a>&nbsp;
+<a href="../object/Thing.html#canMatchIt">canMatchIt</a>&nbsp;
+<a href="../object/Thing.html#canMatchThem">canMatchThem</a>&nbsp;
+<a href="../object/Thing.html#circularlyInMessage">circularlyInMessage</a>&nbsp;
+<a href="../object/Thing.html#collectiveGroup">collectiveGroup</a>&nbsp;
+<a href="../object/Thing.html#collectiveGroups">collectiveGroups</a>&nbsp;
+<a href="../object/Thing.html#contents">contents</a>&nbsp;
+<a href="../object/Thing.html#contentsListed">contentsListed</a>&nbsp;
+<a href="../object/Thing.html#contentsListedInExamine">contentsListedInExamine</a>&nbsp;
+<a href="../object/Thing.html#contentsListedSeparately">contentsListedSeparately</a>&nbsp;
+<a href="../object/Thing.html#contentsLister">contentsLister</a>&nbsp;
+<a href="../object/Thing.html#descContentsLister">descContentsLister</a>&nbsp;
+<a href="../object/Thing.html#described">described</a>&nbsp;
+<a href="../object/Thing.html#disambigEquivName">disambigEquivName</a>&nbsp;
+<a href="../object/Thing.html#disambigName">disambigName</a>&nbsp;
+<a href="../object/Thing.html#distantDesc">distantDesc</a>&nbsp;
+<a href="../object/Thing.html#distantInitSpecialDesc">distantInitSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#distantSpecialDesc">distantSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#distinguishers">distinguishers</a>&nbsp;
+<a href="../object/Thing.html#dummyName">dummyName</a>&nbsp;
+<a href="../object/Thing.html#effectiveFollowLocation">effectiveFollowLocation</a>&nbsp;
+<a href="../object/Thing.html#equivalenceKey">equivalenceKey</a>&nbsp;
+<a href="../object/Thing.html#equivalentGrouper">equivalentGrouper</a>&nbsp;
+<a href="../object/Thing.html#equivalentGrouperClass">equivalentGrouperClass</a>&nbsp;
+<a href="../object/Thing.html#equivalentGrouperTable">equivalentGrouperTable</a>&nbsp;
+<a href="../object/Thing.html#esEndingPat">esEndingPat</a>&nbsp;
+<a href="../object/Thing.html#explicitVisualSenseInfo">explicitVisualSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#getState">getState</a>&nbsp;
+<a href="../object/Thing.html#globalParamName">globalParamName</a>&nbsp;
+<a href="../object/Thing.html#holdingIndex">holdingIndex</a>&nbsp;
+<a href="../object/Thing.html#iesEndingPat">iesEndingPat</a>&nbsp;
+<a href="../object/Thing.html#initDesc">initDesc</a>&nbsp;
+<a href="../object/Thing.html#initNominalRoomPartLocation">initNominalRoomPartLocation</a>&nbsp;
+<a href="../object/Thing.html#initSpecialDesc">initSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#inlineContentsLister">inlineContentsLister</a>&nbsp;
+<a href="../object/Thing.html#isEquivalent">isEquivalent</a>&nbsp;
+<a href="../object/Thing.html#isHer">isHer</a>&nbsp;
+<a href="../object/Thing.html#isHim">isHim</a>&nbsp;
+<a href="../object/Thing.html#isInInitState">isInInitState</a>&nbsp;
+<a href="../object/Thing.html#isKnown">isKnown</a>&nbsp;
+<a href="../object/Thing.html#isLikelyCommandTarget">isLikelyCommandTarget</a>&nbsp;
+<a href="../object/Thing.html#isListedAboardVehicle">isListedAboardVehicle</a>&nbsp;
+<a href="../object/Thing.html#isMassNoun">isMassNoun</a>&nbsp;
+<a href="../object/Thing.html#isPlural">isPlural</a>&nbsp;
+<a href="../object/Thing.html#isProperName">isProperName</a>&nbsp;
+<a href="../object/Thing.html#isQualifiedName">isQualifiedName</a>&nbsp;
+<a href="../object/Thing.html#isThingConstructed">isThingConstructed</a>&nbsp;
+<a href="../object/Thing.html#isTopLevel">isTopLevel</a>&nbsp;
+<a href="../object/Thing.html#listName">listName</a>&nbsp;
+<a href="../object/Thing.html#listWith">listWith</a>&nbsp;
+<a href="../object/Thing.html#location">location</a>&nbsp;
+<a href="../object/Thing.html#lookInLister">lookInLister</a>&nbsp;
+<a href="../object/Thing.html#moved">moved</a>&nbsp;
+<a href="../object/Thing.html#name">name</a>&nbsp;
+<a href="../object/Thing.html#nameDoes">nameDoes</a>&nbsp;
+<a href="../object/Thing.html#nameSays">nameSays</a>&nbsp;
+<a href="../object/Thing.html#nameSees">nameSees</a>&nbsp;
+<a href="../object/Thing.html#notTravelReadyMsg">notTravelReadyMsg</a>&nbsp;
+<a href="../object/Thing.html#objectNotifyList">objectNotifyList</a>&nbsp;
+<a href="../object/Thing.html#objInPrep">objInPrep</a>&nbsp;
+<a href="../object/Thing.html#obscuredInitSpecialDesc">obscuredInitSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#obscuredSpecialDesc">obscuredSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#owner">owner</a>&nbsp;
+<a href="../object/Thing.html#patElevenEighteen">patElevenEighteen</a>&nbsp;
+<a href="../object/Thing.html#patIsAlpha">patIsAlpha</a>&nbsp;
+<a href="../object/Thing.html#patLeadingTagOrQuote">patLeadingTagOrQuote</a>&nbsp;
+<a href="../object/Thing.html#patOfPhrase">patOfPhrase</a>&nbsp;
+<a href="../object/Thing.html#patOneLetterAnWord">patOneLetterAnWord</a>&nbsp;
+<a href="../object/Thing.html#patOneLetterWord">patOneLetterWord</a>&nbsp;
+<a href="../object/Thing.html#patSingleApostropheS">patSingleApostropheS</a>&nbsp;
+<a href="../object/Thing.html#patTagOrQuoteChar">patTagOrQuoteChar</a>&nbsp;
+<a href="../object/Thing.html#patUpperOrDigit">patUpperOrDigit</a>&nbsp;
+<a href="../object/Thing.html#patVowelY">patVowelY</a>&nbsp;
+<a href="../object/Thing.html#pluralDisambigName">pluralDisambigName</a>&nbsp;
+<a href="../object/Thing.html#pluralName">pluralName</a>&nbsp;
+<a href="../object/Thing.html#pronounSelector">pronounSelector</a>&nbsp;
+<a href="../object/Thing.html#roomDarkName">roomDarkName</a>&nbsp;
+<a href="../object/Thing.html#roomLocation">roomLocation</a>&nbsp;
+<a href="../object/Thing.html#roomName">roomName</a>&nbsp;
+<a href="../object/Thing.html#seen">seen</a>&nbsp;
+<a href="../object/Thing.html#sightPresence">sightPresence</a>&nbsp;
+<a href="../object/Thing.html#sightSize">sightSize</a>&nbsp;
+<a href="../object/Thing.html#smellPresence">smellPresence</a>&nbsp;
+<a href="../object/Thing.html#smellSize">smellSize</a>&nbsp;
+<a href="../object/Thing.html#soundPresence">soundPresence</a>&nbsp;
+<a href="../object/Thing.html#soundSize">soundSize</a>&nbsp;
+<a href="../object/Thing.html#specialContentsLister">specialContentsLister</a>&nbsp;
+<a href="../object/Thing.html#specialDesc">specialDesc</a>&nbsp;
+<a href="../object/Thing.html#specialDescBeforeContents">specialDescBeforeContents</a>&nbsp;
+<a href="../object/Thing.html#specialDescListWith">specialDescListWith</a>&nbsp;
+<a href="../object/Thing.html#specialDescOrder">specialDescOrder</a>&nbsp;
+<a href="../object/Thing.html#specialNominalRoomPartLocation">specialNominalRoomPartLocation</a>&nbsp;
+<a href="../object/Thing.html#suppressAutoSeen">suppressAutoSeen</a>&nbsp;
+<a href="../object/Thing.html#takeFromNotInMessage">takeFromNotInMessage</a>&nbsp;
+<a href="../object/Thing.html#theDisambigName">theDisambigName</a>&nbsp;
+<a href="../object/Thing.html#theName">theName</a>&nbsp;
+<a href="../object/Thing.html#theNamePossNoun">theNamePossNoun</a>&nbsp;
+<a href="../object/Thing.html#tmpAmbient_">tmpAmbient_</a>&nbsp;
+<a href="../object/Thing.html#tmpAmbientFill_">tmpAmbientFill_</a>&nbsp;
+<a href="../object/Thing.html#tmpAmbientWithin_">tmpAmbientWithin_</a>&nbsp;
+<a href="../object/Thing.html#tmpFillMedium_">tmpFillMedium_</a>&nbsp;
+<a href="../object/Thing.html#tmpObstructor_">tmpObstructor_</a>&nbsp;
+<a href="../object/Thing.html#tmpObstructorWithin_">tmpObstructorWithin_</a>&nbsp;
+<a href="../object/Thing.html#tmpPathIsIn_">tmpPathIsIn_</a>&nbsp;
+<a href="../object/Thing.html#tmpTrans_">tmpTrans_</a>&nbsp;
+<a href="../object/Thing.html#tmpTransWithin_">tmpTransWithin_</a>&nbsp;
+<a href="../object/Thing.html#touchPresence">touchPresence</a>&nbsp;
+<a href="../object/Thing.html#touchSize">touchSize</a>&nbsp;
+<a href="../object/Thing.html#verbCan">verbCan</a>&nbsp;
+<a href="../object/Thing.html#verbCannot">verbCannot</a>&nbsp;
+<a href="../object/Thing.html#verbCant">verbCant</a>&nbsp;
+<a href="../object/Thing.html#verbEndingSD">verbEndingSD</a>&nbsp;
+<a href="../object/Thing.html#verbEndingSEd">verbEndingSEd</a>&nbsp;
+<a href="../object/Thing.html#verbEndingSMessageBuilder_">verbEndingSMessageBuilder_</a>&nbsp;
+<a href="../object/Thing.html#verbMust">verbMust</a>&nbsp;
+<a href="../object/Thing.html#verbToCome">verbToCome</a>&nbsp;
+<a href="../object/Thing.html#verbToDo">verbToDo</a>&nbsp;
+<a href="../object/Thing.html#verbToGo">verbToGo</a>&nbsp;
+<a href="../object/Thing.html#verbToLeave">verbToLeave</a>&nbsp;
+<a href="../object/Thing.html#verbToSay">verbToSay</a>&nbsp;
+<a href="../object/Thing.html#verbToSee">verbToSee</a>&nbsp;
+<a href="../object/Thing.html#verbWill">verbWill</a>&nbsp;
+<a href="../object/Thing.html#verbWont">verbWont</a>&nbsp;
+<a href="../object/Thing.html#weight">weight</a>&nbsp;
+</code><p>
+<p>Inherited from <code>VocabObject</code> :<br>
+<code>
+<a href="../object/VocabObject.html#canResolvePossessive">canResolvePossessive</a>&nbsp;
+<a href="../object/VocabObject.html#disambigPromptOrder">disambigPromptOrder</a>&nbsp;
+<a href="../object/VocabObject.html#pluralOrder">pluralOrder</a>&nbsp;
+<a href="../object/VocabObject.html#vocabLikelihood">vocabLikelihood</a>&nbsp;
+<a href="../object/VocabObject.html#vocabWords">vocabWords</a>&nbsp;
+<a href="../object/VocabObject.html#weakTokens">weakTokens</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#actorTravelPreCond">actorTravelPreCond</a>&nbsp;
+<a href="#canTravelerPass">canTravelerPass</a>&nbsp;
+<a href="#checkTravelBarriers">checkTravelBarriers</a>&nbsp;
+<a href="#connectorBack">connectorBack</a>&nbsp;
+<a href="#connectorGetConnectorTo">connectorGetConnectorTo</a>&nbsp;
+<a href="#connectorTravelPreCond">connectorTravelPreCond</a>&nbsp;
+<a href="#createUnlistedProxy">createUnlistedProxy</a>&nbsp;
+<a href="#darkTravel">darkTravel</a>&nbsp;
+<a href="#describeArrival">describeArrival</a>&nbsp;
+<a href="#describeDeparture">describeDeparture</a>&nbsp;
+<a href="#describeLocalArrival">describeLocalArrival</a>&nbsp;
+<a href="#describeLocalDeparture">describeLocalDeparture</a>&nbsp;
+<a href="#describeRemoteTravel">describeRemoteTravel</a>&nbsp;
+<a href="#dobjFor(TravelVia)">dobjFor(TravelVia)</a>&nbsp;
+<a href="#explainTravelBarrier">explainTravelBarrier</a>&nbsp;
+<a href="#fixedSource">fixedSource</a>&nbsp;
+<a href="#getApparentDestination">getApparentDestination</a>&nbsp;
+<a href="#getDestination">getDestination</a>&nbsp;
+<a href="#isConnectorApparent">isConnectorApparent</a>&nbsp;
+<a href="#isConnectorPassable">isConnectorPassable</a>&nbsp;
+<a href="#isConnectorVisibleInDark">isConnectorVisibleInDark</a>&nbsp;
+<a href="#noteTraversal">noteTraversal</a>&nbsp;
+<a href="#rememberTravel">rememberTravel</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Thing</code> :<br>
+<code>
+<a href="../object/Thing.html#acceptCommand">acceptCommand</a>&nbsp;
+<a href="../object/Thing.html#addAllContents">addAllContents</a>&nbsp;
+<a href="../object/Thing.html#addDirectConnections">addDirectConnections</a>&nbsp;
+<a href="../object/Thing.html#addObjectNotifyItem">addObjectNotifyItem</a>&nbsp;
+<a href="../object/Thing.html#addToContents">addToContents</a>&nbsp;
+<a href="../object/Thing.html#addToSenseInfoTable">addToSenseInfoTable</a>&nbsp;
+<a href="../object/Thing.html#adjustLookAroundTable">adjustLookAroundTable</a>&nbsp;
+<a href="../object/Thing.html#adjustThrowDestination">adjustThrowDestination</a>&nbsp;
+<a href="../object/Thing.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/Thing.html#afterTravel">afterTravel</a>&nbsp;
+<a href="../object/Thing.html#allContents">allContents</a>&nbsp;
+<a href="../object/Thing.html#aNameFrom">aNameFrom</a>&nbsp;
+<a href="../object/Thing.html#aNameObj">aNameObj</a>&nbsp;
+<a href="../object/Thing.html#aNameOwnerLoc">aNameOwnerLoc</a>&nbsp;
+<a href="../object/Thing.html#announceDefaultObject">announceDefaultObject</a>&nbsp;
+<a href="../object/Thing.html#appendHeldContents">appendHeldContents</a>&nbsp;
+<a href="../object/Thing.html#atmosphereList">atmosphereList</a>&nbsp;
+<a href="../object/Thing.html#baseMoveInto">baseMoveInto</a>&nbsp;
+<a href="../object/Thing.html#basicExamine">basicExamine</a>&nbsp;
+<a href="../object/Thing.html#basicExamineFeel">basicExamineFeel</a>&nbsp;
+<a href="../object/Thing.html#basicExamineListen">basicExamineListen</a>&nbsp;
+<a href="../object/Thing.html#basicExamineSmell">basicExamineSmell</a>&nbsp;
+<a href="../object/Thing.html#basicExamineTaste">basicExamineTaste</a>&nbsp;
+<a href="../object/Thing.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/Thing.html#beforeTravel">beforeTravel</a>&nbsp;
+<a href="../object/Thing.html#buildContainmentPaths">buildContainmentPaths</a>&nbsp;
+<a href="../object/Thing.html#cacheAmbientInfo">cacheAmbientInfo</a>&nbsp;
+<a href="../object/Thing.html#cacheSenseInfo">cacheSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#cacheSensePath">cacheSensePath</a>&nbsp;
+<a href="../object/Thing.html#canBeHeardBy">canBeHeardBy</a>&nbsp;
+<a href="../object/Thing.html#canBeSeenBy">canBeSeenBy</a>&nbsp;
+<a href="../object/Thing.html#canBeSensed">canBeSensed</a>&nbsp;
+<a href="../object/Thing.html#canBeSmelledBy">canBeSmelledBy</a>&nbsp;
+<a href="../object/Thing.html#canBeTouchedBy">canBeTouchedBy</a>&nbsp;
+<a href="../object/Thing.html#canDetailsBeSensed">canDetailsBeSensed</a>&nbsp;
+<a href="../object/Thing.html#canHear">canHear</a>&nbsp;
+<a href="../object/Thing.html#canMatchPronounType">canMatchPronounType</a>&nbsp;
+<a href="../object/Thing.html#canMoveViaPath">canMoveViaPath</a>&nbsp;
+<a href="../object/Thing.html#cannotGoShowExits">cannotGoShowExits</a>&nbsp;
+<a href="../object/Thing.html#cannotReachObject">cannotReachObject</a>&nbsp;
+<a href="../object/Thing.html#cannotSeeSmellSource">cannotSeeSmellSource</a>&nbsp;
+<a href="../object/Thing.html#cannotSeeSoundSource">cannotSeeSoundSource</a>&nbsp;
+<a href="../object/Thing.html#canOwn">canOwn</a>&nbsp;
+<a href="../object/Thing.html#canSee">canSee</a>&nbsp;
+<a href="../object/Thing.html#canSmell">canSmell</a>&nbsp;
+<a href="../object/Thing.html#canThrowViaPath">canThrowViaPath</a>&nbsp;
+<a href="../object/Thing.html#canTouch">canTouch</a>&nbsp;
+<a href="../object/Thing.html#canTouchViaPath">canTouchViaPath</a>&nbsp;
+<a href="../object/Thing.html#checkActorOutOfNested">checkActorOutOfNested</a>&nbsp;
+<a href="../object/Thing.html#checkBulkChange">checkBulkChange</a>&nbsp;
+<a href="../object/Thing.html#checkBulkChangeWithin">checkBulkChangeWithin</a>&nbsp;
+<a href="../object/Thing.html#checkMoveViaPath">checkMoveViaPath</a>&nbsp;
+<a href="../object/Thing.html#checkStagingLocation">checkStagingLocation</a>&nbsp;
+<a href="../object/Thing.html#checkThrowViaPath">checkThrowViaPath</a>&nbsp;
+<a href="../object/Thing.html#checkTouchViaPath">checkTouchViaPath</a>&nbsp;
+<a href="../object/Thing.html#checkTravelerDirectlyInRoom">checkTravelerDirectlyInRoom</a>&nbsp;
+<a href="../object/Thing.html#childInName">childInName</a>&nbsp;
+<a href="../object/Thing.html#childInNameGen">childInNameGen</a>&nbsp;
+<a href="../object/Thing.html#childInNameWithOwner">childInNameWithOwner</a>&nbsp;
+<a href="../object/Thing.html#childInRemoteName">childInRemoteName</a>&nbsp;
+<a href="../object/Thing.html#clearSenseInfo">clearSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#cloneForMultiInstanceContents">cloneForMultiInstanceContents</a>&nbsp;
+<a href="../object/Thing.html#cloneMultiInstanceContents">cloneMultiInstanceContents</a>&nbsp;
+<a href="../object/Thing.html#conjugateRegularVerb">conjugateRegularVerb</a>&nbsp;
+<a href="../object/Thing.html#connectionTable">connectionTable</a>&nbsp;
+<a href="../object/Thing.html#construct">construct</a>&nbsp;
+<a href="../object/Thing.html#contentsInFixedIn">contentsInFixedIn</a>&nbsp;
+<a href="../object/Thing.html#countDisambigName">countDisambigName</a>&nbsp;
+<a href="../object/Thing.html#countListName">countListName</a>&nbsp;
+<a href="../object/Thing.html#countName">countName</a>&nbsp;
+<a href="../object/Thing.html#countNameFrom">countNameFrom</a>&nbsp;
+<a href="../object/Thing.html#countNameOwnerLoc">countNameOwnerLoc</a>&nbsp;
+<a href="../object/Thing.html#darkRoomContentsLister">darkRoomContentsLister</a>&nbsp;
+<a href="../object/Thing.html#defaultDistantDesc">defaultDistantDesc</a>&nbsp;
+<a href="../object/Thing.html#defaultObscuredDesc">defaultObscuredDesc</a>&nbsp;
+<a href="../object/Thing.html#desc">desc</a>&nbsp;
+<a href="../object/Thing.html#directionForConnector">directionForConnector</a>&nbsp;
+<a href="../object/Thing.html#distantSmellDesc">distantSmellDesc</a>&nbsp;
+<a href="../object/Thing.html#distantSoundDesc">distantSoundDesc</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AskAbout)">dobjFor(AskAbout)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AskFor)">dobjFor(AskFor)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AskVague)">dobjFor(AskVague)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AttachTo)">dobjFor(AttachTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Attack)">dobjFor(Attack)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AttackWith)">dobjFor(AttackWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Board)">dobjFor(Board)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Break)">dobjFor(Break)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Burn)">dobjFor(Burn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(BurnWith)">dobjFor(BurnWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Clean)">dobjFor(Clean)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(CleanWith)">dobjFor(CleanWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Climb)">dobjFor(Climb)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ClimbDown)">dobjFor(ClimbDown)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ClimbUp)">dobjFor(ClimbUp)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Close)">dobjFor(Close)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Consult)">dobjFor(Consult)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ConsultAbout)">dobjFor(ConsultAbout)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(CutWith)">dobjFor(CutWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Detach)">dobjFor(Detach)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(DetachFrom)">dobjFor(DetachFrom)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Dig)">dobjFor(Dig)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(DigWith)">dobjFor(DigWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Doff)">dobjFor(Doff)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Drink)">dobjFor(Drink)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Drop)">dobjFor(Drop)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Eat)">dobjFor(Eat)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Enter)">dobjFor(Enter)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(EnterOn)">dobjFor(EnterOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Examine)">dobjFor(Examine)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Extinguish)">dobjFor(Extinguish)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Fasten)">dobjFor(Fasten)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(FastenTo)">dobjFor(FastenTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Feel)">dobjFor(Feel)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Flip)">dobjFor(Flip)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Follow)">dobjFor(Follow)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(GetOffOf)">dobjFor(GetOffOf)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(GetOutOf)">dobjFor(GetOutOf)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(GiveTo)">dobjFor(GiveTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(GoThrough)">dobjFor(GoThrough)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(JumpOff)">dobjFor(JumpOff)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(JumpOver)">dobjFor(JumpOver)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Kiss)">dobjFor(Kiss)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LieOn)">dobjFor(LieOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Light)">dobjFor(Light)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ListenTo)">dobjFor(ListenTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Lock)">dobjFor(Lock)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LockWith)">dobjFor(LockWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LookBehind)">dobjFor(LookBehind)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LookIn)">dobjFor(LookIn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LookThrough)">dobjFor(LookThrough)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LookUnder)">dobjFor(LookUnder)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Move)">dobjFor(Move)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(MoveTo)">dobjFor(MoveTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(MoveWith)">dobjFor(MoveWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Open)">dobjFor(Open)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PlugIn)">dobjFor(PlugIn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PlugInto)">dobjFor(PlugInto)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Pour)">dobjFor(Pour)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PourInto)">dobjFor(PourInto)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PourOnto)">dobjFor(PourOnto)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Pull)">dobjFor(Pull)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Push)">dobjFor(Push)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PushTravel)">dobjFor(PushTravel)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PutBehind)">dobjFor(PutBehind)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PutIn)">dobjFor(PutIn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PutOn)">dobjFor(PutOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PutUnder)">dobjFor(PutUnder)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Read)">dobjFor(Read)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Remove)">dobjFor(Remove)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Screw)">dobjFor(Screw)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ScrewWith)">dobjFor(ScrewWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Search)">dobjFor(Search)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Set)">dobjFor(Set)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(SetTo)">dobjFor(SetTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ShowTo)">dobjFor(ShowTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(SitOn)">dobjFor(SitOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Smell)">dobjFor(Smell)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(StandOn)">dobjFor(StandOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Strike)">dobjFor(Strike)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Switch)">dobjFor(Switch)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Take)">dobjFor(Take)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TakeFrom)">dobjFor(TakeFrom)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TalkTo)">dobjFor(TalkTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Taste)">dobjFor(Taste)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TellAbout)">dobjFor(TellAbout)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TellVague)">dobjFor(TellVague)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Throw)">dobjFor(Throw)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ThrowAt)">dobjFor(ThrowAt)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ThrowDir)">dobjFor(ThrowDir)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ThrowTo)">dobjFor(ThrowTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Turn)">dobjFor(Turn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TurnOff)">dobjFor(TurnOff)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TurnOn)">dobjFor(TurnOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TurnTo)">dobjFor(TurnTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TurnWith)">dobjFor(TurnWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TypeLiteralOn)">dobjFor(TypeLiteralOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TypeOn)">dobjFor(TypeOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Unfasten)">dobjFor(Unfasten)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(UnfastenFrom)">dobjFor(UnfastenFrom)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Unlock)">dobjFor(Unlock)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(UnlockWith)">dobjFor(UnlockWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Unplug)">dobjFor(Unplug)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(UnplugFrom)">dobjFor(UnplugFrom)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Unscrew)">dobjFor(Unscrew)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(UnscrewWith)">dobjFor(UnscrewWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Wear)">dobjFor(Wear)</a>&nbsp;
+<a href="../object/Thing.html#examineListContents">examineListContents</a>&nbsp;
+<a href="../object/Thing.html#examineListContentsWith">examineListContentsWith</a>&nbsp;
+<a href="../object/Thing.html#examineSpecialContents">examineSpecialContents</a>&nbsp;
+<a href="../object/Thing.html#examineStatus">examineStatus</a>&nbsp;
+<a href="../object/Thing.html#failCheck">failCheck</a>&nbsp;
+<a href="../object/Thing.html#feelDesc">feelDesc</a>&nbsp;
+<a href="../object/Thing.html#fillMedium">fillMedium</a>&nbsp;
+<a href="../object/Thing.html#findOpaqueObstructor">findOpaqueObstructor</a>&nbsp;
+<a href="../object/Thing.html#findTouchObstructor">findTouchObstructor</a>&nbsp;
+<a href="../object/Thing.html#forEachConnectedContainer">forEachConnectedContainer</a>&nbsp;
+<a href="../object/Thing.html#forEachContainer">forEachContainer</a>&nbsp;
+<a href="../object/Thing.html#fromPOV">fromPOV</a>&nbsp;
+<a href="../object/Thing.html#getAllForTakeFrom">getAllForTakeFrom</a>&nbsp;
+<a href="../object/Thing.html#getAllPathsTo">getAllPathsTo</a>&nbsp;
+<a href="../object/Thing.html#getAnnouncementDistinguisher">getAnnouncementDistinguisher</a>&nbsp;
+<a href="../object/Thing.html#getBagAffinities">getBagAffinities</a>&nbsp;
+<a href="../object/Thing.html#getBagsOfHolding">getBagsOfHolding</a>&nbsp;
+<a href="../object/Thing.html#getBestDistinguisher">getBestDistinguisher</a>&nbsp;
+<a href="../object/Thing.html#getBulk">getBulk</a>&nbsp;
+<a href="../object/Thing.html#getBulkWithin">getBulkWithin</a>&nbsp;
+<a href="../object/Thing.html#getCarryingActor">getCarryingActor</a>&nbsp;
+<a href="../object/Thing.html#getCommonContainer">getCommonContainer</a>&nbsp;
+<a href="../object/Thing.html#getCommonDirectContainer">getCommonDirectContainer</a>&nbsp;
+<a href="../object/Thing.html#getConnectedContainers">getConnectedContainers</a>&nbsp;
+<a href="../object/Thing.html#getConnectorTo">getConnectorTo</a>&nbsp;
+<a href="../object/Thing.html#getContentsForExamine">getContentsForExamine</a>&nbsp;
+<a href="../object/Thing.html#getDestName">getDestName</a>&nbsp;
+<a href="../object/Thing.html#getDropDestination">getDropDestination</a>&nbsp;
+<a href="../object/Thing.html#getEncumberingBulk">getEncumberingBulk</a>&nbsp;
+<a href="../object/Thing.html#getEncumberingWeight">getEncumberingWeight</a>&nbsp;
+<a href="../object/Thing.html#getExtraScopeItems">getExtraScopeItems</a>&nbsp;
+<a href="../object/Thing.html#getHitFallDestination">getHitFallDestination</a>&nbsp;
+<a href="../object/Thing.html#getIdentityObject">getIdentityObject</a>&nbsp;
+<a href="../object/Thing.html#getInScopeDistinguisher">getInScopeDistinguisher</a>&nbsp;
+<a href="../object/Thing.html#getListedContents">getListedContents</a>&nbsp;
+<a href="../object/Thing.html#getLocPushTraveler">getLocPushTraveler</a>&nbsp;
+<a href="../object/Thing.html#getLocTraveler">getLocTraveler</a>&nbsp;
+<a href="../object/Thing.html#getMovePathTo">getMovePathTo</a>&nbsp;
+<a href="../object/Thing.html#getNoise">getNoise</a>&nbsp;
+<a href="../object/Thing.html#getNominalDropDestination">getNominalDropDestination</a>&nbsp;
+<a href="../object/Thing.html#getNominalOwner">getNominalOwner</a>&nbsp;
+<a href="../object/Thing.html#getObjectNotifyList">getObjectNotifyList</a>&nbsp;
+<a href="../object/Thing.html#getOdor">getOdor</a>&nbsp;
+<a href="../object/Thing.html#getOutermostRoom">getOutermostRoom</a>&nbsp;
+<a href="../object/Thing.html#getOutermostVisibleRoom">getOutermostVisibleRoom</a>&nbsp;
+<a href="../object/Thing.html#getRoomNotifyList">getRoomNotifyList</a>&nbsp;
+<a href="../object/Thing.html#getRoomPartLocation">getRoomPartLocation</a>&nbsp;
+<a href="../object/Thing.html#getStateWithInfo">getStateWithInfo</a>&nbsp;
+<a href="../object/Thing.html#getStatuslineExitsHeight">getStatuslineExitsHeight</a>&nbsp;
+<a href="../object/Thing.html#getThrowPathTo">getThrowPathTo</a>&nbsp;
+<a href="../object/Thing.html#getTouchPathTo">getTouchPathTo</a>&nbsp;
+<a href="../object/Thing.html#getTravelConnector">getTravelConnector</a>&nbsp;
+<a href="../object/Thing.html#getVisualSenseInfo">getVisualSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#getWeight">getWeight</a>&nbsp;
+<a href="../object/Thing.html#hasCollectiveGroup">hasCollectiveGroup</a>&nbsp;
+<a href="../object/Thing.html#hideFromAll">hideFromAll</a>&nbsp;
+<a href="../object/Thing.html#hideFromDefault">hideFromDefault</a>&nbsp;
+<a href="../object/Thing.html#initializeEquivalent">initializeEquivalent</a>&nbsp;
+<a href="../object/Thing.html#initializeLocation">initializeLocation</a>&nbsp;
+<a href="../object/Thing.html#initializeThing">initializeThing</a>&nbsp;
+<a href="../object/Thing.html#inRoomName">inRoomName</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(AttachTo)">iobjFor(AttachTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(AttackWith)">iobjFor(AttackWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(BurnWith)">iobjFor(BurnWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(CleanWith)">iobjFor(CleanWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(CutWith)">iobjFor(CutWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(DetachFrom)">iobjFor(DetachFrom)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(DigWith)">iobjFor(DigWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(FastenTo)">iobjFor(FastenTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(GiveTo)">iobjFor(GiveTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(LockWith)">iobjFor(LockWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(MoveWith)">iobjFor(MoveWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PlugInto)">iobjFor(PlugInto)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PourInto)">iobjFor(PourInto)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PourOnto)">iobjFor(PourOnto)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PutBehind)">iobjFor(PutBehind)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PutIn)">iobjFor(PutIn)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PutOn)">iobjFor(PutOn)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PutUnder)">iobjFor(PutUnder)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(ScrewWith)">iobjFor(ScrewWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(ShowTo)">iobjFor(ShowTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(TakeFrom)">iobjFor(TakeFrom)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(ThrowAt)">iobjFor(ThrowAt)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(ThrowTo)">iobjFor(ThrowTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(TurnWith)">iobjFor(TurnWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(UnfastenFrom)">iobjFor(UnfastenFrom)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(UnlockWith)">iobjFor(UnlockWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(UnplugFrom)">iobjFor(UnplugFrom)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(UnscrewWith)">iobjFor(UnscrewWith)</a>&nbsp;
+<a href="../object/Thing.html#isActorTravelReady">isActorTravelReady</a>&nbsp;
+<a href="../object/Thing.html#isComponentOf">isComponentOf</a>&nbsp;
+<a href="../object/Thing.html#isDirectlyIn">isDirectlyIn</a>&nbsp;
+<a href="../object/Thing.html#isHeldBy">isHeldBy</a>&nbsp;
+<a href="../object/Thing.html#isIn">isIn</a>&nbsp;
+<a href="../object/Thing.html#isInFixedIn">isInFixedIn</a>&nbsp;
+<a href="../object/Thing.html#isListed">isListed</a>&nbsp;
+<a href="../object/Thing.html#isListedInContents">isListedInContents</a>&nbsp;
+<a href="../object/Thing.html#isListedInInventory">isListedInInventory</a>&nbsp;
+<a href="../object/Thing.html#isListedInRoomPart">isListedInRoomPart</a>&nbsp;
+<a href="../object/Thing.html#isLookAroundCeiling">isLookAroundCeiling</a>&nbsp;
+<a href="../object/Thing.html#isNominallyIn">isNominallyIn</a>&nbsp;
+<a href="../object/Thing.html#isNominallyInRoomPart">isNominallyInRoomPart</a>&nbsp;
+<a href="../object/Thing.html#isOccludedBy">isOccludedBy</a>&nbsp;
+<a href="../object/Thing.html#isOrIsIn">isOrIsIn</a>&nbsp;
+<a href="../object/Thing.html#isOwnedBy">isOwnedBy</a>&nbsp;
+<a href="../object/Thing.html#isShipboard">isShipboard</a>&nbsp;
+<a href="../object/Thing.html#isVocabEquivalent">isVocabEquivalent</a>&nbsp;
+<a href="../object/Thing.html#itIs">itIs</a>&nbsp;
+<a href="../object/Thing.html#itNom">itNom</a>&nbsp;
+<a href="../object/Thing.html#itObj">itObj</a>&nbsp;
+<a href="../object/Thing.html#itPossAdj">itPossAdj</a>&nbsp;
+<a href="../object/Thing.html#itPossNoun">itPossNoun</a>&nbsp;
+<a href="../object/Thing.html#itVerb">itVerb</a>&nbsp;
+<a href="../object/Thing.html#listCardinality">listCardinality</a>&nbsp;
+<a href="../object/Thing.html#localDirectionLinkForConnector">localDirectionLinkForConnector</a>&nbsp;
+<a href="../object/Thing.html#lookAround">lookAround</a>&nbsp;
+<a href="../object/Thing.html#lookAroundPov">lookAroundPov</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithin">lookAroundWithin</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinContents">lookAroundWithinContents</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinDesc">lookAroundWithinDesc</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinName">lookAroundWithinName</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinSense">lookAroundWithinSense</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinShowExits">lookAroundWithinShowExits</a>&nbsp;
+<a href="../object/Thing.html#lookInDesc">lookInDesc</a>&nbsp;
+<a href="../object/Thing.html#mainExamine">mainExamine</a>&nbsp;
+<a href="../object/Thing.html#mainMoveInto">mainMoveInto</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#meetsObjHeld">meetsObjHeld</a>&nbsp;
+<a href="../object/Thing.html#mergeSenseInfo">mergeSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#mergeSenseInfoTable">mergeSenseInfoTable</a>&nbsp;
+<a href="../object/Thing.html#moveInto">moveInto</a>&nbsp;
+<a href="../object/Thing.html#moveIntoForTravel">moveIntoForTravel</a>&nbsp;
+<a href="../object/Thing.html#moveIntoNotifyPath">moveIntoNotifyPath</a>&nbsp;
+<a href="../object/Thing.html#mustMoveObjInto">mustMoveObjInto</a>&nbsp;
+<a href="../object/Thing.html#nameIs">nameIs</a>&nbsp;
+<a href="../object/Thing.html#nameIsnt">nameIsnt</a>&nbsp;
+<a href="../object/Thing.html#nameVerb">nameVerb</a>&nbsp;
+<a href="../object/Thing.html#normalizePath">normalizePath</a>&nbsp;
+<a href="../object/Thing.html#notePromptByOwnerLoc">notePromptByOwnerLoc</a>&nbsp;
+<a href="../object/Thing.html#notePromptByPossAdj">notePromptByPossAdj</a>&nbsp;
+<a href="../object/Thing.html#noteSeenBy">noteSeenBy</a>&nbsp;
+<a href="../object/Thing.html#notifyInsert">notifyInsert</a>&nbsp;
+<a href="../object/Thing.html#notifyMoveInto">notifyMoveInto</a>&nbsp;
+<a href="../object/Thing.html#notifyMoveViaPath">notifyMoveViaPath</a>&nbsp;
+<a href="../object/Thing.html#notifyRemove">notifyRemove</a>&nbsp;
+<a href="../object/Thing.html#obscuredDesc">obscuredDesc</a>&nbsp;
+<a href="../object/Thing.html#obscuredSmellDesc">obscuredSmellDesc</a>&nbsp;
+<a href="../object/Thing.html#obscuredSoundDesc">obscuredSoundDesc</a>&nbsp;
+<a href="../object/Thing.html#pluralNameFrom">pluralNameFrom</a>&nbsp;
+<a href="../object/Thing.html#processThrow">processThrow</a>&nbsp;
+<a href="../object/Thing.html#propHidesProp">propHidesProp</a>&nbsp;
+<a href="../object/Thing.html#propWithPresent">propWithPresent</a>&nbsp;
+<a href="../object/Thing.html#putInName">putInName</a>&nbsp;
+<a href="../object/Thing.html#receiveDrop">receiveDrop</a>&nbsp;
+<a href="../object/Thing.html#remoteDesc">remoteDesc</a>&nbsp;
+<a href="../object/Thing.html#remoteInitSpecialDesc">remoteInitSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#remoteRoomContentsLister">remoteRoomContentsLister</a>&nbsp;
+<a href="../object/Thing.html#remoteSpecialDesc">remoteSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#removeFromContents">removeFromContents</a>&nbsp;
+<a href="../object/Thing.html#removeObjectNotifyItem">removeObjectNotifyItem</a>&nbsp;
+<a href="../object/Thing.html#restoreLocation">restoreLocation</a>&nbsp;
+<a href="../object/Thing.html#roomActorThereDesc">roomActorThereDesc</a>&nbsp;
+<a href="../object/Thing.html#roomContentsLister">roomContentsLister</a>&nbsp;
+<a href="../object/Thing.html#roomDaemon">roomDaemon</a>&nbsp;
+<a href="../object/Thing.html#roomDarkDesc">roomDarkDesc</a>&nbsp;
+<a href="../object/Thing.html#roomDesc">roomDesc</a>&nbsp;
+<a href="../object/Thing.html#roomFirstDesc">roomFirstDesc</a>&nbsp;
+<a href="../object/Thing.html#roomRemoteDesc">roomRemoteDesc</a>&nbsp;
+<a href="../object/Thing.html#roomTravelPreCond">roomTravelPreCond</a>&nbsp;
+<a href="../object/Thing.html#saveLocation">saveLocation</a>&nbsp;
+<a href="../object/Thing.html#selectPathTo">selectPathTo</a>&nbsp;
+<a href="../object/Thing.html#sendNotifyInsert">sendNotifyInsert</a>&nbsp;
+<a href="../object/Thing.html#sendNotifyRemove">sendNotifyRemove</a>&nbsp;
+<a href="../object/Thing.html#senseAmbientMax">senseAmbientMax</a>&nbsp;
+<a href="../object/Thing.html#senseInfoTable">senseInfoTable</a>&nbsp;
+<a href="../object/Thing.html#senseObj">senseObj</a>&nbsp;
+<a href="../object/Thing.html#sensePathFromWithin">sensePathFromWithin</a>&nbsp;
+<a href="../object/Thing.html#sensePathFromWithout">sensePathFromWithout</a>&nbsp;
+<a href="../object/Thing.html#sensePathToContents">sensePathToContents</a>&nbsp;
+<a href="../object/Thing.html#sensePathToLoc">sensePathToLoc</a>&nbsp;
+<a href="../object/Thing.html#sensePresenceList">sensePresenceList</a>&nbsp;
+<a href="../object/Thing.html#setAllSeenBy">setAllSeenBy</a>&nbsp;
+<a href="../object/Thing.html#setContentsSeenBy">setContentsSeenBy</a>&nbsp;
+<a href="../object/Thing.html#setGlobalParamName">setGlobalParamName</a>&nbsp;
+<a href="../object/Thing.html#setVisualSenseInfo">setVisualSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#shineFromWithin">shineFromWithin</a>&nbsp;
+<a href="../object/Thing.html#shineFromWithout">shineFromWithout</a>&nbsp;
+<a href="../object/Thing.html#shineOnContents">shineOnContents</a>&nbsp;
+<a href="../object/Thing.html#shineOnLoc">shineOnLoc</a>&nbsp;
+<a href="../object/Thing.html#showDistantSpecialDesc">showDistantSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#showDistantSpecialDescInContents">showDistantSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#showInventoryContents">showInventoryContents</a>&nbsp;
+<a href="../object/Thing.html#showInventoryItem">showInventoryItem</a>&nbsp;
+<a href="../object/Thing.html#showInventoryItemCounted">showInventoryItemCounted</a>&nbsp;
+<a href="../object/Thing.html#showListItem">showListItem</a>&nbsp;
+<a href="../object/Thing.html#showListItemCounted">showListItemCounted</a>&nbsp;
+<a href="../object/Thing.html#showListItemCountedGen">showListItemCountedGen</a>&nbsp;
+<a href="../object/Thing.html#showListItemGen">showListItemGen</a>&nbsp;
+<a href="../object/Thing.html#showObjectContents">showObjectContents</a>&nbsp;
+<a href="../object/Thing.html#showObscuredSpecialDesc">showObscuredSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#showObscuredSpecialDescInContents">showObscuredSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#showRemoteSpecialDesc">showRemoteSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#showRemoteSpecialDescInContents">showRemoteSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#showSpecialDesc">showSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#showSpecialDescInContents">showSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#showSpecialDescInContentsWithInfo">showSpecialDescInContentsWithInfo</a>&nbsp;
+<a href="../object/Thing.html#showSpecialDescWithInfo">showSpecialDescWithInfo</a>&nbsp;
+<a href="../object/Thing.html#showStatuslineExits">showStatuslineExits</a>&nbsp;
+<a href="../object/Thing.html#showWornItem">showWornItem</a>&nbsp;
+<a href="../object/Thing.html#showWornItemCounted">showWornItemCounted</a>&nbsp;
+<a href="../object/Thing.html#smellDesc">smellDesc</a>&nbsp;
+<a href="../object/Thing.html#smellHereDesc">smellHereDesc</a>&nbsp;
+<a href="../object/Thing.html#soundDesc">soundDesc</a>&nbsp;
+<a href="../object/Thing.html#soundHereDesc">soundHereDesc</a>&nbsp;
+<a href="../object/Thing.html#specialDescList">specialDescList</a>&nbsp;
+<a href="../object/Thing.html#specialPathFrom">specialPathFrom</a>&nbsp;
+<a href="../object/Thing.html#statusName">statusName</a>&nbsp;
+<a href="../object/Thing.html#stopThrowViaPath">stopThrowViaPath</a>&nbsp;
+<a href="../object/Thing.html#superHidesSuper">superHidesSuper</a>&nbsp;
+<a href="../object/Thing.html#tasteDesc">tasteDesc</a>&nbsp;
+<a href="../object/Thing.html#thatNom">thatNom</a>&nbsp;
+<a href="../object/Thing.html#thatObj">thatObj</a>&nbsp;
+<a href="../object/Thing.html#theNameFrom">theNameFrom</a>&nbsp;
+<a href="../object/Thing.html#theNameObj">theNameObj</a>&nbsp;
+<a href="../object/Thing.html#theNameOwnerLoc">theNameOwnerLoc</a>&nbsp;
+<a href="../object/Thing.html#theNameWithOwner">theNameWithOwner</a>&nbsp;
+<a href="../object/Thing.html#throwTargetCatch">throwTargetCatch</a>&nbsp;
+<a href="../object/Thing.html#throwTargetHitWith">throwTargetHitWith</a>&nbsp;
+<a href="../object/Thing.html#throwViaPath">throwViaPath</a>&nbsp;
+<a href="../object/Thing.html#transmitAmbient">transmitAmbient</a>&nbsp;
+<a href="../object/Thing.html#transSensingIn">transSensingIn</a>&nbsp;
+<a href="../object/Thing.html#transSensingOut">transSensingOut</a>&nbsp;
+<a href="../object/Thing.html#traversePath">traversePath</a>&nbsp;
+<a href="../object/Thing.html#tryHolding">tryHolding</a>&nbsp;
+<a href="../object/Thing.html#tryImplicitRemoveObstructor">tryImplicitRemoveObstructor</a>&nbsp;
+<a href="../object/Thing.html#tryMovingObjInto">tryMovingObjInto</a>&nbsp;
+<a href="../object/Thing.html#useInitDesc">useInitDesc</a>&nbsp;
+<a href="../object/Thing.html#useInitSpecialDesc">useInitSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#useSpecialDesc">useSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#useSpecialDescInContents">useSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#useSpecialDescInRoom">useSpecialDescInRoom</a>&nbsp;
+<a href="../object/Thing.html#useSpecialDescInRoomPart">useSpecialDescInRoomPart</a>&nbsp;
+<a href="../object/Thing.html#verbEndingEs">verbEndingEs</a>&nbsp;
+<a href="../object/Thing.html#verbEndingIes">verbEndingIes</a>&nbsp;
+<a href="../object/Thing.html#verbEndingS">verbEndingS</a>&nbsp;
+<a href="../object/Thing.html#verbToHave">verbToHave</a>&nbsp;
+<a href="../object/Thing.html#verbWas">verbWas</a>&nbsp;
+<a href="../object/Thing.html#verifyFollowable">verifyFollowable</a>&nbsp;
+<a href="../object/Thing.html#verifyInsert">verifyInsert</a>&nbsp;
+<a href="../object/Thing.html#verifyMoveTo">verifyMoveTo</a>&nbsp;
+<a href="../object/Thing.html#verifyRemove">verifyRemove</a>&nbsp;
+<a href="../object/Thing.html#whatIf">whatIf</a>&nbsp;
+<a href="../object/Thing.html#whatIfHeldBy">whatIfHeldBy</a>&nbsp;
+<a href="../object/Thing.html#withVisualSenseInfo">withVisualSenseInfo</a>&nbsp;
+</code><p>
+<p>Inherited from <code>VocabObject</code> :<br>
+<code>
+<a href="../object/VocabObject.html#addToDictionary">addToDictionary</a>&nbsp;
+<a href="../object/VocabObject.html#expandPronounList">expandPronounList</a>&nbsp;
+<a href="../object/VocabObject.html#filterResolveList">filterResolveList</a>&nbsp;
+<a href="../object/VocabObject.html#getFacets">getFacets</a>&nbsp;
+<a href="../object/VocabObject.html#inheritVocab">inheritVocab</a>&nbsp;
+<a href="../object/VocabObject.html#initializeVocab">initializeVocab</a>&nbsp;
+<a href="../object/VocabObject.html#initializeVocabWith">initializeVocabWith</a>&nbsp;
+<a href="../object/VocabObject.html#matchName">matchName</a>&nbsp;
+<a href="../object/VocabObject.html#matchNameCommon">matchNameCommon</a>&nbsp;
+<a href="../object/VocabObject.html#matchNameDisambig">matchNameDisambig</a>&nbsp;
+<a href="../object/VocabObject.html#throwNoMatchForLocation">throwNoMatchForLocation</a>&nbsp;
+<a href="../object/VocabObject.html#throwNoMatchForPossessive">throwNoMatchForPossessive</a>&nbsp;
+<a href="../object/VocabObject.html#throwNothingInLocation">throwNothingInLocation</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="connectorStagingLocation"></a>
+<table class=decl><tr><td><code>connectorStagingLocation</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#815">815</a>]</table><div class=desc>   The "staging location" for travel through this connector.  By   default, if we have a location, that's our staging location; if   we don't have a location (in which case we probably an outermost   room), we don't have a staging location. <p>
+</div>
+<a name="isCircularPassage"></a>
+<table class=decl><tr><td><code>isCircularPassage</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1218">1218</a>]</table><div class=desc>   Is this a "circular" passage?  A circular passage is one that   explicitly connects back to its origin, so that traveling through   the connector leaves us where we started.  When a passage is   marked as circular, we'll describe travel through the passage   exactly as though we had actually gone somewhere.  By default, if   traveling through a passage leaves us where we started, we assume   that nothing happened, so we don't describe any travel. <p>   Circular passages don't often occur in ordinary settings; these   are mostly useful in disorienting environments, such as twisty   cave networks, where a passage between locations can change   direction and even loop back on itself. <p>
+</div>
+<a name="isConnectorListed"></a>
+<table class=decl><tr><td><code>isConnectorListed</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#963">963</a>]</table><div class=desc>   Is this connector listed?  This indicates whether or not the exit   is allowed to be displayed in lists of exits, such as in the   status line or in "you can't go that way" messages.  By default,   all exits are allowed to appear in listings. <p>   Note that this indicates if listing is ALLOWED - it doesn't   guarantee that listing actually occurs.  A connector can be   listed only if this is true, AND the point-of-view actor for the   listing can perceive the exit (which means that   isConnectorApparent must return true, and there must be   sufficient light to see the exit). <p>
+</div>
+<a name="rememberCircularPassage"></a>
+<table class=decl><tr><td><code>rememberCircularPassage</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1227">1227</a>]</table><div class=desc>   Should we remember a circular trip through this passage?  By   default, we remember the destination of a passage that takes us   back to our origin only if we're explicitly marked as a circular   passage; in other cases, we assume that the travel was blocked   somehow instead. <p>
+</div>
+<a name="travelBarrier"></a>
+<table class=decl><tr><td><code>travelBarrier</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#852">852</a>]</table><div class=desc>   Barrier or barriers to travel.  This property can be set to a   single TravelBarrier object or to a list of TravelBarrier   objects.  checkTravelBarriers() checks each barrier specified   here. <p>
+</div>
+<a name="travelMemory"></a>
+<table class=decl><tr><td><code>travelMemory</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1202">1202</a>]</table><div class=desc>   Our "travel memory" table.  If this contains a non-nil lookup   table object, we'll store a record of each successful traversal   of a travel connector here - we'll record the destination keyed   by the combination of actor, origin, and connector, so that we   can later check to see if the actor has any memory of where a   given connector goes from a given origin. <p>   We keep this information by default, which is why we statically   create the table here.  Keeping this information does involve   some overhead, so some authors might want to get rid of this   table (by setting the property to nil) if the game doesn't make   any use of the information.  Note that this table is stored just   once, in the TravelConnector class itself - there's not a   separate table per connector. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="actorTravelPreCond"></a>
+<table class=decl><tr><td><code>actorTravelPreCond (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#836">836</a>]</table><div class=desc>   Get the travel preconditions that this connector requires for   travel by the given actor.  In most cases, this won't depend on   the actor, but it's provided as a parameter anyway; in most cases,   this will just apply the conditions that are relevant to actors as   travelers. <p>   By default, we require actors to be "travel ready" before   traversing a connector.  The exact meaning of "travel ready" is   provided by the actor's immediate location, but it usually simply   means that the actor is standing.  This ensures that the actor   isn't sitting in a chair or lying down or something like that.   Some connectors might not require this, so this routine can be   overridden per connector. <p>   Note that this will only be called when an actor is the traveler.   When a vehicle or other kind of traveler is doing the travel, this   will not be invoked. <p>
+</div>
+<a name="canTravelerPass"></a>
+<table class=decl><tr><td><code>canTravelerPass (traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#936">936</a>]</table><div class=desc>   Check to see if the Traveler object is allowed to travel through   this connector.  Returns true if travel is allowed, nil if not. <p>   This is called from checkTravelBarriers() to check any conditions   coded directly into the TravelConnector.  By default, we simply   return true; subclasses can override this to apply special   conditions. <p>   If an override wants to disallow travel, it should return nil   here, and then provide an override for explainTravelBarrier() to   provide a descriptive message explaining why the travel isn't   allowed. <p>   Conditions here serve essentially the same purpose as barrier   conditions.  The purpose of providing this additional place for   the same type of conditions is simply to improve the convenience   of defining travel conditions for cases where barriers are   unnecessary.  The main benefit of using a barrier is that the same   barrier object can be re-used with multiple connectors, so if the   same set of travel conditions apply to several different   connectors, barriers allow the logic to be defined once in a   single barrier object and then re-used easily in each place it's   needed.  However, when a particular condition is needed in only   one place, creating a barrier to represent the condition is a bit   verbose; in such cases, the condition can be placed in this method   more conveniently. <p>
+</div>
+<a name="checkTravelBarriers"></a>
+<table class=decl><tr><td><code>checkTravelBarriers (dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#858">858</a>]</table><div class=desc>   Check barriers.  The TravelVia check() routine must call this to   enforce barriers. <p>
+</div>
+<a name="connectorBack"></a>
+<table class=decl><tr><td><code>connectorBack (traveler, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1400">1400</a>]</table><div class=desc>   Find a connector in the destination location that connects back as   the source of travel from the given connector when traversed from   the source location.  Returns nil if there is no such connector.   This must be called while the traveler is still in the source   location; we'll attempt to find the connector back to the   traveler's current location. <p>   The purpose of this routine is to identify the connector by which   the traveler arrives in the new location.  This can be used, for   example, to generate a connector-specific message describing the   traveler's emergence from the connector (so we can say one thing   if the traveler arrives via a door, and another if the traveler   arrives by climing up a ladder). <p>   By default, we'll try to find a travel link in the destination   that links us back to this same connector, in which case we'll   return 'self' as the connector from which the traveler emerges in   the new location.  Failing that, we'll look for a travel link   whose apparent source is the origin location. <p>   This should be overridden for any connector with an explicit   complementary connector.  For example, it is common to implement a   door using a pair of objects, one representing each side of the   door; in such cases, each door object would simply return its twin   here.  Note that a complementary connector doesn't actually have   to go anywhere, since it's still useful to have a connector back   simply for describing travelers arriving on the connector. <p>   This *must* be overridden when the destination location doesn't   have a simple connector whose apparent source is this connector,   because in such cases we won't be able to find the reverse   connector with our direction search. <p>
+</div>
+<a name="connectorGetConnectorTo"></a>
+<table class=decl><tr><td><code>connectorGetConnectorTo (origin, traveler, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1145">1145</a>]</table><div class=desc>   Get the travel connector leading to the given destination from the   given origin and for the given travel.  Return nil if we don't   know a connector leading there. <p>   By default, we simply return 'self' if our destination is the   given destination, or nil if not. <p>   Some subclasses might encapsulate one or more "secondary"   connectors - that is, the main connector might choose among   multiple other connectors.  In these cases, the secondary   connectors typically won't be linked to directions on their own,   so the room can't see them directly - it can only find them   through us, since we're effectively a wrapper for the secondary   connectors.  In these cases, we won't have any single destination   ourself, so getDestination() will have to return nil.  But we   *can* work backwards: given a destination, we can find the   secondary connector that points to that destination.  That's what   this routine is for. <p>
+</div>
+<a name="connectorTravelPreCond"></a>
+<table class=decl><tr><td><code>connectorTravelPreCond ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#780">780</a>]</table><div class=desc>   Get any connector-specific pre-conditions for travel via this   connector. <p>
+</div>
+<a name="createUnlistedProxy"></a>
+<table class=decl><tr><td><code>createUnlistedProxy ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#970">970</a>]</table><div class=desc>   Get an unlisted proxy for this connector.  This is normally   called from the asExit() macro to set up one room exit direction   as an unlisted synonym for another. <p>
+</div>
+<a name="darkTravel"></a>
+<table class=decl><tr><td><code>darkTravel (actor, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1541">1541</a>]</table><div class=desc>   Handle travel in the dark.  Specifically, this is called when an   actor attempts travel from one dark location to another dark   location.  (We don't invoke this in any other case:   light-to-light, light-to-dark, and dark-to-light travel are all   allowed without any special checks.) <p>   By default, we will prohibit dark-to-dark travel by calling the   location's darkTravel handler.  Individual connectors can   override this to allow such travel or apply different handling. <p>
+</div>
+<a name="describeArrival"></a>
+<table class=decl><tr><td><code>describeArrival (traveler, origin, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1287">1287</a>]</table><div class=desc>   Describe an actor's arrival through the connector from the given   origin into the given destination.  This description is from the   point of view of another actor in the destination. <p>   Note that this is called on the connector that reverses the   travel, NOT on the connector the actor is actually traversing -   that is, 'self' is the backwards connector, leading from the   destination back to the origin location.  So, if we have two   sides to a door, and the actor traverses the first side, this   will be called on the second side - the one that links the   destination back to the origin. <p>
+</div>
+<a name="describeDeparture"></a>
+<table class=decl><tr><td><code>describeDeparture (traveler, origin, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1234">1234</a>]</table><div class=desc>   Describe an actor's departure through the connector from the   given origin to the given destination.  This description is from   the point of view of another actor in the origin location. <p>
+</div>
+<a name="describeLocalArrival"></a>
+<table class=decl><tr><td><code>describeLocalArrival (traveler, origin, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1346">1346</a>]</table><div class=desc>   Describe a "local arrival" via this connector.  This is called   when the traveler moves around entirely within the field of view   of the player character, and comes *closer* to the PC - that is,   the traveler's origin is visible to the player character when we   arrive in our destination, AND the destination's top-level   location contains the PC.  We'll describe the travel not in terms   of truly arriving, since the traveler was already here to start   with, but rather as entering the destination, but just in terms of   moving closer. <p>
+</div>
+<a name="describeLocalDeparture"></a>
+<table class=decl><tr><td><code>describeLocalDeparture (traveler, origin, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1329">1329</a>]</table><div class=desc>   Describe a "local departure" via this connector.  This is called   when a traveler moves around entirely within the field of view of   the player character, and move *further away* from the PC - that   is, the traveler's destination is visible to the PC when we're   leaving our origin, AND the origin's top-level location contains   the PC.  We'll describe the travel not in terms of truly   departing, but simply in terms of moving away. <p>
+</div>
+<a name="describeRemoteTravel"></a>
+<table class=decl><tr><td><code>describeRemoteTravel (traveler, origin, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1360">1360</a>]</table><div class=desc>   Describe "remote travel" via this connector.  This is called when   the traveler moves around entirely within the field of view of the   PC, but between two "remote" top-level locations - "remote" means   "does not contain the PC."  In this case, the traveler isn't   arriving or departing, exactly; it's just moving laterally from   one top-level location to another. <p>
+</div>
+<a name="dobjFor(TravelVia)"></a>
+<table class=decl><tr><td><code>dobjFor(TravelVia)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1561">1561</a>]</table><div class=desc>   Action handler for the internal "TravelVia" action.  This is not a   real action, but is instead a pseudo-action that we implement   generically for travel via the connector.  Subclasses that want to   handle real actions by traveling via the connector can use   remapTo(TravelVia) to implement the real action handlers.  Note   that remapTo should be used (rather than, say, asDobjFor), since   this will ensure that every type of travel through the connector   actually looks like a TravelVia action, which is useful for   intercepting travel actions generically in other code. <p>
+</div>
+<a name="explainTravelBarrier"></a>
+<table class=decl><tr><td><code>explainTravelBarrier (traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#948">948</a>]</table><div class=desc>   Explain why canTravelerPass() returned nil.  This is called to   display an explanation of why travel is not allowed by   self.canTravelerPass(). <p>   Since the default canTravelerPass() always allows travel, the   default implementation of this method does nothing.  Whenever   canTravelerPass() is overridden to return nil, this should also be   overridden to provide an appropriate explanation. <p>
+</div>
+<a name="fixedSource"></a>
+<table class=decl><tr><td><code>fixedSource (dest, traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1488">1488</a>]</table><div class=desc>   Get the "fixed" source for travelers emerging from this connector,   if possible.  This can return nil if the connector does not have a   fixed relationship with another connector. <p>   The purpose of this routine is to find complementary connectors   for simple static map connections.  This is especially useful for   direct room-to-room connections. <p>   When a connector relationship other than a simple static mapping   exists, the connectors must generally override connectorBack(), in   which case this routine will not be needed (at least, this routine   won't be needed as long as the overridden connectorBack() doesn't   call it).  Whenever it is not clear how to implement this routine,   don't - implement connectorBack() instead. <p>
+</div>
+<a name="getApparentDestination"></a>
+<table class=decl><tr><td><code>getApparentDestination (origin, actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1063">1063</a>]</table><div class=desc>   Get the apparent destination of travel by the actor to the given   origin.  This returns the location to which the connector   travels, AS FAR AS THE ACTOR KNOWS.  If the actor does not know   and cannot tell where the connector leads, this should return nil. <p>   Note that this method does NOT necessarily return the actual   destination, because we obviously can't know the destination for   certain until we traverse the connection.  Rather, the point of   this routine is to return as much information as the actor is   supposed to have.  This can be used for purposes like   auto-mapping, where we'd want to show what the player character   knows of the map, and NPC goal-seeking, where an NPC tries to   figure out how to get from one point to another based on the   NPC's knowledge of the map.  In these sorts of applications, it's   important to use only knowledge that the actor is supposed to   have within the parameters of the simulation. <p>   Callers should always test isConnectorApparent() before calling   this routine.  This routine does not check to ensure that the   connector is apparent, so it could return misleading information   if used independently of isConnectorApparent(); for example, if   the connector *formerly* worked but has now disappeared, and the   actor has a memory of the former destination, we'll return the   remembered destination. <p>   The actor can know the destination by a number of means: <p>   1.  The location is familiar to the character.  For example, if   the setting is the character's own house, the character would   obviously know the house well, so would know where you'd end up   going east from the living room or south from the kitchen.  We   use the origin method actorKnowsDestination() to determine this. <p>   2.  The destination is readily visible from the origin location,   or is clearly marked.  For example, in an outdoor setting, it   might be clear that going east from the field takes you to the   hilltop.  In an indoor setting, an open passage might make it   clear that going east from the living room takes you to the   dining room.  We use the origin method actorKnowsDestination() to   determine this. <p>   3. The actor has been through the connector already in the course   of the game, and so remembers the connection by virtue of recent   experience.  If our travelMemory class property is set to a   non-nil lookup table object, then we'll automatically use the   lookup table to remember the destination each time an actor   travels via a connector, and use this information by default to   provide apparent destination information. <p>
+</div>
+<a name="getDestination"></a>
+<table class=decl><tr><td><code>getDestination (origin, traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1123">1123</a>]</table><div class=desc>   Get our destination, given the traveler and the origin location. <p>   This method is required to return the current destination for the   travel.  If the connector doesn't go anywhere, this should return   nil.  The results of this method must be stable for the extent of   a turn, up until the time travel actually occurs; in other words,   it must be possible to call this routine simply for information   purposes, to determine where the travel will end up. <p>   This method should not trigger any side effects, since it's   necessary to be able to call this method more than once in the   course of a given travel command.  If it's necessary to trigger   side effects when the connector is actually traversed, apply the   side effects in noteTraversal(). <p>   For auto-mapping and the like, note that getApparentDestination()   is a better choice, since this method has internal information   that might not be apparent to the characters in the game and thus   shouldn't be revealed through something like an auto-map.  This   method is intended for internal use in the course of processing a   travel action, since it knows the true destination of the travel. <p>
+</div>
+<a name="isConnectorApparent"></a>
+<table class=decl><tr><td><code>isConnectorApparent (origin, actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#987">987</a>]</table><div class=desc>   Determine if the travel connection is apparent - as a travel   connector - to the actor in the given origin location.  This   doesn't indicate whether or not travel is possible, or where   travel goes, or that the actor can tell where the passage goes;   this merely indicates whether or not the actor should realize   that the passage exists at all. <p>   A closed door, for example, would return true, because even a   closed door makes it clear that travel is possible in the   direction, even if it's not possible currently.  A secret door,   on the other hand, would return nil while closed, because it   would not be apparent to the actor that the object is a door at   all. <p>
+</div>
+<a name="isConnectorPassable"></a>
+<table class=decl><tr><td><code>isConnectorPassable (origin, traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1007">1007</a>]</table><div class=desc>   Determine if the travel connection is passable by the given   traveler in the current state.  For example, a door would return   true when open, nil when closed. <p>   This information is intended to help game code probing the   structure of the map.  This information is NOT used in actor   travel; for actor travel, we rely on custom checks in the   connector's TravelVia handler to enforce the conditions of travel.   Actor travel uses TravelVia customizations rather than this method   because that allows better specificity in reporting failures.   This method lets game code get at the same information, but in a   more coarse-grained fashion. <p>
+</div>
+<a name="isConnectorVisibleInDark"></a>
+<table class=decl><tr><td><code>isConnectorVisibleInDark (origin, actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1507">1507</a>]</table><div class=desc>   Can the given actor see this connector in the dark, looking from   the given origin?  Returns true if so, nil if not. <p>   This is used to determine if the actor can travel from the given   origin via this connector when the actor (in the origin location)   is in darkness. <p>   By default, we implement the usual convention, which is that   travel from a dark room is possible only when the destination is   lit.  If we can't determine our destination, we will assume that   the connector is not visible. <p>
+</div>
+<a name="noteTraversal"></a>
+<table class=decl><tr><td><code>noteTraversal (traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1160">1160</a>]</table><div class=desc>   Note that the connector is being traversed.  This is invoked just   before the traveler is moved; this notification is fired after the   other travel-related notifications (beforeTravel, actorTravel,   travelerLeaving).  This is a good place to display any special   messages describing what happens during the travel, because any   messages displayed here will come after any messages related to   reactions from other objects. <p>
+</div>
+<a name="rememberTravel"></a>
+<table class=decl><tr><td><code>rememberTravel (origin, actor, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#1173">1173</a>]</table><div class=desc>   Service routine: add a memory of a successful traversal of a   travel connector.  If we have a travel memory table, we'll add   the traversal to the table, so that we can find it later. <p>   This is called from Traveler.travelerTravelTo() on successful   travel.  We're called for each actor participating in the travel. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

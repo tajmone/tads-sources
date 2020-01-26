@@ -1,0 +1,158 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>HiddenDoor</title><meta name="keywords" content="HiddenDoor,Button"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>HiddenDoor : <a href="secretdoor.htm">SecretDoor</a>
+<br>
+</b><font face="Arial" size="1" color="#000000"><b>Other Examples</b></font><font face="Arial" size="3" color="#000000"><b>
+<br>
+</b></font></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="floorless.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="entryportal.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A HiddenDoor is a variation on SecretDoor, the difference being that while a <a href="secretdoor.htm">SecretDoor</a> is a visible object (like the rock we used before) that is not apparently a door, a HiddenDoor isn't even visible until it's been opened. For our example we'll create a section of the foreward bulkhead of the cabin that slides open at the press of a button. We'll go about concealing the button in a later section.
+<br>
+
+<br>
+First, however, we need to create the cabin:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;Cabin&nbsp;:&nbsp;ShipboardRoom,&nbsp;Room;
+<br>
+
+<br>
+greatCabin&nbsp;:&nbsp;Cabin&nbsp;'Great&nbsp;Cabin'&nbsp;'the&nbsp;great&nbsp;cabin'
+<br>
+&nbsp;&nbsp;"The&nbsp;great&nbsp;cabin&nbsp;occupies&nbsp;the&nbsp;entire&nbsp;width&nbsp;of&nbsp;the&nbsp;ship&nbsp;at&nbsp;the&nbsp;stern.&nbsp;The&nbsp;stern
+<br>
+&nbsp;&nbsp;&nbsp;windows&nbsp;aft&nbsp;look&nbsp;out&nbsp;over&nbsp;the&nbsp;water,&nbsp;while&nbsp;there&nbsp;is&nbsp;a&nbsp;solid&nbsp;wooden&nbsp;bulkhead
+<br>
+&nbsp;&nbsp;&nbsp;foreward.&nbsp;The&nbsp;main&nbsp;piece&nbsp;of&nbsp;furniture&nbsp;is&nbsp;a&nbsp;sturdy&nbsp;wooden&nbsp;desk,&nbsp;while&nbsp;a&nbsp;flight&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;steps&nbsp;leads&nbsp;up&nbsp;to&nbsp;the&nbsp;deck&nbsp;above.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;cabinSteps
+<br>
+&nbsp;&nbsp;&nbsp;fore&nbsp;=&nbsp;bulkheadDoor
+<br>
+;
+<br>
+
+<br>
++&nbsp;cabinSteps&nbsp;:&nbsp;StairwayUp&nbsp;-&gt;&nbsp;deckSteps&nbsp;'flight&nbsp;steps'&nbsp;'steps'
+<br>
+&nbsp;&nbsp;"The&nbsp;steps&nbsp;lead&nbsp;up&nbsp;to&nbsp;the&nbsp;deck&nbsp;above.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There is nothing new in this, apart from the creation of our custom Cabin class (which, along with the Deck class, we'll shortly be customizing a little further). We can now define the HiddenDoor:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;bulkheadDoor&nbsp;:&nbsp;HiddenDoor&nbsp;'bulkhead&nbsp;door/doorway/opening'&nbsp;'bulkhead&nbsp;door'
+<br>
+&nbsp;&nbsp;"The&nbsp;central&nbsp;section&nbsp;of&nbsp;the&nbsp;foreward&nbsp;bulkhead&nbsp;has&nbsp;slid&nbsp;open,&nbsp;revealing&nbsp;a&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;doorway&nbsp;through&nbsp;the&nbsp;bulkhead.&nbsp;"
+<br>
+&nbsp;&nbsp;destination&nbsp;=&nbsp;crewQuarters&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We next need to provide a mechanism for opening it, which we'll make a button that, for now, is simply a Fixture in the cabin:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;<a name="smallbrownbutton">Button,&nbsp;Fixture&nbsp;'small&nbsp;brown&nbsp;button'&nbsp;'small&nbsp;brown&nbsp;button'
+<br>
+&nbsp;&nbsp;"The&nbsp;small&nbsp;brown&nbsp;button&nbsp;is&nbsp;fixed&nbsp;to&nbsp;the&nbsp;underside&nbsp;of&nbsp;the&nbsp;desk.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Push)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There's&nbsp;a&nbsp;sharp&nbsp;&lt;i&gt;click&lt;/i&gt;,&nbsp;and&nbsp;a&nbsp;section&nbsp;of&nbsp;the&nbsp;foreward&nbsp;bulkhead&nbsp;slides
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;bulkheadDoor.isOpen&nbsp;?&nbsp;'closed'&nbsp;:&nbsp;'open'&gt;&gt;.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bulkheadDoor.makeOpen(!bulkheadDoor.isOpen);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The description of the button shows where we'll end up putting it, but that will come later. Finally, we need to define another couple of rooms where we fetch up when we go through the HiddenDoor:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;DarkCabin&nbsp;:&nbsp;Cabin
+<br>
+&nbsp;&nbsp;brightness&nbsp;=&nbsp;0
+<br>
+;
+<br>
+
+<br>
+
+<br>
+crewQuarters&nbsp;:&nbsp;DarkCabin&nbsp;'Crew&nbsp;Quarters'&nbsp;'the&nbsp;crew&nbsp;quarters'
+<br>
+&nbsp;&nbsp;"The&nbsp;crew&nbsp;quarters&nbsp;seem&nbsp;largely&nbsp;deserted.&nbsp;There's&nbsp;an&nbsp;exit&nbsp;back&nbsp;aft&nbsp;and&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;ladder&nbsp;leading&nbsp;down&nbsp;into&nbsp;the&nbsp;hold.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;holdLadderDown
+<br>
+&nbsp;&nbsp;&nbsp;aft&nbsp;=&nbsp;greatCabin
+<br>
+;
+<br>
+
+<br>
++&nbsp;holdLadderDown&nbsp;:&nbsp;StairwayDown&nbsp;'ladder'&nbsp;'ladder';
+<br>
+
+<br>
+
+<br>
+hold&nbsp;:&nbsp;DarkCabin&nbsp;'Hold'
+<br>
+&nbsp;&nbsp;"The&nbsp;hold&nbsp;seems&nbsp;vast&nbsp;and&nbsp;cavernous,&nbsp;and&nbsp;is&nbsp;largely&nbsp;empty.&nbsp;A&nbsp;ladder&nbsp;leads
+<br>
+&nbsp;&nbsp;&nbsp;up&nbsp;through&nbsp;an&nbsp;open&nbsp;hatchway&nbsp;above.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;holdLadderUp&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;holdLadderUp&nbsp;:&nbsp;StairwayUp&nbsp;-&gt;holdLadderDown&nbsp;'ladder'&nbsp;'ladder';
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We could have defined DarkCabin as ShipboardRoom, DarkRoom; but by making it inherit from Cabin we ensure that it inherits any further customizations we add to the Cabin class.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

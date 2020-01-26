@@ -1,0 +1,71 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>FakeConnector</title><meta name="keywords" content="FakeConnector,travelDesc,showTravelDesc,noteTraversal,TravelWithDesc"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>FakeConnector : <a href="notravelmessage.htm">NoTravelMessage</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="outdoorroom.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="deadendconnector.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The room <a href="outdoorroom.htm">outsideCave</a> was defined previously. Its description refers to a valley to the north and a car park to the east. We do not want the Player Character to go wandering off in those directions, but there should be a reasonable response to any attempts to do so; in particular the game should respond with a sensible message if the player types the commands EAST or NORTH. The FakeConnector is just the job for this sort of  situation, where we want to provide a soft boundary. The two FakeConnectors to be added to the room definition are shown in bold.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">outsideCave&nbsp;:&nbsp;OutdoorRoom&nbsp;'Parser&nbsp;Valley'&nbsp;'Parser&nbsp;Valley'
+<br>
+&nbsp;&nbsp;"To&nbsp;the&nbsp;north&nbsp;stretches&nbsp;the&nbsp;broad&nbsp;green&nbsp;Parser&nbsp;Valley&nbsp;under&nbsp;a&nbsp;clear&nbsp;blue&nbsp;sky,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;past&nbsp;a&nbsp;small&nbsp;car&nbsp;park&nbsp;lying&nbsp;just&nbsp;off&nbsp;to&nbsp;the&nbsp;east.&nbsp;The&nbsp;main&nbsp;feature&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;interest&nbsp;round&nbsp;here&nbsp;is&nbsp;the&nbsp;notorious&nbsp;Eerhtsdat&nbsp;Caves,&nbsp;the&nbsp;entrance&nbsp;to&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;lies&nbsp;just&nbsp;to&nbsp;the&nbsp;south,&nbsp;marked&nbsp;by&nbsp;a&nbsp;large&nbsp;blue&nbsp;sign&nbsp;that&nbsp;proclaims,&nbsp;predictably
+<br>
+&nbsp;&nbsp;&nbsp;enough:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&nbsp;BGCOLOR=BLUE&nbsp;COLOR=WHITE&gt;
+<br>
+&nbsp;&nbsp;&nbsp;ENTRANCE&nbsp;TO&nbsp;THE\nEERHTSDAT&nbsp;CAVES&lt;/FONT&gt;\n"
+<br>
+&nbsp;&nbsp;&nbsp;<b>north&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You've&nbsp;come&nbsp;here&nbsp;to&nbsp;explore&nbsp;the&nbsp;caves,&nbsp;not&nbsp;the&nbsp;valley.&nbsp;"&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;east&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You've&nbsp;only&nbsp;just&nbsp;come&nbsp;from&nbsp;there&nbsp;--&nbsp;you've&nbsp;no&nbsp;reason&nbsp;to&nbsp;go&nbsp;back&nbsp;just&nbsp;now.&nbsp;"&nbsp;}
+<br>
+</b>&nbsp;&nbsp;&nbsp;atmosphereList&nbsp;:&nbsp;ShuffledEventList&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'A&nbsp;flight&nbsp;of&nbsp;birds&nbsp;disappears&nbsp;off&nbsp;to&nbsp;the&nbsp;west.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:&nbsp;"\nA&nbsp;&lt;&lt;one of&gt;&gt;small&lt;&lt;or&gt;&gt;large&lt;&lt;at random&gt;&gt;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;one of&gt;&gt;green&lt;&lt;or&gt;&gt;red&lt;&lt;or&gt;&gt;blue&lt;&lt;or&gt;&gt;black&lt;&lt;or&gt;&gt;white&lt;&lt;at random&gt;&gt;&nbsp;car
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pulls&nbsp;out&nbsp;of&nbsp;the&nbsp;car&nbsp;park&nbsp;and&nbsp;drives&nbsp;off&nbsp;to&nbsp;the&nbsp;north.&nbsp;"&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'An&nbsp;aeroplane&nbsp;flies&nbsp;far&nbsp;overhead.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;]&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At this point you can compile and run the game to test that it is working properly.
+<br>
+
+<br>
+Note that we once again use a template to abbreviate the business of writing the FakeConnector definition. The property in double quotes that we are defining for each FakeConnector here is in fact its travelDesc property (defined by the <a href="notravelmessagetemplate.htm">NoTravelMessage template</a>, which FakeConnector inherits). This is called by the connector's showTravelDesc() method only for the Player Character (so that, for example, the message will not be shown repeatedly if the PC is being accompanied by one or more NPCs), while showTravelDesc() is in turn invoked by noteTraversal(traveler). The last of these methods - noteTraversal - is defined for all TravelConnectors, whereas the other two - travelDesc and showTravelDesc - are defined on <a href="travelwithmessage.htm">TravelWithMessage</a> and classes that descend from it.
+<br>
+
+<br>
+The FakeConnector works very like the <a href="notravelmessage.htm">NoTravelMessage</a>. The only difference is that a direction attached to a NoTravelMessage won't be included in a list of exits (e.g. in response to an EXITS command, or in the status line), whereas that attached to a FakeConnector will. A NoTravelMessage should therefore be used to explain why travel is not possible in a direction in which it's reasonably apparent that travel isn't possible, while a FakeConnector should be used to make travel apparently possible in a direction in which it isn't really, e.g.. to provide a "soft boundary" to the map.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

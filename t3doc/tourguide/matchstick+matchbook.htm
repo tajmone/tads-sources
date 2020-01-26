@@ -1,0 +1,64 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Matchstick &amp; Matchbook</title><meta name="keywords" content="Matchstick,Matchbook"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Matchstick &amp; Matchbook
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="oillamp.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="dynamite.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Although the oil lamp makes a much more convenient light source than the stock of candles, it could still be inconvenient if it went out some distance from a naked flame. We could make things easier for the player by providing a book of matches. Both the Matchbook (a subclass of Dispenser) and Matchstick (a subclass of LightSource and FireSource) are defined in the library, and can be used with very little customization. All we need to do is to provide a description for the Matchbook and a name and some vocabulary for our Matchsticks. If we wanted various different types of Matchstick in our game we might have to define subclasses of Matchstick to do it on, but in this case we can simply override the Matchstick class.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">matchbook&nbsp;:&nbsp;Matchbook&nbsp;'book&nbsp;matches'&nbsp;'book&nbsp;of&nbsp;matches'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;@(dressingTable.subUnderside)
+<br>
+&nbsp;&nbsp;"The&nbsp;matchbook&nbsp;bears&nbsp;a&nbsp;picture&nbsp;of&nbsp;a&nbsp;banana&nbsp;and&nbsp;the&nbsp;words
+<br>
+&nbsp;&nbsp;&nbsp;CABAL&nbsp;LIGHTING&nbsp;CO.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Matchstick
+<br>
+&nbsp;&nbsp;vocabWords&nbsp;=&nbsp;'match&nbsp;matchstick*matches'
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'match'
+<br>
+&nbsp;&nbsp;isEquivalent&nbsp;=&nbsp;true;
+<br>
+;
+<br>
+
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
++&nbsp;Matchstick;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

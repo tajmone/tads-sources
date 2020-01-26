@@ -1,0 +1,50 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PostRestoreObject</title><meta name="keywords" content="PostRestoreObject"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PostRestoreObject: <a href="moduleexecobject.htm">ModuleExecObject</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="presaveobject.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="postundoobject.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A PostRestoreObject is similar to a <a href="presaveobject.htm">PreSaveObject</a>, except that instead of its execute method being invoked just before saving, it is invoked just after restoring.
+<br>
+
+<br>
+For example, if our imaginary mad IF author (he'd have to be man, wouldn't he) wanted to inspire not only anger but hatred and loathing, he could add the following:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">PostRestoreObject()
+<br>
+&nbsp;&nbsp;execute()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;ridiculous&nbsp;wretch!&nbsp;To&nbsp;be&nbsp;restoring&nbsp;this&nbsp;game&nbsp;you&nbsp;must&nbsp;have&nbsp;saved&nbsp;it,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;you&nbsp;&lt;i&gt;know&lt;/i&gt;&nbsp;how&nbsp;much&nbsp;I&nbsp;hate&nbsp;that!&nbsp;I&nbsp;suppose&nbsp;you&nbsp;think&nbsp;that&nbsp;way&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;can&nbsp;escape&nbsp;the&nbsp;points&nbsp;penalty&nbsp;for&nbsp;saving.&nbsp;Well,&nbsp;you&nbsp;can't&nbsp;--&nbsp;I'm&nbsp;deducting
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;another&nbsp;ten&nbsp;thousand&nbsp;points&nbsp;for&nbsp;restoring,&nbsp;and&nbsp;IT&nbsp;SERVES&nbsp;YOU&nbsp;RIGHT!!!!&lt;.p&gt;";
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(-10000,&nbsp;'restoring&nbsp;the&nbsp;game');&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+It goes without saying, of course, that the good reader of this guide would never use PostRestoreObject for so nefarious a purpose, but it could happen that there was some legitimate housekeeping activity we needed to carry out just after a restore (for example, if we were trying to keep track of how long the player had been playing our game for).
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,171 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DistanceConnector</title><meta name="keywords" content="DistanceConnector,sightSize,remoteInitSpecialDesc,remoteSpecialDesc,inRoomName"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DistanceConnector : <a href="senseconnector.htm">SenseConnector</a>, <a href="intangible.htm">Intangible</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="intangible.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="occluder.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Let's go back to the chasm we created between the narrow tunnel from the south shore and the opposite ledge. Since the chasm is only six feet wide, you would have thought that once you had pushed the monolith into it to form the bridge, you'd be able to see the monolith from either side of the chasm (as well as the chasm itself). Furthermore, with this setup, you'd expect that if a torch/flashlight were left on one side of the chasm you'd still have light enough to cross the chasm by. In fact, if you try putting this to the test, the transcript you'll see is something like this:
+<br>
+
+<br>
+
+<br>
+&gt;<b>push monolith south</b>
+<br>
+<b>Deep Chasm (standing on the monolith)
+<br>
+</b>
+<br>
+The chasm is not something you want to look down if you suffer from vertigo; the bottom is far out of sight in the impenetrable blackness below. It is about six feet wide, too far to jump.
+<br>
+
+<br>
+The monolith topples into the chasm, forming a precarious bridge of sorts, onto which you step.
+<br>
+
+<br>
+&gt;<b>s</b>
+<br>
+<b>Ledge of Chasm</b>
+<br>
+
+<br>
+A deep, wide chasm splits the ground immediately to the north of this narrow ledge, while a dark tunnel runs south. Another tunnel can be seen leading north from the far side of the chasm.
+<br>
+
+<br>
+&gt;<b>x monolith</b>
+<br>
+You see no monolith here.
+<br>
+
+<br>
+&gt;<b>drop torch</b>
+<br>
+Dropped.
+<br>
+
+<br>
+&gt;<b>n</b>
+<br>
+<b>In the dark</b>
+<br>
+
+<br>
+It's pitch black.
+<br>
+
+<br>
+What happens, of course, is that the game treats the two sides of the chasm and the chasm itself as three entirely separate locations; even if in our own mind's eye they are closely related in the sense of being in close physical proximity and visually open to one another, there's no way the game can read our mind and know this. There is, however, a way we can tell the game that we want locations to be connected in this way, and that is to use a DistanceConnector. This is basically a way of linking separate locations by sight without making them into a single location, so that we can break up a large location such as a big hall, a large town square, or (as in this case) a chasm and its two sides into separate rooms while maintaining visual contact between them.
+<br>
+
+<br>
+To use a DistanceConnector is extremely easy. You just need the class name followed by a list of the locations being connected. In the present case we just need to define:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">DistanceConnector&nbsp;[narrowTunnel,&nbsp;deepChasm,&nbsp;chasmLedge]&nbsp;;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+You should now be able to push the monolith into the chasm, carry on to the other side, EXAMINE the monolith from there, drop the torch there and walk back across the chasm still by the light of the torch.
+<br>
+<br>
+Suppose you drop a small item like the ring before crossing the chasm. When you EXAMINE the ring from the other side, you may be told "It's too far away to make out any detail". By default sightSize (and smellSize, soundSize and touchSize) are all medium, which means that the object can be sensed at a distance but not well enough to make out any detail. Setting sightSize = small would mean that we could not even see the object at a distance, while setting it to large means that we can not only see it but make out the details (i.e. see the normal desc property in response to an EXAMINE command). So if we want to see full the description of something from a distance we need to add the following to its definition:
+<br><br>
+  </font><font face="Courier New" size="2" color="#000000">sightSize&nbsp;=&nbsp;large</font><font face="Arial" size="2" color="#000000">
+<br><br>
+We could add this to the definition of the monolith, but we don't actually need to do so, since it's changed into a RoomPart (specifically a Floor) when it's pushed into the chasm, and RoomParts have sightSize large by default.
+<br>
+
+<br>
+Once we can see things at a distance we may be faced with another problem: what can be seen from a distance may not be the same as what can be seen close-to. Thus the way we want objects to be described from a distance may be different from their standard (close-up) description. If we use an initSpecialDesc or specialDesc we can also define the corresponding properties remoteInitSpecialDesc and remoteSpecialDesc to use when the object is viewed from another location, for example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">museumLeaflet&nbsp;:&nbsp;Readable&nbsp;'small&nbsp;crumpled&nbsp;piece&nbsp;yellow&nbsp;leaflet/paper'&nbsp;'yellow&nbsp;leaflet'
+<br>
+&nbsp;&nbsp;&nbsp;@chasmLedge
+<br>
+&nbsp;&nbsp;"It&nbsp;seems&nbsp;to&nbsp;be&nbsp;a&nbsp;leaflet&nbsp;advertising&nbsp;the&nbsp;Eerhtstad&nbsp;Caves&nbsp;Museum&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;Curious&nbsp;Antiquities.&nbsp;"
+<br>
+&nbsp;&nbsp;readDesc&nbsp;=&nbsp;"Amongst&nbsp;such&nbsp;oddities&nbsp;as&nbsp;the&nbsp;Amber&nbsp;Amulet&nbsp;of&nbsp;Amazement,&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Green&nbsp;Gargoyle&nbsp;of&nbsp;Gloom,&nbsp;the&nbsp;Lost&nbsp;Crown&nbsp;of&nbsp;King&nbsp;Peregrine&nbsp;the&nbsp;Pipsqueak
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;the&nbsp;Invisible&nbsp;Mantle&nbsp;of&nbsp;the&nbsp;Naked&nbsp;Emperor,&nbsp;your&nbsp;eye&nbsp;is&nbsp;caught&nbsp;by
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;advertisement&nbsp;for&nbsp;the&nbsp;star&nbsp;exhibit:&nbsp;the&nbsp;Golden&nbsp;Banana&nbsp;of&nbsp;Discord.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;reverse&nbsp;of&nbsp;side&nbsp;of&nbsp;the&nbsp;leaflet&nbsp;proclaims,&nbsp;&lt;q&gt;Our&nbsp;most&nbsp;wanted
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;acquisition&nbsp;of&nbsp;the&nbsp;month&nbsp;is&nbsp;the&nbsp;legendary&nbsp;Great&nbsp;Purple&nbsp;Carbuncle&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;King&nbsp;Solomon;&nbsp;if&nbsp;discovered,&nbsp;please&nbsp;bring&nbsp;to&nbsp;the&nbsp;curator&nbsp;who&nbsp;will
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;only&nbsp;receive&nbsp;it&nbsp;with&nbsp;&lt;i&gt;great&lt;/i&gt;&nbsp;gratitude&nbsp;but&nbsp;ensure&nbsp;that&nbsp;a&nbsp;small
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;brass&nbsp;plaque&nbsp;is&nbsp;inscribed&nbsp;to&nbsp;your&nbsp;everlasting&nbsp;honour!&lt;/q&gt;&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;yellow&nbsp;leaflet&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground.&nbsp;"
+<br>
+&nbsp;&nbsp;remoteInitSpecialDesc(actor)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"On&nbsp;the&nbsp;&lt;&lt;actor.isIn(deepChasm)&nbsp;?&nbsp;'southern'&nbsp;:&nbsp;'far'&gt;&gt;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ledge&nbsp;of&nbsp;the&nbsp;chasm&nbsp;lies&nbsp;a&nbsp;crumpled&nbsp;piece&nbsp;of&nbsp;yellow&nbsp;paper.&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that </font><font face="Courier New" size="2" color="#000000">remoteInitSpecialDesc</font><font face="Arial" size="2" color="#000000"> takes a single parameter, </font><font face="Courier New" size="2" color="#000000">actor</font><font face="Arial" size="2" color="#000000">. This normally represents the actor from whose point of view the object is to be described. If this affects the remote description at all, it will normally depend on the location of the actor; thus we can use it here to vary the description of the location of the leaflet depending on the location of the player character when it's described (if we wanted to, we could also vary the description of the leaflet itself, perhaps making it slightly more detailed from the closer point of view).
+<br>
+
+<br>
+There's a further refinement we can make here: if you push the monolith into the chasm, walk south to the ledge, take the leaflet and drop it, then return to the monolith, the room description will now state:
+<br>
+
+<br>
+In the ledge of chasm, you see a yellow leaflet.
+<br>
+
+<br>
+This shows that the leaflet is still visible, but that it's in the 'ledge of chasm' room, not the current location. However, 'In the ledge of chasm' is not the most felicitous way to describe the position of the leaflet, so we may want to customise it. We can do this by overriding the inRoomName(pov) method of chasmLedge (where pov has the same meaning as before), for example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">chasmLedge&nbsp;:&nbsp;DarkRoom&nbsp;'Ledge&nbsp;of&nbsp;Chasm'&nbsp;'the&nbsp;ledge&nbsp;of&nbsp;the&nbsp;chasm'
+<br>
+&nbsp;&nbsp;"A&nbsp;deep,&nbsp;wide&nbsp;chasm&nbsp;splits&nbsp;the&nbsp;ground&nbsp;immediately&nbsp;to&nbsp;the&nbsp;north&nbsp;of&nbsp;this
+<br>
+&nbsp;&nbsp;&nbsp;narrow&nbsp;ledge,&nbsp;while&nbsp;a&nbsp;dark&nbsp;tunnel&nbsp;runs&nbsp;south.&nbsp;Another&nbsp;tunnel&nbsp;can&nbsp;be&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;seen&nbsp;leading&nbsp;north&nbsp;from&nbsp;the&nbsp;far&nbsp;side&nbsp;of&nbsp;the&nbsp;chasm.&nbsp;"
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;deepChasm&nbsp;
+<br>
+&nbsp;&nbsp;<b>inRoomName(pov)&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'on&nbsp;the&nbsp;'&nbsp;+&nbsp;(pov.isIn(deepChasm)&nbsp;?&nbsp;'south'&nbsp;:&nbsp;'far')&nbsp;+&nbsp;'&nbsp;ledge&nbsp;of&nbsp;the&nbsp;chasm';&nbsp;
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

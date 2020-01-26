@@ -1,0 +1,565 @@
+<html>
+
+<head>
+<title>TADS Workbench Command List</title>
+<link rel=stylesheet href="wbdoc.css">
+</head>
+
+<body>
+<font size=-1>Help Topics &gt; <a href="wbcont.htm">Table of Contents</a></font><br><br><br>
+<h1>TADS Workbench Command List</h1>
+<dl class=cmdlist>
+<dt>Build.Abort
+<dd>Interrupt the current build process (this should be used only if the build appears to be stuck).
+<br><span class=sysid>TADS 3 only</span>
+<dt>Build.AllPackages
+<dd>Build all packages (Release ZIP, SETUP, Web Page, Source ZIP).
+<br><span class=sysid>TADS 3 only</span>
+<dt>Build.Clean
+<dd>Delete all of the project's "debug" compiler-output files - object files, symbol files, and the executable file.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Build.CompileAndRun
+<dd>Compile the project in "debug" mode, and if successful, begin execution as soon as the build completes.
+<dt>Build.CompileExe
+<dd>Compile the project into a stand-alone executable that Windows users can run without installing the TADS Interpreter.
+<dt>Build.CompileForDebug
+<dd>Compile the project in "debug" mode, for execution in the integrated debugger.
+<dt>Build.CompileForDebugFull
+<dd>Compile the project in "debug" mode, recompiling all files, whether changed or not since the last build.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Build.CompileForRelease
+<dd>Compile the project in "release" mode, for distribution to users.
+<dt>Build.CompileInstaller
+<dd>Compile the project and package it into a stand-alone SETUP program for single-file distribution to Windows users.
+<dt>Build.GoToError
+<dd>Display the source code line referenced by the error message at the current location in the Debug Log tool window.
+<dt>Build.Publish
+<dd>Publish the project to the Internet: upload to the IF Archive and create a listing on IFDB..
+<br><span class=sysid>TADS 3 only</span>
+<dt>Build.ReleaseZIP
+<dd>Build a ZIP file for release, with the compiled game and all "feelies".
+<br><span class=sysid>TADS 3 only</span>
+<dt>Build.Settings
+<dd>Display the Build Settings dialog to make changes to the project's build configuration.
+<dt>Build.SourceZIP
+<dd>Build a ZIP file containing the complete source code for the game, including the project file and all "feelies".
+<br><span class=sysid>TADS 3 only</span>
+<dt>Build.WebPage
+<dd>Generate a web page for distributing the game.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Debug.AbortCommand
+<dd>Send an "abort" signal to the running program to terminate processing of the current game command.
+<dt>Debug.AddWatch
+<dd>Add the current text selection to the expression window.
+<dt>Debug.Break
+<dd>Break into the program's execution, interrupting any command-line editing under way.
+<dt>Debug.ClearCallTrace
+<dd>Clear the call trace log.
+<br><span class=sysid>TADS 2 only</span>
+<dt>Debug.DisableBreakpoint
+<dd>Disable the breakpoint (if any) at the current source code line.
+<dt>Debug.EditBreakpoints
+<dd>Display the Breakpoints dialog.
+<dt>Debug.Evaluate
+<dd>Compute and display the current value of an expression.
+<dt>Debug.Go
+<dd>Start or continue execution of the program.
+<dt>Debug.ReplaySession
+<dd>Restart the game and replay the input script from the current/last session.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Debug.RunToCursor
+<dd>Start or continue execution, stopping upon reaching the current cursor location.
+<dt>Debug.SetClearBreakpoint
+<dd>Toggle the breakpoint at the current source code line.
+<dt>Debug.SetNextStatement
+<dd>Move the execution point to the current source code line.
+<dt>Debug.SetProgramArgs
+<dd>Display the Program Arguments dialog to enter command-line arguments to pass to the program on each run.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Debug.ShowNextStatement
+<dd>Display the next source code line that will be executed when execution resumes.
+<dt>Debug.StepInto
+<dd>Step through one line of code, entering any function or method called.
+<dt>Debug.StepOut
+<dd>Continue execution until the current function or method returns to its caller.
+<dt>Debug.StepOver
+<dd>Step through one line of code, but run any function or methods called within the line to completion.
+<dt>Debug.ToggleCallTrace
+<dd>Start/stop collecting a log of all method and function calls.
+<br><span class=sysid>TADS 2 only</span>
+<dt>Debug.ToggleHiddenOutput
+<dd>Toggle the show/hide status for hidden command output.
+<br><span class=sysid>TADS 2 only</span>
+<dt>Edit.BackTab
+<dd>Unindent the current line by one position.
+<dt>Edit.Cancel
+<dd>Cancel any modes, and cancel the current selection.
+<dt>Edit.ChangeModified
+<dd>Set or clear the "modified" status for the active window.
+<dt>Edit.ChangeReadOnly
+<dd>Set or clear read-only mode for the active window.
+<dt>Edit.CharLeft
+<dd>Move the cursor left one character.
+<dt>Edit.CharLeftExtend
+<dd>Move the cursor left one character, extending the selection.
+<dt>Edit.CharLeftRectExtend
+<dd>Move the cursor left one character, extending the rectangular selection.
+<dt>Edit.CharRight
+<dd>Move the cursor right one character.
+<dt>Edit.CharRightExtend
+<dd>Move the cursor right one character, extending the selection.
+<dt>Edit.CharRightRectExtend
+<dd>Move the cursor right one character, extending the rectangular selection.
+<dt>Edit.CharTranspose
+<dd>Transpose the characters before and after the caret.
+<dt>Edit.ClearAllBookmarks
+<dd>Remove all bookmarks throughout the project.
+<dt>Edit.ClearFileBookmarks
+<dd>Remove all bookmarks in the current file.
+<dt>Edit.CommentRegion
+<dd>Add or remove comment markers on each line in the selected region.
+<dt>Edit.Copy
+<dd>Copy the current text selection.
+<dt>Edit.Cut
+<dd>Cut the current text selection.
+<dt>Edit.CutLineRight
+<dd>Cut from the caret to the end of the line.
+<dt>Edit.Delete
+<dd>Delete the current selection.
+<dt>Edit.DeleteBack
+<dd>Delete the previous character.
+<dt>Edit.DeleteBackNotLine
+<dd>Delete the previous character, but do nothing at the start of the line.
+<dt>Edit.DeleteChar
+<dd>Delete the selection, or the character at the caret if there's no selection.
+<dt>Edit.DelLineLeft
+<dd>Delete from the start of the line to the cursor.
+<dt>Edit.DelLineRight
+<dd>Delete from the cursor to the end of the line.
+<dt>Edit.DelWordLeft
+<dd>Delete the previous word.
+<dt>Edit.DelWordRight
+<dd>Delete the word to the right of the cursor.
+<dt>Edit.DocumentEnd
+<dd>Move the cursor to the end of the document.
+<dt>Edit.DocumentEndExtend
+<dd>Move the cursor to the end of the document, extending the selection.
+<dt>Edit.DocumentStart
+<dd>Move the cursor to the start of the document.
+<dt>Edit.DocumentStartExtend
+<dd>Move the cursor to the start of the document, extending the selection.
+<dt>Edit.FillParagraph
+<dd>Word-wrap the current paragraph or all of the paragraphs in the selection range.
+<dt>Edit.Find
+<dd>Search for text in the current source file.
+<dt>Edit.FindDefinition
+<dd>Search the project for the definition of the symbol at the cursor.
+<dt>Edit.FindNext
+<dd>Search for the next occurrence of the last search text.
+<dt>Edit.Formfeed
+<dd>Insert a page break ("form feed" character) at the cursor.
+<dt>Edit.GoToLine
+<dd>Go to a given line number in the current window.
+<dt>Edit.Home
+<dd>Move the cursor to the start of the line.
+<dt>Edit.HomeDisplay
+<dd>Move the cursor to the start of the display line.
+<dt>Edit.HomeDisplayExtend
+<dd>Move the cursor to the start of the display line, extending the selection.
+<dt>Edit.HomeExtend
+<dd>Move the cursor to the start of the line, extending the selection.
+<dt>Edit.HomeRectExtend
+<dd>Move the cursor to the start of the line,  extending the rectangular selection.
+<dt>Edit.HomeWrap
+<dd>Move the cursor to the start of the wrapped line.
+<dt>Edit.HomeWrapExtend
+<dd>Move the cursor to the start of the wrapped line, extending the selection.
+<dt>Edit.IncSearch.Backspace
+<dd>Delete the last character of the search text.
+<dt>Edit.IncSearch.Cancel
+<dd>Cancel the current incremental search, returning to the position at the start of the search.
+<dt>Edit.IncSearch.Exit
+<dd>End the current incremental search, leaving the caret at the current position.
+<dt>Edit.IncSearch.Next
+<dd>Find the next occurrence of the search text.
+<dt>Edit.IncSearch.Prev
+<dd>Find the previous occurrence of the search text.
+<dt>Edit.IncSearch.ToggleExactCase
+<dd>Toggle exact-case matching for the current incremental search.
+<dt>Edit.IncSearch.ToggleRegEx
+<dd>Toggle regular-expression matching for the current incremental search.
+<dt>Edit.IncSearch.ToggleWord
+<dd>Toggle whole-word matching for the current incremental search.
+<dt>Edit.IndentHome
+<dd>Move the cursor to the start of the current line's indentation.
+<dt>Edit.IndentHomeExtend
+<dd>Move the cursor to the start of the current line's indentation, extending the selection.
+<dt>Edit.IndentHomeRectExtend
+<dd>Move the cursor to the start of the current line's indentation, extending the rectangular selection.
+<dt>Edit.IndentHomeWrap
+<dd>Move the cursor to the start of the current wrapped line's indentation.
+<dt>Edit.IndentHomeWrapExtend
+<dd>Move the cursor to the start of the current wrapped line's indentation, extending the selection.
+<dt>Edit.JumpToNamedBookmark
+<dd>Go to a named bookmark.
+<dt>Edit.JumpToNextBookmark
+<dd>Go to the next bookmark in the current file, or to the first bookmark in the next project file.
+<dt>Edit.JumpToPreviousBookmark
+<dd>Go to the previous bookmark in the current file, or to the last bookmark in the prior project file.
+<dt>Edit.LineCopy
+<dd>Copy the current line to the clipboard.
+<dt>Edit.LineCut
+<dd>Cut the current line, placing it on the clipboard.
+<dt>Edit.LineDelete
+<dd>Delete the current line.
+<dt>Edit.LineDown
+<dd>Move the cursor to the next line.
+<dt>Edit.LineDownExtend
+<dd>Move the cursor to the next line, extending the selection.
+<dt>Edit.LineDownRectExtend
+<dd>Move the cursor to the next line, extending the rectangular selection.
+<dt>Edit.LineDuplicate
+<dd>Insert a copy of the current line.
+<dt>Edit.LineEnd
+<dd>Move the cursor to the end of the current line.
+<dt>Edit.LineEndDisplay
+<dd>Move the cursor to the end of the current display line.
+<dt>Edit.LineEndDisplayExtend
+<dd>Move the cursor to the end of the current display line, extending the selection.
+<dt>Edit.LineEndExtend
+<dd>Move the cursor to the end of the current line, extending the selection.
+<dt>Edit.LineEndRectExtend
+<dd>Move the cursor to the end of the current line, extending the rectangular selection.
+<dt>Edit.LineEndWrap
+<dd>Move the cursor to the end of the current wrapped line.
+<dt>Edit.LineEndWrapExtend
+<dd>Move the cursor to the end of the current wrapped line, extending the selection.
+<dt>Edit.LineScrollDown
+<dd>Scroll the window down one line.
+<dt>Edit.LineScrollUp
+<dd>Scroll the window up one line.
+<dt>Edit.LineSelectMode
+<dd>Set line selection mode: sets "mark" to here; subsequent ordinary cursor movement selects whole lines.
+<dt>Edit.LineTranspose
+<dd>Transpose the current and previous lines.
+<dt>Edit.LineUp
+<dd>Move the cursor to the previous line.
+<dt>Edit.LineUpExtend
+<dd>Move the cursor to the previous line, extending the selection.
+<dt>Edit.LineUpRectExtend
+<dd>Move the cursor to the previous line, extending the rectangular selection.
+<dt>Edit.Lowercase
+<dd>Convert the selection to lower-case.
+<dt>Edit.Newline
+<dd>Insert a newline at the cursor.
+<dt>Edit.OpenLine
+<dd>Opens a new line at the cursor.
+<dt>Edit.PageDown
+<dd>Move the cursor down one page.
+<dt>Edit.PageDownExtend
+<dd>Move the cursor down one page, extending the selection.
+<dt>Edit.PageDownRectExtend
+<dd>Move the cursor down one page, extending the rectangular selection.
+<dt>Edit.PageLeft
+<dd>Scroll one window-width left.
+<dt>Edit.PageRight
+<dd>Scroll one window-width right.
+<dt>Edit.PageUp
+<dd>Move the cursor up one page.
+<dt>Edit.PageUpExtend
+<dd>Move the cursor up one page, extending the selection.
+<dt>Edit.PageUpRectExtend
+<dd>Move the cursor up one page, extending the rectangular selection.
+<dt>Edit.ParaDown
+<dd>Move the curor to the start of the next paragraph.
+<dt>Edit.ParaDownExtend
+<dd>Move the curor to the start of the next paragraph, extending the selection.
+<dt>Edit.ParaUp
+<dd>Move the cursor up by one paragraph.
+<dt>Edit.ParaUpExtend
+<dd>Move the cursor up by one paragraph, extending the selection.
+<dt>Edit.Paste
+<dd>Paste the contents of the clipboard.
+<dt>Edit.PastePop
+<dd>Replace the last Paste or PastePop text with the next most recent cut or copied text.
+<dt>Edit.PopBookmark
+<dd>Go to the most recently set bookmark, and pop it off the recent bookmark stack.
+<dt>Edit.QuoteKey
+<dd>Treat the next keystroke as a literal character to insert into the editor, not as a command key.
+<dt>Edit.RectSelectMode
+<dd>Set rectangle selection mode: sets "mark" to here; subsequent cursor movement defines a rectangular selection.
+<dt>Edit.Redo
+<dd>Redo the last editing action.
+<dt>Edit.RepeatCount
+<dd>Enter a number from the keyboard as a repeat count for the next editing command.
+<dt>Edit.Replace
+<dd>Search the active window for text and replace each occurrence.
+<dt>Edit.ScrollLeft
+<dd>Scroll one column left.
+<dt>Edit.ScrollRight
+<dd>Scroll one column right.
+<dt>Edit.SearchIncremental
+<dd>Search incrementally for text entered interactively.
+<dt>Edit.SearchRegexIncremental
+<dd>Incremental regular expression search.
+<dt>Edit.SearchRevIncremental
+<dd>Incremental reverse search.
+<dt>Edit.SearchRevRegexIncremental
+<dd>Incremental reverse regular expression search.
+<dt>Edit.SelectAll
+<dd>Select everything in the current window.
+<dt>Edit.SelectionDuplicate
+<dd>Insert a copy of the selection.
+<dt>Edit.SelectionMode
+<dd>Set selection mode: sets "mark" to here; subsequent ordinary cursor movement defines a selection.
+<dt>Edit.SelectToMark
+<dd>Select the text between the current position and the "mark" position.
+<dt>Edit.SetNamedBookmark
+<dd>Set a named bookmark at the current line.
+<dt>Edit.ShowFolding
+<dd>Show the code-folding controls in text editing windows.
+<dt>Edit.ShowLineNumbers
+<dd>Show line numbers in text editing windows.
+<dt>Edit.SplitWindow
+<dd>Split the current window 50/50 horizontally.
+<dt>Edit.StutteredPageDown
+<dd>Move the cursor to the bottom of the current page, or down a page if already at the bottom.
+<dt>Edit.StutteredPageDownExtend
+<dd>Move the cursor to the bottom of the page or down one page if already there, extending the selection.
+<dt>Edit.StutteredPageUp
+<dd>Move the cursor to the top of the current page, or up one page if already at the top.
+<dt>Edit.StutteredPageUpExtend
+<dd>Move the cursor to the top of the page or up one page if already there, extending the selection.
+<dt>Edit.SwapMark
+<dd>Swap the current position with the "mark" position.
+<dt>Edit.SwitchSplitWindow
+<dd>Move focus to the other pane of a split window.
+<dt>Edit.Tab
+<dd>Indent the current line by one position.
+<dt>Edit.ToggleBookmark
+<dd>Set or clear a bookmark at the current line.
+<dt>Edit.ToggleOvertype
+<dd>Toggle between Insert and Overtype modes.
+<dt>Edit.Undo
+<dd>Undo the last editing action.
+<dt>Edit.UnsplitSwitchWindow
+<dd>Switch to the other split pane and un-split the window.
+<dt>Edit.UnsplitWindow
+<dd>Un-split the window to show as a single pane.
+<dt>Edit.Uppercase
+<dd>Convert the selection to uppper-case.
+<dt>Edit.VCenterCaret
+<dd>Scroll the window to center the caret vertically.
+<dt>Edit.WindowEnd
+<dd>Move the caret to the bottom of the window.
+<dt>Edit.WindowHome
+<dd>Move the caret to the top of the window.
+<dt>Edit.WordLeft
+<dd>Move the cursor left by one word.
+<dt>Edit.WordLeftEnd
+<dd>Move the cursor to the end of the previous word.
+<dt>Edit.WordLeftEndExtend
+<dd>Move the cursor to the end of the previous word, extending the selection.
+<dt>Edit.WordLeftExtend
+<dd>Move the cursor left by one word, extending the selection.
+<dt>Edit.WordPartLeft
+<dd>Move the cursor left to the prior "word part" (intercap, underscore, etc).
+<dt>Edit.WordPartLeftExtend
+<dd>Move the cursor left to the prior "word part" (intercap, underscore, etc), extending the selection.
+<dt>Edit.WordPartRight
+<dd>Move the cursor right to the next "word part" (intercap, underscore, etc).
+<dt>Edit.WordPartRightExtend
+<dd>Move the cursor right to the next "word part" (intercap, underscore, etc), extending the selection.
+<dt>Edit.WordRight
+<dd>Move the cursor right by one word.
+<dt>Edit.WordRightEnd
+<dd>Move the cursor to the end of the next word.
+<dt>Edit.WordRightEndExtend
+<dd>Move the cursor to the end of the next word, extending the selection.
+<dt>Edit.WordRightExtend
+<dd>Move the cursor right by one word, extending the selection.
+<dt>Edit.WrapChar
+<dd>Wrap long lines in the active window at any character boundary.
+<dt>Edit.WrapNone
+<dd>Turn off word-wrap and character-wrap mode for the active window.
+<dt>Edit.WrapWord
+<dd>Wrap long lines in the active window at word boundaries.
+<dt>File.Close
+<dd>Close the current window.
+<dt>File.Exit
+<dd>Exit the application.
+<dt>File.New
+<dd>Create a new file.
+<dt>File.NewProject
+<dd>Run the New Project Wizard to create a new project.
+<dt>File.Open
+<dd>Open a file.
+<dt>File.OpenProject
+<dd>Open a project (closes the current project).
+<dt>File.PageSetup
+<dd>Select a printer and set up the page layout for printing.
+<dt>File.Print
+<dd>Print the current document window.
+<dt>File.ReloadProject
+<dd>Close the current project and reload it.
+<dt>File.RestartProgram
+<dd>Terminate the running program and start it again.
+<dt>File.Save
+<dd>Save the current file.
+<dt>File.SaveAll
+<dd>Save all modified files.
+<dt>File.SaveAs
+<dd>Save the current file under a new name.
+<dt>File.SendToExternalEditor
+<dd>Open the current file in the external text editor application.
+<dt>File.StopProgram
+<dd>Terminate the running program.
+<dt>Help.About
+<dd>Show TADS Workbench version and copyright information.
+<dt>Help.EnterDocSearch
+<dd>Move keyboard focus to the Search toolbar to enter keywords for a documentation search.
+<dt>Help.GoBack
+<dd>Go back to the previous page in the help window.
+<dt>Help.GoForward
+<dd>Navigate forward to the next page in the help window.
+<dt>Help.LibraryManual
+<dd>Open the on-line Library Manual.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Help.Manuals
+<dd>Open the on-line User's Manual.
+<dt>Help.ParserManual
+<dd>Open the on-line Parser Manual.
+<br><span class=sysid>TADS 2 only</span>
+<dt>Help.Refresh
+<dd>Reload the page displayed in the help window.
+<dt>Help.SearchDoc
+<dd>Search the documentation for keywords.
+<dt>Help.Topics
+<dd>Open the on-line Help and go to the main topic list.
+<dt>Help.Tutorial
+<dd>Open the on-line Tutorial manual.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Profiler.Start
+<dd>Begin collecting "profiling" performance data, which monitors the amount of time spent in each function and method called while profiling is activated.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Profiler.Stop
+<dd>Stop collecting profiling data.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.AddActiveFile
+<dd>Add the file in the active text editor window to the project.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.AddExternalResource
+<dd>Add an external resource file to the project.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.AddFile
+<dd>Browse for a file or files to add to the project.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.AddFolder
+<dd>Add all files in a specified folder to the project in the selected section.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.IncludeInInstall
+<dd>If an external resource file is selected in the Project window, toggle its "included in install" status.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.OpenSelection
+<dd>Open the file selected in the Project window.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.RemoveSelection
+<dd>Remove the file selected in the Project window from the project.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.ScanIncludes
+<dd>Rebuild the project's list of header files by scanning the source files for #include directives.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.SearchFiles
+<dd>Search for text in the project's source files.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.SearchFilesReplace
+<dd>Search all project files for text and replace each occurrence.
+<dt>Project.SetFileTitle
+<dd>Set the title to display in the Start Menu or Web Page for the selected file.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Project.SetSpecial
+<dd>Select the file to use for the selected special item in the Project list.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Script.ReplayToCursor
+<dd>Replay the current script up to (and including) the line containing the cursor.
+<br><span class=sysid>TADS 3 only</span>
+<dt>Tools.EditExternal
+<dd>Edit the list of external commands displayed on the Tools menu.
+<dt>Tools.NewIFID
+<dd>Create an IFID (an Interative Fiction IDentifier, for use in GameInfo metadata).
+<dt>Tools.Options
+<dd>Display the Options dialog to customize the Workbench environment and text editor.
+<dt>Tools.ReadIFID
+<dd>Read the IFID from a previously released TADS game.
+<dt>View.AutoFlushGameWin
+<dd>Automatically flush buffered output in the main game window every time the debugger gets control.
+<dt>View.CallTraceWindow
+<dd>Show the Trace Log tool window.
+<br><span class=sysid>TADS 2 only</span>
+<dt>View.DebugToolbar
+<dd>Show/Hide the Debug toolbar.
+<dt>View.DocSearch
+<dd>Show the Documentation Search Results tool window.
+<dt>View.DocToolbar
+<dd>Show/Hide the Documentation toolbar.
+<dt>View.EditToolbar
+<dd>Show/Hide the Text Editing toolbar.
+<dt>View.ExprWindow
+<dd>Show the Expression tool window.
+<dt>View.FileSearch
+<dd>Show the Project File Search Results tool window.
+<dt>View.FlushGameWin
+<dd>Flush any buffered output in the main game window.
+<dt>View.GameWindow
+<dd>Show the main game window, and bring to the front.
+<dt>View.Help
+<dd>Show the Help/Documentation Viewer tool window.
+<dt>View.LocalsWindow
+<dd>Show the Local Variables tool window.
+<dt>View.Menu
+<dd>Show/Hide the main menu.
+<dt>View.ProjectWindow
+<dd>Show the Project window.
+<br><span class=sysid>TADS 3 only</span>
+<dt>View.ScriptWindow
+<dd>Show the Script tool window.
+<br><span class=sysid>TADS 3 only</span>
+<dt>View.SearchToolbar
+<dd>Show/Hide the Search toolbar.
+<dt>View.ShowDebugWin
+<dd>Show the Debug Log tool window.
+<dt>View.StackWindow
+<dd>Show the Stack tool window.
+<dt>View.Statusline
+<dd>Show/Hide the status line.
+<dt>Window.Cascade
+<dd>Reposition all open windows in a staggered formation.
+<dt>Window.CloseAllDocuments
+<dd>Close all document windows.
+<dt>Window.Dock
+<dd>Dock the active dockable window.
+<dt>Window.DockHide
+<dd>Hide the active docking window.
+<dt>Window.DockingMode
+<dd>Make the current MDI tool window into a dockable tool window, or vice versa.
+<dt>Window.Maximize
+<dd>Maximize the window.
+<dt>Window.Minimize
+<dd>Minimize the window.
+<dt>Window.Next
+<dd>Switch to the next window.
+<dt>Window.Prev
+<dd>Switch to the previous window.
+<dt>Window.Restore
+<dd>Restore the current maximized window to its original size.
+<dt>Window.TileHoriz
+<dd>Reposition all open windows in a horizontal tile pattern.
+<dt>Window.TileVert
+<dd>Reposition all open windows in a vertical tile pattern.
+<dt>Window.Undock
+<dd>Undock the active docking window, making it a floating tool window.
+</dl>
+
+<br><br><br><font size=-1>Help Topics &gt; <a href="wbcont.htm">Table of Contents</a></font><br><br>
+</body>
+</html>

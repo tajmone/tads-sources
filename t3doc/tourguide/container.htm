@@ -1,0 +1,66 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Container</title><meta name="keywords" content="Container,isOpen,objNotWorn,preCond,material,glass,brightness"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Container :<a href="basiccontainer.htm"> BasicContainer</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="basiccontainer.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="openablecontainer.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Although the plain Container class contains no handling for dealing with OPEN and CLOSE commands from the player (for that you need <a href="openablecontainer.htm">OpenableContaine</a>r or one of its subclasses), it does have an isOpen property that can be set and manipulated by the author in game code, and, unlike BasicContainer, a Container does allow things to be put inside it in response to a PUT IN command.
+<br>
+
+<br>
+One item we have already defined that could be used as a Container, though not obviously so, is the <a href="wearable.htm">sailor's cap</a>. It won't have a huge capacity, but a cap ought to be able to contain a few small items. Also, it will have the interesting property that it will be closed when worn and open otherwise.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">cap&nbsp;:&nbsp;Wearable,&nbsp;<b>Container</b>&nbsp;'sailor\'s&nbsp;cap'&nbsp;'sailor\'s&nbsp;cap'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large&nbsp;round&nbsp;hat&nbsp;with&nbsp;a&nbsp;white&nbsp;top&nbsp;and&nbsp;a&nbsp;small&nbsp;blue&nbsp;peak.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>bulkCapacity&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;isOpen&nbsp;{&nbsp;return&nbsp;!isWorn();&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Try compiling and running the game, then move to mainCave and experiment with using the cap as a Container when it is and isn't worn (for now you can use the boulder as the object to put in it, though this isn't very realistic). Everything should work fine until you try to put the boulder in the cap while the player character is wearing the cap, whereupon you'll get:
+<br>
+
+<br>
+&gt;<b>put boulder in cap</b>
+<br>
+You can't move that through the sailor's cap.
+<br>
+
+<br>
+Although far from disastrous, this is certainly less than ideal. Although you could override the message, a neater solution is to add objNotWorn to the preconditions for putting anything in the cap:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">cap&nbsp;:&nbsp;Wearable,&nbsp;Container&nbsp;'sailor\'s&nbsp;cap'&nbsp;'sailor\'s&nbsp;cap'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large&nbsp;round&nbsp;hat&nbsp;with&nbsp;a&nbsp;white&nbsp;top&nbsp;and&nbsp;a&nbsp;small&nbsp;blue&nbsp;peak.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;isOpen&nbsp;{&nbsp;return&nbsp;!isWorn();&nbsp;}
+<br>
+&nbsp;&nbsp;<b>iobjFor(PutIn)&nbsp;{&nbsp;preCond&nbsp;=&nbsp;static&nbsp;inherited&nbsp;+&nbsp;objNotWorn&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then, when the player attempts to put something in the cap while it is worn, a REMOVE CAP command is carried out as an implicit action and the PUT IN command follows (try it and see).
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

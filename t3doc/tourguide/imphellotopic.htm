@@ -1,0 +1,34 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ImpHelloTopic</title><meta name="keywords" content="ImpHelloTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ImpHelloTopic : <a href="misctopic.htm">MiscTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="hellotopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="byetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An ImpHelloTopic (if defined) deals with the <a href="greetingprotocols.htm">greeting protocols</a> in the case where a conversation is started without an explicit greeting command (such as SARAH, HELLO or TALK TO SARAH). The normal place for an ImpHelloTopic is in a <a href="conversationreadystate.htm">ConversationReadyState</a>.
+<br>
+
+<br>
+For example, we might provide King Solomon with an ImpHelloTopic that looks like this:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+++&nbsp;ImpHelloTopic&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;"Solomon&nbsp;turns&nbsp;and&nbsp;looks&nbsp;up&nbsp;at&nbsp;you&nbsp;as&nbsp;you&nbsp;start&nbsp;to&nbsp;speak.&nbsp;
+<br>
+&nbsp;&nbsp;&lt;&lt;solomonHelloTopic.advanceState()&gt;&gt;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This should be located in the solomonExamining ConversationReadyState. The one subtlety here is the call to solomonHelloTopic.advanceState(). The reason for calling this is that once this ImpHelloTopic has been triggered, we'd want to see the second response, not the first, in the list of responses on <a href="hellotopic.htm">solomonHelloTopic</a>.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

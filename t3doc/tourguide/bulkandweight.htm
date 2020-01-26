@@ -1,0 +1,64 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>bulk and weight</title><meta name="keywords" content="bulk,weight,bulkCapacity,weightCapacity,maxSingleBulk"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>bulk and weight
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="described.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="setsuperclasslist.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The <b>bulk</b> and <b>weight</b> properties are fairly self-explanatory, in that they can be used to hold numbers (which must be integers) representing the bulk (volume) and weight of the item according to any scheme the game author finds convenient.
+<br>
+
+<br>
+One use of these properties, which is normally deprecated in modern IF, is to limit what the player character can carry, either by weight or volume. This can be done by setting the player character's bulkCapacity and weightCapacity properties to some value lower than the default of 10000. Conversely, if you are going to use a large range of numbers for the bulk property of you objects, you might want to raise its maxSingleBulk property to something larger than its default value of 10. Although inventory puzzles are now unpopular, it is more acceptable to limit what a PC can carry round in his or hands if you provide something (such as a bag or sack) he or she can use to transport objects that exceed the capacity of his or her hands.
+<br>
+
+<br>
+Another use for the bulk property might be as a rough and ready way of preventing the absurdity of allowing an obviously small container like a purse contain one or more obviously large objects like a packing case or a pair of oars; for this reason alone you might want to give at least a little thought to the bulk you give your objects and the bulkCapacity you give any container objects. At the very least it would be odd to have a container whose bulkCapacity exceeded its bulk.
+<br>
+
+<br>
+Apart from limiting what a player can carry, weight could be used to limit what various platforms and passages can support; you could, for example, have a flimsy bridge that collapses if the total weight it is made to bear exceeds a certain amount. In this game, however, we shall use weight for a different kind of puzzle, namely one that involves putting exactly the correct total weight (which in this game will be 54) on a stone altar in order to open a secret door behind it. Any combination of objects that weigh 54 in total will trigger the secret door, and in due course we shall provide a weighing machine for the player to find out what any portable object weighs. But to make sure the problem is soluble, we shall also provide a set of objects that weigh 1, 2, 4, 8, 16 and 32 units, which guarantees that (once all these objects have been collected) any weight up to 63 units can be formed by some combination of these objects (to obtain 54 the player will need 32 + 16 + 4 + 2). Each of these objects will be a square tablet, each made of some different material. One face of each of these objects will contain a grid of 25 (5 x 5) letters; when the complete set is collected these inscriptions will, when deciphered, contain the instruction to place 54 pounds on the altar. An inscription on a tombstone outside the temple (in which the altar is located) will provide a clue how the inscriptions are to be deciphered.
+<br>
+
+<br>
+Since there will be several of these tablets in the game, all with similar descriptions, it will be convenient to define a Tablet class:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;Tablet&nbsp;:&nbsp;Thing&nbsp;
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"\^&lt;&lt;theName&gt;&gt;&nbsp;is&nbsp;about&nbsp;eight&nbsp;inches&nbsp;square&nbsp;and&nbsp;an&nbsp;inch&nbsp;thick.
+<br>
+&nbsp;&nbsp;&nbsp;On&nbsp;it&nbsp;is&nbsp;inscribed:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&gt;&lt;&lt;inscription&gt;&gt;&lt;/FONT&gt;\b"&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;4
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We can then define our first tablet and place it in longCave:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassTablet&nbsp;:&nbsp;Tablet&nbsp;'brass&nbsp;tablet*tablets'&nbsp;'brass&nbsp;tablet'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;inscription&nbsp;=&nbsp;"F&nbsp;T&nbsp;M&nbsp;T&nbsp;R\nA&nbsp;O&nbsp;O&nbsp;I&nbsp;U\nS&nbsp;T&nbsp;U&nbsp;N&nbsp;L\nT&nbsp;I&nbsp;L&nbsp;R&nbsp;E\nR&nbsp;A&nbsp;D&nbsp;A&nbsp;R"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;brass&nbsp;tablet&nbsp;rests&nbsp;by&nbsp;the&nbsp;ladder.&nbsp;"
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;4&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">We'll explain how the coded message works later; in the meantime you're welcome to try to work it out for yourself!</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

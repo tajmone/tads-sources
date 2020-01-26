@@ -1,0 +1,169 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ConversationReadyState</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ConversationReadyState</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4742">4742</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A "ready for conversation" state.  This can be used as the base class   for actor states when the actor is receptive to conversation, and we   want to have the sense of a conversational context.  The key feature   that this class provides is the ability to provide messages when   engaging and disengaging the conversation. <p>   Note that this state is NOT required for conversation, since the basic   ActorState object accepts conversational commands like ASK, TELL,   GIVE, and TAKE.  The special feature of the "conversation ready" state   is that we explicitly move the actor to a separate state when   conversation begins.  This is especially appropriate for states in   which the NPC is actively carrying on some other activity; the   conversation should interrupt those states, so that the actor stops   the other activity and gives us its full attention. <p>   This type of state can be associated with its in-conversation state   object in one of two ways.  First, the inConvState property can be   explicitly set to point to the in-conversation state object.  Second,   this object can be nested inside its in-conversation state object via   the 'location' property (so you can use the '+' syntax to put this   object inside its in-conversation state object).  The 'ready' object   goes inside the 'conversing' object because a single 'conversing'   object can frequently be shared among several 'ready' states.
+<p>
+<code>class
+<b>ConversationReadyState</b> :  &nbsp; <a href="../object/ActorState.html">ActorState</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ConversationReadyState</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorState.html">ActorState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TravelMessageHandler.html">TravelMessageHandler</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorTopicDatabase.html">ActorTopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicDatabase.html">TopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#getImpliedConvState">getImpliedConvState</a>&nbsp;
+<a href="#inConvState">inConvState</a>&nbsp;
+<a href="#stateSuggestedTopics">stateSuggestedTopics</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorState</code> :<br>
+<code>
+<a href="../object/ActorState.html#autoSuggest">autoSuggest</a>&nbsp;
+<a href="../object/ActorState.html#isInitState">isInitState</a>&nbsp;
+<a href="../object/ActorState.html#location">location</a>&nbsp;
+<a href="../object/ActorState.html#stateDesc">stateDesc</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ActorTopicDatabase</code> :<br>
+<code>
+<a href="../object/ActorTopicDatabase.html#askForTopics">askForTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#askTopics">askTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#commandTopics">commandTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#giveTopics">giveTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#initiateTopics">initiateTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#miscTopics">miscTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#showTopics">showTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#specialTopics">specialTopics</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html#tellTopics">tellTopics</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicDatabase</code> :<br>
+<code>
+<a href="../object/TopicDatabase.html#limitSuggestions">limitSuggestions</a>&nbsp;
+<a href="../object/TopicDatabase.html#suggestedTopics">suggestedTopics</a>&nbsp;
+<a href="../object/TopicDatabase.html#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="../object/TopicDatabase.html#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#enterConversation">enterConversation</a>&nbsp;
+<a href="#enterFromConversation">enterFromConversation</a>&nbsp;
+<a href="#handleConversation">handleConversation</a>&nbsp;
+<a href="#initializeActorState">initializeActorState</a>&nbsp;
+<a href="#initiateTopic">initiateTopic</a>&nbsp;
+<a href="#notifyTopicResponse">notifyTopicResponse</a>&nbsp;
+<a href="#showGreetingMsg">showGreetingMsg</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorState</code> :<br>
+<code>
+<a href="../object/ActorState.html#activateState">activateState</a>&nbsp;
+<a href="../object/ActorState.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/ActorState.html#afterTravel">afterTravel</a>&nbsp;
+<a href="../object/ActorState.html#arrivingTurn">arrivingTurn</a>&nbsp;
+<a href="../object/ActorState.html#arrivingWithDesc">arrivingWithDesc</a>&nbsp;
+<a href="../object/ActorState.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/ActorState.html#beforeTravel">beforeTravel</a>&nbsp;
+<a href="../object/ActorState.html#construct">construct</a>&nbsp;
+<a href="../object/ActorState.html#deactivateState">deactivateState</a>&nbsp;
+<a href="../object/ActorState.html#distantSpecialDesc">distantSpecialDesc</a>&nbsp;
+<a href="../object/ActorState.html#endConversation">endConversation</a>&nbsp;
+<a href="../object/ActorState.html#getActor">getActor</a>&nbsp;
+<a href="../object/ActorState.html#getNominalTraveler">getNominalTraveler</a>&nbsp;
+<a href="../object/ActorState.html#getSuggestedTopicList">getSuggestedTopicList</a>&nbsp;
+<a href="../object/ActorState.html#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="../object/ActorState.html#justFollowed">justFollowed</a>&nbsp;
+<a href="../object/ActorState.html#obeyCommand">obeyCommand</a>&nbsp;
+<a href="../object/ActorState.html#remoteSpecialDesc">remoteSpecialDesc</a>&nbsp;
+<a href="../object/ActorState.html#showSpecialDescInContents">showSpecialDescInContents</a>&nbsp;
+<a href="../object/ActorState.html#specialDesc">specialDesc</a>&nbsp;
+<a href="../object/ActorState.html#specialDescListWith">specialDescListWith</a>&nbsp;
+<a href="../object/ActorState.html#suggestTopicsFor">suggestTopicsFor</a>&nbsp;
+<a href="../object/ActorState.html#takeTurn">takeTurn</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TravelMessageHandler</code> :<br>
+<code>
+<a href="../object/TravelMessageHandler.html#sayArriving">sayArriving</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDir">sayArrivingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingDownStairs">sayArrivingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingLocally">sayArrivingLocally</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingThroughPassage">sayArrivingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingUpStairs">sayArrivingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayArrivingViaPath">sayArrivingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDeparting">sayDeparting</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingDir">sayDepartingDir</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingDownStairs">sayDepartingDownStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingLocally">sayDepartingLocally</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingThroughPassage">sayDepartingThroughPassage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingUpStairs">sayDepartingUpStairs</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayDepartingViaPath">sayDepartingViaPath</a>&nbsp;
+<a href="../object/TravelMessageHandler.html#sayTravelingRemotely">sayTravelingRemotely</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ActorTopicDatabase</code> :<br>
+<code>
+<a href="../object/ActorTopicDatabase.html#showTopicResponse">showTopicResponse</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicDatabase</code> :<br>
+<code>
+<a href="../object/TopicDatabase.html#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#addTopic">addTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#addTopicToList">addTopicToList</a>&nbsp;
+<a href="../object/TopicDatabase.html#compareVocabMatch">compareVocabMatch</a>&nbsp;
+<a href="../object/TopicDatabase.html#findTopicResponse">findTopicResponse</a>&nbsp;
+<a href="../object/TopicDatabase.html#handleTopic">handleTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeSuggestedTopic">removeSuggestedTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeTopic">removeTopic</a>&nbsp;
+<a href="../object/TopicDatabase.html#removeTopicFromList">removeTopicFromList</a>&nbsp;
+<a href="../object/TopicDatabase.html#showSuggestedTopicList">showSuggestedTopicList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="getImpliedConvState"></a>
+<table class=decl><tr><td><code>getImpliedConvState</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4753">4753</a>]</table><div class=desc>my implied conversational state is my in-conversation state<p>
+</div>
+<a name="inConvState"></a>
+<table class=decl><tr><td><code>inConvState</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4750">4750</a>]</table><div class=desc>   The associated in-conversation state.  This should be set to an   InConversationState object that controls the actor's behavior   while carrying on a conversation.  Note that the library will   automatically set this if the instance is nested (via its   'location' property) inside an InConversationState object. <p>
+</div>
+<a name="stateSuggestedTopics"></a>
+<table class=decl><tr><td><code>stateSuggestedTopics</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4934">4934</a>]</table><div class=desc>   Get this state's suggested topic list.  ConversationReady states   shouldn't normally have topic entries of their own, since a   ConvversationReady state usually forwards conversation handling   to its corresponding in-conversation state.  So, simply return   the suggestion list from our in-conversation state object. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="enterConversation"></a>
+<table class=decl><tr><td><code>enterConversation (actor, entry)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4899">4899</a>]</table><div class=desc>   Enter a conversation with the given actor, either explicitly (via   HELLO or TALK TO) or implicitly (by directly asking a question,   etc).  'entry' gives the TopicEntry that's triggering the implicit   conversation entry; if this is nil, it means that we're being   triggered explicitly. <p>
+</div>
+<a name="enterFromConversation"></a>
+<table class=decl><tr><td><code>enterFromConversation (actor, reason, oldNode)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4815">4815</a>]</table><div class=desc>   Enter this state from a conversation.  This should show any   message we want to display when we're ending a conversation and   switching from the conversation to this state.  'reason' is the   endConvXxx enum indicating what triggered the termination of the   conversation.  'oldNode' is the ConvNode we were in just before we   initiated the termination - we need this information because we   want to look in the ConvNode for a Bye topic message to display,   but we can't just look in the actor for the node because it will   already have been cleared out by the time we get here. <p>   Games shouldn't normally override this method.  Instead, simply   create a ByeTopic entry and put it inside the state object; we'll   find the ByeTopic and show its message for the goodbye. <p>   If you want to distinguish between different types of goodbyes,   you can create an ImpByeTopic for any implied goodbye (i.e., the   kind where the other actor just walks away, or where we get bored   of the other actor ignoring us).  You can also further   differentiate by creating BoredByeTopic and/or LeaveByeTopic   objects to handle just those cases.  The regular ByeTopic will   handle explicit GOODBYE commands, and the others (ImpByeTopic,   BoredByeTopic, LeaveByeTopic) will handle the implied kinds. <p>
+</div>
+<a name="handleConversation"></a>
+<table class=decl><tr><td><code>handleConversation (otherActor, topic, convType)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4839">4839</a>]</table><div class=desc>handle a conversational action directed to our actor<p>
+</div>
+<a name="initializeActorState"></a>
+<table class=decl><tr><td><code>initializeActorState ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4937">4937</a>]</table><div class=desc>initialize the actor state object<p>
+</div>
+<a name="initiateTopic"></a>
+<table class=decl><tr><td><code>initiateTopic (obj)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4875">4875</a>]</table><div class=desc>   Initiate conversation based on the given simulation object.  This   is an internal method that isn't usually called directly from game   code; game code usually calls the Actor's initiateTopic(), which   calls this routine to check for a topic that's part of the state   object. <p>
+</div>
+<a name="notifyTopicResponse"></a>
+<table class=decl><tr><td><code>notifyTopicResponse (fromActor, entry)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4886">4886</a>]</table><div class=desc>   Receive notification that a TopicEntry is being used (via its   handleTopic method) to respond to a command.  If the TopicEntry is   conversational, automatically enter our in-conversation state. <p>
+</div>
+<a name="showGreetingMsg"></a>
+<table class=decl><tr><td><code>showGreetingMsg (actor, explicit)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4783">4783</a>]</table><div class=desc>   Show our greeting message.  If 'explicit' is true, it means that   the player character is greeting us through an explicit greeting   command, such as HELLO or TALK TO.  Otherwise, the greeting is   implied by some other conversational action, such a ASK ABOUT or   SHOW TO.  We do nothing by default; this should be overridden in   most cases to show some sort of exchange of pleasantries -   something like this: <p> <br> &gt;bob, hello <br> "Hi, there," you say. <p>   Bob looks up over his newspaper.  "Oh, hello," he says, putting   down the paper.  "What can I do for you?" <p>   Note that games shouldn't usually override this method.  Instead,   you should simply create a HelloTopic entry and put it inside the   state object; we'll find the HelloTopic and show its message as   our greeting. <p>   If you want to distinguish between explicit and implicit   greetings, you can create an ImpHelloTopic entry for implied   greetings (i.e., the kind of greeting that occurs automatically   when the player jumps right into a conversation with our actor   using ASK ABOUT or the like, without explicitly saying HELLO   first).  The regular HelloTopic will handle explicit greetings,   and the ImpHelloTopic will handle the implied kind. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

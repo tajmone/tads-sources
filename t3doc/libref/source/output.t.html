@@ -1,0 +1,2023 @@
+<html><head><link rel=stylesheet type="text/css" href="../libref.css"><title>output.t</title></head><body>
+<table class=ban><tr><td><h1>output.t</h1><td align=right><a href="../file/output.t.html">documentation</a></table><pre>
+<a name="1"></a>#charset "us-ascii"
+<a name="2"></a>
+<a name="3"></a>/*
+<a name="4"></a> *   Copyright (c) 2000, 2006 Michael J. Roberts.  All Rights Reserved.
+<a name="5"></a> *
+<a name="6"></a> *   TADS 3 Library - output formatting
+<a name="7"></a> *
+<a name="8"></a> *   This module defines the framework for displaying output text.
+<a name="9"></a> */
+<a name="10"></a>
+<a name="11"></a>/* include the library header */
+<a name="12"></a>#include "adv3.h"
+<a name="13"></a>
+<a name="14"></a>
+<a name="15"></a>/* ------------------------------------------------------------------------ */
+<a name="16"></a>/*
+<a name="17"></a> *   The standard library output function.  We set this up as the default
+<a name="18"></a> *   display function (for double-quoted strings and for "&lt;&lt; &gt;&gt;"
+<a name="19"></a> *   embeddings).  Code can also call this directly to display items.
+<a name="20"></a> */
+<a name="21"></a>say(val)
+<a name="22"></a>{
+<a name="23"></a>    /* send output to the active output stream */
+<a name="24"></a>    outputManager.curOutputStream.writeToStream(val);
+<a name="25"></a>}
+<a name="26"></a>
+<a name="27"></a>/* ------------------------------------------------------------------------ */
+<a name="28"></a>/*
+<a name="29"></a> *   Generate a string for showing quoted text.  We simply enclose the
+<a name="30"></a> *   text in a &lt;Q&gt;...&lt;/Q&gt; tag sequence and return the result.
+<a name="31"></a> */
+<a name="32"></a>withQuotes(txt)
+<a name="33"></a>{
+<a name="34"></a>    return '&lt;q&gt;&lt;&lt;txt&gt;&gt;&lt;/q&gt;';
+<a name="35"></a>}
+<a name="36"></a>
+<a name="37"></a>/* ------------------------------------------------------------------------ */
+<a name="38"></a>/*
+<a name="39"></a> *   Output Manager.  This object contains global code for displaying text
+<a name="40"></a> *   on the console.
+<a name="41"></a> *
+<a name="42"></a> *   The output manager is transient because we don't want its state to be
+<a name="43"></a> *   saved and restored; the output manager state is essentially part of
+<a name="44"></a> *   the intepreter user interface, which is not affected by save and
+<a name="45"></a> *   restore.
+<a name="46"></a> */
+<a name="47"></a>transient outputManager: object
+<a name="48"></a>    /*
+<a name="49"></a>     *   Switch to a new active output stream.  Returns the previously
+<a name="50"></a>     *   active output stream, so that the caller can easily restore the
+<a name="51"></a>     *   old output stream if the new output stream is to be established
+<a name="52"></a>     *   only for a specific duration.
+<a name="53"></a>     */
+<a name="54"></a>    setOutputStream(ostr)
+<a name="55"></a>    {
+<a name="56"></a>        local oldStr;
+<a name="57"></a>
+<a name="58"></a>        /* remember the old stream for a moment */
+<a name="59"></a>        oldStr = curOutputStream;
+<a name="60"></a>
+<a name="61"></a>        /* set the new output stream */
+<a name="62"></a>        curOutputStream = ostr;
+<a name="63"></a>
+<a name="64"></a>        /*
+<a name="65"></a>         *   return the old stream, so the caller can restore it later if
+<a name="66"></a>         *   desired
+<a name="67"></a>         */
+<a name="68"></a>        return oldStr;
+<a name="69"></a>    }
+<a name="70"></a>
+<a name="71"></a>    /*
+<a name="72"></a>     *   run the given function, using the given output stream as the
+<a name="73"></a>     *   active default output stream
+<a name="74"></a>     */
+<a name="75"></a>    withOutputStream(ostr, func)
+<a name="76"></a>    {
+<a name="77"></a>        /* establish the new stream */
+<a name="78"></a>        local oldStr = setOutputStream(ostr);
+<a name="79"></a>
+<a name="80"></a>        /* make sure we restore the old active stream on the way out */
+<a name="81"></a>        try
+<a name="82"></a>        {
+<a name="83"></a>            /* invoke the callback */
+<a name="84"></a>            (func)();
+<a name="85"></a>        }
+<a name="86"></a>        finally
+<a name="87"></a>        {
+<a name="88"></a>            /* restore the old output stream */
+<a name="89"></a>            setOutputStream(oldStr);
+<a name="90"></a>        }
+<a name="91"></a>    }
+<a name="92"></a>
+<a name="93"></a>    /* the current output stream - start with the main text stream */
+<a name="94"></a>    curOutputStream = mainOutputStream
+<a name="95"></a>
+<a name="96"></a>    /*
+<a name="97"></a>     *   Is the UI running in HTML mode?  This tells us if we have a full
+<a name="98"></a>     *   HTML UI or a text-only UI.  Full HTML mode applies if we're
+<a name="99"></a>     *   running on a Multimedia TADS interpreter, or we're using the Web
+<a name="100"></a>     *   UI, which runs in a separate browser and is thus inherently
+<a name="101"></a>     *   HTML-capable.
+<a name="102"></a>     *
+<a name="103"></a>     *   (The result can't change during a session, since it's a function
+<a name="104"></a>     *   of the game and interpreter capabilities, so we store the result
+<a name="105"></a>     *   on the first evaluation to avoid having to recompute it on each
+<a name="106"></a>     *   query.  Since 'self' is a static object, we'll recompute this each
+<a name="107"></a>     *   time we run the program, which is important because we could save
+<a name="108"></a>     *   the game on one interpreter and resume the session on a different
+<a name="109"></a>     *   interpreter with different capabilities.)
+<a name="110"></a>     */
+<a name="111"></a>    htmlMode = (self.htmlMode = checkHtmlMode())
+<a name="112"></a>;
+<a name="113"></a>
+<a name="114"></a>/* ------------------------------------------------------------------------ */
+<a name="115"></a>/*
+<a name="116"></a> *   Output Stream.  This class provides a stream-oriented interface to
+<a name="117"></a> *   displaying text on the console.  "Stream-oriented" means that we write
+<a name="118"></a> *   text as a sequential string of characters.
+<a name="119"></a> *
+<a name="120"></a> *   Output streams are always transient, since they track the system user
+<a name="121"></a> *   interface in the interpreter.  The interpreter does not save its UI
+<a name="122"></a> *   state with a saved position, so objects such as output streams that
+<a name="123"></a> *   track the UI state should not be saved either.
+<a name="124"></a> */
+<a name="125"></a>class OutputStream: PreinitObject
+<a name="126"></a>    /*
+<a name="127"></a>     *   Write a value to the stream.  If the value is a string, we'll
+<a name="128"></a>     *   display the text of the string; if it's nil, we'll ignore it; if
+<a name="129"></a>     *   it's anything else, we'll try to convert it to a string (with the
+<a name="130"></a>     *   toString() function) and display the resulting text.
+<a name="131"></a>     */
+<a name="132"></a>    writeToStream(val)
+<a name="133"></a>    {
+<a name="134"></a>        /* convert the value to a string */
+<a name="135"></a>        switch(dataType(val))
+<a name="136"></a>        {
+<a name="137"></a>        case TypeSString:
+<a name="138"></a>            /*
+<a name="139"></a>             *   it's a string - no conversion is needed, but if it's
+<a name="140"></a>             *   empty, it doesn't count as real output (so don't notify
+<a name="141"></a>             *   anyone, and don't set any output flags)
+<a name="142"></a>             */
+<a name="143"></a>            if (val == '')
+<a name="144"></a>                return;
+<a name="145"></a>            break;
+<a name="146"></a>
+<a name="147"></a>        case TypeNil:
+<a name="148"></a>            /* nil - don't display anything for this */
+<a name="149"></a>            return;
+<a name="150"></a>
+<a name="151"></a>        case TypeInt:
+<a name="152"></a>        case TypeObject:
+<a name="153"></a>            /* convert integers and objects to strings */
+<a name="154"></a>            val = toString(val);
+<a name="155"></a>            break;
+<a name="156"></a>        }
+<a name="157"></a>
+<a name="158"></a>        /* run it through our output filters */
+<a name="159"></a>        val = applyFilters(val);
+<a name="160"></a>
+<a name="161"></a>        /*
+<a name="162"></a>         *   if, after filtering, we're not writing anything at all,
+<a name="163"></a>         *   there's nothing left to do
+<a name="164"></a>         */
+<a name="165"></a>        if (val == nil || val == '')
+<a name="166"></a>            return;
+<a name="167"></a>
+<a name="168"></a>        /* write the text to our underlying system stream */
+<a name="169"></a>        writeFromStream(val);
+<a name="170"></a>    }
+<a name="171"></a>
+<a name="172"></a>    /*
+<a name="173"></a>     *   Watch the stream for output.  It's sometimes useful to be able to
+<a name="174"></a>     *   call out to some code and determine whether or not the code
+<a name="175"></a>     *   generated any text output.  This routine invokes the given
+<a name="176"></a>     *   callback function, monitoring the stream for output; if any
+<a name="177"></a>     *   occurs, we'll return true, otherwise we'll return nil.
+<a name="178"></a>     */
+<a name="179"></a>    watchForOutput(func)
+<a name="180"></a>    {
+<a name="181"></a>        local mon;
+<a name="182"></a>
+<a name="183"></a>        /* set up a monitor filter on the stream */
+<a name="184"></a>        addOutputFilter(mon = new MonitorFilter());
+<a name="185"></a>
+<a name="186"></a>        /* catch any exceptions so we can remove our filter before leaving */
+<a name="187"></a>        try
+<a name="188"></a>        {
+<a name="189"></a>            /* invoke the callback */
+<a name="190"></a>            (func)();
+<a name="191"></a>
+<a name="192"></a>            /* return the monitor's status, indicating if output occurred */
+<a name="193"></a>            return mon.outputFlag;
+<a name="194"></a>        }
+<a name="195"></a>        finally
+<a name="196"></a>        {
+<a name="197"></a>            /* remove our monitor filter */
+<a name="198"></a>            removeOutputFilter(mon);
+<a name="199"></a>        }
+<a name="200"></a>    }
+<a name="201"></a>
+<a name="202"></a>    /*
+<a name="203"></a>     *   Call the given function, capturing all text output to this stream
+<a name="204"></a>     *   in the course of the function call.  Return a string containing
+<a name="205"></a>     *   the captured text.
+<a name="206"></a>     */
+<a name="207"></a>    captureOutput(func, [args])
+<a name="208"></a>    {
+<a name="209"></a>        /* install a string capture filter */
+<a name="210"></a>        local filter = new StringCaptureFilter();
+<a name="211"></a>        addOutputFilter(filter);
+<a name="212"></a>
+<a name="213"></a>        /* make sure we don't leave without removing our capturer */
+<a name="214"></a>        try
+<a name="215"></a>        {
+<a name="216"></a>            /* invoke the function */
+<a name="217"></a>            (func)(args...);
+<a name="218"></a>
+<a name="219"></a>            /* return the text that we captured */
+<a name="220"></a>            return filter.txt_;
+<a name="221"></a>        }
+<a name="222"></a>        finally
+<a name="223"></a>        {
+<a name="224"></a>            /* we're done with our filter, so remove it */
+<a name="225"></a>            removeOutputFilter(filter);
+<a name="226"></a>        }
+<a name="227"></a>    }
+<a name="228"></a>
+<a name="229"></a>    /* my associated input manager, if I have one */
+<a name="230"></a>    myInputManager = nil
+<a name="231"></a>
+<a name="232"></a>    /* dynamic construction */
+<a name="233"></a>    construct()
+<a name="234"></a>    {
+<a name="235"></a>        /*
+<a name="236"></a>         *   Set up filter list.  Output streams are always transient, so
+<a name="237"></a>         *   make our filter list transient as well.
+<a name="238"></a>         */
+<a name="239"></a>        filterList_ = new transient Vector(10);
+<a name="240"></a>    }
+<a name="241"></a>
+<a name="242"></a>    /* execute pre-initialization */
+<a name="243"></a>    execute()
+<a name="244"></a>    {
+<a name="245"></a>        /* do the same set-up we would do for dynamic construction */
+<a name="246"></a>        construct();
+<a name="247"></a>    }
+<a name="248"></a>
+<a name="249"></a>    /*
+<a name="250"></a>     *   Write text out from this stream; this writes to the lower-level
+<a name="251"></a>     *   stream underlying this stream.  This routine is intended to be
+<a name="252"></a>     *   called only from within this class.
+<a name="253"></a>     *
+<a name="254"></a>     *   Each output stream is conceptually "stacked" on top of another,
+<a name="255"></a>     *   lower-level stream.  At the bottom of the stack is usually some
+<a name="256"></a>     *   kind of physical device, such as the display, or a file on disk.
+<a name="257"></a>     *
+<a name="258"></a>     *   This method must be defined in each subclass to write to the
+<a name="259"></a>     *   appropriate underlying stream.  Most subclasses are specifically
+<a name="260"></a>     *   designed to sit atop a system-level stream, such as the display
+<a name="261"></a>     *   output stream, so most implementations of this method will call
+<a name="262"></a>     *   directly to a system-level output function.
+<a name="263"></a>     */
+<a name="264"></a>    writeFromStream(txt) { }
+<a name="265"></a>
+<a name="266"></a>    /*
+<a name="267"></a>     *   The list of active filters on this stream, in the order in which
+<a name="268"></a>     *   they are to be called.  This should normally be initialized to a
+<a name="269"></a>     *   Vector in each instance.
+<a name="270"></a>     */
+<a name="271"></a>    filterList_ = []
+<a name="272"></a>
+<a name="273"></a>    /*
+<a name="274"></a>     *   Add an output filter.  The argument is an object of class
+<a name="275"></a>     *   OutputFilter, or any object implementing the filterText() method.
+<a name="276"></a>     *
+<a name="277"></a>     *   Filters are always arranged in a "stack": the last output filter
+<a name="278"></a>     *   added is the first one called during output.  This method thus
+<a name="279"></a>     *   adds the new filter at the "top" of the stack.
+<a name="280"></a>     */
+<a name="281"></a>    addOutputFilter(filter)
+<a name="282"></a>    {
+<a name="283"></a>        /* add the filter to the end of our list */
+<a name="284"></a>        filterList_.append(filter);
+<a name="285"></a>    }
+<a name="286"></a>
+<a name="287"></a>    /*
+<a name="288"></a>     *   Add an output filter at a given point in the filter stack: add
+<a name="289"></a>     *   the filter so that it is "below" the given existing filter in the
+<a name="290"></a>     *   stack.  This means that the new filter will be called just after
+<a name="291"></a>     *   the existing filter during output.
+<a name="292"></a>     *
+<a name="293"></a>     *   If 'existingFilter' isn't in the stack of existing filters, we'll
+<a name="294"></a>     *   add the new filter at the "top" of the stack.
+<a name="295"></a>     */
+<a name="296"></a>    addOutputFilterBelow(newFilter, existingFilter)
+<a name="297"></a>    {
+<a name="298"></a>        /* find the existing filter in our list */
+<a name="299"></a>        local idx = filterList_.indexOf(existingFilter);
+<a name="300"></a>
+<a name="301"></a>        /*
+<a name="302"></a>         *   If we found the old filter, add the new filter below the
+<a name="303"></a>         *   existing filter in the stack, which is to say just before the
+<a name="304"></a>         *   old filter in our vector of filters (since we call the
+<a name="305"></a>         *   filters in reverse order of the list).
+<a name="306"></a>         *
+<a name="307"></a>         *   If we didn't find the existing filter, simply add the new
+<a name="308"></a>         *   filter at the top of the stack, by appending the new filter
+<a name="309"></a>         *   at the end of the list.
+<a name="310"></a>         */
+<a name="311"></a>        if (idx != nil)
+<a name="312"></a>            filterList_.insertAt(idx, newFilter);
+<a name="313"></a>        else
+<a name="314"></a>            filterList_.append(newFilter);
+<a name="315"></a>    }
+<a name="316"></a>
+<a name="317"></a>    /*
+<a name="318"></a>     *   Remove an output filter.  Since filters are arranged in a stack,
+<a name="319"></a>     *   only the LAST output filter added may be removed.  It's an error
+<a name="320"></a>     *   to remove a filter other than the last one.
+<a name="321"></a>     */
+<a name="322"></a>    removeOutputFilter(filter)
+<a name="323"></a>    {
+<a name="324"></a>        /* get the filter count */
+<a name="325"></a>        local len = filterList_.length();
+<a name="326"></a>
+<a name="327"></a>        /* make sure it's the last filter */
+<a name="328"></a>        if (len == 0 || filterList_[len] != filter)
+<a name="329"></a>            t3DebugTrace(T3DebugBreak);
+<a name="330"></a>
+<a name="331"></a>        /* remove the filter from my list */
+<a name="332"></a>        filterList_.removeElementAt(len);
+<a name="333"></a>    }
+<a name="334"></a>
+<a name="335"></a>    /* call the filters */
+<a name="336"></a>    applyFilters(val)
+<a name="337"></a>    {
+<a name="338"></a>        /*
+<a name="339"></a>         *   Run through the list, applying each filter in turn.  We work
+<a name="340"></a>         *   backwards through the list from the last element, because the
+<a name="341"></a>         *   filter list is a stack: the last element added is the topmost
+<a name="342"></a>         *   element of the stack, so it must be called first.
+<a name="343"></a>         */
+<a name="344"></a>        for (local i in filterList_.length()..1 step -1 ; val != nil ; )
+<a name="345"></a>            val = filterList_[i].filterText(self, val);
+<a name="346"></a>
+<a name="347"></a>        /* return the result of all of the filters */
+<a name="348"></a>        return val;
+<a name="349"></a>    }
+<a name="350"></a>
+<a name="351"></a>    /*
+<a name="352"></a>     *   Apply the current set of text transformation filters to a string.
+<a name="353"></a>     *   This applies only the non-capturing filters; we skip any capture
+<a name="354"></a>     *   filters.
+<a name="355"></a>     */
+<a name="356"></a>    applyTextFilters(val)
+<a name="357"></a>    {
+<a name="358"></a>        /* run through the filter stack from top to bottom */
+<a name="359"></a>        for (local i in filterList_.length()..1 step -1 ; val != nil ; )
+<a name="360"></a>        {
+<a name="361"></a>            /* skip capturing filters */
+<a name="362"></a>            local f = filterList_[i];
+<a name="363"></a>            if (f.ofKind(CaptureFilter))
+<a name="364"></a>                continue;
+<a name="365"></a>
+<a name="366"></a>            /* apply the filter */
+<a name="367"></a>            val = f.filterText(self, val);
+<a name="368"></a>        }
+<a name="369"></a>
+<a name="370"></a>        /* return the result */
+<a name="371"></a>        return val;
+<a name="372"></a>    }
+<a name="373"></a>
+<a name="374"></a>
+<a name="375"></a>    /*
+<a name="376"></a>     *   Receive notification from the input manager that we have just
+<a name="377"></a>     *   ended reading a line of input from the keyboard.
+<a name="378"></a>     */
+<a name="379"></a>    inputLineEnd()
+<a name="380"></a>    {
+<a name="381"></a>        /* an input line ending doesn't look like a paragraph */
+<a name="382"></a>        justDidPara = nil;
+<a name="383"></a>    }
+<a name="384"></a>
+<a name="385"></a>    /*
+<a name="386"></a>     *   Internal state: we just wrote a paragraph break, and there has
+<a name="387"></a>     *   not yet been any intervening text.  By default, we set this to
+<a name="388"></a>     *   true initially, so that we suppress any paragraph breaks at the
+<a name="389"></a>     *   very start of the text.
+<a name="390"></a>     */
+<a name="391"></a>    justDidPara = true
+<a name="392"></a>
+<a name="393"></a>    /*
+<a name="394"></a>     *   Internal state: we just wrote a character that suppresses
+<a name="395"></a>     *   paragraph breaks that immediately follow.  In this state, we'll
+<a name="396"></a>     *   suppress any paragraph marker that immediately follows, but we
+<a name="397"></a>     *   won't suppress any other characters.
+<a name="398"></a>     */
+<a name="399"></a>    justDidParaSuppressor = nil
+<a name="400"></a>;
+<a name="401"></a>
+<a name="402"></a>/*
+<a name="403"></a> *   The OutputStream for the main text area.
+<a name="404"></a> *
+<a name="405"></a> *   This object is transient because the output stream state is
+<a name="406"></a> *   effectively part of the interpreter user interface, which is not
+<a name="407"></a> *   affected by save and restore.
+<a name="408"></a> */
+<a name="409"></a>transient mainOutputStream: OutputStream
+<a name="410"></a>    /*
+<a name="411"></a>     *   The main text area is the same place where we normally read
+<a name="412"></a>     *   command lines from the keyboard, so associate this output stream
+<a name="413"></a>     *   with the primary input manager.
+<a name="414"></a>     */
+<a name="415"></a>    myInputManager = inputManager
+<a name="416"></a>
+<a name="417"></a>    /* the current command transcript */
+<a name="418"></a>    curTranscript = nil
+<a name="419"></a>
+<a name="420"></a>    /* we sit atop the system-level main console output stream */
+<a name="421"></a>    writeFromStream(txt)
+<a name="422"></a>    {
+<a name="423"></a>        /* if an input event was interrupted, cancel the event */
+<a name="424"></a>        inputManager.inputEventEnd();
+<a name="425"></a>
+<a name="426"></a>        /* write the text to the console */
+<a name="427"></a>        aioSay(txt);
+<a name="428"></a>    }
+<a name="429"></a>;
+<a name="430"></a>
+<a name="431"></a>/* ------------------------------------------------------------------------ */
+<a name="432"></a>/*
+<a name="433"></a> *   Paragraph manager.  We filter strings as they're about to be sent to
+<a name="434"></a> *   the console to convert paragraph markers (represented in the source
+<a name="435"></a> *   text using the "style tag" format, &lt;.P&gt;) into a configurable display
+<a name="436"></a> *   rendering.
+<a name="437"></a> *
+<a name="438"></a> *   We also process the zero-spacing paragraph, &lt;.P0&gt;.  This doesn't
+<a name="439"></a> *   generate any output, but otherwise acts like a paragraph break in that
+<a name="440"></a> *   it suppresses any paragraph breaks that immediately follow.
+<a name="441"></a> *
+<a name="442"></a> *   The special marker &lt;./P0&gt; cancels the effect of a &lt;.P0&gt;.  This can be
+<a name="443"></a> *   used if you want to ensure that a newline or paragraph break is
+<a name="444"></a> *   displayed, even if a &lt;.P0&gt; was just displayed.
+<a name="445"></a> *
+<a name="446"></a> *   Our special processing ensures that paragraph tags interact with one
+<a name="447"></a> *   another and with other display elements specially:
+<a name="448"></a> *
+<a name="449"></a> *   - A run of multiple consecutive paragraph tags is treated as a single
+<a name="450"></a> *   paragraph tag.  This property is particularly important because it
+<a name="451"></a> *   allows code to write out a paragraph marker without having to worry
+<a name="452"></a> *   about whether preceding code or following code add paragraph markers
+<a name="453"></a> *   of their own; if redundant markers are found, we'll filter them out
+<a name="454"></a> *   automatically.
+<a name="455"></a> *
+<a name="456"></a> *   - We can suppress paragraph markers following other specific
+<a name="457"></a> *   sequences.  For example, if the paragraph break is rendered as a blank
+<a name="458"></a> *   line, we might want to suppress an extra blank line for a paragraph
+<a name="459"></a> *   break after an explicit blank line.
+<a name="460"></a> *
+<a name="461"></a> *   - We can suppress other specific sequences following a paragraph
+<a name="462"></a> *   marker.  For example, if the paragraph break is rendered as a newline
+<a name="463"></a> *   plus a tab, we could suppress whitespace following the paragraph
+<a name="464"></a> *   break.
+<a name="465"></a> *
+<a name="466"></a> *   The paragraph manager should always be instantiated with transient
+<a name="467"></a> *   instances, because this object's state is effectively part of the
+<a name="468"></a> *   interpreter user interface, which doesn't participate in save and
+<a name="469"></a> *   restore.
+<a name="470"></a> */
+<a name="471"></a>class ParagraphManager: OutputFilter
+<a name="472"></a>    /*
+<a name="473"></a>     *   Rendering - this is what we display on the console to represent a
+<a name="474"></a>     *   paragraph break.  By default, we'll display a blank line.
+<a name="475"></a>     */
+<a name="476"></a>    renderText = '\b'
+<a name="477"></a>
+<a name="478"></a>    /*
+<a name="479"></a>     *   Flag: show or hide paragraph breaks immediately after input.  By
+<a name="480"></a>     *   default, we do not show paragraph breaks after an input line.
+<a name="481"></a>     */
+<a name="482"></a>    renderAfterInput = nil
+<a name="483"></a>
+<a name="484"></a>    /*
+<a name="485"></a>     *   Preceding suppression.  This is a regular expression that we
+<a name="486"></a>     *   match to individual characters.  If the character immediately
+<a name="487"></a>     *   preceding a paragraph marker matches this expression, we'll
+<a name="488"></a>     *   suppress the paragraph marker in the output.  By default, we'll
+<a name="489"></a>     *   suppress a paragraph break following a blank line, because the
+<a name="490"></a>     *   default rendering would add a redundant blank line.
+<a name="491"></a>     */
+<a name="492"></a>    suppressBefore = static new RexPattern('\b')
+<a name="493"></a>
+<a name="494"></a>    /*
+<a name="495"></a>     *   Following suppression.  This is a regular expression that we
+<a name="496"></a>     *   match to individual characters.  If the character immediately
+<a name="497"></a>     *   following a paragraph marker matches this expression, we'll
+<a name="498"></a>     *   suppress the character.  We'll apply this to each character
+<a name="499"></a>     *   following a paragraph marker in turn until we find one that does
+<a name="500"></a>     *   not match; we'll suppress all of the characters that do match.
+<a name="501"></a>     *   By default, we suppress additional blank lines after a paragraph
+<a name="502"></a>     *   break.
+<a name="503"></a>     */
+<a name="504"></a>    suppressAfter = static new RexPattern('[\b\n]')
+<a name="505"></a>
+<a name="506"></a>    /* pre-compile some regular expression patterns we use a lot */
+<a name="507"></a>    leadingMultiPat = static new RexPattern('(&lt;langle&gt;&lt;dot&gt;[pP]0?&lt;rangle&gt;)+')
+<a name="508"></a>    leadingSinglePat = static new RexPattern(
+<a name="509"></a>        '&lt;langle&gt;&lt;dot&gt;([pP]0?|/[pP]0)&lt;rangle&gt;')
+<a name="510"></a>
+<a name="511"></a>    /* process a string that's about to be written to the console */
+<a name="512"></a>    filterText(ostr, txt)
+<a name="513"></a>    {
+<a name="514"></a>        local ret;
+<a name="515"></a>
+<a name="516"></a>        /* we don't have anything in our translated string yet */
+<a name="517"></a>        ret = '';
+<a name="518"></a>
+<a name="519"></a>        /* keep going until we run out of string to process */
+<a name="520"></a>        while (txt != '')
+<a name="521"></a>        {
+<a name="522"></a>            local len;
+<a name="523"></a>            local match;
+<a name="524"></a>            local p0;
+<a name="525"></a>            local unp0;
+<a name="526"></a>
+<a name="527"></a>            /*
+<a name="528"></a>             *   if we just wrote a paragraph break, suppress any
+<a name="529"></a>             *   character that matches 'suppressAfter', and suppress any
+<a name="530"></a>             *   paragraph markers that immediately follow
+<a name="531"></a>             */
+<a name="532"></a>            if (ostr.justDidPara)
+<a name="533"></a>            {
+<a name="534"></a>                /* check for any consecutive paragraph markers */
+<a name="535"></a>                if ((len = rexMatch(leadingMultiPat, txt)) != nil)
+<a name="536"></a>                {
+<a name="537"></a>                    /* discard the consecutive &lt;.P&gt;'s, and keep going */
+<a name="538"></a>                    txt = txt.substr(len + 1);
+<a name="539"></a>                    continue;
+<a name="540"></a>                }
+<a name="541"></a>
+<a name="542"></a>                /* check for a match to the suppressAfter pattern */
+<a name="543"></a>                if (rexMatch(suppressAfter, txt) != nil)
+<a name="544"></a>                {
+<a name="545"></a>                    /* discard the suppressed character and keep going */
+<a name="546"></a>                    txt = txt.substr(2);
+<a name="547"></a>                    continue;
+<a name="548"></a>                }
+<a name="549"></a>            }
+<a name="550"></a>
+<a name="551"></a>            /*
+<a name="552"></a>             *   we have a character other than a paragraph marker, so we
+<a name="553"></a>             *   didn't just scan a paragraph marker
+<a name="554"></a>             */
+<a name="555"></a>            ostr.justDidPara = nil;
+<a name="556"></a>
+<a name="557"></a>            /*
+<a name="558"></a>             *   if we just wrote a suppressBefore character, discard any
+<a name="559"></a>             *   leading paragraph markers
+<a name="560"></a>             */
+<a name="561"></a>            if (ostr.justDidParaSuppressor
+<a name="562"></a>                &amp;&amp; (len = rexMatch(leadingMultiPat, txt)) != nil)
+<a name="563"></a>            {
+<a name="564"></a>                /* remove the paragraph markers */
+<a name="565"></a>                txt = txt.substr(len + 1);
+<a name="566"></a>
+<a name="567"></a>                /*
+<a name="568"></a>                 *   even though we're not rendering the paragraph, note
+<a name="569"></a>                 *   that a logical paragraph just started
+<a name="570"></a>                 */
+<a name="571"></a>                ostr.justDidPara = true;
+<a name="572"></a>
+<a name="573"></a>                /* keep going */
+<a name="574"></a>                continue;
+<a name="575"></a>            }
+<a name="576"></a>
+<a name="577"></a>            /* presume we won't find a &lt;.p0&gt; or &lt;./p0&gt; */
+<a name="578"></a>            p0 = unp0 = nil;
+<a name="579"></a>
+<a name="580"></a>            /* find the next paragraph marker */
+<a name="581"></a>            match = rexSearch(leadingSinglePat, txt);
+<a name="582"></a>            if (match == nil)
+<a name="583"></a>            {
+<a name="584"></a>                /*
+<a name="585"></a>                 *   there are no more paragraph markers - copy the
+<a name="586"></a>                 *   remainder of the input string to the output
+<a name="587"></a>                 */
+<a name="588"></a>                ret += txt;
+<a name="589"></a>                txt = '';
+<a name="590"></a>
+<a name="591"></a>                /* we just did something other than a paragraph */
+<a name="592"></a>                ostr.justDidPara = nil;
+<a name="593"></a>            }
+<a name="594"></a>            else
+<a name="595"></a>            {
+<a name="596"></a>                /* add everything up to the paragraph break to the output */
+<a name="597"></a>                ret += txt.substr(1, match[1] - 1);
+<a name="598"></a>
+<a name="599"></a>                /* get the rest of the string following the paragraph mark */
+<a name="600"></a>                txt = txt.substr(match[1] + match[2]);
+<a name="601"></a>
+<a name="602"></a>                /* note if we found a &lt;.p0&gt; or &lt;./p0&gt; */
+<a name="603"></a>                p0 = (match[3] is in ('&lt;.p0&gt;', '&lt;.P0&gt;'));
+<a name="604"></a>                unp0 = (match[3] is in ('&lt;./p0&gt;', '&lt;./P0&gt;'));
+<a name="605"></a>
+<a name="606"></a>                /*
+<a name="607"></a>                 *   note that we just found a paragraph marker, unless
+<a name="608"></a>                 *   this is a &lt;./p0&gt;
+<a name="609"></a>                 */
+<a name="610"></a>                ostr.justDidPara = !unp0;
+<a name="611"></a>            }
+<a name="612"></a>
+<a name="613"></a>            /*
+<a name="614"></a>             *   If the last character we copied out is a suppressBefore
+<a name="615"></a>             *   character, note for next time that we have a suppressor
+<a name="616"></a>             *   pending.  Likewise, if we found a &lt;.p0&gt; rather than a
+<a name="617"></a>             *   &lt;.p&gt;, this counts as a suppressor.
+<a name="618"></a>             */
+<a name="619"></a>            ostr.justDidParaSuppressor =
+<a name="620"></a>                (p0 || rexMatch(suppressBefore,
+<a name="621"></a>                                ret.substr(ret.length(), 1)) != nil);
+<a name="622"></a>
+<a name="623"></a>            /*
+<a name="624"></a>             *   if we found a paragraph marker, and we didn't find a
+<a name="625"></a>             *   leading suppressor character just before it, add the
+<a name="626"></a>             *   paragraph rendering
+<a name="627"></a>             */
+<a name="628"></a>            if (ostr.justDidPara &amp;&amp; !ostr.justDidParaSuppressor)
+<a name="629"></a>                ret += renderText;
+<a name="630"></a>        }
+<a name="631"></a>
+<a name="632"></a>        /* return the translated string */
+<a name="633"></a>        return ret;
+<a name="634"></a>    }
+<a name="635"></a>;
+<a name="636"></a>
+<a name="637"></a>/* the paragraph manager for the main output stream */
+<a name="638"></a>transient mainParagraphManager: ParagraphManager
+<a name="639"></a>;
+<a name="640"></a>
+<a name="641"></a>/* ------------------------------------------------------------------------ */
+<a name="642"></a>/*
+<a name="643"></a> *   Output Filter
+<a name="644"></a> */
+<a name="645"></a>class OutputFilter: object
+<a name="646"></a>    /*
+<a name="647"></a>     *   Apply the filter - this should be overridden in each filter.  The
+<a name="648"></a>     *   return value is the result of filtering the string.
+<a name="649"></a>     *
+<a name="650"></a>     *   'ostr' is the OutputStream to which the text is being written,
+<a name="651"></a>     *   and 'txt' is the original text to be displayed.
+<a name="652"></a>     */
+<a name="653"></a>    filterText(ostr, txt) { return txt; }
+<a name="654"></a>;
+<a name="655"></a>
+<a name="656"></a>
+<a name="657"></a>/* ------------------------------------------------------------------------ */
+<a name="658"></a>/*
+<a name="659"></a> *   Output monitor filter.  This is a filter that leaves the filtered
+<a name="660"></a> *   text unchanged, but keeps track of whether any text was seen at all.
+<a name="661"></a> *   Our 'outputFlag' is true if we've seen any output, nil if not.
+<a name="662"></a> */
+<a name="663"></a>class MonitorFilter: OutputFilter
+<a name="664"></a>    /* filter text */
+<a name="665"></a>    filterText(ostr, val)
+<a name="666"></a>    {
+<a name="667"></a>        /* if the value is non-empty, note the output */
+<a name="668"></a>        if (val != nil &amp;&amp; val != '')
+<a name="669"></a>            outputFlag = true;
+<a name="670"></a>
+<a name="671"></a>        /* return the input value unchanged */
+<a name="672"></a>        return val;
+<a name="673"></a>    }
+<a name="674"></a>
+<a name="675"></a>    /* flag: has any output occurred for this monitor yet? */
+<a name="676"></a>    outputFlag = nil
+<a name="677"></a>;
+<a name="678"></a>
+<a name="679"></a>
+<a name="680"></a>/* ------------------------------------------------------------------------ */
+<a name="681"></a>/*
+<a name="682"></a> *   Capture Filter.  This is an output filter that simply captures all of
+<a name="683"></a> *   the text sent through the filter, sending nothing out to the
+<a name="684"></a> *   underlying stream.
+<a name="685"></a> *
+<a name="686"></a> *   The default implementation simply discards the incoming text.
+<a name="687"></a> *   Subclasses can keep track of the text in memory, in a file, or
+<a name="688"></a> *   wherever desired.
+<a name="689"></a> */
+<a name="690"></a>class CaptureFilter: OutputFilter
+<a name="691"></a>    /*
+<a name="692"></a>     *   Filter the text.  We simply discard the text, passing nothing
+<a name="693"></a>     *   through to the underlying stream.
+<a name="694"></a>     */
+<a name="695"></a>    filterText(ostr, txt)
+<a name="696"></a>    {
+<a name="697"></a>        /* leave nothing for the underlying stream */
+<a name="698"></a>        return nil;
+<a name="699"></a>    }
+<a name="700"></a>;
+<a name="701"></a>
+<a name="702"></a>/*
+<a name="703"></a> *   "Switchable" capture filter.  This filter can have its blocking
+<a name="704"></a> *   enabled or disabled.  When blocking is enabled, we capture
+<a name="705"></a> *   everything, leaving nothing to the underlying stream; when disabled,
+<a name="706"></a> *   we pass everything through to the underyling stream unchanged.
+<a name="707"></a> */
+<a name="708"></a>class SwitchableCaptureFilter: CaptureFilter
+<a name="709"></a>    /* filter the text */
+<a name="710"></a>    filterText(ostr, txt)
+<a name="711"></a>    {
+<a name="712"></a>        /*
+<a name="713"></a>         *   if we're blocking output, return nothing to the underlying
+<a name="714"></a>         *   stream; if we're disabled, return the input unchanged
+<a name="715"></a>         */
+<a name="716"></a>        return (isBlocking ? nil : txt);
+<a name="717"></a>    }
+<a name="718"></a>
+<a name="719"></a>    /*
+<a name="720"></a>     *   Blocking enabled: if this is true, we'll capture all text passed
+<a name="721"></a>     *   through us, leaving nothing to the underyling stream.  Blocking
+<a name="722"></a>     *   is enabled by default.
+<a name="723"></a>     */
+<a name="724"></a>    isBlocking = true
+<a name="725"></a>;
+<a name="726"></a>
+<a name="727"></a>/*
+<a name="728"></a> *   String capturer.  This is an implementation of CaptureFilter that
+<a name="729"></a> *   saves the captured text to a string.
+<a name="730"></a> */
+<a name="731"></a>class StringCaptureFilter: CaptureFilter
+<a name="732"></a>    /* filter text */
+<a name="733"></a>    filterText(ostr, txt)
+<a name="734"></a>    {
+<a name="735"></a>        /* add the text to my captured text so far */
+<a name="736"></a>        addText(txt);
+<a name="737"></a>    }
+<a name="738"></a>
+<a name="739"></a>    /* add to my captured text */
+<a name="740"></a>    addText(txt)
+<a name="741"></a>    {
+<a name="742"></a>        /* append the text to my string of captured text */
+<a name="743"></a>        txt_ += txt;
+<a name="744"></a>    }
+<a name="745"></a>
+<a name="746"></a>    /* my captured text so far */
+<a name="747"></a>    txt_ = ''
+<a name="748"></a>;
+<a name="749"></a>
+<a name="750"></a>/* ------------------------------------------------------------------------ */
+<a name="751"></a>/*
+<a name="752"></a> *   Style tag.  This defines an HTML-like tag that can be used in output
+<a name="753"></a> *   text to display an author-customizable substitution string.
+<a name="754"></a> *
+<a name="755"></a> *   Each StyleTag object defines the name of the tag, which can be
+<a name="756"></a> *   invoked in output text using the syntax "&lt;.name&gt;" - we require the
+<a name="757"></a> *   period after the opening angle-bracket to plainly distinguish the
+<a name="758"></a> *   sequence as a style tag, not a regular HTML tag.
+<a name="759"></a> *
+<a name="760"></a> *   Each StyleTag also defines the text string that should be substituted
+<a name="761"></a> *   for each occurrence of the "&lt;.name&gt;" sequence in output text, and,
+<a name="762"></a> *   optionally, another string that is substituted for occurrences of the
+<a name="763"></a> *   "closing" version of the tag, invoked with the syntax "&lt;./name&gt;".
+<a name="764"></a> */
+<a name="765"></a>class StyleTag: object
+<a name="766"></a>    /* name of the tag - the tag appears in source text in &lt;.xxx&gt; notation */
+<a name="767"></a>    tagName = ''
+<a name="768"></a>
+<a name="769"></a>    /*
+<a name="770"></a>     *   opening text - this is substituted for each instance of the tag
+<a name="771"></a>     *   without a '/' prefix
+<a name="772"></a>     */
+<a name="773"></a>    openText = ''
+<a name="774"></a>
+<a name="775"></a>    /*
+<a name="776"></a>     *   Closing text - this is substituted for each instance of the tag
+<a name="777"></a>     *   with a '/' prefix (&lt;./xxx&gt;).  Note that non-container tags don't
+<a name="778"></a>     *   have closing text at all.
+<a name="779"></a>     */
+<a name="780"></a>    closeText = ''
+<a name="781"></a>;
+<a name="782"></a>
+<a name="783"></a>/*
+<a name="784"></a> *   HtmlStyleTag - this is a subclass of StyleTag that provides different
+<a name="785"></a> *   rendering depending on whether the interpreter is in HTML mode or not.
+<a name="786"></a> *   In HTML mode, we display our htmlOpenText and htmlCloseText; when not
+<a name="787"></a> *   in HTML mode, we display our plainOpenText and plainCloseText.
+<a name="788"></a> */
+<a name="789"></a>class HtmlStyleTag: StyleTag
+<a name="790"></a>    openText = (outputManager.htmlMode ? htmlOpenText : plainOpenText)
+<a name="791"></a>
+<a name="792"></a>    closeText = (outputManager.htmlMode ? htmlCloseText : plainCloseText)
+<a name="793"></a>
+<a name="794"></a>    /* our HTML-mode opening and closing text */
+<a name="795"></a>    htmlOpenText = ''
+<a name="796"></a>    htmlCloseText = ''
+<a name="797"></a>
+<a name="798"></a>    /* our plain (non-HTML) opening and closing text */
+<a name="799"></a>    plainOpenText = ''
+<a name="800"></a>    plainCloseText = ''
+<a name="801"></a>;
+<a name="802"></a>
+<a name="803"></a>/*
+<a name="804"></a> *   Define our default style tags.  We name all of these StyleTag objects
+<a name="805"></a> *   so that authors can easily change the expansion text strings at
+<a name="806"></a> *   compile-time with the 'modify' syntax, or dynamically at run-time by
+<a name="807"></a> *   assigning new strings to the appropriate properties of these objects.
+<a name="808"></a> */
+<a name="809"></a>
+<a name="810"></a>/*
+<a name="811"></a> *   &lt;.roomname&gt; - we use this to display the room's name in the
+<a name="812"></a> *   description of a room (such as in a LOOK AROUND command, or when
+<a name="813"></a> *   entering a new location).  By default, we display the room name in
+<a name="814"></a> *   boldface on a line by itself.
+<a name="815"></a> */
+<a name="816"></a>roomnameStyleTag: StyleTag 'roomname' '\n&lt;b&gt;' '&lt;/b&gt;&lt;br&gt;\n';
+<a name="817"></a>
+<a name="818"></a>/* &lt;.roomdesc&gt; - we use this to display a room's long description */
+<a name="819"></a>roomdescStyleTag: StyleTag 'roomdesc' '' '';
+<a name="820"></a>
+<a name="821"></a>/*
+<a name="822"></a> *   &lt;.roompara&gt; - we use this to separate paragraphs within a room's long
+<a name="823"></a> *   description
+<a name="824"></a> */
+<a name="825"></a>roomparaStyleTag: StyleTag 'roompara' '&lt;.p&gt;\n';
+<a name="826"></a>
+<a name="827"></a>/*
+<a name="828"></a> *   &lt;.inputline&gt; - we use this to display the text actually entered by the
+<a name="829"></a> *   user on a command line.  Note that this isn't used for the prompt text
+<a name="830"></a> *   - it's used only for the command-line text itself.
+<a name="831"></a> */
+<a name="832"></a>inputlineStyleTag: HtmlStyleTag 'inputline'
+<a name="833"></a>    /* in HTML mode, switch in and out of TADS-Input font */
+<a name="834"></a>    htmlOpenText = '&lt;font face="tads-input"&gt;'
+<a name="835"></a>    htmlCloseText = '&lt;/font&gt;'
+<a name="836"></a>
+<a name="837"></a>    /* in plain mode, do nothing */
+<a name="838"></a>    plainOpenText = ''
+<a name="839"></a>    plainCloseText = ''
+<a name="840"></a>;
+<a name="841"></a>
+<a name="842"></a>/*
+<a name="843"></a> *   &lt;.a&gt; (named in analogy to the HTML &lt;a&gt; tag) - we use this to display
+<a name="844"></a> *   hyperlinked text.  Note that this goes *inside* an HTML &lt;a&gt; tag - this
+<a name="845"></a> *   doesn't do the actual linking (the true &lt;a&gt; tag does that), but rather
+<a name="846"></a> *   allows customized text formatting for hyperlinked text.
+<a name="847"></a> */
+<a name="848"></a>hyperlinkStyleTag: HtmlStyleTag 'a'
+<a name="849"></a>;
+<a name="850"></a>
+<a name="851"></a>/* &lt;.statusroom&gt; - style for the room name in a status line */
+<a name="852"></a>statusroomStyleTag: HtmlStyleTag 'statusroom'
+<a name="853"></a>    htmlOpenText = '&lt;b&gt;'
+<a name="854"></a>    htmlCloseText = '&lt;/b&gt;'
+<a name="855"></a>;
+<a name="856"></a>
+<a name="857"></a>/* &lt;.statusscore&gt; - style for the score in a status line */
+<a name="858"></a>statusscoreStyleTag: HtmlStyleTag 'statusscore'
+<a name="859"></a>    htmlOpenText = '&lt;i&gt;'
+<a name="860"></a>    htmlCloseText = '&lt;/i&gt;'
+<a name="861"></a>;
+<a name="862"></a>
+<a name="863"></a>/*
+<a name="864"></a> *   &lt;.parser&gt; - style for messages explicitly from the parser.
+<a name="865"></a> *
+<a name="866"></a> *   By default, we do nothing special with these messages.  Many games
+<a name="867"></a> *   like to use a distinctive notation for parser messages, to make it
+<a name="868"></a> *   clear that the messages are "meta" text that's not part of the story
+<a name="869"></a> *   but rather specific to the game mechanics; one common convention is
+<a name="870"></a> *   to put parser messages in [square brackets].
+<a name="871"></a> *
+<a name="872"></a> *   If the game defines a special appearance for parser messages, for
+<a name="873"></a> *   consistency it might want to use the same appearance for notification
+<a name="874"></a> *   messages displayed with the &lt;.notification&gt; tag (see
+<a name="875"></a> *   notificationStyleTag).
+<a name="876"></a> */
+<a name="877"></a>parserStyleTag: StyleTag 'parser'
+<a name="878"></a>    openText = ''
+<a name="879"></a>    closeText = ''
+<a name="880"></a>;
+<a name="881"></a>
+<a name="882"></a>/*
+<a name="883"></a> *   &lt;.notification&gt; - style for "notification" messages, such as score
+<a name="884"></a> *   changes and messages explaining how facilities (footnotes, exit
+<a name="885"></a> *   lists) work the first time they come up.
+<a name="886"></a> *
+<a name="887"></a> *   By default, we'll put notifications in parentheses.  Games that use
+<a name="888"></a> *   [square brackets] for parser messages (i.e., for the &lt;.parser&gt; tag)
+<a name="889"></a> *   might want to use the same notation here for consistency.
+<a name="890"></a> */
+<a name="891"></a>notificationStyleTag: StyleTag 'notification'
+<a name="892"></a>    openText = '('
+<a name="893"></a>    closeText = ')'
+<a name="894"></a>;
+<a name="895"></a>
+<a name="896"></a>/*
+<a name="897"></a> *   &lt;.assume&gt; - style for "assumption" messages, showing an assumption
+<a name="898"></a> *   the parser is making.  This style is used for showing objects used by
+<a name="899"></a> *   default when not specified in a command, objects that the parser
+<a name="900"></a> *   chose despite some ambiguity, and implied commands.
+<a name="901"></a> */
+<a name="902"></a>assumeStyleTag: StyleTag 'assume'
+<a name="903"></a>    openText = '('
+<a name="904"></a>    closeText = ')'
+<a name="905"></a>;
+<a name="906"></a>
+<a name="907"></a>/*
+<a name="908"></a> *   &lt;.announceObj&gt; - style for object announcement messages.  The parser
+<a name="909"></a> *   shows an object announcement for each object when a command is applied
+<a name="910"></a> *   to multiple objects (TAKE ALL, DROP KEYS AND WALLET).  The
+<a name="911"></a> *   announcement simply shows the object's name and a colon, to let the
+<a name="912"></a> *   player know that the response text that follows applies to the
+<a name="913"></a> *   announced object.
+<a name="914"></a> */
+<a name="915"></a>announceObjStyleTag: StyleTag 'announceObj'
+<a name="916"></a>    openText = '&lt;b&gt;'
+<a name="917"></a>    closeText = '&lt;/b&gt;'
+<a name="918"></a>;
+<a name="919"></a>
+<a name="920"></a>/* ------------------------------------------------------------------------ */
+<a name="921"></a>/*
+<a name="922"></a> *   "Style tag" filter.  This is an output filter that expands our
+<a name="923"></a> *   special style tags in output text.
+<a name="924"></a> */
+<a name="925"></a>styleTagFilter: OutputFilter, PreinitObject
+<a name="926"></a>    /* pre-compile our frequently-used tag search pattern */
+<a name="927"></a>    tagPattern = static new RexPattern(
+<a name="928"></a>        '&lt;nocase&gt;&lt;langle&gt;%.(/?[a-z][a-z0-9]*)&lt;rangle&gt;')
+<a name="929"></a>
+<a name="930"></a>    /* filter for a style tag */
+<a name="931"></a>    filterText(ostr, val)
+<a name="932"></a>    {
+<a name="933"></a>        local idx;
+<a name="934"></a>
+<a name="935"></a>        /* search for our special '&lt;.xxx&gt;' tags, and expand any we find */
+<a name="936"></a>        idx = rexSearch(tagPattern, val);
+<a name="937"></a>        while (idx != nil)
+<a name="938"></a>        {
+<a name="939"></a>            local xlat;
+<a name="940"></a>            local afterOfs;
+<a name="941"></a>            local afterStr;
+<a name="942"></a>
+<a name="943"></a>            /* ask the formatter to translate it */
+<a name="944"></a>            xlat = translateTag(rexGroup(1)[3]);
+<a name="945"></a>
+<a name="946"></a>            /* get the part of the string that follows the tag */
+<a name="947"></a>            afterOfs = idx[1] + idx[2];
+<a name="948"></a>            afterStr = val.substr(idx[1] + idx[2]);
+<a name="949"></a>
+<a name="950"></a>            /*
+<a name="951"></a>             *   if we got a translation, replace it; otherwise, leave the
+<a name="952"></a>             *   original text intact
+<a name="953"></a>             */
+<a name="954"></a>            if (xlat != nil)
+<a name="955"></a>            {
+<a name="956"></a>                /* replace the tag with its translation */
+<a name="957"></a>                val = val.substr(1, idx[1] - 1) + xlat + afterStr;
+<a name="958"></a>
+<a name="959"></a>                /*
+<a name="960"></a>                 *   figure the offset of the remainder of the string in
+<a name="961"></a>                 *   the replaced version of the string - this is the
+<a name="962"></a>                 *   length of the original part up to the replacement
+<a name="963"></a>                 *   text plus the length of the replacement text
+<a name="964"></a>                 */
+<a name="965"></a>                afterOfs = idx[1] + xlat.length();
+<a name="966"></a>            }
+<a name="967"></a>
+<a name="968"></a>            /*
+<a name="969"></a>             *   search for the next tag, considering only the part of
+<a name="970"></a>             *   the string following the replacement text - we do not
+<a name="971"></a>             *   want to re-scan the replacement text for tags
+<a name="972"></a>             */
+<a name="973"></a>            idx = rexSearch(tagPattern, afterStr);
+<a name="974"></a>
+<a name="975"></a>            /*
+<a name="976"></a>             *   If we found it, adjust the starting index of the match to
+<a name="977"></a>             *   its position in the actual string.  Note that we do this
+<a name="978"></a>             *   by adding the OFFSET of the remainder of the string,
+<a name="979"></a>             *   which is 1 less than its INDEX, because idx[1] is already
+<a name="980"></a>             *   a string index.  (An offset is one less than an index
+<a name="981"></a>             *   because the index of the first character is 1.)
+<a name="982"></a>             */
+<a name="983"></a>            if (idx != nil)
+<a name="984"></a>                idx[1] += afterOfs - 1;
+<a name="985"></a>        }
+<a name="986"></a>
+<a name="987"></a>        /* return the filtered value */
+<a name="988"></a>        return val;
+<a name="989"></a>    }
+<a name="990"></a>
+<a name="991"></a>    /*
+<a name="992"></a>     *   Translate a tag
+<a name="993"></a>     */
+<a name="994"></a>    translateTag(tag)
+<a name="995"></a>    {
+<a name="996"></a>        local isClose;
+<a name="997"></a>        local styleTag;
+<a name="998"></a>
+<a name="999"></a>        /* if it's a close tag, so note and remove the leading slash */
+<a name="1000"></a>        isClose = tag.startsWith('/');
+<a name="1001"></a>        if (isClose)
+<a name="1002"></a>            tag = tag.substr(2);
+<a name="1003"></a>
+<a name="1004"></a>        /* look up the tag object in our table */
+<a name="1005"></a>        styleTag = tagTable[tag];
+<a name="1006"></a>
+<a name="1007"></a>        /*
+<a name="1008"></a>         *   if we found it, return the open or close text, as
+<a name="1009"></a>         *   appropriate; otherwise return nil
+<a name="1010"></a>         */
+<a name="1011"></a>        return (styleTag != nil
+<a name="1012"></a>                ? (isClose ? styleTag.closeText : styleTag.openText)
+<a name="1013"></a>                : nil);
+<a name="1014"></a>    }
+<a name="1015"></a>
+<a name="1016"></a>    /* preinitialization */
+<a name="1017"></a>    execute()
+<a name="1018"></a>    {
+<a name="1019"></a>        /* create a lookup table for our style table */
+<a name="1020"></a>        tagTable = new LookupTable();
+<a name="1021"></a>
+<a name="1022"></a>        /*
+<a name="1023"></a>         *   Populate the table with all of the StyleTag instances.  Key
+<a name="1024"></a>         *   by tag name, storing the tag object as the value for each
+<a name="1025"></a>         *   key.  This will let us efficiently look up the StyleTag
+<a name="1026"></a>         *   object given a tag name string.
+<a name="1027"></a>         */
+<a name="1028"></a>        forEachInstance(StyleTag, { tag: tagTable[tag.tagName] = tag });
+<a name="1029"></a>    }
+<a name="1030"></a>
+<a name="1031"></a>    /*
+<a name="1032"></a>     *   Our tag translation table.  We'll initialize this during preinit
+<a name="1033"></a>     *   to a lookup table with all of the defined StyleTag objects.
+<a name="1034"></a>     */
+<a name="1035"></a>    tagTable = nil
+<a name="1036"></a>;
+<a name="1037"></a>
+<a name="1038"></a>
+<a name="1039"></a>/* ------------------------------------------------------------------------ */
+<a name="1040"></a>/*
+<a name="1041"></a> *   MessageBuilder - this object provides a general text substitution
+<a name="1042"></a> *   mechanism.  Text to be substituted is enclosed in {curly braces}.
+<a name="1043"></a> *   Within the braces, we have the substitution parameter name, which can
+<a name="1044"></a> *   be in the following formats:
+<a name="1045"></a> *
+<a name="1046"></a> *   id
+<a name="1047"></a> *.  id obj
+<a name="1048"></a> *.  id1/id2 obj
+<a name="1049"></a> *.  id1 obj/id2
+<a name="1050"></a> *
+<a name="1051"></a> *   The ID string gives the type of substitution to perform.  The ID's
+<a name="1052"></a> *   all come from a table, which is specified by the language-specific
+<a name="1053"></a> *   subclass, so the ID's can vary by language (to allow for natural
+<a name="1054"></a> *   template-style parameter names for each language).  If the ID is in
+<a name="1055"></a> *   two pieces (id1 and id2), we concatenate the two pieces together with
+<a name="1056"></a> *   a slash between to form the name we seek in the table - so {the/he
+<a name="1057"></a> *   dobj} and {the dobj/he} are equivalent, and both look up the
+<a name="1058"></a> *   identifier 'the/he'.  If a two-part identifier is given, and the
+<a name="1059"></a> *   identifier isn't found in the table, we'll try looking it up with the
+<a name="1060"></a> *   parts reversed: if we see {he/the dobj}, we'll first try finding
+<a name="1061"></a> *   'he/the', and if that fails we'll look for 'the/he'.
+<a name="1062"></a> *
+<a name="1063"></a> *   If 'obj' is present, it specificies the target object providing the
+<a name="1064"></a> *   text to be substitutued; this is a string passed to the current
+<a name="1065"></a> *   Action, and is usually something like 'actor', 'dobj', or 'iobj'.
+<a name="1066"></a> *
+<a name="1067"></a> *   One instance of this class, called langMessageBuilder, should be
+<a name="1068"></a> *   created by the language-specific library.
+<a name="1069"></a> */
+<a name="1070"></a>class MessageBuilder: OutputFilter, PreinitObject
+<a name="1071"></a>    /* pre-compile some regular expressions we use a lot */
+<a name="1072"></a>    patUpper = static new RexPattern('&lt;upper&gt;')
+<a name="1073"></a>    patAllCaps = static new RexPattern('&lt;upper&gt;&lt;upper&gt;')
+<a name="1074"></a>    patIdObjSlashId = static new RexPattern(
+<a name="1075"></a>        '(&lt;^space|/&gt;+)&lt;space&gt;+(&lt;^space|/&gt;+)(/&lt;^space|/&gt;+)')
+<a name="1076"></a>    patIdObj = static new RexPattern('(&lt;^space&gt;+)&lt;space&gt;+(&lt;^space&gt;+)')
+<a name="1077"></a>    patIdSlash = static new RexPattern('([^/]+)/([^/]+)')
+<a name="1078"></a>
+<a name="1079"></a>    /*
+<a name="1080"></a>     *   Given a source string with substitution parameters, generate the
+<a name="1081"></a>     *   expanded message with the appropriate text in place of the
+<a name="1082"></a>     *   parameters.
+<a name="1083"></a>     */
+<a name="1084"></a>    generateMessage(orig)
+<a name="1085"></a>    {
+<a name="1086"></a>        local result;
+<a name="1087"></a>
+<a name="1088"></a>        /* we have nothing in the result string so far */
+<a name="1089"></a>        result = '';
+<a name="1090"></a>
+<a name="1091"></a>        /* keep going until we run out of substitution parameters */
+<a name="1092"></a>        for (;;)
+<a name="1093"></a>        {
+<a name="1094"></a>            local idx;
+<a name="1095"></a>            local paramStr;
+<a name="1096"></a>            local paramName;
+<a name="1097"></a>            local paramObj;
+<a name="1098"></a>            local info;
+<a name="1099"></a>            local initCap, allCaps;
+<a name="1100"></a>            local targetObj;
+<a name="1101"></a>            local newText;
+<a name="1102"></a>            local prop;
+<a name="1103"></a>
+<a name="1104"></a>            /* get the position of the next brace */
+<a name="1105"></a>            idx = orig.find('{');
+<a name="1106"></a>
+<a name="1107"></a>            /*
+<a name="1108"></a>             *   if there are no braces, the rest of the string is simply
+<a name="1109"></a>             *   literal text; add the entire remainder of the string to
+<a name="1110"></a>             *   the result, and we're done
+<a name="1111"></a>             */
+<a name="1112"></a>            if (idx == nil)
+<a name="1113"></a>            {
+<a name="1114"></a>                result += processResult(genLiteral(orig));
+<a name="1115"></a>                break;
+<a name="1116"></a>            }
+<a name="1117"></a>
+<a name="1118"></a>            /* add everything up to the brace to the result string */
+<a name="1119"></a>            result += processResult(genLiteral(orig.substr(1, idx - 1)));
+<a name="1120"></a>
+<a name="1121"></a>            /*
+<a name="1122"></a>             *   lop off everything up to and including the brace from the
+<a name="1123"></a>             *   source string, since we're done with the part up to the
+<a name="1124"></a>             *   brace now
+<a name="1125"></a>             */
+<a name="1126"></a>            orig = orig.substr(idx + 1);
+<a name="1127"></a>
+<a name="1128"></a>            /*
+<a name="1129"></a>             *   if the brace was the last thing in the source string, or
+<a name="1130"></a>             *   it's a stuttered brace, add it literally to the result
+<a name="1131"></a>             */
+<a name="1132"></a>            if (orig.length() == 0)
+<a name="1133"></a>            {
+<a name="1134"></a>                /*
+<a name="1135"></a>                 *   nothing follows - add a literal brace to the result,
+<a name="1136"></a>                 *   and we're done
+<a name="1137"></a>                 */
+<a name="1138"></a>                result += processResult('{');
+<a name="1139"></a>                break;
+<a name="1140"></a>            }
+<a name="1141"></a>            else if (orig.substr(1, 1) == '{')
+<a name="1142"></a>            {
+<a name="1143"></a>                /*
+<a name="1144"></a>                 *   it's a stuttered brace - add a literal brace to the
+<a name="1145"></a>                 *   result
+<a name="1146"></a>                 */
+<a name="1147"></a>                result += processResult('{');
+<a name="1148"></a>
+<a name="1149"></a>                /* remove the second brace from the source */
+<a name="1150"></a>                orig = orig.substr(2);
+<a name="1151"></a>
+<a name="1152"></a>                /* we're finished processing this brace - go back for more */
+<a name="1153"></a>                continue;
+<a name="1154"></a>            }
+<a name="1155"></a>
+<a name="1156"></a>            /* find the closing brace */
+<a name="1157"></a>            idx = orig.find('}');
+<a name="1158"></a>
+<a name="1159"></a>            /*
+<a name="1160"></a>             *   if there is no closing brace, include the brace and
+<a name="1161"></a>             *   whatever follows as literal text
+<a name="1162"></a>             */
+<a name="1163"></a>            if (idx == nil)
+<a name="1164"></a>            {
+<a name="1165"></a>                /* add the literal brace to the result */
+<a name="1166"></a>                result += processResult('{');
+<a name="1167"></a>
+<a name="1168"></a>                /* we're done with the brace - go back for more */
+<a name="1169"></a>                continue;
+<a name="1170"></a>            }
+<a name="1171"></a>
+<a name="1172"></a>            /*
+<a name="1173"></a>             *   Pull out everything up to the brace as the parameter
+<a name="1174"></a>             *   text.
+<a name="1175"></a>             */
+<a name="1176"></a>            paramStr = orig.substr(1, idx - 1);
+<a name="1177"></a>
+<a name="1178"></a>            /* assume for now that we will have no parameter object */
+<a name="1179"></a>            paramObj = nil;
+<a name="1180"></a>
+<a name="1181"></a>            /*
+<a name="1182"></a>             *   drop everything up to and including the closing brace,
+<a name="1183"></a>             *   since we've pulled it out for processing now
+<a name="1184"></a>             */
+<a name="1185"></a>            orig = orig.substr(idx + 1);
+<a name="1186"></a>
+<a name="1187"></a>            /*
+<a name="1188"></a>             *   Note the capitalization of the first two letters.  If
+<a name="1189"></a>             *   they're both lower-case, we won't adjust the case of the
+<a name="1190"></a>             *   substitution text at all.  If the first is a capital and
+<a name="1191"></a>             *   the second isn't, we'll capitalize the first letter of
+<a name="1192"></a>             *   the replacement text.  If they're both capitals, we'll
+<a name="1193"></a>             *   capitalize the entire replacement text.
+<a name="1194"></a>             */
+<a name="1195"></a>            initCap = (rexMatch(patUpper, paramStr) != nil);
+<a name="1196"></a>            allCaps = (rexMatch(patAllCaps, paramStr) != nil);
+<a name="1197"></a>
+<a name="1198"></a>            /* lower-case the entire parameter string for matching */
+<a name="1199"></a>            local origParamStr = paramStr;
+<a name="1200"></a>            paramStr = paramStr.toLower();
+<a name="1201"></a>
+<a name="1202"></a>            /* perform any language-specific rewriting on the string */
+<a name="1203"></a>            paramStr = langRewriteParam(paramStr);
+<a name="1204"></a>
+<a name="1205"></a>            /*
+<a name="1206"></a>             *   Figure out which format we have.  The allowable formats
+<a name="1207"></a>             *   are:
+<a name="1208"></a>             *
+<a name="1209"></a>             *   id
+<a name="1210"></a>             *   obj
+<a name="1211"></a>             *.  id obj
+<a name="1212"></a>             *.  id1/id2
+<a name="1213"></a>             *.  id1/id2 obj
+<a name="1214"></a>             *.  id1 obj/id2
+<a name="1215"></a>             */
+<a name="1216"></a>            if (rexMatch(patIdObjSlashId, paramStr) != nil)
+<a name="1217"></a>            {
+<a name="1218"></a>                /* we have the id1 obj/id2 format */
+<a name="1219"></a>                paramName = rexGroup(1)[3] + rexGroup(3)[3];
+<a name="1220"></a>                paramObj = rexGroup(2)[3];
+<a name="1221"></a>            }
+<a name="1222"></a>            else if (rexMatch(patIdObj, paramStr) != nil)
+<a name="1223"></a>            {
+<a name="1224"></a>                /* we have 'id obj' or 'id1/id2 obj' */
+<a name="1225"></a>                paramName = rexGroup(1)[3];
+<a name="1226"></a>                paramObj = rexGroup(2)[3];
+<a name="1227"></a>            }
+<a name="1228"></a>            else
+<a name="1229"></a>            {
+<a name="1230"></a>                /* we have no spaces, so we have no target object */
+<a name="1231"></a>                paramName = paramStr;
+<a name="1232"></a>                paramObj = nil;
+<a name="1233"></a>            }
+<a name="1234"></a>
+<a name="1235"></a>            /* look up our parameter name */
+<a name="1236"></a>            info = paramTable_[paramName];
+<a name="1237"></a>
+<a name="1238"></a>            /*
+<a name="1239"></a>             *   If we didn't find it, and the parameter name contains a
+<a name="1240"></a>             *   slash ('/'), try reversing the order of the parts before
+<a name="1241"></a>             *   and after the slash.
+<a name="1242"></a>             */
+<a name="1243"></a>            if (info == nil &amp;&amp; rexMatch(patIdSlash, paramName) != nil)
+<a name="1244"></a>            {
+<a name="1245"></a>                /*
+<a name="1246"></a>                 *   rebuild the name with the order of the parts
+<a name="1247"></a>                 *   reversed, and look up the result
+<a name="1248"></a>                 */
+<a name="1249"></a>                info = paramTable_[rexGroup(2)[3] + '/' + rexGroup(1)[3]];
+<a name="1250"></a>            }
+<a name="1251"></a>
+<a name="1252"></a>            /*
+<a name="1253"></a>             *   If we didn't find a match, simply put the entire thing in
+<a name="1254"></a>             *   the result stream literally, including the braces.
+<a name="1255"></a>             */
+<a name="1256"></a>            if (info == nil)
+<a name="1257"></a>            {
+<a name="1258"></a>                /*
+<a name="1259"></a>                 *   We didn't find it, so try treating it as a string
+<a name="1260"></a>                 *   parameter object.  Try getting the string from the
+<a name="1261"></a>                 *   action.
+<a name="1262"></a>                 */
+<a name="1263"></a>                newText = (gAction != nil
+<a name="1264"></a>                           ? gAction.getMessageParam(paramName) : nil);
+<a name="1265"></a>
+<a name="1266"></a>                /* check what we found */
+<a name="1267"></a>                if (dataType(newText) == TypeSString)
+<a name="1268"></a>                {
+<a name="1269"></a>                    /*
+<a name="1270"></a>                     *   It's a valid string parameter.  Simply add the
+<a name="1271"></a>                     *   literal text to the result.  If we're in html
+<a name="1272"></a>                     *   mode, translate the string to ensure that any
+<a name="1273"></a>                     *   markup-significant characters are properly quoted
+<a name="1274"></a>                     *   so that they aren't taken as html themselves.
+<a name="1275"></a>                     */
+<a name="1276"></a>                    result += processResult(newText.htmlify());
+<a name="1277"></a>                }
+<a name="1278"></a>                else
+<a name="1279"></a>                {
+<a name="1280"></a>                    /*
+<a name="1281"></a>                     *   the parameter is completely undefined; simply add
+<a name="1282"></a>                     *   the original text, including the braces
+<a name="1283"></a>                     */
+<a name="1284"></a>                    result += processResult('{&lt;&lt;origParamStr&gt;&gt;}');
+<a name="1285"></a>                }
+<a name="1286"></a>
+<a name="1287"></a>                /*
+<a name="1288"></a>                 *   we're done with this substitution string - go back
+<a name="1289"></a>                 *   for more
+<a name="1290"></a>                 */
+<a name="1291"></a>                continue;
+<a name="1292"></a>            }
+<a name="1293"></a>
+<a name="1294"></a>            /*
+<a name="1295"></a>             *   If we have no target object specified in the substitution
+<a name="1296"></a>             *   string, and the parameter name has an associated implicit
+<a name="1297"></a>             *   target object, use the implied object.
+<a name="1298"></a>             */
+<a name="1299"></a>            if (paramObj == nil &amp;&amp; info[3] != nil)
+<a name="1300"></a>                paramObj = info[3];
+<a name="1301"></a>
+<a name="1302"></a>            /*
+<a name="1303"></a>             *   If we have a target object name, ask the current action
+<a name="1304"></a>             *   for the target object value.  Otherwise, use the same
+<a name="1305"></a>             *   target object as the previous expansion.
+<a name="1306"></a>             */
+<a name="1307"></a>            if (paramObj != nil)
+<a name="1308"></a>            {
+<a name="1309"></a>                /* check for a current action */
+<a name="1310"></a>                if (gAction != nil)
+<a name="1311"></a>                {
+<a name="1312"></a>                    /* get the target object by name through the action */
+<a name="1313"></a>                    targetObj = gAction.getMessageParam(paramObj);
+<a name="1314"></a>                }
+<a name="1315"></a>                else
+<a name="1316"></a>                {
+<a name="1317"></a>                    /* there's no action, so we don't have a value yet */
+<a name="1318"></a>                    targetObj = nil;
+<a name="1319"></a>                }
+<a name="1320"></a>
+<a name="1321"></a>                /*
+<a name="1322"></a>                 *   if we didn't find a value, look up the name in our
+<a name="1323"></a>                 *   global name table
+<a name="1324"></a>                 */
+<a name="1325"></a>                if (targetObj == nil)
+<a name="1326"></a>                {
+<a name="1327"></a>                    /* look up the name */
+<a name="1328"></a>                    targetObj = nameTable_[paramObj];
+<a name="1329"></a>
+<a name="1330"></a>                    /*
+<a name="1331"></a>                     *   if we found it, and the result is a function
+<a name="1332"></a>                     *   pointer or an anonymous function, invoke the
+<a name="1333"></a>                     *   function to get the result
+<a name="1334"></a>                     */
+<a name="1335"></a>                    if (dataTypeXlat(targetObj) == TypeFuncPtr)
+<a name="1336"></a>                    {
+<a name="1337"></a>                        /* evaluate the function */
+<a name="1338"></a>                        targetObj = (targetObj)();
+<a name="1339"></a>                    }
+<a name="1340"></a>                }
+<a name="1341"></a>
+<a name="1342"></a>                /*
+<a name="1343"></a>                 *   remember this for next time, in case the next
+<a name="1344"></a>                 *   substitution string doesn't include a target object
+<a name="1345"></a>                 */
+<a name="1346"></a>                lastTargetObj_ = targetObj;
+<a name="1347"></a>                lastParamObj_ = paramObj;
+<a name="1348"></a>            }
+<a name="1349"></a>            else
+<a name="1350"></a>            {
+<a name="1351"></a>                /*
+<a name="1352"></a>                 *   there's no implied or explicit target - use the same
+<a name="1353"></a>                 *   one as last time
+<a name="1354"></a>                 */
+<a name="1355"></a>                targetObj = lastTargetObj_;
+<a name="1356"></a>                paramObj = lastParamObj_;
+<a name="1357"></a>            }
+<a name="1358"></a>
+<a name="1359"></a>            /*
+<a name="1360"></a>             *   if the target object wasn't found, treat the whole thing
+<a name="1361"></a>             *   as a failure - put the entire parameter string back in
+<a name="1362"></a>             *   the result stream literally
+<a name="1363"></a>             */
+<a name="1364"></a>            if (targetObj == nil)
+<a name="1365"></a>            {
+<a name="1366"></a>                /* add it to the output literally, and go back for more */
+<a name="1367"></a>                result += processResult('{' + paramStr + '}');
+<a name="1368"></a>                continue;
+<a name="1369"></a>            }
+<a name="1370"></a>
+<a name="1371"></a>            /* get the property to call on the target */
+<a name="1372"></a>            prop = getTargetProp(targetObj, paramObj, info);
+<a name="1373"></a>
+<a name="1374"></a>            /* evaluate the parameter's associated property on the target */
+<a name="1375"></a>            newText = targetObj.(prop);
+<a name="1376"></a>
+<a name="1377"></a>            /* apply the appropriate capitalization to the result */
+<a name="1378"></a>            if (allCaps)
+<a name="1379"></a>                newText = newText.toUpper();
+<a name="1380"></a>            else if (initCap)
+<a name="1381"></a>                newText = newText.substr(1, 1).toUpper() + newText.substr(2);
+<a name="1382"></a>
+<a name="1383"></a>            /*
+<a name="1384"></a>             *   append the new text to the output result so far, and
+<a name="1385"></a>             *   we're finished with this round
+<a name="1386"></a>             */
+<a name="1387"></a>            result += processResult(newText);
+<a name="1388"></a>        }
+<a name="1389"></a>
+<a name="1390"></a>        /* return the result string */
+<a name="1391"></a>        return result;
+<a name="1392"></a>    }
+<a name="1393"></a>
+<a name="1394"></a>    /*
+<a name="1395"></a>     *   Get the property to invoke on the target object for the given
+<a name="1396"></a>     *   parameter information entry.  By default, we simply return
+<a name="1397"></a>     *   info[2], which is the standard property to call on the target.
+<a name="1398"></a>     *   This can be overridden by the language-specific subclass to
+<a name="1399"></a>     *   provide a different property if appropriate.
+<a name="1400"></a>     *
+<a name="1401"></a>     *   'targetObj' is the target object, and 'paramObj' is the parameter
+<a name="1402"></a>     *   name of the target object.  For example, 'paramObj' might be the
+<a name="1403"></a>     *   string 'dobj' to represent the direct object, in which case
+<a name="1404"></a>     *   'targetObj' will be the gDobj object.
+<a name="1405"></a>     *
+<a name="1406"></a>     *   The English version, for example, uses this routine to supply a
+<a name="1407"></a>     *   reflexive instead of the default entry when the target object
+<a name="1408"></a>     *   matches the subject of the sentence.
+<a name="1409"></a>     */
+<a name="1410"></a>    getTargetProp(targetObj, paramObj, info)
+<a name="1411"></a>    {
+<a name="1412"></a>        /* return the standard property mapping from the parameter info */
+<a name="1413"></a>        return info[2];
+<a name="1414"></a>    }
+<a name="1415"></a>
+<a name="1416"></a>    /*
+<a name="1417"></a>     *   Process result text.  This takes some result text that we're
+<a name="1418"></a>     *   about to add and returns a processed version.  This is called for
+<a name="1419"></a>     *   all text as we add it to the result string.
+<a name="1420"></a>     *
+<a name="1421"></a>     *   The text we pass to this method has already had all parameter
+<a name="1422"></a>     *   text fully expanded, so this routine does not need to worry about
+<a name="1423"></a>     *   { } sequences - all { } sequences will have been removed and
+<a name="1424"></a>     *   replaced with the corresponding expansion text before this is
+<a name="1425"></a>     *   called.
+<a name="1426"></a>     *
+<a name="1427"></a>     *   This routine is called piecewise: the routine will be called once
+<a name="1428"></a>     *   for each parameter replacement text and once for each run of text
+<a name="1429"></a>     *   between parameters, and is called in the order in which the text
+<a name="1430"></a>     *   appears in the original string.
+<a name="1431"></a>     *
+<a name="1432"></a>     *   By default we do nothing with the result text; we simply return
+<a name="1433"></a>     *   the original text unchanged.  The language-specific subclass can
+<a name="1434"></a>     *   override this as desired to further modify the text for special
+<a name="1435"></a>     *   language-specific parameterization outside of the { } mechanism.
+<a name="1436"></a>     *   The subclass can also use this routine to maintain internal state
+<a name="1437"></a>     *   that depends on sentence structure.  For example, the English
+<a name="1438"></a>     *   version looks for sentence-ending punctuation so that it can
+<a name="1439"></a>     *   reset its internal notion of the subject of the sentence when a
+<a name="1440"></a>     *   sentence appears to be ending.
+<a name="1441"></a>     */
+<a name="1442"></a>    processResult(txt) { return txt; }
+<a name="1443"></a>
+<a name="1444"></a>    /*
+<a name="1445"></a>     *   "Quote" a message - double each open or close brace, so that braces in
+<a name="1446"></a>     *   the message will be taken literally when run through the substitution
+<a name="1447"></a>     *   replacer.  This can be used when a message is expanded prior to being
+<a name="1448"></a>     *   displayed to ensure that braces in the result won't be mistaken as
+<a name="1449"></a>     *   substitution parameters requiring further expansion.
+<a name="1450"></a>     *
+<a name="1451"></a>     *   Note that only open braces need to be quoted, since lone close braces
+<a name="1452"></a>     *   are ignored in the substitution process.
+<a name="1453"></a>     */
+<a name="1454"></a>    quoteMessage(str)
+<a name="1455"></a>    {
+<a name="1456"></a>        return str.findReplace(['{', '}'], ['{{', '}}'], ReplaceAll);
+<a name="1457"></a>    }
+<a name="1458"></a>
+<a name="1459"></a>    /*
+<a name="1460"></a>     *   Internal routine - generate the literal text for the given source
+<a name="1461"></a>     *   string.  We'll remove any stuttered close braces.
+<a name="1462"></a>     */
+<a name="1463"></a>    genLiteral(str)
+<a name="1464"></a>    {
+<a name="1465"></a>        /* replace all '}}' sequences with '}' sequences */
+<a name="1466"></a>        return str.findReplace('}}', '}', ReplaceAll);
+<a name="1467"></a>    }
+<a name="1468"></a>
+<a name="1469"></a>    /*
+<a name="1470"></a>     *   execute pre-initialization
+<a name="1471"></a>     */
+<a name="1472"></a>    execute()
+<a name="1473"></a>    {
+<a name="1474"></a>        /* create a lookup table for our parameter names */
+<a name="1475"></a>        paramTable_ = new LookupTable();
+<a name="1476"></a>
+<a name="1477"></a>        /* add each element of our list to the table */
+<a name="1478"></a>        foreach (local cur in paramList_)
+<a name="1479"></a>            paramTable_[cur[1]] = cur;
+<a name="1480"></a>
+<a name="1481"></a>        /* create a lookup table for our global names */
+<a name="1482"></a>        nameTable_ = new LookupTable();
+<a name="1483"></a>
+<a name="1484"></a>        /*
+<a name="1485"></a>         *   Add an entry for 'actor', which resolves to gActor if there is
+<a name="1486"></a>         *   a gActor when evaluated, or the current player character if
+<a name="1487"></a>         *   not.  Note that using a function ensures that we evaluate the
+<a name="1488"></a>         *   current gActor or gPlayerChar each time we need the 'actor'
+<a name="1489"></a>         *   value.
+<a name="1490"></a>         */
+<a name="1491"></a>        nameTable_['actor'] = {: gActor != nil ? gActor : gPlayerChar };
+<a name="1492"></a>    }
+<a name="1493"></a>
+<a name="1494"></a>    /*
+<a name="1495"></a>     *   Our output filter method.  We'll run each string written to the
+<a name="1496"></a>     *   display through our parameter substitution method.
+<a name="1497"></a>     */
+<a name="1498"></a>    filterText(ostr, txt)
+<a name="1499"></a>    {
+<a name="1500"></a>        /* substitute any parameters in the string and return the result */
+<a name="1501"></a>        return generateMessage(txt);
+<a name="1502"></a>    }
+<a name="1503"></a>
+<a name="1504"></a>    /*
+<a name="1505"></a>     *   The most recent target object.  Each time we parse a substitution
+<a name="1506"></a>     *   string, we'll remember the target object here; when a
+<a name="1507"></a>     *   substitution string doesn't imply or specify a target object,
+<a name="1508"></a>     *   we'll use the previous one by default.
+<a name="1509"></a>     */
+<a name="1510"></a>    lastTargetObj_ = nil
+<a name="1511"></a>
+<a name="1512"></a>    /* the parameter name of the last target object ('dobj', 'actor', etc) */
+<a name="1513"></a>    lastParamObj_ = nil
+<a name="1514"></a>
+<a name="1515"></a>    /* our parameter table - a LookupTable that we set up during preinit */
+<a name="1516"></a>    paramTable_ = nil
+<a name="1517"></a>
+<a name="1518"></a>    /* our global name table - a LookupTable we set up during preinit */
+<a name="1519"></a>    nameTable_ = nil
+<a name="1520"></a>
+<a name="1521"></a>    /*
+<a name="1522"></a>     *   Rewrite the parameter string for any language-specific rules.  By
+<a name="1523"></a>     *   default, we'll return the original parameter string unchanged;
+<a name="1524"></a>     *   the language-specific instance can override this to provide any
+<a name="1525"></a>     *   special syntax extensions to the parameter string syntax desired
+<a name="1526"></a>     *   by the language-specific library.  The returned string must be in
+<a name="1527"></a>     *   one of the formats recognized by the generic handler.
+<a name="1528"></a>     */
+<a name="1529"></a>    langRewriteParam(paramStr)
+<a name="1530"></a>    {
+<a name="1531"></a>        /* by default, return the original unchanged */
+<a name="1532"></a>        return paramStr;
+<a name="1533"></a>    }
+<a name="1534"></a>
+<a name="1535"></a>    /*
+<a name="1536"></a>     *   our parameter list - this should be initialized in the
+<a name="1537"></a>     *   language-specific subclass to a list like this:
+<a name="1538"></a>     *
+<a name="1539"></a>     *   [entry1, entry2, entry3, ...]
+<a name="1540"></a>     *
+<a name="1541"></a>     *   Each entry is a list like this:
+<a name="1542"></a>     *
+<a name="1543"></a>     *   [paramName, &amp;prop, impliedTargetName, &lt;extra&gt;]
+<a name="1544"></a>     *
+<a name="1545"></a>     *   paramName is a string giving the substitution parameter name;
+<a name="1546"></a>     *   this can be one word or two ('the' or 'the obj', for example).
+<a name="1547"></a>     *
+<a name="1548"></a>     *   prop is a property identifier.  This is the property invoked on
+<a name="1549"></a>     *   the target object to obtain the substitution text.
+<a name="1550"></a>     *
+<a name="1551"></a>     *   impliedTargetName is a string giving the target object name to
+<a name="1552"></a>     *   use.  When this is supplied, the paramName is normally used in
+<a name="1553"></a>     *   message text with no object name.  This should be nil for
+<a name="1554"></a>     *   parameters that do not imply a particular target.
+<a name="1555"></a>     *
+<a name="1556"></a>     *   &lt;extra&gt; is any number of additional parameters for the
+<a name="1557"></a>     *   language-specific subclass.  The generic code ignores these extra
+<a name="1558"></a>     *   parameters, but the langague-specific subclass can use them if it
+<a name="1559"></a>     *   requires additional information.
+<a name="1560"></a>     *
+<a name="1561"></a>     *   Here's an example:
+<a name="1562"></a>     *
+<a name="1563"></a>     *   paramList_ = [
+<a name="1564"></a>     *.                ['you', &amp;theDesc, nil, 'actor'],
+<a name="1565"></a>     *.                ['the obj' &amp;theObjDesc, &amp;itReflexive, nil]
+<a name="1566"></a>     *.  ]
+<a name="1567"></a>     *
+<a name="1568"></a>     *   The first item specifies a substitution name of 'you', which is
+<a name="1569"></a>     *   expanded by evaluating the property theDesc on the target object,
+<a name="1570"></a>     *   and specifies an implied target object of 'actor'.  When this is
+<a name="1571"></a>     *   expanded, we'll call the current action to get the meaning of
+<a name="1572"></a>     *   'actor', then evaulate property theDesc on the result.
+<a name="1573"></a>     *
+<a name="1574"></a>     *   The second item specifies a substitution name of 'the obj',
+<a name="1575"></a>     *   expanded by evaluating property theObjDesc on the target object.
+<a name="1576"></a>     *   This one doesn't have an implied object, so the target object is
+<a name="1577"></a>     *   the one explicitly given in the message source text or is the
+<a name="1578"></a>     *   previous target object if one isn't specified in the message
+<a name="1579"></a>     *   text.
+<a name="1580"></a>     */
+<a name="1581"></a>    paramList_ = []
+<a name="1582"></a>;
+<a name="1583"></a>
+<a name="1584"></a>
+<a name="1585"></a>/* ------------------------------------------------------------------------ */
+<a name="1586"></a>/*
+<a name="1587"></a> *   Command Sequencer Filter.  This is an output filter that handles the
+<a name="1588"></a> *   special &lt;.commandsep&gt; tag for visual command separation.  This tag has
+<a name="1589"></a> *   the form of a style tag, but must be processed specially.
+<a name="1590"></a> *
+<a name="1591"></a> *   &lt;.commandsep&gt; shows an appropriate separator between commands.  Before
+<a name="1592"></a> *   the first command output or after the last command output, this has no
+<a name="1593"></a> *   effect.  A run of multiple consecutive &lt;.commandsep&gt; tags is treated
+<a name="1594"></a> *   as a single tag.
+<a name="1595"></a> *
+<a name="1596"></a> *   Between commands, we show gLibMessages.commandResultsSeparator.  After
+<a name="1597"></a> *   an input line and before the first command result text, we show
+<a name="1598"></a> *   gLibMessages.commandResultsPrefix.  After the last command result text
+<a name="1599"></a> *   before a new input line, we show gLibMessages.commandResultsSuffix.
+<a name="1600"></a> *   If we read two input lines, and there is no intervening text output at
+<a name="1601"></a> *   all, we show gLibMessages.commandResultsEmpty.
+<a name="1602"></a> *
+<a name="1603"></a> *   The input manager should write a &lt;.commandbefore&gt; tag whenever it
+<a name="1604"></a> *   starts reading a command line, and a &lt;.commandafter&gt; tag whenever it
+<a name="1605"></a> *   finishes reading a command line.
+<a name="1606"></a> */
+<a name="1607"></a>enum stateReadingCommand, stateBeforeCommand, stateBeforeInterruption,
+<a name="1608"></a>    stateInCommand, stateBetweenCommands, stateWriteThrough,
+<a name="1609"></a>    stateNoCommand;
+<a name="1610"></a>
+<a name="1611"></a>transient commandSequencer: OutputFilter
+<a name="1612"></a>    /*
+<a name="1613"></a>     *   Force the sequencer into mid-command mode.  This can be used to
+<a name="1614"></a>     *   defeat the resequencing into before-results mode that occurs if
+<a name="1615"></a>     *   any interactive command-line input must be read in the course of
+<a name="1616"></a>     *   a command's execution.
+<a name="1617"></a>     */
+<a name="1618"></a>    setCommandMode() { state_ = stateInCommand; }
+<a name="1619"></a>
+<a name="1620"></a>    /*
+<a name="1621"></a>     *   Internal routine: write the given text directly through us,
+<a name="1622"></a>     *   skipping any filtering we'd otherwise apply.
+<a name="1623"></a>     */
+<a name="1624"></a>    writeThrough(txt)
+<a name="1625"></a>    {
+<a name="1626"></a>        local oldState;
+<a name="1627"></a>
+<a name="1628"></a>        /* remember our old state */
+<a name="1629"></a>        oldState = state_;
+<a name="1630"></a>
+<a name="1631"></a>        /* set our state to write-through */
+<a name="1632"></a>        state_ = stateWriteThrough;
+<a name="1633"></a>
+<a name="1634"></a>        /* make sure we reset things on the way out */
+<a name="1635"></a>        try
+<a name="1636"></a>        {
+<a name="1637"></a>            /* write the text */
+<a name="1638"></a>            say(txt);
+<a name="1639"></a>        }
+<a name="1640"></a>        finally
+<a name="1641"></a>        {
+<a name="1642"></a>            /* restore our old state */
+<a name="1643"></a>            state_ = oldState;
+<a name="1644"></a>        }
+<a name="1645"></a>    }
+<a name="1646"></a>
+<a name="1647"></a>    /* pre-compile our tag sequence pattern */
+<a name="1648"></a>    patNextTag = static new RexPattern(
+<a name="1649"></a>        '&lt;nocase&gt;&lt;langle&gt;&lt;dot&gt;'
+<a name="1650"></a>        + 'command(sep|int|before|after|none|mid)'
+<a name="1651"></a>        + '&lt;rangle&gt;')
+<a name="1652"></a>
+<a name="1653"></a>    /*
+<a name="1654"></a>     *   Apply our filter
+<a name="1655"></a>     */
+<a name="1656"></a>    filterText(ostr, txt)
+<a name="1657"></a>    {
+<a name="1658"></a>        local ret;
+<a name="1659"></a>
+<a name="1660"></a>        /*
+<a name="1661"></a>         *   if we're in write-through mode, simply pass the text through
+<a name="1662"></a>         *   unchanged
+<a name="1663"></a>         */
+<a name="1664"></a>        if (state_ == stateWriteThrough)
+<a name="1665"></a>            return txt;
+<a name="1666"></a>
+<a name="1667"></a>        /* scan for tags */
+<a name="1668"></a>        for (ret = '' ; txt != '' ; )
+<a name="1669"></a>        {
+<a name="1670"></a>            local match;
+<a name="1671"></a>            local cur;
+<a name="1672"></a>            local tag;
+<a name="1673"></a>
+<a name="1674"></a>            /* search for our next special tag sequence */
+<a name="1675"></a>            match = rexSearch(patNextTag, txt);
+<a name="1676"></a>
+<a name="1677"></a>            /* check to see if we found a tag */
+<a name="1678"></a>            if (match == nil)
+<a name="1679"></a>            {
+<a name="1680"></a>                /* no more tags - the rest of the text is plain text */
+<a name="1681"></a>                cur = txt;
+<a name="1682"></a>                txt = '';
+<a name="1683"></a>                tag = nil;
+<a name="1684"></a>            }
+<a name="1685"></a>            else
+<a name="1686"></a>            {
+<a name="1687"></a>                /* found a tag - get the plain text up to the tag */
+<a name="1688"></a>                cur = txt.substr(1, match[1] - 1);
+<a name="1689"></a>                txt = txt.substr(match[1] + match[2]);
+<a name="1690"></a>
+<a name="1691"></a>                /* get the tag name */
+<a name="1692"></a>                tag = rexGroup(1)[3];
+<a name="1693"></a>            }
+<a name="1694"></a>
+<a name="1695"></a>            /* process the plain text up to the tag, if any */
+<a name="1696"></a>            if (cur != '')
+<a name="1697"></a>            {
+<a name="1698"></a>                /* check our state */
+<a name="1699"></a>                switch(state_)
+<a name="1700"></a>                {
+<a name="1701"></a>                case stateReadingCommand:
+<a name="1702"></a>                case stateWriteThrough:
+<a name="1703"></a>                case stateInCommand:
+<a name="1704"></a>                case stateNoCommand:
+<a name="1705"></a>                    /* we don't need to add anything in these states */
+<a name="1706"></a>                    break;
+<a name="1707"></a>
+<a name="1708"></a>                case stateBeforeCommand:
+<a name="1709"></a>                    /*
+<a name="1710"></a>                     *   We're waiting for the first command output, and
+<a name="1711"></a>                     *   we've now found it.  Write the command results
+<a name="1712"></a>                     *   prefix separator.
+<a name="1713"></a>                     */
+<a name="1714"></a>                    ret += gLibMessages.commandResultsPrefix;
+<a name="1715"></a>
+<a name="1716"></a>                    /* we're now inside some command result text */
+<a name="1717"></a>                    state_ = stateInCommand;
+<a name="1718"></a>                    break;
+<a name="1719"></a>
+<a name="1720"></a>                case stateBeforeInterruption:
+<a name="1721"></a>                    /*
+<a name="1722"></a>                     *   An editing session has been interrupted, and we're
+<a name="1723"></a>                     *   showing new output.  First, switch to normal
+<a name="1724"></a>                     *   in-command mode - do this before doing anything
+<a name="1725"></a>                     *   else, since we might recursively show some more
+<a name="1726"></a>                     *   text in the course of canceling the input line.
+<a name="1727"></a>                     */
+<a name="1728"></a>                    state_ = stateInCommand;
+<a name="1729"></a>
+<a name="1730"></a>                    /*
+<a name="1731"></a>                     *   Now tell the input manager that we're canceling
+<a name="1732"></a>                     *   the input line that was under construction.  Don't
+<a name="1733"></a>                     *   reset the input editor state, though, since we
+<a name="1734"></a>                     *   might be able to resume editing the same line
+<a name="1735"></a>                     *   later.
+<a name="1736"></a>                     */
+<a name="1737"></a>                    inputManager.cancelInputInProgress(nil);
+<a name="1738"></a>
+<a name="1739"></a>                    /* insert the command interruption prefix */
+<a name="1740"></a>                    ret += gLibMessages.commandInterruptionPrefix;
+<a name="1741"></a>                    break;
+<a name="1742"></a>
+<a name="1743"></a>                case stateBetweenCommands:
+<a name="1744"></a>                    /*
+<a name="1745"></a>                     *   We've been waiting for a new command to start
+<a name="1746"></a>                     *   after seeing a &lt;.commandsep&gt; tag.  We now have
+<a name="1747"></a>                     *   some text for the new command, so show a command
+<a name="1748"></a>                     *   separator.
+<a name="1749"></a>                     */
+<a name="1750"></a>                    ret += gLibMessages.commandResultsSeparator;
+<a name="1751"></a>
+<a name="1752"></a>                    /* we're now inside some command result text */
+<a name="1753"></a>                    state_ = stateInCommand;
+<a name="1754"></a>                    break;
+<a name="1755"></a>                }
+<a name="1756"></a>
+<a name="1757"></a>                /* add the plain text */
+<a name="1758"></a>                ret += cur;
+<a name="1759"></a>            }
+<a name="1760"></a>
+<a name="1761"></a>            /* if we found the tag, process it */
+<a name="1762"></a>            switch(tag)
+<a name="1763"></a>            {
+<a name="1764"></a>            case 'none':
+<a name="1765"></a>                /* switching to no-command mode */
+<a name="1766"></a>                state_ = stateNoCommand;
+<a name="1767"></a>                break;
+<a name="1768"></a>
+<a name="1769"></a>            case 'mid':
+<a name="1770"></a>                /* switching back to mid-command mode */
+<a name="1771"></a>                state_ = stateInCommand;
+<a name="1772"></a>                break;
+<a name="1773"></a>
+<a name="1774"></a>            case 'sep':
+<a name="1775"></a>                /* command separation - check our state */
+<a name="1776"></a>                switch(state_)
+<a name="1777"></a>                {
+<a name="1778"></a>                case stateReadingCommand:
+<a name="1779"></a>                case stateBeforeCommand:
+<a name="1780"></a>                case stateBetweenCommands:
+<a name="1781"></a>                case stateWriteThrough:
+<a name="1782"></a>                    /* in these states, &lt;.commandsep&gt; has no effect */
+<a name="1783"></a>                    break;
+<a name="1784"></a>
+<a name="1785"></a>                case stateInCommand:
+<a name="1786"></a>                    /*
+<a name="1787"></a>                     *   We're inside some command text.  &lt;.commandsep&gt;
+<a name="1788"></a>                     *   tells us that we've reached the end of one
+<a name="1789"></a>                     *   command's output, so any subsequent output text
+<a name="1790"></a>                     *   belongs to a new command and thus must be visually
+<a name="1791"></a>                     *   separated from the preceding text.  Don't add any
+<a name="1792"></a>                     *   separation text yet, because we don't know for
+<a name="1793"></a>                     *   sure that there will ever be any more output text;
+<a name="1794"></a>                     *   instead, switch our state to between-commands, so
+<a name="1795"></a>                     *   that any subsequent text will trigger addition of
+<a name="1796"></a>                     *   a separator.
+<a name="1797"></a>                     */
+<a name="1798"></a>                    state_ = stateBetweenCommands;
+<a name="1799"></a>                    break;
+<a name="1800"></a>                }
+<a name="1801"></a>                break;
+<a name="1802"></a>
+<a name="1803"></a>            case 'int':
+<a name="1804"></a>                /*
+<a name="1805"></a>                 *   we've just interrupted reading a command line, due to
+<a name="1806"></a>                 *   an expired timeout event - switch to the
+<a name="1807"></a>                 *   before-interruption state
+<a name="1808"></a>                 */
+<a name="1809"></a>                state_ = stateBeforeInterruption;
+<a name="1810"></a>                break;
+<a name="1811"></a>
+<a name="1812"></a>            case 'before':
+<a name="1813"></a>                /* we're about to start reading a command */
+<a name="1814"></a>                switch (state_)
+<a name="1815"></a>                {
+<a name="1816"></a>                case stateBeforeCommand:
+<a name="1817"></a>                    /*
+<a name="1818"></a>                     *   we've shown nothing since the last command; show
+<a name="1819"></a>                     *   the empty command separator
+<a name="1820"></a>                     */
+<a name="1821"></a>                    writeThrough(gLibMessages.commandResultsEmpty());
+<a name="1822"></a>                    break;
+<a name="1823"></a>
+<a name="1824"></a>                case stateBetweenCommands:
+<a name="1825"></a>                case stateInCommand:
+<a name="1826"></a>                    /*
+<a name="1827"></a>                     *   we've written at least one command result, so
+<a name="1828"></a>                     *   show the after-command separator
+<a name="1829"></a>                     */
+<a name="1830"></a>                    writeThrough(gLibMessages.commandResultsSuffix());
+<a name="1831"></a>                    break;
+<a name="1832"></a>
+<a name="1833"></a>                default:
+<a name="1834"></a>                    /* do nothing in other modes */
+<a name="1835"></a>                    break;
+<a name="1836"></a>                }
+<a name="1837"></a>
+<a name="1838"></a>                /* switch to reading-command mode */
+<a name="1839"></a>                state_ = stateReadingCommand;
+<a name="1840"></a>                break;
+<a name="1841"></a>
+<a name="1842"></a>            case 'after':
+<a name="1843"></a>                /*
+<a name="1844"></a>                 *   We've just finished reading a command.  If we're
+<a name="1845"></a>                 *   still in reading-command mode, switch to
+<a name="1846"></a>                 *   before-command-results mode.  Don't switch if we're
+<a name="1847"></a>                 *   in another state, since we must have switched to
+<a name="1848"></a>                 *   another state already by a different route, in which
+<a name="1849"></a>                 *   case we can ignore this notification.
+<a name="1850"></a>                 */
+<a name="1851"></a>                if (state_ == stateReadingCommand)
+<a name="1852"></a>                    state_ = stateBeforeCommand;
+<a name="1853"></a>                break;
+<a name="1854"></a>            }
+<a name="1855"></a>        }
+<a name="1856"></a>
+<a name="1857"></a>        /* return the results */
+<a name="1858"></a>        return ret;
+<a name="1859"></a>    }
+<a name="1860"></a>
+<a name="1861"></a>    /* our current state - start out in before-command mode */
+<a name="1862"></a>    state_ = stateBeforeCommand
+<a name="1863"></a>;
+<a name="1864"></a>
+<a name="1865"></a>/* ------------------------------------------------------------------------ */
+<a name="1866"></a>/*
+<a name="1867"></a> *   Log Console output stream.  This is a simple wrapper for the system
+<a name="1868"></a> *   log console, which allows console-style output to be captured to a
+<a name="1869"></a> *   file, with full processing (HTML expansion, word wrapping, etc) but
+<a name="1870"></a> *   without displaying anything to the game window.
+<a name="1871"></a> *
+<a name="1872"></a> *   This class should always be instantiated with transient instances,
+<a name="1873"></a> *   since the underlying system object doesn't participate in save/restore
+<a name="1874"></a> *   operations.
+<a name="1875"></a> */
+<a name="1876"></a>class LogConsole: OutputStream
+<a name="1877"></a>    /*
+<a name="1878"></a>     *   Utility method: create a log file, set up to capture all console
+<a name="1879"></a>     *   output to the log file, run the given callback function, and then
+<a name="1880"></a>     *   close the log file and restore the console output.  This can be
+<a name="1881"></a>     *   used as a simple means of creating a file that captures the output
+<a name="1882"></a>     *   of a command.
+<a name="1883"></a>     */
+<a name="1884"></a>    captureToFile(filename, charset, width, func)
+<a name="1885"></a>    {
+<a name="1886"></a>        local con;
+<a name="1887"></a>
+<a name="1888"></a>        /* set up a log console to do the capturing */
+<a name="1889"></a>        con = new LogConsole(filename, charset, width);
+<a name="1890"></a>
+<a name="1891"></a>        /* capture to the console and run our command */
+<a name="1892"></a>        outputManager.withOutputStream(con, func);
+<a name="1893"></a>
+<a name="1894"></a>        /* done with the console */
+<a name="1895"></a>        con.closeConsole();
+<a name="1896"></a>    }
+<a name="1897"></a>
+<a name="1898"></a>    /* create a log console */
+<a name="1899"></a>    construct(filename, charset, width)
+<a name="1900"></a>    {
+<a name="1901"></a>        /* inherit base class handling */
+<a name="1902"></a>        inherited();
+<a name="1903"></a>
+<a name="1904"></a>        /* create the system log console object */
+<a name="1905"></a>        handle_ = logConsoleCreate(filename, charset, width);
+<a name="1906"></a>
+<a name="1907"></a>        /* install the standard output filters */
+<a name="1908"></a>        addOutputFilter(typographicalOutputFilter);
+<a name="1909"></a>        addOutputFilter(new transient ParagraphManager());
+<a name="1910"></a>        addOutputFilter(styleTagFilter);
+<a name="1911"></a>        addOutputFilter(langMessageBuilder);
+<a name="1912"></a>    }
+<a name="1913"></a>
+<a name="1914"></a>    /*
+<a name="1915"></a>     *   Close the console.  This closes the underlying system log console,
+<a name="1916"></a>     *   which closes the operating system file.  No further text can be
+<a name="1917"></a>     *   written to the console after it's closed.
+<a name="1918"></a>     */
+<a name="1919"></a>    closeConsole()
+<a name="1920"></a>    {
+<a name="1921"></a>        /* close our underlying system console */
+<a name="1922"></a>        logConsoleClose(handle_);
+<a name="1923"></a>
+<a name="1924"></a>        /*
+<a name="1925"></a>         *   forget our handle, since it's no longer valid; setting the
+<a name="1926"></a>         *   handle to nil will make it more obvious what's going on if
+<a name="1927"></a>         *   someone tries to write more text after we've been closed
+<a name="1928"></a>         */
+<a name="1929"></a>        handle_ = nil;
+<a name="1930"></a>    }
+<a name="1931"></a>
+<a name="1932"></a>    /* low-level stream writer - write to our system log console */
+<a name="1933"></a>    writeFromStream(txt) { logConsoleSay(handle_, txt); }
+<a name="1934"></a>
+<a name="1935"></a>    /* our system log console handle */
+<a name="1936"></a>    handle_ = nil
+<a name="1937"></a>;
+<a name="1938"></a>
+<a name="1939"></a>/* ------------------------------------------------------------------------ */
+<a name="1940"></a>/*
+<a name="1941"></a> *   Output stream window.
+<a name="1942"></a> *
+<a name="1943"></a> *   This is an abstract base class for UI widgets that have output
+<a name="1944"></a> *   streams, such as Banner Windows and Web UI windows.  This base class
+<a name="1945"></a> *   essentially handles the interior of the window, and leaves the details
+<a name="1946"></a> *   of the window's layout in the broader UI to subclasses.
+<a name="1947"></a> */
+<a name="1948"></a>class OutputStreamWindow: object
+<a name="1949"></a>    /*
+<a name="1950"></a>     *   Invoke the given callback function, setting the default output
+<a name="1951"></a>     *   stream to the window's output stream for the duration of the call.
+<a name="1952"></a>     *   This allows invoking any code that writes to the current default
+<a name="1953"></a>     *   output stream and displaying the result in the window.
+<a name="1954"></a>     */
+<a name="1955"></a>    captureOutput(func)
+<a name="1956"></a>    {
+<a name="1957"></a>        /* make my output stream the global default */
+<a name="1958"></a>        local oldStr = outputManager.setOutputStream(outputStream_);
+<a name="1959"></a>
+<a name="1960"></a>        /* make sure we restore the default output stream on the way out */
+<a name="1961"></a>        try
+<a name="1962"></a>        {
+<a name="1963"></a>            /* invoke the callback function */
+<a name="1964"></a>            (func)();
+<a name="1965"></a>        }
+<a name="1966"></a>        finally
+<a name="1967"></a>        {
+<a name="1968"></a>            /* restore the original default output stream */
+<a name="1969"></a>            outputManager.setOutputStream(oldStr);
+<a name="1970"></a>        }
+<a name="1971"></a>    }
+<a name="1972"></a>
+<a name="1973"></a>    /*
+<a name="1974"></a>     *   Make my output stream the default in the output manager.  Returns
+<a name="1975"></a>     *   the previous default output stream; the caller can note the return
+<a name="1976"></a>     *   value and use it later to restore the original output stream via a
+<a name="1977"></a>     *   call to outputManager.setOutputStream(), if desired.
+<a name="1978"></a>     */
+<a name="1979"></a>    setOutputStream()
+<a name="1980"></a>    {
+<a name="1981"></a>        /* set my stream as the default */
+<a name="1982"></a>        return outputManager.setOutputStream(outputStream_);
+<a name="1983"></a>    }
+<a name="1984"></a>
+<a name="1985"></a>    /*
+<a name="1986"></a>     *   Create our output stream.  We'll create the appropriate output
+<a name="1987"></a>     *   stream subclass and set it up with our default output filters.
+<a name="1988"></a>     *   Subclasses can override this as needed to customize the filters.
+<a name="1989"></a>     */
+<a name="1990"></a>    createOutputStream()
+<a name="1991"></a>    {
+<a name="1992"></a>        /* create a banner output stream */
+<a name="1993"></a>        outputStream_ = createOutputStreamObj();
+<a name="1994"></a>
+<a name="1995"></a>        /* set up the default filters */
+<a name="1996"></a>        outputStream_.addOutputFilter(typographicalOutputFilter);
+<a name="1997"></a>        outputStream_.addOutputFilter(new transient ParagraphManager());
+<a name="1998"></a>        outputStream_.addOutputFilter(styleTagFilter);
+<a name="1999"></a>        outputStream_.addOutputFilter(langMessageBuilder);
+<a name="2000"></a>    }
+<a name="2001"></a>
+<a name="2002"></a>    /*
+<a name="2003"></a>     *   Create the output stream object.  Subclasses can override this to
+<a name="2004"></a>     *   create the appropriate stream subclass.  Note that the stream
+<a name="2005"></a>     *   should always be created as a transient object.
+<a name="2006"></a>     */
+<a name="2007"></a>    createOutputStreamObj() { return new transient OutputStream(); }
+<a name="2008"></a>
+<a name="2009"></a>    /*
+<a name="2010"></a>     *   My output stream - this is a transient OutputStream instance.
+<a name="2011"></a>     *   Subclasses must create this explicitly by calling
+<a name="2012"></a>     *   createOutputStream() when the underlying UI window is first
+<a name="2013"></a>     *   created.
+<a name="2014"></a>     */
+<a name="2015"></a>    outputStream_ = nil
+<a name="2016"></a>;
+<a name="2017"></a>
+</pre>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

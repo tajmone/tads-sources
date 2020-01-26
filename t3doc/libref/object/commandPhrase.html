@@ -1,0 +1,12 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>commandPhrase</title></head><body>
+<table class=ban><tr><td align=left><span class=title>commandPhrase</span><span class=type>GrammarProd</span></table><p>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/commandPhrase(ambiguousConj).html">commandPhrase(ambiguousConj)</a></span> :  &nbsp; <a href="../object/CommandProdWithAmbiguousConj.html">CommandProdWithAmbiguousConj</a></code>
+<td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1188">1188</a>]</code></table><div class=gramrule>    predicate-&gt;cmd1_ commandOrNounConjunction-&gt;conj_ commandPhrase-&gt;cmd2_<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/commandPhrase(definiteConj).html">commandPhrase(definiteConj)</a></span> :  &nbsp; <a href="../object/CommandProdWithDefiniteConj.html">CommandProdWithDefiniteConj</a></code>
+<td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1177">1177</a>]</code></table><div class=gramrule>    predicate-&gt;cmd_<br>    | predicate-&gt;cmd_ commandOnlyConjunction-&gt;conj_ *<br></div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+# TADS 3 makefile
+#
+# Warning: this file was mechanically generated.  You may edit this file
+# manually, but your changes might be modified or discarded when
+# you load this file into a TADS development tool.  The TADS tools
+# generally retain the comment at the start of the  file and the
+# comment marked "##sources" below, but other comments might be
+# discarded, the formatting might be changed, and some option
+# settings might be modified.
+
+-pre
+-I en_us
+-I en_us
+-I en_us
+-D LANGUAGE=en_us
+-D MESSAGESTYLE=neu
+-Fy obj
+-Fo obj
+-w1
+
+##sources
+-lib system
+-lib adv3/adv3
+-source Heidi
+
+-res
+GameInfo.txt
+
+# The following is machine-generated - DO NOT EDIT
+[Config:devsys]
+DebugToolbar:rebarWidth:I:-1
+build:ext resfile cnt:I:0
+build:defaults set:I:1
+watch win:vis:I:0
+watch win:pos:R:573,270,595,270
+build:c ops:I:0
+SearchToolbar:rebarNewLine:I:0
+MenuBar:rebarVis:I:1
+log win vis::I:0
+log win pos::R:538,605,1018,732
+build:charmap:S:0:
+*54 src win pos:c:\program files\tads 3\lib\adv3\objects.t:R:-4,2,665,477
+DocToolbar:rebarIndex:I:3
+*54 src win pos:c:\program files\tads 3\lib\adv3\precond.t:R:22,29,585,325
+build:include_files-sys:S:0:system
+build:include_files-sys:S:1:system
+build:include_files-sys:S:2:system
+build:include_files-sys:S:3:system
+build:include_files-sys:S:4:system
+build:include_files-sys:S:5:system
+build:include_files-sys:S:6:system
+build:include_files-sys:S:7:system
+build:include_files-sys:S:8:system
+build:include_files-sys:S:9:system
+build:include_files-sys:S:10:system
+build:include_files-sys:S:11:system
+build:include_files-sys:S:12:lib
+build:include_files-sys:S:13:system
+build:include_files-sys:S:14:system
+build:include_files-sys:S:15:lib
+project win:dock id:I:7
+*54 src win pos:c:\program files\tads 3\lib\adv3\actions.t:R:22,29,580,325
+*61 src win pos:c:\program files\tads 3\lib\adv3\en_us\instruct.t:R:-25,11,604,446
+DocToolbar:rebarWidth:I:-1
+DebugToolbar:rebarVis:I:1
+*54 src win pos:c:\program files\tads 3\lib\adv3\numbers.t:R:44,58,607,366
+*59 src win pos:c:\program files\tads 3\lib\adv3\en_us\en_us.tl:R:22,29,573,325
+watch win:expression list 0:S:0:getPOV()
+*87 line wrap:C:\Documents and Settings\Eric Eve\My Documents\TADS\doc\beta\doc\gsg\Heidi.t:S:0:N
+watch win:sep xpos 0:I:11
+watch win:sep xpos 1:I:0
+watch win:sep xpos 2:I:0
+watch win:sep xpos 3:I:0
+build:installer options:S:0:name=Heidi
+build:installer options:S:1:savext=Heidi
+search:start at top:I:0
+*52 src win pos:c:\program files\tads 3\lib\adv3\modid.t:R:-1,9,329,450
+*54 src win pos:c:\program files\tads 3\lib\adv3\hintsys.t:R:44,58,577,343
+src win pos:Mountain.t:R:0,326,220,473
+EditToolbar:rebarNewLine:I:1
+breakpoints:cond-mode:S:0:true
+*52 src win pos:c:\program files\tads 3\lib\adv3\actor.t:R:-47,38,622,513
+*52 src win pos:c:\program files\tads 3\lib\adv3\thing.t:R:-32,13,644,488
+*52 src win pos:c:\program files\tads 3\lib\adv3\score.t:R:14,79,577,387
+*52 src win pos:c:\program files\tads 3\lib\adv3\sense.t:R:-49,39,620,514
+proj search:exact case:I:0
+src win pos:Forest_Road.t:R:220,179,440,326
+src win pos:Castle.t:R:-4,-30,665,445
+DocToolbar:rebarVis:I:1
+*52 src win pos:c:\program files\tads 3\lib\adv3\hints.t:R:23,33,622,386
+auto-script:quit sequences:S:0:<nocase>[<]line[>]<space>*q(uit)?<space>*
+auto-script:quit sequences:S:1:<nocase>[<]line[>]<space>*y.*
+*52 src win pos:c:\program files\tads 3\lib\adv3\menus.t:R:25,26,643,411
+SearchToolbar:rebarIndex:I:2
+*52 src win pos:c:\program files\tads 3\lib\adv3\exits.t:R:0,0,330,441
+search:wrap:I:1
+*52 src win pos:c:\program files\tads 3\lib\adv3\input.t:R:66,87,617,383
+auto-script:next-id:I:2
+SearchToolbar:rebarWidth:I:253
+*57 src win pos:C:\Program Files\TADS 3\samples\Heidi\Heidi.t:R:-4,2,665,477
+docking config::S:0:CB
+docking config::S:3:CR
+docking config::S:6:CL
+docking config::S:8:CB
+docking config::S:9:W8,270,170,-153,450,489,470,D,B,locals win
+docking config::S:10:W8,270,170,569,248,599,268,D,B,watch win
+docking config::S:11:CL
+docking config::S:12:W11,170,270,-170,17,161,424,D,L,project win
+docking config::S:13:W11,170,150,175,424,345,574,D,L,script win
+docking config::S:14:W-1,170,170,362,450,850,611,M,R,log win
+docking config::S:15:W-1,170,170,848,-10,1016,193,M,R,stack win
+search:text:S:0:BuyTopic:
+search:text:S:1:
+src win pos:Forest.t:R:440,294,660,441
+*64 src win pos:C:\Program Files\TADS 3\samples\Forest\Forest_Road.t:R:28,2,704,477
+locals win:vis:I:0
+locals win:pos:R:-149,472,485,472
+main win max::I:1
+*59 src win pos:C:\Program Files\TADS 3\samples\Forest\Castle.t:R:-4,220,664,367
+proj search:collapse spaces:I:0
+search:exact case:I:0
+mdi win list::S:0:C:\Documents and Settings\Eric Eve\My Documents\TADS\doc\beta\doc\gsg\Heidi.t
+main win pos::R:-4,-4,1028,712
+proj search:whole word:I:0
+help win vis::I:0
+build:ignore case:I:0
+src win pos:forest.h:R:88,116,651,424
+docsearch win vis::I:0
+build:exe:S:0:Heidi.exe
+script win:pos:R:2,554,163,683
+script win:vis:I:1
+*50 src win pos:c:\program files\tads 3\lib\adv3\pov.t:R:34,119,597,427
+*59 src win pos:C:\Program Files\TADS 3\samples\Forest\Forest.t:R:-4,-30,672,445
+src win list::S:0:C:\Program Files\TADS 3\samples\Heidi\Heidi.t
+build:use charmap:I:0
+EditToolbar:rebarIndex:I:1
+hist win vis::I:0
+editor:cmdline:S:0:-f"%f"  -l  "TADS 3"
+*51 src win pos:c:\program files\tads 3\lib\adv3\adv3.h:R:-36,34,633,509
+EditToolbar:rebarWidth:I:578
+*60 src win pos:c:\program files\tads 3\lib\adv3\en_us\msg_neu.t:R:-4,-30,665,445
+build:include_files:S:0:tads.h
+build:include_files:S:1:t3.h
+build:include_files:S:2:lookup.h
+build:include_files:S:3:systype.h
+build:include_files:S:4:vector.h
+build:include_files:S:5:charset.h
+build:include_files:S:6:bytearr.h
+build:include_files:S:7:tadsgen.h
+build:include_files:S:8:tadsio.h
+build:include_files:S:9:file.h
+build:include_files:S:10:dict.h
+build:include_files:S:11:tok.h
+build:include_files:S:12:adv3.h
+build:include_files:S:13:gramprod.h
+build:include_files:S:14:strcomp.h
+build:include_files:S:15:en_us.h
+SearchToolbar:rebarVis:I:1
+src win pos:lake.t:R:440,32,660,179
+MenuBar:rebarNewLine:I:0
+proj search:regex:I:0
+locals win:sep xpos 0:I:124
+locals win:sep xpos 1:I:317
+*55 src win pos:c:\program files\tads 3\lib\adv3\footnote.t:R:44,58,595,354
+search:whole word:I:0
+src win pos:Town.t:R:220,326,440,473
+*52 src win pos:c:\program files\tads 3\include\lookup.h:R:88,116,646,412
+*55 src win pos:c:\program files\tads 3\lib\adv3\resolver.t:R:88,116,644,424
+DebugToolbar:rebarNewLine:I:1
+build:debug_image_file:S:0:debug\Heidi.t3
+*53 src win pos:c:\program files\tads 3\lib\adv3\banner.t:R:0,0,661,220
+search dlg:old searches:S:0:BuyTopic:
+search dlg:old searches:S:1:dobjFor(Drop
+search dlg:old searches:S:2:floor
+search dlg:old searches:S:3:subLocation
+search dlg:old searches:S:4:getDropDestination
+search dlg:old searches:S:5:receiveDrop
+search dlg:old searches:S:6:DistanceConnector
+search dlg:old searches:S:7:isKnownBy
+search dlg:old searches:S:8:putDestFloor
+search dlg:old searches:S:9:Floor:
+*50 src win pos:c:\program files\tads 3\include\dict.h:R:0,0,558,296
+editor:program:S:0:C:\Program Files\Imaginate\Imaginate.exe
+*53 src win pos:c:\program files\tads 3\lib\adv3\action.t:R:-47,25,629,500
+*48 src win pos:c:\program files\tads 3\include\t3.h:R:66,87,624,383
+*50 src win pos:c:\program files\tads 3\include\tads.h:R:44,58,602,354
+*91 src win split:C:\Documents and Settings\Eric Eve\My Documents\TADS\doc\beta\doc\gsg\Heidi.t:S:0:0.000000
+*58 src win pos:c:\program files\tads 3\lib\adv3\en_us\en_us.h:R:58,68,616,364
+search dlg:old search opts:S:0:
+search dlg:old search opts:S:1:
+search dlg:old search opts:S:2:
+search dlg:old search opts:S:3:
+search dlg:old search opts:S:4:
+search dlg:old search opts:S:5:
+search dlg:old search opts:S:6:
+search dlg:old search opts:S:7:
+search dlg:old search opts:S:8:
+search dlg:old search opts:S:9:
+src win pos:General.t:R:-11,1,658,476
+*57 src win pos:C:\Program Files\TADS 3\samples\Forest\Town.t:R:28,2,704,477
+*53 src win pos:c:\program files\tads 3\lib\adv3\parser.t:R:44,58,602,354
+*53 src win pos:c:\program files\tads 3\lib\adv3\travel.t:R:-4,2,665,477
+search:regex:I:0
+startup:action:I:1
+*58 src win pos:c:\program files\tads 3\lib\adv3\en_us\en_us.t:R:376,289,596,399
+mdi tab order::S:0:0
+*53 src win pos:c:\program files\tads 3\lib\adv3\lister.t:R:88,116,646,412
+build:rlsgam:S:0:Heidi.t3
+EditToolbar:rebarVis:I:1
+*53 src win pos:c:\program files\tads 3\lib\adv3\verify.t:R:22,29,585,337
+*53 src win pos:c:\program files\tads 3\lib\adv3\events.t:R:54,19,651,416
+*53 src win pos:c:\program files\tads 3\lib\adv3\extras.t:R:-36,2,633,477
+main win mdi max::I:1
+auto-script:default quit sequences set:I:1
+*53 src win pos:c:\program files\tads 3\lib\adv3\report.t:R:44,82,607,390
+*53 src win pos:c:\program files\tads 3\lib\adv3\status.t:R:0,0,563,308
+DocToolbar:rebarNewLine:I:0
+*51 src win pos:c:\program files\tads 3\lib\adv3\exec.t:R:0,0,334,220
+*94 src win selrange:C:\Documents and Settings\Eric Eve\My Documents\TADS\doc\beta\doc\gsg\Heidi.t:S:0:0,0
+*94 src win selrange:C:\Documents and Settings\Eric Eve\My Documents\TADS\doc\beta\doc\gsg\Heidi.t:S:1:0,0
+MenuBar:rebarIndex:I:0
+*51 src win pos:c:\program files\tads 3\lib\adv3\misc.t:R:40,26,603,334
+mdi win title::S:0:C:\Documents and Settings\Eric Eve\My Documents\TADS\doc\beta\doc\gsg\Heidi.t
+*53 src win pos:c:\program files\tads 3\lib\adv3\output.t:R:61,78,619,374
+search:dir:I:1
+MenuBar:rebarWidth:I:-1
+build:installer prog:S:0:Heidi_Setup.exe
+project win:vis:I:1
+project win:pos:R:2,124,163,528
+filesearch win vis::I:0
+src win pos:Caves.t:R:440,179,660,326
+stack win pos::R:1024,145,1184,314
+stack win vis::I:0
+DebugToolbar:rebarIndex:I:4
+src win title::S:0:C:\Program Files\TADS 3\samples\Heidi\Heidi.t
+*53 src win pos:c:\program files\tads 3\include\tadsgen.h:R:110,145,668,441
+searchMode::I:1
+*95 src win edit mode:C:\Documents and Settings\Eric Eve\My Documents\TADS\doc\beta\doc\gsg\Heidi.t:S:0:TADS 3
+

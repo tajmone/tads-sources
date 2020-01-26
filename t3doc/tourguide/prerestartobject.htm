@@ -1,0 +1,74 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PreRestartObject</title><meta name="keywords" content="PreRestartObject"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PreRestartObject: <a href="moduleexecobject.htm">ModuleExecObject</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="postundoobject.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="travelpushable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">PreRestartObject is the last member of this set. <font face="Times New Roman" size="3" color="#000000">Every instance of this class is notified, via its execute() method, just before we restart the game (with a RESTART command, for example).
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Our totally insane implementor would probably use it like this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">PreRestartObject
+<br>
+&nbsp;&nbsp;execute()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"NO!!&nbsp;You&nbsp;pathetic&nbsp;worm!&nbsp;I&nbsp;have&nbsp;filled&nbsp;this&nbsp;game&nbsp;with&nbsp;a&nbsp;myriad&nbsp;unmappable&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mazes,&nbsp;an&nbsp;infinity&nbsp;of&nbsp;instadeath&nbsp;rooms,&nbsp;a&nbsp;glut&nbsp;of&nbsp;guess-the-verb&nbsp;puzzles,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;unbounded&nbsp;cornucopia&nbsp;of&nbsp;unimplemented&nbsp;objects,&nbsp;and&nbsp;you&nbsp;--&nbsp;you,&nbsp;you&nbsp;miserable
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;wretch&nbsp;--&nbsp;you&nbsp;want&nbsp;to&nbsp;back&nbsp;out&nbsp;of&nbsp;all&nbsp;this&nbsp;by&nbsp;RESTARTING!&nbsp;Well,&nbsp;I'm&nbsp;not&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;having&nbsp;it.&nbsp;You'll&nbsp;just&nbsp;have&nbsp;to&nbsp;carry&nbsp;on.&nbsp;So&nbsp;there!&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At this point you may be feeling thoroughly grateful that there's no PreQuitObject. Unfortunately our Insane Implementor could always resort to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;QuitAction
+<br>
+&nbsp;&nbsp;execSystemAction()
+<br>
+&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"What?&nbsp;You&nbsp;want&nbsp;to&nbsp;quit&nbsp;my&nbsp;masterpiece?&nbsp;No&nbsp;way!&nbsp;What&nbsp;kind&nbsp;of&nbsp;cretin&nbsp;are
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you,&nbsp;anyway?";
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">But please don't try this at home!</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And now, after that little diversion, let's get back to the Quest of the Golden Banana.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

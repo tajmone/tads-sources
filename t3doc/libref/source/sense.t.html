@@ -1,0 +1,872 @@
+<html><head><link rel=stylesheet type="text/css" href="../libref.css"><title>sense.t</title></head><body>
+<table class=ban><tr><td><h1>sense.t</h1><td align=right><a href="../file/sense.t.html">documentation</a></table><pre>
+<a name="1"></a>#charset "us-ascii"
+<a name="2"></a>
+<a name="3"></a>/*
+<a name="4"></a> *   Copyright (c) 2000, 2006 Michael J. Roberts.  All Rights Reserved.
+<a name="5"></a> *
+<a name="6"></a> *   TADS 3 Library - senses
+<a name="7"></a> *
+<a name="8"></a> *   This module defines objects and functions related to senses.  This
+<a name="9"></a> *   file is language-independent.
+<a name="10"></a> */
+<a name="11"></a>
+<a name="12"></a>/* include the library header */
+<a name="13"></a>#include "adv3.h"
+<a name="14"></a>
+<a name="15"></a>
+<a name="16"></a>/* ------------------------------------------------------------------------ */
+<a name="17"></a>/*
+<a name="18"></a> *   Material: the base class for library objects that specify the way
+<a name="19"></a> *   senses pass through objects.
+<a name="20"></a> */
+<a name="21"></a>class Material: object
+<a name="22"></a>    /*
+<a name="23"></a>     *   Determine how a sense passes through the material.  We'll return
+<a name="24"></a>     *   a transparency level.  (Individual materials should not need to
+<a name="25"></a>     *   override this method, since it simply dispatches to the various
+<a name="26"></a>     *   xxxThru methods.)
+<a name="27"></a>     */
+<a name="28"></a>    senseThru(sense)
+<a name="29"></a>    {
+<a name="30"></a>        /* dispatch to the xxxThru method for the sense */
+<a name="31"></a>        return self.(sense.thruProp);
+<a name="32"></a>    }
+<a name="33"></a>
+<a name="34"></a>    /*
+<a name="35"></a>     *   For each sense, each material must define an appropriate xxxThru
+<a name="36"></a>     *   property that returns the transparency level for that sense
+<a name="37"></a>     *   through the material.  Any xxxThru property not defined in an
+<a name="38"></a>     *   individual material defaults to opaque.
+<a name="39"></a>     */
+<a name="40"></a>    seeThru = opaque
+<a name="41"></a>    hearThru = opaque
+<a name="42"></a>    smellThru = opaque
+<a name="43"></a>    touchThru = opaque
+<a name="44"></a>;
+<a name="45"></a>
+<a name="46"></a>/*
+<a name="47"></a> *   Adventium is the basic stuff of the game universe.  This is the
+<a name="48"></a> *   default material for any object that doesn't specify a different
+<a name="49"></a> *   material.  This type of material is opaque to all senses.
+<a name="50"></a> */
+<a name="51"></a>adventium: Material
+<a name="52"></a>    seeThru = opaque
+<a name="53"></a>    hearThru = opaque
+<a name="54"></a>    smellThru = opaque
+<a name="55"></a>    touchThru = opaque
+<a name="56"></a>;
+<a name="57"></a>
+<a name="58"></a>/*
+<a name="59"></a> *   Paper is opaque to sight and touch, but allows sound and smell to
+<a name="60"></a> *   pass.
+<a name="61"></a> */
+<a name="62"></a>paper: Material
+<a name="63"></a>    seeThru = opaque
+<a name="64"></a>    hearThru = transparent
+<a name="65"></a>    smellThru = transparent
+<a name="66"></a>    touchThru = opaque
+<a name="67"></a>;
+<a name="68"></a>
+<a name="69"></a>/*
+<a name="70"></a> *   Glass is transparent to light, but opaque to touch, sound, and smell.
+<a name="71"></a> */
+<a name="72"></a>glass: Material
+<a name="73"></a>    seeThru = transparent
+<a name="74"></a>    hearThru = opaque
+<a name="75"></a>    smellThru = opaque
+<a name="76"></a>    touchThru = opaque
+<a name="77"></a>;
+<a name="78"></a>
+<a name="79"></a>/*
+<a name="80"></a> *   Fine Mesh is transparent to all senses except touch.
+<a name="81"></a> */
+<a name="82"></a>fineMesh: Material
+<a name="83"></a>    seeThru = transparent
+<a name="84"></a>    hearThru = transparent
+<a name="85"></a>    smellThru = transparent
+<a name="86"></a>    touchThru = opaque
+<a name="87"></a>;
+<a name="88"></a>
+<a name="89"></a>/*
+<a name="90"></a> *   Coarse Mesh is transparent to all senses, including touch, but
+<a name="91"></a> *   doesn't allow large objects to pass through.
+<a name="92"></a> */
+<a name="93"></a>coarseMesh: Material
+<a name="94"></a>    seeThru = transparent
+<a name="95"></a>    hearThru = transparent
+<a name="96"></a>    smellThru = transparent
+<a name="97"></a>    touchThru = transparent
+<a name="98"></a>;
+<a name="99"></a>
+<a name="100"></a>/* ------------------------------------------------------------------------ */
+<a name="101"></a>/*
+<a name="102"></a> *   Sense: the basic class for senses.
+<a name="103"></a> */
+<a name="104"></a>class Sense: object
+<a name="105"></a>    /*
+<a name="106"></a>     *   Each sense must define the property thruProp as a property
+<a name="107"></a>     *   pointer giving the xxxThru property for the sense.  The xxxThru
+<a name="108"></a>     *   property is the property of a material which determines how the
+<a name="109"></a>     *   sense passes through that material.
+<a name="110"></a>     */
+<a name="111"></a>    thruProp = nil
+<a name="112"></a>
+<a name="113"></a>    /*
+<a name="114"></a>     *   Each sense must define the property sizeProp as a property
+<a name="115"></a>     *   pointer giving the xxxSize property for the sense.  The xxxSize
+<a name="116"></a>     *   property is the property of a Thing which determines how "large"
+<a name="117"></a>     *   the object is with respect to the sense.  For example, sightSize
+<a name="118"></a>     *   indicates how large the object is visually, while soundSize
+<a name="119"></a>     *   indicates how loud the object is.
+<a name="120"></a>     *
+<a name="121"></a>     *   The purpose of an object's size in a given sense is to determine
+<a name="122"></a>     *   how well the object can be sensed through an obscuring medium or
+<a name="123"></a>     *   at a distance.
+<a name="124"></a>     */
+<a name="125"></a>    sizeProp = nil
+<a name="126"></a>
+<a name="127"></a>    /*
+<a name="128"></a>     *   Each sense must define the property presenceProp as a property
+<a name="129"></a>     *   pointer giving the xxxPresence property for the sense.  The
+<a name="130"></a>     *   xxxPresence property is the property of a Thing which determines
+<a name="131"></a>     *   whether or not the object has a "presence" in this sense, which is
+<a name="132"></a>     *   to say whether or not the object is emitting any detectable
+<a name="133"></a>     *   sensory data for the sense.  For example, soundPresence indicates
+<a name="134"></a>     *   whether or not a Thing is making any noise.
+<a name="135"></a>     *
+<a name="136"></a>     *   The sensory presence is used to determine if an object is in
+<a name="137"></a>     *   scope.  An object with a detectable sensory presence is normally
+<a name="138"></a>     *   in scope.  Note that sounds and smells emitted by a tangible
+<a name="139"></a>     *   object are frequently represented as additional intangible
+<a name="140"></a>     *   objects, and in these cases the intangible object (the sensory
+<a name="141"></a>     *   emanation) is usually the object with a sensory presence, rather
+<a name="142"></a>     *   than the tangible object making the noise/odor.  However, it is
+<a name="143"></a>     *   sometimes obvious that a particular sound or odor is coming from a
+<a name="144"></a>     *   particular kind of object, so the presence of the sound or odor
+<a name="145"></a>     *   implies the presence of the source object and thus places the
+<a name="146"></a>     *   source object in scope.  In such cases, it is desirable for the
+<a name="147"></a>     *   source object to have a sensory presence of its own, in addition
+<a name="148"></a>     *   to the sensory presence of the intangible sensory emanation
+<a name="149"></a>     *   object.
+<a name="150"></a>     *
+<a name="151"></a>     *   Note that the "presence" doesn't have any effect on whether or not
+<a name="152"></a>     *   an object can be sensed.  Only the sense path matters for that: an
+<a name="153"></a>     *   object without a presence can still be sensed if there's a
+<a name="154"></a>     *   non-opaque sense path to the object.  Presence only determines
+<a name="155"></a>     *   whether or not an object is *actively* calling attention to
+<a name="156"></a>     *   itself.
+<a name="157"></a>     */
+<a name="158"></a>    presenceProp = nil
+<a name="159"></a>
+<a name="160"></a>    /*
+<a name="161"></a>     *   Each sense can define this property to specify a property pointer
+<a name="162"></a>     *   used to define a Thing's "ambient" energy emissions.  Senses
+<a name="163"></a>     *   which do not use ambient energy should define this to nil.
+<a name="164"></a>     *
+<a name="165"></a>     *   Some senses work only on directly emitted sensory data; human
+<a name="166"></a>     *   hearing, for example, has no (at least effectively no) use for
+<a name="167"></a>     *   reflected sound, and can sense objects only by the sounds they're
+<a name="168"></a>     *   actually emitting.  Sight, on the other hand, can make use not
+<a name="169"></a>     *   only of light emitted by an object but of light reflected by the
+<a name="170"></a>     *   object.  So, sight defines an ambience property, whereas hearing,
+<a name="171"></a>     *   touch, and smell do not.
+<a name="172"></a>     */
+<a name="173"></a>    ambienceProp = nil
+<a name="174"></a>
+<a name="175"></a>    /*
+<a name="176"></a>     *   Determine if, in general, the given object can be sensed under
+<a name="177"></a>     *   the given conditions.  Returns true if so, nil if not.  By
+<a name="178"></a>     *   default, if the ambient level is zero, we'll return nil;
+<a name="179"></a>     *   otherwise, if the transparency level is 'transparent', we'll
+<a name="180"></a>     *   return true; otherwise, we'll consult the object's size:
+<a name="181"></a>     *
+<a name="182"></a>     *   - Small objects cannot be sensed under less than transparent
+<a name="183"></a>     *   conditions.
+<a name="184"></a>     *
+<a name="185"></a>     *   - Medium or large objects can be sensed in any conditions other
+<a name="186"></a>     *   than opaque.
+<a name="187"></a>     */
+<a name="188"></a>    canObjBeSensed(obj, trans, ambient)
+<a name="189"></a>    {
+<a name="190"></a>        /*
+<a name="191"></a>         *   if we use "reflected" energy, and the ambient energy level is
+<a name="192"></a>         *   zero, we can't sense it
+<a name="193"></a>         */
+<a name="194"></a>        if (ambienceProp != nil &amp;&amp; ambient == 0)
+<a name="195"></a>            return nil;
+<a name="196"></a>
+<a name="197"></a>        /* check the transparency level */
+<a name="198"></a>        switch(trans)
+<a name="199"></a>        {
+<a name="200"></a>        case transparent:
+<a name="201"></a>        case attenuated:
+<a name="202"></a>            /*
+<a name="203"></a>             *   we can always sense under transparent or attenuated
+<a name="204"></a>             *   conditions
+<a name="205"></a>             */
+<a name="206"></a>            return true;
+<a name="207"></a>
+<a name="208"></a>        case distant:
+<a name="209"></a>        case obscured:
+<a name="210"></a>            /*
+<a name="211"></a>             *   we can only sense medium and large objects under less
+<a name="212"></a>             *   than transparent conditions
+<a name="213"></a>             */
+<a name="214"></a>            return obj.(self.sizeProp) != small;
+<a name="215"></a>
+<a name="216"></a>        default:
+<a name="217"></a>            /* we can never sense under other conditions */
+<a name="218"></a>            return nil;
+<a name="219"></a>        }
+<a name="220"></a>    }
+<a name="221"></a>;
+<a name="222"></a>
+<a name="223"></a>/*
+<a name="224"></a> *   The senses.  We define sight, sound, smell, and touch.  We do not
+<a name="225"></a> *   define a separate sense for taste, since it would add nothing to our
+<a name="226"></a> *   model: you can taste something if and only if you can touch it.
+<a name="227"></a> *
+<a name="228"></a> *   To add a new sense, you must do the following:
+<a name="229"></a> *
+<a name="230"></a> *   - Define the sense object itself, in parallel to the senses defined
+<a name="231"></a> *   below.
+<a name="232"></a> *
+<a name="233"></a> *   - Modify class Material to set the default transparency level for
+<a name="234"></a> *   this sense by defining the property xxxThru - for most senses, the
+<a name="235"></a> *   default transparency level is 'opaque', but you must decide on the
+<a name="236"></a> *   appropriate default for your new sense.
+<a name="237"></a> *
+<a name="238"></a> *   - Modify class Thing to set the default xxxSize setting, if desired.
+<a name="239"></a> *
+<a name="240"></a> *   - Modify class Thing to set the default xxxPresence setting, if
+<a name="241"></a> *   desired.
+<a name="242"></a> *
+<a name="243"></a> *   - Modify each instance of class 'Material' that should have a
+<a name="244"></a> *   non-default transparency for the sense by defining the property
+<a name="245"></a> *   xxxThru for the material.
+<a name="246"></a> *
+<a name="247"></a> *   - Modify class Actor to add the sense to the default mySenses list;
+<a name="248"></a> *   this is only necessary if the sense is one that all actors should
+<a name="249"></a> *   have by default.
+<a name="250"></a> */
+<a name="251"></a>
+<a name="252"></a>sight: Sense
+<a name="253"></a>    thruProp = &amp;seeThru
+<a name="254"></a>    sizeProp = &amp;sightSize
+<a name="255"></a>    presenceProp = &amp;sightPresence
+<a name="256"></a>    ambienceProp = &amp;brightness
+<a name="257"></a>;
+<a name="258"></a>
+<a name="259"></a>sound: Sense
+<a name="260"></a>    thruProp = &amp;hearThru
+<a name="261"></a>    sizeProp = &amp;soundSize
+<a name="262"></a>    presenceProp = &amp;soundPresence
+<a name="263"></a>;
+<a name="264"></a>
+<a name="265"></a>smell: Sense
+<a name="266"></a>    thruProp = &amp;smellThru
+<a name="267"></a>    sizeProp = &amp;smellSize
+<a name="268"></a>    presenceProp = &amp;smellPresence
+<a name="269"></a>;
+<a name="270"></a>
+<a name="271"></a>touch: Sense
+<a name="272"></a>    thruProp = &amp;touchThru
+<a name="273"></a>    sizeProp = &amp;touchSize
+<a name="274"></a>    presenceProp = &amp;touchPresence
+<a name="275"></a>
+<a name="276"></a>    /*
+<a name="277"></a>     *   Override canObjBeSensed for touch.  Unlike other senses, touch
+<a name="278"></a>     *   requires physical contact with an object, so it cannot operate at
+<a name="279"></a>     *   a distance, regardless of the size of an object.
+<a name="280"></a>     */
+<a name="281"></a>    canObjBeSensed(obj, trans, ambient)
+<a name="282"></a>    {
+<a name="283"></a>        /* if it's distant, we can't sense the object no matter how large */
+<a name="284"></a>        if (trans == distant)
+<a name="285"></a>            return nil;
+<a name="286"></a>
+<a name="287"></a>        /* for other cases, inherit the default handling */
+<a name="288"></a>        return inherited(obj, trans, ambient);
+<a name="289"></a>    }
+<a name="290"></a>;
+<a name="291"></a>
+<a name="292"></a>
+<a name="293"></a>/* ------------------------------------------------------------------------ */
+<a name="294"></a>/*
+<a name="295"></a> *   "Add" two transparency levels, yielding a new transparency level.
+<a name="296"></a> *   This function can be used to determine the result of passing a sense
+<a name="297"></a> *   through multiple layers of material.
+<a name="298"></a> */
+<a name="299"></a>transparencyAdd(a, b)
+<a name="300"></a>{
+<a name="301"></a>    /* transparent + x -&gt; x for all x */
+<a name="302"></a>    if (a == transparent)
+<a name="303"></a>        return b;
+<a name="304"></a>    if (b == transparent)
+<a name="305"></a>        return a;
+<a name="306"></a>
+<a name="307"></a>    /* opaque + x -&gt; opaque for all x */
+<a name="308"></a>    if (a == opaque || b == opaque)
+<a name="309"></a>        return opaque;
+<a name="310"></a>
+<a name="311"></a>    /*
+<a name="312"></a>     *   any other combinations yield opaque - we can't have two levels of
+<a name="313"></a>     *   attenuation or obscuration without losing all detail and energy
+<a name="314"></a>     *   transmission
+<a name="315"></a>     */
+<a name="316"></a>    return opaque;
+<a name="317"></a>}
+<a name="318"></a>
+<a name="319"></a>/* ------------------------------------------------------------------------ */
+<a name="320"></a>/*
+<a name="321"></a> *   Compare two transparency levels to determine which one is more
+<a name="322"></a> *   transparent.  Returns 0 if the two levels are equally transparent, 1
+<a name="323"></a> *   if the first one is more transparent, and -1 if the second one is
+<a name="324"></a> *   more transparent.  The comparison follows this rule:
+<a name="325"></a> *
+<a name="326"></a> *   transparent &gt; attenuated &gt; distant == obscured &gt; opaque
+<a name="327"></a> */
+<a name="328"></a>transparencyCompare(a, b)
+<a name="329"></a>{
+<a name="330"></a>    /*
+<a name="331"></a>     *   for the purposes of the comparison, consider obscured to be
+<a name="332"></a>     *   identical to distant
+<a name="333"></a>     */
+<a name="334"></a>    if (a == obscured)
+<a name="335"></a>        a = distant;
+<a name="336"></a>    if (b == obscured)
+<a name="337"></a>        b = distant;
+<a name="338"></a>
+<a name="339"></a>    /* if they're the same, return zero to so indicate */
+<a name="340"></a>    if (a == b)
+<a name="341"></a>        return 0;
+<a name="342"></a>
+<a name="343"></a>    /*
+<a name="344"></a>     *   We know they're not equal, so if one is transparent, then the
+<a name="345"></a>     *   other one isn't.  Thus, if either one is transparent, it's the
+<a name="346"></a>     *   winner.
+<a name="347"></a>     */
+<a name="348"></a>    if (a == transparent)
+<a name="349"></a>        return 1;
+<a name="350"></a>    if (b == transparent)
+<a name="351"></a>        return -1;
+<a name="352"></a>
+<a name="353"></a>    /*
+<a name="354"></a>     *   We know they're not equal and we know neither is transparent, so
+<a name="355"></a>     *   if one is attenuated then the other is worse, and the attenuated
+<a name="356"></a>     *   one is the winner.
+<a name="357"></a>     */
+<a name="358"></a>    if (a == attenuated)
+<a name="359"></a>        return 1;
+<a name="360"></a>    if (b == attenuated)
+<a name="361"></a>        return -1;
+<a name="362"></a>
+<a name="363"></a>    /*
+<a name="364"></a>     *   We now know neither one is transparent or attenuated, and we've
+<a name="365"></a>     *   already transformed obscured into distant, so the only possible
+<a name="366"></a>     *   values remaining are distant and opaque.  We know also they're
+<a name="367"></a>     *   not equal, because we would have already returned if that were
+<a name="368"></a>     *   the case.  So, we can conclude that one must be distant and the
+<a name="369"></a>     *   other must be opaque.  Hence, the one that's opaque is the less
+<a name="370"></a>     *   transparent one.
+<a name="371"></a>     */
+<a name="372"></a>    if (a == opaque)
+<a name="373"></a>        return -1;
+<a name="374"></a>    else
+<a name="375"></a>        return 1;
+<a name="376"></a>}
+<a name="377"></a>
+<a name="378"></a>/* ------------------------------------------------------------------------ */
+<a name="379"></a>/*
+<a name="380"></a> *   Given a brightness level and a transparency level, compute the
+<a name="381"></a> *   brightness as modified by the transparency level.
+<a name="382"></a> */
+<a name="383"></a>adjustBrightness(br, trans)
+<a name="384"></a>{
+<a name="385"></a>    switch(trans)
+<a name="386"></a>    {
+<a name="387"></a>    case transparent:
+<a name="388"></a>    case distant:
+<a name="389"></a>        /*
+<a name="390"></a>         *   Transparent medium or distance - this doesn't modify
+<a name="391"></a>         *   brightness at all.  (Technically, distance would reduce
+<a name="392"></a>         *   brightness somewhat, but the typical scale of an IF setting
+<a name="393"></a>         *   isn't usually large enough that brightness should
+<a name="394"></a>         *   significantly diminish.)
+<a name="395"></a>         */
+<a name="396"></a>        return br;
+<a name="397"></a>
+<a name="398"></a>    case attenuated:
+<a name="399"></a>    case obscured:
+<a name="400"></a>        /*
+<a name="401"></a>         *   Distant, obscured, or attenuated.  We reduce self-illuminating
+<a name="402"></a>         *   light (level 1) and dim light (level 2) to nothing (level 0),
+<a name="403"></a>         *   we leave nothing as nothing (obviously), and we reduce all
+<a name="404"></a>         *   other levels one step.  So, everything below level 3 goes to
+<a name="405"></a>         *   0, and everything at or above level 3 gets decremented by 1.
+<a name="406"></a>         */
+<a name="407"></a>        return (br &gt;= 3 ? br - 1 : 0);
+<a name="408"></a>
+<a name="409"></a>    case opaque:
+<a name="410"></a>        /* opaque medium - nothing makes it through */
+<a name="411"></a>        return 0;
+<a name="412"></a>
+<a name="413"></a>    default:
+<a name="414"></a>        /* shouldn't get to other cases */
+<a name="415"></a>        return nil;
+<a name="416"></a>    }
+<a name="417"></a>}
+<a name="418"></a>
+<a name="419"></a>/* ------------------------------------------------------------------------ */
+<a name="420"></a>/*
+<a name="421"></a> *   SenseConnector: an object that can pass senses across room
+<a name="422"></a> *   boundaries.  This is a mix-in class: add it to the superclass list of
+<a name="423"></a> *   the object before Thing (or a Thing subclass).
+<a name="424"></a> *
+<a name="425"></a> *   A SenseConnector acts as a sense conduit across all of its locations,
+<a name="426"></a> *   so to establish a connection between locations, simply place a
+<a name="427"></a> *   SenseConnector in each location.  Since a SenseConnector is useful
+<a name="428"></a> *   only when placed placed in multiple locations, SenseConnector is
+<a name="429"></a> *   based on MultiLoc.
+<a name="430"></a> */
+<a name="431"></a>class SenseConnector: MultiLoc
+<a name="432"></a>    /*
+<a name="433"></a>     *   A SenseConnector's material generally determines how senses pass
+<a name="434"></a>     *   through the connection.
+<a name="435"></a>     */
+<a name="436"></a>    connectorMaterial = adventium
+<a name="437"></a>
+<a name="438"></a>    /*
+<a name="439"></a>     *   Determine how senses pass through this connection.  By default,
+<a name="440"></a>     *   we simply use the material's transparency.
+<a name="441"></a>     */
+<a name="442"></a>    transSensingThru(sense) { return connectorMaterial.senseThru(sense); }
+<a name="443"></a>
+<a name="444"></a>    /*
+<a name="445"></a>     *   Add the direct containment connections for this item to a lookup
+<a name="446"></a>     *   table.
+<a name="447"></a>     *
+<a name="448"></a>     *   Since we provide a sense connection among all of our containers,
+<a name="449"></a>     *   add each of our containers to the list.
+<a name="450"></a>     */
+<a name="451"></a>    addDirectConnections(tab)
+<a name="452"></a>    {
+<a name="453"></a>        /* add myself */
+<a name="454"></a>        tab[self] = true;
+<a name="455"></a>
+<a name="456"></a>        /* add my CollectiveGroup objects */
+<a name="457"></a>        foreach (local cur in collectiveGroups)
+<a name="458"></a>            tab[cur] = true;
+<a name="459"></a>
+<a name="460"></a>        /* add my contents */
+<a name="461"></a>        foreach (local cur in contents)
+<a name="462"></a>        {
+<a name="463"></a>            if (tab[cur] == nil)
+<a name="464"></a>                cur.addDirectConnections(tab);
+<a name="465"></a>        }
+<a name="466"></a>
+<a name="467"></a>        /* add my containers */
+<a name="468"></a>        foreach (local cur in locationList)
+<a name="469"></a>        {
+<a name="470"></a>            if (tab[cur] == nil)
+<a name="471"></a>                cur.addDirectConnections(tab);
+<a name="472"></a>        }
+<a name="473"></a>    }
+<a name="474"></a>
+<a name="475"></a>    /*
+<a name="476"></a>     *   Transmit energy from a container onto me.
+<a name="477"></a>     */
+<a name="478"></a>    shineFromWithout(fromParent, sense, ambient, fill)
+<a name="479"></a>    {
+<a name="480"></a>        /* if this increases my ambient level, accept the new level */
+<a name="481"></a>        if (ambient &gt; tmpAmbient_)
+<a name="482"></a>        {
+<a name="483"></a>            local levelThru;
+<a name="484"></a>
+<a name="485"></a>            /* remember the new level and fill material to this point */
+<a name="486"></a>            tmpAmbient_ = ambient;
+<a name="487"></a>            tmpAmbientFill_ = fill;
+<a name="488"></a>
+<a name="489"></a>            /* transmit to my contents */
+<a name="490"></a>            shineOnContents(sense, ambient, fill);
+<a name="491"></a>
+<a name="492"></a>            /*
+<a name="493"></a>             *   We must transmit this energy to each of our other
+<a name="494"></a>             *   parents, possibly reduced for traversing our connector.
+<a name="495"></a>             *   Calculate the new level after traversing our connector.
+<a name="496"></a>             */
+<a name="497"></a>            levelThru = adjustBrightness(ambient, transSensingThru(sense));
+<a name="498"></a>
+<a name="499"></a>            /*
+<a name="500"></a>             *   if there's anything left, transmit it to the other
+<a name="501"></a>             *   containers
+<a name="502"></a>             */
+<a name="503"></a>            if (levelThru &gt;= 2)
+<a name="504"></a>            {
+<a name="505"></a>                /* transmit to each container except the source */
+<a name="506"></a>                foreach (local cur in locationList)
+<a name="507"></a>                {
+<a name="508"></a>                    /* if this isn't the sender, transmit to it */
+<a name="509"></a>                    if (cur != fromParent)
+<a name="510"></a>                        cur.shineFromWithin(self, sense, levelThru, fill);
+<a name="511"></a>                }
+<a name="512"></a>            }
+<a name="513"></a>        }
+<a name="514"></a>    }
+<a name="515"></a>
+<a name="516"></a>    /*
+<a name="517"></a>     *   Build a sense path from a container to me
+<a name="518"></a>     */
+<a name="519"></a>    sensePathFromWithout(fromParent, sense, trans, obs, fill)
+<a name="520"></a>    {
+<a name="521"></a>        /*
+<a name="522"></a>         *   if there's better transparency along this path than along any
+<a name="523"></a>         *   previous path we've used to visit this item, take this path
+<a name="524"></a>         */
+<a name="525"></a>        if (transparencyCompare(trans, tmpTrans_) &gt; 0)
+<a name="526"></a>        {
+<a name="527"></a>            local transThru;
+<a name="528"></a>
+<a name="529"></a>            /* remember the new path to this point */
+<a name="530"></a>            tmpTrans_ = trans;
+<a name="531"></a>            tmpObstructor_ = obs;
+<a name="532"></a>
+<a name="533"></a>            /* we're coming to this object from outside */
+<a name="534"></a>            tmpPathIsIn_ = true;
+<a name="535"></a>
+<a name="536"></a>            /* transmit to my contents */
+<a name="537"></a>            sensePathToContents(sense, trans, obs, fill);
+<a name="538"></a>
+<a name="539"></a>            /*
+<a name="540"></a>             *   We must transmit this energy to each of our other
+<a name="541"></a>             *   parents, possibly reduced for traversing our connector.
+<a name="542"></a>             *   Calculate the new level after traversing our connector.
+<a name="543"></a>             */
+<a name="544"></a>            transThru = transparencyAdd(trans, transSensingThru(sense));
+<a name="545"></a>
+<a name="546"></a>            /* if we changed the transparency, we're the obstructor */
+<a name="547"></a>            if (transThru != trans)
+<a name="548"></a>                obs = self;
+<a name="549"></a>
+<a name="550"></a>            /*
+<a name="551"></a>             *   if there's anything left, transmit it to the other
+<a name="552"></a>             *   containers
+<a name="553"></a>             */
+<a name="554"></a>            if (transThru != opaque)
+<a name="555"></a>            {
+<a name="556"></a>                /* transmit to each container except the source */
+<a name="557"></a>                foreach (local cur in locationList)
+<a name="558"></a>                {
+<a name="559"></a>                    /* if this isn't the sender, transmit to it */
+<a name="560"></a>                    if (cur != fromParent)
+<a name="561"></a>                        cur.sensePathFromWithin(self, sense,
+<a name="562"></a>                                                transThru, obs, fill);
+<a name="563"></a>                }
+<a name="564"></a>            }
+<a name="565"></a>        }
+<a name="566"></a>    }
+<a name="567"></a>
+<a name="568"></a>    /*
+<a name="569"></a>     *   Call a function on each connected container.  Since we provide a
+<a name="570"></a>     *   sense path connection among our containers, we must iterate over
+<a name="571"></a>     *   each of our containers.
+<a name="572"></a>     */
+<a name="573"></a>    forEachConnectedContainer(func, [args])
+<a name="574"></a>    {
+<a name="575"></a>        forEachContainer(func, args...);
+<a name="576"></a>    }
+<a name="577"></a>
+<a name="578"></a>    /*
+<a name="579"></a>     *   Return a list of my connected containers.  We connect to all of
+<a name="580"></a>     *   our containers, so simply return my location list.
+<a name="581"></a>     */
+<a name="582"></a>    getConnectedContainers = (locationList)
+<a name="583"></a>
+<a name="584"></a>    /*
+<a name="585"></a>     *   Check moving an object through me.  This is called when we try to
+<a name="586"></a>     *   move an object from one of our containers to another of our
+<a name="587"></a>     *   containers through me.  By default, we don't allow it.
+<a name="588"></a>     */
+<a name="589"></a>    checkMoveThrough(obj, dest)
+<a name="590"></a>    {
+<a name="591"></a>        /* return an error - cannot move through &lt;self&gt; */
+<a name="592"></a>        return new CheckStatusFailure(&amp;cannotMoveThroughMsg, obj, self);
+<a name="593"></a>    }
+<a name="594"></a>
+<a name="595"></a>    /*
+<a name="596"></a>     *   Check touching an object through me.  This is called when an
+<a name="597"></a>     *   actor tries to reach from one of my containers through me into
+<a name="598"></a>     *   another of my containers.  By default, we don't allow it.
+<a name="599"></a>     */
+<a name="600"></a>    checkTouchThrough(obj, dest)
+<a name="601"></a>    {
+<a name="602"></a>        /* return an error - cannot reach through &lt;self&gt; */
+<a name="603"></a>        return new CheckStatusFailure(&amp;cannotReachThroughMsg, dest, self);
+<a name="604"></a>    }
+<a name="605"></a>
+<a name="606"></a>    /*
+<a name="607"></a>     *   Check throwing an object through me.  This is called when an actor
+<a name="608"></a>     *   tries to throw a projectile 'obj' at 'dest' via a path that
+<a name="609"></a>     *   includes 'self'.  By default, we don't allow it.
+<a name="610"></a>     */
+<a name="611"></a>    checkThrowThrough(obj, dest)
+<a name="612"></a>    {
+<a name="613"></a>        return new CheckStatusFailure(&amp;cannotThrowThroughMsg, dest, self);
+<a name="614"></a>    }
+<a name="615"></a>
+<a name="616"></a>    /* check for moving via a path */
+<a name="617"></a>    checkMoveViaPath(obj, dest, op)
+<a name="618"></a>    {
+<a name="619"></a>        /* if moving through us, run the separate Move check */
+<a name="620"></a>        if (op == PathThrough)
+<a name="621"></a>            return checkMoveThrough(obj, dest);
+<a name="622"></a>
+<a name="623"></a>        /* if we can inherit, do so */
+<a name="624"></a>        if (canInherit())
+<a name="625"></a>            return inherited(obj, dest, op);
+<a name="626"></a>
+<a name="627"></a>        /* return success by default */
+<a name="628"></a>        return checkStatusSuccess;
+<a name="629"></a>    }
+<a name="630"></a>
+<a name="631"></a>    /* check for touching via a path */
+<a name="632"></a>    checkTouchViaPath(obj, dest, op)
+<a name="633"></a>    {
+<a name="634"></a>        /* if reaching through us, run the separate Touch check */
+<a name="635"></a>        if (op == PathThrough)
+<a name="636"></a>            return checkTouchThrough(obj, dest);
+<a name="637"></a>
+<a name="638"></a>        /* if we can inherit, do so */
+<a name="639"></a>        if (canInherit())
+<a name="640"></a>            return inherited(obj, dest, op);
+<a name="641"></a>
+<a name="642"></a>        /* return success by default */
+<a name="643"></a>        return checkStatusSuccess;
+<a name="644"></a>    }
+<a name="645"></a>
+<a name="646"></a>    /* check for throwing via a path */
+<a name="647"></a>    checkThrowViaPath(obj, dest, op)
+<a name="648"></a>    {
+<a name="649"></a>        /* if throwing through us, run the separate Throw check */
+<a name="650"></a>        if (op == PathThrough)
+<a name="651"></a>            return checkThrowThrough(obj, dest);
+<a name="652"></a>
+<a name="653"></a>        /* if we can inherit, do so */
+<a name="654"></a>        if (canInherit())
+<a name="655"></a>            return inherited(obj, dest, op);
+<a name="656"></a>
+<a name="657"></a>        /* return success by default */
+<a name="658"></a>        return checkStatusSuccess;
+<a name="659"></a>    }
+<a name="660"></a>;
+<a name="661"></a>
+<a name="662"></a>/*
+<a name="663"></a> *   Occluder: this is a mix-in class that can be used with multiple
+<a name="664"></a> *   inheritance to combine with other classes (such as SenseConnector, or
+<a name="665"></a> *   Thing subclasses), to create an "occluded view."  This lets you
+<a name="666"></a> *   exclude certain objects from view, and you can make the exclusion vary
+<a name="667"></a> *   according to the point of view.
+<a name="668"></a> *
+<a name="669"></a> *   This class is useful for situations where the view from one location
+<a name="670"></a> *   to another is partially obstructed.  For example, suppose we have two
+<a name="671"></a> *   rooms, connected by a window between them.  The window is the sense
+<a name="672"></a> *   connector that connects the two top-level locations, and it makes
+<a name="673"></a> *   objects in one room visible from the point of view of the other room.
+<a name="674"></a> *   Suppose that one room contains a bookcase, with its back to the
+<a name="675"></a> *   window.  From the point of view of the other room, we can't see
+<a name="676"></a> *   anything inside the bookcase.  This class allows for such special
+<a name="677"></a> *   situations.
+<a name="678"></a> *
+<a name="679"></a> *   Note that occlusion rules are applied "globally" within a room - that
+<a name="680"></a> *   is, anything that an Occluder occludes will be removed from view, even
+<a name="681"></a> *   if it's visible from another, non-occluding connector.  Hence,
+<a name="682"></a> *   occlusion always takes precedence over "inclusion" - if an object is
+<a name="683"></a> *   occluded just once, then it won't be in view, no matter how many times
+<a name="684"></a> *   it's added back into view by other connectors.  This comes from the
+<a name="685"></a> *   order in which the occlusion rules are considered.  Occlusion rules
+<a name="686"></a> *   are always run last, and they can't distinguish the connector that
+<a name="687"></a> *   added an object to view.  So, we first run around and collect up
+<a name="688"></a> *   everything that can be seen, by considering all of the different paths
+<a name="689"></a> *   to seeing those things.  Then, we go through all of the occlusion
+<a name="690"></a> *   rules that apply to the room, and we remove from view everything that
+<a name="691"></a> *   the occluding connectors want to occlude.
+<a name="692"></a> */
+<a name="693"></a>class Occluder: object
+<a name="694"></a>    /*
+<a name="695"></a>     *   Do we occlude the given object, in the given sense and from the
+<a name="696"></a>     *   given point of view?  This returns true if the object is occluded,
+<a name="697"></a>     *   nil if not.  By default, we simply ask the object whether it's
+<a name="698"></a>     *   occluded by this occluder from the given POV.
+<a name="699"></a>     */
+<a name="700"></a>    occludeObj(obj, sense, pov)
+<a name="701"></a>    {
+<a name="702"></a>        /* by default, simply ask the object what it thinks */
+<a name="703"></a>        return obj.isOccludedBy(self, sense, pov);
+<a name="704"></a>    }
+<a name="705"></a>
+<a name="706"></a>    /*
+<a name="707"></a>     *   When we initialize for the sense path calculation, register to
+<a name="708"></a>     *   receive notification after we've finished building the sense
+<a name="709"></a>     *   table.  We'll use the notification to remove any occluded objects
+<a name="710"></a>     *   from the sense table.
+<a name="711"></a>     */
+<a name="712"></a>    clearSenseInfo()
+<a name="713"></a>    {
+<a name="714"></a>        /* do the normal work */
+<a name="715"></a>        inherited();
+<a name="716"></a>
+<a name="717"></a>        /* register for notification after we've built the table */
+<a name="718"></a>        senseTmp.notifyList.append(self);
+<a name="719"></a>    }
+<a name="720"></a>
+<a name="721"></a>    /*
+<a name="722"></a>     *   Receive notification that the sense path calculation is now
+<a name="723"></a>     *   finished.  'objs' is a LookupTable containing all of the objects
+<a name="724"></a>     *   involved in the sense path calculation (the objects are the keys
+<a name="725"></a>     *   in the table).  Each object in the table now has its tmpXxx_
+<a name="726"></a>     *   properties set to the sense path data we've calculated for that
+<a name="727"></a>     *   object - tmpTrans_ is the transparency to the object, tmpAmbient_
+<a name="728"></a>     *   is the ambient light level at the object, and so on.
+<a name="729"></a>     *
+<a name="730"></a>     *   Since our job is to occlude certain objects from view, we'll run
+<a name="731"></a>     *   through the table and test each object using our occlusion rule.
+<a name="732"></a>     *   If we find that we do occlude an object, we'll set its
+<a name="733"></a>     *   transparency to 'opaque' to indicate that it cannot be seen.
+<a name="734"></a>     */
+<a name="735"></a>    finishSensePath(objs, sense)
+<a name="736"></a>    {
+<a name="737"></a>        /* get the point of view of the calculation */
+<a name="738"></a>        local pov = senseTmp.pointOfView;
+<a name="739"></a>
+<a name="740"></a>        /* run through the table, and apply our rule to each object */
+<a name="741"></a>        objs.forEachAssoc(function(key, val)
+<a name="742"></a>        {
+<a name="743"></a>            /* if this object is occluded, set its path to opaque */
+<a name="744"></a>            if (occludeObj(key, sense, pov))
+<a name="745"></a>            {
+<a name="746"></a>                /* set this object to opaque */
+<a name="747"></a>                key.tmpTrans_ = key.tmpTransWithin_ = opaque;
+<a name="748"></a>
+<a name="749"></a>                /* we're the obstructor for the object */
+<a name="750"></a>                key.tmpObstructor_ = key.tmpObstructorWithin_ = self;
+<a name="751"></a>            }
+<a name="752"></a>        });
+<a name="753"></a>    }
+<a name="754"></a>;
+<a name="755"></a>
+<a name="756"></a>/*
+<a name="757"></a> *   DistanceConnector: a special type of SenseConnector that connects its
+<a name="758"></a> *   locations with distance.  This can be used for things like divided
+<a name="759"></a> *   rooms, where a single physical location is modeled with two or more
+<a name="760"></a> *   Room objects - the north and south end of a large cave, for example.
+<a name="761"></a> *   This is also useful for cases where two rooms are separate but open to
+<a name="762"></a> *   one another, such as a balcony overlooking a courtyard.
+<a name="763"></a> *
+<a name="764"></a> *   Note that this inherits from both SenseConnector and Intangible.
+<a name="765"></a> *   Intangible is included as a base class because each instance will need
+<a name="766"></a> *   to derive from Thing, so that it fits into the normal sense model, but
+<a name="767"></a> *   will virtually never need any other physical presence in the game
+<a name="768"></a> *   world; Intangible fills both of these needs.
+<a name="769"></a> */
+<a name="770"></a>class DistanceConnector: SenseConnector, Intangible
+<a name="771"></a>    /* all senses are connected through us, but at a distance */
+<a name="772"></a>    transSensingThru(sense) { return distant; }
+<a name="773"></a>
+<a name="774"></a>    /*
+<a name="775"></a>     *   When checking for reaching through this connector, specialize the
+<a name="776"></a>     *   failure message to indicate that distance is the specific problem.
+<a name="777"></a>     *   (Without this specialization, we'd get a generic message when
+<a name="778"></a>     *   trying to reach through the connector, such as "you can't reach
+<a name="779"></a>     *   that through &lt;self&gt;."
+<a name="780"></a>     */
+<a name="781"></a>    checkTouchThrough(obj, dest)
+<a name="782"></a>    {
+<a name="783"></a>        /* we can't touch through this connector due to the distance */
+<a name="784"></a>        return new CheckStatusFailure(&amp;tooDistantMsg, dest);
+<a name="785"></a>    }
+<a name="786"></a>
+<a name="787"></a>    /*
+<a name="788"></a>     *   When checking for throwing through this container, specialize the
+<a name="789"></a>     *   failure message to indicate that distance is the specific problem.
+<a name="790"></a>     */
+<a name="791"></a>    checkThrowThrough(obj, dest)
+<a name="792"></a>    {
+<a name="793"></a>        return new CheckStatusFailure(&amp;tooDistanceMsg, dest);
+<a name="794"></a>    }
+<a name="795"></a>
+<a name="796"></a>    /*
+<a name="797"></a>     *   Do allow moving an object through a distance connector.  This
+<a name="798"></a>     *   should generally only be involved at all when we're moving an
+<a name="799"></a>     *   object programmatically, in which case we should already have
+<a name="800"></a>     *   decided that the movement is allowable.  Any command that tries to
+<a name="801"></a>     *   move an object through a distance connector will almost certainly
+<a name="802"></a>     *   have a suitable set of preconditions that checks for reachability,
+<a name="803"></a>     *   which will in most cases disallow the action anyway before we get
+<a name="804"></a>     *   to the point of wanting to move anything.
+<a name="805"></a>     */
+<a name="806"></a>    checkMoveThrough(obj, dest) { return checkStatusSuccess; }
+<a name="807"></a>
+<a name="808"></a>    /*
+<a name="809"></a>     *   Report the reason that we stopped a thrown projectile from hitting
+<a name="810"></a>     *   its intended target.  This is called when we're along the path
+<a name="811"></a>     *   between the thrower and the intended target, AND 'self' objects to
+<a name="812"></a>     *   the action.
+<a name="813"></a>     *
+<a name="814"></a>     *   The default version of this method in Thing reports that the
+<a name="815"></a>     *   projectile hits 'self', as though self were a physical obstruction
+<a name="816"></a>     *   like a fence or wall.  In the case of a distance connector,
+<a name="817"></a>     *   though, the reason isn't usually obstruction, but simply that the
+<a name="818"></a>     *   connector imposes such a distance that the actor can't throw the
+<a name="819"></a>     *   projectile far enough to reach the intended target.  We therefore
+<a name="820"></a>     *   override the Thing version to report that the projectile fell
+<a name="821"></a>     *   short of the target.
+<a name="822"></a>     *
+<a name="823"></a>     *   Note that if you do want to allow throwing a projectile across the
+<a name="824"></a>     *   distance represented by this connector, you can override
+<a name="825"></a>     *   checkThrowThrough() to return checkStatusSuccess.
+<a name="826"></a>     */
+<a name="827"></a>    throwTargetHitWith(projectile, path)
+<a name="828"></a>    {
+<a name="829"></a>        /*
+<a name="830"></a>         *   figure out where we fall to when we hit this object, then send
+<a name="831"></a>         *   the object being thrown to that location
+<a name="832"></a>         */
+<a name="833"></a>        getHitFallDestination(projectile, path)
+<a name="834"></a>            .receiveDrop(projectile, new DropTypeShortThrow(self, path));
+<a name="835"></a>    }
+<a name="836"></a>;
+<a name="837"></a>
+<a name="838"></a>/*
+<a name="839"></a> *   A drop-type descriptor for a "short throw," which occurs when the
+<a name="840"></a> *   target is too far away to reach with our throw (i.e., the thrown
+<a name="841"></a> *   object falls short of the target).
+<a name="842"></a> */
+<a name="843"></a>class DropTypeShortThrow: DropTypeThrow
+<a name="844"></a>    construct(target, path)
+<a name="845"></a>    {
+<a name="846"></a>        /* inherit the default handling */
+<a name="847"></a>        inherited(target, path);
+<a name="848"></a>
+<a name="849"></a>        /* we care about the *intended* target, not the distance connector */
+<a name="850"></a>        target_ = path[path.length()];
+<a name="851"></a>    }
+<a name="852"></a>
+<a name="853"></a>    standardReport(obj, dest)
+<a name="854"></a>    {
+<a name="855"></a>        /* show the short-throw report */
+<a name="856"></a>        mainReport(&amp;throwFallShortMsg, obj, target_,
+<a name="857"></a>                   dest.getNominalDropDestination());
+<a name="858"></a>    }
+<a name="859"></a>
+<a name="860"></a>    getReportPrefix(obj, dest)
+<a name="861"></a>    {
+<a name="862"></a>        /* return the short-throw prefix */
+<a name="863"></a>        return gActor.getActionMessageObj().throwShortMsg(obj, target_);
+<a name="864"></a>    }
+<a name="865"></a>;
+<a name="866"></a>
+</pre>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

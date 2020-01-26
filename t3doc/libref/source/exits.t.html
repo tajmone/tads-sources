@@ -1,0 +1,448 @@
+<html><head><link rel=stylesheet type="text/css" href="../libref.css"><title>exits.t</title></head><body>
+<table class=ban><tr><td><h1>exits.t</h1><td align=right><a href="../file/exits.t.html">documentation</a></table><pre>
+<a name="1"></a>#charset "us-ascii"
+<a name="2"></a>
+<a name="3"></a>/*
+<a name="4"></a> *   Copyright (c) 2002, 2006 by Michael J. Roberts
+<a name="5"></a> *
+<a name="6"></a> *   Based on exitslister.t, copyright 2002 by Steve Breslin and
+<a name="7"></a> *   incorporated by permission.
+<a name="8"></a> *
+<a name="9"></a> *   TADS 3 Library - Exits Lister
+<a name="10"></a> *
+<a name="11"></a> *   This module provides an automatic exit lister that shows the apparent
+<a name="12"></a> *   exits from the player character's location.  The automatic exit lister
+<a name="13"></a> *   can optionally provide these main features:
+<a name="14"></a> *
+<a name="15"></a> *   - An "exits" verb lets the player explicitly show the list of apparent
+<a name="16"></a> *   exits, along with the name of the room to which each exit connects.
+<a name="17"></a> *
+<a name="18"></a> *   - Exits can be shown automatically as part of the room description.
+<a name="19"></a> *   This extra information can be controlled by the player through the
+<a name="20"></a> *   "exits on" and "exits off" command.
+<a name="21"></a> *
+<a name="22"></a> *   - Exits can be shown automatically when an actor tries to go in a
+<a name="23"></a> *   direction where no exit exists, as a helpful reminder of which
+<a name="24"></a> *   directions are valid.
+<a name="25"></a> */
+<a name="26"></a>
+<a name="27"></a>/* include the library header */
+<a name="28"></a>#include "adv3.h"
+<a name="29"></a>
+<a name="30"></a>
+<a name="31"></a>/* ------------------------------------------------------------------------ */
+<a name="32"></a>/*
+<a name="33"></a> *   The main exits lister.
+<a name="34"></a> */
+<a name="35"></a>exitLister: PreinitObject
+<a name="36"></a>    /* preinitialization */
+<a name="37"></a>    execute()
+<a name="38"></a>    {
+<a name="39"></a>        /* install myself as the global exit lister object */
+<a name="40"></a>        gExitLister = self;
+<a name="41"></a>    }
+<a name="42"></a>
+<a name="43"></a>    /*
+<a name="44"></a>     *   Flag: use "verbose" listing style for exit lists in room
+<a name="45"></a>     *   descriptions.  When this is set to true, we'll show a
+<a name="46"></a>     *   sentence-style list of exits ("Obvious exits lead east to the
+<a name="47"></a>     *   living room, south, and up.").  When this is set to nil, we'll use
+<a name="48"></a>     *   a terse style, enclosing the message in the default system
+<a name="49"></a>     *   message's brackets ("[Obvious exits: East, West]").
+<a name="50"></a>     *
+<a name="51"></a>     *   Verbose-style room descriptions tend to fit well with a room
+<a name="52"></a>     *   description's prose, but at the expense of looking redundant with
+<a name="53"></a>     *   the exit list that's usually built into each room's custom
+<a name="54"></a>     *   descriptive text to begin with.  Some authors prefer the terse
+<a name="55"></a>     *   style precisely because it doesn't look like more prose
+<a name="56"></a>     *   description, but looks like a separate bit of information being
+<a name="57"></a>     *   offered.
+<a name="58"></a>     *
+<a name="59"></a>     *   This is an author-configured setting; the library does not provide
+<a name="60"></a>     *   a command to let the player control this setting.
+<a name="61"></a>     */
+<a name="62"></a>    roomDescVerbose = nil
+<a name="63"></a>
+<a name="64"></a>    /*
+<a name="65"></a>     *   Flag: show automatic exit listings on attempts to move in
+<a name="66"></a>     *   directions that don't allow travel.  Enable this by default,
+<a name="67"></a>     *   since most players appreciate having the exit list called out
+<a name="68"></a>     *   separately from the room description (where any mention of exits
+<a name="69"></a>     *   might be buried in lots of other text) in place of an unspecific
+<a name="70"></a>     *   "you can't go that way".
+<a name="71"></a>     *
+<a name="72"></a>     *   This is an author-configured setting; the library does not provide
+<a name="73"></a>     *   a command to let the player control this setting.
+<a name="74"></a>     */
+<a name="75"></a>    enableReminder = true
+<a name="76"></a>
+<a name="77"></a>    /*
+<a name="78"></a>     *   Flag: enable the automatic exit reminder even when the room
+<a name="79"></a>     *   description exit listing is enabled.  When this is nil, we will
+<a name="80"></a>     *   NOT show a reminder with "can't go that way" messages when the
+<a name="81"></a>     *   room description exit list is enabled - this is the default,
+<a name="82"></a>     *   because it can be a little much to have the list of exits shown so
+<a name="83"></a>     *   frequently.  Some authors might prefer to show the reminder
+<a name="84"></a>     *   unconditionally, though, so this option is offered.
+<a name="85"></a>     *
+<a name="86"></a>     *   This is an author-configured setting; the library does not provide
+<a name="87"></a>     *   a command to let the player control this setting.
+<a name="88"></a>     */
+<a name="89"></a>    enableReminderAlways = nil
+<a name="90"></a>
+<a name="91"></a>    /*
+<a name="92"></a>     *   Flag: use hyperlinks in the directions mentioned in room
+<a name="93"></a>     *   description exit lists, so that players can click on the direction
+<a name="94"></a>     *   name in the listing to enter the direction command.
+<a name="95"></a>     */
+<a name="96"></a>    enableHyperlinks = true
+<a name="97"></a>
+<a name="98"></a>    /* flag: we've explained how the exits on/off command works */
+<a name="99"></a>    exitsOnOffExplained = nil
+<a name="100"></a>
+<a name="101"></a>    /*
+<a name="102"></a>     *   Determine if the "reminder" is enabled.  The reminder is the list
+<a name="103"></a>     *   of exits we show along with a "can't go that way" message, to
+<a name="104"></a>     *   reminder the player of the valid exits when an invalid one is
+<a name="105"></a>     *   attempted.
+<a name="106"></a>     */
+<a name="107"></a>    isReminderEnabled()
+<a name="108"></a>    {
+<a name="109"></a>        /*
+<a name="110"></a>         *   The reminder is enabled if enableReminderAlways is true, OR if
+<a name="111"></a>         *   enableReminder is true AND exitsMode.inRoomDesc is nil.
+<a name="112"></a>         */
+<a name="113"></a>        return (enableReminderAlways
+<a name="114"></a>                || (enableReminder &amp;&amp; !exitsMode.inRoomDesc));
+<a name="115"></a>    }
+<a name="116"></a>
+<a name="117"></a>    /*
+<a name="118"></a>     *   Get the exit lister we use for room descriptions.
+<a name="119"></a>     */
+<a name="120"></a>    getRoomDescLister()
+<a name="121"></a>    {
+<a name="122"></a>        /* use the verbose or terse lister, according to the configuration */
+<a name="123"></a>        return roomDescVerbose
+<a name="124"></a>            ? lookAroundExitLister
+<a name="125"></a>            : lookAroundTerseExitLister;
+<a name="126"></a>    }
+<a name="127"></a>
+<a name="128"></a>    /* perform the "exits" command to show exits on explicit request */
+<a name="129"></a>    showExitsCommand()
+<a name="130"></a>    {
+<a name="131"></a>        /* show exits for the current actor */
+<a name="132"></a>        showExits(gActor);
+<a name="133"></a>
+<a name="134"></a>        /*
+<a name="135"></a>         *   if we haven't explained how to turn exit listing on and off,
+<a name="136"></a>         *   do so now
+<a name="137"></a>         */
+<a name="138"></a>        if (!exitsOnOffExplained)
+<a name="139"></a>        {
+<a name="140"></a>            gLibMessages.explainExitsOnOff;
+<a name="141"></a>            exitsOnOffExplained = true;
+<a name="142"></a>        }
+<a name="143"></a>    }
+<a name="144"></a>
+<a name="145"></a>    /*
+<a name="146"></a>     *   Perform an EXITS ON/OFF/STATUS/LOOK command.  'stat' indicates
+<a name="147"></a>     *   whether we're turning on (true) or off (nil) the statusline exit
+<a name="148"></a>     *   listing; 'look' indicates whether we're turning the room
+<a name="149"></a>     *   description listing on or off.
+<a name="150"></a>     */
+<a name="151"></a>    exitsOnOffCommand(stat, look)
+<a name="152"></a>    {
+<a name="153"></a>        /* set the new status */
+<a name="154"></a>        exitsMode.inStatusLine = stat;
+<a name="155"></a>        exitsMode.inRoomDesc = look;
+<a name="156"></a>
+<a name="157"></a>        /* confirm the new status */
+<a name="158"></a>        gLibMessages.exitsOnOffOkay(stat, look);
+<a name="159"></a>
+<a name="160"></a>        /*
+<a name="161"></a>         *   If we haven't already explained how the EXITS ON/OFF command
+<a name="162"></a>         *   works, don't bother explaining it now, since they obviously
+<a name="163"></a>         *   know how it works if they've actually used it.
+<a name="164"></a>         */
+<a name="165"></a>        exitsOnOffExplained = true;
+<a name="166"></a>    }
+<a name="167"></a>
+<a name="168"></a>    /* show the list of exits from an actor's current location */
+<a name="169"></a>    showExits(actor)
+<a name="170"></a>    {
+<a name="171"></a>        /* show exits from the actor's location */
+<a name="172"></a>        showExitsFrom(actor, actor.location);
+<a name="173"></a>    }
+<a name="174"></a>
+<a name="175"></a>    /* show an exit list display in the status line, if desired */
+<a name="176"></a>    showStatuslineExits()
+<a name="177"></a>    {
+<a name="178"></a>        /* if statusline exit displays are enabled, show the exit list */
+<a name="179"></a>        if (exitsMode.inStatusLine)
+<a name="180"></a>            showExitsWithLister(gPlayerChar, gPlayerChar.location,
+<a name="181"></a>                                statuslineExitLister,
+<a name="182"></a>                                gPlayerChar.location
+<a name="183"></a>                                .wouldBeLitFor(gPlayerChar));
+<a name="184"></a>    }
+<a name="185"></a>
+<a name="186"></a>    /*
+<a name="187"></a>     *   Calculate the contribution of the exits list to the height of the
+<a name="188"></a>     *   status line, in lines of text.  If we're not configured to display
+<a name="189"></a>     *   the exits list in the status line, then the contribution is zero;
+<a name="190"></a>     *   otherwise, we'll estimate how much space we need to display the
+<a name="191"></a>     *   exit list.
+<a name="192"></a>     */
+<a name="193"></a>    getStatuslineExitsHeight()
+<a name="194"></a>    {
+<a name="195"></a>        /*
+<a name="196"></a>         *   if we're enabled, our standard display takes up one line; if
+<a name="197"></a>         *   we're disabled, we don't contribute anything to the status
+<a name="198"></a>         *   line's vertical extent
+<a name="199"></a>         */
+<a name="200"></a>        if (exitsMode.inStatusLine)
+<a name="201"></a>            return 1;
+<a name="202"></a>        else
+<a name="203"></a>            return 0;
+<a name="204"></a>    }
+<a name="205"></a>
+<a name="206"></a>    /* show exits as part of a room description */
+<a name="207"></a>    lookAroundShowExits(actor, loc, illum)
+<a name="208"></a>    {
+<a name="209"></a>        /* if room exit displays are enabled, show the exits */
+<a name="210"></a>        if (exitsMode.inRoomDesc)
+<a name="211"></a>            showExitsWithLister(actor, loc, getRoomDescLister, illum);
+<a name="212"></a>    }
+<a name="213"></a>
+<a name="214"></a>    /* show exits as part of a "cannot go that way" error */
+<a name="215"></a>    cannotGoShowExits(actor, loc)
+<a name="216"></a>    {
+<a name="217"></a>        /* if we want to show the reminder, show it */
+<a name="218"></a>        if (isReminderEnabled())
+<a name="219"></a>            showExitsWithLister(actor, loc, explicitExitLister,
+<a name="220"></a>                                loc.wouldBeLitFor(actor));
+<a name="221"></a>    }
+<a name="222"></a>
+<a name="223"></a>    /* show the list of exits from a given location for a given actor */
+<a name="224"></a>    showExitsFrom(actor, loc)
+<a name="225"></a>    {
+<a name="226"></a>        /* show exits with our standard lister */
+<a name="227"></a>        showExitsWithLister(actor, loc, explicitExitLister,
+<a name="228"></a>                            loc.wouldBeLitFor(actor));
+<a name="229"></a>    }
+<a name="230"></a>
+<a name="231"></a>    /*
+<a name="232"></a>     *   Show the list of exits using a specific lister.
+<a name="233"></a>     *
+<a name="234"></a>     *   'actor' is the actor for whom the display is being generated.
+<a name="235"></a>     *   'loc' is the location whose exit list is to be shown; this need
+<a name="236"></a>     *   not be the same as the actor's current location.  'lister' is the
+<a name="237"></a>     *   Lister object that will show the list of DestInfo objects that we
+<a name="238"></a>     *   create to represent the exit list.
+<a name="239"></a>     *
+<a name="240"></a>     *   'locIsLit' indicates whether or not the ambient illumination, for
+<a name="241"></a>     *   the actor's visual senses, is sufficient that the actor would be
+<a name="242"></a>     *   able to see if the actor were in the new location.  We take this
+<a name="243"></a>     *   as a parameter so that we don't have to re-compute the
+<a name="244"></a>     *   information if the caller has already computed it for other
+<a name="245"></a>     *   reasons (such as showing a room description).  If the caller
+<a name="246"></a>     *   hasn't otherwise computed the value, it can be easily computed as
+<a name="247"></a>     *   loc.wouldBeLitFor(actor).
+<a name="248"></a>     */
+<a name="249"></a>    showExitsWithLister(actor, loc, lister, locIsLit)
+<a name="250"></a>    {
+<a name="251"></a>        local destList;
+<a name="252"></a>        local showDest;
+<a name="253"></a>        local options;
+<a name="254"></a>
+<a name="255"></a>        /*
+<a name="256"></a>         *   Ask the lister if it shows the destination names.  We need to
+<a name="257"></a>         *   know because we want to consolidate exits that go to the same
+<a name="258"></a>         *   place if and only if we're going to show the destination in
+<a name="259"></a>         *   the listing; if we're not showing the destination, there's no
+<a name="260"></a>         *   reason to consolidate.
+<a name="261"></a>         */
+<a name="262"></a>        showDest = lister.listerShowsDest;
+<a name="263"></a>
+<a name="264"></a>        /* we have no option flags for the lister yet */
+<a name="265"></a>        options = 0;
+<a name="266"></a>
+<a name="267"></a>        /* run through all of the directions used in the game */
+<a name="268"></a>        destList = new Vector(Direction.allDirections.length());
+<a name="269"></a>        foreach (local dir in Direction.allDirections)
+<a name="270"></a>        {
+<a name="271"></a>            local conn;
+<a name="272"></a>
+<a name="273"></a>            /*
+<a name="274"></a>             *   If the actor's location has a connector in this
+<a name="275"></a>             *   direction, and the connector is apparent, add it to the
+<a name="276"></a>             *   list.
+<a name="277"></a>             *
+<a name="278"></a>             *   If the actor is in the dark, we can only see the
+<a name="279"></a>             *   connector if the connector is visible in the dark.  If
+<a name="280"></a>             *   the actor isn't in the dark, we can show all of the
+<a name="281"></a>             *   connectors.
+<a name="282"></a>             */
+<a name="283"></a>            if ((conn = loc.getTravelConnector(dir, actor)) != nil
+<a name="284"></a>                &amp;&amp; conn.isConnectorApparent(loc, actor)
+<a name="285"></a>                &amp;&amp; conn.isConnectorListed
+<a name="286"></a>                &amp;&amp; (locIsLit || conn.isConnectorVisibleInDark(loc, actor)))
+<a name="287"></a>            {
+<a name="288"></a>                local dest;
+<a name="289"></a>                local destName = nil;
+<a name="290"></a>                local destIsBack;
+<a name="291"></a>
+<a name="292"></a>                /*
+<a name="293"></a>                 *   We have an apparent connection in this direction, so
+<a name="294"></a>                 *   add it to our list.  First, check to see if we know
+<a name="295"></a>                 *   the destination.
+<a name="296"></a>                 */
+<a name="297"></a>                dest = conn.getApparentDestination(loc, actor);
+<a name="298"></a>
+<a name="299"></a>                /* note if this is the "back to" connector for the actor */
+<a name="300"></a>                destIsBack = (conn == actor.lastTravelBack);
+<a name="301"></a>
+<a name="302"></a>                /*
+<a name="303"></a>                 *   If we know the destination, and they want to include
+<a name="304"></a>                 *   destination names where possible, get the name.  If
+<a name="305"></a>                 *   there's a name to show, include the name.
+<a name="306"></a>                 */
+<a name="307"></a>                if (dest != nil
+<a name="308"></a>                    &amp;&amp; showDest
+<a name="309"></a>                    &amp;&amp; (destName = dest.getDestName(actor, loc)) != nil)
+<a name="310"></a>                {
+<a name="311"></a>                    local orig;
+<a name="312"></a>
+<a name="313"></a>                    /*
+<a name="314"></a>                     *   we are going to show a destination name for this
+<a name="315"></a>                     *   item, so set the special option flag to let the
+<a name="316"></a>                     *   lister know that this is the case
+<a name="317"></a>                     */
+<a name="318"></a>                    options |= ExitLister.hasDestNameFlag;
+<a name="319"></a>
+<a name="320"></a>                    /*
+<a name="321"></a>                     *   if this is the back-to connector, note that we
+<a name="322"></a>                     *   know the name of the back-to location
+<a name="323"></a>                     */
+<a name="324"></a>                    if (destIsBack)
+<a name="325"></a>                        options |= ExitLister.hasBackNameFlag;
+<a name="326"></a>
+<a name="327"></a>                    /*
+<a name="328"></a>                     *   If this destination name already appears in the
+<a name="329"></a>                     *   list, don't include this one in the list.
+<a name="330"></a>                     *   Instead, add this direction to the 'others' list
+<a name="331"></a>                     *   for the existing entry, so that we will show each
+<a name="332"></a>                     *   known destination only once.
+<a name="333"></a>                     */
+<a name="334"></a>                    orig = destList.valWhich({x: x.dest_ == dest});
+<a name="335"></a>                    if (orig != nil)
+<a name="336"></a>                    {
+<a name="337"></a>                        /*
+<a name="338"></a>                         *   this same destination name is already present
+<a name="339"></a>                         *   - add this direction to the existing entry's
+<a name="340"></a>                         *   list of other directions going to the same
+<a name="341"></a>                         *   place
+<a name="342"></a>                         */
+<a name="343"></a>                        orig.others_ += dir;
+<a name="344"></a>
+<a name="345"></a>                        /*
+<a name="346"></a>                         *   if this is the back-to connector, note it in
+<a name="347"></a>                         *   the original destination item
+<a name="348"></a>                         */
+<a name="349"></a>                        if (destIsBack)
+<a name="350"></a>                            orig.destIsBack_ = true;
+<a name="351"></a>
+<a name="352"></a>                        /*
+<a name="353"></a>                         *   don't add this direction to the main list,
+<a name="354"></a>                         *   since we don't want to list the destination
+<a name="355"></a>                         *   redundantly
+<a name="356"></a>                         */
+<a name="357"></a>                        continue;
+<a name="358"></a>                    }
+<a name="359"></a>                }
+<a name="360"></a>
+<a name="361"></a>                /* add it to our list */
+<a name="362"></a>                destList.append(new DestInfo(dir, dest, destName,
+<a name="363"></a>                                             destIsBack));
+<a name="364"></a>            }
+<a name="365"></a>        }
+<a name="366"></a>
+<a name="367"></a>        /* show the list */
+<a name="368"></a>        lister.showListAll(destList.toList(), options, 0);
+<a name="369"></a>    }
+<a name="370"></a>;
+<a name="371"></a>
+<a name="372"></a>/*
+<a name="373"></a> *   A destination tracker.  This keeps track of a direction and the
+<a name="374"></a> *   apparent destination in that direction.
+<a name="375"></a> */
+<a name="376"></a>class DestInfo: object
+<a name="377"></a>    construct(dir, dest, destName, destIsBack)
+<a name="378"></a>    {
+<a name="379"></a>        /* remember the direction, destination, and destination name */
+<a name="380"></a>        dir_ = dir;
+<a name="381"></a>        dest_ = dest;
+<a name="382"></a>        destName_ = destName;
+<a name="383"></a>        destIsBack_ = destIsBack;
+<a name="384"></a>    }
+<a name="385"></a>
+<a name="386"></a>    /* the direction of travel */
+<a name="387"></a>    dir_ = nil
+<a name="388"></a>
+<a name="389"></a>    /* the destination room object */
+<a name="390"></a>    dest_ = nil
+<a name="391"></a>
+<a name="392"></a>    /* the name of the destination */
+<a name="393"></a>    destName_ = nil
+<a name="394"></a>
+<a name="395"></a>    /* flag: this is the "back to" destination */
+<a name="396"></a>    destIsBack_ = nil
+<a name="397"></a>
+<a name="398"></a>    /* list of other directions that go to our same destination */
+<a name="399"></a>    others_ = []
+<a name="400"></a>;
+<a name="401"></a>
+<a name="402"></a>/*
+<a name="403"></a> *   Settings item - show defaults in status line
+<a name="404"></a> */
+<a name="405"></a>exitsMode: SettingsItem
+<a name="406"></a>    /* our ID */
+<a name="407"></a>    settingID = 'adv3.exits'
+<a name="408"></a>
+<a name="409"></a>    /* show our description */
+<a name="410"></a>    settingDesc =
+<a name="411"></a>        (gLibMessages.currentExitsSettings(inStatusLine, inRoomDesc))
+<a name="412"></a>
+<a name="413"></a>    /* convert to text */
+<a name="414"></a>    settingToText()
+<a name="415"></a>    {
+<a name="416"></a>        /* just return the two binary variables */
+<a name="417"></a>        return (inStatusLine ? 'on' : 'off')
+<a name="418"></a>            + ','
+<a name="419"></a>            + (inRoomDesc ? 'on' : 'off');
+<a name="420"></a>    }
+<a name="421"></a>
+<a name="422"></a>    settingFromText(str)
+<a name="423"></a>    {
+<a name="424"></a>        /* parse out our format */
+<a name="425"></a>        if (rexMatch('&lt;space&gt;*(&lt;alpha&gt;+)&lt;space&gt;*,&lt;space&gt;*(&lt;alpha&gt;+)',
+<a name="426"></a>                     str.toLower()) != nil)
+<a name="427"></a>        {
+<a name="428"></a>            /* pull out the two variables from the regexp groups */
+<a name="429"></a>            inStatusLine = (rexGroup(1)[3] == 'on');
+<a name="430"></a>            inRoomDesc = (rexGroup(2)[3] == 'on');
+<a name="431"></a>        }
+<a name="432"></a>    }
+<a name="433"></a>
+<a name="434"></a>    /*
+<a name="435"></a>     *   Our value is in two parts.  inStatusLine controls whether or not
+<a name="436"></a>     *   we show the exit list in the status line; inRoomDesc controls the
+<a name="437"></a>     *   exit listing in room descriptions.
+<a name="438"></a>     */
+<a name="439"></a>    inStatusLine = true
+<a name="440"></a>    inRoomDesc = nil
+<a name="441"></a>;
+<a name="442"></a>
+</pre>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

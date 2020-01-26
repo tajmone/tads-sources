@@ -1,0 +1,254 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Calling a Spade a Spade</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="buryingtheboots.htm">[Previous] </a>&nbsp;&nbsp;<a href="lettherebelight.htm">[Next] </a></I></FONT></P>
+<h2>Calling a Spade a Spade</h2>
+
+<p>Clearly leaving the spade conveniently leaning against the wall of the cave is a bit too obvious, even for a simple tutorial game such as this. It obviously needs to start life somewhere else, and in fact we've already indicated where that somewhere else must be, since we've already described the charcoal burner as wielding a spade. To obtain the spade, therefore, Heidi needs to ask Joe for it.
+</p>
+
+<br>
+This may be achieved by first of all adding a suitable <font face="Courier New" size="2" color="#000000">AskForTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to the list of TopicEntries in the </font><font face="Courier New" size="2" color="#000000">burnerTalking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">InConversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Here again this is an exercise you might like to try for yourself before turning over the page to see how this guide does it. An </font><font face="Courier New" size="2" color="#000000">AskForTopic&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">works just like the other types of </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> we've seen, except that it responds to <b>ask for whatever</b> instead of, say, <b>ask about whatever</b>. You'll need to make sure that your new </font><font face="Courier New" size="2" color="#000000">AskForTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> responds specifically to a request for the spade, and that it results not only in Joe saying Heidi can take it, but in Heidi actually acquiring it. You'll also need to handle the case where the player issues an <b>ask for spade</b> command when Heidi already has the spade. And, of course, you'll need to make some appropriate adjustments to the spade object itself, so that it starts out being carried by Joe rather than leaning against the wall of the cave.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This is how we do it here:
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+++&nbsp;AskForTopic&nbsp;@spade
+<br>
+&nbsp;&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Could&nbsp;I&nbsp;borrow&nbsp;your&nbsp;spade,&nbsp;please?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;All&nbsp;right&nbsp;then,&lt;/q&gt;&nbsp;he&nbsp;agrees&nbsp;a&nbsp;little&nbsp;reluctantly,&nbsp;handing&nbsp;you&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spade,&nbsp;&lt;q&gt;but&nbsp;make&nbsp;sure&nbsp;you&nbsp;bring&nbsp;it&nbsp;back.&lt;/q&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spade.moveInto(gActor);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you compile the game (yet again) and try all this out, you'll find that there's still a problem: even after Joe hands the spade over he's described as still leaning on it (while he's talking) or still using it (when he goes back to work). But this problem turns out to be an opportunity to show how to give Joe a slightly wider range of behaviour. The approach we'll take is to give him another pair of ActorStates which define what he does when he's without his spade. We'll assume that once he's handed over his spade he's particularly anxious to get it back, and won't discuss anything until it's been returned. The implementation relies on switching ActorStates as Joe gives the spade to Heidi and as Heidi gives it back again. The two new ActorStates may be defined as follows:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;burnerFretting&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;burner/he}&nbsp;is&nbsp;standing&nbsp;talking&nbsp;to&nbsp;you&nbsp;with&nbsp;his
+<br>
+&nbsp;&nbsp;&nbsp;hands&nbsp;on&nbsp;his&nbsp;hips.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;standing&nbsp;talking&nbsp;to&nbsp;you&nbsp;with&nbsp;his&nbsp;hands&nbsp;on&nbsp;his&nbsp;hips.&nbsp;"
+<br>
+&nbsp;&nbsp;nextState&nbsp;=&nbsp;burnerWaiting
+<br>
+;
+<br>
+
+<br>
+++&nbsp;burnerWaiting&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;burner/he}&nbsp;is&nbsp;walking&nbsp;round&nbsp;the&nbsp;fire,&nbsp;frowning&nbsp;as
+<br>
+&nbsp;&nbsp;&nbsp;he&nbsp;keeps&nbsp;instinctively&nbsp;reaching&nbsp;for&nbsp;the&nbsp;spade&nbsp;that&nbsp;isn't&nbsp;there.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;walking&nbsp;round&nbsp;the&nbsp;fire.&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++++&nbsp;HelloTopic
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;Hello,&nbsp;there.&lt;/q&gt;&nbsp;you&nbsp;say.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Hello,&nbsp;young&nbsp;lady&nbsp;-&nbsp;have&nbsp;you&nbsp;brought&nbsp;my&nbsp;spade?&lt;/q&gt;&nbsp;he&nbsp;asks.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;ByeTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Bye,&nbsp;then.&lt;/q&gt;&nbsp;you&nbsp;say.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Don't&nbsp;be&nbsp;too&nbsp;long&nbsp;with&nbsp;that&nbsp;spade&nbsp;-&nbsp;be&nbsp;sure&nbsp;to&nbsp;bring&nbsp;it&nbsp;right&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;back!&lt;/q&gt;&nbsp;he&nbsp;admonishes&nbsp;you.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;GiveShowTopic&nbsp;@spade
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Here's&nbsp;your&nbsp;spade&nbsp;then,&lt;/q&gt;&nbsp;you&nbsp;say,&nbsp;handing&nbsp;it&nbsp;over.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Ah,&nbsp;thanks!&lt;/q&gt;&nbsp;he&nbsp;replies&nbsp;taking&nbsp;it&nbsp;with&nbsp;evident&nbsp;relief.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;spade.moveInto(burner);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;burner.setCurState(burnerTalking);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskForTopic&nbsp;@spade
+<br>
+&nbsp;&nbsp;"He&nbsp;doesn't&nbsp;have&nbsp;the&nbsp;spade.&nbsp;"
+<br>
+&nbsp;&nbsp;isConversational&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskTellTopic&nbsp;@spade
+<br>
+&nbsp;&nbsp;"&lt;q&gt;This&nbsp;seems&nbsp;a&nbsp;very&nbsp;sturdy&nbsp;spade,&lt;/q&gt;&nbsp;you&nbsp;remark.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;It&nbsp;is&nbsp;--&nbsp;look&nbsp;after&nbsp;it&nbsp;well,&nbsp;I&nbsp;need&nbsp;it&nbsp;for&nbsp;my&nbsp;work!&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{the&nbsp;burner/he}&nbsp;replies.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;I&nbsp;seem&nbsp;to&nbsp;have&nbsp;left&nbsp;your&nbsp;spade&nbsp;somewhere,&lt;/q&gt;&nbsp;you&nbsp;confess.\b
+<br>
+&nbsp;&nbsp;&lt;q&gt;I&nbsp;hope&nbsp;you&nbsp;can&nbsp;find&nbsp;it&nbsp;then!&lt;/q&gt;&nbsp;{the&nbsp;burner/he}&nbsp;remarks&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;anxiously.&nbsp;"
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(!spade.isIn(burner.location))
+<br>
+;
+<br>
+
+<br>
+
+<br>
+++&nbsp;DefaultAskTellTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;We&nbsp;can&nbsp;talk&nbsp;about&nbsp;that&nbsp;when&nbsp;I've&nbsp;got&nbsp;my&nbsp;spade&nbsp;back,&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;he&nbsp;tells&nbsp;you.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's only a couple of points to note here. The first is that we include an </font><font face="Courier New" size="2" color="#000000">AskForTopic&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to handle the case where the player asks for the spade again when Joe's already handed it over; since Joe will always be in the </font><font face="Courier New" size="2" color="#000000">burnerFretting</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> state when he doesn't have his spade, we simply include this </font><font face="Courier New" size="2" color="#000000">AskForTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as one of the TopicEntries in that state. In this case, instead of having Joe respond we simply display a message indicating that Joe is spadeless (we add an appropriate </font><font face="Courier New" size="2" color="#000000">AskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">AltTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to handle the case in which Heidi talks about the spade while Joe is in this state). We then add </font><font face="Courier New" size="2" color="#000000">isConversational&nbsp;=&nbsp;nil&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to the definition of the topic to show that this is not a conversational interchange, so no greeting protocols will be initiated by the player character asking Joe for the spade while he's in this in state.
+<br>
+
+<br>
+The second is that for all this to work as expected it is, of course, necessary to relocate the spade from the cave to the burner in your code.
+<br>
+
+<br>
+The third is the explicit definition of </font><font face="Courier New" size="2" color="#000000">nextState&nbsp;=&nbsp;burnerWaiting</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the </font><font face="Courier New" size="2" color="#000000">burnerFretting</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> state; this is necessary because we change from one </font><font face="Courier New" size="2" color="#000000">InConversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to another in mid-conversation, and without the explicit definition of </font><font face="Courier New" size="2" color="#000000">nextState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (which defines which </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> the </font><font face="Courier New" size="2" color="#000000">Actor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is to switch to when the conversation is terminated from that </font><font face="Courier New" size="2" color="#000000">InConversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) the program becomes a bit confused by the mid-conversation switch of states. For the same reason we now need to add </font><font face="Courier New" size="2" color="#000000">nextState&nbsp;=&nbsp;burnerWorking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to the definition of </font><font face="Courier New" size="2" color="#000000">burnerTalking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The other point worth noting is the use of </font><font face="Courier New" size="2" color="#000000">setCurState(state)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to change the actor's current actor state (don't simply write something like </font><font face="Courier New" size="2" color="#000000">burner.curState&nbsp;=&nbsp;burnerTalking;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">). We need to use the same method in our handling of AskFor to get Joe to switch into his </font><font face="Courier New" size="2" color="#000000">burnerFretting</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> state. Add the following line immediately after </font><font face="Courier New" size="2" color="#000000">spade.moveInto(gActor);</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the </font><font face="Courier New" size="2" color="#000000">topicResponse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of the first </font><font face="Courier New" size="2" color="#000000">AskForTopic&nbsp;@spade</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">getActor().setCurState(burnerFretting);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Everything should now work fine, but there is one more refinement we can add, not because the game really needs it, but because it allows us to try out an aspect of TADS 3 NPC programming we haven't seen yet. So far, the player has taken all the initiative in starting a conversation; in TADS 3 it's possible to make an NPC initiate a conversation. In this game, we'll make Joe so anxious to get his spade back that every time Heidi walks into his clearing he'll ask for it (until he gets it back), without waiting for her to address him first. We do this using his </font><font face="Courier New" size="2" color="#000000">initiateConversation(state,&nbsp;'name')</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, where state is the name of the </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (normally an </font><font face="Courier New" size="2" color="#000000">InConversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) we want him to switch into, and 'name' is the name of a Conversation Node we want activated (as the NPC's way of initiating the conversation). Within the Conversation Node we define an </font><font face="Courier New" size="2" color="#000000">npcGreetingMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (we could use an </font><font face="Courier New" size="2" color="#000000">npcGreetingList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> instead) to display what Joe does and says to start the conversation. We can also use an </font><font face="Courier New" size="2" color="#000000">npcContinueMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">  (or </font><font face="Courier New" size="2" color="#000000">npcContinueList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) to contain Joe's further prompting if the player fails to respond with a conversational command (to create the impression that Joe does really want a reply). In this case, we'll have Joe pose a question that requires a simple yes or no answer, which we can deal with using a </font><font face="Courier New" size="2" color="#000000">YesTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and a </font><font face="Courier New" size="2" color="#000000">NoTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (rather than having to define any </font><font face="Courier New" size="2" color="#000000">SpecialTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or whatever). The new </font><font face="Courier New" size="2" color="#000000">ConvNode</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and its associated topics then look like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;ConvNode&nbsp;'burner-spade'
+<br>
+&nbsp;&nbsp;npcGreetingMsg&nbsp;=&nbsp;"&lt;.p&gt;He&nbsp;looks&nbsp;up&nbsp;at&nbsp;your&nbsp;approach,&nbsp;and&nbsp;walks
+<br>
+&nbsp;&nbsp;&nbsp;away&nbsp;from&nbsp;the&nbsp;fire&nbsp;to&nbsp;meet&nbsp;you.&nbsp;&lt;q&gt;Have&nbsp;you&nbsp;finished&nbsp;with&nbsp;my&nbsp;spade
+<br>
+&nbsp;&nbsp;&nbsp;yet?&lt;/q&gt;&nbsp;he&nbsp;enquires&nbsp;anxiously.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;npcContinueMsg&nbsp;=&nbsp;"&lt;q&gt;What&nbsp;about&nbsp;my&nbsp;spade?&nbsp;Have&nbsp;you&nbsp;finished&nbsp;with&nbsp;it&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;yet?&lt;/q&gt;&nbsp;{the&nbsp;burner/he}&nbsp;repeats&nbsp;anxiously.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;YesTopic
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;Yes,&nbsp;I&nbsp;have.&lt;/q&gt;&nbsp;you&nbsp;reply.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Can&nbsp;I&nbsp;have&nbsp;it&nbsp;back&nbsp;then,&nbsp;please?&lt;/q&gt;&nbsp;he&nbsp;asks.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;NoTopic
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;Not&nbsp;quite;&nbsp;can&nbsp;I&nbsp;borrow&nbsp;it&nbsp;a&nbsp;bit&nbsp;longer?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Very&nbsp;well,&nbsp;then.&lt;/q&gt;&nbsp;he&nbsp;conceded&nbsp;grudgingly,&nbsp;&lt;q&gt;But&nbsp;I&nbsp;need&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;get&nbsp;on&nbsp;with&nbsp;my&nbsp;job,&nbsp;so&nbsp;please&nbsp;be&nbsp;quick&nbsp;about&nbsp;it.&lt;/q&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The reason we start the </font><font face="Courier New" size="2" color="#000000">npcGreetingMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> with the pronoun 'he' rather than </font><font face="Courier New" size="2" color="#000000">{The&nbsp;burner/he}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is that in the only context in which this message will ever be displayed, the player will just have read "Joe Black/The charcoal burner is walking round the fire, frowning as he keeps instinctively reaching for the spade that isn't there", so the  burner's name doesn't need repeating immediately afterwards.
+<br>
+
+<br>
+All that remains is to decide where to insert the call to </font><font face="Courier New" size="2" color="#000000">initiateConversation</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The obvious candidate would be in the </font><font face="Courier New" size="2" color="#000000">afterTravel(traveler,&nbsp;connector)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of  </font><font face="Courier New" size="2" color="#000000">burnerWaiting</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, since this will be called after the Player Character travels to Joe's location:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">afterTravel(traveler, connector)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;getActor().initiateConversation(burnerFretting,&nbsp;'burner-spade');
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note the use of </font><font face="Courier New" size="2" color="#000000">getActor()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">to get the Actor the current state belongs to. We could just as well have used </font><font face="Courier New" size="2" color="#000000">burner.initiateConversation</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> here, but there may be cases where </font><font face="Courier New" size="2" color="#000000">getActor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> would be preferable (for example if one were defining a custom </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class for use in a number of different actors).
+<br>
+
+<br>
+At this point it might be worth playing the game through to check that everything works properly and the game is still winnable. In the next chapter we'll add some more complications.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="buryingtheboots.htm">[Previous] </a>&nbsp;&nbsp;<a href="lettherebelight.htm">[Next] </a></I></FONT></P>
+</body></html>

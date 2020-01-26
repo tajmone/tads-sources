@@ -1,0 +1,96 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Script</title><meta name="keywords" content="Script,curScriptState,doScript,getScriptState"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Script : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="collectivegroup(mobile).htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="eventlist.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The basic Script class provides the skeletal framework for a simple state machine. You're more likely to use one of the subclasses of Script (namely <a href="eventlist.htm">EventList</a> or one of its subclasses) than Script itself, though there may be occasions when Script itself is useful.
+<br>
+
+<br>
+The interface provided by the Script class is rudimentary, to say the least. It provides a <b>curScriptState</b> property (which is 0 by default), a <b>getScriptState()</b> method which simply returns <b>curScriptState</b>, and a <b>doScript</b> method which does nothing at all.
+<br>
+
+<br>
+The kind of situation in which this basic framework might be useful is when you want something to happen at irregular or widely spaced intervals: for example, suppose we'd like an occasional atmospheric message to be displayed in the graveyard. If we get the roomDaemon to call the Room's doScript method we could do something like this:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">graveyard&nbsp;:&nbsp;Room<b>,&nbsp;Script&nbsp;</b>'Graveyard'&nbsp;'the&nbsp;graveyard'
+<br>
+&nbsp;&nbsp;"There&nbsp;is&nbsp;something&nbsp;decidedly&nbsp;eerie&nbsp;about&nbsp;this&nbsp;underground&nbsp;graveyard&nbsp;with&nbsp;its
+<br>
+&nbsp;&nbsp;&nbsp;musty&nbsp;old&nbsp;tombstones.&nbsp;This&nbsp;is&nbsp;truly&nbsp;a&nbsp;place&nbsp;of&nbsp;death;&nbsp;nothing&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;lives&nbsp;here,&nbsp;for&nbsp;this&nbsp;place&nbsp;never&nbsp;sees&nbsp;the&nbsp;sun;&nbsp;a&nbsp;dusty&nbsp;path&nbsp;leads&nbsp;off&nbsp;to&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;northeast&nbsp;and&nbsp;a&nbsp;strange,&nbsp;stone&nbsp;temple&nbsp;is&nbsp;situated&nbsp;just&nbsp;to&nbsp;the&nbsp;west.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;northeast&nbsp;=&nbsp;westShore
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;temple&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;<b>roomDaemon
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!ghost.isIn(self))&nbsp;doScript;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!ghost.moved&nbsp;&amp;&amp;&nbsp;!statue.isPulled)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ghost.moveInto(self);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ghost.initiateConversation(ghostTalking,&nbsp;ghostNode);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ghostAppearingEvent.triggerEvent(ghost);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;doScript()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(curScriptState++)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;1:&nbsp;msg1;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;3:&nbsp;msg2;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;6:&nbsp;msg1;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;10:&nbsp;msg2;&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;15:&nbsp;curScriptState&nbsp;=&nbsp;0;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;msg1&nbsp;=&nbsp;"There's&nbsp;a&nbsp;sound&nbsp;like&nbsp;a&nbsp;distant&nbsp;moaning.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;msg2&nbsp;=&nbsp;"Something&nbsp;seems&nbsp;to&nbsp;flicker,&nbsp;but&nbsp;perhaps&nbsp;it's&nbsp;only&nbsp;a&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trick&nbsp;of&nbsp;the&nbsp;light.&nbsp;";&nbsp;
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In this case, it would probably be easier to put the two message strings in the Room's atmosphereList and use one of the EventList classes to control the frequency of display. There may be cases, however, where being able to control exactly when things occur like this is what you need.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

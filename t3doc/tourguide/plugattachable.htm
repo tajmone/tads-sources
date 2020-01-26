@@ -1,0 +1,220 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PlugAttachable</title><meta name="keywords" content="PlugAttachable,IndirectLockable,notifyInsert,canAttachTo,beforeTravel,tryImplicitAction"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PlugAttachable : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="nearbyattachable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="permanentattachment.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">PlugAttachable is a mix-in class for use with Attachable or NearbyAttachable to make PLUG X IN Y behave like ATTACH X TO Y and UNPLUG X FROM Y behave like DETACH X FROM Y.
+<br>
+
+<br>
+To demonstrate this, we'll implement a vending machine just down the corridor that needs to be plugged into the wall with an electrical cable before it'll dispense entrance tickets. First we'd better create the location for the machine:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">brightCorridor&nbsp;:&nbsp;Room&nbsp;'Brightly-lit&nbsp;Corridor'
+<br>
+&nbsp;&nbsp;"The&nbsp;corridor&nbsp;continues&nbsp;both&nbsp;east&nbsp;and&nbsp;west&nbsp;from&nbsp;here&lt;&lt;openDoorway.isOpen&nbsp;?
+<br>
+&nbsp;&nbsp;',&nbsp;and&nbsp;there&nbsp;is&nbsp;an&nbsp;open&nbsp;doorway&nbsp;to&nbsp;the&nbsp;north'&nbsp;:&nbsp;''&gt;&gt;.&nbsp;A&nbsp;large&nbsp;sign&nbsp;on&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;wall&nbsp;points&nbsp;west&nbsp;towards&nbsp;the&nbsp;Museum&nbsp;Entrance&nbsp;and&nbsp;east&nbsp;towards&nbsp;the&nbsp;Exit.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;openDoorway
+<br>
+&nbsp;&nbsp;&nbsp;<b>east&nbsp;=&nbsp;museumExit</b>
+<br>
+;
+<br>
+
+<br>
+museumExit&nbsp;:&nbsp;Room&nbsp;'Museum&nbsp;Exit'&nbsp;'the&nbsp;museum&nbsp;exit'
+<br>
+&nbsp;&nbsp;"The&nbsp;brightly&nbsp;lit&nbsp;corridor&nbsp;from&nbsp;the&nbsp;west&nbsp;comes&nbsp;to&nbsp;an&nbsp;end&nbsp;here,&nbsp;by&nbsp;a&nbsp;door
+<br>
+&nbsp;&nbsp;&nbsp;that&nbsp;looks&nbsp;firmly&nbsp;closed.&nbsp;Some&nbsp;sort&nbsp;of&nbsp;vending&nbsp;machine&nbsp;stands&nbsp;next&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;one&nbsp;wall,&nbsp;and&nbsp;there's&nbsp;an&nbsp;electrical&nbsp;outlet&nbsp;near&nbsp;to&nbsp;it&nbsp;at&nbsp;floor&nbsp;level.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;brightCorridor
+<br>
+&nbsp;&nbsp;&nbsp;east&nbsp;=&nbsp;museumExitDoor
+<br>
+;
+<br>
+
+<br>
++&nbsp;museumExitDoor&nbsp;:&nbsp;IndirectLockable,&nbsp;Door&nbsp;'door'&nbsp;'door'
+<br>
+&nbsp;&nbsp;"The&nbsp;door&nbsp;is&nbsp;marked&nbsp;EXIT.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In this case we've made the museumExitDoor an IndirectLockable because we intend it never to be unlocked; it forms a boundary to the game world.
+<br>
+
+<br>
+Now we need to add the electrical socket and the vending machine, both of which will need to be both PlugAttachable and Attachable as well their appropriate Thing-derived class:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;socket&nbsp;:&nbsp;PlugAttachable,&nbsp;Attachable,&nbsp;Fixture
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'electrical&nbsp;outlet/socket'&nbsp;'socket'
+<br>
+;
+<br>
+
+<br>
++&nbsp;vendingMachine&nbsp;:&nbsp;PlugAttachable,&nbsp;Attachable,&nbsp;Heavy
+<br>
+&nbsp;&nbsp;'vending&nbsp;machine'&nbsp;'vending&nbsp;machine'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;machine&nbsp;for&nbsp;selling&nbsp;museum&nbsp;tickets.&nbsp;Near&nbsp;the&nbsp;top&nbsp;is&nbsp;a&nbsp;small&nbsp;vertical
+<br>
+&nbsp;&nbsp;&nbsp;slot&nbsp;labelled&nbsp;&lt;&lt;vendingSlot.label&gt;&gt;,&nbsp;and&nbsp;lower&nbsp;down&nbsp;is&nbsp;the&nbsp;hole&nbsp;that
+<br>
+&nbsp;&nbsp;&nbsp;presumably&nbsp;dispenses&nbsp;the&nbsp;tickets.&nbsp;"
+<br>
+&nbsp;&nbsp;powerOn&nbsp;=&nbsp;(powerCable.isAttachedTo(self)&nbsp;&amp;&amp;&nbsp;powerCable.isAttachedTo(socket))&nbsp;
+<br>
+&nbsp;&nbsp;afterAction()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIs(AttachTo)&nbsp;&amp;&amp;&nbsp;powerOn)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;vending&nbsp;machine&nbsp;starts&nbsp;to&nbsp;hum.&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+++&nbsp;vendingSlot&nbsp;:&nbsp;RestrictedContainer,&nbsp;Component&nbsp;'small&nbsp;vertical&nbsp;slot'&nbsp;'slot'
+<br>
+&nbsp;&nbsp;"It's&nbsp;labelled&nbsp;&lt;&lt;label&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;label&nbsp;=&nbsp;'ADMITTANCE&nbsp;THREE&nbsp;FARTHINGS&nbsp;-&nbsp;EXACT&nbsp;CHANGE&nbsp;ONLY'
+<br>
+&nbsp;&nbsp;validContents&nbsp;=&nbsp;[silverCoin,&nbsp;brassCoin]
+<br>
+&nbsp;&nbsp;notifyInsert&nbsp;(obj,&nbsp;newCont)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"\^&lt;&lt;obj.theName&gt;&gt;&nbsp;drops&nbsp;into&nbsp;the&nbsp;slot&nbsp;and&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(obj!=silverCoin&nbsp;||&nbsp;!vendingMachine.powerOn)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"immediately&nbsp;falls&nbsp;straight&nbsp;through&nbsp;into&nbsp;the&nbsp;hole.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj.moveInto(vendingHole);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"a&nbsp;moment&nbsp;or&nbsp;two&nbsp;later&nbsp;a&nbsp;ticket&nbsp;appears&nbsp;in&nbsp;the&nbsp;hole.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;museumTicket.moveInto(vendingHole);&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;obj.moveInto(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+++&nbsp;vendingHole&nbsp;:&nbsp;Container,&nbsp;Component&nbsp;'hole'&nbsp;'hole'
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;square&nbsp;hole&nbsp;at&nbsp;about&nbsp;chest&nbsp;height.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;1&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's not much new in the above. We define vendingMachine.powerOn to determine whether the power cable is attached to both the vending machine and the power socket, and we use afterAction to start the machine humming when both ends are first plugged in, just to confirm that the vending machine is now powered up (if we wanted to be more sophisticated we could also add a suitable Noise object here, although we'd also have to add suitable handling to take it away again). Perhaps the most significant method we define here is vendingSlot.notifyInsert, which checks both that the right coin has been inserted and that the power is on before issuing a ticket. If a ticket is issued then we move the coin into nil to make it no longer available, and then exit to prevent the normal action handling from moving the coin back into the slot.
+<br>
+
+<br>
+Next we need to define the all-important power cable:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">powerCable&nbsp;:&nbsp;PlugAttachable,&nbsp;Attachable,&nbsp;Thing&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'thick&nbsp;black&nbsp;power&nbsp;cable/cord/lead/plugs'&nbsp;'black&nbsp;cable'&nbsp;@galleyCupboard
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;thick&nbsp;black&nbsp;power&nbsp;cable,&nbsp;about&nbsp;four&nbsp;feet&nbsp;long,&nbsp;with
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;plugs&nbsp;both&nbsp;ends.&nbsp;"
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;2&nbsp;
+<br>
+&nbsp;&nbsp;canAttachTo(obj)&nbsp;{return&nbsp;obj&nbsp;is&nbsp;in&nbsp;(socket,&nbsp;vendingMachine);&nbsp;}
+<br>
+&nbsp;&nbsp;travelWhileAttached&nbsp;(movedObj,&nbsp;traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(movedObj==self)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;attachedObjects)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tryImplicitAction(DetachFrom,&nbsp;self,&nbsp;cur);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The straightforward part is the canAttachTo method which simply defines the socket and the vendingMachine as the objects that the cable can be attached to. The subtler part is the travelWhileAttached method. This is needed to cater for the situation where the player character walks off still holding the cable while it's plugged into either the socket or the vending machine or both. What we make it do in this case is to detach the cable from whatever it's attached to; using <b>tryImplicitAction </b>to perform this decoupling makes this detachment an implicit action here, which creates quite a neat effect.
+<br>
+
+<br>
+Finally, of course, we need to define that entrance ticket (which starts off without a location):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">museumTicket&nbsp;:&nbsp;Readable&nbsp;'small&nbsp;green&nbsp;ticket'&nbsp;'small&nbsp;green&nbsp;ticket'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;ticket&nbsp;for&nbsp;admission&nbsp;into&nbsp;the&nbsp;museum.&nbsp;"
+<br>
+&nbsp;&nbsp;readDesc&nbsp;=&nbsp;"Eerhtsdat&nbsp;Caves&nbsp;Museum&nbsp;of&nbsp;Curious&nbsp;Antiquities\n
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADMIT&nbsp;UP&nbsp;TO&nbsp;TWO&nbsp;PERSONS\nMULTIPLE&nbsp;TIMES&nbsp;TILL&nbsp;EXPIRY&nbsp;DATE\n
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Expiry&nbsp;date:&nbsp;TBA&nbsp;"
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;0
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At this point you should be able to compile and run the game and try out the vending machine. Eventually we'll get to the point where you'll need the ticket to get into the museum.
+<br>
+</font></font>
+
+</body></html>

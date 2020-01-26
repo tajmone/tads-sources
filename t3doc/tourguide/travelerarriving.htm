@@ -1,0 +1,100 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>enteringRoom</title><meta name="keywords" content="travelerArrving,enteringRoom,leavingRoom"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>enteringRoom
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="roomdarktravel.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="inroomname.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">It is sometimes useful to have something happen each time an actor arrives in a room. For example, we may want to reset the state of the darkEvents StopEventList each time the player character enters the crewQuarters so that there is always one warning about blundering about in the dark before the PC falls down the ladder and dies. This can be achieved by overriding enteringRoom:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">crewQuarters&nbsp;:&nbsp;DarkCabin&nbsp;'Crew&nbsp;Quarters'&nbsp;'the&nbsp;crew&nbsp;quarters'
+<br>
+&nbsp;&nbsp;"The&nbsp;crew&nbsp;quarters&nbsp;seem&nbsp;largely&nbsp;deserted.&nbsp;There's&nbsp;an&nbsp;exit&nbsp;back&nbsp;aft&nbsp;and&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;ladder&nbsp;leading&nbsp;down&nbsp;into&nbsp;the&nbsp;hold.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;holdLadderDown
+<br>
+&nbsp;&nbsp;&nbsp;aft&nbsp;=&nbsp;greatCabin
+<br>
+&nbsp;&nbsp;&nbsp;cannotGoThatWayInDark()&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;darkEvents.doScript();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;roomDarkTravel(actor)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cannotGoThatWayInDark;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;darkEvents&nbsp;:&nbsp;StopEventList&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Blundering&nbsp;about&nbsp;a&nbsp;ship&nbsp;in&nbsp;the&nbsp;dark&nbsp;could&nbsp;prove&nbsp;dangerous.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;function
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Blundering&nbsp;around&nbsp;in&nbsp;the&nbsp;dark&nbsp;you&nbsp;fall&nbsp;down&nbsp;a&nbsp;ladder&nbsp;into&nbsp;the&nbsp;hold
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;break&nbsp;your&nbsp;neck.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;<b>enteringRoom&nbsp;(traveler)
+<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;darkEvents.curScriptState&nbsp;=&nbsp;1;
+<br>
+&nbsp;&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The enteringRoom method is a convenience hook that is called from travelerArriving, which performs some significant processing of its own and which uses a longer parameter list. By default, the library method enteringRoom does nothing, so that we do not need to call inherited. Without the enteringRoom method we should instead have had to write:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;travelerArriving&nbsp;(traveler,&nbsp;origin,&nbsp;connector,&nbsp;backConnector)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;darkEvents.curScriptState&nbsp;=&nbsp;1;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;inherited&nbsp;(traveler,&nbsp;origin,&nbsp;connector,&nbsp;backConnector);&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">There is also a corresponding <b>leavingRoom(traveler)</b> method that can be used to execute custom code when a traveler is about to leave a room.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

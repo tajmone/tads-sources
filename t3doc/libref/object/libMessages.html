@@ -1,0 +1,1029 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>libMessages</title></head><body>
+<table class=ban><tr><td align=left><span class=title>libMessages</span><span class=type>object</span><td align=right><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#76">76</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Library Messages
+<p>
+<code><b>libMessages</b> :  &nbsp; <a href="../object/MessageHelper.html">MessageHelper</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>libMessages</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MessageHelper.html">MessageHelper</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#commandFullScore">commandFullScore</a>&nbsp;
+<a href="#commandInterruptionPrefix">commandInterruptionPrefix</a>&nbsp;
+<a href="#commandLookAround">commandLookAround</a>&nbsp;
+<a href="#commandNotPresent">commandNotPresent</a>&nbsp;
+<a href="#commandResultsEmpty">commandResultsEmpty</a>&nbsp;
+<a href="#commandResultsPrefix">commandResultsPrefix</a>&nbsp;
+<a href="#commandResultsSeparator">commandResultsSeparator</a>&nbsp;
+<a href="#commandResultsSuffix">commandResultsSuffix</a>&nbsp;
+<a href="#complexResultsSeparator">complexResultsSeparator</a>&nbsp;
+<a href="#currentlyClosed">currentlyClosed</a>&nbsp;
+<a href="#currentlyLocked">currentlyLocked</a>&nbsp;
+<a href="#currentlyNoHints">currentlyNoHints</a>&nbsp;
+<a href="#currentlyOpen">currentlyOpen</a>&nbsp;
+<a href="#currentlyUnlocked">currentlyUnlocked</a>&nbsp;
+<a href="#defaultsFileNotSupported">defaultsFileNotSupported</a>&nbsp;
+<a href="#defaultsFileWriteError">defaultsFileWriteError</a>&nbsp;
+<a href="#dlgButtonCancel">dlgButtonCancel</a>&nbsp;
+<a href="#dlgButtonNo">dlgButtonNo</a>&nbsp;
+<a href="#dlgButtonOk">dlgButtonOk</a>&nbsp;
+<a href="#dlgButtonYes">dlgButtonYes</a>&nbsp;
+<a href="#dlgTitleError">dlgTitleError</a>&nbsp;
+<a href="#dlgTitleInfo">dlgTitleInfo</a>&nbsp;
+<a href="#dlgTitleNone">dlgTitleNone</a>&nbsp;
+<a href="#dlgTitleQuestion">dlgTitleQuestion</a>&nbsp;
+<a href="#dlgTitleWarning">dlgTitleWarning</a>&nbsp;
+<a href="#emptyCommandResponse">emptyCommandResponse</a>&nbsp;
+<a href="#finishDeathMsg">finishDeathMsg</a>&nbsp;
+<a href="#finishFailureMsg">finishFailureMsg</a>&nbsp;
+<a href="#finishGameOverMsg">finishGameOverMsg</a>&nbsp;
+<a href="#finishVictoryMsg">finishVictoryMsg</a>&nbsp;
+<a href="#getRecordingPrompt">getRecordingPrompt</a>&nbsp;
+<a href="#getReplayPrompt">getReplayPrompt</a>&nbsp;
+<a href="#getRestorePrompt">getRestorePrompt</a>&nbsp;
+<a href="#getSavePrompt">getSavePrompt</a>&nbsp;
+<a href="#getScriptingPrompt">getScriptingPrompt</a>&nbsp;
+<a href="#hintsDisabled">hintsDisabled</a>&nbsp;
+<a href="#hintsDone">hintsDone</a>&nbsp;
+<a href="#hintsNotPresent">hintsNotPresent</a>&nbsp;
+<a href="#inputFileScriptWarningButtons">inputFileScriptWarningButtons</a>&nbsp;
+<a href="#inputScriptFailed">inputScriptFailed</a>&nbsp;
+<a href="#internalResultsSeparator">internalResultsSeparator</a>&nbsp;
+<a href="#intraCommandSeparator">intraCommandSeparator</a>&nbsp;
+<a href="#listSepEnd">listSepEnd</a>&nbsp;
+<a href="#listSepMiddle">listSepMiddle</a>&nbsp;
+<a href="#listSepTwo">listSepTwo</a>&nbsp;
+<a href="#longListSepEnd">longListSepEnd</a>&nbsp;
+<a href="#longListSepMiddle">longListSepMiddle</a>&nbsp;
+<a href="#longListSepTwo">longListSepTwo</a>&nbsp;
+<a href="#menuKeyList">menuKeyList</a>&nbsp;
+<a href="#menuLongTopicEnd">menuLongTopicEnd</a>&nbsp;
+<a href="#menuTopicListEnd">menuTopicListEnd</a>&nbsp;
+<a href="#nextMenuTopicLink">nextMenuTopicLink</a>&nbsp;
+<a href="#noAboutInfo">noAboutInfo</a>&nbsp;
+<a href="#noteWithoutScript">noteWithoutScript</a>&nbsp;
+<a href="#noteWithoutScriptWarning">noteWithoutScriptWarning</a>&nbsp;
+<a href="#noteWithScript">noteWithScript</a>&nbsp;
+<a href="#notOnboardShip">notOnboardShip</a>&nbsp;
+<a href="#noTopicsNotTalking">noTopicsNotTalking</a>&nbsp;
+<a href="#offerOopsNote">offerOopsNote</a>&nbsp;
+<a href="#oopsMissingWord">oopsMissingWord</a>&nbsp;
+<a href="#oopsOutOfContext">oopsOutOfContext</a>&nbsp;
+<a href="#prevMenuLink">prevMenuLink</a>&nbsp;
+<a href="#recordingCanceled">recordingCanceled</a>&nbsp;
+<a href="#recordingFailed">recordingFailed</a>&nbsp;
+<a href="#recordingOkay">recordingOkay</a>&nbsp;
+<a href="#recordOffIgnored">recordOffIgnored</a>&nbsp;
+<a href="#recordOffOkay">recordOffOkay</a>&nbsp;
+<a href="#replayCanceled">replayCanceled</a>&nbsp;
+<a href="#roomDarkDesc">roomDarkDesc</a>&nbsp;
+<a href="#roomDarkName">roomDarkName</a>&nbsp;
+<a href="#scoreNotPresent">scoreNotPresent</a>&nbsp;
+<a href="#scriptingCanceled">scriptingCanceled</a>&nbsp;
+<a href="#scriptingFailed">scriptingFailed</a>&nbsp;
+<a href="#scriptOffIgnored">scriptOffIgnored</a>&nbsp;
+<a href="#scriptOffOkay">scriptOffOkay</a>&nbsp;
+<a href="#settingsItemSeparator">settingsItemSeparator</a>&nbsp;
+<a href="#showFullScorePrefix">showFullScorePrefix</a>&nbsp;
+<a href="#showHintWarning">showHintWarning</a>&nbsp;
+<a href="#sorryHintsDisabled">sorryHintsDisabled</a>&nbsp;
+<a href="#webUploadTooBig">webUploadTooBig</a>&nbsp;
+<a href="#whomPronoun">whomPronoun</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#acknowledgeFootnoteStatus">acknowledgeFootnoteStatus</a>&nbsp;
+<a href="#acknowledgeNotifyStatus">acknowledgeNotifyStatus</a>&nbsp;
+<a href="#acknowledgeTipStatus">acknowledgeTipStatus</a>&nbsp;
+<a href="#acknowledgeVerboseMode">acknowledgeVerboseMode</a>&nbsp;
+<a href="#actorHereGroupPrefix">actorHereGroupPrefix</a>&nbsp;
+<a href="#actorHereGroupSuffix">actorHereGroupSuffix</a>&nbsp;
+<a href="#actorInGroupPrefix">actorInGroupPrefix</a>&nbsp;
+<a href="#actorInGroupSuffix">actorInGroupSuffix</a>&nbsp;
+<a href="#actorInRemoteGroupPrefix">actorInRemoteGroupPrefix</a>&nbsp;
+<a href="#actorInRemoteGroupSuffix">actorInRemoteGroupSuffix</a>&nbsp;
+<a href="#actorInRemoteNestedRoom">actorInRemoteNestedRoom</a>&nbsp;
+<a href="#actorInRemoteRoom">actorInRemoteRoom</a>&nbsp;
+<a href="#actorInRoom">actorInRoom</a>&nbsp;
+<a href="#actorInRoomPosture">actorInRoomPosture</a>&nbsp;
+<a href="#actorInRoomStatus">actorInRoomStatus</a>&nbsp;
+<a href="#actorThereGroupPrefix">actorThereGroupPrefix</a>&nbsp;
+<a href="#actorThereGroupSuffix">actorThereGroupSuffix</a>&nbsp;
+<a href="#againCannotChangeActor">againCannotChangeActor</a>&nbsp;
+<a href="#againCannotTalkToTarget">againCannotTalkToTarget</a>&nbsp;
+<a href="#againNotPossible">againNotPossible</a>&nbsp;
+<a href="#allInSameListState">allInSameListState</a>&nbsp;
+<a href="#alreadyTalkingTo">alreadyTalkingTo</a>&nbsp;
+<a href="#announceAmbigActionObject">announceAmbigActionObject</a>&nbsp;
+<a href="#announceDefaultObject">announceDefaultObject</a>&nbsp;
+<a href="#announceImplicitAction">announceImplicitAction</a>&nbsp;
+<a href="#announceMoveToBag">announceMoveToBag</a>&nbsp;
+<a href="#announceMultiActionObject">announceMultiActionObject</a>&nbsp;
+<a href="#announceRemappedAction">announceRemappedAction</a>&nbsp;
+<a href="#basicScoreChange">basicScoreChange</a>&nbsp;
+<a href="#candleBurnedOut">candleBurnedOut</a>&nbsp;
+<a href="#cannotReachContents">cannotReachContents</a>&nbsp;
+<a href="#cannotReachObject">cannotReachObject</a>&nbsp;
+<a href="#cannotReachOutside">cannotReachOutside</a>&nbsp;
+<a href="#cannotTalkTo">cannotTalkTo</a>&nbsp;
+<a href="#closedMsg">closedMsg</a>&nbsp;
+<a href="#confirmQuit">confirmQuit</a>&nbsp;
+<a href="#confirmRestart">confirmRestart</a>&nbsp;
+<a href="#currentExitsSettings">currentExitsSettings</a>&nbsp;
+<a href="#defaultsFileReadError">defaultsFileReadError</a>&nbsp;
+<a href="#dimReadDesc">dimReadDesc</a>&nbsp;
+<a href="#distantThingDesc">distantThingDesc</a>&nbsp;
+<a href="#distantThingSmellDesc">distantThingSmellDesc</a>&nbsp;
+<a href="#distantThingSoundDesc">distantThingSoundDesc</a>&nbsp;
+<a href="#exitsOnOffOkay">exitsOnOffOkay</a>&nbsp;
+<a href="#explainExitsOnOff">explainExitsOnOff</a>&nbsp;
+<a href="#filePromptFailed">filePromptFailed</a>&nbsp;
+<a href="#filePromptFailedMsg">filePromptFailedMsg</a>&nbsp;
+<a href="#firstFootnote">firstFootnote</a>&nbsp;
+<a href="#firstScoreChange">firstScoreChange</a>&nbsp;
+<a href="#footnoteRef">footnoteRef</a>&nbsp;
+<a href="#fullScoreItemPoints">fullScoreItemPoints</a>&nbsp;
+<a href="#inputFileScriptWarning">inputFileScriptWarning</a>&nbsp;
+<a href="#inputScriptFailedException">inputScriptFailedException</a>&nbsp;
+<a href="#inputScriptOkay">inputScriptOkay</a>&nbsp;
+<a href="#invalidCommandToken">invalidCommandToken</a>&nbsp;
+<a href="#invalidFinishOption">invalidFinishOption</a>&nbsp;
+<a href="#litCandleDesc">litCandleDesc</a>&nbsp;
+<a href="#litMatchDesc">litMatchDesc</a>&nbsp;
+<a href="#lockedMsg">lockedMsg</a>&nbsp;
+<a href="#mainCommandPrompt">mainCommandPrompt</a>&nbsp;
+<a href="#makeSentence">makeSentence</a>&nbsp;
+<a href="#matchBurnedOut">matchBurnedOut</a>&nbsp;
+<a href="#mentionFullScore">mentionFullScore</a>&nbsp;
+<a href="#menuInstructions">menuInstructions</a>&nbsp;
+<a href="#menuNextChapter">menuNextChapter</a>&nbsp;
+<a href="#menuTopicProgress">menuTopicProgress</a>&nbsp;
+<a href="#noCommandForAgain">noCommandForAgain</a>&nbsp;
+<a href="#noSuchFootnote">noSuchFootnote</a>&nbsp;
+<a href="#noteMainRestore">noteMainRestore</a>&nbsp;
+<a href="#notRestarting">notRestarting</a>&nbsp;
+<a href="#notTerminating">notTerminating</a>&nbsp;
+<a href="#objBurnedOut">objBurnedOut</a>&nbsp;
+<a href="#obscuredReadDesc">obscuredReadDesc</a>&nbsp;
+<a href="#obscuredThingDesc">obscuredThingDesc</a>&nbsp;
+<a href="#obscuredThingSmellDesc">obscuredThingSmellDesc</a>&nbsp;
+<a href="#obscuredThingSoundDesc">obscuredThingSoundDesc</a>&nbsp;
+<a href="#offMsg">offMsg</a>&nbsp;
+<a href="#okayQuitting">okayQuitting</a>&nbsp;
+<a href="#onMsg">onMsg</a>&nbsp;
+<a href="#oopsNote">oopsNote</a>&nbsp;
+<a href="#openMsg">openMsg</a>&nbsp;
+<a href="#openStatusMsg">openStatusMsg</a>&nbsp;
+<a href="#parserErrorString">parserErrorString</a>&nbsp;
+<a href="#pauseEnded">pauseEnded</a>&nbsp;
+<a href="#pausePrompt">pausePrompt</a>&nbsp;
+<a href="#pauseSaving">pauseSaving</a>&nbsp;
+<a href="#pcDesc">pcDesc</a>&nbsp;
+<a href="#putDestBehind">putDestBehind</a>&nbsp;
+<a href="#putDestContainer">putDestContainer</a>&nbsp;
+<a href="#putDestFloor">putDestFloor</a>&nbsp;
+<a href="#putDestRoom">putDestRoom</a>&nbsp;
+<a href="#putDestSurface">putDestSurface</a>&nbsp;
+<a href="#putDestUnder">putDestUnder</a>&nbsp;
+<a href="#recordingFailedException">recordingFailedException</a>&nbsp;
+<a href="#restoreCanceled">restoreCanceled</a>&nbsp;
+<a href="#restoreCorruptedFile">restoreCorruptedFile</a>&nbsp;
+<a href="#restoredDefaults">restoredDefaults</a>&nbsp;
+<a href="#restoreFailed">restoreFailed</a>&nbsp;
+<a href="#restoreFailedOnServer">restoreFailedOnServer</a>&nbsp;
+<a href="#restoreInvalidFile">restoreInvalidFile</a>&nbsp;
+<a href="#restoreInvalidMatch">restoreInvalidMatch</a>&nbsp;
+<a href="#restoreOkay">restoreOkay</a>&nbsp;
+<a href="#roomActorHereDesc">roomActorHereDesc</a>&nbsp;
+<a href="#roomActorPostureDesc">roomActorPostureDesc</a>&nbsp;
+<a href="#roomActorStatus">roomActorStatus</a>&nbsp;
+<a href="#roomActorThereDesc">roomActorThereDesc</a>&nbsp;
+<a href="#saveCanceled">saveCanceled</a>&nbsp;
+<a href="#savedDefaults">savedDefaults</a>&nbsp;
+<a href="#saveFailed">saveFailed</a>&nbsp;
+<a href="#saveFailedOnServer">saveFailedOnServer</a>&nbsp;
+<a href="#saveOkay">saveOkay</a>&nbsp;
+<a href="#sayArriving">sayArriving</a>&nbsp;
+<a href="#sayArrivingDir">sayArrivingDir</a>&nbsp;
+<a href="#sayArrivingDownStairs">sayArrivingDownStairs</a>&nbsp;
+<a href="#sayArrivingLocally">sayArrivingLocally</a>&nbsp;
+<a href="#sayArrivingShipDir">sayArrivingShipDir</a>&nbsp;
+<a href="#sayArrivingThroughPassage">sayArrivingThroughPassage</a>&nbsp;
+<a href="#sayArrivingUpStairs">sayArrivingUpStairs</a>&nbsp;
+<a href="#sayArrivingViaPath">sayArrivingViaPath</a>&nbsp;
+<a href="#sayDeparting">sayDeparting</a>&nbsp;
+<a href="#sayDepartingAft">sayDepartingAft</a>&nbsp;
+<a href="#sayDepartingDir">sayDepartingDir</a>&nbsp;
+<a href="#sayDepartingDownStairs">sayDepartingDownStairs</a>&nbsp;
+<a href="#sayDepartingFore">sayDepartingFore</a>&nbsp;
+<a href="#sayDepartingLocally">sayDepartingLocally</a>&nbsp;
+<a href="#sayDepartingShipDir">sayDepartingShipDir</a>&nbsp;
+<a href="#sayDepartingThroughPassage">sayDepartingThroughPassage</a>&nbsp;
+<a href="#sayDepartingUpStairs">sayDepartingUpStairs</a>&nbsp;
+<a href="#sayDepartingViaPath">sayDepartingViaPath</a>&nbsp;
+<a href="#sayDepartingWith">sayDepartingWith</a>&nbsp;
+<a href="#sayDepartingWithGuide">sayDepartingWithGuide</a>&nbsp;
+<a href="#sayOpenDoorRemotely">sayOpenDoorRemotely</a>&nbsp;
+<a href="#sayTravelingRemotely">sayTravelingRemotely</a>&nbsp;
+<a href="#scoreChange">scoreChange</a>&nbsp;
+<a href="#scriptingFailedException">scriptingFailedException</a>&nbsp;
+<a href="#scriptingOkay">scriptingOkay</a>&nbsp;
+<a href="#scriptingOkayWebTemp">scriptingOkayWebTemp</a>&nbsp;
+<a href="#shortFootnoteStatus">shortFootnoteStatus</a>&nbsp;
+<a href="#shortNotifyStatus">shortNotifyStatus</a>&nbsp;
+<a href="#shortVerboseStatus">shortVerboseStatus</a>&nbsp;
+<a href="#showCredit">showCredit</a>&nbsp;
+<a href="#showFinishMsg">showFinishMsg</a>&nbsp;
+<a href="#showFootnoteStatus">showFootnoteStatus</a>&nbsp;
+<a href="#showListState">showListState</a>&nbsp;
+<a href="#showNotifyStatus">showNotifyStatus</a>&nbsp;
+<a href="#showScoreMessage">showScoreMessage</a>&nbsp;
+<a href="#showScoreNoMaxMessage">showScoreNoMaxMessage</a>&nbsp;
+<a href="#showScoreRankMessage">showScoreRankMessage</a>&nbsp;
+<a href="#showVersion">showVersion</a>&nbsp;
+<a href="#silentImplicitAction">silentImplicitAction</a>&nbsp;
+<a href="#smellDescSeparator">smellDescSeparator</a>&nbsp;
+<a href="#smellIsFromWithin">smellIsFromWithin</a>&nbsp;
+<a href="#smellIsFromWithout">smellIsFromWithout</a>&nbsp;
+<a href="#soundDescSeparator">soundDescSeparator</a>&nbsp;
+<a href="#soundIsFromWithin">soundIsFromWithin</a>&nbsp;
+<a href="#soundIsFromWithout">soundIsFromWithout</a>&nbsp;
+<a href="#systemActionToNPC">systemActionToNPC</a>&nbsp;
+<a href="#textMenuMainPrompt">textMenuMainPrompt</a>&nbsp;
+<a href="#textMenuTopicPrompt">textMenuTopicPrompt</a>&nbsp;
+<a href="#thingFeelDesc">thingFeelDesc</a>&nbsp;
+<a href="#thingTasteDesc">thingTasteDesc</a>&nbsp;
+<a href="#tipStatusShort">tipStatusShort</a>&nbsp;
+<a href="#undoFailed">undoFailed</a>&nbsp;
+<a href="#undoOkay">undoOkay</a>&nbsp;
+<a href="#unlitMatchDesc">unlitMatchDesc</a>&nbsp;
+<a href="#unlockedMsg">unlockedMsg</a>&nbsp;
+<a href="#webNewUser">webNewUser</a>&nbsp;
+</code><p>
+<p>Inherited from <code>MessageHelper</code> :<br>
+<code>
+<a href="../object/MessageHelper.html#askDisambigList">askDisambigList</a>&nbsp;
+<a href="../object/MessageHelper.html#shortTIMsg">shortTIMsg</a>&nbsp;
+<a href="../object/MessageHelper.html#shortTMsg">shortTMsg</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="commandFullScore"></a>
+<table class=decl><tr><td><code>commandFullScore</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#114">114</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="commandInterruptionPrefix"></a>
+<table class=decl><tr><td><code>commandInterruptionPrefix</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#475">475</a>]</table><div class=desc>   Command "interruption" group prefix.  This is displayed after an   interrupted command line - a command line editing session that   was interrupted by a timeout event - just before the text that   interrupted the command line. <p>   By default, we'll show a paragraph break here, to set off the   interrupting text from the command line under construction. <p>
+</div>
+<a name="commandLookAround"></a>
+<table class=decl><tr><td><code>commandLookAround</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#113">113</a>]</table><div class=desc>   some standard commands for insertion into &lt;a&gt; tags - these are in   the messages so they can translated along with the command set <p>
+</div>
+<a name="commandNotPresent"></a>
+<table class=decl><tr><td><code>commandNotPresent</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1094">1094</a>]</table><div class=desc>optional command is not supported in this game<p>
+</div>
+<a name="commandResultsEmpty"></a>
+<table class=decl><tr><td><code>commandResultsEmpty</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#533">533</a>]</table><div class=desc>   Empty command results - this is shown when we read a command line   and then go back and read another without having displaying   anything. <p>   By default, we'll return a message indicating that nothing   happened. <p>
+</div>
+<a name="commandResultsPrefix"></a>
+<table class=decl><tr><td><code>commandResultsPrefix</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#464">464</a>]</table><div class=desc>   Command group prefix - this is displayed after a command line and   before the first command results shown after the command line. <p>   By default, we'll show the "zero-space paragraph" marker, which   acts like a paragraph break in that it swallows up immediately   following paragraph breaks, but doesn't actually add any space.   This will ensure that we don't add any space between the command   input line and the next text. <p>
+</div>
+<a name="commandResultsSeparator"></a>
+<table class=decl><tr><td><code>commandResultsSeparator</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#493">493</a>]</table><div class=desc>   Command separator - this is displayed after the results from a   command when another command is about to be executed without any   more user input.  That is, when a command line contains more than   one command, this message is displayed between each successive   command, to separate the results visually. <p>   This is not shown before the first command results after a   command input line, and is not shown after the last results   before a new input line.  Furthermore, this is shown only between   adjacent commands for which output actually occurs; if a series   of commands executes without any output, we won't show any   separators between the silent commands. <p>   By default, we'll just start a new paragraph. <p>
+</div>
+<a name="commandResultsSuffix"></a>
+<table class=decl><tr><td><code>commandResultsSuffix</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#523">523</a>]</table><div class=desc>   Command results suffix - this is displayed just before a new   command line is about to be read if any command results have been   shown since the last command line. <p>   By default, we'll show nothing extra. <p>
+</div>
+<a name="complexResultsSeparator"></a>
+<table class=decl><tr><td><code>complexResultsSeparator</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#506">506</a>]</table><div class=desc>   "Complex" result separator - this is displayed between a group of   messages for a "complex" result set and adjoining messages.  A   command result list is "complex" when it's built up out of   several generated items, such as object identification prefixes   or implied command prefixes.  We use additional visual separation   to set off these groups of messages from adjoining messages,   which is especially important for commands on multiple objects,   where we would otherwise have several results shown together.  By   default, we use a paragraph break. <p>
+</div>
+<a name="currentlyClosed"></a>
+<table class=decl><tr><td><code>currentlyClosed</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1665">1665</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="currentlyLocked"></a>
+<table class=decl><tr><td><code>currentlyLocked</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1675">1675</a>]</table><div class=desc>object is currently locked/unlocked<p>
+</div>
+<a name="currentlyNoHints"></a>
+<table class=decl><tr><td><code>currentlyNoHints</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1077">1077</a>]</table><div class=desc>there are currently no hints available (but there might be later)<p>
+</div>
+<a name="currentlyOpen"></a>
+<table class=decl><tr><td><code>currentlyOpen</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1664">1664</a>]</table><div class=desc>object is currently open/closed<p>
+</div>
+<a name="currentlyUnlocked"></a>
+<table class=decl><tr><td><code>currentlyUnlocked</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1676">1676</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="defaultsFileNotSupported"></a>
+<table class=decl><tr><td><code>defaultsFileNotSupported</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1137">1137</a>]</table><div class=desc>SAVE/RESTORE DEFAULTS not supported (old interpreter version)<p>
+</div>
+<a name="defaultsFileWriteError"></a>
+<table class=decl><tr><td><code>defaultsFileWriteError</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1150">1150</a>]</table><div class=desc>SAVE DEFAULTS file creation error<p>
+</div>
+<a name="dlgButtonCancel"></a>
+<table class=decl><tr><td><code>dlgButtonCancel</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1727">1727</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="dlgButtonNo"></a>
+<table class=decl><tr><td><code>dlgButtonNo</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1729">1729</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="dlgButtonOk"></a>
+<table class=decl><tr><td><code>dlgButtonOk</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1726">1726</a>]</table><div class=desc>   Standard dialog button labels, for the Web UI.  These are built in   to the conventional interpreters, but in the Web UI we have to   generate these ourselves. <p>
+</div>
+<a name="dlgButtonYes"></a>
+<table class=decl><tr><td><code>dlgButtonYes</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1728">1728</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="dlgTitleError"></a>
+<table class=decl><tr><td><code>dlgTitleError</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1719">1719</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="dlgTitleInfo"></a>
+<table class=decl><tr><td><code>dlgTitleInfo</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1717">1717</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="dlgTitleNone"></a>
+<table class=decl><tr><td><code>dlgTitleNone</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1715">1715</a>]</table><div class=desc>   Standard dialog titles, for the Web UI.  These are shown in the   title bar area of the Web UI dialog used for inputDialog() calls.   These correspond to the InDlgIconXxx icons.  The conventional   interpreters use built-in titles when titles are needed at all,   but in the Web UI we have to generate these ourselves. <p>
+</div>
+<a name="dlgTitleQuestion"></a>
+<table class=decl><tr><td><code>dlgTitleQuestion</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1718">1718</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="dlgTitleWarning"></a>
+<table class=decl><tr><td><code>dlgTitleWarning</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1716">1716</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="emptyCommandResponse"></a>
+<table class=decl><tr><td><code>emptyCommandResponse</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#445">445</a>]</table><div class=desc>show the response to an empty command line<p>
+</div>
+<a name="finishDeathMsg"></a>
+<table class=decl><tr><td><code>finishDeathMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#768">768</a>]</table><div class=desc>standard game-ending messages for the common outcomes<p>
+</div>
+<a name="finishFailureMsg"></a>
+<table class=decl><tr><td><code>finishFailureMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#770">770</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="finishGameOverMsg"></a>
+<table class=decl><tr><td><code>finishGameOverMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#771">771</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="finishVictoryMsg"></a>
+<table class=decl><tr><td><code>finishVictoryMsg</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#769">769</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getRecordingPrompt"></a>
+<table class=decl><tr><td><code>getRecordingPrompt</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#959">959</a>]</table><div class=desc>get the RECORD prompt<p>
+</div>
+<a name="getReplayPrompt"></a>
+<table class=decl><tr><td><code>getReplayPrompt</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#988">988</a>]</table><div class=desc>REPLAY prompt<p>
+</div>
+<a name="getRestorePrompt"></a>
+<table class=decl><tr><td><code>getRestorePrompt</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#781">781</a>]</table><div class=desc>get the restore-game prompt<p>
+</div>
+<a name="getSavePrompt"></a>
+<table class=decl><tr><td><code>getSavePrompt</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#778">778</a>]</table><div class=desc>   Get the save-game file prompt.  Note that this must return a   single-quoted string value, not display a value itself, because   this prompt is passed to inputFile(). <p>
+</div>
+<a name="getScriptingPrompt"></a>
+<table class=decl><tr><td><code>getScriptingPrompt</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#920">920</a>]</table><div class=desc>get the scripting inputFile prompt message<p>
+</div>
+<a name="hintsDisabled"></a>
+<table class=decl><tr><td><code>hintsDisabled</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1064">1064</a>]</table><div class=desc>acknowledge HINTS OFF<p>
+</div>
+<a name="hintsDone"></a>
+<table class=decl><tr><td><code>hintsDone</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1091">1091</a>]</table><div class=desc>done with hints<p>
+</div>
+<a name="hintsNotPresent"></a>
+<table class=decl><tr><td><code>hintsNotPresent</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1073">1073</a>]</table><div class=desc>this game has no hints<p>
+</div>
+<a name="inputFileScriptWarningButtons"></a>
+<table class=decl><tr><td><code>inputFileScriptWarningButtons</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1748">1748</a>]</table><div class=desc>build the message<p>
+</div>
+<a name="inputScriptFailed"></a>
+<table class=decl><tr><td><code>inputScriptFailed</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#910">910</a>]</table><div class=desc>error opening input script<p>
+</div>
+<a name="internalResultsSeparator"></a>
+<table class=decl><tr><td><code>internalResultsSeparator</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#514">514</a>]</table><div class=desc>   Internal results separator - this is displayed to visually   separate the results of an implied command from the results for   the initiating command, which are shown after the results from   the implied command.  By default, we show a paragraph break. <p>
+</div>
+<a name="intraCommandSeparator"></a>
+<table class=decl><tr><td><code>intraCommandSeparator</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#541">541</a>]</table><div class=desc>   Intra-command report separator.  This is used to separate report   messages within a single command's results.  By default, we show   a paragraph break. <p>
+</div>
+<a name="listSepEnd"></a>
+<table class=decl><tr><td><code>listSepEnd</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#265">265</a>]</table><div class=desc>the list separator for the end of a list of at least three elements<p>
+</div>
+<a name="listSepMiddle"></a>
+<table class=decl><tr><td><code>listSepMiddle</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#259">259</a>]</table><div class=desc>the list separator character in the middle of a list<p>
+</div>
+<a name="listSepTwo"></a>
+<table class=decl><tr><td><code>listSepTwo</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#262">262</a>]</table><div class=desc>the list separator character for a two-element list<p>
+</div>
+<a name="longListSepEnd"></a>
+<table class=decl><tr><td><code>longListSepEnd</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#277">277</a>]</table><div class=desc>the list separator for the end of a long list<p>
+</div>
+<a name="longListSepMiddle"></a>
+<table class=decl><tr><td><code>longListSepMiddle</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#271">271</a>]</table><div class=desc>   the list separator for the middle of a long list (a list with   embedded lists not otherwise set off, such as by parentheses) <p>
+</div>
+<a name="longListSepTwo"></a>
+<table class=decl><tr><td><code>longListSepTwo</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#274">274</a>]</table><div class=desc>the list separator for a two-element list of sublists<p>
+</div>
+<a name="menuKeyList"></a>
+<table class=decl><tr><td><code>menuKeyList</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1166">1166</a>]</table><div class=desc>   Command key list for the menu system.  This uses the format   defined for MenuItem.keyList in the menu system.  Keys must be   given as lower-case in order to match input, since the menu   system converts input keys to lower case before matching keys to   this list. <p>   Note that the first item in each list is what will be given in   the navigation menu, which is why the fifth list contains 'ENTER'   as its first item, even though this will never match a key press. <p>
+</div>
+<a name="menuLongTopicEnd"></a>
+<table class=decl><tr><td><code>menuLongTopicEnd</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1220">1220</a>]</table><div class=desc>   Message to display at the end of a "long topic" in the menu   system.  We'll display this at the end of the long topic's   contents. <p>
+</div>
+<a name="menuTopicListEnd"></a>
+<table class=decl><tr><td><code>menuTopicListEnd</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1213">1213</a>]</table><div class=desc>   Message to display at the end of a topic list.  We'll display   this after we've displayed all available items from a   MenuTopicItem's list of items, to let the user know that there   are no more items available. <p>
+</div>
+<a name="nextMenuTopicLink"></a>
+<table class=decl><tr><td><code>nextMenuTopicLink</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1178">1178</a>]</table><div class=desc>link title for 'next topic' navigation link in topic lists<p>
+</div>
+<a name="noAboutInfo"></a>
+<table class=decl><tr><td><code>noAboutInfo</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#163">163</a>]</table><div class=desc>there's no "about" information in this game<p>
+</div>
+<a name="noteWithoutScript"></a>
+<table class=decl><tr><td><code>noteWithoutScript</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1015">1015</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteWithoutScriptWarning"></a>
+<table class=decl><tr><td><code>noteWithoutScriptWarning</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1018">1018</a>]</table><div class=desc>on the first comment without transcript recording, warn about it<p>
+</div>
+<a name="noteWithScript"></a>
+<table class=decl><tr><td><code>noteWithScript</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1014">1014</a>]</table><div class=desc>comment accepted, with or without transcript recording in effect<p>
+</div>
+<a name="notOnboardShip"></a>
+<table class=decl><tr><td><code>notOnboardShip</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1564">1564</a>]</table><div class=desc>a shipboard direction was attempted while not onboard a ship<p>
+</div>
+<a name="noTopicsNotTalking"></a>
+<table class=decl><tr><td><code>noTopicsNotTalking</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#575">575</a>]</table><div class=desc>no topics to suggest when we're not talking to anyone<p>
+</div>
+<a name="offerOopsNote"></a>
+<table class=decl><tr><td><code>offerOopsNote</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#107">107</a>]</table><div class=desc>   Flag: offer an explanation of the "OOPS" command when it first   comes up.  We'll only show this the first time the player enters   an unknown word.  If you never want to offer this message at all,   simply set this flag to nil initially. <p>   See also oopsNote() below. <p>
+</div>
+<a name="oopsMissingWord"></a>
+<table class=decl><tr><td><code>oopsMissingWord</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#594">594</a>]</table><div class=desc>OOPS in context, but without the word to correct<p>
+</div>
+<a name="oopsOutOfContext"></a>
+<table class=decl><tr><td><code>oopsOutOfContext</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#589">589</a>]</table><div class=desc>can't use OOPS right now<p>
+</div>
+<a name="prevMenuLink"></a>
+<table class=decl><tr><td><code>prevMenuLink</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1175">1175</a>]</table><div class=desc>link title for 'previous menu' navigation link<p>
+</div>
+<a name="recordingCanceled"></a>
+<table class=decl><tr><td><code>recordingCanceled</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#978">978</a>]</table><div class=desc>acknowledge cancellation<p>
+</div>
+<a name="recordingFailed"></a>
+<table class=decl><tr><td><code>recordingFailed</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#968">968</a>]</table><div class=desc>recording failed<p>
+</div>
+<a name="recordingOkay"></a>
+<table class=decl><tr><td><code>recordingOkay</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#962">962</a>]</table><div class=desc>acknowledge recording on<p>
+</div>
+<a name="recordOffIgnored"></a>
+<table class=decl><tr><td><code>recordOffIgnored</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#984">984</a>]</table><div class=desc>RECORD OFF ignored because we're not recording commands<p>
+</div>
+<a name="recordOffOkay"></a>
+<table class=decl><tr><td><code>recordOffOkay</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#981">981</a>]</table><div class=desc>recording turned off<p>
+</div>
+<a name="replayCanceled"></a>
+<table class=decl><tr><td><code>replayCanceled</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#991">991</a>]</table><div class=desc>REPLAY file selection canceled<p>
+</div>
+<a name="roomDarkDesc"></a>
+<table class=decl><tr><td><code>roomDarkDesc</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1325">1325</a>]</table><div class=desc>generic long description of a dark room<p>
+</div>
+<a name="roomDarkName"></a>
+<table class=decl><tr><td><code>roomDarkName</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1322">1322</a>]</table><div class=desc>generic short description of a dark room<p>
+</div>
+<a name="scoreNotPresent"></a>
+<table class=decl><tr><td><code>scoreNotPresent</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1098">1098</a>]</table><div class=desc>this game doesn't use scoring<p>
+</div>
+<a name="scriptingCanceled"></a>
+<table class=decl><tr><td><code>scriptingCanceled</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#949">949</a>]</table><div class=desc>acknowledge cancellation of script file dialog<p>
+</div>
+<a name="scriptingFailed"></a>
+<table class=decl><tr><td><code>scriptingFailed</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#939">939</a>]</table><div class=desc>scripting failed<p>
+</div>
+<a name="scriptOffIgnored"></a>
+<table class=decl><tr><td><code>scriptOffIgnored</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#955">955</a>]</table><div class=desc>SCRIPT OFF ignored because we're not in a script file<p>
+</div>
+<a name="scriptOffOkay"></a>
+<table class=decl><tr><td><code>scriptOffOkay</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#952">952</a>]</table><div class=desc>acknowledge scripting off<p>
+</div>
+<a name="settingsItemSeparator"></a>
+<table class=decl><tr><td><code>settingsItemSeparator</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1134">1134</a>]</table><div class=desc>show a separator for the settingsUI.showAll() list<p>
+</div>
+<a name="showFullScorePrefix"></a>
+<table class=decl><tr><td><code>showFullScorePrefix</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#302">302</a>]</table><div class=desc>   show the list prefix for the full score listing; this is shown on   a line by itself before the list of full score items, shown   indented and one item per line <p>
+</div>
+<a name="showHintWarning"></a>
+<table class=decl><tr><td><code>showHintWarning</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1081">1081</a>]</table><div class=desc>show the hint system warning<p>
+</div>
+<a name="sorryHintsDisabled"></a>
+<table class=decl><tr><td><code>sorryHintsDisabled</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1067">1067</a>]</table><div class=desc>rebuff a request for hints when they've been previously disabled<p>
+</div>
+<a name="webUploadTooBig"></a>
+<table class=decl><tr><td><code>webUploadTooBig</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#879">879</a>]</table><div class=desc>Web UI inputFile error: uploaded file is too large<p>
+</div>
+<a name="whomPronoun"></a>
+<table class=decl><tr><td><code>whomPronoun</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#97">97</a>]</table><div class=desc>   The pronoun to use for the objective form of the personal   interrogative pronoun.  Strictly speaking, the right word for   this usage is "whom"; but regardless of what the grammar books   say, most American English speakers these days use "who" for both   the subjective and objective cases; to many ears, "whom" sounds   old-fashioned, overly formal, or even pretentious.  (Case in   point: a recent television ad tried to make a little kid look   ultra-sophisticated by having him answer the phone by asking   "*whom* may I ask is calling?", with elaborate emphasis on the   "whom."  Of course, the correct usage in this case is "who," so   the ad only made the kid look pretentious.  It goes to show that,   at least in the mind of the writer of the ad, "whom" is just the   snooty, formal version of "who" that serves only to signal the   speaker's sophistication.) <p>   By default, we distinguish "who" and "whom."  Authors who prefer   to use "who" everywhere can do so by changing this property's   value to 'who'. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="acknowledgeFootnoteStatus"></a>
+<table class=decl><tr><td><code>acknowledgeFootnoteStatus (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#412">412</a>]</table><div class=desc>acknowledge a change in the footnote status<p>
+</div>
+<a name="acknowledgeNotifyStatus"></a>
+<table class=decl><tr><td><code>acknowledgeNotifyStatus (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#620">620</a>]</table><div class=desc>acknowledge a change in the score notification status<p>
+</div>
+<a name="acknowledgeTipStatus"></a>
+<table class=decl><tr><td><code>acknowledgeTipStatus (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#341">341</a>]</table><div class=desc>acknowledge turning tips on or off<p>
+</div>
+<a name="acknowledgeVerboseMode"></a>
+<table class=decl><tr><td><code>acknowledgeVerboseMode (verbose)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#598">598</a>]</table><div class=desc>acknowledge setting VERBOSE mode (true) or TERSE mode (nil)<p>
+</div>
+<a name="actorHereGroupPrefix"></a>
+<table class=decl><tr><td><code>actorHereGroupPrefix (posture, lst)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1449">1449</a>]</table><div class=desc>   Prefix/suffix messages for listing actors in a room description,   for cases when the actors' nominal container cannot be seen or is   not to be stated: "Bob and Bill are standing here." <p>   Note that we don't always want to state the nominal container,   even when it's visible.  For example, when actors are standing on   the floor, we don't bother saying that they're on the floor, as   that's stating the obvious.  The container will decide whether or   not it wants to be included in the message; containers that don't   want to be mentioned will use this form of the message. <p>
+</div>
+<a name="actorHereGroupSuffix"></a>
+<table class=decl><tr><td><code>actorHereGroupSuffix (posture, lst)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1450">1450</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="actorInGroupPrefix"></a>
+<table class=decl><tr><td><code>actorInGroupPrefix (posture, cont, lst)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1416">1416</a>]</table><div class=desc>   Prefix/suffix messages for listing actors in a room description,   for cases when the actors are in the local room in a nominal   container that we want to mention: "Bob and Bill are sitting on   the couch." <p>
+</div>
+<a name="actorInGroupSuffix"></a>
+<table class=decl><tr><td><code>actorInGroupSuffix (posture, cont, lst)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1417">1417</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="actorInRemoteGroupPrefix"></a>
+<table class=decl><tr><td><code>actorInRemoteGroupPrefix (pov, posture, cont, remote, lst)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1429">1429</a>]</table><div class=desc>   Prefix/suffix messages for listing actors in a room description,   for cases when the actors are inside a nested room that's inside   a remote location: "Bob and Bill are in the courtyard, sitting on   the bench." <p>
+</div>
+<a name="actorInRemoteGroupSuffix"></a>
+<table class=decl><tr><td><code>actorInRemoteGroupSuffix (pov, posture, cont, remote, lst)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1430">1430</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="actorInRemoteNestedRoom"></a>
+<table class=decl><tr><td><code>actorInRemoteNestedRoom (actor, inner, outer, pov)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1399">1399</a>]</table><div class=desc>   mention that the given actor is visible, at a distance or   remotely, in the given nested room within the given outer   location; this is used in room descriptions <p>
+</div>
+<a name="actorInRemoteRoom"></a>
+<table class=decl><tr><td><code>actorInRemoteRoom (actor, room, pov)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1387">1387</a>]</table><div class=desc>   mention that the given actor is visible, at a distance or   remotely, in the given location; this is used in room   descriptions when an NPC is visible in a remote or distant   location <p>
+</div>
+<a name="actorInRoom"></a>
+<table class=decl><tr><td><code>actorInRoom (actor, cont)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1352">1352</a>]</table><div class=desc>   Mention that an actor is in a given local room, as part of a room   description.  This is used as a default "special description" for   an actor. <p>
+</div>
+<a name="actorInRoomPosture"></a>
+<table class=decl><tr><td><code>actorInRoomPosture (actor, room)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1364">1364</a>]</table><div class=desc>   Describe an actor as standing/sitting/lying on something, as part   of the actor's EXAMINE description.  This is additional   information added to the actor's description, so we refer to the   actor with a pronoun ("He's standing here"). <p>
+</div>
+<a name="actorInRoomStatus"></a>
+<table class=decl><tr><td><code>actorInRoomStatus (actor, room)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1318">1318</a>]</table><div class=desc>show a status line addendum: standing in/on something<p>
+</div>
+<a name="actorThereGroupPrefix"></a>
+<table class=decl><tr><td><code>actorThereGroupPrefix (pov, posture, remote, lst)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1462">1462</a>]</table><div class=desc>   Prefix/suffix messages for listing actors in a room description,   for cases when the actors' immediate container cannot be seen or   is not to be stated, and the actors are in a remote location:   "Bob and Bill are in the courtyard." <p>
+</div>
+<a name="actorThereGroupSuffix"></a>
+<table class=decl><tr><td><code>actorThereGroupSuffix (pov, posture, remote, lst)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1463">1463</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="againCannotChangeActor"></a>
+<table class=decl><tr><td><code>againCannotChangeActor ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#695">695</a>]</table><div class=desc>'again' cannot be directed to a different actor<p>
+</div>
+<a name="againCannotTalkToTarget"></a>
+<table class=decl><tr><td><code>againCannotTalkToTarget (issuer, target)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#702">702</a>]</table><div class=desc>'again': can no longer talk to target actor<p>
+</div>
+<a name="againNotPossible"></a>
+<table class=decl><tr><td><code>againNotPossible (issuer)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#708">708</a>]</table><div class=desc>the last command cannot be repeated in the present context<p>
+</div>
+<a name="allInSameListState"></a>
+<table class=decl><tr><td><code>allInSameListState (lst, stateName)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#174">174</a>]</table><div class=desc>a set of equivalents are all in a given state<p>
+</div>
+<a name="alreadyTalkingTo"></a>
+<table class=decl><tr><td><code>alreadyTalkingTo (actor, greeter)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#568">568</a>]</table><div class=desc>greeting actor while actor is already talking to us<p>
+</div>
+<a name="announceAmbigActionObject"></a>
+<table class=decl><tr><td><code>announceAmbigActionObject (obj, whichObj, action)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#655">655</a>]</table><div class=desc>   Announce a singleton object that we selected from a set of   ambiguous objects.  This is used when we disambiguate a command   and choose an object over other objects that are also logical but   are less likely.  In such cases, it's courteous to tell the   player what we chose, because it's possible that the user meant   one of the other logical objects - announcing this type of choice   helps reduce confusion by making it immediately plain to the   player when we make a choice other than what they were thinking. <p>
+</div>
+<a name="announceDefaultObject"></a>
+<table class=decl><tr><td><code>announceDefaultObject (obj, whichObj, action, resolvedAllObjects)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#677">677</a>]</table><div class=desc>   Announce a singleton object we selected as a default for a   missing noun phrase. <p>   'resolvedAllObjects' indicates where we are in the command   processing: this is true if we've already resolved all of the   other objects in the command, nil if not.  We use this   information to get the phrasing right according to the situation. <p>
+</div>
+<a name="announceImplicitAction"></a>
+<table class=decl><tr><td><code>announceImplicitAction (action, ctx)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#129">129</a>]</table><div class=desc>   Get a string to announce an implicit action.  This announces the   current global action.  'ctx' is an ImplicitAnnouncementContext   object describing the context in which the message is being   displayed. <p>
+</div>
+<a name="announceMoveToBag"></a>
+<table class=decl><tr><td><code>announceMoveToBag (action, ctx)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#149">149</a>]</table><div class=desc>   Get a string to announce that we're implicitly moving an object to   a bag of holding to make room for taking something new.  If   'trying' is true, it means we want to phrase the message as merely   trying the action, not actually performing it. <p>
+</div>
+<a name="announceMultiActionObject"></a>
+<table class=decl><tr><td><code>announceMultiActionObject (obj, whichObj, action)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#632">632</a>]</table><div class=desc>   Announce the current object of a set of multiple objects on which   we're performing an action.  This is used to tell the player   which object we're acting upon when we're iterating through a set   of objects specified in a command targeting multiple objects. <p>
+</div>
+<a name="announceRemappedAction"></a>
+<table class=decl><tr><td><code>announceRemappedAction (action)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#117">117</a>]</table><div class=desc>announce a completely remapped action<p>
+</div>
+<a name="basicScoreChange"></a>
+<table class=decl><tr><td><code>basicScoreChange (delta)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#332">332</a>]</table><div class=desc>   basic score change notification message - this is an internal   service routine for scoreChange and firstScoreChange <p>
+</div>
+<a name="candleBurnedOut"></a>
+<table class=decl><tr><td><code>candleBurnedOut (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1694">1694</a>]</table><div class=desc>daemon report for burning out a candle<p>
+</div>
+<a name="cannotReachContents"></a>
+<table class=decl><tr><td><code>cannotReachContents (obj, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1259">1259</a>]</table><div class=desc>   cannot reach an object, because the object is inside the given   container <p>
+</div>
+<a name="cannotReachObject"></a>
+<table class=decl><tr><td><code>cannotReachObject (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1250">1250</a>]</table><div class=desc>   cannot reach (i.e., touch) an object that is to be manipulated in   a command - this is a generic message used when we cannot   identify the specific reason that the object is in scope but   cannot be touched <p>
+</div>
+<a name="cannotReachOutside"></a>
+<table class=decl><tr><td><code>cannotReachOutside (obj, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1267">1267</a>]</table><div class=desc>cannot reach an object because it's outisde the given container<p>
+</div>
+<a name="cannotTalkTo"></a>
+<table class=decl><tr><td><code>cannotTalkTo (targetActor, issuingActor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#561">561</a>]</table><div class=desc>a command was issued to a non-actor<p>
+</div>
+<a name="closedMsg"></a>
+<table class=decl><tr><td><code>closedMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1661">1661</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="confirmQuit"></a>
+<table class=decl><tr><td><code>confirmQuit ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#721">721</a>]</table><div class=desc>confirm that we really want to quit<p>
+</div>
+<a name="confirmRestart"></a>
+<table class=decl><tr><td><code>confirmRestart ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#751">751</a>]</table><div class=desc>confirm that they really want to restart<p>
+</div>
+<a name="currentExitsSettings"></a>
+<table class=decl><tr><td><code>currentExitsSettings (statusLine, roomDesc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1050">1050</a>]</table><div class=desc>describe the current EXITS settings<p>
+</div>
+<a name="defaultsFileReadError"></a>
+<table class=decl><tr><td><code>defaultsFileReadError (exc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1143">1143</a>]</table><div class=desc>RESTORE DEFAULTS file open/read error<p>
+</div>
+<a name="dimReadDesc"></a>
+<table class=decl><tr><td><code>dimReadDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#234">234</a>]</table><div class=desc>dim light "read" description<p>
+</div>
+<a name="distantThingDesc"></a>
+<table class=decl><tr><td><code>distantThingDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#178">178</a>]</table><div class=desc>generic long description of a Thing from a distance<p>
+</div>
+<a name="distantThingSmellDesc"></a>
+<table class=decl><tr><td><code>distantThingSmellDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#203">203</a>]</table><div class=desc>generic "smell" description of a Thing at a distance<p>
+</div>
+<a name="distantThingSoundDesc"></a>
+<table class=decl><tr><td><code>distantThingSoundDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#192">192</a>]</table><div class=desc>generic "listen" description of a Thing at a distance<p>
+</div>
+<a name="exitsOnOffOkay"></a>
+<table class=decl><tr><td><code>exitsOnOffOkay (stat, look)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1029">1029</a>]</table><div class=desc>acknowledge new "exits on/off" status<p>
+</div>
+<a name="explainExitsOnOff"></a>
+<table class=decl><tr><td><code>explainExitsOnOff ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1044">1044</a>]</table><div class=desc>explain how to turn exit display on and off<p>
+</div>
+<a name="filePromptFailed"></a>
+<table class=decl><tr><td><code>filePromptFailed ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#865">865</a>]</table><div class=desc>error showing the input file dialog (or character-mode equivalent)<p>
+</div>
+<a name="filePromptFailedMsg"></a>
+<table class=decl><tr><td><code>filePromptFailedMsg (msg)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#873">873</a>]</table><div class=desc>error showing the input file dialog, with a system error message<p>
+</div>
+<a name="firstFootnote"></a>
+<table class=decl><tr><td><code>firstFootnote ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#360">360</a>]</table><div class=desc>first footnote notification<p>
+</div>
+<a name="firstScoreChange"></a>
+<table class=decl><tr><td><code>firstScoreChange (delta)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#315">315</a>]</table><div class=desc>score change - first notification<p>
+</div>
+<a name="footnoteRef"></a>
+<table class=decl><tr><td><code>footnoteRef (num)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#353">353</a>]</table><div class=desc>get the string to display for a footnote reference<p>
+</div>
+<a name="fullScoreItemPoints"></a>
+<table class=decl><tr><td><code>fullScoreItemPoints (points)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#309">309</a>]</table><div class=desc>   show the item prefix, with the number of points, for a full score   item - immediately after this is displayed, we'll display the   description message for the achievement <p>
+</div>
+<a name="inputFileScriptWarning"></a>
+<table class=decl><tr><td><code>inputFileScriptWarning (warning, filename)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1740">1740</a>]</table><div class=desc>   Warning prompt for inputFile() warnings generated when reading a   script file, for the Web UI.  The interpreter normally displays   these warnings directly, but in Web UI mode, the program is   responsible, so we need localized messages. <p>
+</div>
+<a name="inputScriptFailedException"></a>
+<table class=decl><tr><td><code>inputScriptFailedException (exc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#914">914</a>]</table><div class=desc>exception opening input script<p>
+</div>
+<a name="inputScriptOkay"></a>
+<table class=decl><tr><td><code>inputScriptOkay (fname)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#903">903</a>]</table><div class=desc>acknowledge starting an input script<p>
+</div>
+<a name="invalidCommandToken"></a>
+<table class=decl><tr><td><code>invalidCommandToken (ch)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#448">448</a>]</table><div class=desc>invalid token (i.e., punctuation) in command line<p>
+</div>
+<a name="invalidFinishOption"></a>
+<table class=decl><tr><td><code>invalidFinishOption (resp)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1023">1023</a>]</table><div class=desc>invalid finishGame response<p>
+</div>
+<a name="litCandleDesc"></a>
+<table class=decl><tr><td><code>litCandleDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#245">245</a>]</table><div class=desc>lit candle description<p>
+</div>
+<a name="litMatchDesc"></a>
+<table class=decl><tr><td><code>litMatchDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#241">241</a>]</table><div class=desc>lit/unlit match description<p>
+</div>
+<a name="lockedMsg"></a>
+<table class=decl><tr><td><code>lockedMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1671">1671</a>]</table><div class=desc>locked/unlocked status - adjectives describing lock states<p>
+</div>
+<a name="mainCommandPrompt"></a>
+<table class=decl><tr><td><code>mainCommandPrompt (which)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#436">436</a>]</table><div class=desc>   Show the main command prompt. <p>   'which' is one of the rmcXxx phase codes indicating what kind of   command we're reading.  This default implementation shows the   same prompt for every type of input, but games can use the   'which' value to show different prompts for different types of   queries, if desired. <p>
+</div>
+<a name="makeSentence"></a>
+<table class=decl><tr><td><code>makeSentence (msg)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#809">809</a>]</table><div class=desc>   make an error message into a sentence, by capitalizing the first   letter and adding a period at the end if it doesn't already have   one <p>
+</div>
+<a name="matchBurnedOut"></a>
+<table class=decl><tr><td><code>matchBurnedOut (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1686">1686</a>]</table><div class=desc>daemon report for burning out a match<p>
+</div>
+<a name="mentionFullScore"></a>
+<table class=decl><tr><td><code>mentionFullScore ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1102">1102</a>]</table><div class=desc>mention the FULL SCORE command<p>
+</div>
+<a name="menuInstructions"></a>
+<table class=decl><tr><td><code>menuInstructions (keylist, prevLink)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1227">1227</a>]</table><div class=desc>   instructions text for banner-mode menus - this is displayed in   the instructions bar at the top of the screen, above the menu   banner area <p>
+</div>
+<a name="menuNextChapter"></a>
+<table class=decl><tr><td><code>menuNextChapter (keylist, title, hrefNext, hrefUp)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1238">1238</a>]</table><div class=desc>show a 'next chapter' link<p>
+</div>
+<a name="menuTopicProgress"></a>
+<table class=decl><tr><td><code>menuTopicProgress (cur, tot)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1205">1205</a>]</table><div class=desc>   Position indicator for topic list items - this is displayed after   a topic list item to show the current item number and the total   number of items in the list, to give the user an idea of where   they are in the overall list. <p>
+</div>
+<a name="noCommandForAgain"></a>
+<table class=decl><tr><td><code>noCommandForAgain ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#689">689</a>]</table><div class=desc>'again' used with no prior command<p>
+</div>
+<a name="noSuchFootnote"></a>
+<table class=decl><tr><td><code>noSuchFootnote (num)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#366">366</a>]</table><div class=desc>there is no such footnote as the given number<p>
+</div>
+<a name="noteMainRestore"></a>
+<table class=decl><tr><td><code>noteMainRestore ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#817">817</a>]</table><div class=desc>note that we're restoring at startup via a saved-position launch<p>
+</div>
+<a name="notRestarting"></a>
+<table class=decl><tr><td><code>notRestarting ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#758">758</a>]</table><div class=desc>"not restarting" confirmation<p>
+</div>
+<a name="notTerminating"></a>
+<table class=decl><tr><td><code>notTerminating ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#745">745</a>]</table><div class=desc>   "not terminating" confirmation - this is displayed when the   player doesn't acknowledge a 'quit' command with an affirmative   response to our confirmation question <p>
+</div>
+<a name="objBurnedOut"></a>
+<table class=decl><tr><td><code>objBurnedOut (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1702">1702</a>]</table><div class=desc>daemon report for burning out a generic fueled light source<p>
+</div>
+<a name="obscuredReadDesc"></a>
+<table class=decl><tr><td><code>obscuredReadDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#226">226</a>]</table><div class=desc>obscured "read" description<p>
+</div>
+<a name="obscuredThingDesc"></a>
+<table class=decl><tr><td><code>obscuredThingDesc (obj, obs)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#185">185</a>]</table><div class=desc>generic long description of a Thing under obscured conditions<p>
+</div>
+<a name="obscuredThingSmellDesc"></a>
+<table class=decl><tr><td><code>obscuredThingSmellDesc (obj, obs)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#207">207</a>]</table><div class=desc>generic obscured "smell" description<p>
+</div>
+<a name="obscuredThingSoundDesc"></a>
+<table class=decl><tr><td><code>obscuredThingSoundDesc (obj, obs)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#196">196</a>]</table><div class=desc>generic obscured "listen" description<p>
+</div>
+<a name="offMsg"></a>
+<table class=decl><tr><td><code>offMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1683">1683</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="okayQuitting"></a>
+<table class=decl><tr><td><code>okayQuitting ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#738">738</a>]</table><div class=desc>   QUIT message.  We display this to acknowledge an explicit player   command to quit the game.  This is the last message the game   displays on the way out; there is no need to offer any options at   this point, because the player has decided to exit the game. <p>   By default, we show nothing; games can override this to display an   acknowledgment if desired.  Note that this isn't a general   end-of-game 'goodbye' message; the library only shows this to   acknowledge an explicit QUIT command from the player. <p>
+</div>
+<a name="onMsg"></a>
+<table class=decl><tr><td><code>onMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1682">1682</a>]</table><div class=desc>   on/off status - these are simply adjectives that can be used to   describe the status of a switchable object <p>
+</div>
+<a name="oopsNote"></a>
+<table class=decl><tr><td><code>oopsNote ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#583">583</a>]</table><div class=desc>   Show a note about the OOPS command.  This is, by default, added   to the "I don't know that word" error the first time that error   occurs. <p>
+</div>
+<a name="openMsg"></a>
+<table class=decl><tr><td><code>openMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1660">1660</a>]</table><div class=desc>   open/closed status - these are simply adjectives that can be used   to describe the status of an openable object <p>
+</div>
+<a name="openStatusMsg"></a>
+<table class=decl><tr><td><code>openStatusMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1668">1668</a>]</table><div class=desc>stand-alone independent clause describing current open status<p>
+</div>
+<a name="parserErrorString"></a>
+<table class=decl><tr><td><code>parserErrorString (actor, msg)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#442">442</a>]</table><div class=desc>   Show a pre-resolved error message string.  This simply displays   the given string. <p>
+</div>
+<a name="pauseEnded"></a>
+<table class=decl><tr><td><code>pauseEnded ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#897">897</a>]</table><div class=desc>PAUSE ended<p>
+</div>
+<a name="pausePrompt"></a>
+<table class=decl><tr><td><code>pausePrompt ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#882">882</a>]</table><div class=desc>PAUSE prompt<p>
+</div>
+<a name="pauseSaving"></a>
+<table class=decl><tr><td><code>pauseSaving ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#891">891</a>]</table><div class=desc>saving from within a pause<p>
+</div>
+<a name="pcDesc"></a>
+<table class=decl><tr><td><code>pcDesc (actor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1299">1299</a>]</table><div class=desc>default description of the player character<p>
+</div>
+<a name="putDestBehind"></a>
+<table class=decl><tr><td><code>putDestBehind (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#254">254</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="putDestContainer"></a>
+<table class=decl><tr><td><code>putDestContainer (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#251">251</a>]</table><div class=desc>   Prepositional phrases for putting objects into different types of   objects. <p>
+</div>
+<a name="putDestFloor"></a>
+<table class=decl><tr><td><code>putDestFloor (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#255">255</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="putDestRoom"></a>
+<table class=decl><tr><td><code>putDestRoom (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#256">256</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="putDestSurface"></a>
+<table class=decl><tr><td><code>putDestSurface (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#252">252</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="putDestUnder"></a>
+<table class=decl><tr><td><code>putDestUnder (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#253">253</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="recordingFailedException"></a>
+<table class=decl><tr><td><code>recordingFailedException (exc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#972">972</a>]</table><div class=desc>recording failed with exception<p>
+</div>
+<a name="restoreCanceled"></a>
+<table class=decl><tr><td><code>restoreCanceled ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#823">823</a>]</table><div class=desc>restore canceled<p>
+</div>
+<a name="restoreCorruptedFile"></a>
+<table class=decl><tr><td><code>restoreCorruptedFile ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#840">840</a>]</table><div class=desc>restore failed because the file was corrupted<p>
+</div>
+<a name="restoredDefaults"></a>
+<table class=decl><tr><td><code>restoredDefaults ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1122">1122</a>]</table><div class=desc>RESTORE DEFAULTS successful<p>
+</div>
+<a name="restoreFailed"></a>
+<table class=decl><tr><td><code>restoreFailed (exc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#858">858</a>]</table><div class=desc>restore failed for some reason other than those distinguished above<p>
+</div>
+<a name="restoreFailedOnServer"></a>
+<table class=decl><tr><td><code>restoreFailedOnServer (exc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#826">826</a>]</table><div class=desc>restore failed due to storage server request error<p>
+</div>
+<a name="restoreInvalidFile"></a>
+<table class=decl><tr><td><code>restoreInvalidFile ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#833">833</a>]</table><div class=desc>restore failed because the file was not a valid saved game file<p>
+</div>
+<a name="restoreInvalidMatch"></a>
+<table class=decl><tr><td><code>restoreInvalidMatch ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#850">850</a>]</table><div class=desc>restore failed because the file was for the wrong game or version<p>
+</div>
+<a name="restoreOkay"></a>
+<table class=decl><tr><td><code>restoreOkay ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#820">820</a>]</table><div class=desc>successfully restored<p>
+</div>
+<a name="roomActorHereDesc"></a>
+<table class=decl><tr><td><code>roomActorHereDesc (actor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1331">1331</a>]</table><div class=desc>   mention that an actor is here, without mentioning the enclosing   room, as part of a room description <p>
+</div>
+<a name="roomActorPostureDesc"></a>
+<table class=decl><tr><td><code>roomActorPostureDesc (actor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1375">1375</a>]</table><div class=desc>   Describe an actor's posture, as part of an actor's "examine"   description.  If the actor is standing, don't bother mentioning   anything, as standing is the trivial default condition. <p>
+</div>
+<a name="roomActorStatus"></a>
+<table class=decl><tr><td><code>roomActorStatus (actor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1310">1310</a>]</table><div class=desc>   Show a status line addendum for the actor posture, without   mentioning the actor's location.  We won't mention standing, since   this is the default posture. <p>
+</div>
+<a name="roomActorThereDesc"></a>
+<table class=decl><tr><td><code>roomActorThereDesc (actor)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1342">1342</a>]</table><div class=desc>   mention that an actor is visible at a distance or remotely,   without mentioning the enclosing room, as part of a room   description <p>
+</div>
+<a name="saveCanceled"></a>
+<table class=decl><tr><td><code>saveCanceled ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#787">787</a>]</table><div class=desc>save canceled<p>
+</div>
+<a name="savedDefaults"></a>
+<table class=decl><tr><td><code>savedDefaults ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1108">1108</a>]</table><div class=desc>SAVE DEFAULTS successful<p>
+</div>
+<a name="saveFailed"></a>
+<table class=decl><tr><td><code>saveFailed (exc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#790">790</a>]</table><div class=desc>saved failed due to a file write or similar error<p>
+</div>
+<a name="saveFailedOnServer"></a>
+<table class=decl><tr><td><code>saveFailedOnServer (exc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#798">798</a>]</table><div class=desc>save failed due to storage server request error<p>
+</div>
+<a name="saveOkay"></a>
+<table class=decl><tr><td><code>saveOkay ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#784">784</a>]</table><div class=desc>successfully saved<p>
+</div>
+<a name="sayArriving"></a>
+<table class=decl><tr><td><code>sayArriving (traveler)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1470">1470</a>]</table><div class=desc>a traveler is arriving, but not from a compass direction<p>
+</div>
+<a name="sayArrivingDir"></a>
+<table class=decl><tr><td><code>sayArrivingDir (traveler, dirName)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1514">1514</a>]</table><div class=desc>a traveler is arriving from a compass direction<p>
+</div>
+<a name="sayArrivingDownStairs"></a>
+<table class=decl><tr><td><code>sayArrivingDownStairs (traveler, stairs)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1618">1618</a>]</table><div class=desc>a traveler is arriving by coming down a stairway<p>
+</div>
+<a name="sayArrivingLocally"></a>
+<table class=decl><tr><td><code>sayArrivingLocally (traveler, dest)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1487">1487</a>]</table><div class=desc>   a traveler is arriving locally (staying within view throughout the   travel, and coming closer to the PC) <p>
+</div>
+<a name="sayArrivingShipDir"></a>
+<table class=decl><tr><td><code>sayArrivingShipDir (traveler, dirName)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1530">1530</a>]</table><div class=desc>a traveler is arriving from a shipboard direction<p>
+</div>
+<a name="sayArrivingThroughPassage"></a>
+<table class=decl><tr><td><code>sayArrivingThroughPassage (traveler, passage)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1574">1574</a>]</table><div class=desc>a traveler is arriving via a passage<p>
+</div>
+<a name="sayArrivingUpStairs"></a>
+<table class=decl><tr><td><code>sayArrivingUpStairs (traveler, stairs)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1609">1609</a>]</table><div class=desc>a traveler is arriving by coming up a stairway<p>
+</div>
+<a name="sayArrivingViaPath"></a>
+<table class=decl><tr><td><code>sayArrivingViaPath (traveler, passage)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1588">1588</a>]</table><div class=desc>a traveler is arriving via a path<p>
+</div>
+<a name="sayDeparting"></a>
+<table class=decl><tr><td><code>sayDeparting (traveler)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1477">1477</a>]</table><div class=desc>a traveler is departing, but not in a compass direction<p>
+</div>
+<a name="sayDepartingAft"></a>
+<table class=decl><tr><td><code>sayDepartingAft (traveler)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1546">1546</a>]</table><div class=desc>a traveler is going aft<p>
+</div>
+<a name="sayDepartingDir"></a>
+<table class=decl><tr><td><code>sayDepartingDir (traveler, dirName)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1521">1521</a>]</table><div class=desc>a traveler is leaving in a given compass direction<p>
+</div>
+<a name="sayDepartingDownStairs"></a>
+<table class=decl><tr><td><code>sayDepartingDownStairs (traveler, stairs)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1602">1602</a>]</table><div class=desc>a traveler is leaving down a stairway<p>
+</div>
+<a name="sayDepartingFore"></a>
+<table class=decl><tr><td><code>sayDepartingFore (traveler)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1555">1555</a>]</table><div class=desc>a traveler is going fore<p>
+</div>
+<a name="sayDepartingLocally"></a>
+<table class=decl><tr><td><code>sayDepartingLocally (traveler, dest)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1497">1497</a>]</table><div class=desc>   a traveler is departing locally (staying within view throughout   the travel, and moving further away from the PC) <p>
+</div>
+<a name="sayDepartingShipDir"></a>
+<table class=decl><tr><td><code>sayDepartingShipDir (traveler, dirName)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1537">1537</a>]</table><div class=desc>a traveler is leaving in a given shipboard direction<p>
+</div>
+<a name="sayDepartingThroughPassage"></a>
+<table class=decl><tr><td><code>sayDepartingThroughPassage (traveler, passage)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1567">1567</a>]</table><div class=desc>a traveler is leaving via a passage<p>
+</div>
+<a name="sayDepartingUpStairs"></a>
+<table class=decl><tr><td><code>sayDepartingUpStairs (traveler, stairs)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1595">1595</a>]</table><div class=desc>a traveler is leaving up a stairway<p>
+</div>
+<a name="sayDepartingViaPath"></a>
+<table class=decl><tr><td><code>sayDepartingViaPath (traveler, passage)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1581">1581</a>]</table><div class=desc>a traveler is leaving via a path<p>
+</div>
+<a name="sayDepartingWith"></a>
+<table class=decl><tr><td><code>sayDepartingWith (traveler, lead)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1627">1627</a>]</table><div class=desc>acompanying another actor on travel<p>
+</div>
+<a name="sayDepartingWithGuide"></a>
+<table class=decl><tr><td><code>sayDepartingWithGuide (guide, lead)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1642">1642</a>]</table><div class=desc>   Accompanying a tour guide.  Note the seemingly reversed roles:   the lead actor is the one initiating the travel, and the tour   guide is the accompanying actor.  So, the lead actor is   effectively following the accompanying actor.  It seems   backwards, but really it's not: the tour guide merely shows the   lead actor where to go, but it's up to the lead actor to actually   initiate the travel. <p>
+</div>
+<a name="sayOpenDoorRemotely"></a>
+<table class=decl><tr><td><code>sayOpenDoorRemotely (door, stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1649">1649</a>]</table><div class=desc>note that a door is being opened/closed remotely<p>
+</div>
+<a name="sayTravelingRemotely"></a>
+<table class=decl><tr><td><code>sayTravelingRemotely (traveler, dest)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1507">1507</a>]</table><div class=desc>   a traveler is traveling remotely (staying within view through the   travel, and moving from one remote top-level location to another) <p>
+</div>
+<a name="scoreChange"></a>
+<table class=decl><tr><td><code>scoreChange (delta)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#322">322</a>]</table><div class=desc>score change - notification other than the first time<p>
+</div>
+<a name="scriptingFailedException"></a>
+<table class=decl><tr><td><code>scriptingFailedException (exc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#943">943</a>]</table><div class=desc>scripting failed with an exception<p>
+</div>
+<a name="scriptingOkay"></a>
+<table class=decl><tr><td><code>scriptingOkay ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#923">923</a>]</table><div class=desc>acknowledge scripting on<p>
+</div>
+<a name="scriptingOkayWebTemp"></a>
+<table class=decl><tr><td><code>scriptingOkayWebTemp ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#930">930</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="shortFootnoteStatus"></a>
+<table class=decl><tr><td><code>shortFootnoteStatus (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#419">419</a>]</table><div class=desc>show the footnote status, in short form<p>
+</div>
+<a name="shortNotifyStatus"></a>
+<table class=decl><tr><td><code>shortNotifyStatus (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#617">617</a>]</table><div class=desc>show the current score notify status, in short form<p>
+</div>
+<a name="shortVerboseStatus"></a>
+<table class=decl><tr><td><code>shortVerboseStatus (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#607">607</a>]</table><div class=desc>show the current VERBOSE setting, in short form<p>
+</div>
+<a name="showCredit"></a>
+<table class=decl><tr><td><code>showCredit (name, byline)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#157">157</a>]</table><div class=desc>show a library credit (for a CREDITS listing)<p>
+</div>
+<a name="showFinishMsg"></a>
+<table class=decl><tr><td><code>showFinishMsg (msg)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#765">765</a>]</table><div class=desc>   Show a game-finishing message - we use the conventional "*** You   have won! ***" format that text games have been using since the   dawn of time. <p>
+</div>
+<a name="showFootnoteStatus"></a>
+<table class=decl><tr><td><code>showFootnoteStatus (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#373">373</a>]</table><div class=desc>show the current footnote status<p>
+</div>
+<a name="showListState"></a>
+<table class=decl><tr><td><code>showListState (state)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#171">171</a>]</table><div class=desc>   Show a list state name - this is extra state information that we   show for an object in a listing involving the object.  For   example, a light source might add a state like "(providing   light)".  We simply show the list state name in parentheses. <p>
+</div>
+<a name="showNotifyStatus"></a>
+<table class=decl><tr><td><code>showNotifyStatus (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#610">610</a>]</table><div class=desc>show the current score notify status<p>
+</div>
+<a name="showScoreMessage"></a>
+<table class=decl><tr><td><code>showScoreMessage (points, maxPoints, turns)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#280">280</a>]</table><div class=desc>show the basic score message<p>
+</div>
+<a name="showScoreNoMaxMessage"></a>
+<table class=decl><tr><td><code>showScoreNoMaxMessage (points, turns)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#288">288</a>]</table><div class=desc>show the basic score message with no maximum<p>
+</div>
+<a name="showScoreRankMessage"></a>
+<table class=decl><tr><td><code>showScoreRankMessage (msg)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#295">295</a>]</table><div class=desc>show the full message for a given score rank string<p>
+</div>
+<a name="showVersion"></a>
+<table class=decl><tr><td><code>showVersion (name, version)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#160">160</a>]</table><div class=desc>show a library version number (for a VERSION listing)<p>
+</div>
+<a name="silentImplicitAction"></a>
+<table class=decl><tr><td><code>silentImplicitAction (action, ctx)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#141">141</a>]</table><div class=desc>   Announce a silent implied action.  This allows an implied action   to work exactly as normal (including the suppression of a default   response message), but without any announcement of the implied   action. <p>
+</div>
+<a name="smellDescSeparator"></a>
+<table class=decl><tr><td><code>smellDescSeparator ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#547">547</a>]</table><div class=desc>   separator for "smell" results - we ordinarily show each item's   odor description as a separate paragraph <p>
+</div>
+<a name="smellIsFromWithin"></a>
+<table class=decl><tr><td><code>smellIsFromWithin (obj, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1287">1287</a>]</table><div class=desc>odor is coming from inside/outside a container<p>
+</div>
+<a name="smellIsFromWithout"></a>
+<table class=decl><tr><td><code>smellIsFromWithout (obj, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1292">1292</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="soundDescSeparator"></a>
+<table class=decl><tr><td><code>soundDescSeparator ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#555">555</a>]</table><div class=desc>   separator for "listen" results <p>
+</div>
+<a name="soundIsFromWithin"></a>
+<table class=decl><tr><td><code>soundIsFromWithin (obj, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1275">1275</a>]</table><div class=desc>sound is coming from inside/outside a container<p>
+</div>
+<a name="soundIsFromWithout"></a>
+<table class=decl><tr><td><code>soundIsFromWithout (obj, loc)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1280">1280</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="systemActionToNPC"></a>
+<table class=decl><tr><td><code>systemActionToNPC ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#714">714</a>]</table><div class=desc>system actions cannot be directed to non-player characters<p>
+</div>
+<a name="textMenuMainPrompt"></a>
+<table class=decl><tr><td><code>textMenuMainPrompt (keylist)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1184">1184</a>]</table><div class=desc>   main prompt text for text-mode menus - this is displayed each   time we ask for a keystroke to navigate a menu in text-only mode <p>
+</div>
+<a name="textMenuTopicPrompt"></a>
+<table class=decl><tr><td><code>textMenuTopicPrompt ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1192">1192</a>]</table><div class=desc>prompt text for topic lists in text-mode menus<p>
+</div>
+<a name="thingFeelDesc"></a>
+<table class=decl><tr><td><code>thingFeelDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#222">222</a>]</table><div class=desc>generic "feel" description of a Thing<p>
+</div>
+<a name="thingTasteDesc"></a>
+<table class=decl><tr><td><code>thingTasteDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#214">214</a>]</table><div class=desc>generic "taste" description of a Thing<p>
+</div>
+<a name="tipStatusShort"></a>
+<table class=decl><tr><td><code>tipStatusShort (stat)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#347">347</a>]</table><div class=desc>describe the tip mode setting<p>
+</div>
+<a name="undoFailed"></a>
+<table class=decl><tr><td><code>undoFailed ( )</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1007">1007</a>]</table><div class=desc>undo command failed<p>
+</div>
+<a name="undoOkay"></a>
+<table class=decl><tr><td><code>undoOkay (actor, cmd)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#994">994</a>]</table><div class=desc>undo command succeeded<p>
+</div>
+<a name="unlitMatchDesc"></a>
+<table class=decl><tr><td><code>unlitMatchDesc (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#242">242</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="unlockedMsg"></a>
+<table class=decl><tr><td><code>unlockedMsg (obj)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1672">1672</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="webNewUser"></a>
+<table class=decl><tr><td><code>webNewUser (name)</code><td align=right><code><a href="../file/msg_neu.t.html">msg_neu.t</a>[<a href="../source/msg_neu.t.html#1732">1732</a>]</table><div class=desc>web UI alert when a new user has joined a multi-user session<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

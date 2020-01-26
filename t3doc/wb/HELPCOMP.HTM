@@ -1,0 +1,953 @@
+<html>
+<head>
+<title>Compiling with TADS Workbench</title>
+<link rel=stylesheet href="wbdoc.css">
+</head>
+
+<body>
+
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+
+<center>
+<br><br><br><img src='../htmltads.jpg'>
+<br><h1>Compiling with TADS Workbench</h1>
+<br><br>
+</center>
+
+<br><br>
+<h2>
+Overview
+</h2>
+
+<p>TADS Workbench lets you run the compiler, resource bundler, and
+executable builder from within the graphical Workbench environment,
+without ever opening a DOS command shell.  In addition, Workbench
+lets you set the compiler options and other build settings
+through dialogs, so that you don't have to deal directly with
+the command-line tools.
+
+<p>Workbench stores your project's build settings in its project
+(.t3m) file.  When you create a new project through Workbench's "New
+Project Wizard" dialog, the new .t3m file will be created for you.
+You can also create a .t3m file manually; it's simply a text file
+containing the list of compiler options and source file names that
+you'd specify if you were running the command-line compiler.
+See the TADS 3 System Manual for details on the project file's
+contents.
+
+<p>Once you've loaded your project, compiling is easy - just select
+Compile for Debugging from the Build menu.
+
+<a name='project'></a>
+<h2>
+Project Window
+</h2>
+
+<p> Workbench has a special window named "Project" that shows all of
+the source files, include files, resource files (images, etc) that
+make up your game.  If you don't see the Project window, select the
+Project Window command from the View menu to display it.
+
+<p> You can use the project window to manage your project's files.
+Double-click on the name of a file to open it in the text editor.
+Right-click on a section title in the project tree to bring up a
+menu for adding new files to the section, and other options.
+
+<h4>Source Files</h4>
+
+<p> The Project window has a section called Source Files that lists
+the .t files making up your game.  It's shown with a "folder" icon
+because it's conceptually a group of files, although it doesn't
+actually correspond to a real folder on disk.  TADS 3 lets you divide
+your source code into multiple source files, to keep things better
+organized.  The compiler processes each file separately, creating an
+"object file" for each one that contains the compiled version of its
+contents.  The compiler then combines the object files into a single
+.t3 file containing the fully compiled game.  Compiling source files
+separately makes the build process faster when you're actively working
+on the game, since the compiler only has to rebuild the source files
+you actually changed since the last build.
+
+<p>You add each source file in your game to the Source Files folder.
+Only source files can go here.  When you use the Compile command,
+Workbench compiles each file listed in this section, and links
+together the resulting object files to create the final .t3 file.
+
+<p>To add a file to the Source Files folder, you can simply drag the
+file from Windows Explorer, and drop it on the Source Files icon in
+the Project window.  If you prefer, you can right-click on the Source
+Files icon to display the Project window menu, then select the "Add
+File" item from the menu.  You can also click on the Source Files
+folder to select it, then open the "Project" menu and select "Add
+File to Project."  All of these different approaches are equivalent;
+you can use whichever way you find most convenient.
+
+<p>Once you've added a source file, it will appear in the list under
+the Source Files folder in the Project window.  (If you don't see a
+list, click the little "+" icon next to the Source Files folder to
+open the folder.)  If you want to view one of your source files,
+simply double-click on the file in the list.
+
+<h4>Include Files</h4>
+
+<p>The Include Files folder is similar to the Source Files folder,
+but this folder lists header files only.  You don't actually have to
+add any files here, but Workbench lets you add files here as a convenience.
+The only reason to add files to this folder is that you can easily open
+a file from this list by double-clicking on it.  You will probably want
+to add the header files you're using simply to make it easy to view
+them.
+
+<p>The best way to fill in the list of include files is to let
+Workbench find the include files for you.  To do this, right-click on
+the Include Files folder in the Project window, and choose "Scan for
+Include Files" from the menu.  Workbench will run a quick scan over
+your source files, looking for #include directives, and will add
+each one it finds to the Include Files section.
+
+<h4>Resource Files</h4>
+
+<p>The Resource Files folder is similar to the others, but contains
+multimedia files: JPEG, PNG, and MNG images; and MIDI, WAV, MP3, and
+Ogg Vorbis sound files.
+
+<p>The Resource Files folder can contain not only files, but also entire
+file system directories.  To add a directory, you can drag it from
+Windows Explorer and drop it on the Resource Files folder, or you
+can use the right-click menu to select the "Add Directory to Resources"
+item.  If you do add a directory, Workbench only displays the folder -
+it doesn't display the items in the folder.  Only the folder is displayed,
+because Workbench doesn't actually process the folder until you compile
+your game for release; when you do, it bundles all of the files found
+in that folder.  This allows you to manage your resources in the file
+system, without having to worry about keeping your project list synchronized
+as you add, rename, or delete files.  Simply add your folder to the project,
+and Workbench will automatically build an up-to-date bundle each time you
+compile.
+
+<h4>External Resources</h4>
+
+<p>The External Resource mechanism is an older feature, and most
+authors today probably won't have any use for it.  This feature allows
+for separate "high resolution" and "low resolution" versions of the
+game - the idea was that you'd create a high-res version that you'd
+distribute on CD-ROM, and a low-res version for downloads.  The
+low-res version would have smaller versions of the resources - you'd
+use lossier compression, for example, or reduce the color depth of
+images.  These days, the idea of distribution on CD-ROM seems
+positively quaint, and Internet connections tend to be fast enough
+that a low-res version isn't going to be worth the trouble for anyone.
+
+<p>We don't really recommend that you use this feature at this point,
+because we'd like to eventually remove it, to simplify the Project
+window a bit.  However, if you really want to use it, keep reading.
+
+<p>To add an external resource to your project, use the "Add External
+Resource" from the right-click menu in the Project window (or select
+the same item from the "Project" menu in the main menu bar).  This
+will add a resource file to the list.
+
+<p>Once you've created an external resource file, you can treat it just
+like the Resource Files folder.  Add individual resource files or
+directories to this folder to include them in this external resource
+file.  Each time you compile for release, the compiler will build a
+file with the same name as your image file, but with the suffix replaced
+by ".3r0", ".3r1", and so on, as shown in the Project window.
+
+<p>Each external resource file has an icon to the left of its primary
+icon.  The icon looks like a CD, and either has a big red X through it
+or not.  If you see just a CD icon, it means that the external resource
+<i>will</i> be included in the installer version of your build; if the
+red X is showing, the file will not be included in the installer version.
+If your goal is to build a smaller version for internet distribution,
+and a larger version for CD-based distribution, you can use this setting
+to build external resources for the installer.  To change the setting,
+just click on the icon.
+
+<h4>Special Files</h4>
+
+<p>This section of the Project window is a little different from the
+others.  This section has a fixed list of files with special purposes.
+you can't add new files of your own to this section, but you can set
+each of the fixed items to a file of your choosing.
+
+<p>To set the file for one of these items, right-click the item in
+the list, and select "Set File..." from the menu.  This will bring
+up a standard file chooser dialog.  Alternatively, you can drop a
+file from Windows Explorer onto the item.
+
+<p>The individual special items are:
+
+<ul>
+
+<li>ReadMe File: You can set this item to a file that contains notes
+about your game that you want to provide to players.  This should be a
+plain text (.txt) or HTML (.htm) file.  Workbench will automatically
+include this file in the Release ZIP package and in the Windows SETUP
+package.  This might sound a lot like an ordinary Feelie file - and it
+is.  The only difference is that when you create the Windows SETUP
+package for your game, the generated SETUP program will automatically
+display the ReadMe file to the user at the end of the installation
+procedure.  To do this, the SETUP program obviously has to know which
+file you want to designate as the ReadMe; this special file item is
+the way you do this.
+
+<p>By the way, if you right-click on the ReadMe item, then choose "Set
+File Title..." from the menu, you'll be able to set a custom title for
+the file as it appears in the Start menu on the player's machine.
+
+<li>License File: You can set this item to a file containing a
+copyright notice and the license terms for your game.  This must be a
+plain text file.  Like the ReadMe file, this file is special to the
+Windows SETUP builder: the generated SETUP program will display the
+contents of this file as one of the steps of the installation process.
+Other than that, this file acts like a Feelie, in that Workbench
+includes it in the Release ZIP package and the Windows SETUP package.
+
+<li>Cover Art: This is an image, saved in either JPEG or PNG format,
+that serves as the artwork for your game's release packaging.  If you
+were to distribute your game in retail stores, this is the artwork
+that you'd put on the front of the box; or, if your game were a book,
+this is the art that you'd use on the cover.  Of course, you probably
+won't actually need artwork for <i>physical</i> packaging, since IF
+doesn't tend to be sold commercially these days.  Even so, the Cover
+Art image still has some uses for "virtual" packaging.  In particular,
+Workbench will embed the image in the compiled game file with special
+information that lets third-party tools find it; "IF jukebox" programs
+can use it, for example, to create an attractive browsing page for
+your game.  In addition, Workbench's Web Page builder uses this image
+in the Web page it generates.
+
+<p>If you provide a Cover Art image, you should follow the guidelines
+in the <a href="http://babel.ifarchive.org">Treaty of Babel</a>.  The
+Treaty has full details, but here are the basics: the image should be
+roughly square in aspect ratio, and should be between 120x120 and
+1200x1200 pixels in size, the preferred size being 960x960.  You can
+call the file anything you want, but you should make sure the name
+ends in ".png" for a PNG file, or ".jpg" for a JPEG file.
+
+<li>EXE File Icon: This is a Windows Icon (.ico) file, to use as the
+Windows desktop icon for the stand-alone application (.exe file) build
+of your game.  This file isn't included as a separate file in any of
+the release packages; instead, it's inserted into your .exe build as
+the program icon, which Windows displays in the Explorer desktop view
+of your game folder.  In the Windows SETUP version, Windows also
+displays this in the Start menu for your game.  If you don't specify
+an icon file, your stand-alone .exe build will simply use the standard
+HTML TADS desktop icons.  Windows .ico files can contain different
+copies of the icon at different sizes; if you do specify an icon,
+you should include the current sizes that Windows Explorer displays,
+which currently are 16x16, 32x32, and 48x48, all in 24-bit color.
+
+<li>Char Map Library: This lets you specify a custom character mapping
+library for your stand-alone application (.exe) build.  The default
+character maps already include most of the non-Asian Windows character
+sets, so it's unlikely that you'll need to set this.  If you do need
+to provide custom character set mappings, you can fill in this item
+with your custom .t3r file.  Refer to "Stand-Alone Executables" in
+the <i>TADS System Manual</i> for details on how to create a character
+mapping library.
+
+<li>Custom Web Builder: If you don't like the default Web page layout
+that you get from the Build Web Page command, you can use this item to
+customize the way the page is generated.  Workbench generates the
+game's Web page by invoking an external program, passing to it your
+project's configuration settings.  The external program takes the
+settings, reads your GameInfo.txt file, and creates the page.  Rather
+than using a web "template" language to control the page layout, we
+use a language you already know - TADS 3!  If you want to customize
+the page layout, you simply create a custom version of the Web
+builder program.
+
+<p>Here's how it works: the Web builder program is actually a little
+TADS 3 program that receives build setting information via the command
+line, and writes out the files needed for the Web page.  The source
+code for Workbench's standard Web page builder is included with
+Workbench - you can find it in the program directory (usually
+C:\Program Files\TADS 3), under the "mkwebfiles" subfolder.  The
+main source file is called mkweb.t, and the project file is mkweb.t3m.
+
+<p>The easiest way to customize the web page layout is to make your
+own private copy of mkweb.t and mkweb.t3m, then edit your copy.  The
+source file has extensive comments describing how it works.  The
+overall program is a bit complicated, but you'll probably only need to
+change a small and relatively straightforward part of it.  The
+interesting part essentially just prints out a bunch of HTML text, and
+if you just want to customize the layout, you won't need to do much
+more than edit the HTML text.  It should be clear how to do this
+when you look at the source file.
+
+<p>Once you've created your custom version of mkweb.t, all that
+remains is to tell Workbench that you want to use it instead of the
+default version.  This is where the Custom Web Builder item in the
+Special Files list comes in: you simply need to set this item to your
+private copy of the <b>project</b> (.t3m) file.  Once you do this,
+Workbench will use your customized version instead of the default
+copy.  Note that you don't even have to worry about manually compiling
+your customized mkweb.t - Workbench will do this automatically as part
+of the Build Web Page procedure.  You just need to tell Workbench
+about your custom copy by setting the Special Files item, and
+Workbench should take care of the rest.
+
+</ul>
+
+<h4>Feelies</h4>
+
+<p>This section lets you list additional files that you want to
+include with your release packages.  Workbench defines the basic set
+of files for each release package - for example, the Release ZIP
+always contains your compiled game file, plus your ReadMe and License
+files from the Special Files list, if specified.  The Feelies section
+lets you specify any additional files that you want to include in the
+packages - documentation, hints, pictures, and other supplemental
+materials.  Workbench will automatically include these files in the
+Release ZIP and Windows SETUP packages.
+
+<p>For each file you add, you can optionally set a Start menu title.
+Do this by right-clicking on the file in the Feelie list, and choosing
+"Set File Title" from the menu.  Click the appropriate button to
+include the item in the Start menu or not; if you want to include it,
+you can fill in the text box with the name you want to display for the
+item.  This setting is used only for the Windows SETUP package.  If
+you do specify that a file is to be included in the Start menu, the
+generated SETUP program will automatically create a Start menu item
+for the file; this makes it easy for the player to find the item after
+installation, since they won't have to browse through the game's
+Program Files folder.
+
+<p>The name of this section, by the way, is a reference to the early
+days of IF, when Infocom and other companies still sold text games
+commercially.  In those days, a text game usually came in a box, and
+the box usually contained a floppy disk, a printed instruction manual,
+and a few little trinkets that tied into the game's setting: a coin
+from the game's fantasy kingdom, a subway map, a student ID card, a
+program for a play.  The trinkets came to be known as "feelies" -
+something from the game world that you could actually touch.  Feelies
+were invented in large part because the whole idea of buying software
+was so new to most people back then, and publishers felt that buyers
+would see more value in a package if it included something tangible.
+Despite their mercenary origins, feelies turned out to have a rather
+more profound impact for a lot of players; somehow, the whole game
+world seemed a lot more real when you could hold a piece of it in
+your hand.
+
+<p>In these days of mostly freeware IF that's mostly distributed by
+the Internet, true feelies - in the sense of physical trinkets - are
+essentially no more.  However, many authors still like to include
+"virtual" feelies with their games.  The most common virtual feelies
+are images or documents that players can view outside the game.  For
+example, rather than including a printed subway map, you could include
+a JPEG image of the map; or a PDF of a program for a play, or a JPEG
+of a student ID card.
+
+<h4>Web Page Extras</h4>
+
+<p>This section lets you list additional files that you want to
+include in your game's Web page.  These files won't be included in any
+of the release packages, so players won't automatically receive copies
+when they download the game.  Instead, these files will be offered as
+download links on the Web page that Workbench can generate for your
+game.  You can use this for things like hint files, walkthroughs, and
+so on - files that you want to make available to players, but which
+you don't want to include by default with every copy of the game.
+
+<p>You can set a custom title for the Web page hyperlink for each file
+in this section.  Right-click on a file, then select "Set File Title"
+from the menu.  This will display a dialog that lets you set the
+hyperlink title for the file.
+
+<h4>Notes &amp; Miscellaneous</h4>
+
+<p>This section is for files that you want to keep track of as part of
+the overall project, but which don't belong in any of the other
+sections.  Files in this section will be included in the Source ZIP,
+but they won't be included in the Web page or any of the release
+packages.  You can use this section to capture your own working notes
+on the game - your to-do list, plot outline, working maps, and so on.
+
+<p>Listing a file in this section has two benefits.  First, it lets
+you open the file easily in Workbench - just double-click it from the
+list.  If it's a text file, you can edit it right in Workbench.  The
+second benefit is that the file will automatically be bundled into the
+Source ZIP, to the file will be included if you use the Source ZIP to
+copy the project to another machine or distribute it to other people.
+
+<h2>
+Compiling
+</h2>
+
+<p>If you created your project with the "New Project Wizard",
+Workbench automatically set up all of the necessary compiler options
+for you.  If you created your .t3m file manually, Workbench uses the
+compiler options you specified in the .t3m file.  In either case, you
+can review and change any of the project settings through the
+<a href="#settings">build settings</a> dialog.
+
+<p> To compile your game, you must first configure the
+<a href='#settings'>build settings</a> for your game.  Once you
+configure the settings, TADS Workbench will remember them in your
+game's project (.t3m) file, so you won't need to enter any settings
+when you actually compile your game.
+
+<p>
+There are four ways to compile your game, all accessed
+using the "Build" menu:
+
+<ul>
+<li><b>Compile for Debugging:</b> this builds a debugging version
+of the game, which you can run with the Debugger (which is integrated into
+TADS Workbench).
+
+<li><b>Compile for Release:</b> this builds a version of the compiled
+.t3 file that you can distribute to players.  This version doesn't
+include any debugging information, and includes your graphics and
+sound resources bundled into the .t3 file.
+
+<li><b>Compile Application:</b> this builds an executable Windows
+application (.exe) file that you can distribute to players.  This is
+the same version of your game as the Compile for Release version, but
+is bound into the HTML TADS Interpreter for Windows to form a
+stand-alone executable application that players can run directly,
+without installing any additional software.
+
+<li><b>Compile Installer:</b> this builds an automatic Setup program
+that you can distribute to players.  This is the same version of your
+game as the Compile Application version, bundled into an
+installer program.  The resulting installer program is a single,
+stand-alone executable that you can distribute to players (you don't
+need to give players any other files, since the installer program
+contains all of its installation data); players simply run the
+executable program, which prompts for installation parameters and
+extracts the game files onto the player's hard disk.
+
+</ul>
+
+<p>
+The debug log window will display the build status, including the
+program command lines and any error messages from the compiler and
+other tools.  The build proceeds in the background, so you can
+continue with other work while the build is running.  If you're
+compiling the debugging version of your game, you cannot, of course,
+run the game until the build completes, and you cannot start a new
+build while another build is running.
+
+
+<h2>
+Going to an Error Line
+</h2>
+
+<p>
+The debug log window shows any error messages that the compiler
+produces as it compiles your source code.  If the compiler does
+find errors, you can jump directly to the line containing the
+error in your source file by double-clicking on the error message
+in the debug log window.
+
+<h2>
+<a name='settings'>Build Settings</a>
+</h2>
+
+<p> If you created your project with the New Project Wizard, the
+wizard will have set up your project with all of the necessary
+settings for compiling, although you might want to customize some
+settings.  If you didn't use the wizard to create your project, you
+might need to manually configure the compiler settings before you
+build for the first time.  To customize or create the build settings,
+go to the "Build" menu, and select "Settings" to open the Build
+Settings dialog.
+
+<p>
+The Build Settings dialog is organized into several pages, arranged
+by function.  In most cases, you can use the default settings, but
+you should scan each page to make sure the settings are suitable for
+your game.
+
+<h2>
+Build Settings: Include
+</h2>
+
+<p><b>Directories to search for #include files:</b> This is the list
+of directories that the compiler will search for files included with
+<tt>#include</tt> directives.  You don't normally have to add
+anything here, because the compiler automatically searches both the
+directory containing your source files and the directory containing
+the TADS system headers when looking for included files.  However, if
+you're using any additional third-party libraries, you should add to
+this list the directory or directories where you've installed the
+header files for those libraries.
+
+<h2>
+Build Settings: Output
+</h2>
+
+<p><a name='dbggam'><b>Debugging image file</b></a>: This is the
+compiled (or "image") file for debugging.  You can't change this
+setting, because it's always the same as the image file that you
+currently have loaded.  This version of the compiled game contains
+extra information that the TADS Debugger uses to provide source-level
+debugging.  This file is created whenever you use the "Compile for
+Debugging" command on the "Build" menu.
+
+<blockquote><b>Note:</b> the compiler does not bundle graphics and
+sound resources into the debugging version of the game.  This makes
+it faster to compile the debugging version, since the build process
+skips the resource bundling step.  As a result, all of your resource
+files must be in the same directory as the debugging game file (or
+subdirectories of the game file directory, if you're using relative
+paths in the resource names), so that the interpreter can find the
+resources as external files at run-time.  Refer to <a
+href='../htmltads/res.htm#naming'>resource naming conventions</a> for
+information on how multimedia versions of TADS find resource files.
+</blockquote>
+
+<p><a name='rlsgam'><b>Release .t3 file:</b></a>  This is the compiled
+image file that you can release to players.  This version of the image file
+does not contain any symbolic debugging information, so it cannot be used
+with the debugger; as a result, it's smaller and runs more quickly than
+the debugging version.  This version includes the resources that you
+included in the "resource files" section of your
+<a href='#project'>project window</a>, all bundled into the
+file, so that you need only distribute this single file to players;
+the only other thing needed to play your game is the TADS Interpreter.
+This file is portable to all platforms that have a TADS Interpreter;
+you don't need to recompile your game to run it on other types of
+computers.  This version of the file is created whenever you
+use the "Compile for Release" command on the "Build" menu.
+
+<blockquote><b>Note:</b> This file
+must use a different name than the debugging game file, so that you don't
+overwrite the debugging version with the release version when you build
+the latter.
+</blockquote>
+
+<p><a name='exe'><b>Executable file:</b></a>  This is an executable
+application (.EXE) file that contains your <a href='#rlsgam'>release
+.t3 file</a>, including the bundled resources, bound together with the
+HTML TADS 3 Interpreter for Windows.  You can distribute this single file
+to players; nothing else is needed to play your game.  You might prefer
+to distribute this form of your game to players who are using Windows,
+rather than the release .t3 file, because players won't need to install
+a TADS Interpreter separately.  For players who aren't using Windows,
+however, you'll want to distribute the release .t3 file, because that
+file is portable to all platforms with a TADS 3 Interpreter; the executable
+version only works on Windows machines.  To build the executable file,
+open the "Build" menu and select "Compile Application (.EXE)."
+
+<h2>
+Build Settings: Defines
+</h2>
+
+<p><b>Symbols to #define:</b> This is a list of preprocessor symbols
+to define when compiling your game.  Use the "Add" button to add a
+new symbol to the list.  Each symbol listed here is defined as though
+you had used a <tt>#define</tt> preprocessor directive just before the
+first line of your primary source file.
+
+<p><b>Symbols to #undef:</b> This is a list of pre-defined preprocessor
+symbols that you want to undefine.  This lets you remove symbols that
+the compiler normally defines for you.  The effect is the same as though
+you had used an <tt>#undef</tt> directive just before the first line
+of your primary source file.
+
+<h2>
+Build Settings: Diagnostics
+</h2>
+
+<p><b>Warning messages:</b> You can use this to select how cautious
+you want the compiler to be about reporting warnings.  If you select
+"None," the compiler won't generate any warning messages.  The
+default, "Standard," lets the compiler show warnings about constructs
+in your code that are usually problematic - these are situations where
+experience has shown that programmers <i>usually</i> intended
+something other than what the code actually says.  "Pedantic" tells
+the compiler to generate warnings about constructs that only
+<i>occasionally</i> indicate problems - these are situations where
+people sometimes confuse one thing for another, but not usually.
+
+<p><b>Verbose error messages:</b> If this box is checked, the compiler
+will generate lengthy error messages that attempt to describe in
+detail each problem the compiler finds in the source code.  If the box
+is unchecked, the compiler will generate rather terse messages that
+don't provide any detail.  If you're an experienced programmer, you're
+probably already familiar with the sort of jargon that compilers are
+fond of, and you'll probably have no problem interpreting the terse
+messages; you might prefer terse mode because it'll take you less time
+to read the error messages.  Less experienced users might find the
+verbose messages to be a lot more helpful, since they try to describe
+the problems in plain English, and many offer possible solutions, or
+at least suggestions for what to look at.
+
+<p><b>Treat warnings as errors:</b> If this box is checked, the
+compiler will abort the build if a source module generates any warning
+messages.  The compiler doesn't normally do this - warnings aren't
+true errors, in that they indicate situations that <i>could</i> be
+problematic, but which nonetheless are valid TADS source code that the
+compiler can understand and unambiguously interpret.  However, many
+programmers have found through experience that compiler warnings
+indicate actual problems often enough that it's always worth
+investigating them.  One easy way to discipline yourself to
+investigate all warnings is to use this option - it prevents you from
+finishing a build until you've fixed every warning, so you can't put
+off your investigation.  This ensures that you don't accumulate a big
+pile of warnings that you'll have to slog through late in your
+development schedule - which, if you're like most people, would mean
+that you'd never actually get to it.
+
+<h2>Build Settings: Advanced</h2>
+
+<p><b>Run Pre-Initialization during release build:</b> You should
+normally leave this box checked.  If you clear this box, the pre-init
+procedure will be skipped during a release build, which means that
+pre-init won't run until the user actually starts running the game.
+
+<p><b>Link default system modules:</b> By default, this box is
+checked, which causes the standard TADS 3 "system library" modules to
+be included in the build.  The system library contains things like the
+standard start-up code, and it's rare for anyone to want to remove
+these modules.  Uncheck this box if you want to use custom
+replacements for the system library.
+
+<p><b>Default source-file character set:</b> Check the checkbox and
+fill in the text box below it if you want to specify a default
+character set name for your source files.  The character set name must
+be one of the names the compiler recognizes: ASCII, UTF8, Latin-1,
+Latin-2 (etc), Win-1252 (or other Windows code page numbers), DOS-850
+(or other DOS code-page numbers), etc.  See the TADS System Manual
+for more information and a more complete list.
+
+<p>If you leave this box unchecked, the compiler assumes that source
+files use your local Windows code page (e.g., 1252, "Windows Western",
+for systems in the US and Western Europe).
+
+<p><b>Additional command-line options:</b> If you need to specify any
+command-line options that cannot be specified elsewhere in the dialog
+box, you can enter the text of the options here.  Look
+<a href='../../doc/t3build.htm'>here</a> for the full set of compiler options.
+(In most cases, you won't need to put anything here, since all of the
+common compiler options are all accessible through the dialog without
+resorting to typing them in here directly.)
+
+<h2>
+Build Settings: Windows SETUP
+</h2>
+
+<p><a name='install_exe'><b>Setup Program:</b></a>  This is the name of
+the executable application file that will contain the installer for your
+game.  TADS Workbench can create an automatic installation program for
+your game; this installer will be bundled into the single file named here.
+You can distribute this file to players, who can install your game on
+their Windows computers simply by running this installer program.  The
+installer is entirely self-contained, so this is the only file you will
+need to distribute to players.
+
+<p>Building an installer for your game has several advantages over
+simply distributing the <a href='#exe'>game executable file</a> or
+the <a href='#rlsgam'>release .t3 file</a>.  Like a game executable,
+you can distribute the installer as a single, self-contained,
+stand-alone file, so players won't need to download or install any
+additional software.  Unlike the game executable, you can include
+additional files, such as a license text file, or a hint file, with
+the installer; these additional files are bundled into the installer
+executable, then extracted and installed on the player's computer
+when the player runs the installer.  With the installer version, you
+can specify a special desktop icon for your game, and the game will
+be set up in the player's Windows "Start" menu for easy access and
+better integration into the Windows desktop.  Finally, the installer
+automatically sets up an "uninstall" utility that lets the player
+easily remove the game when they're finished with it.
+
+<p>To build the installer, after configuring the installer options,
+open the "Build" menu and select "Compiler Installer."
+
+<p>To enter installer options, you can type the options directly into
+the text box, or you can use the "Edit" button to use a dialog to
+enter the settings.  The settings in the "Edit" dialog are:
+
+<blockquote>
+<p><b>Display Name:</b> This is the name of your game that is displayed
+to the player during the installation process.
+
+<p><b>Saved Game Extension:</b> This is the file suffix that your game's
+saved position files will use.  With the standard TADS Interpreter, the
+suffix is always "SAV".  By using a unique suffix for your game, you'll
+make it possible for the player to restore a saved position and start
+the game all at once simply by double-clicking on a saved position file
+on the Windows desktop.  To make this possible, the installer will create
+a file type association for the suffix you specify, so that the Windows
+desktop will launch your game's executable when the player double-clicks
+on one of your game's saved position files.
+
+<p><b>Default Program Directory:</b> This specifies the default directory
+in which your game will be installed on the player's computer.  Most
+people use a subdirectory of "<tt>C:\Program Files</tt>" for the default
+value here.  The player will be able to override this during installation,
+but you can make installation much easier and faster for most people by
+suggesting a suitable default here.
+
+<p><b>Default Start Menu Folder:</b> This specifies the default name of
+the Windows "Start" menu folder that the installer will create for your
+game.  As with the default program directory, the player can override
+this during installation, but a good default will make things easier
+for most people.
+
+</blockquote>
+
+<p>Note that some other Project settings affect the Windows SETUP
+builder, but aren't entered directly in this dialog.  In particular,
+the Special Files section of the Project window lets you select
+ReadMe and License files that the SETUP program will display, and
+lets you specify the icon for the .exe version of your game (which
+is the version that gets bundled into the SETUP program).
+
+<h2>Build Settings: Release ZIP</h2>
+
+<p><b>Zip File:</b> Specify the filename for the Release ZIP package.
+This is the name of the file that the "Build Release ZIP" command
+will create.
+
+<p><b>Include in "Build All Packages"</b>: If this box is checked,
+the Build All Packages command will build this package.
+
+<h2>Build Settings: Web Page</h2>
+
+<p><b>Output Directory:</b> Specify the name of the folder that will
+contain the files making up the generated Web page.
+
+<p><b>Offer game download as Game Only/Release ZIP:</b> Select which
+format you want to use for the main download link for your game on the
+generated Web page.  The Web page will have a link for the selected
+format, and this file will be copied to the Web output directory.
+
+<p><b>Include Windows SETUP:</b> If this is checked, the Web page
+will contain a download link for the Windows-only SETUP package,
+and the SETUP file will be copied to the output directory.
+
+<p><b>Include Source ZIP:</b> If this is checked, the Web page will
+contain a download link for the Source package, and the Source ZIP
+file will be copied to the output directory.
+
+<p><b>Include in "Build All Packages"</b>: If this box is checked,
+the Build All Packages command will build this package.
+
+
+<h2>Build Settings: Source File ZIP</h2>
+
+<p><b>Zip File:</b> Specify the filename for the Source ZIP package.
+
+<p><b>Include in "Build All Packages"</b>: If this box is checked,
+the Build All Packages command will build this package.
+
+
+
+<h2>
+<a name='dirtree'>Suggested Directory Layout</a>
+</h2>
+
+<p>
+You can arrange your source files and compiled game files into any
+set of directories that suit your working style.  We have some
+guidelines, however, that you might wish to consider:
+
+<p>
+<ul>
+<li><b>Don't put your source files or game files in the TADS program
+directory, or any subdirectory of the TADS program directory.</b>
+This will make it simpler to upgrade to a new version of TADS in
+the future.  The easiest way to upgrade TADS is to uninstall the
+old version, then install the new version.  If you were to put any
+of your own source files into the TADS program directory, you might
+accidentally delete your files when you delete the older version of
+TADS.  To prevent this from happening, we recommend that you create
+a separate directory tree, outside of the TADS directory, for your
+source files.
+
+<li><b>Keep your resource files in the same directory as your debugging
+game file, or a subdirectory thereof.</b>  TADS Workbench does not bundle
+resources into your debugging game, so when you're running your game
+from within TADS Workbench, it will load the resources from the original
+individual files.  When you compile your game for release, however,
+TADS bundles all of the resources into the compiled game file, storing
+the resource paths relative to the debugging game's directory; the
+release game will therefore load directly from the .t3 file,
+rather than looking for them in external files, which means that you
+need only distribute the release version of the .t3 file to players.
+By storing the original resource files under the directory containing
+the debugging .t3 file, you will ensure that this difference between
+the debugging and release versions is transparent to your game.
+
+</ul>
+
+<p>
+The easiest way to conform to these guidelines is simply to put all
+of your files (sources, resources, and compiled games) into a single
+directory, separate from the TADS program directory.  However, some
+people prefer to organize their files into subdirectories to make
+them easier to manage; so, we offer this suggested directory layout:
+
+<blockquote>
+
+<p><b>TADS program directory:</b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<tt>C:\Program Files\TADS 3 Toolkit</tt>
+
+<p><b>Main game directory:</b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<tt>C:\Games\MyGame</tt>
+
+<p><b>Source file directory:</b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<tt>C:\Games\MyGame\source</tt>
+
+<p><b>Compiled game directory:</b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<tt>C:\Games\MyGame\GAM</tt>
+
+<p><b>Image resources (JPEG, PNG, and MNG files):</b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<tt>C:\Games\MyGame\GAM\images</tt>
+
+<p><b>Sound resources (MIDI, WAV, MP3, and Ogg Vorbis files):</b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<tt>C:\Games\MyGame\GAM\sounds</tt>
+
+</blockquote>
+
+
+<h2>Packaging</h2>
+
+<p>Workbench has several packaging commands that make it easy to
+assemble releasable versions of your game.  Workbench can build any
+or all of the following:
+
+<ul>
+
+<li>A portable compiled version of your game (a .t3 file), playable
+on any computer with a TADS 3 Interpreter.
+
+<li>A Windows-only .exe file version of your game, playable on any
+Windows machine without installing any extra software.
+
+<li>A portable Release ZIP package, which is a single .zip file
+containing your compiled game, plus your ReadMe and License files,
+plus your "feelies."
+
+<li>A Windows-only SETUP package, which is a single .exe file that
+automatically installs your game (along with your ReadMe, License, and
+"feelies" files) onto a player's Windows machine, complete with a
+desktop icon and a Start menu group.
+
+<li>A Source ZIP package, which is a single .zip file containing your
+entire project's source code, letting you easily move the project to
+another computer or distribute the project to other people.
+
+<li>A Web page for your game, featuring your custom artwork and game
+description, with download links to any or all of the above packages
+and any extra files you wish to include.
+
+</ul>
+
+<p>Each of these packages has a corresponding command in the Build
+menu.  In addition, you can build all of the packages in one step by
+using the Build All Packages command.  Note that you can select which
+packages count as "all packages," using the "Include in Build All
+Packages" checkboxes in the Build Settings pages for the different
+packages.  If you don't intend to release a particular package option,
+you can simply uncheck the "Include in Build All Packages" checkbox on
+that package's Build settings page - doing so will save a little time
+in the Build All Packages procedure, since Workbench will skip the
+steps needed to create the unwanted package or packages.  (Note,
+though, that some packages are dependent on other packages: so even if
+a package's "Include in All" box is unchecked, Workbench might still
+need to build it in the course of building some other package.)
+
+<h3>Source ZIP package and external project files</h3>
+
+<p>A project's list of source files can contain both "local" and
+"external" files.  A local file is simply a file within the project
+folder - that is, the folder containing the project's defining .t3m
+file.  (A file that's inside a sub-folder within the project folder
+counts as a local file, as does a file within a sub-sub-folder, and
+so on to any depth.)  An external file is any file that's not within
+the project folder or one of its sub-folders.
+
+<p>External files are generally shared source files - files that you
+use in multiple projects.  All of the files from the Adv3 library are
+external, for instance, since they reside in the system library
+folder, not within the project folder.  These files are designed to be
+the common foundation of most TADS 3 games, so they're obviously meant
+to be shared.  Likewise, the many published add-on "extension"
+libraries are designed to be shared.  If you download one of these
+extensions, you'll probably want to install it in a common folder that
+you can share among all of your projects, rather than copying it
+directly into a single project's folder tree.  You might also want to
+create your own private external library, for sharing some common code
+among your own projects.
+
+<p>When you create a source ZIP package, it's easy for Workbench to
+handle the local files: it just stores them in the ZIP file using the
+same folder paths they have within the project folder.  But things are
+a little trickier for external files.  The complication is that the
+ZIP file's internal folder structure has to be entirely relative to
+the project folder.  External files aren't within this folder - they
+are by definition outside of it.  As a result, there's no way to store
+their folder paths within the ZIP file.  Without this location
+information, there's no way for a recipient to know where the files
+should go when unpacking the source package.
+
+<p>Even so, you'd normally want those external files included in the
+package, since otherwise a recipient would have to go find and
+download any published external libraries you're using - and would be
+completely out of luck for any shared libraries that you created for
+your own use but never published.
+
+<p>To solve this problem, Workbench stores external libraries in the
+source package as follows.  First, it surveys the project to identify
+the external folders mentioned in the project.  For each external
+folder, Workbench creates a <i>separate</i> ZIP file containing
+<i>all</i> of the files in the external folder.  (Workbench includes
+all of the files, whether or not they're mentioned in the project
+list, to ensure that auxiliary files like READMEs and documentation
+are included.  There's no equivalent of the "Notes &amp;
+Miscellaneous" section for external libraries, so Workbench simply
+includes everything in the external folder trees.)  Finally, Workbench
+bundles all of these separate ZIP files into the main source ZIP
+package.
+
+<p>This creates a little extra work for the recipient of the source
+package.  After unzipping the main source package, the recipient will
+still have to do something with the separate ZIP files.  However, this
+extra step has the benefit that the recipient can decide exactly what
+to do with the external libraries.  She has two main options:
+
+<ul>
+
+<li>Unzip each one directly into the project folder.  This approach
+is simple, but it doesn't let the recipient share these libraries
+among other projects of her own.
+
+<li>Unzip each one into her own common folder for extensions.  If the
+recipient already uses other third-party extension libraries, this
+will be the natural way to go, since she'll already have Workbench's
+Library Paths configuration set up with a common extensions folder.
+
+</ul>
+
+<p>Either option will allow the recipient to build the project, so
+it's just a matter of which working style suits her best.
+
+<p>Note that Workbench does <b>not</b> include any files from the
+system library or header folders.  Workbench assumes that recipients
+of the source package will already have all of the system files as
+part of their TADS installations, so they won't need a separate copy
+included in the source package.
+
+
+<br><br><br><br><br>
+<hr>
+<br>
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+<font size=-1>
+Copyright &copy;1999, 2007 by Michael J. Roberts.
+</font>
+
+</body>
+</html>
+

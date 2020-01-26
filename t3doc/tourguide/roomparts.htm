@@ -1,0 +1,256 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>roomParts</title><meta name="keywords" content="roomParts,Room,OutdoorRoom,RoomPart,Floor,FloorlessRoom,static,inherited,moveIntoAdd,moveOutOf"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>roomParts
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="roomxxxxaction.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="cannotgothatway.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">For a normal Room the library supplies a defaultFloor, defaultCeiling and four defaultWalls which provide a default "You see nothing special about the floor/ceiling/wall" message if examined. An OutdoorRoom simply has a defaultGround and defaultSky which perform the same function. These objects are listed in the roomParts property of the respective classes, so that they are always available to be examined in any Room or OutdoorRoom. This property can always be overridden, however, if you want more specific or appropriate roomParts for individual Rooms or classes of Room. For example, we may define some roomParts more appropriate to the Deck of our ship on its subterranean lake:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">defaultDeck&nbsp;:&nbsp;Floor&nbsp;'deck/ground/floor'&nbsp;'deck'
+<br>
+&nbsp;&nbsp;"The&nbsp;deck&nbsp;is&nbsp;made&nbsp;of&nbsp;close-fitting&nbsp;wooden&nbsp;planks.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;putDestMessage&nbsp;=&nbsp;&amp;putDestFloor
+<br>
+;
+<br>
+
+<br>
+caveSky&nbsp;:&nbsp;RoomPart&nbsp;'roof/ceiling'&nbsp;'ceiling'
+<br>
+&nbsp;&nbsp;"The&nbsp;dark&nbsp;roof&nbsp;of&nbsp;the&nbsp;cave,&nbsp;a&nbsp;long&nbsp;way&nbsp;up,&nbsp;dimly&nbsp;reflects&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rippling&nbsp;green&nbsp;light&nbsp;from&nbsp;the&nbsp;lake.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+class&nbsp;Deck&nbsp;:&nbsp;ShipboardRoom,&nbsp;OutdoorRoom
+<br>
+&nbsp;<b>&nbsp;roomParts&nbsp;=&nbsp;[defaultDeck,&nbsp;caveSky]
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that rooms should generally have one and only one roomPart that represents the floor of the room, which must be of class Floor; the main exception here is any room that is <i>meant </i>to be floorless, such as a FloorlessRoom or a room defined with the Floorless mix-in class. Since we have made the top of the mast a Floorless, Deck, changing the room parts of <a href="floorlessroom.htm">Deck</a> leaves the top of the mast with caveSky as its only roomPart, which is, in fact, just what we want. We could have achieved precisely the same result by defining:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">topOfMast&nbsp;:&nbsp;FloorlessRoom&nbsp;'Top&nbsp;of&nbsp;Mast'&nbsp;'the&nbsp;top&nbsp;of&nbsp;the&nbsp;mast'
+<br>
+&nbsp;&nbsp;"From&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;mast&nbsp;you&nbsp;can&nbsp;see&nbsp;miles&nbsp;out&nbsp;across&nbsp;the&nbsp;lake&nbsp;to&nbsp;starboard
+<br>
+&nbsp;&nbsp;&nbsp;and&nbsp;the&nbsp;shore&nbsp;over&nbsp;to&nbsp;port.&nbsp;The&nbsp;deck&nbsp;below&nbsp;looks&nbsp;a&nbsp;sickeningly&nbsp;long&nbsp;way&nbsp;down.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;mainDeck
+<br>
+&nbsp;&nbsp;&nbsp;bottomRoom&nbsp;=&nbsp;(mainDeck.destination)
+<br>
+&nbsp;&nbsp;&nbsp;<b>roomParts&nbsp;=&nbsp;[caveSky]</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The defaultDeck and defaultCeiling will serve well enough for a Cabin, but it is hardly appropriate for a Cabin to have the north, south, east and west walls found by default in a Room, so we need to provide a new set of roomParts:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">defaultForeBulkhead&nbsp;:&nbsp;RoomPart&nbsp;'f&nbsp;fore&nbsp;foreward&nbsp;bulkhead/wall*walls'&nbsp;'foreward&nbsp;bulkhead';
+<br>
+&nbsp;&nbsp;
+<br>
+defaultAftBulkhead&nbsp;:&nbsp;RoomPart&nbsp;'a&nbsp;aft&nbsp;bulkhead/wall*walls'&nbsp;'aft&nbsp;bulkhead';
+<br>
+&nbsp;&nbsp;
+<br>
+defaultPortWall&nbsp;:&nbsp;RoomPart&nbsp;'p&nbsp;port&nbsp;wall*walls'&nbsp;'port&nbsp;wall';
+<br>
+
+<br>
+defaultStarboardWall&nbsp;:&nbsp;RoomPart&nbsp;'sb&nbsp;starboard&nbsp;wall*walls'&nbsp;'starboard&nbsp;wall';
+<br>
+
+<br>
+
+<br>
+class&nbsp;Cabin&nbsp;:&nbsp;ShipboardRoom,&nbsp;Room
+<br>
+&nbsp;&nbsp;roomBeforeAction()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIs(Jump))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;had&nbsp;better&nbsp;not&nbsp;try&nbsp;jumping&nbsp;here,&nbsp;{you/he}&nbsp;might&nbsp;hit
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{your}&nbsp;head&nbsp;on&nbsp;the&nbsp;deck&nbsp;beams.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;roomAfterAction
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>if(gActionIs(Look))</b>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"\nThe&nbsp;ship&nbsp;creaks&nbsp;ominously.\n";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>roomParts&nbsp;=&nbsp;[defaultDeck,&nbsp;defaultCeiling,&nbsp;defaultForeBulkhead,&nbsp;defaultAftBulkhead,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultPortWall,&nbsp;defaultStarboardWall]
+<br>
+</b>;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">The other change made here is to remove the gActionIs(Examine) from the roomAfterAction, since otherwise the creaking message will mask the default  "You see nothing special about it" response to an attempt to examine these default cabin parts.
+<br>
+
+<br>
+In the greatCabin, however, even some of these specialised roomParts may not be entirely appropriate, since the aft bulkhead is taken up with a window and the foreward one may have a special opening revealed by the press of a button. We can thus further customise the roomParts for this particular room:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">greatCabinForeBulkhead&nbsp;:&nbsp;defaultForeBulkhead
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"The&nbsp;foreward&nbsp;bulkhead&nbsp;is&nbsp;made&nbsp;of&nbsp;polished&nbsp;oak&nbsp;planks.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;bulkheadDoor.isOpen&nbsp;?&nbsp;bulkheadDoor.desc&nbsp;:&nbsp;nil&gt;&gt;&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+greatCabinAftBulkhead&nbsp;:&nbsp;defaultAftBulkhead
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"The&nbsp;aft&nbsp;wall&nbsp;of&nbsp;the&nbsp;cabin&nbsp;is&nbsp;pierced&nbsp;by&nbsp;a&nbsp;series&nbsp;of&nbsp;windows&nbsp;across
+<br>
+&nbsp;&nbsp;&nbsp;most&nbsp;of&nbsp;its&nbsp;width.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+greatCabin&nbsp;:&nbsp;Cabin&nbsp;'Great&nbsp;Cabin'&nbsp;'the&nbsp;great&nbsp;cabin'
+<br>
+&nbsp;&nbsp;"The&nbsp;great&nbsp;cabin&nbsp;occupies&nbsp;the&nbsp;entire&nbsp;width&nbsp;of&nbsp;the&nbsp;ship&nbsp;at&nbsp;the&nbsp;stern.&nbsp;The&nbsp;stern
+<br>
+&nbsp;&nbsp;&nbsp;windows&nbsp;aft&nbsp;look&nbsp;out&nbsp;over&nbsp;the&nbsp;water,&nbsp;while&nbsp;there&nbsp;is&nbsp;a&nbsp;solid&nbsp;wooden&nbsp;bulkhead
+<br>
+&nbsp;&nbsp;&nbsp;foreward.&nbsp;The&nbsp;main&nbsp;piece&nbsp;of&nbsp;furniture&nbsp;is&nbsp;a&nbsp;sturdy&nbsp;wooden&nbsp;desk,&nbsp;while&nbsp;a&nbsp;flight&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;steps&nbsp;leads&nbsp;up&nbsp;to&nbsp;the&nbsp;deck&nbsp;above.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;cabinSteps
+<br>
+&nbsp;&nbsp;&nbsp;fore&nbsp;=&nbsp;bulkheadDoor
+<br>
+&nbsp;&nbsp;&nbsp;<b>roomParts&nbsp;=&nbsp;static&nbsp;inherited&nbsp;-&nbsp;defaultAftBulkhead&nbsp;-&nbsp;defaultForeBulkhead
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;greatCabinAftBulkhead&nbsp;+&nbsp;greatCabinForeBulkhead
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's a couple of points to note here: the first is that we can make our specialised room parts inherit from their corresponding default <i>objects</i>; this avoids the need to specify the vocabulary and name properties all over again. The second is the use of the static and inherited keywords to adjust the list of roomParts from that specified in the Cabin class (rather than having to list the whole lot again). We use static since the list of roomParts will never be changed during the game, so the expression that follows the static keyword can be resolved at compile time rather than being evaluated when the game is run.
+<br>
+
+<br>
+There's also a couple of points to note about roomParts in general. The main one is that the library apparently expects them to remain fixed throughout the duration of the game, which will normally be the case (most rooms with four walls, a floor and a ceiling tend to keep them). There may, however, be odd occasions when you want to change the list of room parts in a particular location during the course of a game: perhaps you blow a hole in one of the walls, or the ceiling collapses, or the floor gives way. The thing to note there is that if you want to remove a room part from a room during the course of the game you need to remove it <i>both</i> from the locations roomParts list <i>and</i> its contents list. For example, if the main bathroom's ceiling is blown away in a hurricane, you'd need to write something like:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;mainBathroom.roomParts&nbsp;-=&nbsp;defaultCeiling;
+<br>
+&nbsp;&nbsp;&nbsp;mainBathroom.contents&nbsp;-=&nbsp;defaultCeiling;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Similarly, if you want to <i>add</i> a room part to a location dynamically during the course of a game you'll need to add it both to the location's roomParts list and to its contents list. The reason for this that Room's initializeThing method appends the location's roomParts list to its contents list, but the library provides no automatic means of maintaining this link thereafter.
+<br>
+
+<br>
+Where a room has custom room part that you want to add or remove dynamically, prior to TADS 3.0.9 it might be simpler not to include it in the roomParts list at all. The alternative would be simply to place it in its room using the location property in the normal way, for example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;bathroomCeiling:&nbsp;RoomPart&nbsp;'ceiling'&nbsp;'ceiling'&nbsp;@mainBathroom
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;full&nbsp;of&nbsp;cracks&nbsp;and&nbsp;looks&nbsp;like&nbsp;it&nbsp;wouldn't&nbsp;take&nbsp;much&nbsp;to&nbsp;make&nbsp;it&nbsp;collapse&nbsp;altogether.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then, when the bathroom ceiling finally does collapse, all you need to write is:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;bathroomCeiling.moveInto(nil);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Of course, if you do this, you need to remember to exclude defaultCeiling from the list of roomParts when you define mainBathroom. A further consideration is that although it's reasonably easy to cope with custom walls and ceilings this way, custom floors are a different matter: the library expects the floor (or ground) of a room to be among its roomParts, and although this behaviour can be overridden on a given room (e.g. by overriding its roomFloor property), it's probably simplest to stick to this rule.
+<br>
+
+<br>
+The methods moveIntoAdd(room) and moveOutOf(room) provide a possibly neater alternative. With these methods you can include bathroomCeiling in the bathroom's roomParts property in the normal way, and when the ceiling collapses simply call:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bathroomCeiling.moveOutOf(bathroom);</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+If the ceiling were subsequently repaired you could reverse this by calling:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bathroomCeiling.moveIntoAdd(bathroom);</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+This leads on to a more general point: where you want to use customised walls and ceilings (and possibly even floors) in a given location, it's always possible to by-pass the roomParts mechanism altogether and simply make your customised room parts ordinary Fixtures located in the room. If you do this, it's probably better to use the RoomPart class for them than the Fixture class (since the RoomPart class contains some specializations that make better sense for things like walls and ceilings), and you still have to remember to remove the default room part equivalents from the location's roomParts list when you define the room, or you could end up with, say, two west walls, the default one and your custom one.
+<br>
+
+<br>
+For this reason, it's probably easier to get into the habit of always putting room parts - even custom ones - into their location's roomParts list. This way you're much more likely to remember to remove the corresponding default room part, and you also make sure you take advantage of the library's specialized handling of room parts. For example, if you define a custom ceiling for one location, and then find it would suit another just as well, it's probably easier to add it to the roomParts list of both locations than to make into a <a href="multiinstance.htm">MultiInstance</a> object.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,90 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultCommandTopic</title><meta name="keywords" content="DefaultCommandTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultCommandTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="commandtopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="overridingobeycommand.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">By default, if a player issues a command which the author has not catered for, such as CURATOR, KISS SARAH, the game responds with a message like "The curator refuses your request." The DefaultCommandTopic provides a convenient means of customizing this response, either on each individual actor state, or globally for the actor.
+<br>
+
+<br>
+Here's how we might define a global DefaultCommandTopic (located in the sarah object) for Sarah:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;DefaultCommandTopic,&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;No,&nbsp;I\'d&nbsp;really&nbsp;rather&nbsp;not!&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;don\'t&nbsp;think&nbsp;so.&lt;/q&gt;&nbsp;she&nbsp;declines.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Since&nbsp;when&nbsp;did&nbsp;you&nbsp;have&nbsp;the&nbsp;right&nbsp;to&nbsp;boss&nbsp;me&nbsp;around?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;she&nbsp;demands.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;merely&nbsp;shakes&nbsp;her&nbsp;head.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Do&nbsp;it&nbsp;yourself!&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&lt;.p&gt;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This is fine, except that if a command is directed at Sarah before you've struck up a conversation with her, you get something like this:
+<br>
+
+<br>
+<b>&gt;woman, examine the ship</b>
+<br>
+"Hello there," you say.
+<br>
+
+<br>
+"Hello." she smiles at you, slightly quizzically.
+<br>
+
+<br>
+"Do it yourself!" she tells you.
+<br>
+
+<br>
+
+<br>
+The player will probably see what it means, but it does read a little strangely. It would be nicer if we could get something like this:
+<br>
+
+<br>
+&gt;<b>woman, x ship</b>
+<br>
+"Hello there," you say.
+<br>
+
+<br>
+"Hello." she smiles at you, slightly quizzically.
+<br>
+
+<br>
+"Young woman, please examine the ship," you request.
+<br>
+
+<br>
+"Do it yourself!" she tells you.
+<br>
+
+<br>
+
+<br>
+This can be achieved, but it will take a bit of work; fortunately this work will prove generally beneficial in extending the power of the CommandTopic system. We'll take it a step at a time.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

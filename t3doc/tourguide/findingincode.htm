@@ -1,0 +1,112 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Finding by moving</title><meta name="keywords" content="DigWith,roomParts,roomParts, replacing defaultFloor,defaultFloor,defaultFloor, replacing"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Finding by moving
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="wordgames.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="sightpresence+islisted.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Finding concealed items can be implemented in code using the classes and methods we have already seen, e.g. by moving an object from nil into the player character's location when it is discovered. This is the technique we'll use to find the dynamite. We'll assume that the dynamite is buried in the sandy floor of the small cave. Since it's not obvious that one should dig there, and the player can hardly be expected to try digging in every location in the game, we'll drop a heavy hint by leaving a spade leaning against the wall of the cave:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">spade&nbsp;:&nbsp;Thing&nbsp;'spade'&nbsp;'spade'&nbsp;@smallCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;good&nbsp;solid&nbsp;spade,&nbsp;with&nbsp;a&nbsp;stout&nbsp;wooden&nbsp;handle&nbsp;and&nbsp;sharp&nbsp;steel&nbsp;blade.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;spade&nbsp;leans&nbsp;against&nbsp;the&nbsp;wall&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;verifyIobjDigWith&nbsp;{&nbsp;logicalRank(150,&nbsp;'digging&nbsp;implement');&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that the last line of this definition is simply a more compact way of writing:
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+iobjFor(DigWith)
+<br>
+{
+<br>
+&nbsp;&nbsp;verify()&nbsp;{&nbsp;logicalRank(150,&nbsp;'digging&nbsp;implement');&nbsp;}
+<br>
+}
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Having defined the digging implement, we need to define a floor that can be dug in and will yield dynamite when dug. You will recall that we start the <a href="dynamite.htm">dynamite</a> in limbo (i.e. location = nil). Once the dynamite is discovered, we do not want the player to find another stick, unless the first one has been destroyed (by exploding). When it is destroyed, the stick of dynamite is moved back into nil, which means the player could then dig up another one from the small cave floor. This is fine, since it prevents the game becoming unwinable should the player allow his first stick of dynamite to detonate in the wrong place. It would be good, however, to indicate that the second (and any subsequent) stick of dynamite is 'another' one, and not the same one miraculously reconstructed (even though, in the internal implementation, that's precisely what it is). We'll want our sandy diggable floor to be a replacement for the defaultFloor in the cave, so we'll derive it from that:</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+smallCaveFloor&nbsp;:&nbsp;defaultFloor
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"The&nbsp;floor&nbsp;of&nbsp;this&nbsp;cave&nbsp;is&nbsp;very&nbsp;sandy.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(DigWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;another&nbsp;=&nbsp;(dynamite.moved&nbsp;?&nbsp;'another'&nbsp;:&nbsp;'a'&nbsp;);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dynamite.isIn(nil))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;uncover&nbsp;&lt;&lt;another&gt;&gt;&nbsp;stick&nbsp;of&nbsp;dynamite.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynamite.moveInto(smallCave);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;dig&nbsp;in&nbsp;the&nbsp;sand&nbsp;for&nbsp;a&nbsp;while&nbsp;but&nbsp;find&nbsp;nothing.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Finally, we need to amend our definition of smallCave so that it incorporates our special floor:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">smallCave&nbsp;:&nbsp;DarkRoom&nbsp;'Small&nbsp;Cave'&nbsp;'the&nbsp;small&nbsp;cave'
+<br>
+&nbsp;&nbsp;"The&nbsp;only&nbsp;way&nbsp;out&nbsp;of&nbsp;this&nbsp;small<b>,&nbsp;sandy</b>&nbsp;cave&nbsp;is&nbsp;to&nbsp;the&nbsp;south.&nbsp;"
+<br>
+&nbsp;&nbsp;south&nbsp;:&nbsp;TravelMessage&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;secretPassage
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;walk&nbsp;south&nbsp;for&nbsp;quite&nbsp;some&nbsp;way&nbsp;down&nbsp;a&nbsp;long&nbsp;tunnel.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>roomParts&nbsp;=&nbsp;static&nbsp;inherited&nbsp;-&nbsp;defaultFloor&nbsp;+&nbsp;smallCaveFloor&nbsp;&nbsp;
+<br>
+</b>;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

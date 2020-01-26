@@ -1,0 +1,21 @@
+/* Copyright (c) 2006 by Michael J. Roberts.  All Rights Reserved. */
+/*
+Name
+  scriptaddin.rc - Workbench command script addin - resources
+Function
+  This is a TADS Workbench add-in that provides customized indenting and
+  styling for TADS command script files opened in Workbench's integrated
+  Scintilla editor.
+
+  See itadsworkbench.h for details on how to create Workbench extensions.
+Notes
+
+Modified
+  10/05/06 MJRoberts  - Creation
+*/
+
+#include <windows.h>
+#include "scriptaddin.h"
+
+ICON_SCRIPT_FILE   ICON DISCARDABLE "CMD file.ico"
+

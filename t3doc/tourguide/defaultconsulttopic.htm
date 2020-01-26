@@ -1,0 +1,153 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultConsultTopic</title><meta name="keywords" content="DefaultConsultTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultConsultTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="consulttopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="scoring-overview.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">If the player tries to consult our History Book about something for which we've defined no response, we need an appropriate message to be displayed. We use a DefaultConsultTopic for this purpose (just as we use other <a href="defaulttopics-overview.htm">DefaultTopic</a> types in conversation).
+<br>
+
+<br>
+An appropriate DefaultConsultTopic is not hard to define. Since a book is an inanimate object, we don't need to vary its behaviour, and something simple like the following should suffice:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;DefaultConsultTopic
+<br>
+&nbsp;&nbsp;"The&nbsp;book&nbsp;doesn't&nbsp;seem&nbsp;to&nbsp;have&nbsp;anything&nbsp;useful&nbsp;to&nbsp;say&nbsp;on&nbsp;that&nbsp;subject.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">If you wanted to make this a bit more sophisticated by suggesting to the player the topics that are available to be listed in the book, you could add a name property to each ConsultTopic you want suggested (e.g. name = 'Benedict' or name='the museum') and then expand the DefaultConsultTopic thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;DefaultConsultTopic
+<br>
+&nbsp;&nbsp;"The&nbsp;book&nbsp;doesn't&nbsp;seem&nbsp;to&nbsp;have&nbsp;anything&nbsp;useful&nbsp;to&nbsp;say&nbsp;on&nbsp;that&nbsp;subject,
+<br>
+&nbsp;&nbsp;&nbsp;but&nbsp;a&nbsp;quick&nbsp;look&nbsp;in&nbsp;the&nbsp;index&nbsp;suggests&nbsp;that&nbsp;you&nbsp;could&nbsp;consult&nbsp;it&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;about&nbsp;&lt;&lt;suggestionList&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;suggestionList()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;[];
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;location.consultTopics)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cur.name&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst&nbsp;+=&nbsp;cur.name;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stringLister.showSimpleList(lst);
+
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There are both advantages and disadvantages to this approach. On the one hand the player is not left to guess which topics the book implements; on the other, the message is a bit directive and may make consulting the book feel like working through the list of topics suggested.
+<br>
+
+<br>
+A less directive approach, which may provide the best compromise, could be to provide the book with an index topic and drop a broad hint in the DefaultConsultTopic that there is an index to be consulted:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;ConsultTopic&nbsp;@tIndex
+<br>
+&nbsp;&nbsp;"A&nbsp;quick&nbsp;look&nbsp;in&nbsp;the&nbsp;index&nbsp;suggests&nbsp;that&nbsp;you&nbsp;could&nbsp;consult&nbsp;it&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;about&nbsp;&lt;&lt;suggestionList&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;suggestionList()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;[];
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;location.consultTopics)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cur.name&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst&nbsp;+=&nbsp;cur.name;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stringLister.showSimpleList(lst);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+
+<br>
++&nbsp;DefaultConsultTopic
+<br>
+&nbsp;&nbsp;"So&nbsp;far&nbsp;as&nbsp;you&nbsp;can&nbsp;tell&nbsp;from&nbsp;the&nbsp;index,&nbsp;the&nbsp;book&nbsp;doesn't&nbsp;seem&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;have&nbsp;anything&nbsp;useful&nbsp;to&nbsp;say&nbsp;on&nbsp;that&nbsp;subject.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+tIndex&nbsp;:&nbsp;Topic&nbsp;'index/contents';
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">If you had several books in your game that you wanted to provide with an index you could avoid repetitive coding by defining an IndexTopic class:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;IndexTopic&nbsp;:&nbsp;ConsultTopic
+<br>
+&nbsp;&nbsp;suggestionList()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;[];
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;location.consultTopics)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cur.name&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst&nbsp;+=&nbsp;cur.name;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stringLister.showSimpleList(lst);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+
+Note that the IndexTopic only responds to commands like LOOK UP INDEX IN BOOK. If you want it to respond to commands like X INDEX, LOOK INDEX and CONSULT INDEX you'll need to add a physical index object to the book to handle such commands, for example:
+
+
+
+
+</font><font face="Courier New" size="2" color="#000000">
+<br><pre>
++ Component 'index' 'index'
+    dobjFor(Examine) remapTo(ConsultAbout, location, tIndex)
+    dobjFor(LookIn) remapTo(ConsultAbout, location, tIndex)
+    dobjFor(Consult) remapTo(ConsultAbout, location, tIndex)
+;
+</font></font></pre>
+
+</body></html>

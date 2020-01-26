@@ -1,0 +1,48 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>General Introduction</title>
+<LINK href="main.css" type=text/css rel=stylesheet></LINK></head>
+<body>
+<div class="topbar"><A href="index.html"><IMG src="topbar.jpg" border=0></A></div>
+
+<div class="main">
+<P><FONT SIZE=-1><A href="index.html">[Main]</A><BR>
+<I><A href="newchapterwithtext.htm">[Previous] </A>&nbsp;&nbsp;<A href="creatingyourfirsttads3project.htm">[Next] </A></I></FONT></P>
+<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="left"></td></tr></table><br>
+<h1>Chapter 1 - Introduction</h1>
+<h2>General Introduction</h2>
+
+<p>If you are reading this Beginner's Guide to using TADS 3 you will presumably already know what Interactive Fiction is, so I shall not offer an explanation here. You will presumably already have found your way to Mike Roberts's TADS pages (<A href=" http://www.tads.org" target=_top>http://www.tads.org</A>), will probably have downloaded the TADS 3 author's kit and tried it out, and may perhaps have some familiarity with another IF language such as TADS 2 or Inform. If you are still trying to work out how to install the TADS 3 compiler or do anything with it, the instructions in the section on "<A href="creatingyourfirsttads3project.htm">Creating your First TADS 3 Project</A>" below should get you started. On the other hand, if you have already got going in TADS 3 you can skip the remaining sections of this chapter and maybe the next chapter as well. I shall not in any case spend a great deal of time explaining programming concepts such as functions, operators, statements, classes and objects, but the final two sections of this chapter provide a basic introduction to the way these are implemented in TADS 3 and to the programming concepts needed to follow this guide <A href="chapter2.htm">Chapter Two</A> then shows you how to implement a very short sample game; for some readers this may be the best place to start.
+</p>
+
+<p>
+The approach taken in the remainder of this guide will be to introduce various features of TADS 3 through developing a more substantial game. Inform 6 users will recognize the genesis of this game in the <i>Inform Beginner's Guide</i> by Roger Firth and Sonja Kesserich (who have very kindly allowed me to borrow both Heidi and her forest), although rather than following the <i>IBG's</i> route of illustrating features of the language through three successive games, I shall stick with the same game, <i>The Further Adventures of Heidi</i>, and increase its complexity from chapter to chapter. The complete source code of the finished game, heidi.t, should be packaged in the zip file with this guide (if you downloaded it separately) or with the TADS 3 documentation set.
+</p>
+
+<p>
+<A href="startinganewgame.htm">Chapter Three</A> will explain in some detail how to define a room and a single object within that room for the game we'll be developing together throughout the remainder of the guide. Things will become rather more complicated in <A href="basictravel.htm">Chapter Four</A> when we look at the use of various kinds of connector to move between rooms, and at the same time introduce a number of other features of the TADS 3 library and language so we can program a couple of basic puzzles (how to get to the top of a tree and find a diamond ring in a bird's nest). The main focus of <A href="settingthescene.htm">Chapter Five</A> will be the programming of an NPC (non-player character), in this case a friendly charcoal-burner who turns out to be the owner of the missing ring. Subsequent chapters will place a further series of obstacles between Heidi and the ring so that we can sample the excitements of lockable doors, dark caves, and a pair of conveniently buried Wellington boots (to mention a few) and thereby introduce a number of other features. By <A href="lettherebelight.htm">Chapter Seven</A> we shall be sending Heidi on a boat trip down to the shops (well, a shop), and trying to figure out how to handle buying and selling. <A href="fillinginsomegaps.htm">Chapter Eight</A> will wrap things up with some suggestions on how to put some finishing touches to the game, a look at a different ways we could have tackled a couple of the problems we encountered, some suggestions on how to make testing and debugging slightly less painful, and some pointers on where to go next. Needless to say, the sample game won’t be able to cover all the features of TADS 3, neither will it lay out the ones it does touch in a particularly systematic fashion; but it will introduce you to the process of writing Interactive Fiction in TADS 3 and in process of doing so it will introduce you to many of the features of the system you are likely to use in your own games.
+</p>
+
+<p>
+It follows that this <i>Beginner's Guide</i> is not really intended for bedtime reading (although it may turn out to be an excellent cure for insomnia!); it is intended rather to be used sitting at your computer while you type the example code and see how it works when you compile it, and, even better, try experimenting and implementing things for yourself when invited to do so. If you'd like a sneak preview of where it's all going, by all means compile the heidi.t file that should have come with this <i>Guide</i> and play through the game - just don't expect it to be a masterpiece of IF!
+</p>
+
+<p>
+This is by no means a formal manual, but I shall employ a few typographical conventions. Text in the normal font (like this) will be used for the bulk of the text. Text in <b>bold</b> will generally represent what a player might type at the TADS 3 command prompt when playing a game (e.g. <b>north</b> or <b>eat the baked banana</b>). Text in the fixed-spaced font (<tt>like&nbsp;this</tt>) will be used for code or fragments of code (e.g. <tt>name&nbsp;=&nbsp;'Fred'</tt> ).
+</p>
+
+<p>
+Note that both the <i>Guide</i>  and the heidi.t file have been written to be compatible with TADS 3.1.0 (although most things will probably work well enough with earlier versions). If you have an earlier version of TADS 3 installed, please update it to the latest version before following the instructions in this guide, otherwise you may keep coming across things that do not work as they are described (as well as finding you get a raft of errors when you try to compile heidi.t). If by the time you read this you have a version of TADS later than 3.1.0, please check the revision history notes that come with it in case there are any changes that you need to implement to the code in heidi.t, and the code given in the remainder of this Guide to get things to work.
+</p>
+
+<p>
+Exactly how you approach this <i>Getting Started Guide</i> may depend both on your temperament and your previous experience (either with other systems for writing Interactive Fiction or with programming in general). If you feel you want a reasonably sound grasp of the findamentals of the TADS 3 language before seeing how to write a game in it, then you'll probably want to read the remainder of this chapter. If, on the other hand, you'd rather get straight on with the business of seeing how a game is written, you might prefer to skip straight to Chapter Two and only return to the last two sections of this chapter if and when you feel the need to clarify the programming concepts employed in the course of this guide. If you'd prefer a compromise solution, you could read the "<A href="programmingprolegomena.htm">Programming Prolegomena</A>" section below, but leave the final "<A href="furtherprogramming.htm">Further Programming Concepts and Constructs</A>" section till later. But whatever you do, please try to master the basics fully before trying to do something more complex; some new users of TADS 3 become frustrated because they try to run before they have learned how&nbsp;to walk.
+</p>
+
+<p>
+Finally, do feel free to experiment as you work your way through the material that follows; you will almost certainly learn more if you try adapting the example code given to try things out than if you simply copy it all with your brain in neutral. It may often, however, be a good idea to clean out your experimental code before going on to the next step in this <i>Guide</i>, just in case your bright ideas clash with mine, and if you find your experiments are leading to frustration and confusion you may want to postpone them for a while.
+</p>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<A href="index.html">[Main]</A><BR>
+<I><A href="newchapterwithtext.htm">[Previous] </A>&nbsp;&nbsp;<A href="creatingyourfirsttads3project.htm">[Next] </A></I></FONT></P></div>
+</body></html>

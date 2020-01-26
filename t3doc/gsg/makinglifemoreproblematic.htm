@@ -1,0 +1,357 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Making Life More Problematic</title><meta name="keywords" content="NoTravelMessage,asExit,Enterable,connector,Chair,initSpecialDesc,OneWayRoomConnector,destination,canTravelerPass,explainTravelBarrier,travelDesc,TravelMessage"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="climbingthetree.htm">[Previous] </a>&nbsp;&nbsp;<a href="rewardingtheeffort.htm">[Next] </a></I></FONT></P>
+<h2>Making Life More Problematic</h2>
+<p>So far the game allows the player to walk from the cottage to the clearing and then climb the tree, but this is not particularly challenging. The time has come to add a puzzle: let's suppose that in order to climb the tree, Heidi first needs to fetch a chair and stand on it. To make this a puzzle we must first prevent Heidi climbing the tree when she's standing on the ground. To do this we must change the definition of <TT>clearing.up</TT>. As a first attempt, we'll use a close relative (in fact the parent) of the <TT>FakeConnector</TT>, namely the <TT>NoTravelMessage</TT>. Modify the clearing object so that its <TT>up </TT>property is now defined as follows:
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">up&nbsp;:&nbsp;NoTravelMessage&nbsp;{"The&nbsp;lowest&nbsp;bough&nbsp;is&nbsp;just&nbsp;too&nbsp;high&nbsp;for&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;you&nbsp;to&nbsp;reach.&nbsp;"}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Now recompile the game and try both going up from the clearing and climbing the tree. Both attempts should be foiled in exactlty the same way. If we had remapped <b>climb tree</b> to <TT>TravelVia,&nbsp;topOfTree</TT> instead of <TT>Up</TT> this would not have worked; the player could have bypassed our puzzle by typing <b>climb tree</b> instead of <b>up</b>.
+<br>
+
+<br>
+That was the easy part. The tricky part is creating a chair object that will enable Heidi to climb the tree. The first thing we need is somewhere to put it; the most likely place you'd find a chair is probably inside the cottage. For the moment we'll define the inside of the cottage as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">insideCottage&nbsp;:&nbsp;Room&nbsp;'Inside&nbsp;Cottage'
+<br>
+&nbsp;&nbsp;"You&nbsp;are&nbsp;in&nbsp;the&nbsp;front&nbsp;parlour&nbsp;of&nbsp;the&nbsp;little&nbsp;cottage.&nbsp;The&nbsp;door&nbsp;out
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;to&nbsp;the&nbsp;east.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;=&nbsp;outsideCottage
+<br>
+&nbsp;&nbsp;&nbsp;east&nbsp;asExit(out)
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The only new element here is the <TT>asExit </TT>macro. The cottage lies to the west of the starting postion, so to get from inside the cottage back outside the player might type either <B>out </B>or <B>east</B>. The <TT>asExit</TT>() macro make going <B>east </B>the same as going <B>out</B>, but without having <B>east </B>listed as a separate exit (either in the status line or in response to an exits command). This allows us to make two directions lead to the same destination without misleading the player into supposing that they are two separate exits, instead of two synonyms for the same exit.
+<br>
+
+<br>
+Note too that since </font><font face="Courier New" size="2" color="#000000">insideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is an indoor room, we have defined it to be of class </font><font face="Courier New" size="2" color="#000000">Room</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather than class </font><font face="Courier New" size="2" color="#000000">OutsideRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. To make this room accessible at all we should add the following to the definition of </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">in&nbsp;=&nbsp;insideCottage
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">west&nbsp;asExit(in)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Now recompile the game and you should be able to get inside the cottage by typing either <b>enter</b> or <b>in</b> or <b>west</b> (or <b>w</b>). But one thing the player might equally well try, namely <b>enter cottage</b> won't work.
+<br>
+
+<br>
+The obvious way to fix this on the basis of what we've done before is to add the following to the definition of </font><font face="Courier New" size="2" color="#000000">cottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">dobjFor(Enter)&nbsp;remapTo(In)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">And this will certainly act just as expected. However, it's more work than we need, since the TADS 3 library provides an </font><font face="Courier New" size="2" color="#000000">Enterable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class to handle just this kind of situation. All we need do, in fact, is to change the definition of cottage to:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;Enterable&nbsp;-&gt;insideCottage&nbsp;'pretty&nbsp;little
+<br>
+&nbsp;&nbsp;&nbsp;cottage/house/building'&nbsp;'pretty&nbsp;little&nbsp;cottage'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;just&nbsp;the&nbsp;sort&nbsp;of&nbsp;pretty&nbsp;little&nbsp;cottage&nbsp;that&nbsp;townspeople&nbsp;dream&nbsp;of&nbsp;living&nbsp;in,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;roses&nbsp;round&nbsp;the&nbsp;door&nbsp;and&nbsp;a&nbsp;neat&nbsp;little&nbsp;window&nbsp;frame&nbsp;freshly&nbsp;painted&nbsp;in&nbsp;green.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This introduces a new template element: <TT>-&gt;insideCottage</TT>. In this instance the <TT>-&gt;</TT> points to the <TT>TravelConnector </TT>that is traversed when the Enterable is entered. Remember that a room is a kind of <TT>TravelConnector</TT>, and that travelling via a room is the same as travelling to a room, so for now the command enter cottage will take Heidi to the inside of the cottage (we'll be changing that later when we give the cottage a locked front door). An alternative to using the <TT>-&gt;connector</TT> syntax would have been to define the connector property explicitly with:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">connector&nbsp;=&nbsp;insideCottage
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Whether you prefer this as being more readable is up to you.
+<br>
+
+<br>
+Now that we have somewhere to put the chair, we can start defining it. What we need is something that we can carry around and stand on (but not both at the same time!). So it must be something that can contain an actor while appearing as an object inside a room. In TADS 3 this kind of object is called a <TT>NestedRoom</TT>. The TADS 3 library includes a subclass of <TT>NestedRoom </TT>called <TT>Chair </TT>that does just the job (a <TT>Chair </TT>is something you can sit on or stand on but not lie on):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;chair&nbsp;:&nbsp;Chair&nbsp;'wooden&nbsp;chair'&nbsp;'wooden&nbsp;chair'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;plain&nbsp;wooden&nbsp;chair.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's one way we can improve the behaviour of this chair before we even think about using it to climb the tree. When Heidi is sent into the cottage, the game displays the plain vanilla default message "You see a wooden chair here." We can improve on this by adding the following property definition to the chair object:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">initSpecialDesc&nbsp;=&nbsp;"A&nbsp;plain&nbsp;wooden&nbsp;chair&nbsp;sits&nbsp;in&nbsp;the&nbsp;corner.&nbsp;"
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">initSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property defines how the object will be described in a room description before the object has been moved (if we wanted to, we could override the conditions under which </font><font face="Courier New" size="2" color="#000000">initSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> was displayed, but that's a complication we won't tangle with for now).
+<br>
+
+<br>
+Now try compiling and rerunning the game. You should find that the chair now behaves just as one would expect: you can sit or stand on it (but not lie on it), you can also take it, but you can't take it while you're sitting or standing on it, and you can't sit or stand on it while you're carrying it.
+<br>
+
+<br>
+But, as you will discover, the chair still doesn't help Heidi climb the tree. The problem is that we defined the connector on </font><font face="Courier New" size="2" color="#000000">clearing.up</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as a </font><font face="Courier New" size="2" color="#000000">NoTravelMessage,</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> which blocks travel under all circumstances. What we need is a connector that allows Heidi to pass only when the chair is at the foot of the tree, i.e. in the clearing. One type of connector appropriate to this task is a </font><font face="Courier New" size="2" color="#000000">OneWayRoomConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, since this possesses methods to control the conditions under which travel is permitted. We could define it thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">up&nbsp;:&nbsp;OneWayRoomConnector
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;=&nbsp;topOfTree
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;chair.isIn(clearing);&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"The&nbsp;lowest&nbsp;bough&nbsp;is&nbsp;just&nbsp;too&nbsp;high&nbsp;for&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;you&nbsp;to&nbsp;reach.&nbsp;";&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">canTravelerPass()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method allows travel if and only if it returns true, which in this case will happen if and only if the chair is in the clearing. If travel is disallowed, the method </font><font face="Courier New" size="2" color="#000000">explainTravelBarrier()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is called to explain why not. In this case we just display a suitable message.
+<br>
+
+<br>
+Before we carry on with refining this, let's digress to another matter. The connector we've just defined is defined on the </font><font face="Courier New" size="2" color="#000000">up</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of </font><font face="Courier New" size="2" color="#000000">clearing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This might lead us to suppose that we could have defined a slightly more general version of it by defining:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">up&nbsp;:&nbsp;OneWayRoomConnector
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;=&nbsp;topOfTree
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;chair.isIn(self);&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"The&nbsp;lowest&nbsp;bough&nbsp;is&nbsp;just&nbsp;too&nbsp;high&nbsp;for&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;you&nbsp;to&nbsp;reach.&nbsp;";&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Here we have simply changed <TT>chair.isIn(clearing)</TT> to <TT>chair.isIn(self)</TT>, on the assumption that it will effectively mean the same thing. But it won't, since in the context in which we've defined it, <TT>self </TT>refers not to the clearing, but to the nested <TT>OneWayRoomConnector </TT>we've just defined on one of its properties. This is a fatally easy easy mistake to make, and raises the question whether there is a right way for a nested object like the anonymous <TT>OneWayRoomConnector </TT>in this example to refer to its host object. There is: what we actually need is <TT>lexicalParent</TT>. We could correctly write the previous example as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">up&nbsp;:&nbsp;OneWayRoomConnector
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;=&nbsp;topOfTree
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;chair.isIn(lexicalParent);&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"The&nbsp;lowest&nbsp;bough&nbsp;is&nbsp;just&nbsp;too&nbsp;high&nbsp;for&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;you&nbsp;to&nbsp;reach.&nbsp;";&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This is now equivalent to writing </font><font face="Courier New" size="2" color="#000000">chair.isIn(clearing),</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> but using </font><font face="Courier New" size="2" color="#000000">lexicalParent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> makes it immediately obvious what the intention is (as opposed to having to check that </font><font face="Courier New" size="2" color="#000000">chair</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> refers to the enclosing object).
+<br>
+
+<br>
+If you now recompile the game and try it again, you'll find that it now works after a fashion, but that it's less than ideal. There are still several things we should tidy up.
+<br>
+
+<br>
+One thing we might like to do is to display a suitable message when the player character climbs off the chair and up the tree, rather than just have Heidi suddenly transported from the chair to the top. There is a <TT>TravelMessage</TT> class that allows a message to be displayed while traveling, but we have already defined the connector to be a <TT>OneWayRoomConnector</TT>. Since, however, the <TT>TravelMessage</TT> class inherits all the methods we have already used, we can simply change <TT>OneWayRoomConnector</TT> to <TT>TravelMessage</TT> and add the following property:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">travelDesc&nbsp;=&nbsp;&nbsp;"By&nbsp;standing&nbsp;on&nbsp;the&nbsp;chair&nbsp;you&nbsp;just&nbsp;manage&nbsp;to&nbsp;reach&nbsp;the&nbsp;lowest&nbsp;
+<br>
+&nbsp;&nbsp;bough&nbsp;and&nbsp;haul&nbsp;yourself&nbsp;up&nbsp;the&nbsp;tree.&lt;.p&gt;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></font></td></tr></table>
+<br><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">  The <TT>&lt;.p&gt;</TT> just adds a paragraph break (blank line) after the message. We could do the same with <TT>\b</TT>, except that using <TT>&lt;.p&gt;</TT> ensures we don't get multiple blank lines should the next message start with <TT>&lt;.p&gt;</TT>. The connector should now look like this:
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">up&nbsp;:&nbsp;TravelMessage
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;=&nbsp;topOfTree
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;chair.isIn(lexicalParent);&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"The&nbsp;lowest&nbsp;bough&nbsp;is&nbsp;just&nbsp;too&nbsp;high&nbsp;for&nbsp;you&nbsp;to&nbsp;reach.&nbsp;";&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;travelDesc&nbsp;=&nbsp;&nbsp;"By&nbsp;standing&nbsp;on&nbsp;the&nbsp;chair&nbsp;you&nbsp;just&nbsp;manage&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reach&nbsp;the&nbsp;lowest&nbsp;bough&nbsp;and&nbsp;haul&nbsp;yourself&nbsp;up&nbsp;the&nbsp;tree.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Recompile the game and try it again. You will soon encounter another small problem: the game now describes Heidi as using the chair to reach the bough whether she's standing on the chair or still on the ground when the <B>climb tree</B> or <B>up </B>command is issued. You might think this is okay on the grounds that if the player has made Heidi carry the chair to the clearing he's probably figured why, so we don't need to make Heidi explicitly stand on the chair before climbing the tree. But there's another problem: the chair is counted as being <I>in </I>the clearing even if Heidi is still carrying it, so this code would allow Heidi to use the chair to climb the tree while she's still holding the chair. It would be better, then, to check that Heidi is actually on the chair (which she can't be if she's carrying it) before allowing her to climb. We can achieve this by changing the <TT>canTravelerPass </TT>method to
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;traveler.isIn(chair);&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We don't then need to test as well that the chair is in the clearing, since it already <i>must</i> be if Heidi is in the chair when this connector is available to her.
+<br>
+
+<br>
+Now everything should work reasonably well, except that the game will now allow Heidi to climb the tree from the chair even if she's only sitting on the chair, and not standing on it. Again, we may not think this matters very much in practice, but if we do, there are various ways we could go about fixing it. Perhaps the simplest for now is to add the condition that Heidi must be standing to the </font><font face="Courier New" size="2" color="#000000">canTravelerPass()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, which finally gives us:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">clearing&nbsp;:&nbsp;OutdoorRoom&nbsp;'Clearing'
+<br>
+&nbsp;&nbsp;&nbsp;"A&nbsp;tall&nbsp;sycamore&nbsp;tree&nbsp;stands&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;this&nbsp;clearing.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;One&nbsp;path&nbsp;winds&nbsp;to&nbsp;the&nbsp;southwest,&nbsp;and&nbsp;another&nbsp;to&nbsp;the&nbsp;north."
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;southwest&nbsp;=&nbsp;forest
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;:&nbsp;TravelMessage&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;-&gt;topOfTree
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"By&nbsp;clinging&nbsp;on&nbsp;to&nbsp;the&nbsp;bough&nbsp;you&nbsp;manage&nbsp;to&nbsp;haul&nbsp;yourself
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;the&nbsp;tree.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;return&nbsp;traveler.isIn(chair)&nbsp;&amp;&amp;&nbsp;traveler.posture==standing;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"The&nbsp;lowest&nbsp;bough&nbsp;is&nbsp;just&nbsp;out&nbsp;of&nbsp;reach.&nbsp;";&nbsp;}&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;north&nbsp: FakeConnector {"You decide against going that way right
+         now. "}
+
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If there were several objects that could be used for Heidi to stand on, the </font><font face="Courier New" size="2" color="#000000">canTravelerPass(traveler)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method would only become a little more complicated, e.g.:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">canTravelerPass(traveler)&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;return&nbsp;traveler.location&nbsp;is&nbsp;in&nbsp;(chair,&nbsp;crate,&nbsp;stepladder)&nbsp;&amp;&amp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;traveler.posture&nbsp;==&nbsp;standing;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Since an just out-of-reach bough is mentioned when the player tries to get Heidi up the tree without the aid of the chair, we might want to add that bough somewhere. The slight complication is that the bough will be out of reach if Heidi is standing on the ground, but not if she's standing on the chair. The </font><font face="Courier New" size="2" color="#000000">OutOfReach</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class handles this type of situation; you could place the following code immediately after the definition of the tree object:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;bough&nbsp;:&nbsp;OutOfReach,&nbsp;Fixture&nbsp;'lowest&nbsp;bough'&nbsp;'lowest&nbsp;bough'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;lowest&nbsp;bough&nbsp;of&nbsp;the&nbsp;tree&nbsp;is&nbsp;just&nbsp;a&nbsp;bit&nbsp;too&nbsp;high&nbsp;up&nbsp;for&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;reach&nbsp;from&nbsp;the&nbsp;ground.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;canObjReachContents(obj)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(obj.posture&nbsp;==&nbsp;standing&nbsp;&amp;&amp;&nbsp;obj.location&nbsp;==&nbsp;chair)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;true;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;inherited(obj);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;cannotReachFromOutsideMsg(dest)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'The&nbsp;bough&nbsp;is&nbsp;just&nbsp;too&nbsp;far&nbsp;from&nbsp;the&nbsp;ground&nbsp;for&nbsp;you&nbsp;to&nbsp;reach.&nbsp;';
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Admittedly this doesn't allow Heidi to interact very interestingly with the bough even if she is standing on the chair; she can touch the bough which she can't do from the ground, but that's about it. It might be more interesting if on the bough was concealed an object that Heidi needed to find, but this is a step further than we need to go for this game (but you're welcome to experiment with it if you wish!).
+<br>
+
+<br>
+One final point: using one object (like the chair here) to gain access to a connector (like the way up the chair) is a fairly common situation in Interactive Fiction. Often, however, it turns out to be a bit more complicated to implement than the example we have worked throught here. You don't need to worry about that just yet - there's plenty more to do in this guide first - but if when you try to implement something similar in your own game you find TADS 3 doing its best to frustrate you at every turn, you'll also find that help is at hand in the article on      '<a href="../techman/t3staging.htm" target="_top">Using NestedRooms as Staging Locations</a>' in the <i>Technical Manual</i>.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="climbingthetree.htm">[Previous] </a>&nbsp;&nbsp;<a href="rewardingtheeffort.htm">[Next] </a></I></FONT></P>
+</body></html>

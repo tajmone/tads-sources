@@ -1,0 +1,276 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Row My Boat</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="lettherebelight.htm">[Previous] </a>&nbsp;&nbsp;<a href="goingshopping.htm">[Next] </a></I></FONT></P>
+<h2>Row My Boat</h2>
+
+<p>Leaving the battery so near the torch perhaps makes things a little too easy. For the final complication we'll oblige Heidi to go and buy a battery, and just to make things interesting the way to the shop will be by rowing a boat along the stream (now you know what the oars are for). Since we're going to row this boat, we once again need to define a new verb:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">DefineTAction(Row);
+<br>
+
+<br>
+VerbRule(Row)
+<br>
+&nbsp;&nbsp;'row'&nbsp;singleDobj
+<br>
+&nbsp;&nbsp;:&nbsp;RowAction
+<br>
+&nbsp;&nbsp;verbPhrase&nbsp;=&nbsp;'row/rowing&nbsp;(what)'
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;dobjFor(Row)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;preCond&nbsp;=&nbsp;[touchObj]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;illogical('{You/he}&nbsp;can\'t&nbsp;row&nbsp;{that&nbsp;dobj/him}');&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There is a </font><font face="Courier New" size="2" color="#000000">Vehicle</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class (a subclass of </font><font face="Courier New" size="2" color="#000000">NestedRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), but this is not really what we want for our boat. Instead we'll use three different objects to define our boat; a </font><font face="Courier New" size="2" color="#000000">Heavy,</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">Enterable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to represent the boat as seen from the outside, an </font><font face="Courier New" size="2" color="#000000">OutdoorRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to represent its interior, and an anonymous object placed inside the </font><font face="Courier New" size="2" color="#000000">OutdoorRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to be the object of the Row action. This is how we fit the three together:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">boat&nbsp;:&nbsp;Heavy,&nbsp;Enterable&nbsp;-&gt;&nbsp;insideBoat&nbsp;'rowing&nbsp;boat'&nbsp;'rowing&nbsp;boat'
+<br>
+&nbsp;&nbsp;@cottageGarden
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;rowing&nbsp;boat.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;rowing&nbsp;boat&nbsp;floats&nbsp;on&nbsp;the&nbsp;stream,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;just&nbsp;by&nbsp;the&nbsp;bank.&nbsp;"
+<br>
+&nbsp;&nbsp;useSpecialDesc&nbsp;{&nbsp;return&nbsp;true;&nbsp;}
+<br>
+&nbsp;&nbsp;dobjFor(Board)&nbsp;asDobjFor(Enter)&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+insideBoat&nbsp;:&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;('In&nbsp;the&nbsp;boat&nbsp;(by&nbsp;'+&nbsp;boat.location.name&nbsp;+&nbsp;')')
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"The&nbsp;boat&nbsp;is&nbsp;a&nbsp;plain&nbsp;wooden&nbsp;rowing&nbsp;dinghy&nbsp;with&nbsp;a&nbsp;single&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;wooden&nbsp;seat.&nbsp;It&nbsp;is&nbsp;floating&nbsp;on&nbsp;the&nbsp;stream&nbsp;just&nbsp;by&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&lt;&lt;boat.location.name&gt;&gt;.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;(boat.location)
+<br>
+;
+<br>
+
+<br>
++&nbsp;Fixture&nbsp;'plain&nbsp;wooden&nbsp;rowing&nbsp;boat/dinghy'&nbsp;'boat'
+<br>
+&nbsp;&nbsp;"&lt;&lt;insideBoat.desc&gt;&gt;"
+<br>
+&nbsp;&nbsp;dobjFor(Take)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{illogical('{You/he}&nbsp;can\'t&nbsp;take&nbsp;the&nbsp;boat&nbsp;-&nbsp;{you\'re/he\'s}&nbsp;in
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it!');&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;dobjFor(Row)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!oars.isHeldBy(gActor))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;need&nbsp;to&nbsp;be&nbsp;holding&nbsp;the&nbsp;oars&nbsp;before&nbsp;you&nbsp;can&nbsp;row&nbsp;this&nbsp;boat.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;row&nbsp;the&nbsp;boat&nbsp;along&nbsp;the&nbsp;stream&nbsp;and&nbsp;under&nbsp;a&nbsp;low&nbsp;bridge,&nbsp;finally&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arriving&nbsp;at&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(boat.isIn(jetty))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;cottage&nbsp;garden.&lt;.p&gt;&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boat.moveInto(cottageGarden);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"the&nbsp;side&nbsp;of&nbsp;a&nbsp;small&nbsp;wooden&nbsp;jetty.&lt;.p&gt;&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boat.moveInto(jetty);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedAction(Look);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There is little here that is really new; we have simply fitted existing things together in a new way. Perhaps the most complex of these is the way we have defined the </font><font face="Courier New" size="2" color="#000000">name</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of </font><font face="Courier New" size="2" color="#000000">insideBoat</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. We have taken advantage of the fact that a property can contain an expression (in parentheses) to build up a name that shows not only that the player character is the boat but where the boat is. We also use </font><font face="Courier New" size="2" color="#000000">&lt;&lt;boat.location.name&gt;&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the description of the boat's interior, so that this also reports not only what the boat looks like but where it is. Finally, we set the </font><font face="Courier New" size="2" color="#000000">out&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">property of </font><font face="Courier New" size="2" color="#000000">insideBoat</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to </font><font face="Courier New" size="2" color="#000000">boat.location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, so that whenever we go out from </font><font face="Courier New" size="2" color="#000000">insideBoat</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> we end up wherever the boat object is. We can thus achieve the actual travel by moving the boat object around. Finally, we use the </font><font face="Courier New" size="2" color="#000000">specialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of the boat object to display a message that the boat is floating on the stream, and define the </font><font face="Courier New" size="2" color="#000000">useSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method always to return true so that </font><font face="Courier New" size="2" color="#000000">specialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is always used.
+<br>
+
+<br>
+The code for handling the Row command first checks that the actor is holding the oars. If so, then it checks which of two locations the boat is currently in and moves it to the other, displaying a suitable message to show the outcome, and then performing a nested Look action to show that we've arrived at a new location.
+<br>
+
+<br>
+One could almost do away with the anonymous object contained within insideBoat, by defining </font><font face="Courier New" size="2" color="#000000">vocabWords&nbsp;=&nbsp;'boat'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on </font><font face="Courier New" size="2" color="#000000">insideBoat</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> itself and moving the handling of for Row and Take to </font><font face="Courier New" size="2" color="#000000">insideBoat</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The main reason for not doing this is that one gets quite a bizarre message if one types the command <b>row</b> without a direct object and the parser helpfully selects the </font><font face="Courier New" size="2" color="#000000">insideBoat</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object.
+<br>
+
+<br>
+There's one other minor refinement you may want to include on this boat. If you get in the boat and then sit or lie down, you'll find that you're described as being in the boat sitting or lying on the ground. The way to fix this is to give the boat a more appropriate floor object:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">boatBottom&nbsp;:&nbsp;Floor&nbsp;'floor/bottom/(boat)'&nbsp;'bottom&nbsp;of&nbsp;the&nbsp;boat'
+<br>
+;
+<br>
+
+<br>
+insideBoat&nbsp;:&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;('In&nbsp;the&nbsp;boat&nbsp;(by&nbsp;'+&nbsp;boat.location.name&nbsp;+&nbsp;')')
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"The&nbsp;boat&nbsp;is&nbsp;a&nbsp;plain&nbsp;wooden&nbsp;rowing&nbsp;boat&nbsp;with&nbsp;a&nbsp;single&nbsp;wooden&nbsp;seat.
+<br>
+&nbsp;&nbsp;It&nbsp;is&nbsp;floating&nbsp;on&nbsp;the&nbsp;stream&nbsp;just&nbsp;by&nbsp;the&nbsp;&lt;&lt;boat.location.name&gt;&gt;.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;(boat.location)
+<br>
+&nbsp;&nbsp;roomParts&nbsp;=&nbsp;[boatBottom,&nbsp;defaultSky]&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You may also want to add the small wooden seat referred to in the description of the inside of the boat, but this can be left as an exercise for the reader (or you can look at the source code to heidi.t that came with this Guide). Note that the way we have specified </font><font face="Courier New" size="2" color="#000000">boatBottom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">'s </font><font face="Courier New" size="2" color="#000000">vocabWords</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (</font><font face="Courier New" size="2" color="#000000">floor/bottom/(boat)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) will automatically match 'floor of boat' and 'bottom of boat' - but not just 'boat'); once again we don't need to do anything special to take care of the 'of' in phrases like these.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This boat is fairly simple since it moves between only two locations. If we wanted more possible locations we'd need a more complicated implementation of the Row verb - or perhaps define two versions of it, RowUpstream and RowDownstream. In principle, however, the approach taken here could be extended to all sorts of vehicles.
+<br>
+
+<br>
+Talking of destinations, we have yet to define the destination the boat arrives at when it's rowed from the bottom of the garden (although you may already have made your own attempt). Here's this guide's suggestion:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">jetty&nbsp;:&nbsp;OutdoorRoom&nbsp;'Jetty'
+<br>
+&nbsp;&nbsp;"This&nbsp;small&nbsp;wooden&nbsp;jetty&nbsp;stands&nbsp;on&nbsp;the&nbsp;bank&nbsp;of&nbsp;the&nbsp;stream.&nbsp;Upstream&nbsp;
+<br>
+&nbsp;&nbsp;to&nbsp;the&nbsp;east&nbsp;you&nbsp;can&nbsp;see&nbsp;a&nbsp;road-bridge,&nbsp;and&nbsp;a&nbsp;path&nbsp;runs&nbsp;downstream&nbsp;
+<br>
+&nbsp;&nbsp;along&nbsp;the&nbsp;bank&nbsp;to&nbsp;the&nbsp;west.&nbsp;Just&nbsp;to&nbsp;the&nbsp;south&nbsp;stands&nbsp;a&nbsp;small&nbsp;shop.&nbsp;"
+<br>
+&nbsp;&nbsp;west&nbsp;:&nbsp;FakeConnector&nbsp;{"You&nbsp;could&nbsp;go&nbsp;wandering&nbsp;down&nbsp;the&nbsp;path&nbsp;but&nbsp;you&nbsp;don't
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;feel&nbsp;you&nbsp;have&nbsp;much&nbsp;reason&nbsp;to.&nbsp;"}
+<br>
+&nbsp;&nbsp;east&nbsp;:&nbsp;NoTravelMessage&nbsp;{"The&nbsp;path&nbsp;doesn't&nbsp;run&nbsp;under&nbsp;the&nbsp;bridge.&nbsp;"}
+<br>
+;
+<br>
+
+<br>
++&nbsp;Distant&nbsp;'bridge'&nbsp;'bridge'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;small&nbsp;brick-built&nbsp;hump-backed&nbsp;bridge&nbsp;carrying&nbsp;the&nbsp;road&nbsp;over
+<br>
+&nbsp;&nbsp;the&nbsp;stream.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;Fixture&nbsp;'stream'&nbsp;'stream'
+<br>
+&nbsp;&nbsp;"The&nbsp;stream&nbsp;becomes&nbsp;quite&nbsp;wide&nbsp;at&nbsp;this&nbsp;point,&nbsp;almost&nbsp;reaching&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;proportions&nbsp;of&nbsp;a&nbsp;small&nbsp;river.&nbsp;To&nbsp;the&nbsp;east&nbsp;it&nbsp;flows&nbsp;under&nbsp;a&nbsp;bridge,&nbsp;and&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;west&nbsp;it&nbsp;carries&nbsp;on&nbsp;through&nbsp;the&nbsp;village.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Cross)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;preCond&nbsp;=&nbsp;[objVisible]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;failCheck&nbsp;('The&nbsp;stream&nbsp;is&nbsp;far&nbsp;too&nbsp;wide&nbsp;and&nbsp;deep&nbsp;to&nbsp;cross&nbsp;here.&nbsp;';&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The one new feature introduced here is the </font><font face="Courier New" size="2" color="#000000">Distant</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, which may be used for objects that can be seen from a location but are too far away to interact with. This location isn't quite finished, since there's still no shop. We'll add that in the next section; in the meantime you can try the current version of the game out to make sure you can row your boat.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="lettherebelight.htm">[Previous] </a>&nbsp;&nbsp;<a href="goingshopping.htm">[Next] </a></I></FONT></P>
+</body></html>

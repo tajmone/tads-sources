@@ -1,0 +1,176 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>CommandTranscript</title></head><body>
+<table class=ban><tr><td align=left><span class=title>CommandTranscript</span><span class=type>class</span><td align=right><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#606">606</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Command Transcript.  This is a "semantic transcript" of the results of   a command.  This provides a list of CommandReport objects describing   the results of the command.
+<p>
+<code>class
+<b>CommandTranscript</b> :  &nbsp; <a href="../object/OutputFilter.html">OutputFilter</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>CommandTranscript</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/OutputFilter.html">OutputFilter</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#isActive">isActive</a>&nbsp;
+<a href="#isFailure">isFailure</a>&nbsp;
+<a href="#iter_">iter_</a>&nbsp;
+<a href="#reports_">reports_</a>&nbsp;
+<a href="#transforms_">transforms_</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#actionFailed">actionFailed</a>&nbsp;
+<a href="#activate">activate</a>&nbsp;
+<a href="#addCommandSep">addCommandSep</a>&nbsp;
+<a href="#addMarker">addMarker</a>&nbsp;
+<a href="#addReport">addReport</a>&nbsp;
+<a href="#announceAmbigActionObject">announceAmbigActionObject</a>&nbsp;
+<a href="#announceDefaultObject">announceDefaultObject</a>&nbsp;
+<a href="#announceImplicit">announceImplicit</a>&nbsp;
+<a href="#announceMultiActionObject">announceMultiActionObject</a>&nbsp;
+<a href="#announceRemappedAction">announceRemappedAction</a>&nbsp;
+<a href="#applyTransforms">applyTransforms</a>&nbsp;
+<a href="#canShowReport">canShowReport</a>&nbsp;
+<a href="#clearReports">clearReports</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#currentActionHasReport">currentActionHasReport</a>&nbsp;
+<a href="#deactivate">deactivate</a>&nbsp;
+<a href="#deleteLastReport">deleteLastReport</a>&nbsp;
+<a href="#deleteRange">deleteRange</a>&nbsp;
+<a href="#endDescription">endDescription</a>&nbsp;
+<a href="#filterText">filterText</a>&nbsp;
+<a href="#findCurrentActionReport">findCurrentActionReport</a>&nbsp;
+<a href="#flushForInput">flushForInput</a>&nbsp;
+<a href="#forEachReport">forEachReport</a>&nbsp;
+<a href="#getLastReport">getLastReport</a>&nbsp;
+<a href="#moveRangeAppend">moveRangeAppend</a>&nbsp;
+<a href="#newIter">newIter</a>&nbsp;
+<a href="#noteFailure">noteFailure</a>&nbsp;
+<a href="#showReports">showReports</a>&nbsp;
+<a href="#summarizeAction">summarizeAction</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="isActive"></a>
+<table class=decl><tr><td><code>isActive</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#648">648</a>]</table><div class=desc>   flag: I'm active; when this is nil, we'll pass text through our   filter routine unchanged <p>
+</div>
+<a name="isFailure"></a>
+<table class=decl><tr><td><code>isFailure</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#617">617</a>]</table><div class=desc>   flag: the command has failed (i.e., at least one failure report   has been generated) <p>
+</div>
+<a name="iter_"></a>
+<table class=decl><tr><td><code>iter_</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1235">1235</a>]</table><div class=desc>   iteration number - for an iterated top-level command, this helps   us keep the results for a particular iteration grouped together <p>
+</div>
+<a name="reports_"></a>
+<table class=decl><tr><td><code>reports_</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1238">1238</a>]</table><div class=desc>our vector of reports<p>
+</div>
+<a name="transforms_"></a>
+<table class=decl><tr><td><code>transforms_</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1241">1241</a>]</table><div class=desc>our list of transformations<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="actionFailed"></a>
+<table class=decl><tr><td><code>actionFailed (action)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#634">634</a>]</table><div class=desc>   Did the given action fail?  This scans the transcript to determine   if there are any failure messages associated with the given   action. <p>
+</div>
+<a name="activate"></a>
+<table class=decl><tr><td><code>activate ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#842">842</a>]</table><div class=desc>activate - set up to capture output<p>
+</div>
+<a name="addCommandSep"></a>
+<table class=decl><tr><td><code>addCommandSep ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1148">1148</a>]</table><div class=desc>   Add a command separator. <p>
+</div>
+<a name="addMarker"></a>
+<table class=decl><tr><td><code>addMarker ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1005">1005</a>]</table><div class=desc>   Add a marker report.  This adds a marker to the report stream,   and returns the marker object.  The marker doesn't show any   message in the final display, but callers can use a pair of   markers to identify a range of reports for later reordering or   removal. <p>
+</div>
+<a name="addReport"></a>
+<table class=decl><tr><td><code>addReport (report)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#934">934</a>]</table><div class=desc>   Add a report. <p>
+</div>
+<a name="announceAmbigActionObject"></a>
+<table class=decl><tr><td><code>announceAmbigActionObject (obj, whichObj)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1129">1129</a>]</table><div class=desc>   Announce an object that was resolved with slight ambiguity. <p>
+</div>
+<a name="announceDefaultObject"></a>
+<table class=decl><tr><td><code>announceDefaultObject (obj, whichObj, action, allResolved)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1138">1138</a>]</table><div class=desc>   Announce a default object. <p>
+</div>
+<a name="announceImplicit"></a>
+<table class=decl><tr><td><code>announceImplicit (action, msgProp)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1080">1080</a>]</table><div class=desc>   Announce that the action is implicit <p>
+</div>
+<a name="announceMultiActionObject"></a>
+<table class=decl><tr><td><code>announceMultiActionObject (preCalcMsg, obj, whichObj)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1119">1119</a>]</table><div class=desc>   Announce one of a set of objects to a multi-object action.  We'll   record this announcement for display with our report list. <p>
+</div>
+<a name="announceRemappedAction"></a>
+<table class=decl><tr><td><code>announceRemappedAction ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1109">1109</a>]</table><div class=desc>   Announce a remapped action <p>
+</div>
+<a name="applyTransforms"></a>
+<table class=decl><tr><td><code>applyTransforms ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1203">1203</a>]</table><div class=desc>apply transformations<p>
+</div>
+<a name="canShowReport"></a>
+<table class=decl><tr><td><code>canShowReport (report)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1169">1169</a>]</table><div class=desc>   Can we show a given report?  By default, we always return true,   but subclasses might want to override this to suppress certain   types of reports. <p>
+</div>
+<a name="clearReports"></a>
+<table class=decl><tr><td><code>clearReports ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1157">1157</a>]</table><div class=desc>   clear our reports <p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#607">607</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="currentActionHasReport"></a>
+<table class=decl><tr><td><code>currentActionHasReport (func)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1214">1214</a>]</table><div class=desc>   check to see if the current action has a report matching the given   criteria <p>
+</div>
+<a name="deactivate"></a>
+<table class=decl><tr><td><code>deactivate ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#849">849</a>]</table><div class=desc>deactivate - stop capturing output<p>
+</div>
+<a name="deleteLastReport"></a>
+<table class=decl><tr><td><code>deleteLastReport ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#991">991</a>]</table><div class=desc>delete the last report added<p>
+</div>
+<a name="deleteRange"></a>
+<table class=decl><tr><td><code>deleteRange (marker1, marker2)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1018">1018</a>]</table><div class=desc>delete the reports between two markers<p>
+</div>
+<a name="endDescription"></a>
+<table class=decl><tr><td><code>endDescription ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1071">1071</a>]</table><div class=desc>   End the description section of the report.  This adds a marker   report that indicates that anything following (and part of the   same action) is no longer part of the description; this can be   important when we apply the default description suppression   transformation, because it tells us not to consider the   non-descriptive messages following this marker when, for example,   suppressing default descriptive messages. <p>
+</div>
+<a name="filterText"></a>
+<table class=decl><tr><td><code>filterText (ostr, txt)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1177">1177</a>]</table><div class=desc>   Filter text.  If we're active, we'll turn the text into a command   report and add it to our report list, blocking the text from   reaching the underlying stream; otherwise, we'll pass it through   unchanged. <p>
+</div>
+<a name="findCurrentActionReport"></a>
+<table class=decl><tr><td><code>findCurrentActionReport (func)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1221">1221</a>]</table><div class=desc>find a report in the current action that matches the given criteria<p>
+</div>
+<a name="flushForInput"></a>
+<table class=decl><tr><td><code>flushForInput ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#871">871</a>]</table><div class=desc>   Flush the transcript in preparation for reading input.  This shows   all pending reports, clears the backlog of reports (so that we   don't show them again in the future), and deactivates the   transcript's capture feature so that subsequent output goes   directly to the output stream. <p>   We return the former activation status - that is, we return true   if the transcript was activated before the call, nil if not. <p>
+</div>
+<a name="forEachReport"></a>
+<table class=decl><tr><td><code>forEachReport (func)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1060">1060</a>]</table><div class=desc>   Perform a callback on all of the reports in the transcript.   We'll invoke the given callback function func(rpt) once for each   report, with the report object as the parameter. <p>
+</div>
+<a name="getLastReport"></a>
+<table class=decl><tr><td><code>getLastReport ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#984">984</a>]</table><div class=desc>get the last report added<p>
+</div>
+<a name="moveRangeAppend"></a>
+<table class=decl><tr><td><code>moveRangeAppend (marker1, marker2)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#1035">1035</a>]</table><div class=desc>   Pull out the reports between two markers, and reinsert them at   the end of the transcript. <p>
+</div>
+<a name="newIter"></a>
+<table class=decl><tr><td><code>newIter ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#859">859</a>]</table><div class=desc>   Count an iteration.  An Action should call this once per iteration   if it's a top-level (non-nested) command. <p>
+</div>
+<a name="noteFailure"></a>
+<table class=decl><tr><td><code>noteFailure ( )</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#623">623</a>]</table><div class=desc>   Note that the current action has failed.  This is equivalent to   adding a reportFailure() message to the transcript. <p>
+</div>
+<a name="showReports"></a>
+<table class=decl><tr><td><code>showReports (deact)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#887">887</a>]</table><div class=desc>   Show our reports.  Returns true if the transcript was previously   active, nil if not. <p>
+</div>
+<a name="summarizeAction"></a>
+<table class=decl><tr><td><code>summarizeAction (cond, report)</code><td align=right><code><a href="../file/report.t.html">report.t</a>[<a href="../source/report.t.html#693">693</a>]</table><div class=desc>   Summarize the current action's reports.  This allows a caller to   turn a series of iterated reports into a single report for the   entire action.  For example, we could change something like this: <p>   gold coin: Bob accepts the gold coin. <br> gold coin: Bob accepts the gold coin. <br> gold coin: Bob accepts the gold coin. <p>   into this: <p>   Bob accepts the three gold coins. <p>   This function runs through the reports for the current action,   submitting each one to the 'cond' callback to see if it's of   interest to the summary.  For each consecutive run of two or more   reports that can be summarized, we'll remove the reports that   'cond' accepted, and we'll remove the multiple-object announcement   reports associated with them, and we'll insert a new report with   the message returned by the 'report' callback. <p>   'cond' is called as cond(x), where 'x' is a report object.  This   callback returns true if the report can be summarized for the   caller's purposes, nil if not. <p>   'report' is called as report(vec), where 'vec' is a Vector   consisting of all of the consecutive report objects that we're now   summarizing.  This function returns a string giving the message to   use in place of the reports we're removing.  This should be a   summary message, standing in for the set of individual reports   we're removing. <p>   There's an important subtlety to note.  If the messages you're   summarizing are conversational (that is, if they're generated by   TopicEntry responses), you should take care to generate the full   replacement text in the 'report' part, rather than doing so in   separate code that you run after summarizeAction() returns.  This   is important because it ensures that the Conversation Manager   knows that your replacement message is part of the same   conversation.  If you wait until after summarizeAction() returns   to generate more response text, the conversation manager won't   realize that the additional text is part of the same conversation. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

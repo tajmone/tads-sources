@@ -1,0 +1,113 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TopicDatabase</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TopicDatabase</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#551">551</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A plug-in topic database.  The topic database is a set of TopicEntry   objects that specify the responses to queries on particular topics.   The exact nature of the queries that a particular topic database   handles is up to the database subclass to define; we just provide the   abstract mechanism for finding and displaying responses. <p>   This is a "plug-in" database in that it's meant to be added into other   classes using multiple inheritance.  This isn't meant to be used as a   stand-alone abstract topic entry container.
+<p>
+<code>class
+<b>TopicDatabase</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TopicDatabase</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TopicDatabase</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorTopicDatabase.html">ActorTopicDatabase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Actor.html">Actor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UntakeableActor.html">UntakeableActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Person.html">Person</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorState.html">ActorState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AccompanyingInTravelState.html">AccompanyingInTravelState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GuidedInTravelState.html">GuidedInTravelState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AccompanyingState.html">AccompanyingState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GuidedTourState.html">GuidedTourState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConversationReadyState.html">ConversationReadyState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HermitActorState.html">HermitActorState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InConversationState.html">InConversationState</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvNode.html">ConvNode</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Consultable.html">Consultable</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#limitSuggestions">limitSuggestions</a>&nbsp;
+<a href="#suggestedTopics">suggestedTopics</a>&nbsp;
+<a href="#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="#addTopic">addTopic</a>&nbsp;
+<a href="#addTopicToList">addTopicToList</a>&nbsp;
+<a href="#compareVocabMatch">compareVocabMatch</a>&nbsp;
+<a href="#findTopicResponse">findTopicResponse</a>&nbsp;
+<a href="#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="#handleTopic">handleTopic</a>&nbsp;
+<a href="#removeSuggestedTopic">removeSuggestedTopic</a>&nbsp;
+<a href="#removeTopic">removeTopic</a>&nbsp;
+<a href="#removeTopicFromList">removeTopicFromList</a>&nbsp;
+<a href="#showSuggestedTopicList">showSuggestedTopicList</a>&nbsp;
+<a href="#showTopicResponse">showTopicResponse</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="limitSuggestions"></a>
+<table class=decl><tr><td><code>limitSuggestions</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#911">911</a>]</table><div class=desc>   Flag: this database level should limit topic suggestions (for the   TOPICS and TALK TO commands) to its own topics, excluding any   topics inherited from the "broader" context.  If this property is   set to true, then we won't include suggestions from any lower   level of the database hierarchy.  If this property is nil, we'll   also include any topic suggestions from the broader context. <p>   Topic databases are arranged into a fixed hierarchy for an actor.   At the top level is the current ConvNode object; at the next level   is the ActorState; and at the bottom level is the Actor itself.   So, if the ConvNode's limitSuggestions property is set to true,   then the suggestions for the actor will include ONLY the ConvNode.   If the ConvNode has the property set to nil, but the ActorState   has it set to true, then we'll include the ConvNode and the   ActorState suggestions. <p>   By default, we set this to nil.  This should usually be set to   true for any ConvNode or ActorState where the NPC won't allow the   player to stray from the subject.  For example, if a ConvNode only   accepts a YES or NO response to a question, then this property   should probably be set to true in the ConvNode, since other   suggested topics won't be accepted as conversation topics as long   as the ConvNode is active. <p>
+</div>
+<a name="suggestedTopics"></a>
+<table class=decl><tr><td><code>suggestedTopics</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#975">975</a>]</table><div class=desc>   Our list of suggested topics.  These are SuggestedTopic objects   that describe things that another actor wants to ask or tell this   actor about. <p>
+</div>
+<a name="topicGroupActive"></a>
+<table class=decl><tr><td><code>topicGroupActive</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#557">557</a>]</table><div class=desc>   Is the topic group active?  A TopicEntry always checks with its   container to see if the children of the container are active.  By   default, everything in the database is active. <p>
+</div>
+<a name="topicGroupScoreAdjustment"></a>
+<table class=decl><tr><td><code>topicGroupScoreAdjustment</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#564">564</a>]</table><div class=desc>   Get the score adjustment for all topic entries contained within.   The default adjustment is zero; TopicGroup objects can use this to   adjust the score for their nested entries. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="addSuggestedTopic"></a>
+<table class=decl><tr><td><code>addSuggestedTopic (topic)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#934">934</a>]</table><div class=desc>add a suggested topic<p>
+</div>
+<a name="addTopic"></a>
+<table class=decl><tr><td><code>addTopic (topic)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#918">918</a>]</table><div class=desc>   Add a topic to our topic database.  We'll add it to the   appropriate list or lists as indicated in the topic itself.   'topic' is a TopicEntry object. <p>
+</div>
+<a name="addTopicToList"></a>
+<table class=decl><tr><td><code>addTopicToList (topic, listProp)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#952">952</a>]</table><div class=desc>   Add a topic to the given topic list.  The topic list is given as a   property point; for example, we'd specify &amp;askTopics to add the   topic to our ASK list. <p>
+</div>
+<a name="compareVocabMatch"></a>
+<table class=decl><tr><td><code>compareVocabMatch (a, b)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#810">810</a>]</table><div class=desc>   Compare the vocabulary match strengths of two ResolveInfo objects,   for the purposes of breaking ties in topic matching.  Uses the   usual comparison/sorting return value conventions: -1 means that a   is weaker than b, 0 means they're equivalent, 1 means a is   stronger than b. <p>
+</div>
+<a name="findTopicResponse"></a>
+<table class=decl><tr><td><code>findTopicResponse (fromActor, topic, convType, path)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#606">606</a>]</table><div class=desc>   find the best response (a TopicEntry object) for the given topic   (a ResolvedTopic object) <p>
+</div>
+<a name="getTopicOwner"></a>
+<table class=decl><tr><td><code>getTopicOwner ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#985">985</a>]</table><div class=desc>   Get the "owner" of the topics in this database.  The meaning of   "owner" varies according to the topic database type; for actor   topic databases, for example, this is the actor.  Generally, the   owner is the object being queried about the topic, from the   player's perspective.  Each type of database should define this   method to return the appropriate object. <p>
+</div>
+<a name="handleTopic"></a>
+<table class=decl><tr><td><code>handleTopic (fromActor, topic, convType, path)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#572">572</a>]</table><div class=desc>   Handle a topic.  Look up the topic in our topic list for the   given conversational action type.  If we find a match, we'll   invoke the matching topic list entry to handle it.  We'll return   true if we find a match, nil if not. <p>
+</div>
+<a name="removeSuggestedTopic"></a>
+<table class=decl><tr><td><code>removeSuggestedTopic (topic)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#941">941</a>]</table><div class=desc>remove a suggested topic<p>
+</div>
+<a name="removeTopic"></a>
+<table class=decl><tr><td><code>removeTopic (topic)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#926">926</a>]</table><div class=desc>remove a topic from our topic database<p>
+</div>
+<a name="removeTopicFromList"></a>
+<table class=decl><tr><td><code>removeTopicFromList (topic, listProp)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#963">963</a>]</table><div class=desc>remove a topic from the given topic list<p>
+</div>
+<a name="showSuggestedTopicList"></a>
+<table class=decl><tr><td><code>showSuggestedTopicList (lst, asker, askee, explicit)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#846">846</a>]</table><div class=desc>show our suggested topic list<p>
+</div>
+<a name="showTopicResponse"></a>
+<table class=decl><tr><td><code>showTopicResponse (fromActor, topic, resp)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#596">596</a>]</table><div class=desc>show the response we found for a topic<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,927 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Further Programming</title><meta name="keywords" content="comments,identifiers,local,local variables,variables,variables, local,scope of identifiers,loops,loops, while,loops, do...while,loops, for,loops, foreach,while,do ... while,for,foreach,break,continue,inheritance,multiple inheritance,replace,modify,delegated"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link>
+</head>
+<body>
+
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="programmingprolegomena.htm">[Previous] </a>&nbsp;&nbsp;<a href="chapter2.htm">[Next] </a></I></FONT></P>
+<h2>Further Programming Concepts and Constructs</h3>
+
+<p>We have only scratched the surface of the TADS 3 language here, but further details are available in the <i>System Manual</i>, and in the meantime we have covered most of the basic features of the language that you need to follow this <i>Guide</i>. A few more will be introduced as we go along. There are, however, a few more fairly basic TADS 3 programming concepts we haven't covered yet, and as you'll probably need them sooner rather than later they're introduced here. It is not necessary to master these in order to use the rest of this <i>Guide</i>, however, so you may prefer to skip this section for now and get on with the more interesting business of discovering how to construct your first TADS 3 game, returning to this section later on if you need to.
+</p>
+<h3>a. Comments, Identifiers and Scope</h3>
+<h4>(i) Comments</h4>
+<p>Outside of a quoted string, two consecutive slashes, </font><font face="Courier New" size="2" color="#000000">//</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, indicate that the rest of the line is a comment. Everything up to the next newline is ignored.  Alternatively, C-style comments can be used; these start with </font><font face="Courier New" size="2" color="#000000">/*</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and end with </font><font face="Courier New" size="2" color="#000000">*/</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; this type of comment can span multiple lines.
+<br>
+
+<br>
+Examples:
+<pre><div class=code>//&nbsp;This&nbsp;line&nbsp;is&nbsp;a&nbsp;comment.&nbsp;
+
+/*
+This&nbsp;is&nbsp;a&nbsp;comment
+which&nbsp;goes&nbsp;across
+several&nbsp;lines.
+*/
+</div></pre>
+<br>
+<h4>ii) Identifiers</h4>
+<p>Identifiers must start with a letter (upper or lower case), and may contain letters, numbers, dollar signs, and underscores. Identifiers can be up to 39 characters long. Upper and lower case letters are distinct (so that, for example, cloakroom, Cloakroom and CloakRoom are three different identifiers).
+</p>
+
+<br>
+<h4>iii) Scope of Identifiers and Local Variables</h4>
+
+<p>All objects and functions are named by global identifiers. No identifier may be used to identify different things; that is, no two objects can have the same name, an identifier naming a function can't also be used for an object, and so forth.
+</p>
+
+<p>
+Property names are also global identifiers. A name used for a property can't be used for a function or object, or vice versa. However, unlike functions and objects, the same property name can be used in many different objects. Since a property name is never used alone, but always in conjunction with an object, the TADS compiler is able to determine which object's property is being referenced even if the same name is used in many objects.
+</p>
+
+<p>
+Function arguments and local variables are visible only in the function in which they appear. It is permissible to re-use a global identifier as a function argument or local variable, in which case the variable supersedes the global meaning within the function. However, this is discouraged, as it can be a bit confusing.
+</p>
+
+<p>
+Local variables in functions and methods must be declared with the keyword </font><font face="Courier New" size="2" color="#000000">local&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">before they are used. Local variable declarations can appear anywhere within a code block. A local variable definition that appears in the middle of a code block creates a variable that is in scope from that point in the code block to the closing brace of the code block. (TADS 2 only allowed local variable declarations at the start of a code block.)
+</p>
+
+<p>
+You can define local variables for the current code block. This is done with a statement such as this:
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;local&nbsp;<i>identifier-list</i>&nbsp;;&nbsp;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The <i>identifier-list</i> has the form:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000"><i>&nbsp;&nbsp;identifier&nbsp;[&nbsp;initializer&nbsp;]&nbsp;[</i>,&nbsp;<i>identifier-list&nbsp;]</i>&nbsp;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">An <i>initializer</i>, which is optional, has the form:
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;
+<br>
+=&nbsp;<i>expression</i>&nbsp;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">where the <i>expression</i> is any valid expression, which can contain arguments to the function or method, as well as any local variables defined prior to the local variable being initialized with the expression. The expression is evaluated, and the resulting value is assigned to the local variable prior to evaluating the next initializer, if any, and prior to executing the first statement after the </font><font face="Courier New" size="2" color="#000000">local</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> declaration. Local variables with initializers and local variables without initializers can be freely intermixed in a single statement; any local variables without initializers are automatically set to </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> by the run-time system.
+<br>
+
+<br>
+The identifiers defined in this fashion are visible only inside the function or method in which the </font><font face="Courier New" size="2" color="#000000">local</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement appears (actually, the situation can be slightly more complex than this when anonymous functions are involved - see the section on <a href="../sysman/anonfn.htm">Anonymous Functions</a> in the System Manual for the full story). Furthermore, the local statement supersedes any global meaning of the identifiers within the function or method.
+<br>
+
+<br>
+An example of declaring local variables, using multiple </font><font face="Courier New" size="2" color="#000000">local</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statements, and using initializers is below.
+<pre><div class=code>
+f(a, b)
+{
+  local i, j;                   /* no initializers */
+  local k = 1, m, n = 2;        /* some with initializers, some without */
+  local q = 5 * k, r = m + q;   /* OK to use q after it's initialized */
+  for (i = 1 ; i &lt; q ; i++)
+  {
+    local x, y;                 /* locals can be declared in any block */
+    say(i);
+  }
+}
+</div></pre>
+<br>
+<h3>b. Loops</h3>
+
+<p>A common programming requirement - and one that can turn up quite frequently in TADS programming - is the need to repeat a statement or set of statements a number of times. This may either be a fixed number of times or, more commonly, a number of times determined by some condition, such as the number of objects in a set we wish to examine. For example at the start of the game we might want to go through every object in the game and ensure that it is has been added to the <span class=code>contents&nbsp;</span>property of its immediately container (the library in fact does this for us). It would be tedious indeed to have to write code to do this on every single object that might be affected; it's far better to write a set of statements once and have that same set of statements executed for every relevant object in our game. A programming construct that accomplishes this sort of task is traditionally called a <i>loop</i>, and the TADS 3 language provides four types of loop: while, do-while, for and foreach. It also contains a number of statements to help control how loops function.
+</p>
+
+<br>
+<h4>i) While</h4>
+
+<p>The </font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement defines a loop: set of statements that is executed repeatedly as long as a certain condition is true.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">while&nbsp;(&nbsp;<i>expression</i>&nbsp;)&nbsp;statement
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">As with the </font><font face="Courier New" size="2" color="#000000">if</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement, the <i>statement</i> may be a single statement or a set of statements enclosed in braces. The <i>expression</i> should evaluate to a number (in which case 0 is false and anything else is true), or a truth value (</font><font face="Courier New" size="2" color="#000000">true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">).
+<br>
+
+<br>
+The <i>expression</i> is evaluated <i>before</i> the first time through the loop; if the <i>expression</i> is false at that time, the statement or statements in the loop are skipped. Otherwise, the statement or statements are executed once, and the <i>expression</i> is evaluated again; if the <i>expression</i> is still true, the loop executes one more time and the cycle is repeated. Once the <i>expression</i> is false, execution resumes at the next statement after the loop.
+<br>
+
+<br>
+For example, suppose we had a custom class called </font><font face="Courier New" size="2" color="#000000">Book</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and we wanted to loop through every </font><font face="Courier New" size="2" color="#000000">Book</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in our game setting its </font><font face="Courier New" size="2" color="#000000">hasBeenRead</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property to </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> unless its </font><font face="Courier New" size="2" color="#000000">author</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property refers to the Player Character. We could write:
+<pre><div class=code>
+local&nbsp;obj&nbsp;=&nbsp;firstObj(Book);
+while(obj&nbsp;!=&nbsp;nil)
+{
+  if(obj.author==gPlayerChar)
+      obj.hasBeenRead&nbsp;=&nbsp;true;
+  else
+      obj.hasBeenRead&nbsp;=&nbsp;nil;
+  obj&nbsp;=&nbsp;nextObj(obj,&nbsp;Book);
+}
+</div></pre>
+<h4>ii) Do-While</h4>
+
+<p>The do-while statement defines a slightly different type of loop from the </font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement. This type of loop also executes until a controlling expression becomes false (0 or </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), but evaluates the controlling expression <i>after</i> each iteration of the loop. This ensures that the loop is executed at least once, since the expression isn't tested for the first time until after the first iteration of the loop.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The general form of this statement is:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">do&nbsp;<i>statement</i>&nbsp;while&nbsp;(&nbsp;<i>expression</i>&nbsp;);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The statement may again be a single statement or a set of statements enclosed in braces. The expression should again evaluate either to a number (in which case 0 is false and anything else is true), or a truth value (</font><font face="Courier New" size="2" color="#000000">true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">For example, to calculate factorial n:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">factorial(n)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;x&nbsp;=&nbsp;1,&nbsp;res&nbsp;=&nbsp;1;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;do
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000">{
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;res&nbsp;=&nbsp;res&nbsp;*&nbsp;x;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;x++;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(x&nbsp;&lt;=&nbsp;n);
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;res;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="30"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>iii)</i></font></i></font></i></font></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i></i></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>For </i></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i>
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i></i></font></td><td></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement defines a very powerful and general type of loop. You can always use </font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to construct any loop you can construct with </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but the </font><font face="Courier New" size="2" color="#000000">for&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">statement is often a much more compact and readable notation for the same effect.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The general form of this statement is:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">for&nbsp;(&nbsp;<i>init-expr</i>;&nbsp;<i>cond-expr</i>;&nbsp;<i>reinit-expr</i>&nbsp;)&nbsp;<i>statement</i>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">As with other looping constructs, the <i>statement</i> can be either a single statement, or a block of statements enclosed in braces.
+<br>
+
+<br>
+The first expression, <i>init-expr</i>, is the "initialization expression." This expression is evaluated once, before the first iteration of the loop. It is used to initialize the variables involved in the loop.
+<br>
+
+<br>
+The second expression, <i>cond-expr</i>, is the condition of the loop. It serves the same purpose as the controlling expression of a </font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement. Before each iteration of the loop, the <i>cond-expr</i> is evaluated. If the value is true the body of the loop is executed; otherwise, the loop is terminated, and execution resumes at the statement following the loop body. Note that, like the </font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement's controlling expression, the <i>cond-expr</i> of a </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement is evaluated prior to the first time through the loop (but after the <i>init-expr</i> has been evaluated), so a </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> loop will execute zero times if the <i>cond-expr</i> is false prior to the first iteration.
+<br>
+
+<br>
+The third expression, <i>reinit-expr</i>, is the "re-initialization expression." This expression is evaluated <i>after</i> each iteration of the loop. Its value is ignored; the only purpose of this expression is to change the loop variables as necessary for the next iteration of the loop. Usually, the re-initialization expression will increment a counter or perform some similar function.
+<br>
+
+<br>
+Any or all of the three expressions may be omitted. Omitting the expression condition is equivalent to using </font><font face="Courier New" size="2" color="#000000">true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as the expression condition; hence, a loop that starts "</font><font face="Courier New" size="2" color="#000000">for&nbsp;(&nbsp;;;&nbsp;)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">" will iterate forever (or until a </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement is executed within the loop). A </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement that omits the initialization and re-initialization expressions is the same as a </font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> loop.
+<br>
+
+<br>
+Here's an example of using a </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement. This function implements a simple loop that computes the sum of the elements of a list.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;sumlist(lst)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;len&nbsp;=&nbsp;length(lst),&nbsp;sum,&nbsp;i;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(sum&nbsp;=&nbsp;0,&nbsp;i&nbsp;=&nbsp;1&nbsp;;&nbsp;i&nbsp;&lt;=&nbsp;len&nbsp;;&nbsp;i++)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum&nbsp;+=&nbsp;lst[i];
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that an equivalent loop could be written with an empty loop body, by performing the summation in the re-initialization expression. We could also move the initialization of </font><font face="Courier New" size="2" color="#000000">len</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> within the initialization expression of the loop.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;sumlist(lst)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;len,&nbsp;sum,&nbsp;i;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(len&nbsp;=&nbsp;length(lst),&nbsp;sum&nbsp;=&nbsp;0,&nbsp;i&nbsp;=&nbsp;1&nbsp;;&nbsp;i&nbsp;&lt;=&nbsp;len&nbsp;;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum&nbsp;+=&nbsp;lst[i],&nbsp;i++);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You can define new local variables in the initializer part of a </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement by using the </font><font face="Courier New" size="2" color="#000000">local</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword in the initializer. For example:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(i&nbsp;=&nbsp;1,&nbsp;local&nbsp;j&nbsp;=&nbsp;3,&nbsp;local&nbsp;k&nbsp;=&nbsp;4,&nbsp;l&nbsp;=&nbsp;5&nbsp;;&nbsp;i&nbsp;&lt;&nbsp;5&nbsp;;&nbsp;++i)&nbsp;//&nbsp;...
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This declares two new local variables, </font><font face="Courier New" size="2" color="#000000">j</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">k</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and uses the existing variables </font><font face="Courier New" size="2" color="#000000">i</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">l</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Note that </font><font face="Courier New" size="2" color="#000000">l</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is <i>not</i> a new local, even though it comes after the </font><font face="Courier New" size="2" color="#000000">local&nbsp;k</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> definition, because each </font><font face="Courier New" size="2" color="#000000">local</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword in a </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> initializer defines only one variable. Note also that an initial value assignment is required for each new local declared.
+<br>
+
+<br>
+The new locals declared in a </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> initializer are local in scope to the </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement and its body (this is the same rule that Java uses, although note that it differs from the (undesirable) way C++ works). The effect is exactly as though an extra open brace ("{") followed by a </font><font face="Courier New" size="2" color="#000000">local</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement for each new local appeared immediately before the </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement, and an extra close brace ("}") appeared immediately after the end of the body of the loop.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="30"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>iv)</i></font></i></font></i></font></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i></i></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>Foreach</i></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><b><i>
+&nbsp;<br>
+</i></b></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><b><i></i></b></font></td><td></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">foreach</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement provides a convenient syntax for writing a loop over the contents of a collection, such as a List or a Vector.
+<br>
+
+<br>
+The syntax of the </font><font face="Courier New" size="2" color="#000000">foreach</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement is:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;foreach&nbsp;(&nbsp;<i>foreach_lvalue&nbsp;</i>in&nbsp;<i>expression</i>&nbsp;)&nbsp;<i>body
+<br>
+</i>
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The <i>foreach_lvalue</i> specifies a local variable or other "lvalue" expression which serves as the looping variable. This can be any &nbsp;&nbsp;&nbsp;lvalue (any expression that can be used on the left-hand side of an assignment operator), or it can be the keyword </font><font face="Courier New" size="2" color="#000000">local</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> followed by the name of a new local variable; if </font><font face="Courier New" size="2" color="#000000">local</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is used, a new local variable is created with scope local to the </font><font face="Courier New" size="2" color="#000000">foreach</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement and its body. (Note that as of TADS 3.1.0 we can use <font face="Courier New" size="2" color="#000000">for</font> in place of <font face="Courier New" size="2" color="#000000">foreach</font> in such loops, and that there are also other varieties of <font face="Courier New" size="2" color="#000000">for..in</font> loop that we needn't worry about here.)
+<br>
+
+<br>
+The <i>expression </i>is any expression that evaluates to a Collection object (for which see the <a href="../sysman/collect.htm"><i>System Manual</i></a>), such as a List or Vector value.
+<br>
+
+<br>
+The statement loops over the elements of the collection. For each element, the statement assigns the current element to the lvalue, then executes the body.
+<br>
+
+<br>
+Here's an example that displays the elements of a list.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;[1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5];
+<br>
+&nbsp;&nbsp;&nbsp;foreach&nbsp;(local&nbsp;x&nbsp;in&nbsp;lst)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;&lt;x&gt;&gt;\n";
+<br>
+<font face="Courier New" size="2" color="#0000FF">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="30"><font face="Courier New" size="2" color="#0000FF"></font></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>v)</i></font></i></font></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i></i></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>Break and Continue</i></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i>
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i></i></font></td><td></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">A program can get out of a loop early using the </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;break;&nbsp;
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This is useful for terminating a loop at a midpoint. Execution resumes at the statement immediately following the innermost loop in which the break appears.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement also is used to exit a </font><font face="Courier New" size="2" color="#000000">switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement. In a </font><font face="Courier New" size="2" color="#000000">switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement, a </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> causes execution to resume at the statement following the closing brace of the </font><font face="Courier New" size="2" color="#000000">switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">continue</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement does roughly the opposite of the </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement; it resumes execution back at the start of the innermost loop in which it appears. The </font><font face="Courier New" size="2" color="#000000">continue</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement may be used in </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">foreach</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and </font><font face="Courier New" size="2" color="#000000">do-while&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">loops.
+<br>
+
+<br>
+In a </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> loop, </font><font face="Courier New" size="2" color="#000000">continue</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> causes execution to resume at the re-initialization step. That is, the third expression (if present) in the </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement is evaluated, then the second expression (if present) is evaluated; if the second expression's value is non-nil or the second expression isn't present, execution resumes at the first statement within the statement block following the </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, otherwise at the next statement following the block.
+<br>
+
+<br>
+For example, suppose we want to loop through a player's possessions until we find one that is of class </font><font face="Courier New" size="2" color="#000000">LightSource</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; we might do something like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">local&nbsp;obj;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">foreach(obj&nbsp;in&nbsp;gPlayerChar.contents)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;if(obj.ofKind(LightSource))
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">continue</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statements can optionally specify a target label. When a label is used with one of these statements, it must refer to a statement that encloses the </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">continue</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. In the case of </font><font face="Courier New" size="2" color="#000000">continue</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the label must refer directly to a loop statement: a </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, or </font><font face="Courier New" size="2" color="#000000">do</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">-</font><font face="Courier New" size="2" color="#000000">while</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement. The target of a </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> may be any enclosing statement.
+<br>
+
+<br>
+When a label is used with </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the statement transfers control to the statement immediately following the labeled statement. If the target statement is a loop, control transfers to the statement following the loop body. If the target is a compound statement (a group of statements enclosed in braces), control transfers to the next statement after the block's closing brace. Targeted </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statements are especially useful when you want to break out of a loop from within a switch statement:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">scanLoop:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(i&nbsp;=&nbsp;1&nbsp;;&nbsp;i&nbsp;&lt;&nbsp;10&nbsp;;&nbsp;++i)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(val[i])
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'+':
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++sum;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'-':
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--sum;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'eof':
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break&nbsp;scanLoop;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Targeted </font><font face="Courier New" size="2" color="#000000">break</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statements are also useful for breaking out of nested loops:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">matchLoop:
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(i&nbsp;=&nbsp;1&nbsp;;&nbsp;i&nbsp;&lt;=&nbsp;val.length()&nbsp;;&nbsp;++i)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(j&nbsp;=&nbsp;1&nbsp;;&nbsp;j&nbsp;&lt;&nbsp;i&nbsp;;&nbsp;++j)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(val[i]&nbsp;==&nbsp;val[j])
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break&nbsp;matchLoop;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="30"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>vi)</i></font></i></font></i></font></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i></i></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>Alternatives to Loops</i></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i>
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i></i></font></td><td></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">It seems to be one of the best kept secrets of TADS 3 that for many purposes there's often a more compact alternative to using a loop, particular when working with a <i>Collection</i> such as List or Vector. For example the foreach loop used above to identify a LightSource held by the player could have been replaced with a single statement:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">local&nbsp;obj&nbsp;=&nbsp;gPlayerChar.contents.valWhich({x:&nbsp;x.ofKind(LightSource)});
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The above statement will hardly be transparent to the novice, and this probably isn't the best place to explain it, since it involves concepts that go some way beyond the introductory. At this point it must suffice to call your attention to the possibility of this kind of construct, which can be extremely powerful once mastered. To find out more (when you feel ready), read the sections on <a href="../sysman/anonfn.htm">Anonymous Functions</a>,
+<a href="../sysman/list.htm">List</a> and <a href="../sysman/vector.htm">Vector</a> in
+the <i>System Manual</i>.
+<br>
+
+<br>
+
+<br>
+<h3>c. Inheritance</h3>
+
+<p>
+TADS 3 is an object-oriented language which makes heavy use of inheritance (that is to say, the language supports inheritance and the library makes heavy use of it). At its simplest inheritance allows us to have the best of both worlds: to modify the behaviour of an existing object or class but still make use of the behaviour defined on that class. For example, suppose we defined a </font><font face="Courier New" size="2" color="#000000">Switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class with a method that defines what happens when it's switched on and off:
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">Switch:&nbsp;Thing
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">makeOn(stat)
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;isOn&nbsp;=&nbsp;stat;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;"You&nbsp;flip&nbsp;the&nbsp;switch&nbsp;&lt;&lt;&nbsp;stat&nbsp;?&nbsp;'on'&nbsp;:&nbsp;'off'&nbsp;&gt;&gt;.&nbsp;"
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">isOn&nbsp;=&nbsp;nil
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Now suppose you wanted a </font><font face="Courier New" size="2" color="#000000">LightSwitch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class that did exactly the same as the </font><font face="Courier New" size="2" color="#000000">Switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, but also turn on an associated light source when turned on. You could derive this from </font><font face="Courier New" size="2" color="#000000">Switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as a subclass, and you'd still want its </font><font face="Courier New" size="2" color="#000000">makeOn</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method to do everything </font><font face="Courier New" size="2" color="#000000">Switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">'s </font><font face="Courier New" size="2" color="#000000">makeOn</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method does, but you'd also want it to light the light source. It would be tedious to have to retype the whole </font><font face="Courier New" size="2" color="#000000">makeOn(stat</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) method, particularly in cases where it was something rather more substantial than here; instead we can inherit it and then add our own modifications:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">LightSwitch:&nbsp;Switch
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">makeOn(stat)
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;inherited(stat);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;if(myLight&nbsp;!=&nbsp;nil)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;myLight.makeLit(stat);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">myLight&nbsp;=&nbsp;nil
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that we don't have to repeat the definition of the </font><font face="Courier New" size="2" color="#000000">isOn</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, since this is already inherited from the </font><font face="Courier New" size="2" color="#000000">Switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class. We'll now examine this mechanism in a bit more detail.
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="30"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>i)</i></font></i></font></i></font></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i></i></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>Inherited</i></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i>
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i></i></font></td><td></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">A special pseudo-object called </font><font face="Courier New" size="2" color="#000000">inherited&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">allows you to call a method in the current </font><font face="Courier New" size="2" color="#000000">self&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">object's superclass. Moreover, you can use </font><font face="Courier New" size="2" color="#000000">inherited&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">in an expression, so any value returned by the superclass method can be determined and used by the current method. Third, you can pass arguments to the property invoked with the </font><font face="Courier New" size="2" color="#000000">inherited&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">pseudo-object.
+<br>
+
+<br>
+You can use </font><font face="Courier New" size="2" color="#000000">inherited&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">in an expression anywhere that you can use </font><font face="Courier New" size="2" color="#000000">self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+Here is an example of using </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;MyClass:&nbsp;object
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;sdesc&nbsp;=&nbsp;"myclass"
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;prop1(a,&nbsp;b)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"This&nbsp;is&nbsp;myclass's&nbsp;prop1.&nbsp;&nbsp;self&nbsp;=&nbsp;&lt;&lt;&nbsp;sdesc&nbsp;&gt;&gt;,
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;&lt;&lt;&nbsp;a&nbsp;&gt;&gt;,&nbsp;and&nbsp;b&nbsp;=&nbsp;&lt;&lt;&nbsp;b&nbsp;&gt;&gt;.\n";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return(123);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;myobj:&nbsp;MyClass
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;sdesc&nbsp;=&nbsp;"myobj"
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;prop1(d,&nbsp;e,&nbsp;f)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;x;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"This&nbsp;is&nbsp;myobj's&nbsp;prop1.&nbsp;&nbsp;self&nbsp;=&nbsp;&lt;&lt;&nbsp;sdesc&nbsp;&gt;&gt;,
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;&lt;&lt;&nbsp;d&nbsp;&gt;&gt;,&nbsp;e&nbsp;=&nbsp;&lt;&lt;&nbsp;e&nbsp;&gt;&gt;,&nbsp;and&nbsp;f&nbsp;=&nbsp;&lt;&lt;&nbsp;f&nbsp;&gt;&gt;.\n";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;inherited.prop1(d,&nbsp;f)&nbsp;*&nbsp;2;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Back&nbsp;in&nbsp;myobj's&nbsp;prop1.&nbsp;&nbsp;x&nbsp;=&nbsp;&lt;&lt;&nbsp;x&nbsp;&gt;&gt;\n";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">&nbsp;&nbsp;&nbsp;When you call </font><font face="Courier New" size="2" color="#000000">myobj.prop1(1,&nbsp;2,&nbsp;3),</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> the following will be displayed:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="68"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">&nbsp;This&nbsp;is&nbsp;myobj's&nbsp;prop1.&nbsp;self&nbsp;=&nbsp;myobj,&nbsp;d&nbsp;=&nbsp;1,&nbsp;e&nbsp;=&nbsp;2,&nbsp;and&nbsp;f&nbsp;=&nbsp;3.
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="68"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;This&nbsp;is&nbsp;myclass's&nbsp;prop1.&nbsp;self&nbsp;=&nbsp;myobj,&nbsp;a&nbsp;=&nbsp;1,&nbsp;and&nbsp;b&nbsp;=&nbsp;3.
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="68"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;Back&nbsp;in&nbsp;myobj's&nbsp;prop1.&nbsp;x&nbsp;=&nbsp;246.
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="68"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that the </font><font face="Courier New" size="2" color="#000000">self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object that is in effect while the superclass method is being executed is the <i>same</i> as the </font><font face="Courier New" size="2" color="#000000">self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object in the calling (subclass) method. This makes </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> very different from calling the superclass method directly (i.e., by using the superclass object's name in place of </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">).
+<br>
+
+<br>
+You can also specify the name of the superclass after the 'inherited' keyword; this is otherwise similar to the normal 'inherited' syntax:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited&nbsp;Fixture.actionDobjTake();
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+This specifies that you want the method to inherit the actionDobjTake() implementation from the </font><font face="Courier New" size="2" color="#000000">Fixture</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> superclass, regardless of whether TADS might normally have chosen another superclass as the overridden method. This is useful for situations involving multiple inheritance where you want more control over which of the base classes of an object should provide a particular behavior for the subclass.
+<br>
+
+<br>
+If the last example had been called from within the </font><font face="Courier New" size="2" color="#000000">actionDobjTake()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of the object in question, we could simply have written:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">inherited&nbsp;Fixture();
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">It is legal to omit the property name or expression in an </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">delegated&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(see below) expression. When the property name or expression is omitted, the property inherited or delegated to is implicitly the same as the current target property. For example, consider this code:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">myObj:&nbsp;myClass
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;myMethod(a,&nbsp;b)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;{
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;inherited(a*2,&nbsp;b*2);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This invokes the inherited myMethod(), as though we had instead written </font><font face="Courier New" size="2" color="#000000">inherited.myMethod(a*2,&nbsp;b*2)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Because the current method is </font><font face="Courier New" size="2" color="#000000">myMethod</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> when the </font><font face="Courier New" size="2" color="#000000">inherited&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">expression is evaluated, </font><font face="Courier New" size="2" color="#000000">myMethod</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the implied property of the </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> expression.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="30"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>ii)</i></font></i></font></i></font></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i></i></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>Multiple Inheritance</i></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i>
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i></i></font></td><td></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">An object can inherit properties from more than one other object. This is called Multiple Inheritance. It complicates things considerably, primarily because it can be confusing to figure out exactly where an object is inheriting its properties from. In essence, the order in which you specify an object's superclasses determines the priority of inheritance if the object could inherit the same property from several of its superclasses.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">multiObj:&nbsp;class1,&nbsp;class2,&nbsp;class3
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Here we have defined </font><font face="Courier New" size="2" color="#000000">multiObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to inherit properties first from </font><font face="Courier New" size="2" color="#000000">class1</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, then from </font><font face="Courier New" size="2" color="#000000">class2</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, then from </font><font face="Courier New" size="2" color="#000000">class3</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. If all three classes define a property </font><font face="Courier New" size="2" color="#000000">prop1</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">multiObj&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">inherits </font><font face="Courier New" size="2" color="#000000">prop1</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> from </font><font face="Courier New" size="2" color="#000000">class1</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, since it is specified first.
+<br>
+
+<br>
+Multiple inheritance can be a very useful feature. For example, suppose you wanted to define a huge vase; it should be fixed in the room, since it is too heavy to carry, but it should also be a container. With multiple inheritance, you can define the object to be both a </font><font face="Courier New" size="2" color="#000000">Heavy</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and a </font><font face="Courier New" size="2" color="#000000">Container&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(which are classes defined in the standard library).
+<br>
+
+<br>
+If a property is inherited from more than one of its superclasses (and is not overridden in the object's own property list), the property is inherited from the superclass that appears earliest in the list. For example, suppose you define an object like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">vase:&nbsp;Container,&nbsp;Heavy;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+If both </font><font face="Courier New" size="2" color="#000000">Container</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">Heavy</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> define a method named </font><font face="Courier New" size="2" color="#000000">m1</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and vase itself doesn't define an </font><font face="Courier New" size="2" color="#000000">m1</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, then </font><font face="Courier New" size="2" color="#000000">m1</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is inherited from </font><font face="Courier New" size="2" color="#000000">Container</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, because it appears earlier in the superclass list than </font><font face="Courier New" size="2" color="#000000">Heavy</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+There is a more complicated case that can occur. You do not need to master this in order to follow this guide, so skip this section if you find it confusing. Suppose that in the example above, both </font><font face="Courier New" size="2" color="#000000">Container&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and </font><font face="Courier New" size="2" color="#000000">Heavy&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">have the superclass </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and that </font><font face="Courier New" size="2" color="#000000">Thing&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and </font><font face="Courier New" size="2" color="#000000">Heavy&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">define method </font><font face="Courier New" size="2" color="#000000">m2</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and that neither </font><font face="Courier New" size="2" color="#000000">Container&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">nor vase define </font><font face="Courier New" size="2" color="#000000">m2</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Now, since </font><font face="Courier New" size="2" color="#000000">Container&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">inherits </font><font face="Courier New" size="2" color="#000000">m2&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">from </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, it might seem that vase should inherit </font><font face="Courier New" size="2" color="#000000">m2&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">from </font><font face="Courier New" size="2" color="#000000">Container&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and thus from </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. However, this is not the case; since the </font><font face="Courier New" size="2" color="#000000">m2&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">defined in </font><font face="Courier New" size="2" color="#000000">Heavy&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">overrides the one defined in </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, vase inherits the </font><font face="Courier New" size="2" color="#000000">m2&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">from </font><font face="Courier New" size="2" color="#000000">Heavy&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">rather than the one from </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Hence, the rule, fully stated, is: the inherited property in the case of multiple inheritance is that property of the earliest (leftmost) superclass in the object's superclass list that is not overridden by a subsequent superclass. An alternative way of expressing this is "The first (left-most) superclass has precedence for inheritance, so any properties or methods that it defines effectively override the same properties and methods defined in subsequent superclasses, except that an ancestor class does not override a method or property on any of its descendent classes."
+<br>
+
+<br>
+Don't worry if this is less than crystal-clear at the moment; simply think of it as something you may need come back to. In the meantime bear in mind two simple consequences: (1) it may not always be immediately obvious (in a situation of multiple inheritance) what the keyword </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will inherit from; and (2) the order of classes in an object definition can be important (e.g </font><font face="Courier New" size="2" color="#000000">myDoor:&nbsp;Lockable,&nbsp;Door&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">works properly while </font><font face="Courier New" size="2" color="#000000">myDoor:&nbsp;Door,&nbsp;Lockable&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">doesn't).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(When you're ready for fuller explanations of the mysteries of multiple inheritance, these are available both in the <i><a href="../sysman/inherit.htm" target="_top">System Manual</a> </i>and in the <i><a href="../techman/t3mi.htm" target="_top">Technical Manual</i></a>).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="30"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>iii)</i></font></i></font></i></font></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i></i></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>Replace and Modify </i></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i>
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i></i></font></td><td></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Most game authors sooner or later find that, when writing a substantial game, they need to modify the standard library behaviour at a number of points. While it would in principle be possible to modify the library files, this would create a problem when a new version of TADS is released, because you must either continue to use the old version of </font><font face="Courier New" size="2" color="#000000">adv3</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which means that any bug fixes or enhancements in the new version are not available, or take the time to reconcile your changes to your custom </font><font face="Courier New" size="2" color="#000000">adv3</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> files with those made in the standard version. The </font><font face="Courier New" size="2" color="#000000">replace</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">modify</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> mechanism can help you deal with this problem.
+<br>
+
+<br>
+These keywords allow you to make changes to objects and classes that have been previously defined. In other words, you can use the standard </font><font face="Courier New" size="2" color="#000000">adv3</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> library, and then make changes to the objects that the compiler has <i>already</i> finished compiling. Using these keywords, you can make four types of changes to previously-defined objects: you can replace a function entirely, you can replace an object entirely, or you can add to or change the methods already defined in an object, or you can modify a function.
+<br>
+
+<br>
+To replace a function that's already been defined, you simply preface your replacement definition with the keyword </font><font face="Courier New" size="2" color="#000000">replace</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Following the keyword </font><font face="Courier New" size="2" color="#000000">replace</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is an otherwise normal function definition. The following example replaces the </font><font face="Courier New" size="2" color="#000000">addToScore()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> function defined in </font><font face="Courier New" size="2" color="#000000">score.t&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(part of the standard adv3 library):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">replace&nbsp;addToScore(points,&nbsp;desc)&nbsp;
+<br>
+{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;if(gPlayerChar.isWorthy)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;libScore.addToScore_(points,&nbsp;desc);&nbsp;
+<br>
+}&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You can do exactly the same thing with objects or classes. For example, you can entirely replace the </font><font face="Courier New" size="2" color="#000000">coarseMesh&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">object defined in sense.t:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">replace&nbsp;coarseMesh:&nbsp;Material&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;seeThru&nbsp;=&nbsp;transparent&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;hearThru&nbsp;=&nbsp;transparent&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;smellThru&nbsp;=&nbsp;distant
+<br>
+&nbsp;&nbsp;&nbsp;touchThru&nbsp;=&nbsp;transparent&nbsp;
+<br>
+;&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Replacing an object or class entirely deletes the previous definition, including all inheritance information and vocabulary. The only properties of a replaced object are those defined in the replacement; the original definition is entirely discarded.
+<br>
+
+<br>
+You can also modify an object or class, retaining its original definition (including inheritance information, vocabulary, and properties). This allows you to add new properties and vocabulary. You can also override properties, simply by redefining them in the new definition.
+<br>
+
+<br>
+For example, you might want to change one of the standard library responses and add one of your own:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;playerActionMessages
+<br>
+&nbsp;&nbsp;&nbsp;cannotTurnMsg&nbsp;=&nbsp;'{The&nbsp;dobj/he}&nbsp;just&nbsp;will&nbsp;not&nbsp;turn.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;shouldNotSpitMsg&nbsp;=&nbsp;'It's&nbsp;rude&nbsp;to&nbsp;spit&nbsp;in&nbsp;public.&nbsp;'
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+Note that no superclass information can be specified in a </font><font face="Courier New" size="2" color="#000000">modify</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statement; this is because the superclass list for the modified object is the same as for the original object.
+<br>
+
+<br>
+In a method that you redefine with </font><font face="Courier New" size="2" color="#000000">modify</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, you can use </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to refer to the <i>replaced</i> method in the original definition of the object. In essence, using </font><font face="Courier New" size="2" color="#000000">modify</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> renames the original object, and then creates a new object under the original name; the new object is created as a subclass of the original (now unnamed) object. (There is no way to refer to the original object directly; you can only refer to it indirectly through the new replacement object.) Here's an example of using </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> with </font><font face="Courier New" size="2" color="#000000">modify</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;testClass:&nbsp;object
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sdesc&nbsp;=&nbsp;"testClass"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;testObj:&nbsp;testClass
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sdesc&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"testObj...";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;testObj
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sdesc&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"modified&nbsp;testObj...";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Evaluating </font><font face="Courier New" size="2" color="#000000">testObj.sdesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> results in this display:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;modified&nbsp;testObj...testObj...testClass
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You can also replace a property entirely, erasing all traces of the original definition of a property. The original definition is entirely forgotten - using </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will refer to the method inherited by the original object. To do this, use the </font><font face="Courier New" size="2" color="#000000">replace&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">keyword with the property itself. In the example above, we could do this instead:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;testObj
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replace&nbsp;sdesc
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"modified&nbsp;testObj...";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">&nbsp;&nbsp;&nbsp;This would result in a different display for </font><font face="Courier New" size="2" color="#000000">testObj.sdesc:</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;modified&nbsp;testObj...testClass
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td><td width="25"></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="25"></td><td><font face="Courier New" size="2" color="#000000"></font></td><td></td><td width="25"><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">replace</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword before the property definition tells the compiler to completely delete the previous definitions of the property. This allows you to completely replace the property, and not merely override it, meaning that </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will refer to the property actually inherited from the superclass, and not the original definition of the property.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">modify</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword can also be used in a function definition. Modifying a function is just like replacing it (using the </font><font face="Courier New" size="2" color="#000000">replace&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">keyword), except that the new definition of the function can invoke the old definition of the function (i.e., the definition that's being replaced). This allows the program to apply incremental changes to a function, such as adding new special cases, without the need to copy the full text of the original function.
+<br>
+
+<br>
+To invoke the previous definition of the function, use the </font><font face="Courier New" size="2" color="#000000">replaced</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword. This keyword is syntactically like the name of a function, so you can put a parenthesized argument list after it to invoke the past function, and you can simply use the replaced keyword by itself to obtain a pointer to the old function. Here's an example.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;getName(val)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(dataType(val))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TypeObject:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;val.name;
+<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'unknown';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;later,&nbsp;or&nbsp;in&nbsp;a&nbsp;separate&nbsp;source&nbsp;module
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;getName(val)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(dataType(val)&nbsp;==&nbsp;TypeSString)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'\''&nbsp;+&nbsp;val&nbsp;+&nbsp;'\'';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;replaced(val);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+Note how the modified function refers back to the original version: we add handling for string values, which the original definition didn't provide, but simply invoke the original version of the function for any other type. The call to </font><font face="Courier New" size="2" color="#000000">replaced(val)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> invokes the previous definition of the function, which we're replacing.
+<br>
+
+<br>
+Once a function is redefined using </font><font face="Courier New" size="2" color="#000000">modify</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, it's no longer possible to invoke the old definition of the function directly by name. The only way to reach the old definition is via the </font><font face="Courier New" size="2" color="#000000">replaced&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">keyword, and that can only be used within the new definition of the function.
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="30"><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>iv)</i></font></i></font></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i></i></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#00007F"><i>Delegated</i></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i>
+&nbsp;<br>
+</i></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"><i></i></font></td><td></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">It is sometimes desirable to be able to circumvent the normal inheritance relationships between objects, and call a method in an unrelated object as though it were inherited from a base class of the current object. For example, you might want to create an object that sometimes acts as though it were derived from one base class, and sometimes acts as though it were derived from another class, based on some dynamic state in the object. Or, you might wish to create a specialized set of inheritance relationships that don't fit into the usual class tree model.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">delegated</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword can be useful for these situations. This keyword is similar to the </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> keyword, in that it allows you to invoke a method in another object while retaining the same "self" object as the caller. </font><font face="Courier New" size="2" color="#000000">delegated</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> differs from </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, though, in that you can delegate a call to <i>any </i>object (or class), whether or not the object is related to "self." In addition, you can use an object expression with </font><font face="Courier New" size="2" color="#000000">delegated</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, whereas </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> requires a compile-time constant object.
+<br>
+
+<br>
+The syntax of </font><font face="Courier New" size="2" color="#000000">delegated</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is similar to that of </font><font face="Courier New" size="2" color="#000000">inherited</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;return_value&nbsp;=&nbsp;delegated&nbsp;object_expression.property&nbsp;
+<br>
+optional_argument_list<i>
+<br>
+</i>
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+For example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">book:&nbsp;Thing
+<br>
+&nbsp;&nbsp;handler&nbsp;=&nbsp;Readable
+<br>
+&nbsp;&nbsp;doTake(actor)&nbsp;{&nbsp;return&nbsp;delegated&nbsp;handler.doTake(actor);&nbsp;}
+<br>
+;
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+In this example, the </font><font face="Courier New" size="2" color="#000000">doTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method delegates its processing to the </font><font face="Courier New" size="2" color="#000000">doTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of the object given by the "handler" property of the "self" object, which in this case is the </font><font face="Courier New" size="2" color="#000000">Readable&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">object. When </font><font face="Courier New" size="2" color="#000000">Readable.doTake&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">executes, its "self" object will be the same as it was in </font><font face="Courier New" size="2" color="#000000">book.doTake</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, because </font><font face="Courier New" size="2" color="#000000">delegated</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> preserves the "self" object in the delegatee.
+<br>
+
+<br>
+In the delegatee, the </font><font face="Courier New" size="2" color="#000000">targetobj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> pseudo-variable contains the object that was the target of the </font><font face="Courier New" size="2" color="#000000">delegated</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> expression.
+<br>
+<h3>d. Afterword</h3>
+
+<p>There is more to the TADS 3 language than has been described here, but hopefully we have now covered the basics, and once you have mastered those you will be able to glean the rest from the <i><a href="../sysman/langsec.htm" target="_top">System Manual</i></a>. There's no need to do that until you've worked your way through this guide, although of course if you're burning with curiosity to find out what else is there, there's nothing to stop you!
+</p>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="programmingprolegomena.htm">[Previous] </a>&nbsp;&nbsp;<a href="chapter2.htm">[Next] </a></I></FONT></P>
+</body></html>

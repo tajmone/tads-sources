@@ -1,0 +1,418 @@
+<title>Using the BANNER Feature in HTML TADS Games</title>
+
+<h1>Using the BANNER Feature in HTML TADS Games</h1>
+
+<p>
+BANNER is a tag from HTML 3.0 that allows a document to create a
+non-scrolling area on the screen, and display arbitrary HTML markups
+within this area.  HTML TADS uses BANNER, with a few extensions, to
+implement the "status line" that traditional text adventure games
+display across the top of the screen to show, for example, the
+current location and score.
+
+<p>
+The BANNER feature is similar to the "frames" feature that many
+browsers provide, but is more suitable for HTML TADS games than
+frames.  (HTML TADS does not support frames.)  The fundamental
+difference between BANNER and frames is that the contents of a
+banner are specified directly within the main HTML text stream,
+whereas a frame simply contains a pointer to a separate URL, which
+provides the contents of the frame.  Using a separate URL doesn't
+fit into the HTML TADS model, so frames are not appropriate.
+Fortunately, BANNER provides the same type of functionality, and
+is a good fit for the way HTML TADS works.
+
+<p>
+BANNER is a container tag.  The markups between the &lt;BANNER&gt;
+and &lt;/BANNER&gt; tags are the contents of the banner.  A banner
+can contain almost anything, but cannot contain a TITLE tag or another
+BANNER tag (banners cannot be nested; another &lt;BANNER&gt; tag
+within a banner is ignored).
+
+<h3>Banner ID</h3>
+
+<p>
+BANNER takes an ID attribute that lets the document assign the banner
+an identifier.  The identifier value is arbitrary; its purpose is to
+name the banner, so that subsequent BANNER tags can refer to the same
+area on the screen.  When HTML TADS formats a BANNER tag, it first
+looks to see if it already has a banner on the screen with the same
+identifier; if so, it clears all of the markups out of the area that
+the banner is using on the screen, and formats the new contents.  If
+no BANNER with the given ID is present, HTML TADS creates a new
+banner area, and displays the contents of the banner in the new area;
+the system remembers the ID of the new banner, so that subsequent tags can
+replace the contents of the banner with a new display.
+
+<p>
+The ID feature is useful for banners that are updated from time to time,
+since it allows you to replace the contents of the banner while leaving
+it at the same position on the screen.  This is how status lines are
+implemented in HTML TADS -- the status line is simply a banner at the
+top of the screen, and on each turn, the game replaces the status line
+contents to show the new game status.
+
+<h3>Banner Positioning</h3>
+
+<p>
+The BANNER tag takes an ALIGN attribute that specifies where the banner goes
+on the screen.  Four values are possible:  TOP, BOTTOM, LEFT, and RIGHT;
+the default value is TOP.  These values determine where the banner goes,
+as follows:
+
+<ul>
+
+<li>TOP alignment indicates that the banner is positioned at the top of
+the current input window area.  The banner takes up the full width of
+the input window.  The input window is shortened vertically to make room
+for the banner.
+
+<li>BOTTOM alignment places the banner at the bottom of the input window.
+
+<li>LEFT alignment means that the banner is at the left of the current
+input window.  The banner takes up the full height of the input window,
+and the input window is horizontally shrunken to make room for the banner.
+
+<li>RIGHT alignment places the banner at the right of the input window.
+
+</ul>
+
+Each banner effectively splits the input window in two.  Initially, before
+there are any banners, the input window takes up the entire area of the
+main HTML TADS window.  The first banner you display divides the window
+into two pieces, according to the banner's alignment.  For example, if
+the first banner you display is TOP-aligned, the main window will look like
+this:
+
+<p>
+<i>
+<table cellspacing=0 width=30% border=1 align=center>
+<tr><td align=center>
+&nbsp;&nbsp;&nbsp;&nbsp;First Banner Contents&nbsp;&nbsp;&nbsp;&nbsp;
+<tr><td align=center>
+<br><br><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Input Window&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><br><br>
+</table>
+</i>
+
+<p>
+Each subsequent banner splits the remaining input window further.
+Note that this means that every banner is rectangular, and the input
+window is always rectangular.  Banners can never fragment the window
+in such a way as to leave part of the window unused.
+
+<p>
+For example, if you now display a second banner, this time with LEFT
+alignment, the window will change to look like this:
+
+<p>
+<i>
+<table cellspacing=0 width=30% border=1 align=center>
+<tr><td align=center colspan=2>
+&nbsp;&nbsp;&nbsp;&nbsp;First (TOP) Banner Contents&nbsp;&nbsp;&nbsp;&nbsp;
+<tr>
+<td align=center valign=middle>Second<br>(LEFT)<br>Banner<br>Contents
+<td align=center>
+<br><br><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Input Window&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><br><br>
+</table>
+</i>
+
+<p>
+Note that the order of the banners in the example above is important,
+in that it determines that the first banner takes up the full width of
+the main window, and the second banner is shortened vertically by the
+size of the first banner.  If you wanted to achieve the opposite effect,
+you would simply reverse the order of the banners -- you'd display the
+LEFT banner first, and the TOP banner second.  This would achieve a
+window layout like this:
+
+<p>
+<i>
+<table cellspacing=0 width=30% border=1 align=center>
+<tr><td align=center valign=middle rowspan=2>
+First<br>(LEFT)<br>Banner<br>Contents
+<td align=center>
+Second (TOP) Banner Contents
+<tr><td align=center>
+<br><br><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Input Window&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><br><br>
+</table>
+</i>
+
+<p>
+Note further that in none of the cases above are any of the windows
+overlapping.  Banners are always sized to fit the areas that they're
+allocated, and the banners tile the available area.
+
+
+<h3>Coloring the Banner</h3>
+
+You can specify the text and background colors of a banner using
+a BODY tag within the banner.  You can also use BODY to specify the
+background image for the banner.  A BODY tag within a banner affects
+only the banner, so the each banner and the main input window can
+all have different color settings.
+
+<h3><a name='size_attrs'>Size Attributes</a></h3>
+
+<p>
+BANNER takes HEIGHT and WIDTH attributes that let you specify
+the size of the banner on the screen.  Because banners are always
+constrained in one dimension according to their alignment, only
+one of HEIGHT or WIDTH will be meaningful for a particular banner.
+
+<p> For a horizontal banner (ALIGN=TOP or BOTTOM), only HEIGHT is
+meaningful, because horizontal banners always occupy the full width
+of the input window.  For a horizontal banner, if no HEIGHT attribute
+is present, BANNER sets the size of the banner's screen area to be
+the same height as the contents.  If a HEIGHT value is provided, it
+specifies the height of the banner in pixels.  You can also specify
+the height as a percentage of the main window height, by placing a
+percent sign ("%") after the height value.  For example, to create a banner
+that takes up the bottom quarter of the main game window, you'd write
+something like this:
+
+<p><pre>
+    &lt;banner id=myBanner align=bottom height=25%&gt;
+</pre>
+
+<p>The HEIGHT attribute can also be set to the value "PREVIOUS",
+rather than a pixel or percentage height.  This specifies that, if
+banner is already being displayed (i.e., the ID matches the ID of a
+previous BANNER), the height is left unchanged.  If HEIGHT=PREVIOUS is
+specified and the banner is not already displayed, the default
+behavior applies (i.e., the banner's height is set to the height of
+the contents).  For banners that are frequently updated,
+HEIGHT=PREVIOUS is usually desirable, because this makes the banner's
+screen area remain stable.  The default status line implementation
+uses HEIGHT=PREVIOUS to keep the status line fixed in position
+throughout the game.
+
+<p>
+For a vertical banner (ALIGN=LEFT or RIGHT), only WIDTH is meaningful.
+As with HEIGHT, WIDTH can specify a width in pixels, a percentage
+of the main window's width, or the
+special value "PREVIOUS".  If WIDTH is not specified for a vertical
+banner, the system sets the width of the banner to the <i>minimum</i>
+width in which each "unbreakable" item will fit (individual words
+and pictures are unbreakable because they can't be split across
+multiple text lines).
+
+<p>
+If you're having trouble making a banner's spacing and sizing come
+out exactly the way you want it, you may want to consider using a table
+within the banner.
+Tables give you the most direct control of spacing and sizing in HTML.
+Using a table may be especially helpful with a vertical
+(LEFT or RIGHT) banner, since you'll probably want to be especially
+conservative with screen space in a banner running down one side of
+the main window.
+
+
+<h3>Borders</h3>
+
+<p>
+The BORDER attribute lets you specify that the banner should be
+drawn with a border at its inside edge.  For a TOP banner, the inside
+edge is at the bottom; for a LEFT banner, it's at the right edge;
+for a BOTTOM banner, it's at the top; and for a RIGHT banner, it's
+at the left edge.
+
+<p>
+You may want to use a border
+if the banner is the same color as the window that appears just inside it
+(this adjacent window may be another banner or may be the main game
+window).  BORDER takes no value; if it's specified, a border is
+drawn, otherwise the banner is drawn without a border.
+
+<h3>Removing a Banner</h3>
+
+<p>
+The REMOVE attribute specifies that a banner is simply to be removed.
+The banner currently being displayed whose ID matches the ID
+specified in the &lt;BANNER REMOVE&gt; tag is removed from the
+screen.  When &lt;BANNER REMOVE&gt; is specified, &lt;BANNER&gt; is
+not a container, so no &lt;/BANNER&gt; tag is allowed.
+
+<p>
+The REMOVEALL attribute specifies that <i>all</i> banners are to
+be removed.  When this attribute is used, no ID is needed, since
+every banner will be removed.  This tag is useful for abrupt global
+changes, such as restarting the game, when you want to reset the
+display to its initial state.
+
+
+<h3>Interaction with UNDO, RESTART, RESTORE</h3>
+
+If you use banners, you may find certain aspects of banner behavior
+confusing.  To understand how banners interact with certain operations
+that make abrupt changes to the overall state of the game, you must
+keep in mind that banners are part of the display, and not part of the
+game state.
+
+<p>
+Certain commands make sweeping changes to the game state directly,
+without going through any of the steps that your game would normally
+go through.  In particular, UNDO, RESTART, and RESTORE all update the
+internal state of the game to some previous game state.  However,
+these commands will <i>not</i> affect any banners you have displayed,
+because banners are part of the <i>display</i> state, not the game
+state, and these commands never affect the display state.
+
+<p>
+Banners are thus not affected by UNDO, RESTART, and RESTORE for
+the same reason that text displayed previously on the screen is not
+affected.  If you type UNDO, the text that was displayed by the command
+being undone is not erased from the screen - more text is simply added
+after it.  The same holds for banners.
+
+<p>
+Depending on how you use banners in your game, you may find this behavior
+undesirable.  For example, if you use a banner to display a picture of
+the current location, it's a problem if the picture isn't updated when
+you restore a game.
+
+<p>
+If you have banners that you use to display information that changes
+in response to changes in game state, the best approach to dealing with
+UNDO, RESTART, and RESTORE is to update the banners on each turn
+from within a daemon.  This will ensure that the banners will always
+show the correct state at the start of each turn.  (This is effectively
+how the status line works, incidentally; the status line is updated
+whenever a new command line is about to be read, so it always displays
+the correct information even though its contents aren't part of the
+game state and thus aren't updated by UNDO, RESTART, or RESTORE.)
+
+<p>
+Alternative approaches could work just as well, depending on your
+game.  For example, if you have banners that change infrequently,
+you could define a routine to update the banners to the current
+state, and explicitly call this routine whenever something happens
+in the game that would affect the banners.  You could then add a
+call to this routine to the <tt>action</tt> methods for the undo,
+restart, and restore <tt>deepverb</tt> objects (using the <tt>modify</tt>
+mechanism to change the adv.t object definitions).
+
+
+<h3>Example of a Status Line</h3>
+
+<p>
+The default status line implementation in <tt>adv.t</tt> uses BANNER
+to provide a status line similar to the style used in the standard
+TADS interpreter.
+
+<p>
+<pre>
+    statusLine =
+    {
+        "&lt;banner id=StatusLine height=previous&gt;
+        &lt;body bgcolor=statusbg text=statustext&gt;&lt;b&gt;";
+
+        self.statusRoot;
+
+        "&lt;/b&gt;&lt;tab align=right&gt;&lt;i&gt;";
+
+        say(global.score); "/";
+        say(global.turnsofar); " ";
+
+        "&lt;/i&gt;&lt;/banner&gt;";
+    }
+</pre>
+
+<p>
+The first line contains the BANNER tag.  This uses the default TOP
+alignment to make the status line a horizontal band at the top of the
+main window.  It also gives the banner the ID "StatusLine", so that
+the same banner window can be reused every time the status line is
+updated.  (The ID "StatusLine" isn't anything special -- it's just
+a way identifying the banner so that each update goes to the same
+window.  You can use any ID you want for each banner, as long as
+each banner has a unique name relative to the other banners in
+your game.)
+
+<p>The second line uses the BODY tag to set the banner's background
+and text color.  These use the appropriate
+<a href='deviate.htm#colors'>parameterized color settings</a> for the
+status line.
+
+<p>The next line calls the <tt>statusRoot</tt> method to display the
+room's name (usually via its <tt>sdesc</tt> property, although some rooms
+override this to provide additional information, such as "in the raft").
+
+<p>The next line uses the &lt;TAB ALIGN=RIGHT&gt; tag to align the
+remainder of the current line against the right edge of the banner window.
+Whenever the window is resized, the system will reformat the text so that
+it's aligned properly in the available space.
+
+<p>The next two lines display the current score and the number of turns
+played so far in the game.
+
+<p>Finally, the last line closes the banner.  Since BANNER is a container
+tag, the closing &lt;/BANNER&gt; is required, so that the system can
+figure out where the banner's contents end and the rest of the main
+window's text resumes.
+
+<h3>Example of a Command Bar</h3>
+
+You can use BANNER to provide a list of simple commands that's always
+displayed.  As an example, here's some code that displays a list of commands
+in a vertical banner at the left edge of the window.
+
+<p>
+<pre>
+    "&lt;banner id=CommandBar align=left width=75&gt;
+    &lt;body bgcolor=yellow textcolor=black&gt;
+    &lt;br&gt;&lt;a href='inventory'&gt;inventory&lt;/a&gt;
+    &lt;br&gt;&lt;a href='score'&gt;score&lt;/a&gt;
+    &lt;br&gt;&lt;a href='look'&gt;look&lt;/a&gt;
+    &lt;br&gt;
+    &lt;br&gt;&lt;a href='go north'&gt;go north&lt;/a&gt;
+    &lt;br&gt;&lt;a href='go south'&gt;go south&lt;/a&gt;";
+
+    // add other commands as desired
+
+    "&lt;/banner&gt;";
+</pre>
+
+<p>
+Because of the dynamic nature of banners, you can extend the command
+bar by always updating it with a set of commands relevant to the current
+situation.  You can do this by adding to the status line code, for
+example, and building a new banner on each turn with the same ID
+(which has the effect of replacing the old banner, but keeping the same
+screen area), and containing the commands currently available.
+
+<h3>Splitting a Banner Area</h3>
+
+You may find yourself in a situation where you want to divide a
+banner into two pieces, to achieve a layout something like this:
+
+<p>
+<i>
+<table cellspacing=0 width=30% border=1 align=center>
+<tr align=center valign=middle><td>Banner 1<td>Banner 2
+<tr><td align=center colspan=2>
+<br><br><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Input Window&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br><br><br>
+</table>
+</i>
+
+<p>
+The BANNER feature doesn't provide a direct way of doing this.  However,
+you can achieve a similar effect using a single banner that contains a
+table.  To do this, simply specify a table with one row and two cells:
+
+<p>
+<pre>
+    "&lt;table width='100%' cellspacing=0 cellpadding=0&gt;
+    &lt;tr align=center valign=middle&gt;
+    &lt;td bgcolor=yellow&gt;This is the left half
+    &lt;td bgcolor=green&gt;This is the right half
+    &lt;/table&gt;";
+</pre>
+

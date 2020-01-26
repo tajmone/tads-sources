@@ -1,0 +1,61 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>InteractiveResolver</title></head><body>
+<table class=ban><tr><td align=left><span class=title>InteractiveResolver</span><span class=type>class</span><td align=right><a href="../file/disambig.t.html">disambig.t</a>[<a href="../source/disambig.t.html#335">335</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#3356">3356</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Base class for resolvers used when answering interactive questions.   This class doesn't do anything in the library directly, but it   provides a structured point for language extensions to hook in as   needed with 'modify'.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#3356">3356</a>]:</i><br>
+   Custom interactive resolver.  This is used for responses to   disambiguation questions and prompts for missing noun phrases.
+<p>
+<code>class
+<b>InteractiveResolver</b> :  &nbsp; <a href="../object/ProxyResolver.html">ProxyResolver</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>InteractiveResolver</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ProxyResolver.html">ProxyResolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>InteractiveResolver</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DisambigResolver.html">DisambigResolver</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#getReflexiveBinding">getReflexiveBinding</a>&nbsp;
+<a href="#resolvePronounAntecedent">resolvePronounAntecedent</a>&nbsp;
+<a href="#resolvePronounAsTargetActor">resolvePronounAsTargetActor</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ProxyResolver</code> :<br>
+<code>
+<a href="../object/ProxyResolver.html#construct">construct</a>&nbsp;
+<a href="../object/ProxyResolver.html#getPossessiveResolver">getPossessiveResolver</a>&nbsp;
+<a href="../object/ProxyResolver.html#propNotDefined">propNotDefined</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="getReflexiveBinding"></a>
+<table class=decl><tr><td><code>getReflexiveBinding (typ)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#3396">3396</a>]</table><div class=desc>   Get the reflexive third-person pronoun binding (himself, herself,   itself, themselves).  If the target actor isn't the PC, and the   gender of the pronoun matches, we'll consider this as referring   to the target actor.  This allows exchanges of this form: <p> <br> &gt;bob, examine <br> What do you want Bob to examine? *. <br> &gt;himself <p>
+</div>
+<a name="resolvePronounAntecedent"></a>
+<table class=decl><tr><td><code>resolvePronounAntecedent (typ, np, results, poss)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#3373">3373</a>]</table><div class=desc>   Resolve a pronoun antecedent.  We'll resolve a third-person   singular pronoun to the target actor if the target actor matches   in gender, and the target actor isn't the PC.  This allows   exchanges like this: <p> <br> &gt;bob, examine <br> What do you want Bob to look at? *. <br> &gt;his book <p>   In the above exchange, we'll treat "his" as referring to Bob, the   target actor of the action, because we have referred to Bob in   the partial command (the "BOB, EXAMINE") that triggered the   interactive question. <p>
+</div>
+<a name="resolvePronounAsTargetActor"></a>
+<table class=decl><tr><td><code>resolvePronounAsTargetActor (typ)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#3414">3414</a>]</table><div class=desc>   Try matching the given pronoun type to the target actor.  If it   matches in gender, and the target actor isn't the PC, we'll   return a resolve list consisting of the target actor.  If we   don't have a match, we'll return nil. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

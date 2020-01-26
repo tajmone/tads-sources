@@ -1,0 +1,154 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Defining Our First Room</title><meta name="keywords" content="OutdoorRoom,roomName,desc,templates"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="startinganewgame.htm">[Previous] </a>&nbsp;&nbsp;<a href="addinganobjecttotheroom.htm">[Next] </a></I></FONT></P>
+<h2>Defining Our First Room</h2>
+
+<p>So far, the only really significant thing we have done to the source file is to indicate that the room in which the game will start will be called <font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Our next job is to define this room. As a first attempt, add the following to the end of your source file:
+</p>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+outsideCottage:&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage'
+<br>
+&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Be careful to copy this code exactly, including the punctuation, not least the semicolon at the end (by itself on the last line). Also, be careful to note that 'In front of cottage' is enclosed in single quotation marks, and "You stand outside a cottage; the forest stretches east. " in double quotation marks. This distinction is important and must be followed (the significance of the distinction will be explained in more detail on p. 50 below).
+<br>
+
+<br>
+If you compile and run the game it should now run, although the game is pretty basic. Since there's only one room in the game you can't actually move anywhere, and there are no objects to manipulate or even examine. About the most interesting thing you can do with the game right now is to <b>quit</b> straight away!
+<br>
+
+<br>
+Before making things more interesting, let's take a look at the definition of the one room we have defined so far. The first line </font><font face="Courier New" size="2" color="#000000">outsideCottage:&nbsp;OutdoorRoom&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">consists of the object name followed (after the colon) to the superclass to which it belongs. The object name is simply the name by which this object will be referred in our code; we could have called it </font><font face="Courier New" size="2" color="#000000">room101</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">auntieMyrtle</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but it is obviously better to choose something that makes reasonable sense. Note that we have followed the TADS 3 convention of starting an object name with a lowercase letter, while using a capital letter at the start of any subsequent words in the name.
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+OutdoorRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the name of the class to which we want this game object to belong. By default an </font><font face="Courier New" size="2" color="#000000">OutdoorRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> has ground and sky, but no walls, which is what we want here. Try running the game again and type <b>examine ground</b>, <b>x sky</b> and <b>x wall</b>. Now change </font><font face="Courier New" size="2" color="#000000">OutdoorRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to </font><font face="Courier New" size="2" color="#000000">Room</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and compile and run the game again and type the same commands. Finally change </font><font face="Courier New" size="2" color="#000000">Room&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">back to </font><font face="Courier New" size="2" color="#000000">OutdoorRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Again note the naming convention, since </font><font face="Courier New" size="2" color="#000000">OutdoorRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> names not an object but a <i>class</i> it starts with a capital letter.
+<br>
+
+<br>
+The next two lines define the <i>properties</i> of our OutdoorRoom object:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">roomName&nbsp;=&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage'
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">desc&nbsp;=&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.&nbsp;"
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">roomName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property (a string enclosed in single quotation marks) is the brief title that names the current room in the status line and at the start of a room description. The </font><font face="Courier New" size="2" color="#000000">desc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property (a double quoted string) is the longer description that is displayed the first time a room is seen, or in response to a <b>look</b> command (or every time a room is entered if the game is in <b>verbose</b> mode).
+<br>
+
+<br>
+Finally, on the last line, is a semicolon by itself; this simply ends the definition of this object. An alternative is to enclose the property list in curly braces thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">outsideCottage:&nbsp;OutdoorRoom
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage'
+<br>
+&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.&nbsp;"
+<br>
+}
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+Either form is possible and which you use is largely up to you. There are situations (as we shall see later) in which you have to use braces; in other situations (as we shall again see) the use of the semicolon can make for more compact code.
+<br>
+
+<br>
+Note that the semicolon is also used to terminate TADS 3 program statements. This can be a source of confusion because the property definitions look rather like assignment statements, so it can be very easy to slip into writing:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">outsideCottage:&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage';
+<br>
+&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.&nbsp;";
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If you try to compile this, you'll get an error, because the compiler will now think the definition of </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> ends with the </font><font face="Courier New" size="2" color="#000000">name&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">property and won't know what to do with the </font><font face="Courier New" size="2" color="#000000">desc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property. Since this is such a common source of potential confusion it's worth remembering the following golden rule straight away:
+<br>
+<i>
+<br>
+A property definition is not a programming statement. Do not end it with a semicolon.
+<br>
+</i>
+<br>
+We have laboured the definition of </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> at some length, since the principles involved are common to a great deal of TADS 3 programming, most of which consists in defining objects.
+<br>
+
+<br>
+If you read the previous chapter, then all this should be reasonably familiar from the "goldskull" example. Now we come to our first major innovation: although the definition of </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> seems simple enough, it can in fact be made a good deal simpler through a feature of the language called 'templates'. A template simply defines a shorthand way of defining the most common properties an object is likely to have. Since every room will have a name and a description the TADS 3 library defines a template that looks like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">Room&nbsp;template&nbsp;'roomName'&nbsp;'destName'?&nbsp;'name'?&nbsp;"desc"?;&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This means that if we follow the class name of a Room-type object with a string in single quotation-marks, it will be taken as the </font><font face="Courier New" size="2" color="#000000">roomName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of the Room; we can then optionally supply a second single-quoted string as the </font><font face="Courier New" size="2" color="#000000">destName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property and (if </font><font face="Courier New" size="2" color="#000000">destName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is supplied) a third single-quoted string as the </font><font face="Courier New" size="2" color="#000000">name</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property (a pair of complications we shan't go into here) and, also optionally, a double-quoted string as the </font><font face="Courier New" size="2" color="#000000">desc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property. This would allow our room to be defined simply as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">outsideCottage&nbsp;:&nbsp;OutdoorRoom&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage'&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">In other words, when defining a room we can simply follow the class (or class list) with the room name in single quotation marks, followed by the full room description in double quotation (ignoring the </font><font face="Courier New" size="2" color="#000000">destName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property for now). Since this is generally a far more convenient way of defining objects, it is the way we shall generally adopt from now on. The compiler will, however, complain if you attempt something that does not conform to the template; for example, you would get a compile-time error if you wrote:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">outsideCottage&nbsp;:&nbsp;OutdoorRoom
+<br>
+&nbsp;&nbsp;&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage'
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">In other words, the properties must be supplied in the order defined in the template, and must conform to the number and format of properties the template expects. Note, however, that there is nothing magical about laying the code out for this object definition on three lines. So far as the compiler is concerned, it could have been written:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">outsideCottage&nbsp;:&nbsp;OutdoorRoom&nbsp;'In&nbsp;front&nbsp;of&nbsp;a&nbsp;cottage'&nbsp;"You&nbsp;stand&nbsp;just&nbsp;outside&nbsp;a&nbsp;cottage;&nbsp;the&nbsp;forest&nbsp;stretches&nbsp;east.&nbsp;";
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">It is just that the three-line version is more readable to the human eye, and makes for more legible code. Thanks to templates, though, there are cases in which it is both feasible and legible to code an entire object on a single line.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="startinganewgame.htm">[Previous] </a>&nbsp;&nbsp;<a href="addinganobjecttotheroom.htm">[Next] </a></I></FONT></P>
+</body></html>

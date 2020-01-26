@@ -1,0 +1,161 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Remap</title><meta name="keywords" content="remap"></meta>
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="precond.htm">[Previous] </a>&nbsp;&nbsp;<a href="messages.htm">[Next] </a></I></FONT></P>
+<h3>Remap</h3>
+
+<p>We have already encountered remapping via the <font face="Courier New" size="2" color="#000000">remapTo</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro; it's used when we want to remap a command on one object to a different command involving the same or maybe different objects (or even no objects at all). So, for example, on the tree object we earlier defined:
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">dobjFor(Climb)&nbsp;remapTo(Up)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">What such code actually does is to make the appropriate remap property return a list containing the action followed by the objects involved in the action; the example above is in fact equivalent to:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">remapDobjClimb&nbsp;=&nbsp;[UpAction]
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">A more complicated example was the cottage, where we defined:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">dobjFor(Enter)&nbsp;remapTo(TravelVia,&nbsp;insideCottage)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">which is equivalent to:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">remapDobjEnter&nbsp;=&nbsp;[TravelViaAction,&nbsp;insideCottage]
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Mostly, you can use the </font><font face="Courier New" size="2" color="#000000">remapTo</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro without worrying about the underlying  code the compiler actually sees, but there are a couple of cases where understanding the underlying code can be important. The first thing to realize is that if there is a remap in operation (that is the remap property is non-nil) this will take precedence over all the other action properties (preCond, verify, check and action). In some cases this can lead to unexpected results: you may define verify, check and action for some verb on some object, but find that the object is doing something quite different from what you defined. The reason may very well be that your object has inherited a remap from one of its superclasses, and that this remap is taking precedence over your customizations of the other methods.
+<br>
+
+<br>
+For example, the library Room class remaps LookIn to Examine. Normally this is a perfectly sensible interpretation, but you might decided that's not what you want in your game. For example, you might feel that a player who typed <b>search room</b> or <B>look in room</B> is just being lazy, and should be instructed to concentrate on the objects within the room instead. So you might write:
+<br>
+<pre>
+modify Room
+  dobjFor(LookIn)
+  {
+    verify()
+    {
+     illogical('Try examining some of the objects in the room instead. ');
+    }
+  }
+;
+</pre>
+<p><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">But you'd find that this didn't actually change anything; <B>look in room</B> and <B>search room</B> would still result in the room being examined, since the remap would still be in action. What you'd actually need to do is to reset the remap to nil:
+<br>
+<pre>
+modify Room
+  dobjFor(LookIn)
+  {
+    remap = nil
+    verify()
+    {
+     illogical('Try examining some of the objects in the room instead. ');
+    }
+  }
+;
+</pre>
+<p><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The second area where it can be useful to know how the underlying code works is with conditional remapping. The library defines a macro called </font><font face="Courier New" size="2" color="#000000">maybeRemapTo(),</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> which only remaps if a certain condition holds (that is, if its first parameter is true). For example, if you had a gate object, and you wanted <B>push gate</B> to be treated as <B>close gate</B> when the gate was open, but in the normal way when the gate was closed, you could define:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">gate:&nbsp;Door&nbsp;'gate'&nbsp;&nbsp;'gate'
+<br>
+&nbsp;&nbsp;dobjFor(Push)&nbsp;maybeRemapTo(isOpen,&nbsp;Close,&nbsp;self)
+<br>
+;
+<br>
+<p><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The underlying code here is in fact:
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">remapDobjPush&nbsp;=&nbsp;(isOpen&nbsp;?&nbsp;[CloseAction,&nbsp;self]&nbsp;:&nbsp;inherited());
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The first thing to note is that if the condition is not met (in this case, if the gate is not open), what one gets is not necessarily no remapping, but the inherited remapping. Often the inherited remapping is in fact </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but it might not be.
+For example, suppose you had a room in your game called the Study, and you gave it a <tt>vocabWords</tt> property of 'study', so that it could be the taget of commands. In particular you decide that you want the player to be able to enter the command search study, and have this command find an important letter lying behind the curtain (or wherever), if the letter hasn't already been found. You're aware that <tt>Room</tt> inherits <tt>dobjFor(Search) asDobjFor(LookIn)</tt> from <tt>Thing</tt>, so you decide to implement finding the letter in <tt>dobjFor(LookIn)</tt>. If, however, the letter has already been discovered, you decide you want search study or look in study simply to perform a look command, so you write:
+
+<p><pre>
+dobjFor(LookIn) maybeRemapTo(letter.discovered, Look)
+</pre>
+
+<p>Unfortunately, this wouldn't work as you expected; it would do what you wanted once the letter was discovered, except that it never will be, since if <tt>letter.discovered</tt> is <tt>nil</tt> what you get is not no remapping (in other words the execution of your <tt>dobjFor(LookIn)</tt> code), but the inherited remapping, which in this case is defined on Room as:
+
+<p><pre>
+dobjFor(LookIn) remapTo(Examine, self)
+</pre>
+
+<p>So if the letter is not discovered, <B>search study</B> or <B>examine study</B> will remap to <B>examine study</B> and your special case LookIn handling (to discover the letter) will never be invoked. What you actually need in this case is:
+
+<p><pre>
+dobjFor(LookIn)
+{
+  remap = (letter.discovered ? [LookAction] : nil)
+}
+</pre>
+
+<font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+Another situation when it's useful to use the underlying remap property directly is where you want different remappings depending on circumstances. For example you might want <B>push gate</B> to open the gate when it's closed, and close the gate when it's open. This is beyond the ability of </font><font face="Courier New" size="2" color="#000000">maybeRemapTo</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, but quite possible with the underlying remap property:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">gate:&nbsp;Door&nbsp;'gate'&nbsp;&nbsp;'gate'
+<br>
+&nbsp;&nbsp;dobjFor(Push)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remap&nbsp;=&nbsp;(isOpen&nbsp;?&nbsp;[CloseAction,&nbsp;self]&nbsp;:&nbsp;[OpenAction,&nbsp;self]&nbsp;);
+<br>
+&nbsp;&nbsp;}
+<br>
+
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">By the way, note that when we're writing the 'raw' code rather than using the macro, we have to give the full name of the Action class, hence </font><font face="Courier New" size="2" color="#000000">CloseAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">OpenAction</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather than just </font><font face="Courier New" size="2" color="#000000">Close&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and </font><font face="Courier New" size="2" color="#000000">Open</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. One of the things the </font><font face="Courier New" size="2" color="#000000">remapTo</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">maybeRemapTo</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macros do for us is to add 'Action' to the name of the action we want (e.g. </font><font face="Courier New" size="2" color="#000000">Open</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">Close</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), but if we're not using these macros, we have to do it ourselves.
+<p>
+A further complication with remap is that when it's used with two-object commands, special restrictions apply.
+<p>The first restriction is that a two-object command can only be remapped to another two-object command. Failure to observe this rule will result in a run-time error. The second restriction is that what we remap to must be an action applying to a specific object plus the placeholder <code>DirectObject</code> or <code>IndirectObject</code> (meaning the direct object or indirect object of the command we're remapping from). The specific object must be the one that's acting in the place of the object doing the remapping (which may be <code>self</code> if it's the same object, or else some other object), while the object role placeholder (<code>DirectObject</code> or <code>IndirectObject</code>) must reflect the role of the other object in the original command. Thus if <code>remapTo</code> follows <code>dobjFor()</code> it must use <code>IndirectObject</code> in its list of objects, and if it follows <code>iobjFor()</code> it must use <code>DirectObject</code>.
+<p>This should become clearer with an example. Suppose we have a desk with a single drawer. The drawer can be locked with a small brass key, but we want <b>lock desk with small brass key</b> to behave like <b>lock drawer with small brass key</b>. We could bring this about by defining the following on the desk:
+<p><pre>
+dobjFor(LockWith) remapTo(LockWith, drawer, IndirectObject)
+</pre>
+<p>Similarly we might want <b>put something in desk</b> to be treated as <b>put something in drawer</b>, so we could write (on the desk object):
+<p><pre>
+iobjFor(PutIn) remapTo(PutIn, DirectObject, drawer)
+</pre>
+<p>What we can't do is (for example) to decide that trying to put something in the desk is equivalent to dropping it and so write:
+<p><pre>
+iobjFor(PutIn) remapTo(Drop, DirectObject) // <font color=red>WRONG !!!</font>
+</pre>
+<p>This doesn't mean that you can't make trying to put something in the desk result in its being dropped on the floor, it just means you can't use remap to for that purpose (instead you'd have to write appropriate <code>verify()</code> and <code>action()</code> routines).
+
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="precond.htm">[Previous] </a>&nbsp;&nbsp;<a href="messages.htm">[Next] </a></I></FONT></P>
+</body></html>

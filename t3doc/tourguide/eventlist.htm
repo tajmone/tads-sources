@@ -1,0 +1,122 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>EventList</title><meta name="keywords" content="EventList,doScript"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>EventList : <a href="script.htm">Script</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="script.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="stopeventlist.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An EventList is a <a href="script.htm">Script</a> object that works through a list of events in sequence, until the list is exhausted, after which it does nothing. Unlike a bare Script, which supplies only the bare framework, EventList is a fully-functional class, although one may often want to use one of its subclasses.
+<br>
+
+<br>
+Normally all one needs to specify on an EventList (and many of its subclasses) is its eventList property. The <b>doScript</b> method of the EventList automatically steps through each event in sequence. But what, in this context, is an event? It may be either a single-quoted string, a function pointer, another Script object, a property pointer, or nil. To expand on this we may start by quoting the comment in the library code:
+<br>
+
+<br>
+<i>The script is driven by a list of values; each value represents one step of the script. Each value can be a single-quoted string, in which case the string is simply displayed; a function pointer, in which case the function is invoked without arguments; another Script object, in which case the object's doScript() method is invoked; a property pointer, in which case the property of 'self' (the EventList object) is invoked with no arguments; or nil, in which case nothing happens.
+<br>
+
+<br>
+This base type of event list runs through the list once, in order, and then simply stops doing anything once we pass the last event.
+<br>
+</i>
+<br>
+This may be clearer if we give an example of an EventList using each type of entry in turn.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">sampleEventList&nbsp;:&nbsp;EventList
+<br>
+&nbsp;&nbsp;&nbsp;/*&nbsp;The&nbsp;EventList&nbsp;template&nbsp;allows&nbsp;us&nbsp;to&nbsp;specify&nbsp;the&nbsp;eventList&nbsp;property&nbsp;as&nbsp;the&nbsp;first&nbsp;property&nbsp;after&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;class&nbsp;name&nbsp;without&nbsp;needing&nbsp;explicitly&nbsp;to&nbsp;specify&nbsp;eventList&nbsp;=
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'First&nbsp;we&nbsp;display&nbsp;this&nbsp;string.&nbsp;',
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;function&nbsp;{&nbsp;"Then&nbsp;we&nbsp;do&nbsp;whatever&nbsp;we&nbsp;define&nbsp;inside&nbsp;this&nbsp;function.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;someOtherObject.someOtherMethod;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Which&nbsp;can&nbsp;be&nbsp;more&nbsp;or&nbsp;less&nbsp;what&nbsp;we&nbsp;like.&nbsp;";&nbsp;},
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherScript,&nbsp;//&nbsp;call&nbsp;otherScript.doScript
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;anotherProperty,&nbsp;//&nbsp;execute&nbsp;the&nbsp;code&nbsp;in&nbsp;self.otherProperty;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nil&nbsp;&nbsp;//&nbsp;finally,&nbsp;do&nbsp;nothing&nbsp;(which&nbsp;makes&nbsp;this&nbsp;element&nbsp;superfluous&nbsp;here)
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;anotherProperty&nbsp;{&nbsp;"This&nbsp;can&nbsp;also&nbsp;do&nbsp;whatever&nbsp;we&nbsp;want&nbsp;it&nbsp;to.&nbsp;";&nbsp;}
+<br>
+;
+<br>
+
+<br>
+otherScript&nbsp;:&nbsp;EventList
+<br>
+&nbsp;&nbsp;[&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'This&nbsp;will&nbsp;be&nbsp;displayed&nbsp;as&nbsp;the&nbsp;first&nbsp;element&nbsp;of&nbsp;otherScript.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'And&nbsp;this&nbsp;will&nbsp;be&nbsp;shown&nbsp;as&nbsp;the&nbsp;second&nbsp;element,&nbsp;if&nbsp;otherScript.doScript&nbsp;is&nbsp;ever&nbsp;called&nbsp;again.&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In the case of a function that uses only a single statement, we can use the short-form anonymous function syntax. This can be useful, for example, for using double-quoted strings in an EventList:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">anotherEventList&nbsp;:&nbsp;EventList
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;:&nbsp;"&lt;q&gt;Hi,&nbsp;my&nbsp;name's&nbsp;&lt;&lt;sarah.makeProperName()&gt;&gt;.&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&nbsp;"&nbsp;},
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;You&nbsp;already&nbsp;know&nbsp;my&nbsp;name.&lt;/q&gt;&nbsp;Sarah&nbsp;reminds&nbsp;you.&nbsp;',
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;:&nbsp;"&lt;q&gt;Oh&nbsp;-&nbsp;my&nbsp;last&nbsp;name's&nbsp;Smith.&lt;/q&gt;&nbsp;she&nbsp;explains.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;gPlayerChar.setKnowsAbout(smithName)&gt;&gt;&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+An EventList with a single entry can sometimes be useful, as a way of having something happen once only. For this type of use, see the examples under <a href="cycliceventlist.htm">CyclicEventList</a> and <a href="initiatetopic.htm">InitiateTopic</a>.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

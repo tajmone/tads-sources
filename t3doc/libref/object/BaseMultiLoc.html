@@ -1,0 +1,72 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>BaseMultiLoc</title></head><body>
+<table class=ban><tr><td align=left><span class=title>BaseMultiLoc</span><span class=type>class</span><td align=right><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2436">2436</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Base multi-location item with automatic initialization.  This is the   base class for various multi-located object classes. <p>   We provide four ways of initializing a multi-located object's set of   locations. <p>   First, the object can simply enumerate the locations explicitly, by   setting the 'locationList' property to the list of locations. <p>   Second, the object can indicate that it's located in every object of a   given class, by setting the 'initialLocationClass' property to the   desired class. <p>   Third, the object can define a rule that specifies which objects are   its initial locations, by defining the 'isInitiallyIn(obj)' method to   return true if 'obj' is an initial location, nil if not.  This can be   combined with the 'initialLocationClass' mechanism: if   'initialLocationClass' is non-nil, then only objects of the given   class will be tested with 'isInitiallyIn()'; if 'initialLocationClass'   is nil, then every object in the entire game will be tested. <p>   Fourth, you can override the method buildLocationList() to build an   return the initial list of locations.  You can use this approach if   you have a complex set of rules for determining the initial location   list, and none of the above approaches are flexible enough to   implement it.  If you override buildLocationList(), simply compute and   return the list of initial locations; the library will automatically   call the method during pre-initialization. <p>   If you don't define any of these, then the object simply has no   initial locations by default.
+<p>
+<code>class
+<b>BaseMultiLoc</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>BaseMultiLoc</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>BaseMultiLoc</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MultiInstance.html">MultiInstance</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MultiFaceted.html">MultiFaceted</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MultiLoc.html">MultiLoc</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SenseConnector.html">SenseConnector</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DistanceConnector.html">DistanceConnector</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#initialLocationClass">initialLocationClass</a>&nbsp;
+<a href="#locationList">locationList</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#buildLocationList">buildLocationList</a>&nbsp;
+<a href="#isDirectlyIn">isDirectlyIn</a>&nbsp;
+<a href="#isIn">isIn</a>&nbsp;
+<a href="#isInitiallyIn">isInitiallyIn</a>&nbsp;
+<a href="#isListedInContents">isListedInContents</a>&nbsp;
+<a href="#isOrIsIn">isOrIsIn</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="initialLocationClass"></a>
+<table class=decl><tr><td><code>initialLocationClass</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2451">2451</a>]</table><div class=desc>   The class of our initial locations.  If this is nil, then our   default buildLocationList() method will test every object in the   entire game with our isInitiallyIn() method; otherwise, we'll test   only objects of the given class. <p>
+</div>
+<a name="locationList"></a>
+<table class=decl><tr><td><code>locationList</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2443">2443</a>]</table><div class=desc>   The location list.  Instances can override this to manually   enumerate our initial locations.  By default, we'll call   buildLocationList() the first time this is invoked, and store the   result. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="buildLocationList"></a>
+<table class=decl><tr><td><code>buildLocationList ( )</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2471">2471</a>]</table><div class=desc>   Build my list of locations, and return the list.  This default   implementation looks for an 'initialLocationClass' property value,   and if one is found, looks at every object of that class;   otherwise, it looks at every object in the entire game.  In either   case, each object is then passed to our isInitiallyIn() method,   and is included in our result list if isInitiallyIn() returns   true. <p>
+</div>
+<a name="isDirectlyIn"></a>
+<table class=decl><tr><td><code>isDirectlyIn (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2533">2533</a>]</table><div class=desc>determine if I'm directly in the given object<p>
+</div>
+<a name="isIn"></a>
+<table class=decl><tr><td><code>isIn (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2518">2518</a>]</table><div class=desc>determine if I'm in a given object, directly or indirectly<p>
+</div>
+<a name="isInitiallyIn"></a>
+<table class=decl><tr><td><code>isInitiallyIn (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2460">2460</a>]</table><div class=desc>   Test an object for inclusion in our initial location list.  By   default, we'll simply return true to include every object.  We   return true by default so that an instance can merely specify a   value for initialLocationClass in order to place this object in   every instance of the given class. <p>
+</div>
+<a name="isListedInContents"></a>
+<table class=decl><tr><td><code>isListedInContents (examinee, :?)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2551">2551</a>]</table><div class=desc>   Determine if I'm to be listed within my immediate container.  As a   multi-location object, we have multiple immediate containers, so   we need to know which direct container we're talking about.   Thing.examineListContents() passes this down via "cont:", a named   parameter.  Other callers might not always provide this argument,   though, so if it's not present simply base this on whether we have   a special description in any context. <p>
+</div>
+<a name="isOrIsIn"></a>
+<table class=decl><tr><td><code>isOrIsIn (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2559">2559</a>]</table><div class=desc>Am I either inside 'obj', or equal to 'obj'?<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Daemon</title><meta name="keywords" content="Daemon,new,new, Daemon,removeEvent,removeMatchingEvents,isIn,isDirectlyIn,gMessageParams"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Daemon : Event
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="fuse.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="sensefuse.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Daemon is only slightly more complicated than a <a href="fuse.htm">Fuse</a>, in that while a Fuse fires a one-off event by executing a method after a set number of turns, a Daemon repeatedly calls a method at fixed intervals (unless or until the Daemon is terminated).
+<br>
+
+<br>
+The syntax for setting up a Daemon is similar to that for creating a Fuse:
+<br>
+
+<br>
+  <font face="Courier New" size="2" color="#000000">new&nbsp;Daemon(obj,&nbsp;&amp;prop,&nbsp;interval);</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+This sets up a daemon that will call the method </font><font face="Courier New" size="2" color="#000000">obj.prop</font><font face="Arial" size="2" color="#000000"> every <i>interval</i> turns, where <i>interval</i> must be at least 1 (one). If interval is 1, </font><font face="Courier New" size="2" color="#000000">obj.prop</font><font face="Arial" size="2" color="#000000"> will execute each turn, starting with the current turn. If </font><font face="Courier New" size="2" color="#000000">interval</font><font face="Arial" size="2" color="#000000"> is 2, </font><font face="Courier New" size="2" color="#000000">obj.prop</font><font face="Arial" size="2" color="#000000"> will execute every other turn, starting with the next turn. In general, if </font><font face="Courier New" size="2" color="#000000">interval</font><font face="Arial" size="2" color="#000000"> is <i>n</i>, </font><font face="Courier New" size="2" color="#000000">obj.prop</font><font face="Arial" size="2" color="#000000"> will execute every <i>n</i> turns, starting in <i>n-1</i> turns time. Note once again that the second argument to the new Daemon call must be a property (or method) <i>pointer</i>, hence the &amp;prop syntax.
+<br>
+
+<br>
+As with a Fuse it's useful to store a reference to a Daemon when it's created, e.g.:
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">&nbsp;daemonID&nbsp;=&nbsp;new&nbsp;Daemon(obj,&nbsp;&amp;prop,&nbsp;interval);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This then allows the Daemon to be terminated with the command:
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">daemonID.removeEvent;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Otherwise to terminate the Daemon you'd need to call:
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">eventManager.removeMatchingEvents(obj,&nbsp;&amp;prop);
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Now to return to our example. You'll recall that the aim is to limit the number of turns for which the player character can carry the heavy gold tablet. The Fuse we've already looked at handles the player character's recovery; we'll use a Daemon to warn the player that the tablet is becoming an unbearable burden and then to enforce its dropping when the player has exhausted his or her allotment of turns:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;goldTablet&nbsp;:&nbsp;Tablet&nbsp;'gold&nbsp;tablet*tablets'&nbsp;'gold&nbsp;tablet'
+<br>
+&nbsp;&nbsp;inscription&nbsp;=&nbsp;"T&nbsp;F&nbsp;Q&nbsp;Z&nbsp;P\nN&nbsp;W&nbsp;O&nbsp;B&nbsp;E\nA&nbsp;U&nbsp;O&nbsp;U&nbsp;A\nF&nbsp;L&nbsp;O&nbsp;U&nbsp;R\nS&nbsp;T&nbsp;O&nbsp;P&nbsp;S"
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;32
+<br>
+&nbsp;&nbsp;feelDesc&nbsp;=&nbsp;"It&nbsp;feels&nbsp;mighty&nbsp;heavy!&nbsp;"
+<br>
+&nbsp;&nbsp;carried&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;<b>afterAction()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(daemonID&nbsp;==&nbsp;nil&nbsp;&amp;&amp;&nbsp;isIn(gPlayerChar))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>endFuse;<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;new&nbsp;Daemon(self,&nbsp;&amp;daemon,&nbsp;1);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(daemonID&nbsp;!=&nbsp;nil&nbsp;&amp;&amp;&nbsp;!isIn(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endDaemon;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>fuseID&nbsp;=&nbsp;new&nbsp;Fuse(self,&nbsp;&amp;fuse,&nbsp;3);<b>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;daemon
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;carrier&nbsp;=&nbsp;self;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(!carrier.isDirectlyIn(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;carrier&nbsp;=&nbsp;carrier.location;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gMessageParams(carrier);&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;switch(carried++)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;0:&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;1:&nbsp;"{The&nbsp;carrier/he}&nbsp;{is}&nbsp;starting&nbsp;to&nbsp;feel&nbsp;very&nbsp;heavy.&nbsp;";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;2:&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;3:&nbsp;"You&nbsp;can't&nbsp;carry&nbsp;{the&nbsp;carrier/him}&nbsp;much&nbsp;further.&nbsp;";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"You're&nbsp;forced&nbsp;to&nbsp;put&nbsp;{the&nbsp;carrier/him}&nbsp;down;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it's&nbsp;too&nbsp;heavy&nbsp;for&nbsp;you.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedAction(Drop,&nbsp;carrier);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;endDaemon
+<br>
+&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;if(daemonID&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemonID.removeEvent;
+<br>
+&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil;
+<br>
+&nbsp;}</b>
+<br>
+&nbsp;fuse()&nbsp;{&nbsp;carried&nbsp;=&nbsp;0;&nbsp;fuseID&nbsp;=&nbsp;nil;&nbsp;}
+<br>
+&nbsp;fuseID&nbsp;=&nbsp;nil&nbsp;
+<br>
+&nbsp;endFuse
+<br>
+&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;if(fuseID&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fuseID.removeEvent;
+<br>
+&nbsp;&nbsp;&nbsp;fuseID&nbsp;=&nbsp;nil;
+<br>
+&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The mechanics of controlling the Daemon are very like those of controlling the Fuse. We set up the Daemon and store a reference to it in the statement </font><font face="Courier New" size="2" color="#000000">daemonID&nbsp;=&nbsp;new&nbsp;Daemon(self,&nbsp;&amp;daemon,&nbsp;1)</font><font face="Arial" size="2" color="#000000">, and we define a convenient method for terminating the Daemon in endDaemon, which calls </font><font face="Courier New" size="2" color="#000000">daemonID.removeEvent&nbsp;</font><font face="Arial" size="2" color="#000000">provided daemonID is not nil, and then sets daemonID to nil so we can check that there's no longer a Daemon running (as with the endFuse method we defined earlier, this definition makes it safe to call endDaemon even if daemonID is nil and no Daemon is running). As in the case of the Fuse, there's nothing obligatory about the names daemon, daemonID and endDaemon, we could have called these properties and methods boston, cambridge and worcester (if we were particularly anxious name them after cities that are found in both England and Massachusetts), but the names we have used make it a bit clearer what they're for.
+<br>
+
+<br>
+The principal complication with what we're trying to do is that the restrictions on carrying the gold tablet should apply whether the player character is carrying directly, or in some other container such as a sack, or in a container within a container, such as a box in a sack, and so on. This means we cannot predict what sequence of actions will result the in tablet's being carried or no longer carried. It might be as simple as TAKE GOLD TABLET, or as long-winded as PUT GOLD TABLET IN BOX; PUT BOX IN SACK; TAKE SACK; or something even more convoluted. Or again, the player might TAKE GOLD TABLET and then PUT TABLET IN SACK when the player character (PC) is already carrying the sack. We need to try to find the simplest way handling all these eventualities.
+<br>
+
+<br>
+One thing that helps us here is that the </font><font face="Courier New" size="2" color="#000000">whatsit.isIn(obj)</font><font face="Arial" size="2" color="#000000"> method returns true whether whatsit is directly in obj or is contained in something that's within obj, however deeply nested. Thus </font><font face="Courier New" size="2" color="#000000">goldTablet.isIn(gPlayerChar)</font><font face="Arial" size="2" color="#000000"> will be true whether the tablet is directly carried by the player character, or in a sack that the PC is holding, or in a box in a sack that the PC's carrying, and so on. Likewise </font><font face="Courier New" size="2" color="#000000">goldTablet.isIn(gPlayerChar)</font><font face="Arial" size="2" color="#000000"> will be nil whenever the PC is neither directly or indirectly carrying the tablet. We can thus use this in </font><font face="Courier New" size="2" color="#000000">goldTablet.afterAction&nbsp;</font><font face="Arial" size="2" color="#000000">to check whether the PC is carrying the gold tablet or not after each turn in which the PC performs an action in the vicinity of the tablet. But we also need to know whether there's been a change of state, i.e. whether or not the PC was carrying the gold tablet before, since we don't want to keep spawning new daemons each turn that the gold tablet is carried and new fuses each time it is not. Fortunately we can check that by seeing whether there's a daemon already running (i.e. daemonID is not nil). If the PC is carrying the gold tablet and daemonID = nil, we need to create a new daemon (and kill any fuse that's running), because the PC must have started carrying the tablet this turn. Likewise, if daemonID is not nil and the PC is not carrying the tablet, s/he must have just ceased doing so, so we need to kill the daemon (and start a new fuse). <i>Because</i> we start a new daemon when the PC starts carrying the gold tablet and kill the daemon when the PC stops carrying the tablet, we can use the existence or otherwise of the daemon to check whether or not the PC was carrying the tablet the previous turn. The two checks we need in </font><font face="Courier New" size="2" color="#000000">afterAction</font><font face="Arial" size="2" color="#000000"> are thus </font><font face="Courier New" size="2" color="#000000">if(daemonID&nbsp;==&nbsp;nil&nbsp;&amp;&amp;&nbsp;isIn(gPlayerChar))<b>,&nbsp;</b></font><font face="Arial" size="2" color="#000000">to determine that the PC has just started carrying the gold tablet, so that we need to start the daemon and stop the fuse, and  </font><font face="Courier New" size="2" color="#000000">if(daemonID&nbsp;!=&nbsp;nil&nbsp;&amp;&amp;&nbsp;!isIn(gPlayerChar))</font><font face="Arial" size="2" color="#000000">, to determine that the PC has just stopped carrying the tablet, so that we need to stop the daemon and start a new fuse running.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">daemon</font><font face="Arial" size="2" color="#000000"> method (called each turn that the PC is carrying the gold tablet) uses a </font><font face="Courier New" size="2" color="#000000">switch</font><font face="Arial" size="2" color="#000000"> statement to display an appropriate message (or keep quiet), and finally to force the gold tablet to be dropped. The complication here is once again that the PC may either be carrying the gold tablet directly, in his hands, or in some other container, such as a box or sack. In the former case the player should be informed that it is the gold tablet that is becoming unbearably heavy, and eventually forced to drop the tablet; in the latter it would be better if the player were told that the box, sack or other carrier was becoming difficult to carry, and forced to drop the box or sack. The first four lines of the daemon method are thus devoted to identifying the object we want the rest of the routine to work with. We begin by declaring a local variable, carrier, and setting it to self (i.e. the tablet), which will be the object we want to refer to if the gold tablet is not inside anything. The while loop in the next two lines then walks up the containment tree until it finds an object that's directly held by the player (if the gold tablet is directly held by the player, it won't have much walking to do). After these three lines </font><font face="Courier New" size="2" color="#000000">carrier</font><font face="Arial" size="2" color="#000000"> will refer to whichever object it is that the player's directly holding, either the gold tablet itself, or whatever the gold tablet's being carried around in (if the tablet is inside a box which is inside a sack that's being carried, </font><font face="Courier New" size="2" color="#000000">carrier</font><font face="Arial" size="2" color="#000000"> will refer to the sack, not the box). The fourth line then uses the library macro </font><font face="Courier New" size="2" color="#000000">gMessageParams()</font><font face="Arial" size="2" color="#000000"> so that we can use carrier in parameter substitution strings when generating the messages in the </font><font face="Courier New" size="2" color="#000000">switch</font><font face="Arial" size="2" color="#000000"> statement.
+<br>
+
+<br>
+To see how this all works out in practice, try recompiling and running the game. Then try carrying the gold tablet around first by hand and then in the sack. You should find that if you carry it by hand, you can just carry it into the temple and put it on the altar before having to put it down. Strictly speaking, this is all that <i>needs</i> to be done with it; the catch is that the player can hardly know this without first weighing the gold tablet, which will use up more turns than this even if the PC brings the scales to the tablet rather than the other way round. This doesn't stop the player completing the task, but it does force the PC to take a break from carrying the gold tablet at some point. If this was felt to be too much of a nuisance, one could perhaps go on to implement, say, a wheelbarrow object in which the tablet could be pushed around for longer distances (which would not count as carrying it). We'll do this when we come to look at the <a href="travelpushable.htm">TravelPushable</a> class.
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

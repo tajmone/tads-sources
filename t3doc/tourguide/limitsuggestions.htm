@@ -1,0 +1,82 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>limitSuggestions</title><meta name="keywords" content="limitSuggestions"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>limitSuggestions
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="suggestedtopictree.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="conversationnodes-overview.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">One thing the topic inventory cannot know is which SuggestedTopics are actually reachable at any particular point. For example, suppose you have:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">bob&nbsp;:&nbsp;Person&nbsp;'bob',&nbsp;'Bob'
+<br>
+&nbsp;&nbsp;&nbsp;isHim&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
++&nbsp;AskTopic,&nbsp;SuggestedAskTopic&nbsp;@mavis
+<br>
+&nbsp;&nbsp;"&lt;q&gt;How's&nbsp;Mavis&nbsp;these&nbsp;days?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Fine.&lt;/q&gt;&nbsp;he&nbsp;replies,&nbsp;&lt;q&gt;Dead,&nbsp;of&nbsp;course,&nbsp;but&nbsp;otherwise&nbsp;fit&nbsp;and&nbsp;healthy.&nbsp;&lt;/q&gt;&nbsp;"
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'Mavis'
+<br>
+;
+<br>
+
+<br>
+++&nbsp;bobChatting&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
++++&nbsp;DefaultAnyTopic
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;I'd&nbsp;rather&nbsp;not&nbsp;discuss&nbsp;that&nbsp;right&nbsp;now.&lt;/q&gt;&nbsp;Bob&nbsp;tells&nbsp;you.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The problem here is that when Bob enters the bobChatting state, the AskTopic concerning Mavis is not actually reachable (since ASK BOB ABOUT MAVIS will be trapped by the DefaultAnyTopic, unless it's picked up by a more specific TopicEntry under the bobChatting state), but that "You could ask Bob about Mavis" will still be suggested as a possible topic of conversation. This is because the topic inventory mechanism has no means of knowing which TopicEntries are reachable and which are not, and so suggests everything that <i>might</i> be reachable.
+<br>
+
+<br>
+The way round this is to use the limitSuggestions property. If limitSuggestions is set to true on an ActorState, then only the TopicEntries directly belonging to that ActorState will be suggested. In the above example we could add the line </font><font face="Courier New" size="2" color="#000000">limitSuggestions&nbsp;=&nbsp;true</font><font face="Arial" size="2" color="#000000"> to the bobChattingState, and the Mavis topic would not then be suggested when bob is in that state. Similarly, you can set limitSuggestions to true on a <a href="convnode.htm">ConvNode</a> to ensure that only the TopicEntries within that ConvNode are suggested (we'll be coming to ConvNodes next).
+<br>
+
+<br>
+The full explanation of limitSuggestions given in the library source comments is as follows:
+<br>
+
+<br>
+<i>Flag: this database level should limit topic suggestions (for the TOPICS and TALK TO commands) to its own topics, excluding any topics inherited from the "broader" context. If this property is set to true, then we won't include suggestions from any lower level of the database hierarchy. If this property is nil, we'll also include any topic suggestions from the broader context.
+<br>
+
+<br>
+Topic databases are arranged into a fixed hierarchy for an actor. At the top level is the current ConvNode object; at the next level is the ActorState; and at the bottom level is the Actor itself. So, if the ConvNode's limitSuggestions property is set to true, then the suggestions for the actor will include ONLY the ConvNode. If the ConvNode has the property set to nil, but the ActorState has it set to true, then we'll include the ConvNode and the ActorState suggestions.
+<br>
+
+<br>
+By default, we set this to nil. This should usually be set to true for any ConvNode or ActorState where the NPC won't allow the player to stray from the subject. For example, if a ConvNode only accepts a YES or NO response to a question, then this property should probably be set to true in the ConvNode, since other suggested topics won't be accepted as conversation topics as long as the ConvNode is active. </i></font><font face="Times New Roman" size="3" color="#000000"><i>
+<br>
+</i></font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

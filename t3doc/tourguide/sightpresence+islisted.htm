@@ -1,0 +1,78 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>sightPresence &amp; isListed</title><meta name="keywords" content="sightPresence,isListed,isListedInContents"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>sightPresence &amp; isListed
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="findingincode.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="hidden.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Perhaps an even simpler way to hide an object and then reveal it is to set its <b>sightPresence</b> and <b>isListed</b> properties to nil. The former effectively put the object out of scope for any commands (such as TAKE or EXAMINE) and the latter prevents it being listed in the room description until sightPresence is set to true. We'll see how this works by hiding another of our coded tablets in the squareCave:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">stoneTablet&nbsp;:&nbsp;Tablet&nbsp;'(loose)&nbsp;stone&nbsp;tablet*tablets'&nbsp;'stone&nbsp;tablet'&nbsp;@squareCave
+<br>
+&nbsp;&nbsp;inscription&nbsp;=&nbsp;"O&nbsp;P&nbsp;E&nbsp;R&nbsp;A\nY&nbsp;N&nbsp;U&nbsp;E&nbsp;R\nS&nbsp;T&nbsp;E&nbsp;T&nbsp;S\nI&nbsp;N&nbsp;F&nbsp;E&nbsp;F\nP&nbsp;A&nbsp;N&nbsp;I&nbsp;C"
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;16
+<br>
+&nbsp;&nbsp;sightPresence&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;isListed&nbsp;=&nbsp;(moved)&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You may recall that the way out of this cave is through a stone archway we defined someway back as example of an <a href="exitportal.htm">ExitPortal</a>. This would seem a good place to hide the stone tablet; the player will only learn of the tablet's existence if he or she examines this arch. We don't want the stone tablet listed separately until it's free of the arch, which is why we set isListed = (moved) here, but we'll want the player to be able to interact with the tablet once he or she has examined the arch, so we set sightPresence to nil initially and let the archway set it to true when it's examined:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;ExitPortal&nbsp;-&gt;&nbsp;mainCave&nbsp;'ashlar&nbsp;arch/archway'&nbsp;'archway'
+<br>
+&nbsp;&nbsp;"The&nbsp;archway&nbsp;is&nbsp;beautifully&nbsp;constructed&nbsp;from&nbsp;dressed&nbsp;stones.<b>&nbsp;&lt;&lt;looseStone&gt;&gt;&nbsp;"
+<br>
+&nbsp;&nbsp;looseStone()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!stoneTablet.moved)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stoneTablet.sightPresence&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"One&nbsp;of&nbsp;them&nbsp;seems&nbsp;a&nbsp;bit&nbsp;loose.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There's&nbsp;a&nbsp;gap&nbsp;in&nbsp;the&nbsp;stonework&nbsp;where&nbsp;one&nbsp;of&nbsp;them&nbsp;is&nbsp;missing.&nbsp;";
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's one further complication we have to bear in mind with this method, however, and that is if we had put the stone tablet in a container (e.g. making the archway a container from which the tablet could be removed and then reinserted) we should also need to add </font><font face="Courier New" size="2" color="#000000">isListedInContents&nbsp;=&nbsp;(sightPresence)</font><font face="Arial" size="2" color="#000000">, otherwise the tablet would announce its presence when its container was examined, even if this wasn't what we wanted.
+<br>
+
+<br>
+In the case of the stone tablet, manipulating sightPresence and isListed works reasonably well, not least because we want them to become true under slightly different conditions. Again, with items that descend from NonPortable, which would not normally be listed anyway, manipulating sightPresence can often be the most efficient means of bringing something to light (as in the example of the <a href="lever(2).htm#tinyhole">hole at the end of the fluid link</a>, which we'll come to eventually). Otherwise, though, it is usually simpler to use the <a href="hidden.htm">Hidden</a> class, which we shall look at next.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

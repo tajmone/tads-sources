@@ -1,0 +1,48 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SingleContainer</title><meta name="keywords" content="SingleContainer,ComplexContainer"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SingleContainer : <a href="container.htm">Container</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="containerdoor.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="bagofaffinity.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A SingleContainer is a special type of container that can hold only one object at a time. If a new object is inserted, the old one is removed.
+<br>
+
+<br>
+The example we'll create may seem a little contrived at first, but hopefully it'll make more sense when it ends up in its proper context. For now we'll simply put it in mainCave, where it'll be convenient to test it out until its proper starting place (a space station we'll be visiting in a Tardis) has been constructed. From the description of this object it's fairly clear we'll need to add a number of components to it in due course. Since we don't want these to end up inside in the Container we make our autoRectifier a ComplexContainer and the SingleContainer its subContainer object:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">autoRectifier&nbsp;:&nbsp;ComplexContainer&nbsp;'silver&nbsp;cylinder'&nbsp;'silver&nbsp;cylinder'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;about&nbsp;a&nbsp;foot&nbsp;high&nbsp;and&nbsp;five&nbsp;inches&nbsp;in&nbsp;diameter.&nbsp;A&nbsp;black&nbsp;ring&nbsp;surrounds
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;opening&nbsp;at&nbsp;one&nbsp;end.&nbsp;The&nbsp;only&nbsp;other&nbsp;feature&nbsp;of&nbsp;interest&nbsp;are&nbsp;a&nbsp;conspicuous
+<br>
+&nbsp;&nbsp;&nbsp;orange&nbsp;button&nbsp;and&nbsp;the&nbsp;manufacturer's&nbsp;name&nbsp;inscribed&nbsp;just&nbsp;below&nbsp;the&nbsp;ring.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;subContainer&nbsp;:&nbsp;ComplexComponent,&nbsp;SingleContainer&nbsp;{&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;3&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;3
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+To try this out, compile the game, pick up the first aid kit on the way down to the main cave, then try putting the contents of the first aid kit in the cylinder one at time.
+<br>
+
+<br>
+This gadget is clearly incomplete, but we'll add its components and make it functional when we come to deal with the <a href="keyedcontainer.htm#bentkey">bent key</a> below.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

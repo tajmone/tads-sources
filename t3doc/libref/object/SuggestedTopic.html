@@ -1,0 +1,112 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>SuggestedTopic</title></head><body>
+<table class=ban><tr><td align=left><span class=title>SuggestedTopic</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1151">1151</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A "suggested" topic.  These provide suggestions for things the player   might want to ASK or TELL another actor about.  At certain times   (specifically, when starting a conversation with HELLO or TALK TO, or   when the player enters a TOPICS command to explicitly ask for a list   of topic suggestions), we'll look for these objects in the actor or   actor state for the actor to whom we're talking.  We'll show a list   of each currently active suggestion we find.  This gives the player   some guidance of what to talk about.  For example: <p>   &gt;talk to bob <br> "Excuse me," you say. <p>   Bob looks up from his newspaper.  "Yes?  Oh, you again." <p>   (You'd like to ask him about the black book, the candle, and the   bell, and tell him about the crypt.) <p>   Topic suggestions are entirely optional.  Some authors don't like the   idea, since they think it's too much like a menu system, and just   gives away the solution to the game.  If you don't want to have   anything to do with topic suggestions, we won't force you - simply   don't define any SuggestedTopic objects, and the library will never   offer suggestions and will even disable the TOPICS command. <p>   If you do want to use topic suggestions, the easiest way to use this   class is to combine it using multiple inheritance with a TopicEntry   object.  You just have to add SuggestedTopic to the superclass list   for your topic entry object, and give the suggested topic a name   string (using a property and format defined by the language-specific   library) to display in suggestions lists.  Doing this, the suggestion   will automatically be enabled whenever the topic entry is available,   and will automatically be removed from the suggestions when the topic   is invoked in conversation (in other words, we'll only suggest asking   about the topic until it's been asked about once). <p>   Topic suggestions can be associated with an actor or an actor state;   these are topics that a given character would like to talk to the   associated actor about.  The association is a bit tricky: suggested   topic objects are stored with the actor being *talked to*.  For   example, if we want to suggest topics that the player character might   want to ASK BILL ABOUT, we store these suggestions with *Bill*.  We   do NOT store the suggestions with the player character.  This might   seem backwards at first glance, since fundamentally the suggestions   belong in the player character's "brain" - they are, after all,   things the player character wants to talk about.  In practice,   though, there are two things that make it easier to keep the   information with the character being asked.  First, in most games,   there's just one player character, so one of the two actors in each   association will always be the player character; by storing the   objects with the NPC, we can just let the PC be assumed as the other   actor as a default, saving us some typing that would be necessary if   we had to specify each object in the other direction.  Second, we   keep the *response* objects associated with the character being asked   - that association is intuitive, at least.  The thing is, we can   usually combine the suggestion and response into a single object,   saving another bunch of typing; if we didn't keep the suggestion with   the character being asked, we couldn't combine the suggestions and   responses this way, since they'd have to be associated with different   actors.
+<p>
+<code>class
+<b>SuggestedTopic</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>SuggestedTopic</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>SuggestedTopic</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedAskForTopic.html">SuggestedAskForTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedAskTopic.html">SuggestedAskTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedGiveTopic.html">SuggestedGiveTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedNoTopic.html">SuggestedNoTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedShowTopic.html">SuggestedShowTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedTellTopic.html">SuggestedTellTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedTopicTree.html">SuggestedTopicTree</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SpecialTopic.html">SpecialTopic</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SuggestedYesTopic.html">SuggestedYesTopic</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#associatedTopic">associatedTopic</a>&nbsp;
+<a href="#curiositySatisfied">curiositySatisfied</a>&nbsp;
+<a href="#fullName">fullName</a>&nbsp;
+<a href="#location">location</a>&nbsp;
+<a href="#name">name</a>&nbsp;
+<a href="#suggestionGroup">suggestionGroup</a>&nbsp;
+<a href="#suggestTo">suggestTo</a>&nbsp;
+<a href="#timesToSuggest">timesToSuggest</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#associatedTopicCanMatch">associatedTopicCanMatch</a>&nbsp;
+<a href="#associatedTopicIsActive">associatedTopicIsActive</a>&nbsp;
+<a href="#associatedTopicTalkCount">associatedTopicTalkCount</a>&nbsp;
+<a href="#findEnclosingSuggestedTopic">findEnclosingSuggestedTopic</a>&nbsp;
+<a href="#findOuterSuggestedTopic">findOuterSuggestedTopic</a>&nbsp;
+<a href="#fromEnclosingSuggestedTopic">fromEnclosingSuggestedTopic</a>&nbsp;
+<a href="#initializeSuggestedTopic">initializeSuggestedTopic</a>&nbsp;
+<a href="#isSuggestionActive">isSuggestionActive</a>&nbsp;
+<a href="#noteSuggestion">noteSuggestion</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="associatedTopic"></a>
+<table class=decl><tr><td><code>associatedTopic</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1185">1185</a>]</table><div class=desc>   Our associated topic.  In most cases, this will be initialized   automatically: if this suggested topic object is also a   TopicEntry object (using multiple inheritance), we'll set this   during start-up to 'self', or if our location is a TopicEntry,   we'll set this to our location.  This only needs to be   initialized manually if neither of those conditions is true. <p>
+</div>
+<a name="curiositySatisfied"></a>
+<table class=decl><tr><td><code>curiositySatisfied</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1316">1316</a>]</table><div class=desc>   Have we satisfied our curiosity about this topic?  Returns true   if so, nil if not.  We'll never suggest a topic when this returns   true, because this means that the player no longer feels the need   to ask about the topic. <p>
+</div>
+<a name="fullName"></a>
+<table class=decl><tr><td><code>fullName</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1174">1174</a>]</table><div class=desc>   The name of the suggestion.  The rules for setting this vary by   language; in the English version, we'll display the fullName when   we show a stand-alone item, and the groupName when we appear in a   list group (such as a group of ASK ABOUT or TELL ABOUT   suggestions). <p>   In English, the fullName should be suitable for use after   'could': "You could &lt;fullName&gt;, &lt;fullName&gt;, or &lt;fullName&gt;". <p>   In English, the phrasing where the 'name' property is used   depends on the specific subclass, but it should usually be a   qualified noun phrase (that is, it should include a qualifier   such as "a" or "the" or a possessive).  For ASK and TELL, for   example, the 'name' should be suitable for use after ABOUT: "You   could ask him about &lt;the lighthouse&gt;, &lt;Bob's black book&gt;, or &lt;the   weather&gt;." <p>   By default, we'll walk up our 'location' tree looking for another   suggested topic; if we find one, we'll use its corresponding name   values. <p>
+</div>
+<a name="location"></a>
+<table class=decl><tr><td><code>location</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1199">1199</a>]</table><div class=desc>   Set the location to the actor to ask or tell about this topic.   This is the target of the ASK ABOUT or TELL ABOUT command, NOT   the actor who's doing the asking.  This can also be set to a   TopicEntry object, in which case we'll be associated with the   actor with which the topic entry is associated, and we'll also   automatically tie the topic entry to this suggestion. <p>   Because we're using the location property, you can use the '+'   notation to add a suggested topic to the target actor, state   objects, or topic entry. <p>
+</div>
+<a name="name"></a>
+<table class=decl><tr><td><code>name</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1175">1175</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="suggestionGroup"></a>
+<table class=decl><tr><td><code>suggestionGroup</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1224">1224</a>]</table><div class=desc>the ListGroup with which we're to list this suggestion<p>
+</div>
+<a name="suggestTo"></a>
+<table class=decl><tr><td><code>suggestTo</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1221">1221</a>]</table><div class=desc>   The actor who *wants* to ask or tell about this topic.  Our   location property gives the actor to be asked or told, because   we're associated with the target actor - the same actor who has   the TopicEntry information for the topic.  This property, in   contrast, gives the actor who's doing the asking. <p>   By default, we return the player character; in most cases, you   won't have to override this.  In most games, only the player   character uses the suggested topic mechanism, because there's no   reason to suggest topics for NPC's - they're just automata, after   all, so if we want them to ask something, we can just program   them to ask it directly.  Also, most games have only one player   character.  Games that meet these criteria won't ever have to   override this.  If you do have multiple player characters, you'll   probably want to override this for each suggested topic to   indicate which character wants to ask about the topic, as the   different player characters might have different things they'd   want to talk about. <p>
+</div>
+<a name="timesToSuggest"></a>
+<table class=decl><tr><td><code>timesToSuggest</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1308">1308</a>]</table><div class=desc>   The number of times to suggest asking about our topic.  When   we've asked about our associated topic this many times, we'll   have satisfied our curiosity.  In most cases, we'll only want to   suggest a topic until it's asked about once, since most topics   only have a single meaningful response, so we'll use 1 as the   default.  This should be overridden in cases where a topic will   reveal more information when asked several times.  If this is   nil, it means that there's no limit to the number of times to   suggest asking about this. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="associatedTopicCanMatch"></a>
+<table class=decl><tr><td><code>associatedTopicCanMatch (actor, scopeList)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1351">1351</a>]</table><div class=desc>is it possible to match the associated topic?<p>
+</div>
+<a name="associatedTopicIsActive"></a>
+<table class=decl><tr><td><code>associatedTopicIsActive ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1345">1345</a>]</table><div class=desc>is the associated topic active?<p>
+</div>
+<a name="associatedTopicTalkCount"></a>
+<table class=decl><tr><td><code>associatedTopicTalkCount ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1348">1348</a>]</table><div class=desc>get the number of previous invocations of the associated topic<p>
+</div>
+<a name="findEnclosingSuggestedTopic"></a>
+<table class=decl><tr><td><code>findEnclosingSuggestedTopic ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1227">1227</a>]</table><div class=desc>find the nearest enclosing SuggestedTopic parent<p>
+</div>
+<a name="findOuterSuggestedTopic"></a>
+<table class=decl><tr><td><code>findOuterSuggestedTopic ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1242">1242</a>]</table><div class=desc>find the outermost enclosing SuggestedTopic parent<p>
+</div>
+<a name="fromEnclosingSuggestedTopic"></a>
+<table class=decl><tr><td><code>fromEnclosingSuggestedTopic (prop, defaultVal)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1263">1263</a>]</table><div class=desc>   get a property from the nearest enclosing SuggestedTopic, or   return the given default value if there is no enclosing   SuggestedTopic <p>
+</div>
+<a name="initializeSuggestedTopic"></a>
+<table class=decl><tr><td><code>initializeSuggestedTopic ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1320">1320</a>]</table><div class=desc>initialize - this is called automatically during pre-initialization<p>
+</div>
+<a name="isSuggestionActive"></a>
+<table class=decl><tr><td><code>isSuggestionActive (actor, scopeList)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1282">1282</a>]</table><div class=desc>   Should we suggest this topic to the given actor?  We'll return   true if the actor is the same actor for which this suggestion is   intended, and the associated topic entry is currently active, and   we haven't already satisfied our curiosity about the topic. <p>
+</div>
+<a name="noteSuggestion"></a>
+<table class=decl><tr><td><code>noteSuggestion ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#1359">1359</a>]</table><div class=desc>   Note that we're being shown in a topic inventory listing.  By   default, we don't do anything here, but subclasses can use this to   do any extra work they want to do on being listed. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

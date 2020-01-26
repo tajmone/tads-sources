@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ExceptResolver</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ExceptResolver</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6778">6778</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Exception list resolver.  We use this type of resolution for noun   phrases in the "but" list of an "all but" construct. <p>   We scope the "all but" list to the objects in the "all" list, since   there's no point in excluding objects that aren't in the "all" list.   In addition, if a phrase in the exclusion list matches more than one   object in the "all" list, we consider it a match to all of those   objects, even if it's a definite phrase - this means that items in   the "but" list are never ambiguous.
+<p>
+<code>class
+<b>ExceptResolver</b> :  &nbsp; <a href="../object/ProxyResolver.html">ProxyResolver</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ExceptResolver</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ProxyResolver.html">ProxyResolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#isSubResolver">isSubResolver</a>&nbsp;
+<a href="#mainList">mainList</a>&nbsp;
+<a href="#mainListText">mainListText</a>&nbsp;
+<a href="#origResolver">origResolver</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#filterAmbiguousEquivalents">filterAmbiguousEquivalents</a>&nbsp;
+<a href="#filterAmbiguousNounPhrase">filterAmbiguousNounPhrase</a>&nbsp;
+<a href="#filterPluralPhrase">filterPluralPhrase</a>&nbsp;
+<a href="#getAll">getAll</a>&nbsp;
+<a href="#getQualifierResolver">getQualifierResolver</a>&nbsp;
+<a href="#matchName">matchName</a>&nbsp;
+<a href="#objInScope">objInScope</a>&nbsp;
+</code><p>
+<p>Inherited from <code>ProxyResolver</code> :<br>
+<code>
+<a href="../object/ProxyResolver.html#getPossessiveResolver">getPossessiveResolver</a>&nbsp;
+<a href="../object/ProxyResolver.html#propNotDefined">propNotDefined</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="isSubResolver"></a>
+<table class=decl><tr><td><code>isSubResolver</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6790">6790</a>]</table><div class=desc>we're a sub-phrase resolver<p>
+</div>
+<a name="mainList"></a>
+<table class=decl><tr><td><code>mainList</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6855">6855</a>]</table><div class=desc>the main list from which we're excluding things<p>
+</div>
+<a name="mainListText"></a>
+<table class=decl><tr><td><code>mainListText</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6858">6858</a>]</table><div class=desc>the original text for the main list<p>
+</div>
+<a name="origResolver"></a>
+<table class=decl><tr><td><code>origResolver</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6861">6861</a>]</table><div class=desc>the original underlying resolver<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (mainList, mainListText, resolver)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6779">6779</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="filterAmbiguousEquivalents"></a>
+<table class=decl><tr><td><code>filterAmbiguousEquivalents (lst, np)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6826">6826</a>]</table><div class=desc>filter ambiguous equivalents<p>
+</div>
+<a name="filterAmbiguousNounPhrase"></a>
+<table class=decl><tr><td><code>filterAmbiguousNounPhrase (lst, requiredNum, np)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6837">6837</a>]</table><div class=desc>filter an ambiguous noun list<p>
+</div>
+<a name="filterPluralPhrase"></a>
+<table class=decl><tr><td><code>filterPluralPhrase (lst, np)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6848">6848</a>]</table><div class=desc>filter a plural noun list<p>
+</div>
+<a name="getAll"></a>
+<table class=decl><tr><td><code>getAll (np)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6820">6820</a>]</table><div class=desc>for 'all', simply return the whole original list<p>
+</div>
+<a name="getQualifierResolver"></a>
+<table class=decl><tr><td><code>getQualifierResolver ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6808">6808</a>]</table><div class=desc>   Resolve qualifiers in the enclosing main scope, since qualifier   phrases are not part of the narrowed list - qualifiers apply to   the main phrase from which we're excluding, not to the exclusion   list itself. <p>
+</div>
+<a name="matchName"></a>
+<table class=decl><tr><td><code>matchName (obj, origTokens, adjustedTokens)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6797">6797</a>]</table><div class=desc>   match an object's name - we'll use the disambiguation name   resolver, so that they can give us partial names just like in   answer to a disambiguation question <p>
+</div>
+<a name="objInScope"></a>
+<table class=decl><tr><td><code>objInScope (obj)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6814">6814</a>]</table><div class=desc>   determine if an object is in scope - it's in scope if it's in the   original main list <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

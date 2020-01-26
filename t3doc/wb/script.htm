@@ -1,0 +1,238 @@
+<html>
+<head>
+<title>Scripting and Auto-Scripting</title>
+<link rel=stylesheet href="wbdoc.css">
+</head>
+
+<body>
+
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+
+<center>
+<br><br><br><img src='../htmltads.jpg'>
+<br><h1>Scripting and Auto-Scripting</h1>
+<br><br>
+</center>
+
+<p>The TADS 3 Interpreter has a "scripting" mechanism that lets you
+record and play back a series of command inputs.  This is handy for
+testing, because it lets you exercise your game automatically, running
+it through a series of inputs without having to re-type the inputs
+manually.
+
+<p>Workbench includes a number of features that make it easier to
+create and run scripts.
+
+<h2>Auto-Scripting</h2>
+
+<p>Workbench can automatically capture a script of input events every
+time you run a game.  This feature is enabled by default (but you can
+disable it, using the Scripts page of the Options dialog).
+
+<p>When auto-scripting is enabled, each time you run the game,
+Workbench creates a new script file, stored under the project's
+Scripts folder with a name like "Auto 5.cmd".  Workbench increments
+the number for each new Auto script.  All events that you enter while
+running the game are recorded to the new script file.
+
+<h2>The Scripts window</h2>
+
+<p>Workbench has a tool window that displays the list of script files
+in the project's Scripts folder.  You can view this window by
+selecting Scripts from the View menu.
+
+<p>The Scripts window shows all of the files in the project's Scripts
+folder, ordered from newest to oldest.  Workbench sorts the scripts in
+order of "freshness" because this suits the way most people work on a
+game.  Most people work on a game in sections, spending a while adding
+and refining one section, then moving on to another section.  The
+scripts you'll access most frequently are therefore the ones you've
+been working with most recently.
+
+
+<h2>Trimming QUIT commands</h2>
+
+<p>Auto-scripts capture every event that you enter into the game
+during a debug run.  This includes whatever command (or other events)
+that you entered to quit out of the game.  In a typical command-line
+game, this is usually a QUIT command followed by a YES response to the
+"are you sure" prompt, but it could vary.  A non-English game, for
+instance, would probably use the words for QUIT and YES in its native
+language rather than the English commands; a game without a command
+line would obviously have to use something other than a command,
+such as a keystroke or a hyperlink click, to signal quitting.
+
+<p>Most of the time, though, you won't want those QUIT commands to
+show up in an auto-script.  One of the chief uses for auto-scripts is
+instant replay of the last session or of another recent session, so
+that you can quickly get to the same point and then continue testing
+from there.  The problem with including the QUIT command in the script
+is that it defeats the "continue from there" part if the auto-script
+plays all the way through to the QUIT.
+
+<p>To address this, Workbench can automatically delete the QUIT
+command from the end of an auto-script.  Here's how this works:
+whenever you terminate a debug run, Workbench scans the auto-script
+file that was just generated.  If the last lines of the file match one
+of the QUIT command sequences configured in the project settings,
+Workbench trims the matching lines from the end of the file.  This
+only applies when the <b>last lines</b> of the file match a QUIT
+sequence - if the same lines are found earlier in the file, Workbench
+leaves them intact, because they can't have caused the termination if
+more events follow.
+
+<p>We mentioned earlier that the actual commands that cause the game
+to terminate can vary from one game to another.  Since this is
+something that each game can program individually, there's obviously
+no way for Workbench to predict all of the possibilities.  So, instead
+of trying, Workbench simply provides a configuration option, so that
+you can specify your own game-ending event sequences.
+
+<p>To enter a custom QUIT sequence, open the Project Settings dialog,
+and go to the Scripts page.  That page has a text box where you can
+enter one or more QUIT sequences.  Here, you specify your QUIT
+sequences using regular expressions.  Enter one regular expression per
+line; each line matches one line of the script file.  Each line must
+match in its entirety.  These lines must always match the <b>very
+end</b> of the script - so if you enter three lines, they must match
+the last three lines of the script.
+
+<p>You can enter multiple alternative sequences of lines by using a
+blank line to separate groups.  If you enter multiple sequences,
+Workbench will check each one in turn, in the order given.  If
+Workbench finds a match to a sequence, it will delete that sequence
+from the file and stop looking - so it will only trim out <b>one</b>
+of the sequences you specify.
+
+<p>By default, Workbench sets up a single QUIT sequence, which matches
+the standard Adv3 English QUIT command sequence: a command line with
+the word QUIT, followed by a line with a YES response to the "are you
+sure" prompt.  The actual regular expressions are a bit more elaborate
+than this simple description suggests, since they need to allow for
+extra whitespace, upper/lower case variation, and, of course, the
+event type prefix on each line:
+
+<p>
+<code>
+<nocase>[<]line[>]<space>*q(uit)?<space>*
+<nocase>[<]line[>]<space>*y.*
+</code>
+
+<p>If you need to customize the QUIT sequence, remember to include
+the event type tag for each line.  Remember also that &lt; and &gt;
+are special characters in the regular expression syntax, to to match
+them literally you have to quote them, which the default sequences do
+by writing them as [&lt;] and [&gt;].
+
+<p>The &lt;nocase&gt; code is included because regular expressions are
+case-sensitive by default.  This code tells the matcher to ignore
+upper/lower case variations.
+
+
+<h2>Replaying a script</h2>
+
+<p>To replay a past session in its entirety, right-click on the script
+file in the Scripts window, and select Replay from the menu that pops
+up.  This will terminate the game if it's already running, then start
+a new session that takes its input from the selected script.
+
+<p>If the script doesn't include a command that terminates the game
+(such as a QUIT command), the Interpreter will resume reading input
+from the keyboard after the script finishes.  This lets you use a
+script to move to a certain point in the game, then continue manually
+from there - this is handy during testing, since it lets you quickly
+get to the area you're actively working on without having to manually
+enter all of the commands up to that point.
+
+<p>You can also replay a <i>partial</i> script, from the beginning to
+a selected point, rather than all the way through.  To do this, first
+open the script in the text editor, which you can do by
+double-clicking on the file in the Scripts window; then right-click on
+the last line you want to execute, and select Run to Cursor from the
+pop-up menu.
+
+<p>Whenever you replay a script, Workbench will move that script to
+the top of the list in the Scripts window, in recognition of your
+recent use of the script.
+
+<h2>Editing a script</h2>
+
+<p>A script is just a text file, in a special format that the
+Interpreter recognizes.  Each line in a script provides one input
+event, such a command line entry or a keystroke.  A line starts with a
+"tag" that specifies what kind of input event the line provides, and
+the rest of the line is the event data (the command line entered, the
+key pressed, etc).  For full information on the format, refer to the
+"Input Scripts" chapter of the <i>TADS 3 System Manual</i>.
+
+<p>You can create script files from scratch, or modify existing script
+files, using the Workbench text editor.  To open a script for editing,
+simply double-click on the file in the Scripts window.  You can edit
+the script just like any other text file.
+
+<h2>Renaming a script</h2>
+
+<p>The scripts that Workbench automatically creates are named with the
+generic pattern "Auto N", where N is a number that increases with each
+new auto script.  This doesn't tell you much about the script other
+than its approximate vintage and that it was automatically created.
+
+<p>If there's a script that you plan to use frequently, it'll be
+easier for you to spot the script in the list if you rename it to
+something more descriptive.  You can do this by right-clicking on the
+file in the Scripts window and selecting Rename from the menu that
+pops up; then just type the new name and press Return.
+
+<h2>Deleting a script</h2>
+
+<p>You can delete a script by right-clicking on the file in the
+Scripts window and selecting Delete from the menu that pops up.
+
+<h2>Automatic cleanup</h2>
+
+<p>Creating a new script automatically on every run is nice in the
+short term, but as you work on a game you'll probably find that most
+scripts get less useful with age.  Older scripts tend to become stale;
+for one thing, they're usually for sections of the game that you're
+not actively working on any longer, and for another, changes you've
+made to the game might have broken an older script, so that it won't
+reach its objective even if you did have a reason to run it.
+
+<p>This is the reason that the Scripts window lists the most recently
+used scripts first.  You'll usually want the scripts you've used most
+recently closest at hand, so Workbench sorts them to the top of the
+list.
+
+<p>It's also the thinking behind Workbench's automatic script cleanup
+feature.  By default, each time Workbench creates a new "Auto N"
+script at the start of a run of your game, it scans the Scripts
+folder, counts up the existing Auto scripts, and keeps only the 25
+most recently used of these.  Workbench automatically deletes any
+older scripts.
+
+<p>You can turn off the automatic script cleanup process entirely,
+using the Scripts page of the Options dialog.  If you do want to leave
+auto-cleanup enabled, you can use the same dialog page to change the
+number of Auto scripts you want to keep around at any given time.
+
+<p>The auto-cleanup process will <b>only</b> delete old scripts
+fitting the standard naming pattern of "Auto N", where N is a number.
+So, if there's a script you want to keep permanently, simply rename it
+- that will protect it from auto-cleanup, so it will stay around until
+you manually delete it.
+
+
+<br><br><br><br><br>
+<hr>
+<br>
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+<font size=-1>
+Copyright &copy;1999, 2007 by Michael J. Roberts.
+</font>
+
+</body>
+</html>

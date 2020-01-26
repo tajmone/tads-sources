@@ -1,0 +1,32 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>BoredByeTopic</title><meta name="keywords" content="BoredByeTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="verdana, arial, Helvetica, Sans-Serif" size="3" color="#000000"><b>BoredByeTopic: <a href="misctopic.htm">MiscTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Helvetica, Sans-Serif" size="2"><a href="leavebyetopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="actorbyetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="verdana, arial, Helvetica, Sans-Serif" size="2" color="#000000">The BoredByeTopic is the second special case of <a href="impbyetopic.htm">ImpByeTopic</a>, and complements <a href="leavebyetopic.htm">LeaveByeTopic</a>. It is triggered whenever a conversation is terminated because an NPC gives up waiting for the PC to speak.
+<br>
+
+<br>
+We could, for example, change the curator's ImpByeTopic to a BoredByeTopic:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+++&nbsp;BoredByeTopic
+<br>
+&nbsp;&nbsp;"{The&nbsp;curator/he}&nbsp;turns&nbsp;away&nbsp;and&nbsp;goes&nbsp;back&nbsp;to&nbsp;what
+<br>
+&nbsp;&nbsp;&nbsp;passes&nbsp;for&nbsp;his&nbsp;work.&nbsp;"
+<br>
+;
+<br>
+</font><font face="verdana, arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+In this case the change won't make any practical difference, since either way (given that we've defined a separate LeaveByTopic) this will be the topic that's invoked when the curator tires of waiting for the PC to talk, although using BoredByeTopic in this case probably makes our source code a little clearer.
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,142 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SenseConnector</title><meta name="keywords" content="SenseConnector,PromptDaemon,connectorMaterial,transparent,opaque,transSensingThru,locationList,soundSize"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SenseConnector : <a href="multiloc.htm">Multiloc</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="noise.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="sensoryevent.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Unless the game author takes steps to make things otherwise, each location behaves like a sealed island; nothing that happens in one location can be seen, heard, felt, or smelled in another. Usually this is realistic enough, but there are occasions when it's not quite what we want; on such occasions we can join two or more locations by a SenseConnector, which can pass one or more senses between locations with varying degrees of transparency. The <a href="distanceconnector.htm">DistanceConnector</a> we have already met is a specialized kind of SenseConnector that passes all four senses (taste excluded as not really relevant) as distant.
+<br>
+
+<br>
+There are basically two ways you can define what senses a SenseConnector passes in what way. The first way is to set its <b>connectorMaterial </b>property to one of the materials defined in the library (or one you define yourself), each of which defines some combination of the senses as <i>transparent</i> (which means that they are passed with no degradation, as if their source was right under our nose) and the remainder as <i>opaque</i> (which means that they aren't passed at all). Alternatively, if none of these pre-defined materials give you what you want, and you don't want to define another (which may be needless labour), you can override your SenseConnector's <b>transSensingThru(sense)</b> method to return the appropriate level of transparency for each sense, which may be either <i>transparent</i>, <i>opaque</i>, <i>distant</i> or <i>obscured</i>. This is the method we shall be using shortly.
+<br>
+
+<br>
+We have arranged for the bomb to detonate and to kill the player character if s/he's nearby, but as yet there's nothing to tell the player when the bomb explodes if the player character goes wandering off into a neighbouring location. There are several ways this could be achieved, including the brute force method of (say) a <a href="promptdaemon.htm">prompt daemon</a> that checks once a turn whether the bomb is still present and reports the explosion if it is not, giving a different message according to the location of the actor, and then removing itself from the list of active events, something like this:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;bomb&nbsp;:&nbsp;Hidden,&nbsp;Immovable&nbsp;'unexploded&nbsp;bomb/cylinder'&nbsp;'bomb'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;fat,&nbsp;round-nosed&nbsp;cylinder&nbsp;with&nbsp;tail&nbsp;fins,&nbsp;on&nbsp;a&nbsp;couple&nbsp;of&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;painted&nbsp;tiny&nbsp;swastikas.&nbsp;"
+<br>
+&nbsp;&nbsp;discover()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;SenseFuse(self,&nbsp;&amp;explode,&nbsp;3,&nbsp;self,&nbsp;sight);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>daemonID&nbsp;=&nbsp;new&nbsp;PromptDaemon(self,&nbsp;&amp;daemon);</b>
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>daemon()
+<br>
+&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(bomb.isIn(nil))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(gPlayerChar.location)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;streetJunction:&nbsp;"Loud&nbsp;Bang!";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;road&nbsp;:&nbsp;"Distant&nbsp;Bang!";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;shop&nbsp;:&nbsp;"Muffled&nbsp;Bang!";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;daemonID.removeEvent;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil
+<br>
+</b>&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">This approach works, and could also have been used to handle the case where the player character is in the same location as the bomb when it goes off. We shall, however, explore a different approach that models the situation in a less ad-hoc way, and which perhaps is more easily extensible. We'll be making the explosion of the bomb create a SoundEvent that can be heard someway off; but to allow the SoundEvent to be sensed at other locations we need to connect them by a SenseConnector. For this purpose we'll assume that sound is the only thing that will be transmitted (we can't actually see, smell or feel what's going on near the bomb unless we're there), and that as the other locations are a little way away, any sound should be passed as <i>distant</i> rather than <i>transparent. </i>We can then define our SenseConnector thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">SenseConnector,&nbsp;Intangible
+<br>
+&nbsp;&nbsp;transSensingThru(sense)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(sense==sound)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;distant;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;opaque;
+<br>
+&nbsp;&nbsp;}&nbsp;
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[londonStreet,&nbsp;streetJunction,&nbsp;road,&nbsp;shop]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we need to give the SenseConnector some other class as well. Here we make it an Intangible, since it doesn't represent any tangible object in the game, but in other situations you might want your SenseConnector to be a physical object like a door, wall, or window that actually connects two locations. We use the locationList property to list the locations we want connected (not all of which we have defined yet).
+<br>
+
+<br>
+If you try to run this as things are, apart from the undefined location, you'll encounter another problem: when the player character moves north from londonStreet to streetJunction s/he can now still hear the ticking from the bomb. This probably isn't very realistic - one might expect to hear the bomb exploding from some way away, but not ticking. Fortunately, this is very easy to fix: because we have defined the SenseConnector as passing sounds through a distance, it won't pass any whose <b>soundSize</b> is set to <i>small</i> (as opposed to <i>medium</i> - the default, or <i>large</i>). We thus just need to add this refinement to the definition of our Noise object:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;Noise&nbsp;'tick/ticking'&nbsp;'ticking'
+<br>
+&nbsp;&nbsp;&nbsp;sourceDesc&nbsp;=&nbsp;"It's&nbsp;ticking.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;descWithSource&nbsp;=&nbsp;"The&nbsp;ticking&nbsp;is&nbsp;coming&nbsp;from&nbsp;the&nbsp;bomb.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;descWithoutSource&nbsp;=&nbsp;"The&nbsp;ticking&nbsp;seems&nbsp;to&nbsp;be&nbsp;coming&nbsp;from&nbsp;the&nbsp;pile&nbsp;of&nbsp;rubble.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;hereWithSource&nbsp;=&nbsp;"The&nbsp;bomb&nbsp;is&nbsp;ticking.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;hereWithoutSource&nbsp;=&nbsp;"A&nbsp;ticking&nbsp;comes&nbsp;from&nbsp;the&nbsp;direction&nbsp;of&nbsp;the&nbsp;rubble.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;displaySchedule&nbsp;=&nbsp;[1]
+<br>
+&nbsp;&nbsp;&nbsp;<b>soundSize&nbsp;=&nbsp;small</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

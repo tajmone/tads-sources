@@ -1,0 +1,196 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>KeyedContainer</title><meta name="keywords" content="KeyedContainer,intiallyLocked,keyList,Key,lockOrUnlockAction,Button"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>KeyedContainer : <a href="lockablewithkey.htm">LockableWithKey</a>, <a href="openablecontainer.htm">OpenableContainer</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="indirectlockable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="lockablewithkey.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A KeyedContainer is a Container that can be opened and closed, and also locked and unlocked with a key. As an example we'll put a large, heavy trunk in mainCave:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">trunk&nbsp;:&nbsp;KeyedContainer,&nbsp;Heavy&nbsp;'large&nbsp;black&nbsp;trunk'&nbsp;'large&nbsp;black&nbsp;trunk'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;black&nbsp;trunk&nbsp;rests&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;initiallyLocked&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;keyList&nbsp;=&nbsp;[brassKey]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we have to set <b>initiallyLocked</b> to true if we want the trunk to start locked, and that <b>keyList</b> needs to be set to the list of keys that can lock and unlock this container. Clearly, we also need to define the key, which is entirely straightforward:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassKey&nbsp;:&nbsp;Key&nbsp;'small&nbsp;brass&nbsp;key'&nbsp;'brass&nbsp;key'&nbsp;@roundCave;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that even if it is listed in another objects' keyList, to function as a key an object must be of class Key and not simply Thing; the Key class contains a number of specializations, of which the most important is overriding verifyIobjLockWith() and verifyIobjUnlockWith() to make it logical (which implies possible) for a Key to be used as the indirect object of these commands.
+<br>
+
+<br>
+The trunk will obviously be more interesting if there's something inside when it's opened, so let's put the glass jar and the fake golden banana inside:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">fakeTreasure&nbsp;:&nbsp;Thing&nbsp;'huge&nbsp;great&nbsp;golden&nbsp;gold&nbsp;banana/treasure'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'golden&nbsp;banana'&nbsp;<b>@trunk</b>
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
+glassJar&nbsp;:&nbsp;BasicContainer&nbsp;'glass&nbsp;jar'&nbsp;'glass&nbsp;jar'&nbsp;<b>@trunk</b>
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You'll also need to delete fakeTreasure's initSpecialDesc, which is no longer appropriate.
+<br>
+
+<br>
+<a name="bentkey">Finding a key and opening a container with it is a pretty standard (one might almost say hackneyed) puzzle, so to make things more interesting we could have the brass key start out a bit bent, so that the player has to work out some way to straighten it before it'll work. In that case we want to give the player a fairly strong hint that it's nonetheless the right key. We can achieve all this by giving the brassKey a custom isBent property and checking for it in trunk's <b>lockOrUnlockAction</b> method (the action method of a LockWith command simply calls lockOrUnlockAction(true) while that of an UnlockWith command simply calls lockOrUnlockAction(nil) ).
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">trunk&nbsp;:&nbsp;KeyedContainer,&nbsp;Heavy&nbsp;'large&nbsp;black&nbsp;trunk'&nbsp;'large&nbsp;black&nbsp;trunk'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;black&nbsp;trunk&nbsp;rests&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;initiallyLocked&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;keyList&nbsp;=&nbsp;[brassKey]
+<br>
+&nbsp;&nbsp;<b>lockOrUnlockAction(lock)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gIobj.isBent)&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('{The&nbsp;iobj/he}&nbsp;fits&nbsp;the&nbsp;lock&nbsp;but&nbsp;won\'t&nbsp;quite&nbsp;turn&nbsp;in&nbsp;it.&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited(lock);
+<br>
+&nbsp;&nbsp;}</b>&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+brassKey&nbsp;:&nbsp;Key&nbsp;'small&nbsp;brass&nbsp;key'&nbsp;'brass&nbsp;key'&nbsp;@roundCave
+<br>
+&nbsp;&nbsp;<b>"It&lt;&lt;isBent&nbsp;?&nbsp;'&nbsp;looks&nbsp;slightly&nbsp;bent'&nbsp;:&nbsp;'\'s&nbsp;been&nbsp;straightened'&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;isBent&nbsp;=&nbsp;true</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We now need to find a way to straighten the brass key so that it'll open the trunk. Among things players might try is hitting the key with various objects, or trying to put in the flame of the torch, and we should probably provide suitable responses to such attempts or even make some of them work. But for now, we'll adopt a more exotic solution, a futuristic Autorectifier (a device that straightens any bent device placed in it), which will eventually be discovered aboard a space station (once we've constructed the space station and a means of getting there). We've already defined the basic cylinder that's the core of the device, here's the complete definition along with its components:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">autoRectifier&nbsp;:&nbsp;ComplexContainer&nbsp;'silver&nbsp;cylinder'&nbsp;'silver&nbsp;cylinder'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;about&nbsp;a&nbsp;foot&nbsp;high&nbsp;and&nbsp;five&nbsp;inches&nbsp;in&nbsp;diameter.&nbsp;A&nbsp;black&nbsp;ring&nbsp;surrounds
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;opening&nbsp;at&nbsp;one&nbsp;end.&nbsp;The&nbsp;only&nbsp;other&nbsp;feature&nbsp;of&nbsp;interest&nbsp;are&nbsp;a&nbsp;conspicuous
+<br>
+&nbsp;&nbsp;&nbsp;orange&nbsp;button&nbsp;and&nbsp;the&nbsp;manufacturer's&nbsp;name&nbsp;inscribed&nbsp;just&nbsp;below&nbsp;the&nbsp;ring.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;subContainer&nbsp;:&nbsp;ComplexComponent,&nbsp;SingleContainer&nbsp;{&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;3&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;3
+<br>
+;
+<br>
+
+<br>
++&nbsp;Component&nbsp;'black&nbsp;ring'&nbsp;'black&nbsp;ring'
+<br>
+&nbsp;&nbsp;"The&nbsp;black&nbsp;ring&nbsp;appears&nbsp;to&nbsp;made&nbsp;of&nbsp;some&nbsp;kind&nbsp;of&nbsp;rubbery&nbsp;plastic,&nbsp;but&nbsp;the&nbsp;material
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;unfamiliar&nbsp;to&nbsp;you,&nbsp;as&nbsp;is&nbsp;its&nbsp;function.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;Component&nbsp;'manufacturer\'s&nbsp;name'&nbsp;'manufacturer\'s&nbsp;name'
+<br>
+&nbsp;&nbsp;"According&nbsp;to&nbsp;the&nbsp;inscription&nbsp;this&nbsp;device&nbsp;was&nbsp;manufactured
+<br>
+&nbsp;&nbsp;&nbsp;by&nbsp;ALDEBARAN&nbsp;AUTORECTIFIERS&nbsp;INTERPLANETARY&nbsp;CORP."
+<br>
+;
+<br>
+
+<br>
++&nbsp;<a name="orangebutton">Button,&nbsp;Component&nbsp;'orange&nbsp;button'&nbsp;'orange&nbsp;button'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large&nbsp;round&nbsp;button&nbsp;on&nbsp;one&nbsp;side&nbsp;of&nbsp;the&nbsp;cylinder.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Push)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"When&nbsp;you&nbsp;push&nbsp;the&nbsp;button&nbsp;the&nbsp;cylinder&nbsp;starts&nbsp;to&nbsp;hum,&nbsp;and&nbsp;its&nbsp;interior&nbsp;glows
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;a&nbsp;light&nbsp;that&nbsp;starts&nbsp;orange,&nbsp;then&nbsp;changes&nbsp;to&nbsp;yellow,&nbsp;then&nbsp;finally
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;dazzling&nbsp;white,&nbsp;as&nbsp;the&nbsp;hum&nbsp;steadily&nbsp;rises&nbsp;in&nbsp;pitch.&nbsp;Suddenly&nbsp;the&nbsp;hum
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stops&nbsp;and&nbsp;the&nbsp;light&nbsp;inside&nbsp;goes&nbsp;out.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;autoRectifier.subContainer.contents)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cur.isBent)&nbsp;cur.isBent&nbsp;=&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note how we specify the contents of the cylinder in the button's actionDobjPush method, and that this method will set isBent to nil on anything placed in the cylinder (if it is not nil already); this will allow the device to be usable on any other bent objects we care to introduce into the game.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,79 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>GroupSublister</title></head><body>
+<table class=ban><tr><td align=left><span class=title>GroupSublister</span><span class=type>class</span><td align=right><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1340">1340</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Sub-lister for listing the contents of a group.  This lister shows a   simple list with no prefix or suffix, and otherwise uses the   characteristics of the parent lister.
+<p>
+<code>class
+<b>GroupSublister</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>GroupSublister</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#parentGroup">parentGroup</a>&nbsp;
+<a href="#parentLister">parentLister</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#construct">construct</a>&nbsp;
+<a href="#getTopLister">getTopLister</a>&nbsp;
+<a href="#propNotDefined">propNotDefined</a>&nbsp;
+<a href="#showListEmpty">showListEmpty</a>&nbsp;
+<a href="#showListItem">showListItem</a>&nbsp;
+<a href="#showListItemCounted">showListItemCounted</a>&nbsp;
+<a href="#showListPrefixTall">showListPrefixTall</a>&nbsp;
+<a href="#showListPrefixWide">showListPrefixWide</a>&nbsp;
+<a href="#showListSuffixWide">showListSuffixWide</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="parentGroup"></a>
+<table class=decl><tr><td><code>parentGroup</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1392">1392</a>]</table><div class=desc>my parent list group<p>
+</div>
+<a name="parentLister"></a>
+<table class=decl><tr><td><code>parentLister</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1389">1389</a>]</table><div class=desc>my parent lister<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (parentLister, parentGroup)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1341">1341</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getTopLister"></a>
+<table class=decl><tr><td><code>getTopLister ( )</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1386">1386</a>]</table><div class=desc>get the top-level lister - returns my parent's top-level lister<p>
+</div>
+<a name="propNotDefined"></a>
+<table class=decl><tr><td><code>propNotDefined (prop, [args])</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1380">1380</a>]</table><div class=desc>delegate everything we don't explicitly handle to our parent lister<p>
+</div>
+<a name="showListEmpty"></a>
+<table class=decl><tr><td><code>showListEmpty (pov, parent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1354">1354</a>]</table><div class=desc>show nothing when empty<p>
+</div>
+<a name="showListItem"></a>
+<table class=decl><tr><td><code>showListItem (obj, options, pov, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1361">1361</a>]</table><div class=desc>   Show an item in the list.  Rather than going through the parent   lister directly, we go through the parent group, so that it can   customize the display of items in the group. <p>
+</div>
+<a name="showListItemCounted"></a>
+<table class=decl><tr><td><code>showListItemCounted (lst, options, pov, infoTab)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1372">1372</a>]</table><div class=desc>   Show a counted item in the group.  As with showListItem, we ask   the parent group to do the work, so that it can customize the   display if desired. <p>
+</div>
+<a name="showListPrefixTall"></a>
+<table class=decl><tr><td><code>showListPrefixTall (itemCount, pov, parent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1351">1351</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="showListPrefixWide"></a>
+<table class=decl><tr><td><code>showListPrefixWide (itemCount, pov, parent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1349">1349</a>]</table><div class=desc>no prefix or suffix<p>
+</div>
+<a name="showListSuffixWide"></a>
+<table class=decl><tr><td><code>showListSuffixWide (itemCount, pov, parent)</code><td align=right><code><a href="../file/lister.t.html">lister.t</a>[<a href="../source/lister.t.html#1350">1350</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>DefinitePluralProd</title></head><body>
+<table class=ban><tr><td align=left><span class=title>DefinitePluralProd</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#2207">2207</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A plural phrase qualified by a definite article ("the books").  This   type of phrasing doesn't specify anything about the specific number of   items involved, except that they number more than one. <p>   In most cases, we take this to imply that all of the matching objects   are intended to be included, with one exception: when we have an   object that can serve as a collective for some of the other objects,   we match only the collective but not the other objects.  For example,   if we type "take marbles," and we have five marbles and a bag of   marbles that serves as a collective object for three of the five   marbles, we'll match the bag and two marbles not in the bag, but NOT   the marbles that are in the bag.  This is usually desirable when   there's a collective object, since it applies the command to the   object standing in for the group rather than applying the command one   by one to each of the individuals in the group.
+<p>
+<code>class
+<b>DefinitePluralProd</b> :  &nbsp; <a href="../object/PluralProd.html">PluralProd</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>DefinitePluralProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PluralProd.html">PluralProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NounPhraseProd.html">NounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>DefinitePluralProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/explicitDetPluralNounPhrase(definite).html">explicitDetPluralNounPhrase(definite)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/implicitDetPluralOnlyNounPhrase(main).html">implicitDetPluralOnlyNounPhrase(main)</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#filterForCollectives">filterForCollectives</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#resolveNouns">resolveNouns</a>&nbsp;
+</code><p>
+<p>Inherited from <code>PluralProd</code> :<br>
+<code>
+<a href="../object/PluralProd.html#basicPluralResolveNouns">basicPluralResolveNouns</a>&nbsp;
+<a href="../object/PluralProd.html#getVerifyKeepers">getVerifyKeepers</a>&nbsp;
+</code><p>
+<p>Inherited from <code>NounPhraseProd</code> :<br>
+<code>
+<a href="../object/NounPhraseProd.html#filterTruncations">filterTruncations</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="filterForCollectives"></a>
+<table class=decl><tr><td><code>filterForCollectives</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#2215">2215</a>]</table><div class=desc>prefer to keep collectives instead of their individuals<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="resolveNouns"></a>
+<table class=decl><tr><td><code>resolveNouns (resolver, results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#2208">2208</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

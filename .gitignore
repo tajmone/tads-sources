@@ -1,0 +1,82 @@
+#############################################
+#  TADS Source Code Repository:             #
+#  https://github.com/tajmone/tads-sources  #
+#############################################
+
+## ===============
+## Misc Work Files
+## ===============
+
+# Temporary/backup or removed files and folders:
+___*
+___*.*
+
+# Links and URLs
+*.lnk
+*.url
+
+## =============
+## Private Files
+## =============
+*.ppk
+
+## ============
+## Binary files
+## ============
+
+## Object files
+###############
+*.elf
+*.ko
+*.o
+*.obj
+
+## Static libraries
+###################
+*.a
+*.la
+*.lib
+*.lo
+
+## Shared objects
+#################
+*.dll
+*.dylib
+*.so
+*.so.*
+
+## Executables
+##############
+*.app
+*.exe
+*.out
+
+############################
+## COMMON IGNORE PATTERNS ##
+############################
+
+## Linux
+########
+*~
+.directory
+.fuse_hidden*
+.nfs*
+.Trash-*
+
+## macOS
+########
+*.DS_Store
+._*
+.AppleDouble
+.LSOverride
+Icon
+
+## Windows
+##########
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+.BIN/
+
+# EOF #

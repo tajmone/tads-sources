@@ -1,0 +1,126 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>PronounProd</title></head><body>
+<table class=ban><tr><td align=left><span class=title>PronounProd</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1398">1398</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Basic class for pronoun phrases.  The specific pronouns are   language-dependent; each instance should define its pronounType   property to an appropriate PronounXxx constant.
+<p>
+<code>class
+<b>PronounProd</b> :  &nbsp; <a href="../object/NounPhraseProd.html">NounPhraseProd</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>PronounProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NounPhraseProd.html">NounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>PronounProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HerProd.html">HerProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(her).html">completeNounPhraseWithoutAll(her)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HimProd.html">HimProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(him).html">completeNounPhraseWithoutAll(him)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ItProd.html">ItProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(it).html">completeNounPhraseWithoutAll(it)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MeProd.html">MeProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(me).html">completeNounPhraseWithoutAll(me)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PossessivePronounAdjProd.html">PossessivePronounAdjProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HerAdjProd.html">HerAdjProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveAdjPhrase(her).html">possessiveAdjPhrase(her)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HisAdjProd.html">HisAdjProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveAdjPhrase(his).html">possessiveAdjPhrase(his)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ItsAdjProd.html">ItsAdjProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveAdjPhrase(its).html">possessiveAdjPhrase(its)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MyAdjProd.html">MyAdjProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveAdjPhrase(my).html">possessiveAdjPhrase(my)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TheirAdjProd.html">TheirAdjProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveAdjPhrase(their).html">possessiveAdjPhrase(their)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/YourAdjProd.html">YourAdjProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveAdjPhrase(your).html">possessiveAdjPhrase(your)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PossessivePronounNounProd.html">PossessivePronounNounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HersNounProd.html">HersNounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveNounPhrase(hers).html">possessiveNounPhrase(hers)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HisNounProd.html">HisNounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveNounPhrase(his).html">possessiveNounPhrase(his)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ItsNounProd.html">ItsNounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveNounPhrase(its).html">possessiveNounPhrase(its)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MineNounProd.html">MineNounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveNounPhrase(mine).html">possessiveNounPhrase(mine)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TheirsNounProd.html">TheirsNounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveNounPhrase(theirs).html">possessiveNounPhrase(theirs)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/YoursNounProd.html">YoursNounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/possessiveNounPhrase(yours).html">possessiveNounPhrase(yours)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ReflexivePronounProd.html">ReflexivePronounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HerselfProd.html">HerselfProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(herself).html">completeNounPhraseWithoutAll(herself)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HimselfProd.html">HimselfProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(himself).html">completeNounPhraseWithoutAll(himself)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ItselfProd.html">ItselfProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(itself).html">completeNounPhraseWithoutAll(itself)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThemselvesProd.html">ThemselvesProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(themselves).html">completeNounPhraseWithoutAll(themselves)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThemProd.html">ThemProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(them).html">completeNounPhraseWithoutAll(them)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/YouProd.html">YouProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/completeNounPhraseWithoutAll(yourself).html">completeNounPhraseWithoutAll(yourself)</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#isPlural">isPlural</a>&nbsp;
+<a href="#isPossessive">isPossessive</a>&nbsp;
+<a href="#pronounType">pronounType</a>&nbsp;
+</code><p>
+<p>Inherited from <code>NounPhraseProd</code> :<br>
+<code>
+<a href="../object/NounPhraseProd.html#filterForCollectives">filterForCollectives</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#checkAnaphoricBinding">checkAnaphoricBinding</a>&nbsp;
+<a href="#resolveNouns">resolveNouns</a>&nbsp;
+</code><p>
+<p>Inherited from <code>NounPhraseProd</code> :<br>
+<code>
+<a href="../object/NounPhraseProd.html#filterTruncations">filterTruncations</a>&nbsp;
+<a href="../object/NounPhraseProd.html#getVerifyKeepers">getVerifyKeepers</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="isPlural"></a>
+<table class=decl><tr><td><code>isPlural</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1481">1481</a>]</table><div class=desc>   Is this pronoun a singular or a plural?  A pronoun like "it" or   "he" is singular, because it refers to a single antecedent; "them"   is plural.  Language modules that define their own custom pronoun   subclasses should override this as needed. <p>
+</div>
+<a name="isPossessive"></a>
+<table class=decl><tr><td><code>isPossessive</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1473">1473</a>]</table><div class=desc>is this a possessive usage?<p>
+</div>
+<a name="pronounType"></a>
+<table class=decl><tr><td><code>pronounType</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1470">1470</a>]</table><div class=desc>   our pronoun specifier - this must be set in each rule instance to   one of the PronounXxx constants to specify which pronoun to use   when resolving the pronoun phrase <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="checkAnaphoricBinding"></a>
+<table class=decl><tr><td><code>checkAnaphoricBinding (resolver, results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1492">1492</a>]</table><div class=desc>   Check for an anaphoric binding.  Returns a list (which is allowed   to be empty) if this can refer back to an earlier noun phrase in   the same command, nil if not.  By default, we consider pronouns   to be non-anaphoric, meaning they refer to something from a   previous sentence, not something in this same sentence.  In most   languages, pronouns don't refer to objects in other noun phrases   within the same predicate unless they're reflexive. <p>
+</div>
+<a name="resolveNouns"></a>
+<table class=decl><tr><td><code>resolveNouns (resolver, results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1399">1399</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

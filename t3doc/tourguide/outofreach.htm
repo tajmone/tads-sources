@@ -1,0 +1,177 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>OutOfReach</title><meta name="keywords" content="OutOfReach,canObjReachSelf,canObjReachContents,canReachFromInside,canReachSelfFromInside"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>OutOfReach : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="highnestedroom.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="booth.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The OutOfReach class is a mix-in class that can be used to put its contents, and optionally itself, out of reach of anyone outside it. Whether the OutOfReach object is itself out of reach is determined by its <b>canObjReachSelf(obj)</b> property, which returns true if obj (normally an actor) can reach the OutOfReach object and nil otherwise. Likewise <b>canObjReachContents(obj)</b> returns true if obj (again normally an actor) can reach the OutOfReach object's contents and nil otherwise. There are two corresponding methods for reaching things from inside the OutOfReach object: <b>canReachFromInside(obj, dest)</b> returns true if obj (again normally an actor) can reach dest, and nil otherwise; and <b>canReachSelfFromInside(obj)</b> returns true if the OutOfReach can be reached by an obj (once again normally an actor) located within the OutOfReach and nil otherwise. Note that canReachSelfFromInside(obj) is defined as <font face="Courier New" size="2" color="#000000">{&nbsp;return&nbsp;canReachFromInside(obj,&nbsp;self);&nbsp;}</font><font face="Arial" size="2" color="#000000">, which means that if you want an actor to be able to reach an OutOfReach from within itself you can do so either by overriding canReachSelfFromInside(obj)  to return true, or by overriding canReachFromInside(obj, dest) to return true when dest is self (amongst other things for which you might want it to return true).
+<br>
+
+<br>
+Again this is all very abstract, so let's turn our top bunk into a concrete example. Because it's already a HighNestedRoom we don't want the bunk also to be unreachable from the outside by virtue of being an OutOfReach, so we need its canObjReachSelf method to return true. It seems reasonable that an actor should be able to reach the contents of the top bunk when s/he's in a position to get onto it, so we want canObjReachContents to return true when obj is located in a valid staging location for the top bunk (if we're actually on the bunk we'll automatically be able to reach its contents). Finally,  while we're on the bunk we should be able to reach the bunk itself and also anything we could use as a staging platform to reach the bunk. At the same time we'll make looking under or taking the pillow worthwhile by revealing a vital piece of paper:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000"><b>OutOfReach,</b>&nbsp;HighNestedRoom,&nbsp;Bed,&nbsp;Fixture&nbsp;'top&nbsp;bunk&nbsp;bed*beds*bunks'&nbsp;'top&nbsp;bunk'&nbsp;@crewQuarters
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;top&nbsp;bunk&nbsp;is&nbsp;mounted&nbsp;high&nbsp;on&nbsp;the&nbsp;port&nbsp;side,&nbsp;above&nbsp;the&nbsp;bottom&nbsp;bunk.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;stagingLocations()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;new&nbsp;Vector(5);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;stagingPlatforms)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if((gActor.posture==standing&nbsp;&amp;&amp;&nbsp;gActor.isIn(cur))
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; || (gActor.isIn(self) &amp;&amp; cur.isIn(location)))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst.append(cur);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;lst.toList;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;stagingPlatforms&nbsp;=&nbsp;[cabinChair]
+<br>
+&nbsp;&nbsp;&nbsp;<b>canObjReachSelf(obj)&nbsp;{&nbsp;return&nbsp;true;&nbsp;}&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;canObjReachContents(obj)&nbsp;{&nbsp;return&nbsp;stagingLocations.indexOf(obj.location);&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;canReachFromInside(obj,&nbsp;dest)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;return&nbsp;dest==self&nbsp;||&nbsp;stagingPlatforms.indexOf(dest);&nbsp;}&nbsp;&nbsp;</b>
+<br>
+;
+<br>
+
+<br>
++&nbsp;<b>Underside</b>&nbsp;'plain&nbsp;white&nbsp;pillow'&nbsp;'pillow'
+<br>
+&nbsp;&nbsp;"It's&nbsp;just&nbsp;a&nbsp;plain&nbsp;white&nbsp;pillow.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;allowPutUnder&nbsp;=&nbsp;(!location.ofKind(Actor))
+<br>
+;
+<br>
+&nbsp;&nbsp;
+<br>
+++&nbsp;leftHalfPaper&nbsp;:&nbsp;Hidden,&nbsp;Readable&nbsp;'left&nbsp;half&nbsp;torn&nbsp;sheet&nbsp;yellow&nbsp;paper*sheets*papers'&nbsp;
+<br>
+&nbsp;&nbsp;'torn&nbsp;sheet&nbsp;of&nbsp;yellow&nbsp;paper'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;like&nbsp;the&nbsp;left&nbsp;hand&nbsp;half&nbsp;of&nbsp;a&nbsp;sheet&nbsp;of&nbsp;paper&nbsp;that's&nbsp;been&nbsp;torn&nbsp;in&nbsp;two.&nbsp;It
+<br>
+&nbsp;&nbsp;&nbsp;contains&nbsp;a&nbsp;list&nbsp;of&nbsp;letters&nbsp;and&nbsp;numbers.&nbsp;"
+<br>
+&nbsp;&nbsp;readDesc&nbsp;=&nbsp;"A0\nA2\nC9\nJ8\nM3\nQ7\nT5\n"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;mainExamine
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!described)&nbsp;name&nbsp;+=&nbsp;'&nbsp;(left&nbsp;half)';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The importance of this sheet of paper is obvious. There is no way the player character can be expected to find which of the various possible settings of the slider and dial in the Tardis will actually bring it to a useful destination, so we provide a list of the settings that do. Note that we only add ' (left half)' to the display name of this piece of paper once the player examines it to ascertain that it actually is the left half. While we're at it we might as well supply the other half - behind the picture we'll put in that cabinet aboard the Tardis:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">OpenableContainer,&nbsp;Fixture&nbsp;'storage&nbsp;cabinet'&nbsp;'storage&nbsp;cabinet'&nbsp;@tardisLivingQuarters
+<br>
+&nbsp;&nbsp;"The&nbsp;large&nbsp;cabinet&nbsp;is&nbsp;painted&nbsp;a&nbsp;cream&nbsp;colour&nbsp;and&nbsp;looks&nbsp;securely&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;smallPicture&nbsp;:&nbsp;RearSurface&nbsp;'small&nbsp;picture/photo/photograph'&nbsp;'small&nbsp;picture'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;faded&nbsp;photograph&nbsp;of&nbsp;an&nbsp;eccentrically-dressed&nbsp;man&nbsp;with&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;long&nbsp;scarf,&nbsp;in&nbsp;company&nbsp;with&nbsp;a&nbsp;smiling&nbsp;young&nbsp;woman&nbsp;with
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;long&nbsp;blonde&nbsp;hair.&nbsp;"
+<br>
+&nbsp;&nbsp;allowPutBehind&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+
+<br>
+++&nbsp;rightHalfPaper&nbsp;:&nbsp;Hidden,&nbsp;Readable&nbsp;'right&nbsp;half&nbsp;torn&nbsp;sheet&nbsp;yellow&nbsp;paper*sheets'&nbsp;
+<br>
+&nbsp;&nbsp;'torn&nbsp;sheet&nbsp;of&nbsp;yellow&nbsp;paper'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;like&nbsp;the&nbsp;right&nbsp;hand&nbsp;half&nbsp;of&nbsp;a&nbsp;sheet&nbsp;of&nbsp;paper&nbsp;that's&nbsp;been&nbsp;torn&nbsp;in&nbsp;two.&nbsp;It
+<br>
+&nbsp;&nbsp;&nbsp;contains&nbsp;a&nbsp;list&nbsp;of&nbsp;names.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>readDesc&nbsp;=&nbsp;"Ship&nbsp;Hold\nSpaceStation\nNew&nbsp;Mars\nJerusalem\n
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nivalis\nLondon\nOutside&nbsp;Caves\n"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;mainExamine
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!described)&nbsp;name&nbsp;+=&nbsp;'&nbsp;(right&nbsp;half)';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Meanwhile, there's one other thing we may want to customize on our OutOfReach. If (for example) you try to take the pillow without being on the top bunk or standing on the chair, you'll be told "The pillow is too far away." You may think that this makes it sound like it's a long way off, rather than fairly close at hand and just out of reach, so it may be you'd prefer "The pillow is out of reach. " This seems a better message altogether for the OutOfReach class, so we'll create a new library message and then modify OutOfReach to use it:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;playerActionMessages
+<br>
+&nbsp;outOfReachMsg(obj)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gMessageParams(obj);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'{The&nbsp;obj/he}&nbsp;{is}&nbsp;out&nbsp;of&nbsp;reach.&nbsp;';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;&nbsp;
+<br>
+
+<br>
+modify&nbsp;OutOfReach
+<br>
+&nbsp;&nbsp;cannotReachFromOutsideMsg(dest)&nbsp;{&nbsp;return&nbsp;&amp;outOfReachMsg;&nbsp;}
+<br>
+&nbsp;&nbsp;cannotReachFromInsideMsg(dest)&nbsp;{&nbsp;return&nbsp;&amp;outOfReachMsg;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<p>
+It's worth pointing out that we can do far more with the OutOfReach class than the single example here may suggest; for further details see Section 11.7 <q>Nested Rooms and OutOfReach</q> in <i>Learning TADS 3</i>.
+<br>
+</font></font>
+
+</body></html>

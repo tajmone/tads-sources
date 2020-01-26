@@ -1,0 +1,165 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>List</title></head><body>
+<table class=ban><tr><td align=left><span class=title>List</span><span class=type>class</span><td align=right><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#394">394</a>], <a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#322">322</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   The native list type
+<p><i>Modified in <a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#322">322</a>]:</i><br>
+   Modify the List intrinsic class to provide a to-symbol mapping
+<p>
+<code>intrinsic class
+<b>List</b> :  &nbsp; <a href="../object/Collection.html">Collection</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>List</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Collection.html">Collection</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Object1.html">Object</a></code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#append">append</a>&nbsp;
+<a href="#appendUnique">appendUnique</a>&nbsp;
+<a href="#car">car</a>&nbsp;
+<a href="#cdr">cdr</a>&nbsp;
+<a href="#countOf">countOf</a>&nbsp;
+<a href="#countWhich">countWhich</a>&nbsp;
+<a href="#forEach">forEach</a>&nbsp;
+<a href="#forEachAssoc">forEachAssoc</a>&nbsp;
+<a href="#getUnique">getUnique</a>&nbsp;
+<a href="#indexOf">indexOf</a>&nbsp;
+<a href="#indexWhich">indexWhich</a>&nbsp;
+<a href="#insertAt">insertAt</a>&nbsp;
+<a href="#intersect">intersect</a>&nbsp;
+<a href="#lastIndexOf">lastIndexOf</a>&nbsp;
+<a href="#lastIndexWhich">lastIndexWhich</a>&nbsp;
+<a href="#lastValWhich">lastValWhich</a>&nbsp;
+<a href="#length">length</a>&nbsp;
+<a href="#mapAll">mapAll</a>&nbsp;
+<a href="#prepend">prepend</a>&nbsp;
+<a href="#removeElementAt">removeElementAt</a>&nbsp;
+<a href="#removeRange">removeRange</a>&nbsp;
+<a href="#sort">sort</a>&nbsp;
+<a href="#sublist">sublist</a>&nbsp;
+<a href="#subset">subset</a>&nbsp;
+<a href="#valToSymbol">valToSymbol</a>&nbsp;
+<a href="#valWhich">valWhich</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Collection</code> :<br>
+<code>
+<a href="../object/Collection.html#createIterator">createIterator</a>&nbsp;
+<a href="../object/Collection.html#createLiveIterator">createLiveIterator</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Object</code> :<br>
+<code>
+<a href="../object/Object1.html#getPropList">getPropList</a>&nbsp;
+<a href="../object/Object1.html#getPropParams">getPropParams</a>&nbsp;
+<a href="../object/Object1.html#getSuperclassList">getSuperclassList</a>&nbsp;
+<a href="../object/Object1.html#isClass">isClass</a>&nbsp;
+<a href="../object/Object1.html#isTransient">isTransient</a>&nbsp;
+<a href="../object/Object1.html#ofKind">ofKind</a>&nbsp;
+<a href="../object/Object1.html#propDefined">propDefined</a>&nbsp;
+<a href="../object/Object1.html#propInherited">propInherited</a>&nbsp;
+<a href="../object/Object1.html#propType">propType</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="append"></a>
+<table class=decl><tr><td><code>append (val)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#499">499</a>]</table><div class=desc>   append an element - this works almost exactly like the   concatation operator ('+'), but if the argument is a list, this   simply adds the list as a new element, rather than adding each   element of the list as a separate element <p>
+</div>
+<a name="appendUnique"></a>
+<table class=decl><tr><td><code>appendUnique (lst)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#491">491</a>]</table><div class=desc>   append the elements of the list 'lst' to the elements of this   list, then remove repeated elements in the result; returns a new   list with the unique elements of the combination of the two lists <p>
+</div>
+<a name="car"></a>
+<table class=decl><tr><td><code>car ( )</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#430">430</a>]</table><div class=desc>car/cdr - head/tail of list<p>
+</div>
+<a name="cdr"></a>
+<table class=decl><tr><td><code>cdr ( )</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#431">431</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="countOf"></a>
+<table class=decl><tr><td><code>countOf (val)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#478">478</a>]</table><div class=desc>count the number of elements with the given value<p>
+</div>
+<a name="countWhich"></a>
+<table class=decl><tr><td><code>countWhich (cond)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#481">481</a>]</table><div class=desc>count the number of elements for which the callback returns true<p>
+</div>
+<a name="forEach"></a>
+<table class=decl><tr><td><code>forEach (func)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#448">448</a>]</table><div class=desc>   Invoke the callback func(val) on each element, in order from first   to last.  No return value. <p>
+</div>
+<a name="forEachAssoc"></a>
+<table class=decl><tr><td><code>forEachAssoc (func)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#557">557</a>]</table><div class=desc>   Invoke the callback func(index, val) on each element, in order from   first to last.  No return value. <p>
+</div>
+<a name="getUnique"></a>
+<table class=decl><tr><td><code>getUnique ( )</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#484">484</a>]</table><div class=desc>get a new list consisting of the unique elements of this list<p>
+</div>
+<a name="indexOf"></a>
+<table class=decl><tr><td><code>indexOf (val)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#427">427</a>]</table><div class=desc>get the index of the first match for the given value<p>
+</div>
+<a name="indexWhich"></a>
+<table class=decl><tr><td><code>indexWhich (cond)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#442">442</a>]</table><div class=desc>   Find the first element for which the given condition is true, and   return the index of the element.  Applies the callback function   (which encodes the condition to evaluate) to each element in   turn, starting with the first.  For each element, if the callback   returns nil, proceeds to the next element; otherwise, stops and   returns the index of the element.  If the callback never returns   true for any element, we'll return nil. <p>
+</div>
+<a name="insertAt"></a>
+<table class=decl><tr><td><code>insertAt (startingIndex, val, ...)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#535">535</a>]</table><div class=desc>   Insert one or more elements at the given index.  If the index is 1,   the elements will be inserted before the first existing element.   If the index is one higher than the number of elements, the   elements will be inserted after all existing elements. <p>   Note that a list value argument will simply be inserted as a single   element. <p>   Returns a new list with the value(s) inserted. <p>
+</div>
+<a name="intersect"></a>
+<table class=decl><tr><td><code>intersect (other)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#424">424</a>]</table><div class=desc>intersect with another list<p>
+</div>
+<a name="lastIndexOf"></a>
+<table class=decl><tr><td><code>lastIndexOf (val)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#458">458</a>]</table><div class=desc>find the last element with the given value, and return its index<p>
+</div>
+<a name="lastIndexWhich"></a>
+<table class=decl><tr><td><code>lastIndexWhich (cond)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#469">469</a>]</table><div class=desc>   Find the last element for which the condition is true, and return   the index of the element.  Applies the callback to each element   in turn, starting with the last element and working backwards.   For each element, if the callback returns nil, proceeds to the   previous element; otherwise, stops and returns the index of the   element.  If the callback never returns true for any element,   we'll return nil. <p>
+</div>
+<a name="lastValWhich"></a>
+<table class=decl><tr><td><code>lastValWhich (cond)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#475">475</a>]</table><div class=desc>   Find the last element for which the condition is true, and return   the value of the element <p>
+</div>
+<a name="length"></a>
+<table class=decl><tr><td><code>length ( )</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#418">418</a>]</table><div class=desc>get the number of elements in the list<p>
+</div>
+<a name="mapAll"></a>
+<table class=decl><tr><td><code>mapAll (func)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#415">415</a>]</table><div class=desc>   Apply the callback function to each element of this list, and   return a new list consisting of the results.  Effectively maps   the list to a new list using the given function.  Suppose the   original list is <p>   [x, y, z] <p>   Then the result list is <p>   [func(x), func(y), func(z)] <p>
+</div>
+<a name="prepend"></a>
+<table class=decl><tr><td><code>prepend (val)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#522">522</a>]</table><div class=desc>   Prepend an element - this inserts the value before the first   existing element. <p>
+</div>
+<a name="removeElementAt"></a>
+<table class=decl><tr><td><code>removeElementAt (index)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#542">542</a>]</table><div class=desc>   Delete the element at the given index, reducing the length of the   list by one element.  Returns a new list with the given element   removed. <p>
+</div>
+<a name="removeRange"></a>
+<table class=decl><tr><td><code>removeRange (startingIndex, endingIndex)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#551">551</a>]</table><div class=desc>   Delete the range of elements starting at startingIndex and ending   at endingIndex.  The elements at the ends of the range are included   in the deletion.  If startingIndex == endingIndex, only one element   is removed.  Returns a new list with the given element range   removed. <p>
+</div>
+<a name="sort"></a>
+<table class=decl><tr><td><code>sort (descending, ?, comparisonFunction, ?)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#516">516</a>]</table><div class=desc>   Sort the list, returning a new list.  If the 'descending' flag is   provided and is not nil, we'll sort the list in descending order   rather than ascending order. <p>   If the 'comparisonFunction' argument is provided, it must be a   callback function; the callback takes two arguments, and returns   an integer less than zero if the first argument value is less   than the second, zero if they're equal, and an integer greater   than zero if the first is greater than the second.  If no   'comparisonFunction' argument is provided, or it's provided and   its value is nil, we'll simply compare the list elements as   ordinary values.  The comparison function can be provided for   caller-defined orderings, such as ordering a set of objects. <p>
+</div>
+<a name="sublist"></a>
+<table class=decl><tr><td><code>sublist (start, len, ?)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#421">421</a>]</table><div class=desc>extract a sublist<p>
+</div>
+<a name="subset"></a>
+<table class=decl><tr><td><code>subset (func)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#401">401</a>]</table><div class=desc>   Select a subset of the list: returns a new list consisting only   of the elements for which the callback function 'func' returns   true. <p>
+</div>
+<a name="valToSymbol"></a>
+<table class=decl><tr><td><code>valToSymbol ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#323">323</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="valWhich"></a>
+<table class=decl><tr><td><code>valWhich (cond)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#455">455</a>]</table><div class=desc>   Find the first element for which the given condition is true, and   return the value of the element.  Returns nil if no item   satisfies the condition. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 9/13/2007 from TADS version 3.0.15.2</div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>String</title></head><body>
+<table class=ban><tr><td align=left><span class=title>String</span><span class=type>class</span><td align=right><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#307">307</a>], <a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#236">236</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   The native string type.
+<p><i>Modified in <a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#236">236</a>]:</i><br>
+   Modify the String intrinsic class to provide a to-symbol mapping
+<p>
+<code>intrinsic class
+<b>String</b> :  &nbsp; <a href="../object/Object1.html">Object</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>String</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Object1.html">Object</a></code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#endsWith">endsWith</a>&nbsp;
+<a href="#find">find</a>&nbsp;
+<a href="#findReplace">findReplace</a>&nbsp;
+<a href="#htmlify">htmlify</a>&nbsp;
+<a href="#length">length</a>&nbsp;
+<a href="#mapToByteArray">mapToByteArray</a>&nbsp;
+<a href="#startsWith">startsWith</a>&nbsp;
+<a href="#substr">substr</a>&nbsp;
+<a href="#toLower">toLower</a>&nbsp;
+<a href="#toUnicode">toUnicode</a>&nbsp;
+<a href="#toUpper">toUpper</a>&nbsp;
+<a href="#valToSymbol">valToSymbol</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Object</code> :<br>
+<code>
+<a href="../object/Object1.html#getPropList">getPropList</a>&nbsp;
+<a href="../object/Object1.html#getPropParams">getPropParams</a>&nbsp;
+<a href="../object/Object1.html#getSuperclassList">getSuperclassList</a>&nbsp;
+<a href="../object/Object1.html#isClass">isClass</a>&nbsp;
+<a href="../object/Object1.html#isTransient">isTransient</a>&nbsp;
+<a href="../object/Object1.html#ofKind">ofKind</a>&nbsp;
+<a href="../object/Object1.html#propDefined">propDefined</a>&nbsp;
+<a href="../object/Object1.html#propInherited">propInherited</a>&nbsp;
+<a href="../object/Object1.html#propType">propType</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="endsWith"></a>
+<table class=decl><tr><td><code>endsWith (str)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#337">337</a>]</table><div class=desc>determine if we end with the given string<p>
+</div>
+<a name="find"></a>
+<table class=decl><tr><td><code>find (str, index, ?)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#322">322</a>]</table><div class=desc>find a substring<p>
+</div>
+<a name="findReplace"></a>
+<table class=decl><tr><td><code>findReplace (origStr, newStr, flags, index, ?)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#352">352</a>]</table><div class=desc>   Replace one occurrence or all occurrences of the given substring   with the given new string. <p>
+</div>
+<a name="htmlify"></a>
+<table class=decl><tr><td><code>htmlify (flags, ?)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#331">331</a>]</table><div class=desc>htmlify a string<p>
+</div>
+<a name="length"></a>
+<table class=decl><tr><td><code>length ( )</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#310">310</a>]</table><div class=desc>get the length of the string<p>
+</div>
+<a name="mapToByteArray"></a>
+<table class=decl><tr><td><code>mapToByteArray (charset)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#346">346</a>]</table><div class=desc>   Map to a byte array, converting to the given character set.   'charset' must be an object of intrinsic class CharacterSet; the   characters in the string will be mapped from the internal Unicode   representation to the appropriate byte representation in the given   character set. <p>
+</div>
+<a name="startsWith"></a>
+<table class=decl><tr><td><code>startsWith (str)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#334">334</a>]</table><div class=desc>determine if we start with the given string<p>
+</div>
+<a name="substr"></a>
+<table class=decl><tr><td><code>substr (start, len, ?)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#313">313</a>]</table><div class=desc>extract a substring<p>
+</div>
+<a name="toLower"></a>
+<table class=decl><tr><td><code>toLower ( )</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#319">319</a>]</table><div class=desc>convert to lower case<p>
+</div>
+<a name="toUnicode"></a>
+<table class=decl><tr><td><code>toUnicode (idx, ?)</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#328">328</a>]</table><div class=desc>   convert to a list of Unicode character codes, or get the Unicode   character code for the single character at the given index <p>
+</div>
+<a name="toUpper"></a>
+<table class=decl><tr><td><code>toUpper ( )</code><td align=right><code><a href="../file/systype.h.html">systype.h</a>[<a href="../source/systype.h.html#316">316</a>]</table><div class=desc>convert to upper case<p>
+</div>
+<a name="valToSymbol"></a>
+<table class=decl><tr><td><code>valToSymbol ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#237">237</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 9/13/2007 from TADS version 3.0.15.2</div>
+</body>
+</html>

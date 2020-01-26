@@ -1,0 +1,154 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>GuidedTourState</title><meta name="keywords" content="GuidedTourState,escortActor,escortDest,escortStateClass,stateAfterEscort,TourGuide"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>GuidedTourState : <a href="accompanyingstate.htm">AccompanyingState</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="accompanyingintravelstate.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="guidedintravelstate.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">There may be occasions when you want an NPC to take the lead and have the player character invited to follow him or her. First, we'll give a brief description of how it works.
+<br>
+
+<br>
+According to the comments in the library code:
+<br>
+
+<br>
+<i>Guided Tour state. This provides a simple way of defining a "guided tour," which is a series of locations to which we try to guide the player character. We don't force the player character to travel as specified; we merely try to lead the player. The actual travel is up to the player.
+<br>
+
+<br>
+Here's how this works. For each location on the guided tour, create one of these state objects. Set escortDest to the travel connector to which we're attempting to guide the player character from the current location. Set stateAfterEscort to the state object for the next location on the tour. Set stateDesc to something indicating that we're trying to show the player to the next stop - something along the lines of "Bob waits for you by the door." Set arrivingWithDesc to a message indicating that we just showed up in the current location and are ready to show the player to the next - "Bob goes to the door and waits for you to follow him." </i>
+<br>
+
+<br>
+The significant new properties defined on GuidedTourState are:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>escortActor</b> - the actor being escorted - this is usually the player character
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>escortDest</b> - the travel connector we're trying to show the player character into
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>escortStateClass</b> - The class we use for our actor state during the escort travel. By default, we use the basic guided-tour accompanying travel state class (<a href="guidedintravelstate.htm">GuidedInTravelState</a>), but games will probably want to use a customized subclass of this basic class in most cases. The main reason to use a custom subclass is to provide customized messages to describe the departure of the escorting actor.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>stateAfterEscort</b> - The next state for our actor to assume after the travel. This should be overridden and set to the state object for the next stop on the tour. </font><font face="Times New Roman" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Times New Roman" size="3" color="#000000"></font></td><td></td></tr></table><font face="Times New Roman" size="3" color="#000000"></font><font face="Arial" size="2" color="#000000">
+<br>
+Now we'll give a very simple example. Sarah has lost her ring, and if the player character asks her about it enough times, she'll lead him back inside the cave to look for it, decide she can't find it, and then lead him back out to the lakeside again. We can define a series of GuidedTourStates (which must obviously be located in Sarah), that define her leading the playing character on a brief and futile search for her lost ring:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;sarahGuide1&nbsp;:&nbsp;GuidedTourState
+<br>
+&nbsp;&nbsp;stateAfterEscort&nbsp;=&nbsp;sarahGuide2
+<br>
+&nbsp;&nbsp;escortDest&nbsp;=&nbsp;lakeDoor2
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;waiting&nbsp;for&nbsp;you&nbsp;by&nbsp;the&nbsp;door.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{&nbsp;inherited;&nbsp;stateDesc;}
+<br>
+;
+<br>
+
+<br>
++&nbsp;sarahGuide2&nbsp;:&nbsp;GuidedTourState
+<br>
+&nbsp;&nbsp;stateAfterEscort&nbsp;=&nbsp;sarahGuide3
+<br>
+&nbsp;&nbsp;escortDest&nbsp;=&nbsp;mainCave
+<br>
+&nbsp;&nbsp;arrivingWithDesc&nbsp;=&nbsp;"{The&nbsp;sarah/she}&nbsp;walks&nbsp;round&nbsp;the&nbsp;cave,&nbsp;scanning&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;floor&nbsp;and&nbsp;the&nbsp;furniture&nbsp;with&nbsp;a&nbsp;deep&nbsp;frown&nbsp;on&nbsp;her&nbsp;face,&nbsp;then&nbsp;shakes
+<br>
+&nbsp;&nbsp;&nbsp;her&nbsp;head&nbsp;and&nbsp;walks&nbsp;back&nbsp;over&nbsp;to&nbsp;the&nbsp;door.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;I&nbsp;can't&nbsp;see&nbsp;it&nbsp;here,&lt;/q&gt;&nbsp;she&nbsp;says,&nbsp;&lt;q&gt;Perhaps&nbsp;it's&nbsp;in&nbsp;that
+<br>
+&nbsp;&nbsp;&nbsp;big&nbsp;cave&nbsp;over&nbsp;there.&lt;/q&gt;&nbsp;She&nbsp;starts&nbsp;walking&nbsp;north,&nbsp;then&nbsp;stops
+<br>
+&nbsp;&nbsp;&nbsp;and&nbsp;turns,&nbsp;waiting&nbsp;for&nbsp;you&nbsp;to&nbsp;follow.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;standing&nbsp;looking&nbsp;at&nbsp;you,&nbsp;waiting&nbsp;for&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;follow&nbsp;her&nbsp;into&nbsp;the&nbsp;large&nbsp;cave&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{&nbsp;inherited;&nbsp;stateDesc;}&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;sarahGuide3&nbsp;:&nbsp;GuidedTourState
+<br>
+&nbsp;&nbsp;stateAfterEscort&nbsp;=&nbsp;sarahGuide4
+<br>
+&nbsp;&nbsp;escortDest&nbsp;=&nbsp;anotherCave
+<br>
+&nbsp;&nbsp;arrivingWithDesc&nbsp;=&nbsp;"{The&nbsp;sarah/she}&nbsp;hunts&nbsp;round&nbsp;the&nbsp;cave,&nbsp;peering&nbsp;at
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;torch&nbsp;on&nbsp;the&nbsp;wall,&nbsp;the&nbsp;trunk&nbsp;on&nbsp;the&nbsp;floor,&nbsp;and&nbsp;the&nbsp;various
+<br>
+&nbsp;&nbsp;&nbsp;ways&nbsp;out.&nbsp;Then&nbsp;she&nbsp;lets&nbsp;out&nbsp;a&nbsp;heavy&nbsp;sigh&nbsp;and&nbsp;declares,&nbsp;&lt;q&gt;Oh,&nbsp;it's
+<br>
+&nbsp;&nbsp;&nbsp;&lt;i&gt;hopeless&lt;/i&gt;!&nbsp;How&nbsp;can&nbsp;I&nbsp;find&nbsp;such&nbsp;a&nbsp;small&nbsp;thing&nbsp;here?&nbsp;Anyway,
+<br>
+&nbsp;&nbsp;&nbsp;I'm&nbsp;sure&nbsp;he&nbsp;ran&nbsp;outside&nbsp;with&nbsp;it.&nbsp;Let's&nbsp;go&nbsp;back&nbsp;out&nbsp;by&nbsp;the&nbsp;lake.&lt;/q&gt;\b
+<br>
+&nbsp;&nbsp;&nbsp;So&nbsp;saying,&nbsp;she&nbsp;walks&nbsp;back&nbsp;towards&nbsp;the&nbsp;cave&nbsp;to&nbsp;the&nbsp;south,&nbsp;then&nbsp;stops,
+<br>
+&nbsp;&nbsp;&nbsp;waiting&nbsp;for&nbsp;you&nbsp;to&nbsp;follow.&lt;.p&gt;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;waiting&nbsp;for&nbsp;you&nbsp;by&nbsp;the&nbsp;opening&nbsp;to&nbsp;the&nbsp;cave&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;south.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{inherited;&nbsp;stateDesc;&nbsp;}
+<br>
+;
+<br>
+
+<br>
++&nbsp;sarahGuide4&nbsp;:&nbsp;GuidedTourState
+<br>
+&nbsp;&nbsp;stateAfterEscort&nbsp;=&nbsp;sarahTalking
+<br>
+&nbsp;&nbsp;escortDest&nbsp;=&nbsp;lakeDoor
+<br>
+&nbsp;&nbsp;arrivingWithDesc&nbsp;=&nbsp;"{The&nbsp;sarah/she}&nbsp;walks&nbsp;briskly&nbsp;over&nbsp;to&nbsp;the&nbsp;door,
+<br>
+&nbsp;&nbsp;&nbsp;then&nbsp;stops&nbsp;to&nbsp;wait&nbsp;for&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;waiting&nbsp;for&nbsp;you&nbsp;by&nbsp;the&nbsp;door.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;{inherited;&nbsp;stateDesc;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's one other refinement we can add her, and that's to add <b>TourGuide</b> to Sarah's class list, ahead of Person:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">sarah&nbsp;:&nbsp;<b>TourGuide</b>,&nbsp;Person&nbsp;'attractive&nbsp;young&nbsp;woman/brunette'&nbsp;'young&nbsp;woman'&nbsp;@lakeRoom
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This will allow the player to type FOLLOW SARAH or FOLLOW WOMAN and have her lead the way while she's in one of her GuidedTourStates.
+<br>
+
+<br>
+There's only one problem: so far we've provided no means for her to <i>get</i> into these GuidedTourStates. Since in this case it will require a mechanism we haven't yet come to, we'll have to wait until we do, which will be when we start defining some <a href="asktopic.htm">AskTopics</a> for Sarah.
+<br>
+</font></font>
+
+</body></html>

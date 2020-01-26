@@ -1,0 +1,961 @@
+/* $Header: d:/cvsroot/tads/html/win32/htmlcmn.rc,v 1.1 1999/07/11 00:46:46 MJRoberts Exp $ */
+
+/* Copyright (c) 1997, 1999 by Michael J. Roberts.  All Rights Reserved. */
+
+/* Chinese Translation by Ruochen Zhang, 2008 */
+
+/*
+Name
+  htmltads.rc - HTML TADS common resources
+Function
+  Defines resources common to the HTML TADS Interpreter and Debugger
+Notes
+
+Modified
+  10/26/97 MJRoberts  - Creation
+*/
+
+
+/*
+ *   include resource ID definitions
+ */
+#include <Windows.h>
+#include "htmlres.h"
+
+/*
+ * Ruochen Zhang:
+ *  This file defines Simplified Chinese resources
+ */
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+/*
+ *   include the TADS external strings
+ */
+#include "html_tads_strs_chs.rc"
+
+
+/*
+ * Ruochen Zhang:
+ *  The icons remains the same as in the English version.
+ *  So I removed them.
+ *  Is it OK?
+ */
+
+
+/* ------------------------------------------------------------------------ */
+/*
+ *  menus
+ */
+
+IDR_EDIT_POPUP_MENU MENU DISCARDABLE
+BEGIN
+    POPUP "±à¼­"
+    BEGIN
+        MENUITEM "³·ÏúÊäÈë",                    ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "¼ôÇÐ",                        ID_EDIT_CUT
+        MENUITEM "¸´ÖÆ",                        ID_EDIT_COPY
+        MENUITEM "Õ³Ìù",                        ID_EDIT_PASTE
+        MENUITEM "É¾³ý",                        ID_EDIT_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "È«Ñ¡",                        ID_EDIT_SELECTALL
+        MENUITEM "Ñ¡ÔñÃüÁîÐÐ",                  ID_EDIT_SELECTLINE
+        MENUITEM SEPARATOR
+        MENUITEM "²éÕÒÎÄ±¾..."                  ID_EDIT_FIND
+        MENUITEM "²éÕÒÏÂÒ»¸ö"                   ID_EDIT_FINDNEXT
+    END
+END
+
+IDR_MAINWIN_POPUP MENUEX DISCARDABLE
+BEGIN
+    POPUP "×´Ì¬À¸"
+    BEGIN
+        MENUITEM "¼ÆÊ±Æ÷ÔÝÍ£",                  ID_TIMER_PAUSE
+        MENUITEM "¼ÆÊ±Æ÷ÇåÁã",                  ID_TIMER_RESET
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "ÏÔÊ¾¼ÆÊ±Æ÷",                  ID_VIEW_TIMER,, MFS_CHECKED
+        POPUP "¼ÆÊ±Æ÷¸ñÊ½"
+        BEGIN
+            MENUITEM "Ê±:·Ö:Ãë",                ID_VIEW_TIMER_HHMMSS,
+                                                MFT_RADIOCHECK, MFS_CHECKED
+            MENUITEM "Ê±:·Ö",                   ID_VIEW_TIMER_HHMM,
+                                                MFT_RADIOCHECK
+        END
+    END
+END
+
+
+IDR_MAIN_MENU MENUEX DISCARDABLE
+BEGIN
+    POPUP "ÎÄ¼þ(&F)"
+    BEGIN
+        MENUITEM "´ò¿ªÐÂÓÎÏ·(&O)...\tCtrl+O",   ID_FILE_LOADGAME
+//      MENUITEM "²é¿´ÓÎÏ·¹ý³Ì¼ÇÂ¼(&T)...",     ID_FILE_VIEW_SCRIPT
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "±£´æ½ø¶È(&S)...\tCtrl+S",     ID_FILE_SAVEGAME
+        MENUITEM "¶ÁÈ¡½ø¶È(&R)...\tCtrl+R",     ID_FILE_RESTOREGAME
+        MENUITEM "Àë¿ªÓÎÏ·(&Q)\tCtrl+Q",        ID_FILE_QUIT
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Ã»ÓÐ×î½üµÄÓÎÏ·¼ÇÂ¼",          ID_FILE_RECENT_NONE
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "ÍË³ö(&X)",                    ID_FILE_EXIT
+
+    END
+    POPUP "±à¼­(&E)"
+    BEGIN
+        MENUITEM "³·ÏúÊäÈë(&U)\tCtrl+Z",        ID_EDIT_UNDO
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "¼ôÇÐ(&T)\tCtrl+X",            ID_EDIT_CUT
+        MENUITEM "¸´ÖÆ(&C)\tCtrl+C",            ID_EDIT_COPY
+        MENUITEM "Õ³Ìù(&P)\tCtrl+V",            ID_EDIT_PASTE
+        MENUITEM "É¾³ý(&D)",                    ID_EDIT_DELETE
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Ñ¡ÔñÃüÁîÐÐ(&M)",              ID_EDIT_SELECTLINE
+        MENUITEM "È«Ñ¡(&A)\tCtrl+A",            ID_EDIT_SELECTALL
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "ÔÚµ±Ç°Ò³ÉÏ²éÕÒÎÄ±¾(&F)...\tCtrl+F", ID_EDIT_FIND
+        MENUITEM "²éÕÒÏÂÒ»¸ö(&N)\tF3",          ID_EDIT_FINDNEXT
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "Ñ¡Ïî(&O)",                    ID_VIEW_OPTIONS
+    END
+    POPUP "²é¿´(&V)"
+    BEGIN
+        MENUITEM "ÏÔÊ¾¹¤¾ßÀ¸(&B)",              ID_VIEW_TOOLBAR,, MFS_CHECKED
+        POPUP    "¼ÆÊ±Æ÷(&R)"
+        BEGIN
+            MENUITEM "¼ÆÊ±Æ÷ÔÝÍ£(&P)",          ID_TIMER_PAUSE
+            MENUITEM "¼ÆÊ±Æ÷ÇåÁã(&R)",          ID_TIMER_RESET
+            MENUITEM "",,MFT_SEPARATOR
+            MENUITEM "ÏÔÊ¾¼ÆÊ±Æ÷(&S)",          ID_VIEW_TIMER,, MFS_CHECKED
+            POPUP "¼ÆÊ±Æ÷¸ñÊ½(&F)"
+            BEGIN
+                MENUITEM "Ê±:·Ö:Ãë(&S)",ID_VIEW_TIMER_HHMMSS,
+                                                MFT_RADIOCHECK
+                MENUITEM "Ê±:·Ö(&M)",      ID_VIEW_TIMER_HHMM,
+                                                MFT_RADIOCHECK
+            END
+        END
+        MENUITEM "",,MFT_SEPARATOR
+        POPUP "ÎÄ×Ö´óÐ¡(&T)"
+        BEGIN
+            MENUITEM "×îÐ¡(&A)",                ID_VIEW_FONTS_SMALLEST,
+                                                MFT_RADIOCHECK
+            MENUITEM "½ÏÐ¡(&S)",                ID_VIEW_FONTS_SMALLER,
+                                                MFT_RADIOCHECK
+            MENUITEM "ÆÕÍ¨(&M)",                ID_VIEW_FONTS_MEDIUM,
+                                                MFT_RADIOCHECK
+            MENUITEM "½Ï´ó(&L)",                ID_VIEW_FONTS_LARGER,
+                                                MFT_RADIOCHECK
+            MENUITEM "×î´ó(&R)",                ID_VIEW_FONTS_LARGEST,
+                                                MFT_RADIOCHECK
+        END
+        MENUITEM "¾²Òô(&M)",                    ID_MUTE_SOUND
+    END
+    POPUP "Ö÷Ìâ(&T)"
+    BEGIN
+        /*
+         *  note that we build the entire Themes menu dynamically; we just
+         *  need a placeholder that looks like a profile ID to key off of
+         */
+        MENUITEM "Õ¼Î»·û",                      ID_PROFILE_FIRST
+    END
+    POPUP "Ìø×ª(&G)"
+    BEGIN
+        MENUITEM "ÉÏÒ»Ò³(&P)\tAlt+<",           ID_GO_PREVIOUS
+        MENUITEM "ÏÂÒ»Ò³(&N)\tAlt+>",           ID_GO_NEXT
+#ifdef HTMLTADS_GAME_CHEST
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "ÓÎÏ·±¦ºÐ(&C)",                ID_GO_TO_GAME_CHEST
+#endif
+    END
+    POPUP "°ïÖú(&H)"
+    BEGIN
+        MENUITEM "HTML TADS°ïÖú(&H)",           ID_HELP_CONTENTS
+        MENUITEM "",,MFT_SEPARATOR
+        MENUITEM "¹ØÓÚHTML TADS(&A)...",        ID_HELP_ABOUT
+        MENUITEM "¹ØÓÚ±¾ÓÎÏ·(&G)...",           ID_HELP_ABOUT_GAME
+    END
+END
+
+/*
+ *   menu for the debug log window
+ */
+IDR_DEBUGWIN_MENU MENU DISCARDABLE
+BEGIN
+    POPUP "ÎÄ¼þ(&F)"
+    BEGIN
+        MENUITEM "Òþ²Ø´°¿Ú(&H)",                ID_FILE_HIDE
+    END
+    POPUP "±à¼­(&E)"
+    BEGIN
+        MENUITEM "¸´ÖÆ(&C)\tCtrl+C",            ID_EDIT_COPY
+        MENUITEM SEPARATOR
+        MENUITEM "È«Ñ¡(&A)\tCtrl+A",            ID_EDIT_SELECTALL
+    END
+END
+
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   Preferences property sheet pages
+ */
+
+/*
+ *   Appearance preferences property page
+ */
+DLG_APPEARANCE DIALOG DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Ò»¸ö¡°Ö÷Ìâ¡±°üº¬ÁËÒ»×é×ÖÌå¡¢ÑÕÉ«ÒÔ¼°ÆäËûÊÓ¾õÐ§¹ûµÄÉè¶¨¡£Ã¿¸öÓÎÏ·¶¼¼ÇÂ¼ÁË×Ô¼º¶ÔÓ¦µÄÖ÷Ìâ£¬Òò´ËÄú¿ÉÒÔÔÚ²»Í¬µÄÓÎÏ·ÖÐÊ¹ÓÃ²»Í¬µÄÖ÷Ìâ¡£",
+                    IDC_STATIC,7,7,262,16
+
+    LTEXT           "Ö÷Ìâ(&T)£º",IDC_STATIC,7,27,25,8
+    COMBOBOX        IDC_POP_THEME,7,37,150,75,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "ÐÂ½¨(&N)...",IDC_BTN_NEW,164,36,50,14
+    PUSHBUTTON      "É¾³ý(&L)",IDC_BTN_DELETE,219,36,50,14
+
+    LTEXT           "ÃèÊö(&D)£º", IDC_STATIC,7,56,60,8
+    EDITTEXT        IDC_FLD_DESC,7,66,262,14,ES_AUTOVSCROLL | ES_AUTOHSCROLL
+
+    PUSHBUTTON      "×Ô¶¨ÒåÖ÷Ìâ(&C)...",IDC_BTN_CUSTOMIZE,7,90,80,14
+    LTEXT           "Í¨¹ý±¾Ñ¡Ïî£¬Äú¿ÉÒÔ×Ô¶¨ÒåËùÑ¡Ö÷ÌâµÄ×ÖÌå¡¢ÑÕÉ«ÒÔ¼°ÆäËûÊÓ¾õÐ§¹û¡£",
+                    IDC_STATIC,95,88,174,24
+
+    PUSHBUTTON      "»Ö¸´Ä¬ÈÏÉèÖÃ(&R)",IDC_BTN_DEFAULT,7,122,80,14
+    LTEXT           "Èç¹ûÑ¡ÖÐÁËÒ»¸ö±ê×¼µÄÔ¤ÉèÖ÷Ìâ£¬ÄÇÃ´Äú¿ÉÒÔ½«Æä»Ö¸´µ½Ä¬ÈÏÉèÖÃ¡£Èç¹ûÄú²»Ï£Íû±£Áô¶ÔÖ÷ÌâËù×öµÄÐÞ¸Ä£¬ÇëÑ¡Ôñ´ËÏî¡£",
+                    IDC_STATIC,95,120,174,24
+END
+
+
+/*
+ *   Keyboard preferences property page dialog
+ */
+DLG_KEYS DIALOG DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Ctrl+V",IDC_STATIC,46,14,150,36
+    CONTROL         "ÏòÏÂ·­Ò³(&D) (Õ³ÌùÎªCtrl+Y)",IDC_RB_CTLV_EMACS,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,61,24,130,9
+    CONTROL         "Õ³Ìù(&P)",IDC_RB_CTLV_PASTE,"Button",BS_AUTORADIOBUTTON,
+                    61,35,130,9
+    GROUPBOX        "Alt+V",IDC_STATIC,45,56,150,36
+    CONTROL         "ÏòÉÏ·­Ò³(&U)",IDC_RB_ALTV_EMACS,"Button",BS_AUTORADIOBUTTON |
+                    WS_GROUP,61,66,130,9
+    CONTROL         "±ê×¼µÄWindows²Ëµ¥¿ì½Ý¼ü(&W)",IDC_RB_ALTV_WIN,"Button",
+                    BS_AUTORADIOBUTTON,61,77,130,9
+    GROUPBOX        "ÉÏ/ÏÂ·½Ïò¼ü",IDC_STATIC,45,98,150,36
+    CONTROL         "¹ö¶¯´°¿ÚÄÚÈÝ(&S)",IDC_RB_ARROW_SCROLL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,60,108,94,9
+    CONTROL         "²é¿´ÃüÁîÀúÊ·¼ÇÂ¼(&C)",IDC_RB_ARROW_HIST,"Button",
+                    BS_AUTORADIOBUTTON,60,119,93,9
+END
+
+/*
+ *   File Safety property page
+ */
+DLG_FILE_SAFETY DIALOG DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&4 - ×î°²È«£º²»ÔÊÐíÎÄ¼þ·ÃÎÊ",
+                    IDC_RB_SAFETY4,"Button",BS_AUTORADIOBUTTON,38,26,198,9
+    CONTROL         "&3 - Ö»ÔÊÐí¶Ôµ±Ç°Ä¿Â¼µÄÖ»¶Á·ÃÎÊ",
+                    IDC_RB_SAFETY3,"Button",BS_AUTORADIOBUTTON,38,39,198,9
+    CONTROL         "&2 - Ö»ÔÊÐí¶Ôµ±Ç°Ä¿Â¼µÄ¶ÁÐ´·ÃÎÊ",
+                    IDC_RB_SAFETY2,"Button",BS_AUTORADIOBUTTON,38,52,198,9
+    CONTROL         "&1 - Ö»ÔÊÐí¶Ôµ±Ç°Ä¿Â¼µÄ¶ÁÐ´£¬ÒÔ¼°¶ÔÆäËûÄ¿Â¼µÄÖ»¶Á·ÃÎÊ",
+                    IDC_RB_SAFETY1,"Button",BS_AUTORADIOBUTTON,38,65,198,9
+    CONTROL         "&0 - ×î²»°²È«£ºÔÊÐí¶ÔÈÎºÎÄ¿Â¼µÄ¶ÁÐ´·ÃÎÊ",
+                    IDC_RB_SAFETY0,
+                    "Button",BS_AUTORADIOBUTTON,38,78,198,9
+    LTEXT           "×¢£ºÎÄ¼þ°²È«µÈ¼¶ÉèÖÃÖ»¶ÔÓÎÏ·´úÂëÖÐÃ÷È·µÄÎÄ¼þ²Ù×÷ÓÐÓ°Ïì£¬¶ø¶ÔÓÎÏ·±¾ÉíµÄ½ø¶È´æÈ¡ÒÔ¼°ÓÎÏ·¹ý³ÌÈÕÖ¾¼ÇÂ¼Ã»ÓÐÓ°Ïì¡£",
+                    IDC_STATIC,27,100,214,30
+    GROUPBOX        "ÎÄ¼þ°²È«µÈ¼¶ÉèÖÃ(&S)£º",IDC_STATIC,27,16,214,76
+END
+
+/*
+ *   Memory Settings property page
+ */
+DLG_MEM DIALOG DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Ê¹ÓÃ±¾ÉèÖÃÀ´ÏÞÖÆÏµÍ³±£ÁôÔÚÄÚ´æÖÐµÄÎÄ±¾ÀúÊ·¼ÇÂ¼µÄ´óÐ¡¡£Èç¹ûÔÚÓÎÏ·¹ý³ÌÖÐÄÚ´æ²»×ã£¬Çë½«±¾ÉèÖÃÐÞ¸ÄµÃÐ¡Ò»Ð©¡£",
+                    IDC_STATIC,33,17,203,29
+    RTEXT           "ÎÄ±¾ÀúÊ·¼ÇÂ¼´óÐ¡(&T)",IDC_STATIC,35,53,69,10
+    COMBOBOX        IDC_POP_MEM,113,51,102,65,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+/*
+ *   Starting Settings property page
+ */
+DLG_STARTING DIALOG DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "HTML TADSÆô¶¯Ê±×Ô¶¯´ò¿ª¡°ÓÎÏ·Ñ¡Ôñ¡±¶Ô»°¿ò(&A)",
+                    IDC_CK_ASKGAME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    27,50,203,10
+    LTEXT           "Ä¬ÈÏÓÎÏ·ÎÄ¼þ¼Ð(&F)£º",IDC_STATIC,27,77,185,8
+    EDITTEXT        IDC_FLD_INITFOLDER,27,87,171,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "ä¯ÀÀ(&B)...",IDC_BTN_BROWSE,201,87,50,14
+END
+
+/*
+ *   Quitting Settings property page
+ */
+DLG_QUITTING DIALOG DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "¹Ø±ÕHTML TADS´°¿ÚÊ±µÄ¶¯×÷£º",IDC_STATIC,39,15,192,63
+    CONTROL         "ÏòÓÎÏ··¢³ö¡°ÍË³ö¡±£¨QUIT£©ÃüÁî(&Q)",
+                    IDC_RB_CLOSE_QUITCMD,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,56,29,154,10
+    CONTROL         "¹Ø±Õ´°¿Ú²¢ÍË³öÏµÍ³£¬ÌáÊ¾Íæ¼ÒÈ·ÈÏ(&P)",
+                    IDC_RB_CLOSE_PROMPT,
+                    "Button",BS_AUTORADIOBUTTON,56,45,154,10
+    CONTROL         "¹Ø±Õ´°¿Ú²¢ÍË³öÏµÍ³£¬²»½øÐÐÌáÊ¾(&C)",
+                    IDC_RB_CLOSE_IMMEDIATE,
+                    "Button",BS_AUTORADIOBUTTON,56,59,154,10
+
+    GROUPBOX        "ÍË³öÓÎÏ·ºóµÄ¶¯×÷",IDC_STATIC,39,93,192,48
+    CONTROL         "µÈ´ýÍæ¼Ò°´¼ü£¬¶øºóÍË³öÏµÍ³(&W)",
+                    IDC_RB_POSTQUIT_EXIT,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,56,107,154,10
+    CONTROL         "¼ÌÐøÔËÐÐ(&K)",
+                    IDC_RB_POSTQUIT_KEEP,
+                    "Button",BS_AUTORADIOBUTTON,56,122,154,10
+END
+
+#ifdef HTMLTADS_GAME_CHEST
+/*
+ *  "Game Chest" preferences dialog page
+ */
+DLG_GAMECHEST_PREFS DIALOG DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "ÓÎÏ·±¦ºÐÊý¾Ý¿âÎÄ¼þ(&D)£º¸ÃÎÄ¼þÖÐ´æ´¢×ÅÄúµÄÓÎÏ·ÁÐ±í¡£¸ÃÎÄ¼þÄ¬ÈÏÔÚ¡°ÎÒµÄÎÄµµ¡±ÖÐµÄ¡°TADS¡±ÎÄ¼þ¼ÐÏÂ£¬µ«Äú¿ÉÒÔÑ¡ÔñÁíÍâÒ»¸öÎ»ÖÃ¡£",
+                    IDC_STATIC,7,10,251,24
+    EDITTEXT        IDC_FLD_GC_FILE,7,39,251,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "ä¯ÀÀ(&B)...",IDC_BTN_BROWSE,7,58,50,14
+    PUSHBUTTON      "»Ö¸´Ä¬ÈÏÉèÖÃ(&R)",IDC_BTN_DEFAULT,62,58,60,14
+
+    LTEXT           "ÓÎÏ·±¦ºÐ±³¾°Í¼Æ¬(&P)£ºÄú¿ÉÒÔÑ¡ÔñÒ»¸öÍ¼Æ¬ÎÄ¼þ£¨JPEG»òÕßPNG£©×÷ÎªÓÎÏ·±¦ºÐµÄ±³¾°¡£Èç¹ûÄú²»Ï£ÍûÓÐ±³¾°Í¼Æ¬£¬ÇëÁô¿Õ¡£",
+                    IDC_STATIC,7,80,251,24
+    EDITTEXT        IDC_FLD_GC_BKG,7,109,251,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "ä¯ÀÀ(&W)...",IDC_BTN_BROWSE2,7,128,50,14
+    PUSHBUTTON      "»Ö¸´Ä¬ÈÏÉèÖÃ(&E)",IDC_BTN_DEFAULT2,62,128,60,14
+END
+#endif /* HTMLTADS_GAME_CHEST */
+
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   Visual preferences property sheet pages
+ */
+
+/*
+ *   Font preferences property page dialog
+ */
+DLG_FONT DIALOGEX 0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "ÓÎÏ·Ö÷×ÖÌå(&M)",IDC_STATIC,3,7,74,10,0,
+                    WS_EX_RIGHT
+    COMBOBOX        IDC_MAINFONTPOPUP,89,5,110,95,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_POP_MAINFONTSIZE,207,5,40,95,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "µÈ¿í×ÖÌå(&F)",IDC_STATIC,3,25,74,10,0,WS_EX_RIGHT
+    COMBOBOX        IDC_MONOFONTPOPUP,89,23,110,95,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_POP_MONOFONTSIZE,207,23,40,95,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "³ÄÏß×ÖÌå(&S)",IDC_STATIC,3,43,74,10,0,
+                    WS_EX_RIGHT
+
+    COMBOBOX        IDC_FONTSERIF,89,41,110,95,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_POP_SERIFFONTSIZE,207,41,40,95,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "·Ç³ÄÏß×ÖÌå(&N)",IDC_STATIC,3,61,74,10,0,
+                    WS_EX_RIGHT
+    COMBOBOX        IDC_FONTSANS,89,59,110,95,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_POP_SANSFONTSIZE,207,59,40,95,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "ÊÖÐ´Ìå(&C)",IDC_STATIC,3,79,74,10,0,
+                    WS_EX_RIGHT
+    COMBOBOX        IDC_FONTSCRIPT,89,77,110,95,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_POP_SCRIPTFONTSIZE,207,77,40,95,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "´ò×Ö»ú×ÖÌå(&T)",IDC_STATIC,3,97,74,10,0,
+                    WS_EX_RIGHT
+    COMBOBOX        IDC_FONTTYPEWRITER,89,95,110,95,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_POP_TYPEWRITERFONTSIZE,207,95,40,95,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "ÃüÁî×ÖÌå(&C)",IDC_STATIC,3,119,74,10,0,
+                    WS_EX_RIGHT
+    COMBOBOX        IDC_POP_INPUTFONT,89,117,110,95,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_POP_INPUTFONTSIZE,207,117,40,95,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    CONTROL         "Button",IDC_BTN_INPUTCOLOR,"Button",BS_OWNERDRAW |
+                    WS_TABSTOP,89,134,28,16
+    CONTROL         "´ÖÌå(&B)",IDC_CK_INPUTBOLD,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,128,137,30,10
+    CONTROL         "Ð±Ìå(&I)",IDC_CK_INPUTITALIC,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,164,137,31,10
+    GROUPBOX        "",IDC_STATIC,23,108,228,45
+END
+
+/*
+ *   Color preferences property page dialog
+ */
+DLG_COLORS DIALOGEX 0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "ÎÄ±¾Ö÷Ìå",IDC_STATIC,7,20,103,76
+    LTEXT           "ÎÄ±¾(&T)£º",IDC_STATIC,11,32,46,11,0,WS_EX_RIGHT
+    CONTROL         "Button",IDC_TXTCOLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,
+                    63,31,28,16
+    LTEXT           "±³¾°(&B)£º",IDC_STATIC,11,51,46,11,0,WS_EX_RIGHT
+    CONTROL         "Button",IDC_BKCOLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,
+                    63,49,28,16
+    CONTROL         "Ê¹ÓÃWindowsµÄÑÕÉ«ÉèÖÃ(&W)",IDC_CK_USEWINCLR,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,70,79,9
+    CONTROL         "¸²¸ÇÓÎÏ·µÄÑÕÉ«ÉèÖÃ(&O)",IDC_CK_OVERRIDECLR,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,83,88,9
+
+    GROUPBOX        "×´Ì¬À¸",IDC_STATIC,7,100,103,51
+    LTEXT           "ÎÄ±¾(&X)£º",IDC_STATIC,11,113,46,11,0,WS_EX_RIGHT
+    CONTROL         "Button",IDC_STXTCOLOR,"Button",BS_OWNERDRAW |
+                    WS_TABSTOP,63,110,28,16
+    LTEXT           "±³¾°(&G)£º",IDC_STATIC,11,132,46,11,0,WS_EX_RIGHT
+    CONTROL         "Button",IDC_SBKCOLOR,"Button",BS_OWNERDRAW | WS_TABSTOP,
+                    63,129,28,16
+
+    GROUPBOX        "³¬¼¶Á´½Ó",IDC_STATIC,121,20,147,131
+    LTEXT           "ÏÔÊ¾Á´½Ó(&S)£º",IDC_STATIC,128,35,40,8
+    COMBOBOX        IDC_POP_SHOW_LINKS,169,33,94,65,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "¶ÔÁ´½ÓÌí¼ÓÏÂ»®Ïß(&U)",IDC_CK_UNDERLINE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,128,55,66,9
+    CONTROL         "Êó±êÐüÍ£Ê±¸ßÁÁÏÔÊ¾(&H)",IDC_CK_HOVER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,128,68,88,9
+    LTEXT           "Î´ä¯ÀÀµÄ(&N)£º",IDC_STATIC,124,93,46,11,0,WS_EX_RIGHT
+    CONTROL         "Button",IDC_LINKCOLOR,"Button",BS_OWNERDRAW |
+                    WS_TABSTOP,177,91,28,16
+    LTEXT           "ÐüÍ£×´Ì¬(&V)£º",IDC_STATIC,125,112,46,11,0,WS_EX_RIGHT
+    CONTROL         "Button",IDC_HLINKCOLOR,"Button",BS_OWNERDRAW |
+                    WS_TABSTOP,177,110,28,16
+    LTEXT           "ÒÑä¯ÀÀµÄ(&K)£º",IDC_STATIC,125,132,46,11,0,WS_EX_RIGHT
+    CONTROL         "Button",IDC_ALINKCOLOR,"Button",BS_OWNERDRAW |
+                    WS_TABSTOP,177,129,28,16
+    LTEXT           "×¢£ºÓÐÐ©ÓÎÏ·»áÊ¹ÓÃÆä×ÔÉíµÄÑÕÉ«ÑùÊ½À´¸²¸ÇÕâÐ©ÉèÖÃ¡£",
+                    IDC_STATIC,7,7,260,8
+END
+
+
+/*
+ *   MORE style preferences property page dialog
+ */
+DLG_MORE DIALOGEX DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "ÔÚÓÎÏ·ÄÚÈÝ´°¿ÚÖÐÏÔÊ¾¡°¸ü¶à£¨MORE£©¡±ÌáÊ¾£¬²¢ÖÐÖ¹ÎÄ±¾¹ö¶¯(&W)",
+                    IDC_RB_MORE_NORMAL,"Button",
+                    BS_AUTORADIOBUTTON | BS_MULTILINE,114,38,106,27
+    CONTROL         "ÔÚ×´Ì¬À¸ÉÏÏÔÊ¾¡°¸ü¶à£¨MORE£©¡±ÌáÊ¾£¬²¢ÏÔÊ¾ËùÓÐÎÄ±¾(&S)",
+                    IDC_RB_MORE_ALT,"Button",
+                    BS_AUTORADIOBUTTON | BS_MULTILINE,114,91,106,27
+    CONTROL         IDB_BMPMORE1,IDC_STATIC,"Static",SS_BITMAP,59,32,32,39
+    CONTROL         IDB_BMPMORE2,IDC_STATIC,"Static",SS_BITMAP,59,84,32,39
+END
+
+
+/*
+ *   Media preferences page
+ */
+DLG_MEDIA DIALOG DISCARDABLE  0, 0, 275, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "ÔÊÐíÍ¼ÏñÏÔÊ¾£¨ÈçÍ¼Æ¬¡¢Í¼±êµÈ£©(&G)",
+                    IDC_CK_GRAPHICS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,51,62,130,10
+    CONTROL         "ÔÊÐíÉùÒôÐ§¹û(&S)",IDC_CK_SOUND_FX,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,51,76,79,10
+    CONTROL         "ÔÊÐí±³¾°ÒôÀÖ(&M)",IDC_CK_MUSIC,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,51,90,94,10
+    LTEXT           "Í¨¹ýÇå³ýÑ¡Ôñ¿ò£¬Äú¿ÉÒÔ¹Ø±ÕÓÎÏ·ÖÐµÄÍ¼Ïñ¡¢ÉùÐ§»òÕß±³¾°ÒôÀÖ¡£¶àÃ½ÌåÓÎÏ·ÈÔÈ»»áÕý³£¹¤×÷£¬µ«½«Ö»ÄÜÊä³öÎÄ±¾¡£",
+                    IDC_STATIC,12,24,253,32
+END
+
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   License text dialog
+ */
+DLG_LICENSE DIALOG DISCARDABLE 0, 0, 400, 300
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | DS_CENTER
+CAPTION "Ðí¿ÉÖ¤ÐÅÏ¢"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_FLD_LICENSE, 7,7,386,266,
+                    WS_VSCROLL | ES_MULTILINE | ES_READONLY
+    DEFPUSHBUTTON   "È·¶¨", IDOK, 175,279,50,14
+END
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   Create Theme dialog
+ */
+DLG_NEW_PROFILE DIALOG DISCARDABLE  0, 0, 244, 62
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | DS_CENTER
+CAPTION "´´½¨ÐÂÖ÷Ìâ"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Ö÷ÌâÃû³Æ(&N)£º",IDC_STATIC,7,16,50,8
+    EDITTEXT        IDC_FLD_PROFILE,60,14,177,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "È·¶¨",IDOK,69,41,50,14
+    PUSHBUTTON      "È¡Ïû",IDCANCEL,123,41,50,14
+END
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   DirectX error dialog - warns that DirectX is not installed properly
+ */
+DLG_DIRECTX_WARNING DIALOG DISCARDABLE  0, 0, 313, 138
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DirectX¾¯¸æ"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "ÄúÏµÍ³ÖÐµÄDirectX°æ±¾ËÆºõµÍÓÚ5.0£¬HTML TADSÊ¹ÓÃDirectXÀ´²¥·ÅÊý×ÖÒôÐ§¡£",
+                    IDC_STATIC_DXVSN,40,7,266,28,NOT WS_VISIBLE
+    LTEXT           "ÄúÈÔÈ»ÄÜ¹»ÔËÐÐÓÎÏ·£¬ÒôÐ§Ò²ÄÜÕý³£¹¤×÷£¬µ«Èç¹ûÉý¼¶µ½DirectX 5.0ÒÔÉÏ£¬½«ÄÜ¹»Ìá¹©¸üºÃµÄÐÔÄÜ¡£",
+                    IDC_STATIC_DXVSN2,40,41,266,18,NOT WS_VISIBLE
+    LTEXT           "Èç¹ûÄúÏ£Íû½øÐÐÉý¼¶£¬¿ÉÒÔ´ÓMicrosoftÍøÕ¾ÏÂÔØ×îÐÂ°æ±¾µÄDirectX£ºhttp://www.microsoft.com/directx/",
+                    IDC_STATIC_DXVSN3,40,65,266,30,NOT WS_VISIBLE
+    LTEXT           "HTML TADSÐèÒªDirectXÒÔ²¥·ÅÊý×ÖÒôÐ§¡£±¾ÏµÍ³ÖÐËÆºõÃ»ÓÐ°²×°DirectX£¬»òÕßDirectXÎ´ÄÜÕý³£¹¤×÷¡£",
+                    IDC_STATIC_DXINST,40,7,266,28,NOT WS_VISIBLE
+    DEFPUSHBUTTON   "È·¶¨",IDOK,132,117,50,14
+    LTEXT           "ÄúÈÔÈ»ÄÜ¹»ÔËÐÐÓÎÏ·£¬µ«ÓÎÏ·ÖÐµÄÈÎºÎÒôÐ§¶¼½«²»ÄÜ²¥·Å£¬MIDIÒôÀÖ»Ø·Å²»ÊÜÓ°Ïì¡£",
+                    IDC_STATIC_DXINST2,40,41,266,18,NOT WS_VISIBLE
+    LTEXT           "Èç¹ûÄúÏ£Íû²¥·ÅÒôÐ§£¬±ØÐë°²×°DirectX¡£Äú¿ÉÒÔ´ÓMicrosoftÍøÕ¾ÏÂÔØ×îÐÂ°æ±¾µÄDirectX£ºhttp://www.microsoft.com/directx/",
+                    IDC_STATIC_DXINST3,40,65,266,30,NOT WS_VISIBLE
+    CONTROL         "Æô¶¯Ê±²»ÔÙÏÔÊ¾±¾¾¯¸æ",
+                    IDC_CK_SUPPRESS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,72,
+                    99,169,10
+    ICON            IDI_NO_SOUND,IDC_STATIC,7,7,21,20
+END
+
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   Folder selector dialog
+ */
+IDD_FOLDER_SELECTOR2 DIALOG DISCARDABLE  0, 0, 222, 174
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Ñ¡ÔñÎÄ¼þ¼Ð"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Ä¿±êÂ·¾¶(&P)£º",IDC_TXT_PROMPT,7,7,150,10
+    EDITTEXT        IDC_FLD_FOLDER_PATH,7,17,150,13,ES_AUTOHSCROLL
+    LTEXT           "ÎÄ¼þ¼Ð(&F)£º",IDC_STATIC,7,35,92,10
+    LISTBOX         IDC_LB_FOLDERS,7,45,150,91,LBS_SORT | LBS_OWNERDRAWFIXED |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Çý¶¯Æ÷(&D)",IDC_STATIC,7,141,92,10
+    COMBOBOX        IDC_CBO_DRIVES,7,153,150,73,CBS_DROPDOWNLIST |
+                    CBS_OWNERDRAWFIXED | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "È·¶¨",IDOK,165,7,50,14
+    PUSHBUTTON      "È¡Ïû",IDCANCEL,165,24,50,14
+    PUSHBUTTON      "ÍøÂç(&N)...",IDC_BTN_NETWORK,165,41,50,14
+END
+
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   "Find" dialog
+ */
+DLG_FIND DIALOG DISCARDABLE  0, 0, 274, 94
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "²éÕÒ"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "²éÕÒÄÚÈÝ(&N)£º",IDC_STATIC,7,7,40,8
+    COMBOBOX        IDC_CBO_FINDWHAT,7,20,202,72,CBS_DROPDOWN | WS_VSCROLL |
+                    WS_TABSTOP
+
+    CONTROL         "Æ¥Åä´óÐ¡Ð´(&C)",IDC_CK_MATCHCASE,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,7,42,85,10
+    CONTROL         "µ½´ïÎÄ¼þÎ²Ê±×Ô¶¯»Øµ½¿ªÍ·(&W)",IDC_CK_WRAP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,55,103,10
+    CONTROL         "´ÓÎÄ¼þ¶¥²¿¿ªÊ¼(&T)",IDC_CK_STARTATTOP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,69,99,10
+
+    GROUPBOX        "·½Ïò",IDC_STATIC,139,42,72,38
+    CONTROL         "Ïòºó(&B)",IDC_RB_UP,"Button",BS_AUTORADIOBUTTON |
+                    WS_TABSTOP,144,52,45,10
+    CONTROL         "ÏòÇ°(&O)",IDC_RB_DOWN,"Button",BS_AUTORADIOBUTTON,
+                    144,64,45,10
+
+    DEFPUSHBUTTON   "²éÕÒÏÂÒ»¸ö(&F)",IDOK,217,7,50,14
+    PUSHBUTTON      "¹Ø±Õ",IDCANCEL,217,24,50,14
+END
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   Game Chest dialogs
+ */
+#ifdef HTMLTADS_GAME_CHEST
+
+/*
+ *   Game Chest - add/edit web link
+ */
+DLG_GAME_CHEST_URL DIALOG DISCARDABLE  0, 0, 341, 126
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Ìí¼Ó/É¾³ýÕ¾µãÁ´½Ó"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "ÍøÕ¾µØÖ·(URL)(&A)£º",IDC_STATIC,7,11,66,8
+    EDITTEXT        IDC_FLD_KEY,82,10,252,14,ES_AUTOHSCROLL
+    LTEXT           "ÍøÕ¾Ãû³Æ(&N)£º",IDC_STATIC,7,31,36,8
+    EDITTEXT        IDC_FLD_NAME,82,30,252,14,ES_AUTOHSCROLL
+    LTEXT           "ÃèÊö(&D)£º",IDC_STATIC,7,51,38,8
+    EDITTEXT        IDC_FLD_DESC,82,50,252,45,
+                    ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
+    CONTROL         "&HTML",IDC_CB_DESC_HTML,"Button",
+                    BS_AUTOCHECKBOX,7,63,36,10
+    DEFPUSHBUTTON   "È·¶¨",IDOK,118,105,50,14
+    PUSHBUTTON      "È¡Ïû",IDCANCEL,173,105,50,14
+END
+
+/*
+ *   Game chest - add/edit game file link
+ */
+DLG_GAME_CHEST_GAME DIALOG DISCARDABLE  0, 0, 381, 187
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Ìí¼Ó/É¾³ýÓÎÏ·Á¬½Ó"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "ÓÎÏ·ÎÄ¼þ(&F)£º",IDC_STATIC,7,11,34,8
+    EDITTEXT        IDC_FLD_KEY,65,10,252,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "ä¯ÀÀ(&B)...",IDC_BTN_BROWSE,324,10,50,14
+    LTEXT           "Ãû³Æ(&N)£º",IDC_STATIC,7,31,22,8
+    EDITTEXT        IDC_FLD_NAME,65,30,252,14,ES_AUTOHSCROLL
+
+    LTEXT           "ÃèÊö(&D)£º",IDC_STATIC,7,51,38,8
+    EDITTEXT        IDC_FLD_DESC,65,50,252,45,
+                    ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
+    CONTROL         "&HTML",IDC_CB_DESC_HTML,"Button",
+                    BS_AUTOCHECKBOX,7,63,36,10
+
+    LTEXT           "×÷ÕßÇ©Ãû(&A)£º",IDC_STATIC,7,103,57,8
+    EDITTEXT        IDC_FLD_BYLINE,65,102,252,22,
+                    ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
+    CONTROL         "HT&ML", IDC_CB_BYLINE_HTML,"Button",
+                    BS_AUTOCHECKBOX,7,115,36,10
+
+    LTEXT           "·Ö×é(&G)£º",IDC_STATIC,7,131,22,8
+    COMBOBOX        IDC_POP_GROUP,65,130,252,96,CBS_DROPDOWN | WS_VSCROLL |
+                    WS_TABSTOP
+
+    LTEXT           "Ö÷Ìâ(&T)£º",IDC_STATIC,7,149,30,8
+    COMBOBOX        IDC_CBO_PROFILE,65,148,252,76,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+
+    DEFPUSHBUTTON   "È·¶¨",IDOK,138,166,50,14
+    PUSHBUTTON      "È¡Ïû",IDCANCEL,193,166,50,14
+END
+
+/*
+ *   Game chest - download file
+ */
+DLG_DOWNLOAD DIALOG DISCARDABLE  0, 0, 266, 71
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_VISIBLE
+CAPTION "ÕýÔÚÏÂÔØÎÄ¼þ"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "ÍøÕ¾µØÖ·£º",IDC_STATIC,7,7,46,8
+    LTEXT           "http://",IDC_TXT_URL,68,7,191,8
+    LTEXT           "±£´æµ½ÎÄ¼þ£º",IDC_STATIC,7,21,46,8
+    LTEXT           "c:\\",IDC_TXT_FILE,68,21,191,8
+    LTEXT           "ÒÑ´«Êä×Ö½ÚÊý£º",IDC_STATIC,7,35,44,8
+    LTEXT           "0",IDC_TXT_BYTES,68,35,191,8
+    PUSHBUTTON      "È¡Ïû",IDCANCEL,107,50,50,14
+END
+
+/*
+ *   Game chest - edit groups
+ */
+DLG_GAME_CHEST_GROUPS DIALOG DISCARDABLE  0, 0, 283, 183
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | DS_CENTER
+CAPTION "±à¼­·Ö×é"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Tree1",IDC_TREE_GROUPS,"SysTreeView32",
+                    TVS_SHOWSELALWAYS | TVS_EDITLABELS | TVS_NOTOOLTIPS
+                    /*| TVS_FULLROWSELECT*/ | WS_BORDER | WS_TABSTOP,
+                    7,7,214,169
+    PUSHBUTTON      "",IDC_BTN_MOVE_UP,226,7,14,14,BS_ICON
+    PUSHBUTTON      "",IDC_BTN_MOVE_DOWN,226,23,14,14,BS_ICON
+    PUSHBUTTON      "ÐÂ½¨(&N)...",IDC_BTN_NEW,226,66,50,14
+    PUSHBUTTON      "É¾³ý(&D)",IDC_BTN_DELETE,226,84,50,14
+    PUSHBUTTON      "ÖØÃüÃû(&R)",IDC_BTN_RENAME,226,102,50,14
+    PUSHBUTTON      "¹Ø±Õ(&C)",IDC_BTN_CLOSE,226,162,50,14
+END
+
+/*
+ *   Game Chest Search Dialog
+ */
+DLG_GAME_CHEST_SEARCH DIALOG DISCARDABLE  0, 0, 337, 213
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "ËÑË÷ÓÎÏ·ÎÄ¼þ"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Èç¹ûÄúÏÂÔØÁËÒ»ÅúÓÎÏ·ÎÄ¼þ£¨ÀýÈç´ÓÒ»´ÎIF¾ºÈüµÄ´æµµÖÐ£©, Äú¿ÉÒÔºÜÈÝÒ×µØ½«ËüÃÇ×÷ÎªÒ»¸ö×éÌí¼Óµ½ÓÎÏ·±¦ºÐÖÐ¡£ÇëÑ¡ÔñÐèÒªËÑË÷µÄÓÎÏ·ÎÄ¼þ¼ÐÓë·ÅÖÃÕâÐ©ÓÎÏ·µÄ·Ö×é£¬¶øºóµã»÷¡°¿ªÊ¼ËÑË÷¡±¡£",
+                    IDC_STATIC,7,7,323,32
+    LTEXT           "ÔÚ´ËÎÄ¼þ¼ÐÒÔ¼°Æä×ÓÎÄ¼þ¼ÐÖÐËÑË÷ËùÓÐµÄTADSÓÎÏ·ÎÄ¼þ(.gamºÍ.t3)£º",
+                    IDC_STATIC,7,44,261,8
+    EDITTEXT        IDC_FLD_FOLDER,7,54,266,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "ä¯ÀÀ(&B)...",IDC_BTN_BROWSE,280,54,50,14
+    LTEXT           "½«ÓÎÏ·¼ÓÈë´Ë×éÖÐ(&G) (ÔÚÁÐ±íÖÐÑ¡ÔñÒ»¸ö×é£¬»òÕßÊäÈëÒ»¸öÐÂµÄ×éÃû)£º",
+                    IDC_STATIC,7,76,266,16
+    COMBOBOX        IDC_POP_GROUP,7,94,266,77,CBS_DROPDOWN | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "ËÑË÷µ½µÄÓÎÏ·ÎÄ¼þ£º",IDC_STATIC,7,114,56,8
+    LISTBOX         IDC_LB_RESULTS,7,124,323,61,NOT LBS_NOTIFY |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "¿ªÊ¼ËÑË÷(&S)",IDOK,223,192,50,14
+    PUSHBUTTON      "È¡Ïû",IDCANCEL,280,192,50,14
+END
+
+/*
+ *  Game Chest search-and-add wizard - first page: select the root folder.
+ */
+DLG_GAME_CHEST_SEARCH_ROOT DIALOG DISCARDABLE  0, 0, 315, 175
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         IDB_CHEST_SEARCH,IDC_STATIC,"Static",SS_BITMAP,7,7,15,13
+    LTEXT           "Èç¹ûÄúÏÂÔØÁËÒ»ÅúÓÎÏ·ÎÄ¼þ£¨ÀýÈç´ÓÒ»´ÎIF¾ºÈüµÄ´æµµÖÐ£©, Í¨¹ý±¾Ïòµ¼£¬Äú¿ÉÒÔºÜÈÝÒ×µØ½«ËüÃÇÒ»´ÎÐÔµØ¼ÓÈëµ½ÓÎÏ·±¦ºÐÖÐ¡£",
+                    IDC_STATIC,91,7,217,32
+    LTEXT           "TADS»áÔÚËùÑ¡¶¨µÄÎÄ¼þ¼ÐÒÔ¼°Æä×ÓÎÄ¼þ¼ÐÖÐËÑË÷ÓÎÏ·ÎÄ¼þ¡£Ñ¡ÔñºÃÎÄ¼þ¼Ðºó£¬Çëµã»÷¡°ÏÂÒ»²½¡±ÒÔ¿ªÊ¼ËÑË÷¡£",
+                    IDC_STATIC,91,50,217,24
+    GROUPBOX        "´ýËÑË÷µÄÎÄ¼þ¼Ð(&F)£º",IDC_STATIC,88,138,218,31
+    LTEXT           "<µã»÷¡°ä¯ÀÀ¡±ÒÔÑ¡ÔñÎÄ¼þ¼Ð>",IDC_TXT_FOLDER,93,
+                    151,150,9
+    PUSHBUTTON      "ä¯ÀÀ(&B)...",IDC_BTN_BROWSE,250,149,50,14
+END
+
+/*
+ *  Game Chest search-and-add wizard - second page: approve search results
+ */
+DLG_GAME_CHEST_SEARCH_RESULTS DIALOG DISCARDABLE  0, 0, 315, 175
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         IDB_CHEST_SEARCH,IDC_STATIC,"Static",SS_BITMAP,7,7,15,13
+    LTEXT           "TADSÔÚÖ¸¶¨µÄÎÄ¼þ¼ÐÖÐÕÒµ½ÁËÒÔÏÂÓÎÏ·ÎÄ¼þ¡£ÇëÑ¡ÖÐÄúÏ£Íû¼ÓÈëµ½ÓÎÏ·±¦ºÐÖÐµÄÎÄ¼þ£¬¶øºóµã»÷¡°ÏÂÒ»²½¡±¡£",
+                    -1,91,7,217,24
+    CONTROL         "Games",IDC_TV_GAMES,"SysTreeView32",
+                    WS_BORDER | WS_TABSTOP,91,39,217,129
+END
+
+/*
+ *  Game Chest search-and-add wizard - third page: select group and finish
+ */
+DLG_GAME_CHEST_SEARCH_GROUP DIALOG DISCARDABLE  0, 0, 315, 175
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "ÊôÐÔÒ³"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         IDB_CHEST_SEARCH,IDC_STATIC,"Static",SS_BITMAP,7,7,15,13
+    LTEXT           "ÇëÑ¡Ôñ·ÅÖÃÓÎÏ·µÄ·Ö×é£¬Èç¹ûÏ£ÍûÐÂ½¨·Ö×é£¬ÊäÈëÃû³Æ¼´¿É¡£Èç¹û·Ö×éÃû³ÆÁô¿Õ£¬ÔòÓÎÏ·»á±»¹éÈëÓÎÏ·ÁÐ±í¶¥²¿µÄ¡°Î´·Ö×é¡±ÇøÓòÖÐ¡£",
+                    IDC_STATIC,91,7,217,40
+    LTEXT           "Ñ¡ÔñÍê³Éºó£¬µã»÷¡°Íê³É¡±¼´¿É½«ÓÎÏ·¼ÓÈë±¦ºÐÖÐ¡£",
+                    IDC_STATIC,91,51,217,16
+    LTEXT           "·Ö×é(&G)£º",IDC_STATIC,91,75,22,8
+    COMBOBOX        IDC_POP_GROUP,91,87,217,78,
+                    CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+END
+
+/*
+ *   Game Chest - folder scan progress dialog
+ */
+DLG_GAME_CHEST_SEARCH_BUSY DIALOG DISCARDABLE  0, 0, 267, 66
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "ÕýÔÚÉ¨ÃèÎÄ¼þ¼Ð..."
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "µ±Ç°ÎÄ¼þ¼Ð£º",IDC_STATIC,7,7,47,8
+    LTEXT           "",IDC_TXT_FOLDER,7,22,253,8
+END
+
+#endif /* HTMLTADS_GAME_CHEST */
+
+
+/* ------------------------------------------------------------------------ */
+/*
+ *   String Table
+ */
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    /* options dialog property page tabs */
+    IDS_APPEARANCE          "Íâ¹Û"
+    IDS_FONT                "×ÖÌå"
+    IDS_KEYS                "¼üÅÌ"
+    IDS_COLORS              "ÑÕÉ«"
+    IDS_MORE                "¡°¸ü¶à¡±ÌáÊ¾"
+    IDS_FILE_SAFETY         "ÎÄ¼þ°²È«"
+    IDS_MEM                 "ÄÚ´æ"
+    IDS_QUITTING            "ÍË³ö"
+    IDS_STARTING            "Æô¶¯"
+    IDS_GAMECHEST_PREFS     "ÓÎÏ·±¦ºÐ"
+    IDS_MEDIA               "¶àÃ½Ìå"
+
+    /* tooltips for the interpreter toolbar */
+    IDS_FILE_LOADGAME       "´ò¿ªÐÂÓÎÏ·"
+    IDS_FILE_SAVEGAME       "´æ´¢½ø¶È"
+    IDS_FILE_RESTOREGAME    "¶ÁÈ¡½ø¶È"
+    IDS_EDIT_CUT            "¼ôÇÐ"
+    IDS_EDIT_COPY           "¸´ÖÆ"
+    IDS_EDIT_PASTE          "Õ³Ìù"
+    IDS_CMD_UNDO            "³·Ïú×îºóµÄÖ¸Áî"
+    IDS_VIEW_FONTS_NEXT_SMALLER "¼õÐ¡×ÖÌå"
+    IDS_VIEW_FONTS_NEXT_LARGER  "Ôö´ó×ÖÌå"
+    IDS_VIEW_OPTIONS        "Ñ¡Ïî"
+    IDS_GO_PREVIOUS         "×ªµ½Ç°Ò»Ò³"
+    IDS_GO_NEXT             "×ªµ½ºóÒ»Ò³"
+    IDS_EDIT_FIND           "ÔÚµ±Ç°Ò³ÉÏ²éÕÒÎÄ±¾"
+    IDS_THEMES_DROPDOWN     "×Ô¶¨Òå ""%s"" Ö÷Ìâ"
+    IDS_MUTE_SOUND          "´ò¿ªÉùÒô/¾²Òô"
+
+#ifdef HTMLTADS_GAME_CHEST
+    /* "add games" button label for game chest search dialog */
+    IDS_BTN_ADD_GAMES       "È·¶¨"
+
+    /*
+     *   title and prompt strings for browse-folder dialog in game chest
+     *   search-and-add-favorites dialog
+     */
+    IDS_GCH_SEARCH_FOLDER_TITLE "Ñ¡Ôñ´ýËÑË÷µÄÎÄ¼þ¼Ð"
+    IDS_GCH_SEARCH_FOLDER_PROMPT "ËÑË÷´ËÎÄ¼þ¼Ð(&F)£º"
+
+    /* title strings for the game chest find-and-add wizard pages */
+    IDS_GAME_CHEST_SEARCH_ROOT     "Ñ¡Ôñ´ýËÑË÷µÄÎÄ¼þ¼Ð"
+    IDS_GAME_CHEST_SEARCH_RESULTS  "ËÑË÷½á¹û"
+    IDS_GAME_CHEST_SEARCH_GROUP    "Ñ¡ÔñÓÎÏ·±¦ºÐÖÐµÄ·Ö×é"
+#endif /* HTMLTADS_GAME_CHEST */
+
+    /* titles for added items on 'themes' menu */
+    IDS_SET_DEF_PROFILE            "ÉèÖÃ""%s""ÎªÄ¬ÈÏÖ÷Ìâ(&D)"
+    IDS_MANAGE_PROFILES            "Ìí¼Ó/É¾³ýÖ÷Ìâ(&A)..."
+    IDS_CUSTOMIZE_THEME            "×Ô¶¨Òå ""%s"" Ö÷Ìâ(&C)..."
+
+    /* descriptions of the built-in themes */
+    IDS_THEMEDESC_MULTIMEDIA       "×îÆÕÍ¨µÄWindowsÍâ¹Û¡£"
+    IDS_THEMEDESC_PLAIN_TEXT       "80Äê´úµÄ¾­µäÎÄ×ÖÃ°ÏÕÓÎÏ·µÄÍâ¹Û¡£"
+    IDS_THEMEDESC_WEB_STYLE        "¼ò½àµÄ£¬ÏÖ´úÍøÒ³·ç¸ñµÄÍâ¹Û¡£"
+
+    /* entries in the "when to show links" popup */
+    IDS_LINKS_ALWAYS               "×ÜÊÇ"
+    IDS_LINKS_CTRL                 "°´ÏÂCtrl¼üÊ±"
+    IDS_LINKS_NEVER                "´Ó²»"
+
+    /* statusline messages */
+    IDS_MORE_STATUS_MSG            "*** ¸ü¶à *** [Çë°´ ¿Õ¸ñ¼ü ¼ÌÐø]"
+    IDS_WORKING_MSG                "¹¤×÷ÖÐ..."
+    IDS_PRESS_A_KEY_MSG            "Çë°´ÈÎÒâ¼ü..."
+    IDS_EXIT_PAUSE_MSG             "Çë°´ÈÎÒâ¼üÍË³ö..."
+    IDS_NO_GAME_MSG                "(Î´ÔØÈëÈÎºÎÓÎÏ·)"
+    IDS_GAME_OVER_MSG              "(ÓÎÏ·ÒÑ¾­½áÊø)"
+
+    /* the MORE prompt */
+    IDS_MORE_PROMPT                "  *** ¸ü¶à ***  "
+
+    /* alert dialog: no more matches found for a Find command */
+    IDS_FIND_NO_MORE               "ÕÒ²»µ½¸ü¶àµÄ½á¹ûÁË"
+
+    /* alert dialog: unable to open <A HREF> link */
+    IDS_CANNOT_OPEN_HREF           "ÎÞ·¨Æô¶¯ä¯ÀÀÆ÷¡£Äú±ØÐë°²×°ä¯ÀÀÆ÷ÒÔ´ò¿ªÕâ¸öÁ´½Ó¡£"
+
+    /* alert dialog: hyperlink preferences don't affect the Game Chest page */
+    IDS_LINK_PREF_CHANGE           "×¢£ºÓÎÏ·±¦ºÐÖ÷Ò³ÉÏ×ÜÊÇ»áÏÔÊ¾³¬Á´½Ó£¬Òò´Ë¡°ÏÔÊ¾Á´½Ó¡±µÄÉèÖÃÏî¶Ô¸ÃÒ³ÎÞÐ§¡£ÔÚÖ´ÐÐ²ÉÓÃÁË±¾Ö÷ÌâµÄÓÎÏ·Ê±£¬¸ÃÉèÖÃÏî²Å»áÉúÐ§¡£"
+
+    /* title for "Show Debug Window" menu item */
+    IDS_SHOW_DBG_WIN_MENU,         "ÏÔÊ¾µ÷ÊÔÆ÷´°¿Ú(&D)"
+
+    /* title for the "About This Game" dialog window */
+    IDS_ABOUT_GAME_WIN_TITLE       "¹ØÓÚ±¾ÓÎÏ·"
+
+    /* title for "No Recent Games" menu item */
+    IDS_NO_RECENT_GAMES_MENU       "Ã»ÓÐ×î½üµÄÓÎÏ·¼ÇÂ¼"
+
+    /*
+     *   alert dialogs: really quit the game/go to game chest/switch to a
+     *   new game without saving the current game?
+     */
+    IDS_REALLY_QUIT_MSG            "Äú¼´½«ÍË³öÓÎÏ·£¬µ«Ã»ÓÐ½øÐÐ±£´æ£¬ÄúÈ·¶¨ÒªÍË³öÃ´£¿"
+    IDS_REALLY_GO_GC_MSG           "Ñ¡Ôñ´ËÏî½«ÍË³öµ±Ç°ÓÎÏ·²¢ÇÒ²»±£´æÄúµÄ½ø¶È - ×ÔÉÏÒ»´Î´æµµÖ®ºóµÄËùÓÐÓÎÏ·½ø¶È¶¼½«¶ªÊ§¡£ÄúÈ·¶¨Òª¼ÌÐøÃ´£¿"
+    IDS_REALLY_NEW_GAME_MSG        "¿ªÊ¼ÐÂÓÎÏ·Ê±£¬½«ÍË³öµ±Ç°ÓÎÏ·²¢ÇÒ²»±£´æÄúµÄ½ø¶È¡£ÄúÈ·¶¨Òª¼ÌÐøÃ´£¿"
+
+    /* alert dialog: out-of-date COMCTL32.DLL detected */
+    IDS_COMCTL32_WARNING           "±¾³ÌÐòÐèÒªComCtl32.DLL 4.70»òÕß¸ü¸ßµÄ°æ±¾¡£ÄúËù°²×°µÄÊÇÒ»¸ö½ÏµÍµÄ°æ±¾¡£±¾³ÌÐò½«¿ÉÄÜ²»ÄÜÕý³£¹¤×÷£¬²¢¿ÉÄÜ±ÀÀ£¡£Çë´ÓMicrosoftÍøÕ¾ÏÂÔØ²¢ÔËÐÐ´ËÎÄ¼þ:\r\n\r\nftp://ftp.microsoft.com/softlib/mslfiles/com32upd.exe\r\n\r\nÇëµã»÷¡°È·¶¨¡±Ç¿ÖÆ¼ÌÐø±¾³ÌÐòµÄÔËÐÐ£¬»òÕßµã»÷¡°È¡Ïû¡±ÍË³ö¡£"
+
+    /* standard file selector prompt: choose a new game to load */
+    IDS_CHOOSE_NEW_GAME            "ÇëÑ¡ÔñÐèÒªÔØÈëµÄÓÎÏ·ÎÄ¼þ"
+
+    /* standard file selector prompt: choose a TADS game to play */
+    IDS_CHOOSE_GAME                "Ñ¡ÔñTADSÓÎÏ·"
+
+    /*
+     *  About box template strings.  The first one is the prefix for
+     *  the version number string; the second gives the Credits and Close
+     *  hyperlinks.  These are externalized to allow localized versions to
+     *  use special fonts if needed.  Note that these are HTML fragments
+     *  inserted into the HTML formatting for the aboutbox.
+     */
+    IDS_ABOUTBOX_1                 "<font color=white face=Arial size=-1><b>Release "
+    IDS_ABOUTBOX_2                 "</b></font><br><br><tab align=right><font face='Arial' size=-1><b><a forced href='credits'>¿ª·¢ÈËÔ±</a> &nbsp;&nbsp; <a forced href='license'>Ðí¿ÉÖ¤</a> &nbsp;&nbsp; <a forced href='close'>¹Ø±Õ</a></b></font>"
+END
+
+
+/*
+ * Ruochen Zhang:
+ *  The accelerators are removed as well.
+ */

@@ -1,0 +1,76 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>CommandProd</title></head><body>
+<table class=ban><tr><td align=left><span class=title>CommandProd</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#658">658</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   The base class for commands.  A command is the root of the grammar   match tree for a single action.  A command line can consist of a   number of commands joined with command separators; in English,   command separators are things like periods, semicolons, commas, and   the words "and" and "then".
+<p>
+<code>class
+<b>CommandProd</b> :  &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>CommandProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>CommandProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandProdWithActor.html">CommandProdWithActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FirstCommandProdWithActor.html">FirstCommandProdWithActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/actorBadCommandPhrase(main).html">actorBadCommandPhrase(main)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/firstCommandPhrase(askTellActorTo).html">firstCommandPhrase(askTellActorTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/firstCommandPhrase(withActor).html">firstCommandPhrase(withActor)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandProdWithAmbiguousConj.html">CommandProdWithAmbiguousConj</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/commandPhrase(ambiguousConj).html">commandPhrase(ambiguousConj)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandProdWithDefiniteConj.html">CommandProdWithDefiniteConj</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/commandPhrase(definiteConj).html">commandPhrase(definiteConj)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FirstCommandProd.html">FirstCommandProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/firstCommandPhrase(commandOnly).html">firstCommandPhrase(commandOnly)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FirstCommandProdWithActor.html">FirstCommandProdWithActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/actorBadCommandPhrase(main).html">actorBadCommandPhrase(main)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/firstCommandPhrase(askTellActorTo).html">firstCommandPhrase(askTellActorTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/firstCommandPhrase(withActor).html">firstCommandPhrase(withActor)</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#getActorPhrase">getActorPhrase</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#execActorPhrase">execActorPhrase</a>&nbsp;
+<a href="#hasTargetActor">hasTargetActor</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="getActorPhrase"></a>
+<table class=decl><tr><td><code>getActorPhrase</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#674">674</a>]</table><div class=desc>   Get the match tree for the target actor phrase, if any.  By   default, we have no target actor phrase, so just return nil. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="execActorPhrase"></a>
+<table class=decl><tr><td><code>execActorPhrase (issuingActor)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#683">683</a>]</table><div class=desc>   "Execute" the actor phrase.  This lets us know that the parser   has decided to use our phrasing to specify the target actor.   We're not required to do anything here; it's just a notification   for subclass use.  Since we don't have a target actor phrase at   all, we obviously don't need to do anything here. <p>
+</div>
+<a name="hasTargetActor"></a>
+<table class=decl><tr><td><code>hasTargetActor ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#659">659</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

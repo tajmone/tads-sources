@@ -1,0 +1,56 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>scoreRankTable</title><meta name="keywords" content="scoreRankTable,libMessages,PreinitObject"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>scoreRankTable
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="awardpointsonce.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="maxscore.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Many games not only display a score, they translate that score into a rank, along the lines of
+<br>
+
+<br>
+"Your score is 0 of a possible 10, in 0 moves. This makes you a tourist. "
+<br>
+
+<br>
+To get TADS 3 to do this you need to set up a <b>scoreRankTable </b> on the <b>gameMain</b> object, for example:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">gameMain:&nbsp;GameMainDef
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialPlayerChar&nbsp;=&nbsp;me
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scoreRankTable&nbsp;=
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;0,&nbsp;'a&nbsp;tourist'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;5,&nbsp;'a&nbsp;novice&nbsp;explorer'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;10,&nbsp;'a&nbsp;willing&nbsp;amateur'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;15,&nbsp;'an&nbsp;apprentice&nbsp;adventurer'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;25,&nbsp;'an&nbsp;accomplished&nbsp;adventurer'],
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;40,&nbsp;'a&nbsp;hero']
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Note how this works: the scoreRankTable is a list, each element of which is itself a list of two elements, a number and a single-quoted string. The number is the minimum score needed to reach the rank described in the string. These two-element sublists <i>must</i> be arranged in ascending order of score.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

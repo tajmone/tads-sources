@@ -1,0 +1,208 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TryAsActorResolveResults</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TryAsActorResolveResults</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5753">5753</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A results object for resolving an actor in a command with an unknown   word or invalid phrasing in the predicate.  For this type of   resolution, we're trying to interpret the actor portion of the command   as a noun phrase referring to an actor, but it could also just be   another command.  E.g., we could have "bob, asdf" or "east, asdf".   Since we're only tentatively interpreting the phrase as a noun phrase,   to see if that interpretation goes anywhere, we don't want to throw   any errors on failures; instead we simply allow empty match lists.
+<p>
+<code>class
+<b>TryAsActorResolveResults</b> :  &nbsp; <a href="../object/ResolveResults.html">ResolveResults</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TryAsActorResolveResults</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ResolveResults.html">ResolveResults</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#allowActionRemapping">allowActionRemapping</a>&nbsp;
+<a href="#allowEquivalentFiltering">allowEquivalentFiltering</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#allNotAllowed">allNotAllowed</a>&nbsp;
+<a href="#ambiguousNounPhrase">ambiguousNounPhrase</a>&nbsp;
+<a href="#askMissingLiteral">askMissingLiteral</a>&nbsp;
+<a href="#askMissingObject">askMissingObject</a>&nbsp;
+<a href="#beginSingleObjSlot">beginSingleObjSlot</a>&nbsp;
+<a href="#beginTopicSlot">beginTopicSlot</a>&nbsp;
+<a href="#emptyNounPhrase">emptyNounPhrase</a>&nbsp;
+<a href="#endSingleObjSlot">endSingleObjSlot</a>&nbsp;
+<a href="#endTopicSlot">endTopicSlot</a>&nbsp;
+<a href="#getImpliedObject">getImpliedObject</a>&nbsp;
+<a href="#incCommandCount">incCommandCount</a>&nbsp;
+<a href="#insufficientQuantity">insufficientQuantity</a>&nbsp;
+<a href="#noMatch">noMatch</a>&nbsp;
+<a href="#noMatchForAll">noMatchForAll</a>&nbsp;
+<a href="#noMatchForAllBut">noMatchForAllBut</a>&nbsp;
+<a href="#noMatchForListBut">noMatchForListBut</a>&nbsp;
+<a href="#noMatchForLocation">noMatchForLocation</a>&nbsp;
+<a href="#noMatchForPossessive">noMatchForPossessive</a>&nbsp;
+<a href="#noMatchForPronoun">noMatchForPronoun</a>&nbsp;
+<a href="#noMatchPossessive">noMatchPossessive</a>&nbsp;
+<a href="#noteActorSpecified">noteActorSpecified</a>&nbsp;
+<a href="#noteAdjEnding">noteAdjEnding</a>&nbsp;
+<a href="#noteBadPrep">noteBadPrep</a>&nbsp;
+<a href="#noteEmptyBut">noteEmptyBut</a>&nbsp;
+<a href="#noteIndefinite">noteIndefinite</a>&nbsp;
+<a href="#noteLiteral">noteLiteral</a>&nbsp;
+<a href="#noteMatches">noteMatches</a>&nbsp;
+<a href="#noteMiscWord">noteMiscWord</a>&nbsp;
+<a href="#noteNounSlots">noteNounSlots</a>&nbsp;
+<a href="#notePlural">notePlural</a>&nbsp;
+<a href="#notePronoun">notePronoun</a>&nbsp;
+<a href="#noteWeakPhrasing">noteWeakPhrasing</a>&nbsp;
+<a href="#nothingInLocation">nothingInLocation</a>&nbsp;
+<a href="#noVocabMatch">noVocabMatch</a>&nbsp;
+<a href="#reflexiveNotAllowed">reflexiveNotAllowed</a>&nbsp;
+<a href="#singleObjectRequired">singleObjectRequired</a>&nbsp;
+<a href="#uniqueObjectRequired">uniqueObjectRequired</a>&nbsp;
+<a href="#unknownNounPhrase">unknownNounPhrase</a>&nbsp;
+<a href="#wrongReflexive">wrongReflexive</a>&nbsp;
+<a href="#zeroQuantity">zeroQuantity</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="allowActionRemapping"></a>
+<table class=decl><tr><td><code>allowActionRemapping</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5795">5795</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="allowEquivalentFiltering"></a>
+<table class=decl><tr><td><code>allowEquivalentFiltering</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5796">5796</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="allNotAllowed"></a>
+<table class=decl><tr><td><code>allNotAllowed ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5762">5762</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="ambiguousNounPhrase"></a>
+<table class=decl><tr><td><code>ambiguousNounPhrase (keeper, askwer, txt, matchLst, fullMatchLst, scopeList, requiredNum, resolver)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5769">5769</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="askMissingLiteral"></a>
+<table class=decl><tr><td><code>askMissingLiteral (action, which)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5775">5775</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="askMissingObject"></a>
+<table class=decl><tr><td><code>askMissingObject (asker, resolver, responseProd)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5773">5773</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="beginSingleObjSlot"></a>
+<table class=decl><tr><td><code>beginSingleObjSlot ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5787">5787</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="beginTopicSlot"></a>
+<table class=decl><tr><td><code>beginTopicSlot ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5789">5789</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="emptyNounPhrase"></a>
+<table class=decl><tr><td><code>emptyNounPhrase (resolver)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5776">5776</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="endSingleObjSlot"></a>
+<table class=decl><tr><td><code>endSingleObjSlot ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5788">5788</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="endTopicSlot"></a>
+<table class=decl><tr><td><code>endTopicSlot ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5790">5790</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getImpliedObject"></a>
+<table class=decl><tr><td><code>getImpliedObject (np, resolver)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5772">5772</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="incCommandCount"></a>
+<table class=decl><tr><td><code>incCommandCount ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5791">5791</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="insufficientQuantity"></a>
+<table class=decl><tr><td><code>insufficientQuantity (txt, matchList, requiredNum)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5778">5778</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatch"></a>
+<table class=decl><tr><td><code>noMatch (action, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5755">5755</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForAll"></a>
+<table class=decl><tr><td><code>noMatchForAll ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5757">5757</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForAllBut"></a>
+<table class=decl><tr><td><code>noMatchForAllBut ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5758">5758</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForListBut"></a>
+<table class=decl><tr><td><code>noMatchForListBut ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5759">5759</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForLocation"></a>
+<table class=decl><tr><td><code>noMatchForLocation (loc, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5766">5766</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForPossessive"></a>
+<table class=decl><tr><td><code>noMatchForPossessive (owner, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5765">5765</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchForPronoun"></a>
+<table class=decl><tr><td><code>noMatchForPronoun ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5761">5761</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatchPossessive"></a>
+<table class=decl><tr><td><code>noMatchPossessive (action, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5756">5756</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteActorSpecified"></a>
+<table class=decl><tr><td><code>noteActorSpecified ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5792">5792</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteAdjEnding"></a>
+<table class=decl><tr><td><code>noteAdjEnding ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5781">5781</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteBadPrep"></a>
+<table class=decl><tr><td><code>noteBadPrep ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5767">5767</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteEmptyBut"></a>
+<table class=decl><tr><td><code>noteEmptyBut ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5760">5760</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteIndefinite"></a>
+<table class=decl><tr><td><code>noteIndefinite ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5782">5782</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteLiteral"></a>
+<table class=decl><tr><td><code>noteLiteral (txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5774">5774</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteMatches"></a>
+<table class=decl><tr><td><code>noteMatches (matchList)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5783">5783</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteMiscWord"></a>
+<table class=decl><tr><td><code>noteMiscWord (txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5784">5784</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteNounSlots"></a>
+<table class=decl><tr><td><code>noteNounSlots (cnt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5793">5793</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="notePlural"></a>
+<table class=decl><tr><td><code>notePlural ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5786">5786</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="notePronoun"></a>
+<table class=decl><tr><td><code>notePronoun ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5785">5785</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noteWeakPhrasing"></a>
+<table class=decl><tr><td><code>noteWeakPhrasing ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5794">5794</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nothingInLocation"></a>
+<table class=decl><tr><td><code>nothingInLocation (loc)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5768">5768</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noVocabMatch"></a>
+<table class=decl><tr><td><code>noVocabMatch (action, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5754">5754</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="reflexiveNotAllowed"></a>
+<table class=decl><tr><td><code>reflexiveNotAllowed ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5763">5763</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="singleObjectRequired"></a>
+<table class=decl><tr><td><code>singleObjectRequired (txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5780">5780</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="uniqueObjectRequired"></a>
+<table class=decl><tr><td><code>uniqueObjectRequired (txt, matchList)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5779">5779</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="unknownNounPhrase"></a>
+<table class=decl><tr><td><code>unknownNounPhrase (match, resolver)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5771">5771</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="wrongReflexive"></a>
+<table class=decl><tr><td><code>wrongReflexive (typ, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5764">5764</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="zeroQuantity"></a>
+<table class=decl><tr><td><code>zeroQuantity (txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5777">5777</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

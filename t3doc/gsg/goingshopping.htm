@@ -1,0 +1,526 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Going Shopping</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="rowmyboat.htm">[Previous] </a>&nbsp;&nbsp;<a href="handlingcashtransactions.htm">[Next] </a></I></FONT></P>
+<h2>Going Shopping</h2>
+
+<p>The next task is to add the shop. The definition can go straight after the code listed above (so that the shop exterior is placed in the <font face="Courier New" size="2" color="#000000">jetty</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> room). If you haven't already tried defining your own shop interior, you could do so now, remembering to add a counter and maybe some items for sale (which could just be Decoration objects for now). You could also try adding a bell on the shop's counter, which Heidi can ring for service.
+<br>
+
+<br>
+Here's our version
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;Enterable&nbsp;-&gt;&nbsp;insideShop&nbsp;'small&nbsp;shop/store'&nbsp;'shop'
+<br>
+&nbsp;&nbsp;"The&nbsp;small,&nbsp;timber-clad&nbsp;shop&nbsp;has&nbsp;an&nbsp;open&nbsp;door,&nbsp;above&nbsp;which&nbsp;is&nbsp;a&nbsp;sign&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;reading&nbsp;GENERAL&nbsp;STORE"
+<br>
+;
+<br>
+
+<br>
+insideShop&nbsp;:&nbsp;Room&nbsp;'Inside&nbsp;Shop'
+<br>
+&nbsp;"The&nbsp;interior&nbsp;of&nbsp;the&nbsp;shop&nbsp;is&nbsp;lined&nbsp;with&nbsp;shelves&nbsp;containing&nbsp;all&nbsp;sorts&nbsp;of&nbsp;
+<br>
+&nbsp;&nbsp;items,&nbsp;including&nbsp;basic&nbsp;foodstuffs,&nbsp;sweets,&nbsp;snacks,&nbsp;stationery,&nbsp;batteries,
+<br>
+&nbsp;&nbsp;soft&nbsp;drinks&nbsp;and&nbsp;tissues.&nbsp;Behind&nbsp;the&nbsp;counter&nbsp;is&nbsp;a&nbsp;door&nbsp;marked&nbsp;'PRIVATE'.&nbsp;"
+<br>
+&nbsp;out&nbsp;=&nbsp;jetty
+<br>
+&nbsp;north&nbsp;asExit(out)
+<br>
+&nbsp;south&nbsp;:&nbsp;OneWayRoomConnector
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;=&nbsp;backRoom
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{&nbsp;return&nbsp;traveler&nbsp;!=&nbsp;gPlayerChar;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"The&nbsp;counter&nbsp;bars&nbsp;your&nbsp;way&nbsp;to&nbsp;the&nbsp;door.&nbsp;";&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
++&nbsp;Decoration&nbsp;'private&nbsp;door*doors'&nbsp;'door'
+<br>
+&nbsp;&nbsp;"The&nbsp;door&nbsp;marked&nbsp;'PRIVATE'&nbsp;is&nbsp;on&nbsp;the&nbsp;far&nbsp;side&nbsp;of&nbsp;the&nbsp;counter,&nbsp;and&nbsp;there&nbsp;
+<br>
+&nbsp;&nbsp;seems&nbsp;to&nbsp;be&nbsp;no&nbsp;way&nbsp;you&nbsp;can&nbsp;reach&nbsp;it.&nbsp;The&nbsp;other&nbsp;door&nbsp;out&nbsp;to&nbsp;the&nbsp;jetty&nbsp;is&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;the&nbsp;north.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;Fixture,&nbsp;Surface&nbsp;'counter'&nbsp;'counter'
+<br>
+&nbsp;&nbsp;"The&nbsp;counter&nbsp;is&nbsp;about&nbsp;four&nbsp;feet&nbsp;long&nbsp;and&nbsp;eighteen&nbsp;inches&nbsp;wide.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;bell&nbsp;:&nbsp;Thing&nbsp;'small&nbsp;brass&nbsp;bell'&nbsp;'small&nbsp;brass&nbsp;bell'
+<br>
+&nbsp;&nbsp;"The&nbsp;bell&nbsp;comprises&nbsp;an&nbsp;inverted&nbsp;hemisphere&nbsp;with&nbsp;a&nbsp;small&nbsp;brass&nbsp;knob&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;protruding&nbsp;through&nbsp;the&nbsp;top.&nbsp;Attached&nbsp;to&nbsp;the&nbsp;bell&nbsp;is&nbsp;a&nbsp;small&nbsp;sign.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Ring)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()&nbsp;{}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()&nbsp;{"TING!";}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
++++&nbsp;Component,&nbsp;Readable&nbsp;'sign'&nbsp;'sign'
+<br>
+&nbsp;"The&nbsp;sign&nbsp;reads&nbsp;RING&nbsp;BELL&nbsp;FOR&nbsp;SERVICE.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;Component&nbsp;'knob/button'&nbsp;'knob'
+<br>
+&nbsp;&nbsp;"The&nbsp;knob&nbsp;protrudes&nbsp;through&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;brass&nbsp;hemisphere&nbsp;of&nbsp;the&nbsp;bell.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Push)&nbsp;remapTo(Ring,&nbsp;bell)
+<br>
+;
+<br>
+
+<br>
+backRoom:&nbsp;Room&nbsp;
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;insideShop
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Only a few things need any explanation here. The definition of </font><font face="Courier New" size="2" color="#000000">backRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is minimal because the Player Character will never visit it - the location exists solely as somewhere for the shopkeeper to be when she's not in the shop. We thus define the </font><font face="Courier New" size="2" color="#000000">OneWayRoomConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> south from the shop interior so that the Player Character can't pass but the shopkeeper can. Although two doors are mentioned (or at least implied) by the room description, we supply a </font><font face="Courier New" size="2" color="#000000">Decoration</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object to represent them; a fuller implementation isn't necessary. The essential items are the counter and the bell on the counter that the customer must ring to attract attention. This introduces a new class, the </font><font face="Courier New" size="2" color="#000000">Component</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class, which, as its name suggests, treats objects of that class as components of the object that contains them. The sign is also of class </font><font face="Courier New" size="2" color="#000000">Readable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which makes it a more likely target for a <b>read</b> command; it would also allow <b>read sign</b> to produce a different description if we had overridden the </font><font face="Courier New" size="2" color="#000000">readDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property on the object, but that would be rather fussy here. We allow the player to ring the bell either with <b>ring bell</b> or <b>push knob</b>, the latter command remapping to the former. Since <b>ring</b> is not a verb defined in the library, we need to define it, which we can do by copying the definition of Row and making the few necessary changes:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">DefineTAction(Ring);
+<br>
+
+<br>
+VerbRule(Ring)
+<br>
+&nbsp;&nbsp;'ring'&nbsp;singleDobj
+<br>
+&nbsp;&nbsp;:&nbsp;RingAction
+<br>
+&nbsp;&nbsp;verbPhrase&nbsp;=&nbsp;'ring/ring&nbsp;(what)'
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;dobjFor(Ring)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;preCond&nbsp;=&nbsp;[touchObj]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;illogical('{You/he}&nbsp;can\'t&nbsp;ring&nbsp;{that&nbsp;dobj/him}');&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If we were designing this game for real, we'd probably want to populate the shop with a few more decoration objects, e.g. for the shelves, the items on the shelves, and a cash register on the counter; we'll be adding some of these later, the rest can be left, yet again, as an exercise for the reader. Right now we need to attend to what happens when the bell is rung; obviously more than just displaying the string 'TING' is required; we need to summon the shopkeeper.
+<br>
+
+<br>
+There are several ways this could be done; the way we shall use here probably isn't the simplest or the most elegant, it's simply one that lets us try out some features of the library we haven't met yet. In brief, we'll cause the ringing of the bell to trigger a </font><font face="Courier New" size="2" color="#000000">SoundEvent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. We'll then add a </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> between the inside of the shop and the back room so that the </font><font face="Courier New" size="2" color="#000000">SoundEvent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> can be detected by the shopkeeper even when she's in the back room, but we also need to make the shopkeeper a </font><font face="Courier New" size="2" color="#000000">SoundObserver</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> so she'll be receptive to the sound. We'll then have the sound trigger a daemon on the shopkeeper to make her walk into the shop one turn later (a fuse would have done just as well, so it doesn't much matter which we use here.)
+<br>
+
+<br>
+This probably sounds rather complicated, if not downright incomprehensible, so let's take it one step at a time. First, we need to define the </font><font face="Courier New" size="2" color="#000000">SoundEvent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">bellRing&nbsp;:&nbsp;SoundEvent
+<br>
+&nbsp;&nbsp;triggerEvent(source)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"TING!&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(source);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We have made the </font><font face="Courier New" size="2" color="#000000">SoundEvent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> responsible for producing the "TING!" so we've had to override its </font><font face="Courier New" size="2" color="#000000">triggerEvent(source)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, otherwise the definition of </font><font face="Courier New" size="2" color="#000000">bellRing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> would have been even simpler. The call to </font><font face="Courier New" size="2" color="#000000">inherited(source)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> within </font><font face="Courier New" size="2" color="#000000">triggerEvent(source)&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is absolutely vital here, since it's the inherited method (i.e. the behaviour defined on the class) that does all the work of notifying interested parties that the sound event has just happened. The </font><font face="Courier New" size="2" color="#000000">source</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> parameter is the object from which the sound is supposed to emanate. This is the bell, whose </font><font face="Courier New" size="2" color="#000000">dobjFor(Ring)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> now needs to its action method redefined thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">action()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bellRing.triggerEvent(self);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Where </font><font face="Courier New" size="2" color="#000000">self</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, of course, refers to the bell object. The next task is to make sure that the bell ring can be heard in the back room as well as the shop. To do that we need to define a </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> between the two:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">SenseConnector,&nbsp;Intangible&nbsp;'wall'&nbsp;'wall'
+<br>
+&nbsp;&nbsp;connectorMaterial&nbsp;=&nbsp;paper
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[backRoom,&nbsp;insideShop]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If everything works as it should, giving the </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> the name 'wall' should be unnecessary, but if something works unexpectedly and the parser wants to refer to this object, it's as well that it should have a recognizable name so we can see what's happening. Since the sound does notionally travel through the wall, that's a sensible name to give it. On the other hand, the player does not need to interact with this object in any way, so we make it of class </font><font face="Courier New" size="2" color="#000000">Intangible&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(as well as </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), so that it does not have any physical presence. The </font><font face="Courier New" size="2" color="#000000">connectorMaterial</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> defines the senses this </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will pass: </font><font face="Courier New" size="2" color="#000000">paper</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is predefined to be transparent to sound and smell but opaque to sight and touch; in this case we don't care one way or the other about smell, and since it does what we want with the other three senses, this will do fine.
+<br>
+
+<br>
+Now all we have to do is to define the shopkeeper. At this point we shan't program all her behaviour, just what's needed to get her to respond to the bell ring:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">shopkeeper&nbsp;:&nbsp;SoundObserver,&nbsp;Person&nbsp;'young&nbsp;shopkeeper/woman'&nbsp;'young&nbsp;shopkeeper'
+<br>
+&nbsp;&nbsp;&nbsp;@backRoom
+<br>
+"The&nbsp;shopkeeper&nbsp;is&nbsp;a&nbsp;jolly&nbsp;woman&nbsp;with&nbsp;rosy&nbsp;cheeks&nbsp;and&nbsp;fluffy&nbsp;blonde&nbsp;curls.&nbsp;"
+<br>
+&nbsp;&nbsp;isHer&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;properName&nbsp;=&nbsp;'Sally'
+<br>
+&nbsp;&nbsp;notifySoundEvent(event,&nbsp;source,&nbsp;info)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(event&nbsp;==&nbsp;bellRing&nbsp;&amp;&amp;&nbsp;daemonID&nbsp;==&nbsp;nil&nbsp;&amp;&amp;&nbsp;isIn(backRoom))
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">daemonID&nbsp;=&nbsp;new&nbsp;Daemon(self,&nbsp;&amp;daemon,&nbsp;2);&nbsp;
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(isIn(insideShop)&nbsp;&amp;&amp;&nbsp;event==bellRing)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;All&nbsp;right,&nbsp;all&nbsp;right,&nbsp;here&nbsp;I&nbsp;am!&lt;/q&gt;&nbsp;says&nbsp;{the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper/she}.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;daemon
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveIntoForTravel(insideShop);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;shopkeeper/she}&nbsp;comes&nbsp;through&nbsp;the&nbsp;door&nbsp;and&nbsp;stands&nbsp;behind&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;daemonID.removeEvent();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'shopkeeper'
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The first new feature to note here is the addition of </font><font face="Courier New" size="2" color="#000000">SoundObserver</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to the shopkeeper's class list. This allows us to define the </font><font face="Courier New" size="2" color="#000000">notifySoundEvent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, which will be triggered by the bell ring. Since the bell ring is the only </font><font face="Courier New" size="2" color="#000000">soundEvent</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the game we hardly need to test for it, but to be on the safe side we do so anyway </font><font face="Courier New" size="2" color="#000000">(if&nbsp;event&nbsp;==&nbsp;bellRing)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. At the same time we check that the shopkeeper is still in the back room and that the daemon is not yet operative. We also check to see if the bell is rung while she's in the shop so she can simply respond with a suitable remark.
+<br>
+
+<br>
+The complicated part is setting up the daemon. A new daemon is created with a call to </font><font face="Courier New" size="2" color="#000000">new&nbsp;Daemon(obj,&nbsp;prop,&nbsp;interval)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, where obj is the object it refers to, prop is the method on that object that is called each time the daemon is invoked, and interval is the number of turns between each invocation of the daemon. Here we define the daemon to run the </font><font face="Courier New" size="2" color="#000000">daemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method (note that the parameter is supplied as </font><font face="Courier New" size="2" color="#000000">&amp;daemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) on self (the shopkeeper) every second turn (this means she won't come into the shop until the turn after the bell is rung). Since we want to be able to stop the daemon again we need to store a reference to the daemon, which we do in the property </font><font face="Courier New" size="2" color="#000000">daemonID</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (note that we could have called the daemon method and the reference property anything we liked).
+<br>
+
+<br>
+The daemon method first moves the shopkeeper into the shop and displays a suitable message to announce her arrival. We use </font><font face="Courier New" size="2" color="#000000">moveIntoForTravel</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather than </font><font face="Courier New" size="2" color="#000000">moveInto</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to move the shopkeeper since with the latter the library code tries to find a path to move her through, and may well end up moving her through the </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> with dire consequences (i.e. a runtime error); </font><font face="Courier New" size="2" color="#000000">moveIntoForTravel</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> avoids this problem. Once the shopkeeper has moved the daemon has done its work, so we get it to tidy up after itself, first by calling </font><font face="Courier New" size="2" color="#000000">daemonID.removeEvent(),</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and finally by resetting </font><font face="Courier New" size="2" color="#000000">daemonID</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> back to nil so we can easily test for there no longer being an active daemon.
+<br>
+
+<br>
+In this particular case we could have achieved the same effect slightly easier by using a fuse rather than a daemon. Instead of
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">daemonID&nbsp;=&nbsp;new&nbsp;Daemon(self,&nbsp;&amp;daemon,&nbsp;2);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We could have written
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">daemonID&nbsp;=&nbsp;new&nbsp;Fuse(self,&nbsp;&amp;daemon,&nbsp;1);
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(Note the change in the number from 2 to 1 to produce the same effect of the shopkeeper moving on the next turn). The use of the fuse would have avoided the need for the line:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">daemonID.removeEvent();
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We should still need to keep track of whether we had an active fuse (using </font><font face="Courier New" size="2" color="#000000">daemonID</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which we might rename </font><font face="Courier New" size="2" color="#000000">fuseID</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> had we used a fuse) in order to make sure that a second ringing of the bell while the fuse was still active did not cause the creation of a second fuse.
+<br>
+
+<br>
+Having reached this point, we can start expanding the definition of the shopkeeper using ActorStates and TopicEntries as with Joe the Charcoal Burner; you might like to try this out for yourself before reading this guide's version over the page.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;sallyTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;shopkeeper/she}&nbsp;is&nbsp;standing&nbsp;behind&nbsp;the&nbsp;counter&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;talking&nbsp;with&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;standing&nbsp;behind&nbsp;the&nbsp;counter&nbsp;talking&nbsp;with&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;nextState&nbsp;=&nbsp;sallyWaiting
+<br>
+;
+<br>
+
+<br>
+++&nbsp;sallyWaiting&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;shopkeeper/she}&nbsp;is&nbsp;standing&nbsp;behind&nbsp;the&nbsp;counter,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;checking&nbsp;the&nbsp;stock&nbsp;on&nbsp;the&nbsp;shelves.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"She's&nbsp;checking&nbsp;the&nbsp;stock&nbsp;on&nbsp;the&nbsp;shelves&nbsp;behind&nbsp;the&nbsp;counter.&nbsp;"
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;takeTurn
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!gPlayerChar.isIn(insideShop)&nbsp;&amp;&amp;&nbsp;shopkeeper.isIn(insideShop))&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shopkeeper.moveIntoForTravel(backRoom);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
++++&nbsp;HelloTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Hello,&nbsp;&lt;&lt;getActor.isProperName&nbsp;?&nbsp;properName&nbsp;:&nbsp;'Mrs&nbsp;Shopkeeper'&gt;&gt;,&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;say.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Hello,&nbsp;&lt;&lt;getActor.isProperName&nbsp;?&nbsp;'Heidi'&nbsp;:&nbsp;'young&nbsp;lady'&gt;&gt;,&nbsp;what&nbsp;can
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;do&nbsp;for&nbsp;you?&lt;/q&gt;&nbsp;asks&nbsp;{the&nbsp;shopkeeper/she}."
+<br>
+;
+<br>
+
+<br>
++++&nbsp;ByeTopic
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;'Bye,&nbsp;then!&lt;/q&gt;&nbsp;you&nbsp;say.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Goodbye&lt;&lt;getActor.isProperName&nbsp;?&nbsp;',&nbsp;Heidi'&nbsp;:&nbsp;nil&gt;&gt;.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;you&nbsp;again&nbsp;soon!&lt;/q&gt;&nbsp;{the&nbsp;shopkeeper/she}&nbsp;beams&nbsp;in&nbsp;return.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;ImpByeTopic
+<br>
+&nbsp;&nbsp;"{The&nbsp;shopkeeper/she}&nbsp;turns&nbsp;away&nbsp;and&nbsp;starts&nbsp;checking&nbsp;the&nbsp;stock&nbsp;on&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shelves.&lt;.p&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There is scarcely anything new here. Note the use of the double angle-bracket construction in the </font><font face="Courier New" size="2" color="#000000">HelloTopic&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and </font><font face="Courier New" size="2" color="#000000">ByeTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to vary what's said according to whether Sally and Heidi have exchanged names yet, and the separate </font><font face="Courier New" size="2" color="#000000">ImpByeTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to decide what should be displayed when the conversation is ended; if the conversation ends because Heidi stops conversing or walks out of the shop, Sally simply goes back to work. Heidi will be considered to have stopped talking if she fails to address a conversational command to Sally for the number of turns in the </font><font face="Courier New" size="2" color="#000000">attentionSpan</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> of Sally's current </font><font face="Courier New" size="2" color="#000000">InCoversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. By default this is four; it can be made effectively infinite by setting </font><font face="Courier New" size="2" color="#000000">attentionSpan</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">takeTurn</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">() method is called once every turn that this is Sally's current </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Here we use it to check whether Heidi is still inside the shop; if she isn't, and Sally still is, then we send Sally back to her back room. It may occur to you that the </font><font face="Courier New" size="2" color="#000000">takeTurn&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method is effectively a kind of daemon; to produce the effect of Sally coming into the shop the turn after the bell is rung, we could simply have added a few extra lines of code to this </font><font face="Courier New" size="2" color="#000000">takeTurn</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method, perhaps in conjunction with a custom property. We could have dispensed with the whole mechanism of </font><font face="Courier New" size="2" color="#000000">SoundEvent&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and simply have added a line of code in the </font><font face="Courier New" size="2" color="#000000">dobjFor(Ring)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method of the bell to change the value of the custom property which the additional code in the </font><font face="Courier New" size="2" color="#000000">takeTurn()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method could test for. But then we'd have lost the opportunity to look at sensory events, sense connectors, fuses and daemons. If you want to try to do it the simpler way, by all means experiment.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Since the shopkeeper has been summoned by the ringing of the bell, she is likely to initiate the conversation rather than waiting to be addressed by her customer. To handle this, add the following line after </font><font face="Courier New" size="2" color="#000000">daemonID&nbsp;=&nbsp;nil;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> at the end of the shopkeeper's </font><font face="Courier New" size="2" color="#000000">daemon</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">initiateConversation(sallyTalking,&nbsp;'sally-1');
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">And then add the definition of the appropriate conversation node; a good place for it would be between the definition of the shopkeeper and the definition of </font><font face="Courier New" size="2" color="#000000">sallyTalking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;ConvNode&nbsp;'sally-1'
+<br>
+&nbsp;&nbsp;npcGreetingMsg&nbsp;=&nbsp;"&lt;q&gt;Right,&nbsp;what&nbsp;can&nbsp;I&nbsp;get&nbsp;you?&lt;/q&gt;&nbsp;she&nbsp;asks.&nbsp;&lt;.p&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We don't need to put any topics under this conversation node; its only function is to display the </font><font face="Courier New" size="2" color="#000000">npcGreetingMsg</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Any topics can then be handled by the </font><font face="Courier New" size="2" color="#000000">sallyTalking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:</font><font face="Courier New" size="2" color="#000000">InConversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Let's start by adding a few now (put them after the definition of </font><font face="Courier New" size="2" color="#000000">sallyWaiting</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTellTopic&nbsp;[shopkeeper,&nbsp;gPlayerChar]
+<br>
+&nbsp;&nbsp;"&lt;q&gt;I'm&nbsp;Heidi.&nbsp;What's&nbsp;your&nbsp;name?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&lt;q&gt;Hello,&nbsp;Heidi;&nbsp;I'm&nbsp;&lt;&lt;shopkeeper.properName&gt;&gt;,&lt;/q&gt;&nbsp;she&nbsp;smiles.
+<br>
+&nbsp;&nbsp;&lt;&lt;shopkeeper.makeProper&gt;&gt;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic
+<br>
+&nbsp;"&lt;q&gt;I'm&nbsp;feeling&nbsp;really&nbsp;&lt;i&gt;very&lt;/i&gt;&nbsp;well&nbsp;today;&nbsp;how&nbsp;are&nbsp;you?&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&lt;q&gt;I'm&nbsp;feeling&nbsp;very&nbsp;well&nbsp;too,&nbsp;thanks.&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&nbsp;"
+<br>
+&nbsp;isActive&nbsp;=&nbsp;(shopkeeper.isProperName)
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskTellTopic&nbsp;@burner
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Do&nbsp;you&nbsp;know&nbsp;{the&nbsp;burner/him},&nbsp;the&nbsp;old&nbsp;fellow&nbsp;who&nbsp;works&nbsp;in&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;forest?&lt;/q&gt;&nbsp;you&nbsp;enquire&nbsp;innocently.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&lt;q&gt;He's&nbsp;not&nbsp;&lt;i&gt;that&lt;/i&gt;&nbsp;old,&lt;/q&gt;&nbsp;she&nbsp;replies&nbsp;coyly.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskTellTopic&nbsp;@tWeather
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Lovely&nbsp;weather&nbsp;we're&nbsp;having,&nbsp;don't&nbsp;you&nbsp;think?&lt;/q&gt;&nbsp;you&nbsp;remark.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&lt;q&gt;Absolutely,&lt;/q&gt;&nbsp;she&nbsp;agrees,&nbsp;&lt;q&gt;and&nbsp;with&nbsp;luck,&nbsp;it&nbsp;should&nbsp;stay&nbsp;fine&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;tomorrow.&lt;/q&gt;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;DefaultAskTellTopic,&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;What&nbsp;do&nbsp;you&nbsp;think&nbsp;about&nbsp;'&nbsp;+&nbsp;gTopicText&nbsp;+&nbsp;'?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Frankly,&nbsp;not&nbsp;a&nbsp;lot.&lt;/q&gt;&nbsp;she&nbsp;replies.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;think&nbsp;it\'s&nbsp;really&nbsp;interesting&nbsp;that...&lt;/q&gt;&nbsp;you&nbsp;begin.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Oh&nbsp;yes,&nbsp;really&nbsp;interesting.&lt;/q&gt;&nbsp;she&nbsp;agrees.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'You&nbsp;make&nbsp;polite&nbsp;conversation&nbsp;about&nbsp;'&nbsp;+&nbsp;gTopicText&nbsp;+&nbsp;'&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{the&nbsp;shopkeeper/she}&nbsp;makes&nbsp;polite&nbsp;conversation&nbsp;in&nbsp;return.&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Most of this should be fairly familiar. Note that placing a list in square brackets, as in the </font><font face="Courier New" size="2" color="#000000">[shopkeeper,&nbsp;gPlayerChar]</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the first </font><font face="Courier New" size="2" color="#000000">AskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> means that the topic can be triggered by any of the objects in the list; so this topic will work equally well for <b>ask shopkeeper about herself</b> or <b>tell shopkeeper about yourself</b>. Note also the use of string concatenation (joining strings together with the + operator) in the </font><font face="Courier New" size="2" color="#000000">DefaultAskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to allow the use of a variable element (</font><font face="Courier New" size="2" color="#000000">gTopicText</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) in an EventList. The other slight novelty (unless you already experimented with it at the end of the previous chapter) is the use of a </font><font face="Courier New" size="2" color="#000000">Topic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object to talk about the weather; since the weather is not a physical object defined anywhere in the game, we don't have a game object to match it to. To cope with this type of situation, where you want to be able to converse about things that are not game objects, there is a special </font><font face="Courier New" size="2" color="#000000">Topic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class. In this case all we need define is:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">tWeather&nbsp;:&nbsp;Topic&nbsp;'weather';
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's nothing magic about the 't' with which I started the object name here; that's just a convention I use to mark it as a </font><font face="Courier New" size="2" color="#000000">Topic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object as opposed to an ordinary game object. Note that, unlike game objects, </font><font face="Courier New" size="2" color="#000000">Topic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects are assumed to be known by default, so that they are always available to <b>ask about</b> and <b>tell about</b> commands. This can be changed by setting defining the </font><font face="Courier New" size="2" color="#000000">isKnown</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of the topic to nil when it is defined, e.g. if a player is to be informed about a gruesome murder during a conversation, but does not know of it when the game begins, one might define the murder topic object thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">tMurder&nbsp;:&nbsp;Topic&nbsp;'gruesome&nbsp;murder'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isKnown&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+When the player then learns of the murder at a later point one could use the </font><font face="Courier New" size="2" color="#000000">gSetKnown(tMurder)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro to set </font><font face="Courier New" size="2" color="#000000">tMurder.isKnown&nbsp;=&nbsp;true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="rowmyboat.htm">[Previous] </a>&nbsp;&nbsp;<a href="handlingcashtransactions.htm">[Next] </a></I></FONT></P>
+</body></html>

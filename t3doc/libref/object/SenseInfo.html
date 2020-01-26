@@ -1,0 +1,63 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>SenseInfo</title></head><body>
+<table class=ban><tr><td align=left><span class=title>SenseInfo</span><span class=type>class</span><td align=right><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#31">31</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Sense Information entry.  Thing.senseInfoTable() returns a list of   these objects to provide full sensory detail on the objects within   range of a sense.
+<p>
+<code>class
+<b>SenseInfo</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>SenseInfo</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#ambient">ambient</a>&nbsp;
+<a href="#obj">obj</a>&nbsp;
+<a href="#obstructor">obstructor</a>&nbsp;
+<a href="#trans">trans</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#compareTransTo">compareTransTo</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#selectMoreTrans">selectMoreTrans</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="ambient"></a>
+<table class=decl><tr><td><code>ambient</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#60">60</a>]</table><div class=desc>the ambient sense energy level at this object<p>
+</div>
+<a name="obj"></a>
+<table class=decl><tr><td><code>obj</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#51">51</a>]</table><div class=desc>the object being sensed<p>
+</div>
+<a name="obstructor"></a>
+<table class=decl><tr><td><code>obstructor</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#57">57</a>]</table><div class=desc>the obstructor that introduces a non-transparent value of trans<p>
+</div>
+<a name="trans"></a>
+<table class=decl><tr><td><code>trans</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#54">54</a>]</table><div class=desc>the transparency from the point of view to this object<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="compareTransTo"></a>
+<table class=decl><tr><td><code>compareTransTo (other)</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#68">68</a>]</table><div class=desc>   compare this SenseInfo object's transparency to the other one;   returns a number greater than zero if 'self' is more transparent,   zero if they're equally transparent, or a negative number if   'self' is less transparent <p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (obj, trans, obstructor, ambient)</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#32">32</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="selectMoreTrans"></a>
+<table class=decl><tr><td><code>selectMoreTrans (a, b)</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#76">76</a>]</table><div class=desc>   Return the more transparent of two SenseInfo objects.  Either   argument can be nil, in which case we'll return the non-nil one;   if both are nil, we'll return nil.  If they're equal, we'll return   the first one. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ContainerDoor</title><meta name="keywords" content="ContainerDoor,subContainer"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ContainerDoor : <a href="component.htm">Component</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="complexcontainer.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="singlecontainer.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The purpose of a ContainerDoor is to represent the door of a Container, when the player might want to refer to it separately. A container's door cannot be straightforwardly made a component of its container (located in the container), since this would have the effect of putting the door <i>inside</i> the container, where it would vanish out of sight when the container was closed. You would therefore normally use a ContainerDoor as a component of (located in) a <a href="complexcontainer.htm">ComplexContainer</a>; it then maps OPEN, CLOSE, LOCK, UNLOCK, LOOK IN and LOOK BEHIND commands to the subContainer of that ComplexContainer.
+<br>
+
+<br>
+For example, the dressing table we've just defined mentions in its description that it has a pair of doors. To implement those doors we just need to define the following, immediately after the definition of the dressing table ComplexContainer object:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;ContainerDoor&nbsp;'(dressing)&nbsp;(table)&nbsp;door/pair/doors'&nbsp;'dressing&nbsp;table&nbsp;door'
+<br>
+&nbsp;&nbsp;"They're&nbsp;made&nbsp;of&nbsp;the&nbsp;same&nbsp;scratched,&nbsp;stained&nbsp;wood&nbsp;as&nbsp;the&nbsp;dressing&nbsp;table
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;which&nbsp;they're&nbsp;attached,&nbsp;and&nbsp;perfectly&nbsp;match&nbsp;its&nbsp;generally&nbsp;battered
+<br>
+&nbsp;&nbsp;&nbsp;appearance.&nbsp;"
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+It's also possible to set up a ContainerDoor to act as the door to any kind of openable container, by setting its <b>subContainer</b> property to point to that container. For example, we could add a door to the locker in the crew quarters by this means:
+<br>
+
+<br>
+l</font><font face="Courier New" size="2" color="#000000">ocker&nbsp;:&nbsp;LockableContainer,&nbsp;Fixture&nbsp;'(crew)&nbsp;locker'&nbsp;'locker'&nbsp;@crewQuarters
+<br>
+&nbsp;&nbsp;"The&nbsp;locker&nbsp;is&nbsp;fixed&nbsp;firmly&nbsp;to&nbsp;the&nbsp;bulkhead.&nbsp;Its&nbsp;door&nbsp;is&nbsp;fastened&nbsp;by&nbsp;a&nbsp;simple
+<br>
+&nbsp;&nbsp;&nbsp;latch&nbsp;mechanism,&nbsp;though&nbsp;the&nbsp;latch&nbsp;looks&nbsp;a&nbsp;bit&nbsp;rusty.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;15
+<br>
+&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'crew&nbsp;locker'
+<br>
+&nbsp;&nbsp;initiallyLocked&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;makeLocked(stat)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!lockerLatch.oiled)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('The&nbsp;latch&nbsp;is&nbsp;stuck&nbsp;fast.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(stat);
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">NameAsOther,&nbsp;SecretFixture&nbsp;targetObj&nbsp;=&nbsp;locker&nbsp;location&nbsp;=&nbsp;crewQuarters;
+<br>
+
+<br>
+<b>+&nbsp;ContainerDoor&nbsp;'(locker)&nbsp;door'&nbsp;'locker&nbsp;door'
+<br>
+&nbsp;&nbsp;"The&nbsp;locker&nbsp;door&nbsp;is&nbsp;a&nbsp;plain&nbsp;wooden&nbsp;front,&nbsp;fastened&nbsp;by&nbsp;a&nbsp;latch.&nbsp;"
+<br>
+&nbsp;&nbsp;subContainer&nbsp;=&nbsp;locker
+<br>
+;</b>
+<br>
+
+<br>
+<b>++</b>&nbsp;lockerLatch&nbsp;:&nbsp;Component&nbsp;'(locker)&nbsp;latch'&nbsp;'latch'
+<br>
+&nbsp;&nbsp;"The&nbsp;latch&nbsp;looks&nbsp;a&nbsp;bit&nbsp;rusty.&nbsp;It's&nbsp;currently&nbsp;in&nbsp;the&nbsp;&lt;&lt;locker.isLocked
+<br>
+&nbsp;&nbsp;&nbsp;?&nbsp;nil&nbsp;:&nbsp;'un'&nbsp;&gt;&gt;locked&nbsp;position.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Of course, it would probably have been easier to make the locker a ComplexContainer and attach the ContainerDoor to that; but at least this shows that other arrangements are possible.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

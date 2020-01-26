@@ -1,0 +1,88 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DarkRoom</title><meta name="keywords" content="DarkRoom,brightness,light,fiat lux,debugging commands,debugging commands, fiat lux,__DEBUG,#ifdef,#endif"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DarkRoom : <a href="room.htm">Room</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="throughpassage.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="travelmessage.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Since by the time we end up at the end of the tunnel north from the secret passage we're now some way from the well-lit mainCave, it would not be surprising if we were now totally in the dark. We could simply override the brightness property to be 0 in the smallCave, but instead we'll make it a DarkRoom, which does this for us (using the <a href="roomtemplate.htm">Room template</a>):
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">smallCave&nbsp;:&nbsp;DarkRoom&nbsp;'Small&nbsp;Cave'&nbsp;'the&nbsp;small&nbsp;cave'
+<br>
+&nbsp;&nbsp;"The&nbsp;long&nbsp;narrow&nbsp;tunnel&nbsp;from&nbsp;the&nbsp;south&nbsp;comes&nbsp;to&nbsp;an&nbsp;end&nbsp;in&nbsp;this&nbsp;cramped,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sandy-floored&nbsp;cave,&nbsp;whose&nbsp;rough&nbsp;rocky&nbsp;walls&nbsp;press&nbsp;in&nbsp;claustrophobically
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;every&nbsp;side.&nbsp;Anyone&nbsp;much&nbsp;taller&nbsp;than&nbsp;average&nbsp;would&nbsp;have&nbsp;to&nbsp;stoop&nbsp;here.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You can now compile the program and test it, but you'll quickly find that not only is there no way out of smallCave, but there's as yet no way of bringing any light to it. While developing a game it would obviously be useful to be able to test dark locations without necessarily having to use the methods the player will be obliged to use (either because you simply haven't implemented them yet, or because you don't want to have to go through the business of procuring the light source each time you want to test a new dark location). What would be useful is some way of producing light on demand while testing, and the way to do that is to provide a means of adjusting the brightness property of the Player Character object (i.e. allow the PC to be its own light source, so that it does not need to carry one). You could download Nikos Chantziaras's ncDebugActions.t library extension and use that, since it provides a number of useful debugging verbs, including MEGA and UNMEGA which (amongst other things) turns the player into a light source and back again. If for any reason you have any difficulty in acquiring this file, (which you should be able to obtain from the if-archive at <a href=" http://www.ifarchive.org/indexes/if-archiveXprogrammingXtads3XlibraryXcontributions.html " TARGET="_top">http://www.ifarchive.org/indexes/if-archiveXprogrammingXtads3XlibraryXcontributions.html</A>) you can get a similar effect by including the following in your own code, perhaps out of the way at the end of the file:
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">#ifdef&nbsp;__DEBUG
+<br>
+
+<br>
+DefineIAction(FiatLux)
+<br>
+&nbsp;execAction
+<br>
+{
+<br>
+&nbsp;&nbsp;if(gPlayerChar.brightness&nbsp;==&nbsp;0)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;start&nbsp;to&nbsp;glow!\n";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gPlayerChar.brightness&nbsp;=&nbsp;3;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"Repeating&nbsp;the&nbsp;spell&nbsp;reverses&nbsp;its&nbsp;effect,&nbsp;and&nbsp;your&nbsp;glowing&nbsp;aura&nbsp;disappears.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gPlayerChar.brightness&nbsp;=&nbsp;0;
+<br>
+&nbsp;&nbsp;}
+<br>
+}
+<br>
+;
+<br>
+
+<br>
+VerbRule(FiatLux)
+<br>
+&nbsp;&nbsp;'fiat'&nbsp;'lux'
+<br>
+&nbsp;&nbsp;:&nbsp;FiatLuxAction
+<br>
+&nbsp;&nbsp;verbPhrase&nbsp;=&nbsp;'make/making&nbsp;light'
+<br>
+;
+<br>
+
+<br>
+#endif
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You don't have to call it Fiat Lux, of course, you can call it anything convenient you like, but whatever you call it it's worth enclosing it between #ifdef __DEBUG (note the double underscore before DEBUG) and #endif so that this cheating verb won't be available in the release version of your game. In the debug version, however, you'll be able to type FIAT LUX (or whatever you define the command to be) to make the player character a light source, and the same command again to reverse the spell.
+<br>
+</font></font>
+
+</body></html>

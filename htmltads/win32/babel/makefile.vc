@@ -1,0 +1,75 @@
+# Microsoft Visual C++ makefile for babel-treaty
+# MJRoberts - based on the original Babel Unix makefile
+
+# all: babel.exe $(LIBDIR)\babel.lib
+all: $(LIBDIR)\babel.lib
+
+!if $(MSVCPP_VER) >= 9
+CFLAGS_RTCHECKS = -RTCsu
+CFLAGS_CRT_DEPRECATIONS = -D_CRT_SECURE_NO_WARNINGS=1 -wd4996
+!else
+CFLAGS_RTCHECKS = -GZ
+CFLAGS_CRT_DEPRECATIONS =
+!endif
+
+!ifdef COMPILE_FOR_DEBUG
+CFLAGS_DEBUG = -Zi -Od
+LDFLAGS_DEBUG = /Debug
+!else
+CFLAGS_DEBUG =
+LDFLAGS_DEBUG =
+!endif
+
+CC = cl
+CFLAGS = \
+	$(CFLAGS_DEBUG) \
+	-W3 -WX \
+	-we4062 -we4242 -we4245 -we4263 -we4265 -we4389 -we4702 \
+	$(CFLAGS_CRT_DEPRECATIONS)
+LD = link
+LDFLAGS = $(LDFLAGS_DEBUG)
+AR = lib
+ARFLAGS =
+
+clean:
+	if exist *.obj del *.obj
+	if exist *.exe del *.exe
+
+MAIN_OBJS = \
+	babel_handler.obj \
+	babel_ifiction_functions.obj \
+	babel_story_functions.obj \
+	ifiction.obj \
+	misc.obj \
+	register.obj \
+	register_ifiction.obj
+
+SYSTEM_OBJS_EX_TADS = \
+	blorb.obj \
+	advsys.obj \
+	magscrolls.obj \
+	agt.obj \
+	level9.obj \
+	adrift.obj \
+	hugo.obj \
+	glulx.obj \
+	zcode.obj \
+	executable.obj \
+	tads2.obj \
+	tads3.obj
+
+SYSTEM_OBJS = \
+	$(SYSTEM_OBJS_EX_TADS) \
+	tads.obj \
+
+$(LIBDIR)\babel.lib: $(MAIN_OBJS) $(SYSTEM_OBJS)
+	$(AR) $(ARFLAGS) /out:$@ $**
+
+babel.exe: babel.obj $(MAIN_OBJS) $(SYSTEM_OBJS)
+	$(LD) $(LDFLAGS) /out:$@ $**
+
+tads_test.exe: tads_test.obj $(MAIN_OBJS) $(SYSTEM_OBJS_EX_TADS)
+	$(LD) $(LDFLAGS) /out:$@ $**
+
+tads_test.obj: tads.c
+	$(CC) -c $(CFLAGS) -DTADS_TEST -Fo$@ tads.c

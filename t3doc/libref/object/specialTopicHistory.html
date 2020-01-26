@@ -1,0 +1,44 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>specialTopicHistory</title></head><body>
+<table class=ban><tr><td align=left><span class=title>specialTopicHistory</span><span class=type>object</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3948">3948</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A history of special topics listed in topic inventories.  This keeps   track of special topics that we've recently offered, so that we can   provide better feedback if the player tries to use a recently-listed   special topic after it's gone out of context. <p>   When the player types a command that the parser doesn't recognize, the   parser will check the special topic history to see if the command   matches a special topic that was suggested recently.  If so, we'll   explain that the command isn't usable right now, rather than claiming   that the command is completely invalid.  A player might justifiably   find it confusing to have the game suggest a command one minute, and   then claim that the very same command is invalid a minute later. <p>   Ideally, we'd search *every* special topic for a match each time the   player enters an invalid command, but that could take a long time in a   conversation-heavy game with a large number of special topics.  As a   compromise, we keep track of the last few special commands that were   actually suggested, so that we can scan those.  The reasoning is that   a player is more likely to try a recently-offered special command; the   player will probably eventually forget older suggestions, and in any   case it's much more jarring to see a "command not understood" response   to a suggestion that's still fresh in the player's memory. <p>   This is a transient object because we're interested in the special   topics that have been offered in the current session, irrespective of   things like 'undo' and 'restore'.  From the player's perspective, the   recency of a special topic suggestion is a function of the transcript,   not of the internal story timeline.  For example, if the game suggests   a special topic, then the player types UNDO, the player might still   think to try the special topic on the next turn simply because it's   right there on the screen a few lines up.
+<p>
+<code>transient <b>specialTopicHistory</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>specialTopicHistory</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#historyList">historyList</a>&nbsp;
+<a href="#maxEntries">maxEntries</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#checkHistory">checkHistory</a>&nbsp;
+<a href="#noteListing">noteListing</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="historyList"></a>
+<table class=decl><tr><td><code>historyList</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4051">4051</a>]</table><div class=desc>   The list of entries.  Create it when we first need it, which   perInstance does for us. <p>
+</div>
+<a name="maxEntries"></a>
+<table class=decl><tr><td><code>maxEntries</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3979">3979</a>]</table><div class=desc>   Maximum number of topics to keep in our inventory.  When the   history exceeds this number, we'll throw away the oldest entry   each time we need to add a new entry - thus, we'll always have the   N most recent suggestions. <p>   This can be configured as desired.  The default setting tries to   strike a balance between speed and good feedback - we try to keep   track of enough entries that most players wouldn't think to try   anything that's aged out of the list, but not so many that it   takes a long time to scan them all. <p>   If you set this to nil, we won't keep a history at all, but   instead simply scan every special topic in the entire game when we   need to look for a match to an entered command - in a game with a   small number of special topics (on the order of, say, 30 or 40),   there should be no problem using this approach.  Note that this   changes the behavior in one important way: when there's no history   limit, we can topics that *haven't even been offered yet*.  In   some ways this is more desirable than only scanning past   suggestions, since it avoids weird situations where the game   claims that a command is unrecognized at one point, but later   suggests and then accepts the exact same command.  It's   conceivably less desirable in that it could accidentally give away   information to the player, by letting them know that a randomly   typed command will be meaningful at some point in the game - but   the odds of this even happening seem minuscule, and the   possibility that it would give away meaningful information even if   it did happen seems very remote. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="checkHistory"></a>
+<table class=decl><tr><td><code>checkHistory (toks)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#4008">4008</a>]</table><div class=desc>   Scan the history list (or, if there's no limit to the history,   scan all of the special topics in the entire game) for a match to   an unrecognized command.  Returns true if we find a match, nil if   not. <p>
+</div>
+<a name="noteListing"></a>
+<table class=decl><tr><td><code>noteListing (t)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#3982">3982</a>]</table><div class=desc>note that a special topic 't' is being listed in a topic inventory<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

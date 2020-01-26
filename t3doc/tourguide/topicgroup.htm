@@ -1,0 +1,196 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>TopicGroup</title><meta name="keywords" content="TopicGroup,matchScoreAdjustment"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>TopicGroup : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="misctopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaulttopics-overview.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000"><i>A TopicGroup is an abstract container for a set of TopicEntry objects. The purpose of the group object is to apply a common "is active" condition to all of the topics within the group.
+<br>
+
+<br>
+The isActive condition of the TopicGroup is effectively AND'ed with any other conditions on the nested TopicEntries. In other words, a TopicEntry within the TopicGroup is active if the TopicEntry would otherwise be active AND the TopicGroup is active.
+<br>
+
+<br>
+TopicEntry objects are associated with the group via the 'location' property - set the location of the TopicEntry to point to the containing TopicGroup.
+<br>
+
+<br>
+You can put a TopicGroup anywhere a TopicEntry could go - directly inside an Actor, inside an ActorState, or within another TopicGroup. The topic entries within a topic group act as though they were directly in the topic group's container.</i>
+<br>
+
+<br>
+The TopicGroup is potentially a highly versatile way of organizing TopicEntries when the way you want to organize them doesn't fall neatly into the categories offered by actors, actor states and conversation nodes.
+<br>
+
+<br>
+For example, suppose you wanted Sarah to give a different set of responses based on her mood, but all within the same state (the sarahFollowing state, for example). Note that this goes beyond what we're actually attempting in this game, but what you might do is first define some enums for Sarah's moods:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">enum&nbsp;mHappy,&nbsp;mSad,&nbsp;mAngry;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Then you'd need to define a mood property, say, on Sarah herself (which we'll suppose will be updated in response to various game events):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">sarah&nbsp;:&nbsp;Person&nbsp;...
+<br>
+
+<br>
+&nbsp;&nbsp;mood&nbsp;=&nbsp;mHappy
+<br>
+&nbsp;&nbsp;...
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Then we could define various TopicGroups within, say, sarahFollowing:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;sarahFollowing&nbsp;:&nbsp;AccompanyingState
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
+++&nbsp;TopicGroup
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(sarah.mood&nbsp;==&nbsp;mHappy)
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AskTopic&nbsp;@sarah
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;How&nbsp;are&nbsp;you?&lt;/q&gt;&nbsp;you&nbsp;enquire.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Oh&nbsp;-&nbsp;absolutely&nbsp;fine!&lt;/q&gt;&nbsp;she&nbsp;assures&nbsp;you."
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AskTopic&nbsp;@goldenBanana
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
+++&nbsp;TopicGroup
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(sarahMood&nbsp;==&nbsp;mAngry)
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AskTopic&nbsp;@sarah
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;How&nbsp;are&nbsp;you&nbsp;feeling?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Absolutely&nbsp;livid!&lt;/q&gt;&nbsp;she&nbsp;declares&nbsp;through&nbsp;gritted&nbsp;teeth."
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AskTopic&nbsp;@goldenBanana
+<br>
+&nbsp;&nbsp;...
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Note that this doesn't stop you <i>also</i> locating TopicEntries directly in the actor state as well, if you want them to be common to all of Sarah's moods (say). Or you could put a TopicEntry both in an actor and in a TopicGroup, if, for example you wanted one response when Sarah was angry, and another when she was in any other mood. To ensure that the one in the 'angry' TopicGroup took precedence when Sarah was angry you could then set that TopicGroup's <b>matchScoreAdjustment</b> property to boost the score of all its TopicEntries (e.g., setting matchScoreAdjustment to 50 would effectively add 50 to the matchScore of all the TopicEntries located within it).
+<br>
+
+<br>
+Another problem you could use TopicGroup to solve is the case where you want an actor to give the same response to a number of conversational commands in several but not all of its ActorStates. For example, suppose that than an actor progresses through actor states to which we'll give the unimaginative names state1, state2, state3 and state4 over the course of the game, and that there's a group of topics for which you want one answer if the actor's in state1 or state2 and another if it's in state3 or state4. Rather than having to duplicate the TopicEntries under both states, you could create a couple of TopicGroups directly in the actor:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">bob&nbsp;:&nbsp;Person&nbsp;'bob'&nbsp;'Bob'
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
++&nbsp;TopicGroup
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(getActor.curState&nbsp;is&nbsp;in&nbsp;(state1,&nbsp;state2))
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskTopic&nbsp;@bob
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskTopic&nbsp;@dora
+<br>
+&nbsp;...
+<br>
+;
+<br>
+
+<br>
++&nbsp;TopicGroup
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(getActor.curState&nbsp;is&nbsp;in&nbsp;(state3,&nbsp;state4))
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskTopic&nbsp;@bob
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskTopic&nbsp;@dora
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that in this case, if any of these individual actor states have <a href="defaulttopics-overview.htm">DefaultTopics</a> that might mask bob and dora, these actor states would need to define </font><font face="Courier New" size="2" color="#000000">excludeMatch&nbsp;=&nbsp;[bob,&nbsp;dora].</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Of course, these are just two suggested uses for TopicGroup; there are doubtless many more.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,124 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>travel.t</title></head><body>
+<table class=ban><tr><td align=left><span class=title>travel.t</span><span class=type>file</span><td align=right><a href="../source/travel.t.html">source file</a></table><p>
+<table class=nav><tr>
+<td><b>Classes</b><br><a href="#_ClassSummary_">Summary</a><br>&nbsp;<td><b>Objects</b><br><a href="#_ObjectSummary_">Summary</a><br>&nbsp;<td><b>Functions</b><br><a href="#_FunctionSummary_">Summary</a><br><a href="#_Functions_">Details</a></table><div class=fdesc>
+ <p>   TADS 3 Library - travel <p>   This module defines the parts of the simulation model related to   travel: rooms and other locations, directions, passages.
+</div>
+<a name="_ClassSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Classes</span> &nbsp; </div><p>
+<code>
+<a href="../object/AskConnector.html">AskConnector</a>&nbsp;
+<a href="../object/AutoClosingDoor.html">AutoClosingDoor</a>&nbsp;
+<a href="../object/BasicBed.html">BasicBed</a>&nbsp;
+<a href="../object/BasicChair.html">BasicChair</a>&nbsp;
+<a href="../object/BasicDoor.html">BasicDoor</a>&nbsp;
+<a href="../object/BasicLocation.html">BasicLocation</a>&nbsp;
+<a href="../object/BasicPlatform.html">BasicPlatform</a>&nbsp;
+<a href="../object/Bed.html">Bed</a>&nbsp;
+<a href="../object/Booth.html">Booth</a>&nbsp;
+<a href="../object/Chair.html">Chair</a>&nbsp;
+<a href="../object/CompassDirection.html">CompassDirection</a>&nbsp;
+<a href="../object/DarkRoom.html">DarkRoom</a>&nbsp;
+<a href="../object/DeadEndConnector.html">DeadEndConnector</a>&nbsp;
+<a href="../object/DefaultAskConnector.html">DefaultAskConnector</a>&nbsp;
+<a href="../object/DefaultWall.html">DefaultWall</a>&nbsp;
+<a href="../object/Direction.html">Direction</a>&nbsp;
+<a href="../object/Door.html">Door</a>&nbsp;
+<a href="../object/Enterable.html">Enterable</a>&nbsp;
+<a href="../object/EntryPortal.html">EntryPortal</a>&nbsp;
+<a href="../object/Exitable.html">Exitable</a>&nbsp;
+<a href="../object/ExitOnlyPassage.html">ExitOnlyPassage</a>&nbsp;
+<a href="../object/ExitPortal.html">ExitPortal</a>&nbsp;
+<a href="../object/FakeConnector.html">FakeConnector</a>&nbsp;
+<a href="../object/FakeDestination.html">FakeDestination</a>&nbsp;
+<a href="../object/Floor.html">Floor</a>&nbsp;
+<a href="../object/Floorless.html">Floorless</a>&nbsp;
+<a href="../object/FloorlessRoom.html">FloorlessRoom</a>&nbsp;
+<a href="../object/HiddenDoor.html">HiddenDoor</a>&nbsp;
+<a href="../object/HighNestedRoom.html">HighNestedRoom</a>&nbsp;
+<a href="../object/NestedRoom.html">NestedRoom</a>&nbsp;
+<a href="../object/NestedRoomFloor.html">NestedRoomFloor</a>&nbsp;
+<a href="../object/NominalPlatform.html">NominalPlatform</a>&nbsp;
+<a href="../object/NoTravelMessage.html">NoTravelMessage</a>&nbsp;
+<a href="../object/OneWayRoomConnector.html">OneWayRoomConnector</a>&nbsp;
+<a href="../object/OutdoorRoom.html">OutdoorRoom</a>&nbsp;
+<a href="../object/Passage.html">Passage</a>&nbsp;
+<a href="../object/PathPassage.html">PathPassage</a>&nbsp;
+<a href="../object/Platform.html">Platform</a>&nbsp;
+<a href="../object/PushTravelBarrier.html">PushTravelBarrier</a>&nbsp;
+<a href="../object/PushTraveler.html">PushTraveler</a>&nbsp;
+<a href="../object/RelativeDirection.html">RelativeDirection</a>&nbsp;
+<a href="../object/Room.html">Room</a>&nbsp;
+<a href="../object/RoomAutoConnector.html">RoomAutoConnector</a>&nbsp;
+<a href="../object/RoomConnector.html">RoomConnector</a>&nbsp;
+<a href="../object/RoomPart.html">RoomPart</a>&nbsp;
+<a href="../object/RoomPartItem.html">RoomPartItem</a>&nbsp;
+<a href="../object/SecretDoor.html">SecretDoor</a>&nbsp;
+<a href="../object/Shipboard.html">Shipboard</a>&nbsp;
+<a href="../object/ShipboardDirection.html">ShipboardDirection</a>&nbsp;
+<a href="../object/ShipboardRoom.html">ShipboardRoom</a>&nbsp;
+<a href="../object/Stairway.html">Stairway</a>&nbsp;
+<a href="../object/StairwayDown.html">StairwayDown</a>&nbsp;
+<a href="../object/StairwayUp.html">StairwayUp</a>&nbsp;
+<a href="../object/ThroughPassage.html">ThroughPassage</a>&nbsp;
+<a href="../object/TravelBarrier.html">TravelBarrier</a>&nbsp;
+<a href="../object/TravelConnector.html">TravelConnector</a>&nbsp;
+<a href="../object/TravelConnectorLink.html">TravelConnectorLink</a>&nbsp;
+<a href="../object/Traveler.html">Traveler</a>&nbsp;
+<a href="../object/TravelMessage.html">TravelMessage</a>&nbsp;
+<a href="../object/TravelMessageHandler.html">TravelMessageHandler</a>&nbsp;
+<a href="../object/TravelPushable.html">TravelPushable</a>&nbsp;
+<a href="../object/TravelWithMessage.html">TravelWithMessage</a>&nbsp;
+<a href="../object/UnlistedProxyConnector.html">UnlistedProxyConnector</a>&nbsp;
+<a href="../object/Vehicle.html">Vehicle</a>&nbsp;
+<a href="../object/VehicleBarrier.html">VehicleBarrier</a>&nbsp;
+<a href="../object/VerticalDirection.html">VerticalDirection</a>&nbsp;
+</code>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/aftDirection.html">aftDirection</a>&nbsp;
+<a href="../object/askTravelDown.html">askTravelDown</a>&nbsp;
+<a href="../object/askTravelIn.html">askTravelIn</a>&nbsp;
+<a href="../object/askTravelOut.html">askTravelOut</a>&nbsp;
+<a href="../object/defaultCeiling.html">defaultCeiling</a>&nbsp;
+<a href="../object/defaultEastWall.html">defaultEastWall</a>&nbsp;
+<a href="../object/defaultFloor.html">defaultFloor</a>&nbsp;
+<a href="../object/defaultGround.html">defaultGround</a>&nbsp;
+<a href="../object/defaultNorthWall.html">defaultNorthWall</a>&nbsp;
+<a href="../object/defaultSky.html">defaultSky</a>&nbsp;
+<a href="../object/defaultSouthWall.html">defaultSouthWall</a>&nbsp;
+<a href="../object/defaultWestWall.html">defaultWestWall</a>&nbsp;
+<a href="../object/downDirection.html">downDirection</a>&nbsp;
+<a href="../object/eastDirection.html">eastDirection</a>&nbsp;
+<a href="../object/foreDirection.html">foreDirection</a>&nbsp;
+<a href="../object/inDirection.html">inDirection</a>&nbsp;
+<a href="../object/lightProbe.html">lightProbe</a>&nbsp;
+<a href="../object/nestedRoomOut.html">nestedRoomOut</a>&nbsp;
+<a href="../object/northDirection.html">northDirection</a>&nbsp;
+<a href="../object/northeastDirection.html">northeastDirection</a>&nbsp;
+<a href="../object/northwestDirection.html">northwestDirection</a>&nbsp;
+<a href="../object/noShipTravel.html">noShipTravel</a>&nbsp;
+<a href="../object/noTravel.html">noTravel</a>&nbsp;
+<a href="../object/noTravelDown.html">noTravelDown</a>&nbsp;
+<a href="../object/noTravelIn.html">noTravelIn</a>&nbsp;
+<a href="../object/noTravelOut.html">noTravelOut</a>&nbsp;
+<a href="../object/outDirection.html">outDirection</a>&nbsp;
+<a href="../object/portDirection.html">portDirection</a>&nbsp;
+<a href="../object/southDirection.html">southDirection</a>&nbsp;
+<a href="../object/southeastDirection.html">southeastDirection</a>&nbsp;
+<a href="../object/southwestDirection.html">southwestDirection</a>&nbsp;
+<a href="../object/starboardDirection.html">starboardDirection</a>&nbsp;
+<a href="../object/upDirection.html">upDirection</a>&nbsp;
+<a href="../object/westDirection.html">westDirection</a>&nbsp;
+</code>
+<a name="FunctionSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Functions</span> &nbsp; </div><p>
+<code>
+<a href="#infiniteLoop">infiniteLoop</a>&nbsp;
+</code><p>
+<a name="_Functions_"></a><p><div class=mjhd><span class=hdln>Global Functions</span> &nbsp; </div><p>
+<a name="infiniteLoop"></a>
+<table class=decl><tr><td><code>infiniteLoop ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#15">15</a>]</table><div class=desc>include the library header<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

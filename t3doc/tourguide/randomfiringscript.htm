@@ -1,0 +1,38 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>RandomFiringScript</title><meta name="keywords" content="RandomFiringScript"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>RandomFiringScript: object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="synceventlist.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="overview-actors+npcs.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">RandomFiringScript is a mix-in class that can be added to any Script-like object to reduce the percentage of time it fires. <a href="shuffledeventlist.htm">ShuffledEventList</a> and <a href="randomeventlist.htm">RandomEventList</a> already inherit from RandomFiringScript, but you can mix with any of the other Script subclasses, provided you list it first, e.g.
+<br>
+
+<br>
+  <font face="Courier New" size="2" color="#000000">myScript:&nbsp;RandomFiringScript,&nbsp;EventList
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'The&nbsp;golden&nbsp;banana&nbsp;emits&nbsp;a&nbsp;cloud&nbsp;of&nbsp;purple&nbsp;smoke.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eventPercent&nbsp;=&nbsp;50
+<br>
+&nbsp;&nbsp;;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You can set the <b>eventPercent </b>property (an integer between 0 and 100) to define the proportion of turns in which you want one of the events (normally just displaying a string) to occur (for example, setting eventPercent = 75 would cause a random event to be selected on average in three turns out of every four).  By default, eventPercent is 100. Additionally, if you wish, you can have this percentage fall (or even rise!) to a new value, <b>eventReduceTo</b> after <b>eventReduceAfter</b> turns. If <b>eventReduceAfter</b> is nil (as it is by default) then the eventPercent never changes.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

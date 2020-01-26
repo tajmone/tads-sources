@@ -1,0 +1,97 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>FirstCommandProd</title></head><body>
+<table class=ban><tr><td align=left><span class=title>FirstCommandProd</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#691">691</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A first-on-line command.  The first command on a command line can   optionally start with an actor specification, to give orders to the   actor.
+<p>
+<code>class
+<b>FirstCommandProd</b> :  &nbsp; <a href="../object/CommandProd.html">CommandProd</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>FirstCommandProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandProd.html">CommandProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>FirstCommandProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/firstCommandPhrase(commandOnly).html">firstCommandPhrase(commandOnly)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FirstCommandProdWithActor.html">FirstCommandProdWithActor</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/actorBadCommandPhrase(main).html">actorBadCommandPhrase(main)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/firstCommandPhrase(askTellActorTo).html">firstCommandPhrase(askTellActorTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/firstCommandPhrase(withActor).html">firstCommandPhrase(withActor)</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<p>Inherited from <code>CommandProd</code> :<br>
+<code>
+<a href="../object/CommandProd.html#getActorPhrase">getActorPhrase</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#countCommands">countCommands</a>&nbsp;
+<a href="#getCommandSepIndex">getCommandSepIndex</a>&nbsp;
+<a href="#getCommandTokens">getCommandTokens</a>&nbsp;
+<a href="#getNextCommandIndex">getNextCommandIndex</a>&nbsp;
+<a href="#getTargetActor">getTargetActor</a>&nbsp;
+<a href="#isEndOfSentence">isEndOfSentence</a>&nbsp;
+<a href="#resolveFirstAction">resolveFirstAction</a>&nbsp;
+<a href="#resolveNouns">resolveNouns</a>&nbsp;
+</code><p>
+<p>Inherited from <code>CommandProd</code> :<br>
+<code>
+<a href="../object/CommandProd.html#execActorPhrase">execActorPhrase</a>&nbsp;
+<a href="../object/CommandProd.html#hasTargetActor">hasTargetActor</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="countCommands"></a>
+<table class=decl><tr><td><code>countCommands (results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#692">692</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="getCommandSepIndex"></a>
+<table class=decl><tr><td><code>getCommandSepIndex ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#756">756</a>]</table><div class=desc>   Get the token index of the first command separator token.  This   is the first token that is not part of the underlying command. <p>
+</div>
+<a name="getCommandTokens"></a>
+<table class=decl><tr><td><code>getCommandTokens ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#715">715</a>]</table><div class=desc>   The tokens of the entire command except for the target actor   specification.  By default, we take all of the tokens starting   with the first command's first token and running to the end of   the token list.  This assumes that the target actor is specified   at the beginning of the command - languages that use some other   word ordering must override this accordingly. <p>
+</div>
+<a name="getNextCommandIndex"></a>
+<table class=decl><tr><td><code>getNextCommandIndex ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#767">767</a>]</table><div class=desc>   get the token index of the next command - this is the index of   the next token after our conjunction if we have one, or after our   command if we don't have a conjunction <p>
+</div>
+<a name="getTargetActor"></a>
+<table class=decl><tr><td><code>getTargetActor ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#698">698</a>]</table><div class=desc>count commands in the underlying command<p>
+</div>
+<a name="isEndOfSentence"></a>
+<table class=decl><tr><td><code>isEndOfSentence ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#746">746</a>]</table><div class=desc>   Does this command end a sentence?  The exact meaning of a   sentence may vary by language; in English, a sentence ends with   certain punctuation marks (a period, a semicolon, an exclamation   point). <p>
+</div>
+<a name="resolveFirstAction"></a>
+<table class=decl><tr><td><code>resolveFirstAction (issuingActor, targetActor)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#725">725</a>]</table><div class=desc>   Resolve my first action.  This returns an instance of a subclass   of Action that represents the resolved action.  We'll ask our   first subcommand to resolve its action. <p>
+</div>
+<a name="resolveNouns"></a>
+<table class=decl><tr><td><code>resolveNouns (issuingActor, targetActor, results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#731">731</a>]</table><div class=desc>resolve nouns in the command<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

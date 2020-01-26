@@ -1,0 +1,211 @@
+<html>
+
+<head>
+<title>Using an External Text Editor</title>
+<link rel=stylesheet href="wbdoc.css">
+</head>
+
+<body>
+
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+
+<center>
+<br><br><br><img src='../htmltads.jpg'>
+<br><h1>
+Using a Text Editor in TADS Workbench</h1>
+<br><br>
+</center>
+
+<p>Even though TADS Workbench has a full-featured built-in text
+editor, some people might still prefer to use their own external
+editor application.  Programmers tend to become very attached to their
+favorite editor, because the little details in how an editor operates
+can make such a difference in comfort and convenience.
+
+<p>(Note that Workbench has extensive customization options that might
+make it possible to make the Workbench editor behave a lot like your
+favorite editor.  The number one priority for most people is the
+keyboard layout, and Workbench provides very good control over the
+keyboard.  Even if you have another editor you're happy with, you
+might want to take a look at the built-in editor; you might find that
+the benefits of working in an integrated environment outweight the
+differences between editors, particularly if you take a little time to
+map the keyboard to your liking.)
+
+<p>Workbench has a feature that lets you send a file you're viewing in
+Workbench directly to your external editor.  This feature comes from
+the days when Workbench didn't have an integrated editor of its own,
+but the feature is still useful for people who want to stick to their
+own separate editor applications.
+
+<p>Before you can use this feature, you must first tell Workbench
+how to access your editor program.  Once you've configured this,
+you can use the command "Open File in External Editor," which is
+on the Tools menu - this will send the file that you're currently
+viewing with Workbench to your editor program.  You can then make
+changes and save the file; when you switch back to Workbench,
+Workbench will automatically re-load the file so that it has the
+updated copy.
+
+<h2>
+Configuring your External Editor
+</h2>
+
+<p>
+The default external editor is Notepad - not because you'd actually
+want to use Notepad to edit a source file, but simply because that's
+the only thing we can count on being installed on every Windows
+machine.  If Notepad is the only editor you have installed, you
+probably won't be interested in the rest of this section - you'll
+almost certainly want to use the much-superior built-in editor in
+Workbench instad.
+
+<p> To configure a different text editor, open the "Tools" menu and
+select "Options."  This will display the TADS Workbench preferences
+dialog.  Go to the "External Editor" page.
+
+<p>
+In the "Editor Program" text field, type in the full filename (with
+drive and directory path) of your text editor's application program;
+this will usually be a .EXE file.  You can use the "Browse" button
+to select the application using a standard Windows file selector
+dialog if you prefer.
+
+<p>
+In the "Command Line" text field, type the command line arguments
+for your text editor.
+
+<p>Use a percent sign followed by a lower-case "f"
+(<tt>%f</tt>) as a placeholder for the filename to open.  For most editors,
+you should put the <tt>%f</tt> in double quotes, so that the
+program interprets a filename that contains a space as a single parameter
+rather than as two or more space-delimited tokens; however, this is up
+to the editor to interpret, and some editors don't use this syntax.
+Notepad, for example, considers the entire command line to be the
+filename, so no quotes are necessary.
+
+<p>
+Use a percent sign followed by a lower-case "n" (<tt>%n</tt>) as
+a placeholder for the line number to go to.  Many programmer's text
+editors accept a command line option that specifies a line to jump
+to when first displaying a file; if your editor accepts such an option,
+you can use <tt>%n</tt> to specify it.  If your editor doesn't accept
+a starting line option (Notepad doesn't, for example), you don't need
+to use <tt>%n</tt> anywhere in your command line.
+
+<p>
+Use a percent sign followed by a lower-case "c" (<tt>%c</tt>) as
+a placeholder for the column number.  Many programmer's editors
+let you specify both the line and column number to jump to on
+loading the file.
+
+<p>
+The "%n" and "%c" parameters can both be qualified by an inserted "0"
+(hence "%0n" and "%0c").  This indicates that the line or column number
+should be passed with a 0 base - that is, with 0 representing the
+first line (or column), 1 representing the second, and so on.  By
+default, a 1 base is used (so the first line is number 1, the second
+number 2, etc).  Some editors use a 0 base for one or both of the
+initial line/column parameters.
+
+<p>
+Use a double percent sign (<tt>%%</tt>) if you need a single literal
+percent sign in your command line.
+
+<p>
+<a name='pfe'></a>
+For example, if you use <a href='http://www.lancs.ac.uk/people/cpaap/pfe/'>
+Programmer's File Editor (PFE)</a>, a popular freeware text editor that
+many TADS game authors like, you can configure your editor like this:
+
+<p><table align=center>
+<tr><td><b>Editor Program</b><td>c:\pfe\pfe32.exe
+<tr><td><b>Command Line</b><td>/g %n "%f"
+</table>
+<p>
+
+<br><br>
+<h2>
+Using DDE
+</h2>
+
+<p>
+Some text editors use DDE ("Dynamic Data Exchange," a mechanism in Windows
+that applications can use to communicate with each other) to interact
+with other programs.  The main reason that DDE might be of interest is
+that some editors will start an entirely new application
+instance (hence a whole new main editor window) each time the editor
+application is launched, but can be made to share a single instance
+among several different files using DDE.
+
+<p>Check your editor's documentation to determine if
+this is of any interest to you; if your editor's documentation doesn't
+mention DDE, you can ignore this section.
+
+<blockquote>
+If you're using PFE (see <a href='#pfe'>above</a>), you probably don't
+need to worry about using DDE, even though PFE supports it.  PFE always
+looks for an existing editor instance whenever you launch it, so you
+don't need to use DDE in order to share a single PFE instance.
+</blockquote>
+
+<p>
+In order to use DDE, you need to find three pieces of information in
+your editor's documentation: the DDE server name; the DDE topic name;
+and the DDE command string to open a file.  This information varies
+by application; the only way to find it is to consult your editor's
+documentation.
+
+<p>
+Once you learn the DDE server, topic, and command string, you can
+set up TADS Workbench to use DDE to control your editor.  Open the
+Editor preferences dialog as normal.  Rather than entering an application
+name in the "Editor Program" field, click the "Advanced" button.  This
+will bring up a dialog asking you for the DDE server and topic names.
+Check the "Use DDE" checkbox and enter the server and topic information,
+then click OK.  This will take you back to the main Editor dialog,
+with the "Editor Program" field set to "DDE:", followed by the
+server and topic names you entered.  Finally, enter the command
+string for opening a file in the "Command Line" text field; as usual,
+use <tt>%f</tt> as a placeholder for the name of the file to
+open, <tt>%n</tt> as a placeholder for the line number to go to,
+and <tt>%%</tt> for a literal single percent sign.
+
+<p>
+If you're using <a href='http://www.lugaru.com'>Lugaru's Epsilon</a>,
+you should configure the Editor using DDE, as follows:
+
+<p><table align=center>
+<tr><td><b>Use DDE</b><td>yes
+<tr><td><b>DDE Server</b><td>Epsilon
+<tr><td><b>DDE Topic</b><td>open
+<tr><td><b>Command Line</b><td>+%n "%f"
+</table>
+<p>
+
+<h2>Keyboard Command Binding</h2>
+
+<p>After you set up your editor, you can use the "Open File in
+External Editor" command to send a file that you're viewing in
+Workbench directly to your external editor.  If you use this feature,
+you might want to bind a key to the External Editor command (which is
+called "File.SendToExternalEditor" in the key binding system), so that
+you can send a file to your editor with a single keystroke.
+
+
+
+<br><br><br><br><br>
+<hr>
+<br>
+<font size=-1>Help Topics &gt;
+<a href="wbcont.htm">Table of Contents</a></font>
+<br><br>
+<font size=-1>
+Copyright &copy;1999, 2007 by Michael J. Roberts.
+</font>
+
+</body>
+</html>
+

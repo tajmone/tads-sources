@@ -1,0 +1,168 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>addToScore</title><meta name="keywords" content="addToScore"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>addToScore
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="scoring-overview.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="achievement.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The simplest (in some respects) way to keep track of the score is to call the <b>addToScore</b> function, which is called with two arguments: addToScore(points, description), where <i>points</i> is the number of points being awarded and <i>description</i> is a single-quoted string describing why the points are being awarded. For example, to award a single point for unlocking the door from anotherCave to lakeRoom (by inserting the brass coin) you can simply call addToScore in the notifyInsert method of the slot:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;RestrictedContainer,&nbsp;Component&nbsp;'small&nbsp;vertical&nbsp;slot'&nbsp;'slot'
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;about&nbsp;half&nbsp;an&nbsp;inch&nbsp;long;&nbsp;next&nbsp;to&nbsp;it&nbsp;is&nbsp;some&nbsp;faded&nbsp;writing&nbsp;that
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;just&nbsp;about&nbsp;still&nbsp;says\nENTRANCE&nbsp;TO&nbsp;LAKE\nONE&nbsp;GROAT.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;validContents&nbsp;=&nbsp;[silverCoin,&nbsp;brassCoin]
+<br>
+&nbsp;&nbsp;&nbsp;notifyInsert(obj,&nbsp;newCont)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(obj==brassCoin)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"As&nbsp;the&nbsp;brass&nbsp;coin&nbsp;disappears&nbsp;into&nbsp;the&nbsp;slot&nbsp;you&nbsp;hear&nbsp;a&nbsp;click&nbsp;from&nbsp;the&nbsp;door.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj.moveInto(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lakeDoor.makeLocked(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>addToScore(1,&nbsp;'unlocking&nbsp;the&nbsp;door&nbsp;to&nbsp;the&nbsp;lakeside&nbsp;');</b>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Despite&nbsp;initial&nbsp;appearances&nbsp;&lt;&lt;obj.theName&gt;&gt;&nbsp;doesn't&nbsp;seem&nbsp;to&nbsp;be&nbsp;quite
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;for&nbsp;the&nbsp;slot.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that the score will be incremented every time addToScore is called, so if we want to make sure that points are awarded only once for a particular achievement, we must make sure that the corresponding addToScore is called only once. In this particular case we are safe: since there's only one brass coin in the game and it disappears forever when it's put in the slot, this addToScore can only ever be executed once.
+<br>
+
+<br>
+Blowing up the boulder is similar situation: since this can only ever occur once we can quite safely put an addToScore in the dynamite object's sayBurnedOut() method (insofar as playing with dynamite can ever be said to be safe!). We might want to award more points for this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">dynamite&nbsp;:&nbsp;Candle&nbsp;'stick&nbsp;dynamite/fuse'&nbsp;'stick&nbsp;of&nbsp;dynamite'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;white&nbsp;cylinder&nbsp;with&nbsp;a&nbsp;short&nbsp;fuse.&nbsp;&lt;&lt;isLit&nbsp;?
+<br>
+&nbsp;&nbsp;'The&nbsp;fuse&nbsp;is&nbsp;lit&nbsp;and&nbsp;burning&nbsp;down&nbsp;fast.&nbsp;'&nbsp;:&nbsp;nil&nbsp;&gt;&gt;"
+<br>
+&nbsp;&nbsp;fuelLevel&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;brightnessOn&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;sayBurnedOut()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isHeldBy(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;dynamite&nbsp;explodes&nbsp;with&nbsp;a&nbsp;mighty&nbsp;bang&nbsp;and&nbsp;blows&nbsp;your&nbsp;hand&nbsp;off.&nbsp;But
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;since&nbsp;you're&nbsp;killed&nbsp;by&nbsp;the&nbsp;blast&nbsp;you&nbsp;probably&nbsp;won't&nbsp;be&nbsp;needing&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;more.\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(canBeTouchedBy(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;dynamite&nbsp;detonates&nbsp;close&nbsp;by,&nbsp;but&nbsp;you&nbsp;are&nbsp;killed&nbsp;by&nbsp;the&nbsp;blast&nbsp;almost
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;you&nbsp;hear&nbsp;the&nbsp;bang.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isIn(boulder))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boulderFragments.moveInto(boulder.location);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boulder.moveInto(nil);&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>addToScore(2,&nbsp;'blowing&nbsp;up&nbsp;the&nbsp;boulder');</b>&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;callWithSenseContext&nbsp;(nil,&nbsp;nil,&nbsp;{:"You&nbsp;hear&nbsp;a&nbsp;muffled&nbsp;explosion&nbsp;nearby.&nbsp;"});
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;moveInto(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fuseID&nbsp;=&nbsp;nil;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fuelLevel&nbsp;=&nbsp;3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Indeed, we can even use this technique for awarding five points for casting the Golden Banana of Discord into Mount Gloom; since this results in moving the Golden Banana into nil and it's never recoverable thereafter, we can put the relevant addToScore call in the banana's moveInto method:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;goldenBanana&nbsp;:&nbsp;Thing&nbsp;'golden&nbsp;banana/discord'&nbsp;'Golden&nbsp;Banana&nbsp;of&nbsp;Discord'
+<br>
+&nbsp;&nbsp;"It's&nbsp;about&nbsp;the&nbsp;shape&nbsp;and&nbsp;size&nbsp;of&nbsp;an&nbsp;ordinary&nbsp;banana,&nbsp;but&nbsp;seems&nbsp;to&nbsp;be&nbsp;made
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;solid&nbsp;gold.&nbsp;"
+<br>
+&nbsp;&nbsp;aName&nbsp;=&nbsp;(theName)
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;6
+<br>
+&nbsp;&nbsp;isListedInContents&nbsp;=&nbsp;(!isIn(bananaCase))
+<br>
+&nbsp;&nbsp;<b>moveInto(newCont)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(newCont);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(newCont==nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addToScore(5,&nbsp;'destroying&nbsp;the&nbsp;Golden&nbsp;Banana&nbsp;in&nbsp;Mount&nbsp;Gloom');
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Finally, note that the second parameter in addToScore may be an <a href="achievement.htm">Achievement</a> object instead of a single-quoted string. We'll explain this in more detail once we've introduced the Achievement class.
+<br>
+</font></font>
+
+</body></html>

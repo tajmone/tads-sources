@@ -1,0 +1,74 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>roomDarkTravel</title></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>roomDarkTravel
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="cannotgothatwayindark.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="travelerarriving.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">BasicLocation.roomDarkTravel() defines what happens if we try to move from the current location when it's dark to another dark location. By default, it simply displays the same message as <a href="cannotgothatwayindark.htm">cannotGoThatWayInDark</a> and then uses exit to cancel the movement action. In most cases you'll probably want to keep both methods appearing to do the same thing (unless you want to allow travel from one dark location to another), so that the player is given no indication in the dark whether a given direction is valid for travel or not. In this case we could simply override roomDarkTravel to call cannotGoThatWayInDark and then exit:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">crewQuarters&nbsp;:&nbsp;DarkCabin&nbsp;'Crew&nbsp;Quarters'&nbsp;'the&nbsp;crew&nbsp;quarters'
+<br>
+&nbsp;&nbsp;"The&nbsp;crew&nbsp;quarters&nbsp;seem&nbsp;largely&nbsp;deserted.&nbsp;There's&nbsp;an&nbsp;exit&nbsp;back&nbsp;aft&nbsp;and&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;ladder&nbsp;leading&nbsp;down&nbsp;into&nbsp;the&nbsp;hold.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;holdLadderDown
+<br>
+&nbsp;&nbsp;&nbsp;aft&nbsp;=&nbsp;greatCabin
+<br>
+&nbsp;&nbsp;&nbsp;cannotGoThatWayInDark()&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;darkEvents.doScript();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;<b>roomDarkTravel(actor)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cannotGoThatWayInDark;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}</b>&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;darkEvents&nbsp;:&nbsp;StopEventList&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Blundering&nbsp;about&nbsp;a&nbsp;ship&nbsp;in&nbsp;the&nbsp;dark&nbsp;could&nbsp;prove&nbsp;dangerous.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;function
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Blundering&nbsp;around&nbsp;in&nbsp;the&nbsp;dark&nbsp;you&nbsp;fall&nbsp;down&nbsp;a&nbsp;ladder&nbsp;into&nbsp;the&nbsp;hold
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;break&nbsp;your&nbsp;neck.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">In this case the player only gets one warning; if the PC leaves the crewQuarters aft to the greatCabin after making one false step in the dark, the next false step in crewQuarters in the dark will kill the PC off. This may be what you want, but we'll try changing it next using </font><font face="Courier New" size="2" color="#000000"><a href="travelerarriving.htm">enteringRoom</a>.
+<br>
+</font></font>
+
+</body></html>

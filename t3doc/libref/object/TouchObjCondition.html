@@ -1,0 +1,64 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TouchObjCondition</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TouchObjCondition</span><span class=type>class</span><td align=right><a href="../file/precond.t.html">precond.t</a>[<a href="../source/precond.t.html#419">419</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Pre-condition: a given source object must be able to touch the   object.  This requires that the source object (given by our property   'sourceObj') has a clear 'touch' path to the target object. <p>   This is a base class for arbitrary object-to-object touch conditions.   In most cases, you'll want to use the more specific touchObj, which   tests that the current actor can touch the current object.
+<p>
+<code>class
+<b>TouchObjCondition</b> :  &nbsp; <a href="../object/PreCondition.html">PreCondition</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TouchObjCondition</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PreCondition.html">PreCondition</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/dobjTouchObj.html">dobjTouchObj</a>&nbsp;
+<a href="../object/iobjTouchObj.html">iobjTouchObj</a>&nbsp;
+<a href="../object/touchObj.html">touchObj</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#preCondOrder">preCondOrder</a>&nbsp;
+<a href="#sourceObj">sourceObj</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#checkPreCondition">checkPreCondition</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#verifyPreCondition">verifyPreCondition</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="preCondOrder"></a>
+<table class=decl><tr><td><code>preCondOrder</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/precond.t.html">precond.t</a>[<a href="../source/precond.t.html#673">673</a>]</table><div class=desc>   This condition tends to be fragile, in the sense that other   preconditions for the same action have the potential to undo any   implicit action that we perform to make an object touchable.  This   is most likely to happen when we implicitly move the actor (moving   in or out of a nested room, for example) to put the actor within   reach of the target object.  To reduce the likelihood that this   fragility will be visible to a player, try to execute this   condition after other conditions.  Most other preconditions tend   to be "stickier" - less likely to be undone by subsequent   preconditions. <p>
+</div>
+<a name="sourceObj"></a>
+<table class=decl><tr><td><code>sourceObj</code><td align=right><code><a href="../file/precond.t.html">precond.t</a>[<a href="../source/precond.t.html#427">427</a>]</table><div class=desc>   the source object - this is the object that is attempting to   touch the target object <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="checkPreCondition"></a>
+<table class=decl><tr><td><code>checkPreCondition (obj, allowImplicit)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/precond.t.html">precond.t</a>[<a href="../source/precond.t.html#430">430</a>]</table><div class=desc>check the condition<p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (src)</code><td align=right><code><a href="../file/precond.t.html">precond.t</a>[<a href="../source/precond.t.html#421">421</a>]</table><div class=desc>construct with a given source object<p>
+</div>
+<a name="verifyPreCondition"></a>
+<table class=decl><tr><td><code>verifyPreCondition (obj)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/precond.t.html">precond.t</a>[<a href="../source/precond.t.html#565">565</a>]</table><div class=desc>   We've tried an implied command to remove this obstructor,   but that isn't guaranteed to make the target touchable,   as there could be further obstrutions, or the implied   command could have failed to actually remove the   obstruction.  Keep iterating.  To avoid looping forever   in the event the implicit command we just tried isn't   good enough to remove this obstruction, make a note of   the obstruction we just tried to remove; if we find it   again on a subsequent iteration, we'll know that we've   tried before to remove it and failed, and thus we'll know   to give up without making the same doomed attempt again. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

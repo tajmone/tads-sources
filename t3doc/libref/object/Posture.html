@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>Posture</title></head><body>
+<table class=ban><tr><td align=left><span class=title>Posture</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#103">103</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2596">2596</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Postures.  A posture describes how an actor is internally positioned:   standing, lying, sitting.  We represent postures with objects of   class Posture to make it easier to add new game-specific postures.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2596">2596</a>]:</i><br>
+   Give the postures some additional attributes
+<p>
+<code>class
+<b>Posture</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>Posture</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/lying.html">lying</a>&nbsp;
+<a href="../object/sitting.html">sitting</a>&nbsp;
+<a href="../object/standing.html">standing</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#msgVerbI">msgVerbI</a>&nbsp;
+<a href="#msgVerbIPast">msgVerbIPast</a>&nbsp;
+<a href="#msgVerbIPresent">msgVerbIPresent</a>&nbsp;
+<a href="#msgVerbT">msgVerbT</a>&nbsp;
+<a href="#msgVerbTPast">msgVerbTPast</a>&nbsp;
+<a href="#msgVerbTPresent">msgVerbTPresent</a>&nbsp;
+<a href="#participle">participle</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#setActorToPosture">setActorToPosture</a>&nbsp;
+<a href="#tryMakingPosture">tryMakingPosture</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="msgVerbI"></a>
+<table class=decl><tr><td><code>msgVerbI</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2604">2604</a>]</table><div class=desc>   Intransitive and transitive forms of the verb, for use in library   messages.  Each of these methods simply calls one of the two   corresponding fixed-tense properties, depending on the current   tense. <p>
+</div>
+<a name="msgVerbIPast"></a>
+<table class=decl><tr><td><code>// msgVerbIPast</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2616">2616</a>]</table><div class=desc>our past-tense intransitive form ("he stood up")<p>
+</div>
+<a name="msgVerbIPresent"></a>
+<table class=decl><tr><td><code>// msgVerbIPresent</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2613">2613</a>]</table><div class=desc>our present-tense intransitive form ("he stands up")<p>
+</div>
+<a name="msgVerbT"></a>
+<table class=decl><tr><td><code>msgVerbT</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2605">2605</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="msgVerbTPast"></a>
+<table class=decl><tr><td><code>// msgVerbTPast</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2622">2622</a>]</table><div class=desc>our past-tense transitive form ("he stood on the chair")<p>
+</div>
+<a name="msgVerbTPresent"></a>
+<table class=decl><tr><td><code>// msgVerbTPresent</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2619">2619</a>]</table><div class=desc>our present-tense transitive form ("he stands on the chair")<p>
+</div>
+<a name="participle"></a>
+<table class=decl><tr><td><code>// participle</code><span class=rem>Interface description only</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2625">2625</a>]</table><div class=desc>our participle form<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="setActorToPosture"></a>
+<table class=decl><tr><td><code>setActorToPosture (actor, loc)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#111">111</a>]</table><div class=desc>put the actor into our posture via a nested action<p>
+</div>
+<a name="tryMakingPosture"></a>
+<table class=decl><tr><td><code>tryMakingPosture (loc)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#108">108</a>]</table><div class=desc>   Try getting the current actor into this posture within the given   location, by running an appropriate implied command. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

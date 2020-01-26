@@ -1,0 +1,54 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>PushTravelBarrier</title></head><body>
+<table class=ban><tr><td align=left><span class=title>PushTravelBarrier</span><span class=type>class</span><td align=right><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3430">3430</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A PushTravelBarrier is a TravelConnector that allows regular travel,   but not travel that involves pushing something.  By default, we block   all push travel, but subclasses can customize this so that we block   only specific objects.
+<p>
+<code>class
+<b>PushTravelBarrier</b> :  &nbsp; <a href="../object/TravelBarrier.html">TravelBarrier</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>PushTravelBarrier</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TravelBarrier.html">TravelBarrier</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#canPushedObjectPass">canPushedObjectPass</a>&nbsp;
+<a href="#canTravelerPass">canTravelerPass</a>&nbsp;
+<a href="#explainTravelBarrier">explainTravelBarrier</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="canPushedObjectPass"></a>
+<table class=decl><tr><td><code>canPushedObjectPass (obj)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3437">3437</a>]</table><div class=desc>   Determine if the given pushed object is allowed to pass.  Returns   true if so, nil if not.  By default, we'll return nil for every   object; subclasses can override this to allow some objects to be   pushed through the barrier but not others. <p>
+</div>
+<a name="canTravelerPass"></a>
+<table class=decl><tr><td><code>canTravelerPass (traveler)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3451">3451</a>]</table><div class=desc>   Determine if the given traveler can pass through this connector.   If the traveler isn't a push traveler, we'll allow the travel;   otherwise, we'll block the travel if our canPushedObjectPass   routine says the object being pushed can pass. <p>
+</div>
+<a name="explainTravelBarrier"></a>
+<table class=decl><tr><td><code>explainTravelBarrier (traveler)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3440">3440</a>]</table><div class=desc>explain why an object can't pass<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

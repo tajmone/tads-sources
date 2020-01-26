@@ -1,0 +1,654 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Templates</title><meta name="keywords" content="Templates,inherited"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Templates
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="thesamplegame.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="startupcodegamemain.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Since we shall be using templates extensively to define objects throughout this Guide, we had better start by explaining what they are and how they work.
+<br>
+
+<br>
+If you have worked through <i>Getting Started in TADS 3</i> or some similar introductory guide, you'll already have encountered templates. Templates are built into the TADS 3 language (in the sense that the language provides the facility to define and use them) and into the adv3 library (in the sense that the library defines a number of standard templates). This Tour Guide accordingly assumes that the use of templates is the standard TADS 3 coding style, and is to be encouraged. But first, what exactly is a template?
+<br>
+
+<br>
+Put simply, a template is a means of defining an object in a more succinct form in order to save typing effort and produce less verbose code. On the principle that a couple of examples are a good deal easier to follow than several paragraphs of abstract, theoretical discussion, we'll explain this by showing how templates work with the most common kind of objects you're likely to define in a TADS 3 game: Rooms and Things.
+<br>
+
+<br>
+We'll start with a room. If we defined a Room without using a template, we should have to assign every property we wanted assigned explicitly. Such a definition might look like:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'Entrance&nbsp;Cave'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;destName&nbsp;=&nbsp;'the&nbsp;entrance&nbsp;cave'
+<br>
+&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"Compared&nbsp;with&nbsp;the&nbsp;narrow&nbsp;tunnel&nbsp;leading&nbsp;out&nbsp;to&nbsp;the&nbsp;north,&nbsp;this&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;rough-walled&nbsp;cave&nbsp;seems&nbsp;positively&nbsp;spacious.&nbsp;A&nbsp;red&nbsp;sign&nbsp;fixed&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;one&nbsp;wall&nbsp;suggests&nbsp;that&nbsp;the&nbsp;narrow&nbsp;tunnel&nbsp;is&nbsp;the&nbsp;only&nbsp;way&nbsp;back&nbsp;out&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;valley,&nbsp;while&nbsp;a&nbsp;blue&nbsp;sign&nbsp;next&nbsp;to&nbsp;it&nbsp;welcomes&nbsp;you&nbsp;to&nbsp;the&nbsp;cave.
+<br>
+&nbsp;&nbsp;&nbsp;Directly&nbsp;under&nbsp;the&nbsp;signs&nbsp;a&nbsp;narrow&nbsp;ledge&nbsp;has&nbsp;been&nbsp;carved&nbsp;into&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;wall.&nbsp;There&nbsp;appear&nbsp;to&nbsp;be&nbsp;no&nbsp;other&nbsp;caves&nbsp;at&nbsp;this&nbsp;level,&nbsp;but&nbsp;a&nbsp;sturdy&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;steel&nbsp;ladder&nbsp;leads&nbsp;down&nbsp;through&nbsp;a&nbsp;large&nbsp;round&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor.&nbsp;"
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;entranceTunnel&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;asExit(north)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Taking advantage of the Room template, the same definition could be coded as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room&nbsp;'Entrance&nbsp;Cave'&nbsp;'the&nbsp;entrance&nbsp;cave'
+<br>
+&nbsp;&nbsp;"Compared&nbsp;with&nbsp;the&nbsp;narrow&nbsp;tunnel&nbsp;leading&nbsp;out&nbsp;to&nbsp;the&nbsp;north,&nbsp;this&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;rough-walled&nbsp;cave&nbsp;seems&nbsp;positively&nbsp;spacious.&nbsp;A&nbsp;red&nbsp;sign&nbsp;fixed&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;one&nbsp;wall&nbsp;suggests&nbsp;that&nbsp;the&nbsp;narrow&nbsp;tunnel&nbsp;is&nbsp;the&nbsp;only&nbsp;way&nbsp;back&nbsp;out&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;valley,&nbsp;while&nbsp;a&nbsp;blue&nbsp;sign&nbsp;next&nbsp;to&nbsp;it&nbsp;welcomes&nbsp;you&nbsp;to&nbsp;the&nbsp;cave.
+<br>
+&nbsp;&nbsp;&nbsp;Directly&nbsp;under&nbsp;the&nbsp;signs&nbsp;a&nbsp;narrow&nbsp;ledge&nbsp;has&nbsp;been&nbsp;carved&nbsp;into&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;wall.&nbsp;There&nbsp;appear&nbsp;to&nbsp;be&nbsp;no&nbsp;other&nbsp;caves&nbsp;at&nbsp;this&nbsp;level,&nbsp;but&nbsp;a&nbsp;sturdy&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;steel&nbsp;ladder&nbsp;leads&nbsp;down&nbsp;through&nbsp;a&nbsp;large&nbsp;round&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor.&nbsp;"
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;entranceTunnel&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;asExit(north)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+These two definitions are entirely equivalent; both assign exactly the same values to the same properties.
+<br>
+
+<br>
+So how does this work? The Room template is defined in the library as follows:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Room&nbsp;template&nbsp;'roomName'&nbsp;'destName'?&nbsp;'name'?&nbsp;"desc"?;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+This definition means that when defining an object of class Room (or one of its subclasses), if the class name is immediately followed by a single-quoted string, that string will be assigned to the <b>roomName</b> property; the next single-quoted string, if present, will be assigned to the <b>destName</b> property, the next to the <b>name</b> property, and a double-quoted string that comes at the end of this list will be assigned to the <b>desc</b> property. The question mark after an item in a template definition means that this element is optional and may be omitted.
+<br>
+
+<br>
+Accordingly, the following definitions using the Room template are all legal:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room&nbsp;'Entrance&nbsp;Cave'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Which is equivalent to:</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'Entrance&nbsp;Cave'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Or
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room&nbsp;'Entrance&nbsp;Cave'
+<br>
+&nbsp;&nbsp;"Compared&nbsp;with&nbsp;the&nbsp;narrow&nbsp;tunnel..."
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Which is equivalent to:</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'Entrance&nbsp;Cave'
+<br>
+&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;&nbsp;"Compared&nbsp;with&nbsp;the&nbsp;narrow&nbsp;tunnel..."
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Or
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room&nbsp;'Entrance&nbsp;Cave'&nbsp;'the&nbsp;entrance&nbsp;cave'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Which is equivalent to:</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'Entrance&nbsp;Cave'
+<br>
+&nbsp;&nbsp;&nbsp;destName&nbsp;=&nbsp;'the&nbsp;entrance&nbsp;cave'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Or
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room&nbsp;'Entrance&nbsp;Cave'&nbsp;'the&nbsp;entrance&nbsp;cave'&nbsp;'entrance&nbsp;cave'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Which is equivalent to:</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'Entrance&nbsp;Cave'
+<br>
+&nbsp;&nbsp;&nbsp;destName&nbsp;=&nbsp;'the&nbsp;entrance&nbsp;cave'
+<br>
+&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'entrance&nbsp;cave'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+Note, however, that properties defined in the template must appear in the order shown, so that the following would <i>not</i> match the template:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceRoom&nbsp;"Compared&nbsp;with&nbsp;the&nbsp;narrow&nbsp;tunnel..."&nbsp;'Entrance&nbsp;Cave";
+<br>
+
+<br>
+entranceRoom&nbsp;'Entrance&nbsp;Cave'&nbsp;"Compared&nbsp;with&nbsp;the&nbsp;narrow&nbsp;tunnel..."&nbsp;'the&nbsp;entrance&nbsp;cave';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In practice, virtually all rooms will need to define a roomName and a description (and this is the point of the template, to allow the common properties of all rooms to be defined with the minimum of effort). So you will normally define rooms in one of two forms:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">myRoom&nbsp;:&nbsp;Room&nbsp;'My&nbsp;Room&nbsp;Name'
+<br>
+&nbsp;&nbsp;"My&nbsp;room&nbsp;desc&nbsp;"
+<br>
+&nbsp;&nbsp;/*&nbsp;other&nbsp;properties/methods&nbsp;*/
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>or</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">myRoom&nbsp;:&nbsp;Room&nbsp;'My&nbsp;Room&nbsp;Name'&nbsp;'my&nbsp;room&nbsp;destName'
+<br>
+&nbsp;&nbsp;"My&nbsp;room&nbsp;desc&nbsp;"
+<br>
+&nbsp;&nbsp;/*&nbsp;other&nbsp;properties/methods&nbsp;*/
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Not only does this make defining rooms <i>briefer, </i>it also makes your code more readable, since the key properties (roomName, destName if defined, and desc) will always appear in the same relative location in the definition of a room, rather than at some possibly random location in a list of properties (for these key properties will seldom be the <i>only</i> properties you'll need to define on a room). Once you get used to the template, you can look at a room definition and see its roomName and description at once.
+<br>
+
+<br>
+Note that a template defined for a class is also valid for all its subclasses. So the <a href="room.htm">Room</a> template we have just described can (and should) also be used for <a href="outdoorroom.htm">OutdoorRoom</a>, <a href="darkroom.htm">DarkRoom</a> and <a href="floorlessroom.htm">FloorlessRoom</a> (and, indeed, for any specialized subclasses of Room you may define in your own game).
+<br>
+
+<br>
+Now let's look at the definition of the Thing template (which also applies to all the subclasses of Thing, i.e. virtually every game object that represents a physical object in the game world, unless there's a more specific template applying to the subclass).
+<br>
+
+<br>
+The Thing template is defined like this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Thing&nbsp;template&nbsp;'vocabWords'&nbsp;'name'&nbsp;@location?&nbsp;"desc"?;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+This means that typical Thing definitions will tend to look like this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brass&nbsp;coin/groat*coins'&nbsp;'small&nbsp;brass&nbsp;coin'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Which is exactly equivalent to:
+<br>
+</i>
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;
+<br>
+&nbsp;&nbsp;vocabWords&nbsp;=&nbsp;'(small)&nbsp;brass&nbsp;coin/groat*coins'&nbsp;
+<br>
+&nbsp;&nbsp;name&nbsp;=&nbsp;'small&nbsp;brass&nbsp;coin'&nbsp;
+<br>
+&nbsp;&nbsp;location&nbsp;=&nbsp;longCave
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Or this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;fluidLink&nbsp;:&nbsp;Thing&nbsp;'fluid&nbsp;link'&nbsp;'fluid&nbsp;link'
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;long&nbsp;transparent&nbsp;tube.&nbsp;Both&nbsp;ends&nbsp;are&nbsp;capped&nbsp;with&nbsp;some&nbsp;kind&nbsp;of&nbsp;shiny&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;metal,&nbsp;and&nbsp;at&nbsp;one&nbsp;end&nbsp;is&nbsp;a&nbsp;tiny&nbsp;hole.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Which is exactly equivalent to:</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;fluidLink&nbsp;:&nbsp;Thing&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vocabWords&nbsp;=&nbsp;'fluid&nbsp;link'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;&nbsp;'fluid&nbsp;link'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;&nbsp;"It's&nbsp;a&nbsp;long&nbsp;transparent&nbsp;tube.&nbsp;Both&nbsp;ends&nbsp;are&nbsp;capped&nbsp;with&nbsp;some&nbsp;kind&nbsp;of&nbsp;shiny&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metal,&nbsp;and&nbsp;at&nbsp;one&nbsp;end&nbsp;is&nbsp;a&nbsp;tiny&nbsp;hole.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The main difference is that the second example, the fluidLink, uses the ++ notation to specify its location relative to some previously defined object, so that it does not need to set its location property by any other means. Since </font><font face="Courier New" size="2" color="#000000">@location?</font><font face="Arial" size="2" color="#000000">  in the Thing template includes a question-mark to show that this element is optional, it can be omitted from the object definition and the template will still match. The brassCoin, however, does not use the + syntax to determine its location, so this needs to be done some other way; hence we specify its location using </font><font face="Courier New" size="2" color="#000000">@longCave</font><font face="Arial" size="2" color="#000000">.
+<br>
+
+<br>
+You may define the occasional Thing that is so insignificant that it does not merit a description, in which case you can simply omit the double-quoted string from the definition, making for extremely concise code, e.g.:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;peanut:&nbsp;Food&nbsp;'peanut/nut'&nbsp;'peanut';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+or
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">peanut&nbsp;:&nbsp;Food&nbsp;'peanut/nut'&nbsp;'peanut'&nbsp;@kitchenTable;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This also illustrates how subclasses of Thing (of which Food is one) can use the same template as Thing.
+<br>
+
+<br>
+There's two further types of template we ought to consider; the first is one that can match <i>alternatives</i> at the same location within the sequence of properties. Here's a simple example from the library:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">DefaultTopic&nbsp;template&nbsp;"topicResponse"&nbsp;|&nbsp;[eventList];
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This template means that you can define <i>either</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">DefaultTopic&nbsp;"Bob&nbsp;looks&nbsp;bored&nbsp;with&nbsp;your&nbsp;question";</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+<i>Meaning</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Default&nbsp;Topic
+<br>
+&nbsp;&nbsp;topicResponse&nbsp;=&nbsp;"Bob&nbsp;looks&nbsp;bored&nbsp;with&nbsp;your&nbsp;question"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Or</i>
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">DefaultTopic&nbsp;&nbsp;&nbsp;[&nbsp;'Bob&nbsp;looks&nbsp;bored',&nbsp;'Bob&nbsp;yawns',&nbsp;'Bob&nbsp;is&nbsp;so&nbsp;bored&nbsp;he&nbsp;falls&nbsp;asleep'];
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Meaning
+<br>
+
+<br>
+</i></font><font face="Courier New" size="2" color="#000000">DefaultTopic&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;eventList&nbsp;=&nbsp;[&nbsp;'Bob&nbsp;looks&nbsp;bored',&nbsp;'Bob&nbsp;yawns',&nbsp;'Bob&nbsp;is&nbsp;so&nbsp;bored&nbsp;he&nbsp;falls&nbsp;asleep']
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+(Which isn't actually very useful unless your DefaultTopic also inherits from an EventList class, but that's another matter).
+<br>
+
+<br>
+A more complex example is provided by:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">TopicEntry&nbsp;template&nbsp;+matchScore?&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;@matchObj&nbsp;|&nbsp;[matchObj]&nbsp;|&nbsp;'matchPattern'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;"topicResponse"&nbsp;|&nbsp;[eventList]&nbsp;?;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Which can be matched by something as simple as
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">TopicEntry&nbsp;@bob
+<br>
+&nbsp;&nbsp;"&lt;q&gt;That's&nbsp;none&nbsp;of&nbsp;your&nbsp;business!&lt;/q&gt;&nbsp;he&nbsp;declares.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Or something as complex as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">TopicEntry&nbsp;+&nbsp;110&nbsp;[silverCoin,&nbsp;goldCoin,&nbsp;brassCoin]
+<br>
+&nbsp;&nbsp;[&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&nbsp;&lt;q&gt;I\'ve&nbsp;never&nbsp;been&nbsp;interested&nbsp;in&nbsp;coins.&lt;/q&gt;&nbsp;he&nbsp;growls.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Don\'t&nbsp;try&nbsp;to&nbsp;tempt&nbsp;me&nbsp;with&nbsp;money&nbsp;-&nbsp;I&nbsp;can\'t&nbsp;stand&nbsp;the&nbsp;stuff.'&nbsp;he&nbsp;complains.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Filthy&nbsp;lucre!&nbsp;Take&nbsp;it&nbsp;away!&lt;/q&gt;&nbsp;he&nbsp;demands.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;The&nbsp;root&nbsp;of&nbsp;all&nbsp;evil.&lt;/q&gt;&nbsp;he&nbsp;opines&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Although we shan't try to run through all the possible permutations here.
+<br>
+
+<br>
+The remaining type of template we need to consider is that which uses the <i>inherited</i> keyword in its definition. In fact, the library defines very few of these; one (fairly important) example is:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Passage&nbsp;template&nbsp;-&gt;masterObject&nbsp;inherited;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+In this context the <i>inherited</i> keyword refers to the templates of <i>all</i> Passage's superclasses, so this template could potentially represent a series of templates, in which <i>inherited</i> is replaced with the template of each of Passage's superclass in turn (and also with nothing). Passage inherits from Linkable, Fixture and TravelConnector, none of which defines a template. Linkable inherits from object (so there's no template there). Fixture inherits from NonPortable which inherits from Thing which inherits from VocabObject; TravelConnector also inherits from Thing. The possible templates Passage can inherit from are therefore those for <a href="thingtemplate.htm">Thing</a> and for <a href="vocabobjecttemplate.htm">VocabObject</a>. This foregoing definition is thus equivalent to the following:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Passage&nbsp;template&nbsp;-&gt;&nbsp;masterObject;
+<br>
+Passage&nbsp;template&nbsp;-&gt;&nbsp;masterObject&nbsp;'vocabWords';
+<br>
+Passage&nbsp;template&nbsp;-&gt;&nbsp;masterObject&nbsp;'vocabWords'&nbsp;'name'&nbsp;@location?&nbsp;"desc"?;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that this is almost but not quite equivalent to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Passage&nbsp;template&nbsp;-&gt;&nbsp;masterObject&nbsp;'vocabWords'?&nbsp;'name'?&nbsp;@location?&nbsp;"desc"?;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The reason it is <i>not</i> equivalent is that this template would allow the location or desc properties to be specified in the template without the name property, which the real Passage template will not.
+<br>
+
+<br>
+Note that since Passage inherits from Thing and VocabObject, it is <i>also</i> perfectly legal to use the Thing and VocabObject templates with a Passage, e.g.:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Passage&nbsp;'passage';
+<br>
+Passage&nbsp;'long&nbsp;passage'&nbsp;'long&nbsp;passage'&nbsp;@diningRoom&nbsp;"The&nbsp;long&nbsp;passage&nbsp;leads&nbsp;into&nbsp;the&nbsp;hall.&nbsp;";
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+All this actually looks a good deal more complicated than it will ever work out in practice, for in practice, if you want to use a Passage (or one of its subclasses) you will <i>either</i> use the Thing template to define it, or the form of the Passage template in which <i>inherited</i> picks up the Passage template. Thus, although you can use other template combinations with Passage, in practice most of the time (perhaps 99% of the time), you will use Passage and its subclasses <i>as if</i> its template were defined:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Passage&nbsp;-&gt;masterObject?&nbsp;'vocabWords_'&nbsp;'name'&nbsp;@location?&nbsp;"desc"?;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This applies equally to the other classes for which the library defines templates including the inherited keyword, namely <a href="enterabletemplate.htm">Enterable</a> and <a href="exitabletemplate.htm">Exitable</a>.
+<br>
+
+<br>
+Finally, to see how templates work with multiple inheritance, consider the following:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;TestA&nbsp;:&nbsp;object
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;colour&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;mydesc&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+c</font><font face="Courier New" size="2" color="#000000">lass&nbsp;TestB&nbsp;:&nbsp;object
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;texture&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+
+<br>
+class&nbsp;TestC&nbsp;:&nbsp;&nbsp;TestB,&nbsp;TestA;
+<br>
+;
+<br>
+
+<br>
+
+<br>
+TestA&nbsp;template&nbsp;+weight&nbsp;'colour'&nbsp;'mydesc'?;
+<br>
+TestB&nbsp;template&nbsp;+bulk&nbsp;'texture';
+<br>
+
+<br>
+testMe&nbsp;:&nbsp;TestC&nbsp;+20&nbsp;'rough'&nbsp;;
+<br>
+
+<br>
+testMeAgain&nbsp;:&nbsp;TestC&nbsp;+30&nbsp;'red'&nbsp;'wooden';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<i>Results in</i>
+<br>
+
+<br>
+t</font><font face="Courier New" size="2" color="#000000">estMe&nbsp;:&nbsp;TestC
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colour&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;myDesc&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;20
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;texture&nbsp;=&nbsp;'rough'
+<br>
+;
+<br>
+
+<br>
+testMeAgain:&nbsp;TestC
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;weight&nbsp;=&nbsp;30
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colour&nbsp;=&nbsp;'red'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;myDesc&nbsp;=&nbsp;'wooden'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bulk&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;texture&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The testMe object has a definition that in principle could match either the TestA template or the TestB template. It is the TestB template that is actually matched because TestB comes earlier in the class list of TestC. On the other hand testMeAgain has a definition that can only match the TestA template, so it is the TestA template that is matched.
+<br>
+
+<br>
+Finally, we should consider how the <i>inherited</i> keyword works in the context of multiple inheritance. If we now go on to define:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">TestC&nbsp;template&nbsp;inherited&nbsp;'shape';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The 'inherited' keyword can inherit <i>any</i> of the templates from any of TestC's superclasses, or else nothing at all. The definition is thus equivalent to defining the following three templates:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">TestC&nbsp;template&nbsp;'shape';
+<br>
+TestC&nbsp;template&nbsp;+bulk&nbsp;'texture'&nbsp;'shape';
+<br>
+TestC&nbsp;template&nbsp;+weight&nbsp;'colour'&nbsp;'mydesc'?&nbsp;'shape';</font><font face="Arial" size="2" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">Note also that objects of class C (such as testMe and testMeAgain) will also continue to match templates defined on its superclasses (in this case, the templates for ClassA and ClassB).
+<br>
+
+<br>
+Suppose we also define an object:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">testMeShape&nbsp;:&nbsp;TestC&nbsp;+10&nbsp;'blue'&nbsp;'large'&nbsp;'square';</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Now, this can <i>only</i> match the last form of the template, so it will mean weight=10, colour='blue', mydesc='large' and shape='square'. But what of our previous two objects?
+<br>
+
+<br>
+As before, testMe has bulk=20, texture='rough', while testMeAgain has bulk=30, shape='wooden', texture='red'. Since the TestC template is defined later in the file than the other two, the other two still match first.
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

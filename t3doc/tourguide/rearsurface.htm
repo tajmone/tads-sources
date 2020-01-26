@@ -1,0 +1,80 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>RearSurface</title><meta name="keywords" content="RearSurface"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>RearSurface : <a href="rearcontainer.htm">RearContainer</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="rearcontainer.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="complexcontainer.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A RearSurface is simply a RearContainer for which <a href="spaceoverlay.htm">abandonLocation</a> is nil by default, meaning that the contents of a RearSurface are considered to be attached to it and so move with it. As the comments in the library code explain it:
+<br>
+
+<br>
+<i>A "rear surface" is essentially the same as a "rear container," but models the contents as being attached to the back of the object rather than merely sitting behind it.
+<br>
+
+<br>
+The only practical difference between the "container" and the "surface" is that moving a surface moves its contents along with it, whereas moving a container abandons the contents, leaving them behind where the container used to be.
+<br>
+</i>
+<br>
+As with RearContainer, you'd be most likely to use RearSurface as the ComplexComponent of a <a href="complexcontainer.htm">ComplexContainer</a>, but you could also use it for a flat object that has something attached to back. For example, we could have a small photo with a mysterious piece of paper attached loosely to the back (we'll return to this piece of paper later). For now you can put this pair of objects in any convenient location; we'll be assigning them their proper home later:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;smallPicture&nbsp;:&nbsp;RearSurface&nbsp;'small&nbsp;picture'&nbsp;'small&nbsp;picture'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;faded&nbsp;photograph&nbsp;of&nbsp;an&nbsp;eccentrically-dressed&nbsp;man&nbsp;with&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;long&nbsp;scarf,&nbsp;in&nbsp;company&nbsp;with&nbsp;a&nbsp;smiling&nbsp;young&nbsp;woman&nbsp;with
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;long&nbsp;blonde&nbsp;hair.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;allowPutBehind&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+
+<br>
+++&nbsp;rightHalfPaper&nbsp;:&nbsp;Hidden,&nbsp;Readable&nbsp;'right&nbsp;half&nbsp;torn&nbsp;sheet&nbsp;yellow&nbsp;paper*sheets'&nbsp;
+<br>
+&nbsp;&nbsp;'torn&nbsp;sheet&nbsp;of&nbsp;yellow&nbsp;paper'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;like&nbsp;the&nbsp;right&nbsp;hand&nbsp;half&nbsp;of&nbsp;a&nbsp;sheet&nbsp;of&nbsp;paper&nbsp;that's&nbsp;been&nbsp;torn&nbsp;in&nbsp;two.&nbsp;It
+<br>
+&nbsp;&nbsp;&nbsp;contains&nbsp;a&nbsp;list&nbsp;of&nbsp;names.&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Once again, we make this piece of paper Hidden so the player won't find it without looking behind the picture. The piece of paper will move with the picture, but will readily detach from it when taken, thereby modelling a piece of paper that is only loosely attached.
+<br>
+
+<br>
+One final detail we can handle is that it may occur to the player to look at the rear of the picture, but to do so by typing LOOK AT BACK OF PICTURE instead of the, perhaps less natural and less obvious, LOOK BEHIND PICTURE. This can be handled quite readily by adding the following:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;Decoration&nbsp;'back/picture/photo/photograph'&nbsp;'back&nbsp;of&nbsp;the&nbsp;picture'
+<br>
+&nbsp;&nbsp;&nbsp;dobjFor(Examine)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;{&nbsp;nonObvious;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()&nbsp;{&nbsp;replaceAction(LookBehind,&nbsp;smallPicture);&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+The thing to note here is our use of the nonObvious in the verify routine; this is to prevent the back of the picture being included by the parser as a likely target of the EXAMINE command, so that a command like X PICTURE doesn't give the game away by responding with "Which do picture do you mean, the small picture or the back of the picture?"
+<br>
+</font></font>
+
+</body></html>

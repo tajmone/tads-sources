@@ -1,0 +1,72 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>HintMenu</title><meta name="keywords" content="HintMenu,title"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>HintMenu : MenuItem, HintMenuObject
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="tophintmenu.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="goal.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Unless your hint system is going to be very simple, you'll probably want to split it into submenus. To do this you use a series of HintMenu objects, which would be located directly in the <a href="tophintmenu.htm">TopHintMenu</a>. In the present game we might do this by splitting the hints according to region:
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">TopHintMenu;
+<br>
+
+<br>
++&nbsp;HintMenu&nbsp;'In&nbsp;the&nbsp;First&nbsp;Set&nbsp;of&nbsp;Caves'
+<br>
+;
+<br>
+
+<br>
++&nbsp;HintMenu&nbsp;'Aboard&nbsp;the&nbsp;ship'
+<br>
+;
+<br>
+
+<br>
++&nbsp;HintMenu&nbsp;'The&nbsp;Tardis&nbsp;and&nbsp;its&nbsp;Destinations'
+<br>
+;
+<br>
+
+<br>
++&nbsp;HintMenu&nbsp;'On&nbsp;the&nbsp;East&nbsp;Side&nbsp;of&nbsp;the&nbsp;Lake'
+<br>
+;
+<br>
+
+<br>
++&nbsp;HintMenu&nbsp;'On&nbsp;the&nbsp;South&nbsp;Side&nbsp;of&nbsp;the&nbsp;Lake'
+<br>
+;
+<br>
+
+<br>
++&nbsp;HintMenu&nbsp;'On&nbsp;the&nbsp;West&nbsp;Side&nbsp;of&nbsp;the&nbsp;Lake'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that the Menu template defines the single-quoted string as the title property, so, for example, our first HintMenu could have been defined as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;HintMenu
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;=&nbsp;'In&nbsp;the&nbsp;First&nbsp;Set&nbsp;of&nbsp;Caves'
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Note also that each of these menus is only displayed if it contains currently open goals.</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

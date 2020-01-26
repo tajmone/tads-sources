@@ -1,0 +1,502 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>The Art of Conversation</title><meta name="keywords" content="Conversation,InConversationState,ConversationReadyState,HelloTopic,StopEventList,ByeTopic,ImpByeTopic,isInitState,specialDesc,AskTopic,ConvNode,Conversation Nodes,SpecialTopic,DefaultAskTellTopic,isSticky,AskTellTopic,AltTopic"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="endingthegame.htm">[Previous] </a>&nbsp;&nbsp;<a href="whatsinaname.htm">[Next] </a></I></FONT></P>
+<h2>The Art of Conversation</h2>
+
+<p>When you go up and talk to someone, the chances are that they won't just carry on what they're doing while they're talking with you, they're more likely to stop and adopt another posture (no doubt you can think of plenty of exceptions to this, but it's true most of the time). Also, it's normal to begin and end a conversation with some kind of greeting and farewell protocol (e.g. saying "Hello and goodbye."). Of course there are people who will just bounce up to you and say, "Have you done the monthly sales figures yet?" or "What do you think about the election results?", but it's more normal to start with "Good morning" or the like.
+<br>
+
+<br>
+The traditional way of programming NPCs to respond to ASK ABOUT and TELL ABOUT (as in <b>ask jones about monthly report</b> or <b>tell fred about election results</b>) doesn't really allow for such niceties. The player character just walks up to the NPC and tries to find out what topics he, she, or it will respond to, without much sense that a conversation is starting or ending in the normal way. TADS 3 goes a long way to providing a more realistic approximation to the way human beings actually converse by using ActorStates and greeting protocols.
+<br>
+
+<br>
+The idea is that an actor (NPC) typically starts in a type of ActorState called a <font face="Courier New" size="2" color="#000000">ConversationReadyState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> that defines what he or she is doing prior to the conversation, and how the conversation is begun and ended. Starting a conversation with the actor (either with a <b>talk to</b> command, or by using <b>ask about</b>, <b>ask for</b>, <b>tell about</b>, <b>give to</b>, or <b>show to</b>) then causes the greeting message to be displayed, and the actor to switch into the corresponding </font><font face="Courier New" size="2" color="#000000">InConversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This latter type of </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> typically provides a description of what the actor is doing while talking to you, and contains within it the various </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects to which the actor will respond while in that state.
+<br>
+
+<br>
+To see how this works in practice, add the following code immediately after the definition of the </font><font face="Courier New" size="2" color="#000000">DefaultGiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
++&nbsp;burnerTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;standing&nbsp;talking&nbsp;with&nbsp;you.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;burner/he}&nbsp;is&nbsp;leaning&nbsp;on&nbsp;his&nbsp;spade&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;talking&nbsp;with&nbsp;you.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;burnerWorking&nbsp;:&nbsp;ConversationReadyState
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;busily&nbsp;tending&nbsp;the&nbsp;fire.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"&lt;&lt;a++&nbsp;?&nbsp;'{The&nbsp;burner/he}'&nbsp;:&nbsp;'{A&nbsp;burner/he}'&gt;&gt;&nbsp;
+<br>
+&nbsp;&nbsp;is&nbsp;walking&nbsp;round&nbsp;the&nbsp;fire,&nbsp;occasionally&nbsp;shovelling&nbsp;dirt&nbsp;onto&nbsp;it&nbsp;with&nbsp;his&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;spade.&nbsp;"
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;a&nbsp;=&nbsp;0
+<br>
+;
+<br>
+
+<br>
++++&nbsp;HelloTopic,&nbsp;StopEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Er,&nbsp;excuse&nbsp;me,&lt;/q&gt;&nbsp;you&nbsp;say,&nbsp;trying&nbsp;to&nbsp;get&nbsp;{the\'s&nbsp;burner/her}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attention.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{The&nbsp;burner/he}&nbsp;moves&nbsp;away&nbsp;from&nbsp;the&nbsp;fire&nbsp;and&nbsp;leans&nbsp;on&nbsp;his&nbsp;spade
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;talk&nbsp;to&nbsp;you.&nbsp;&lt;q&gt;Hello,&nbsp;young&nbsp;lady.&nbsp;Mind&nbsp;you&nbsp;don\'t&nbsp;get&nbsp;too&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close&nbsp;to&nbsp;that&nbsp;fire&nbsp;now.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Hello!&lt;/q&gt;&nbsp;you&nbsp;call&nbsp;cheerfully.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Hello&nbsp;again!&lt;/q&gt;&nbsp;{the&nbsp;burner/he}&nbsp;declares,&nbsp;pausing&nbsp;from&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;his&nbsp;labours&nbsp;to&nbsp;rest&nbsp;on&nbsp;his&nbsp;spade.&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+;
+<br>
+
+<br>
++++&nbsp;ByeTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Bye&nbsp;for&nbsp;now,&nbsp;then.&lt;/q&gt;&nbsp;you&nbsp;say.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Take&nbsp;care,&nbsp;now.&lt;/q&gt;&nbsp;{the&nbsp;burner/he}&nbsp;admonishes&nbsp;you&nbsp;as&nbsp;he&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;to&nbsp;his&nbsp;work.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;ImpByeTopic
+<br>
+&nbsp;&nbsp;"{The&nbsp;burner/he}&nbsp;gives&nbsp;a&nbsp;little&nbsp;shake&nbsp;of&nbsp;the&nbsp;head&nbsp;and&nbsp;returns&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;work.&nbsp;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">specialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the description of the actor that appears in the room description. The </font><font face="Courier New" size="2" color="#000000">stateDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is appended to the end of the </font><font face="Courier New" size="2" color="#000000">desc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> of the actor when he's examined with an <b>examine</b> command. By default, the library expects to find the </font><font face="Courier New" size="2" color="#000000">ConversationReadyState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> contained within its corresponding </font><font face="Courier New" size="2" color="#000000">InConversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (which is what we have done here). Clearly, the game needs to know which </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> our charcoal burner starts in; we achieve that by setting </font><font face="Courier New" size="2" color="#000000">isInitState&nbsp;=&nbsp;true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on </font><font face="Courier New" size="2" color="#000000">burnerWorking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (the </font><font face="Courier New" size="2" color="#000000">ConversationReadyState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">).
+<br>
+
+<br>
+To display what happens at the start of a conversation, we use a </font><font face="Courier New" size="2" color="#000000">HelloTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> located in the </font><font face="Courier New" size="2" color="#000000">ConversationReadyState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. In this game, we are assuming that Heidi and the charcoal burner have never seen each other before, so the exchange between them on their first meeting is likely to be different from that on subsequent occasions. We accordingly define the </font><font face="Courier New" size="2" color="#000000">HelloTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to be a </font><font face="Courier New" size="2" color="#000000">StopEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as well. A </font><font face="Courier New" size="2" color="#000000">StopEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> works through each element in its list in sequence, until it reaches the last one, which it then keeps repeating. In this example we have only provided two strings in the list - one for the first greeting and a second one for every subsequent greeting. We could also use an </font><font face="Courier New" size="2" color="#000000">ImpHelloTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to provide a different response if Heidi strikes up a conversation with Joe without first explicitly greeting him through a player command (<b>talk to burner</b>), but this is a complication we can manage without here.
+<br>
+
+<br>
+Likewise, to display what happens at the end of the conversation we use a </font><font face="Courier New" size="2" color="#000000">ByeTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. We could once again display a list of different messages when the conversation is terminated, but here we take the simpler option of displaying the same message each time. On the other hand we supply a separate </font><font face="Courier New" size="2" color="#000000">ImpByeTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to define what happens if the conversation is ended implicitly (either by Heidi walking away in the middle of the conversation, or by exhausting the burner's attention span by failing to continue the conversation) rather than explicitly (with a <b>bye</b> command).
+<br>
+
+<br>
+If this all seems a bit much to take in, it may become clearer if you try running the game again with it included and seeing how the charcoal burner now behaves (you can get into conversation with him either explicitly with <b>talk to burner</b> or by trying to give him or show him something). At some point you will also want to have a careful read of the articles on <a href="../techman/t3conv.htm" target="_top">Programming Conversations with NPCs</a> in TADS 3 in the <i>Technical Manual</i>, though there's no need to do that until you've completed this guide.
+<br>
+
+<br>
+I should explain, though, that there's one little trick in the code given above that you won't find documented there or anywhere else. Since Heidi has never seen the charcoal burner before, the very first time he's mentioned he should be described as "a charcoal burner", but, once he's been referred to once, on every subsequent occasion he should be called "the charcoal burner" (until we learn his name, when he'll be referred to as "Joe Black", which is why we're using the substitution strings - </font><font face="Courier New" size="2" color="#000000">{the&nbsp;burner/he}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and so forth). To achieve this effect, the </font><font face="Courier New" size="2" color="#000000">specialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of burnerWorking has been defined thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">specialDesc&nbsp;=&nbsp;"&lt;&lt;a++&nbsp;?&nbsp;'{The&nbsp;burner/he}'&nbsp;:&nbsp;'{A&nbsp;burner/he}'&gt;&gt;&nbsp;
+<br>
+&nbsp;&nbsp;is&nbsp;walking&nbsp;round&nbsp;the&nbsp;fire,&nbsp;occasionally&nbsp;shovelling&nbsp;dirt&nbsp;onto&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;it&nbsp;with&nbsp;his&nbsp;spade.&nbsp;"
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The first part of this little trick is the use of the ternary operator </font><font face="Courier New" size="2" color="#000000">?&nbsp;:</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> . This means if the expression before the question-mark is true, evaluate to the expression between the question-mark and the colon, otherwise evaluate to the expression after the colon. So, for example:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">(x&nbsp;&gt;&nbsp;5)&nbsp;?&nbsp;96&nbsp;:&nbsp;32
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">evaluates to 96 if x is 6 but to 32 if x is 4. Moreover, </font><font face="Courier New" size="2" color="#000000">a++</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> means use the current value of </font><font face="Courier New" size="2" color="#000000">a</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, then increase it by one after we've use it. We have initialized the property a to 0 (something as uninformative as 'a' would normally be frowned upon as a property name, but since we're using it here to determine whether the burner should be called <i>a</i> burner or <i>the</i> burner, we might just about be forgiven for it). This means that the first time the </font><font face="Courier New" size="2" color="#000000">specialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> string is displayed, </font><font face="Courier New" size="2" color="#000000">a</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is zero (which is treated as equivalent to </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, i.e. a Boolean false), so the whole expression in the double angle brackets evaluates to the parameter string </font><font face="Courier New" size="2" color="#000000">'{A&nbsp;burner/he}'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> which in turn displays as "A charcoal burner". But since the act of displaying the string causes </font><font face="Courier New" size="2" color="#000000">a</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to increment by one, on every subsequent occasion the </font><font face="Courier New" size="2" color="#000000">specialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> string is displayed </font><font face="Courier New" size="2" color="#000000">a</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will be some number greater than zero, which will be treated as meaning </font><font face="Courier New" size="2" color="#000000">true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This will result in the whole expression evaluating to </font><font face="Courier New" size="2" color="#000000">'{The&nbsp;burner/he}'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and thus displaying as "The charcoal burner".
+<br>
+
+<br>
+The next step is to give the charcoal burner a couple of topics he can talk about. Since he's tending a fire, and the fire and smoke are mentioned in the room description, they might be two obvious topics to start with. Compared with what we've just done, coding them is fairly straightforward:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic&nbsp;@smoke
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;Doesn't&nbsp;that&nbsp;smoke&nbsp;bother&nbsp;you?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Nah!&nbsp;You&nbsp;get&nbsp;used&nbsp;to&nbsp;it&nbsp;-&nbsp;you&nbsp;just&nbsp;learn&nbsp;not&nbsp;to&nbsp;breathe&nbsp;too&nbsp;deep&nbsp;when
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;it&nbsp;gets&nbsp;blown&nbsp;your&nbsp;way.&lt;/q&gt;&nbsp;he&nbsp;assures&nbsp;you.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;AskTopic,&nbsp;ShuffledEventList&nbsp;@fire
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Why&nbsp;have&nbsp;you&nbsp;got&nbsp;that&nbsp;great&nbsp;big&nbsp;bonfire&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forest?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;It\'s&nbsp;not&nbsp;a&nbsp;bonfire,&nbsp;Miss,&nbsp;it\'s&nbsp;a&nbsp;fire&nbsp;for&nbsp;making&nbsp;charcoal.&lt;/q&gt;&nbsp;he
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explains,&nbsp;&lt;q&gt;And&nbsp;to&nbsp;make&nbsp;charcoal&nbsp;I&nbsp;need&nbsp;to&nbsp;burn&nbsp;wood&nbsp;-&nbsp;slow&nbsp;like&nbsp;-&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;a&nbsp;forest&nbsp;is&nbsp;a&nbsp;good&nbsp;place&nbsp;to&nbsp;find&nbsp;wood&nbsp;-&nbsp;see?&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Doesn\'t&nbsp;it&nbsp;get&nbsp;a&nbsp;bit&nbsp;hot,&nbsp;working&nbsp;with&nbsp;that&nbsp;fire&nbsp;all&nbsp;day?&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wonder.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes,&nbsp;but&nbsp;it&nbsp;beats&nbsp;being&nbsp;cooped&nbsp;up&nbsp;in&nbsp;an&nbsp;office&nbsp;all&nbsp;day.&lt;/q&gt;&nbsp;he
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;replies,&nbsp;&lt;q&gt;I&nbsp;couldn\'t&nbsp;stand&nbsp;that!&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Why&nbsp;do&nbsp;you&nbsp;keep&nbsp;putting&nbsp;that&nbsp;dust&nbsp;on&nbsp;the&nbsp;fire?&lt;/q&gt;&nbsp;you&nbsp;wonder.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;To&nbsp;stop&nbsp;it&nbsp;burning&nbsp;too&nbsp;quick.&lt;/q&gt;&nbsp;he&nbsp;tells&nbsp;you.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">We make them both of class </font><font face="Courier New" size="2" color="#000000">AskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> so that the burner will respond to <b>ask burner about fire</b> or <b>ask burner about smoke</b>. For the smoke we've just given him a single reply he'll give every time (not because this is a particularly good idea, but just to show how it's done). For the fire, we've given him a list of three responses which will be treated as a </font><font face="Courier New" size="2" color="#000000">ShuffledEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (since their order is not significant). There's only a couple of other points to note here. The first is that our response strings define both sides of the conversation, so we see what Heidi asks as well as what the burner answers. The second is that these topics belong in </font><font face="Courier New" size="2" color="#000000">burnerTalking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the </font><font face="Courier New" size="2" color="#000000">InConversationState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, so we precede them both with two plus signs to contain them at the right place in the object hierarchy.
+<br>
+
+<br>
+It's always possible that the player will try to ask the burner some topic we haven't explicitly defined, so it would be useful to define a catchall </font><font face="Courier New" size="2" color="#000000">DefaultAskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to handle such cases:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;DefaultAskTellTopic
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;What&nbsp;do&nbsp;you&nbsp;think&nbsp;about&nbsp;&lt;&lt;gTopicText&gt;&gt;?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Ah,&nbsp;yes&nbsp;indeed,&nbsp;&lt;&lt;gTopicText&gt;&gt;,&lt;/q&gt;&nbsp;he&nbsp;nods&nbsp;sagely,
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;&lt;&lt;rand('Quite&nbsp;so',&nbsp;'You&nbsp;never&nbsp;know',&nbsp;'Or&nbsp;there&nbsp;again,&nbsp;no&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;indeed')&gt;&gt;.&lt;/q&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This definition (loosely based on a similar trick in the sample game that comes with TADS 3), is designed to create the vague illusion of responding to any topic (though the illusion will quickly be shattered in practice), by using </font><font face="Courier New" size="2" color="#000000">gTopicText</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which returns the text of whatever the player typed after <b>about</b><b><i> </i></b>in an <b>ask burner about</b> or <b>tell burner about</b> command. When the </font><font face="Courier New" size="2" color="#000000">rand()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> function is given a list of arguments, as here, it selects one of them at random; this at least gives a measure of variety to the charcoal burner's meaningless replies, and will generate a transcript like:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">&gt;<b>ask burner about the weather</b>
+<br>
+"What do you think about the weather?" you ask.
+<br>
+
+<br>
+"Ah, yes indeed, the weather," he nods sagely, "You never know."
+<br>
+
+<br>
+&gt;<b>ask him about weapons of mass destruction</b>
+<br>
+"What do you think about weapons of mass destruction?" you ask.
+<br>
+
+<br>
+"Ah, yes indeed, weapons of mass destruction," he nods sagely, "Or there again, no indeed."
+<br>
+
+<br>
+&gt;<b>ask him about his mother</b>
+<br>
+"What do you think about his mother?" you ask.
+<br>
+
+<br>
+"Ah, yes indeed, his mother," he nods sagely, "Or there again, no indeed."
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The last of these rather gives the game away, which is why this particular technique (trying to echo what the player typed in the player character's response) is not really satisfactory, unless you're trying to represent your NPC as an eccentric old buffer who displays his confusion by talking like this. It's usually rather better to show non-commital responses to the effect that the NPC doesn't hear the question, refuses to answer, mutters an inaudible reply, becomes distracted, or says something so convoluted that you fail to understand it. In such cases it isn't really practicable to give the full question asked by the player character, so you either have to omit it, or represent it in indirect speech (e.g. "You ask your question and&#133;") or have the NPC interrupt it half way through, (e.g. "What do you think about&#133;?" you begin. "I don't," he interrupts, "Thinking's for intellectuals, and I sure as hell ain't one of them.") As an exercise you may wish to devise your own list of default ask responses for our burner to replace the slightly dodgy ones shown above.
+<br>
+
+<br>
+ Now the time has come to get the charcoal burner to tell us about himself (in response to the player typing <b>ask burner about himself</b>). This doesn't require us to define a special himself object or topic, since the parser will recognize <b>ask burner about himself</b> as equivalent to <b>ask burner about burner</b>. We simply need to add an </font><font face="Courier New" size="2" color="#000000">AskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> with </font><font face="Courier New" size="2" color="#000000">burner</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as its </font><font face="Courier New" size="2" color="#000000">matchObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic&nbsp;@burner
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;My&nbsp;name's&nbsp;Heidi.&lt;/q&gt;&nbsp;you&nbsp;announce.&nbsp;&lt;q&gt;What's&nbsp;yours?&lt;/q&gt;&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;&lt;&lt;burner.properName&gt;&gt;,&lt;/q&gt;&nbsp;he&nbsp;replies,&nbsp;&lt;q&gt;Mind&nbsp;you,&nbsp;it'll&nbsp;soon&nbsp;be&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mud.&lt;/q&gt;"&nbsp;&nbsp;
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">For clarity of code structure, it might be a good idea to put this just before our catchall </font><font face="Courier New" size="2" color="#000000">DefaultAskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The one point to note here is the use of </font><font face="Courier New" size="2" color="#000000">&lt;&lt;burner.properName&gt;&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather than simply Joe Black. The advantage of doing it this way is that if we later decide we want to call the charcoal burner 'Fred Bloggs' or 'Ebenezer Oddball Sidewinder Bumblebotham' instead, we need only change the value of the </font><font face="Courier New" size="2" color="#000000">burner</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object's </font><font face="Courier New" size="2" color="#000000">properName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, rather than having to hunt down and change every occurrence of the string 'Joe Black'.
+<br>
+
+<br>
+Joe's statement (let's stick with calling him Joe) that his name will soon be mud invites the question why, but this doesn't seem to be the sort of question that naturally fits the <b>ask about</b> format: <b>ask joe about mud</b>, for example, wouldn't read right. What we'd really like is to be able to <b>ask why</b>, but for this to be a valid question only at this point in the conversation. Fortunately TADS 3 makes this possible through a mechanism called <i>conversation nodes </i>used in conjunction with </font><font face="Courier New" size="2" color="#000000">SpecialTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. A conversation node represents a particular point in the conversation (such as here, when Joe tells us his name will be mud) at which particular responses make sense which might not make sense elsewhere. Another example might be when an NPC asks a question requiring a yes or no answer: it makes sense to answer yes or no at that point, but it probably would have made no sense to do so on the previous turn, and the moment when it makes sense may have passed by the next turn. For something more complicated than a straightforward 'yes' or 'no' response, we can define a </font><font face="Courier New" size="2" color="#000000">SpecialTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which in principle allows the player character to ask any question or make any reply we like (though in practice we'll want to restrict their complexity), with the restriction that these responses are only valid while their Conversation Node is active (because after that the conversation will have moved on, and before that the NPC hadn't yet made the remark to which these are potentially relevant responses).
+<br>
+
+<br>
+This may become clearer with an example. What we want to do is to allow Heidi  to ask why Joe thinks his name will be mud. To do this we need to define a conversation node (which we'll call 'burner-mud') and add a couple of SpecialTopics to it to handle questions like <b>ask why</b>. We also need to tell the game when to enter the 'burner-mud' conversation mode. This can be done by use of the </font><font face="Courier New" size="2" color="#000000">&lt;.convnode&nbsp;name&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> tag, where </font><font face="Courier New" size="2" color="#000000">name</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the name of the conversation node we want to enter. We use it by including it in the output string at the appropriate point:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic&nbsp;@burner
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;My&nbsp;name's&nbsp;Heidi.&lt;/q&gt;&nbsp;you&nbsp;announce.&nbsp;&lt;q&gt;What's&nbsp;yours?&lt;/q&gt;&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;&lt;&lt;burner.properName&gt;&gt;,&lt;/q&gt;&nbsp;he&nbsp;replies,&nbsp;&lt;q&gt;Mind&nbsp;you,&nbsp;it'll&nbsp;soon&nbsp;be&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;mud.&lt;/q&gt;&nbsp;&lt;.convnode&nbsp;burner-mud&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The definition of the </font><font face="Courier New" size="2" color="#000000">ConvNode</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object is pretty minimal. The SpecialTopics require a little more attention, and we add a </font><font face="Courier New" size="2" color="#000000">DefaultAskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> at the end to ensure that the player stays in the </font><font face="Courier New" size="2" color="#000000">ConvNode</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> until he or she asks the question we want asked:
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;ConvNode&nbsp;'burner-mud';
+<br>
+
+<br>
+++&nbsp;SpecialTopic,&nbsp;StopEventList&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'deny&nbsp;that&nbsp;mud&nbsp;is&nbsp;a&nbsp;name'&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;['deny',&nbsp;'that',&nbsp;'mud',&nbsp;'is',&nbsp;'a',&nbsp;'name']&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Mud!&nbsp;What&nbsp;kind&nbsp;of&nbsp;name&nbsp;is&nbsp;that?&lt;q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;My&nbsp;name&nbsp;--&nbsp;tonight.&lt;/q&gt;&nbsp;he&nbsp;replied&nbsp;gloomily.&nbsp;&lt;.convstay&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;But&nbsp;you&nbsp;can\'t&nbsp;&lt;i&gt;really&lt;/i&gt;&nbsp;be&nbsp;called&nbsp;&lt;q&gt;Mud&lt;/q&gt;&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insist.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Oh&nbsp;yes&nbsp;I&nbsp;can!&lt;/q&gt;&nbsp;he&nbsp;assures&nbsp;you.&nbsp;&lt;.convstay&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+
+<br>
+++&nbsp;SpecialTopic&nbsp;'ask&nbsp;why'&nbsp;['ask',&nbsp;'him',&nbsp;'why']
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Why&nbsp;will&nbsp;your&nbsp;name&nbsp;be&nbsp;mud?&lt;/q&gt;&nbsp;you&nbsp;want&nbsp;to&nbsp;know.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;He&nbsp;shakes&nbsp;his&nbsp;head,&nbsp;lets&nbsp;out&nbsp;an&nbsp;enormous&nbsp;sigh,&nbsp;and&nbsp;replies,
+<br>
+&nbsp;&nbsp;&lt;q&gt;I&nbsp;was&nbsp;going&nbsp;to&nbsp;give&nbsp;her&nbsp;the&nbsp;ring&nbsp;tonight&nbsp;--&nbsp;her&nbsp;engagement&nbsp;ring&nbsp;--
+<br>
+&nbsp;&nbsp;only&nbsp;I've&nbsp;gone&nbsp;and&nbsp;lost&nbsp;it.&nbsp;Cost&nbsp;me&nbsp;two&nbsp;months'&nbsp;wages&nbsp;it&nbsp;did.&nbsp;And
+<br>
+&nbsp;&nbsp;now&nbsp;she'll&nbsp;never&nbsp;speak&nbsp;to&nbsp;me&nbsp;again,&lt;/q&gt;&nbsp;he&nbsp;concludes,&nbsp;with&nbsp;another
+<br>
+&nbsp;&nbsp;mournful&nbsp;shake&nbsp;of&nbsp;the&nbsp;head,&nbsp;&lt;q&gt;never.&lt;/q&gt;"
+<br>
+;
+<br>
+
+<br>
+++&nbsp;DefaultAskTellTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;And&nbsp;why&nbsp;does...&lt;/q&gt;&nbsp;you&nbsp;begin.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&lt;q&gt;Mud.&lt;/q&gt;&nbsp;he&nbsp;repeats&nbsp;with&nbsp;a&nbsp;despairing&nbsp;sigh.&nbsp;&lt;.convstay&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that there is only one + sign in front of the </font><font face="Courier New" size="2" color="#000000">ConvNode</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This is because here we are putting the </font><font face="Courier New" size="2" color="#000000">ConvNode</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> directly inside the actor (in this case the burner), not any of its actor states. It is also legal (though never necessary) to locate a </font><font face="Courier New" size="2" color="#000000">ConvNode</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in an </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+We should spend a few minutes thinking about how all this works. First, since the player cannot be expected to guess what wording will trigger our special topics, we need to provide some kind of prompt. This is what the single-quoted strings immediately after the class names do (the strings in the </font><font face="Courier New" size="2" color="#000000">name</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of the </font><font face="Courier New" size="2" color="#000000">SpecialTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects). These strings need to be of a form that make sense after "You could&#133;"; in this case the player will be prompted with:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">(You could deny that mud is a name, or ask why.)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The list of strings in square brackets (the </font><font face="Courier New" size="2" color="#000000">keywordList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property) is then the list of words (or 'tokens') that the parser will check for in deciding whether to match a given </font><font face="Courier New" size="2" color="#000000">SpecialTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. It is not necessary that the player types all the words in the list for a match to take place - in this instance one or other of the SpecialTopics will be matched if the player simply types <b>deny</b> or <b>mud</b> or <b>why</b>, for example; but a match will not take place if the command contains any words not in the list. For example if the player types <b>deny mud a proper name</b> the parser will respond with:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The word "proper" is not necessary in this story.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The only way to try to avoid this it to be as careful as possible in the list of strings you include in the </font><font face="Courier New" size="2" color="#000000">keywordList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; in this instance we have mostly just duplicated the words that will appear in the prompt, but it seems likely that the player might try something else (and you can be sure than many players will), we can always add more words to these lists (e.g. 'him' between 'ask' and 'why'). Note also that the list of the words in the </font><font face="Courier New" size="2" color="#000000">keywordList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property must be separated by commas, which can often be surprisingly easy to forget.
+<br>
+
+<br>
+Everything else about the SpecialTopics works in the same way as for other TopicEntries. We supply the 'deny mud is a name' topic merely to give the player the appearance of having an option at this point; a prompt that merely said "(You could ask why)" would look a bit <i>too</i> directive. We use the </font><font face="Courier New" size="2" color="#000000">&lt;.convstay&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> tags in the 'deny mud' topic and the </font><font face="Courier New" size="2" color="#000000">DefaultAskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to try to prevent the player from leaving the conversation node until he or she has asked why and so given Joe a chance to start telling his sorry tale (the player could just walk away and terminate the conversation without learning about the ring, but one hopes that most players' natural curiosity will prompt them to <b>ask why</b> first).
+<br>
+
+<br>
+Since the player could type <b>deny mud is a name</b> more than once, we provide more than one response to it. Once he or she types <b>ask why</b>, however, the game will leave the conversation node after displaying the response, so there's no need for more than one response.
+<br>
+
+<br>
+One further point to note is the use of double dashes (--) in the text of various responses. TADS will automatically convert each pair of dashes into one long dash, which looks better in the output than a short dash.
+<br>
+
+<br>
+Finally, note that normally a Conversation Node will normally only last for one turn. That is why we needed to insert all those </font><font face="Courier New" size="2" color="#000000">&lt;.convstay&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> tags to keep this node active until the player asks the question we want asked. But we could change the default behaviour by setting the </font><font face="Courier New" size="2" color="#000000">ConvNode</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">'s </font><font face="Courier New" size="2" color="#000000">isSticky</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property to </font><font face="Courier New" size="2" color="#000000">true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; in that case the Conversation Node would remain active until we explicitly left it, either by switching to another node, or by using a tag such as </font><font face="Courier New" size="2" color="#000000">&lt;.convnode&nbsp;nil&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to leave the current node without entering another. You might like to experiment with changing the code to use this alternative approach to check that you can get it to work.
+<br>
+
+<br>
+The next thing that's likely to occur to the player is to <b>ask burner about ring</b>. There's an important story to be told here, so this guide will need to provide it's own version, but before seeing what it is, you might first like to try defining an </font><font face="Courier New" size="2" color="#000000">AskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> of your own to handle this. For the sake of argument, assume that Heidi asks "What happened to the ring - how did you manage to lose it?", and try devising your own answer. Then check that Joe responds to <b>ask burner about ring</b> as you intended.
+<br>
+
+<br>
+The answer we actually need here, since it's important to our plot, may be supplied thus (this time nested inside </font><font face="Courier New" size="2" color="#000000">burnerTalking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> again, so put it just after the definition of </font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic&nbsp;@burner</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTellTopic,&nbsp;StopEventList&nbsp;@ring
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;What&nbsp;happened&nbsp;to&nbsp;the&nbsp;ring&nbsp;--&nbsp;how&nbsp;did&nbsp;you&nbsp;manage&nbsp;to&nbsp;lose&nbsp;it?&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;You&nbsp;wouldn\'t&nbsp;believe&nbsp;it.&lt;/q&gt;&nbsp;he&nbsp;shakes&nbsp;his&nbsp;head&nbsp;again,&nbsp;&lt;q&gt;I&nbsp;took&nbsp;it&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;to&nbsp;take&nbsp;a&nbsp;look&nbsp;at&nbsp;it&nbsp;a&nbsp;couple&nbsp;of&nbsp;hours&nbsp;back,&nbsp;and&nbsp;then&nbsp;dropped&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thing.&nbsp;Before&nbsp;I&nbsp;could&nbsp;pick&nbsp;it&nbsp;up&nbsp;again,&nbsp;blow&nbsp;me&nbsp;if&nbsp;a&nbsp;thieving&nbsp;little
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;magpie&nbsp;didn\'t&nbsp;flutter&nbsp;down&nbsp;and&nbsp;fly&nbsp;off&nbsp;with&nbsp;it!&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Where&nbsp;do&nbsp;you&nbsp;think&nbsp;the&nbsp;ring&nbsp;could&nbsp;have&nbsp;gone?&lt;/q&gt;&nbsp;you&nbsp;wonder.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;I&nbsp;suppose&nbsp;it\'s&nbsp;fetched&nbsp;up&nbsp;in&nbsp;some&nbsp;nest&nbsp;somewhere,&lt;/q&gt;&nbsp;he&nbsp;sighs,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Goodness&nbsp;knows&nbsp;how&nbsp;I\'ll&nbsp;ever&nbsp;get&nbsp;it&nbsp;back&nbsp;again!&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Would&nbsp;you&nbsp;like&nbsp;me&nbsp;to&nbsp;try&nbsp;to&nbsp;find&nbsp;your&nbsp;ring&nbsp;for&nbsp;you?&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volunteer&nbsp;earnestly.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes,&nbsp;sure,&nbsp;that&nbsp;would&nbsp;be&nbsp;wonderful.&lt;/q&gt;&nbsp;he&nbsp;agrees,&nbsp;without&nbsp;sounding
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;least&nbsp;convinced&nbsp;that&nbsp;you\'ll&nbsp;be&nbsp;able&nbsp;to.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's one problem with this (actually, there's two, but we'll come to the second one in a minute). This part of the conversation presupposes that Joe has told Heidi the sad story of how he came to lose the ring, but that she hasn't found it yet. Although events could happen that way round, it's perfectly possible that the player could locate the ring before getting into conversation with Joe. That's easy enough to test for - if the ring has been found </font><font face="Courier New" size="2" color="#000000">gPlayerChar.hasSeen(ring)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will be true, otherwise it will be </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. But where do we put this test without a lot of clumsy coding? Once again TADS 3 comes to our rescue with a very neat solution, we simply use an </font><font face="Courier New" size="2" color="#000000">AltTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (directly after the </font><font face="Courier New" size="2" color="#000000">AskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> we've just defined):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;I&nbsp;found&nbsp;a&nbsp;ring&nbsp;in&nbsp;a&nbsp;bird's&nbsp;nest,&nbsp;up&nbsp;a&nbsp;tree&nbsp;just&nbsp;down&nbsp;there.&lt;/q&gt;&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tell&nbsp;him,&nbsp;pointing&nbsp;vaguely&nbsp;southwards,&nbsp;&lt;q&gt;Could&nbsp;it&nbsp;be&nbsp;yours?&lt;/q&gt;&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Really?&lt;/q&gt;&nbsp;he&nbsp;asks,&nbsp;his&nbsp;eyes&nbsp;lighting&nbsp;up&nbsp;with&nbsp;disbelieving&nbsp;hope,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Let&nbsp;me&nbsp;see&nbsp;it!&lt;/q&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(gPlayerChar.hasSeen(ring))
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">There's no need to code either the commands or the object the </font><font face="Courier New" size="2" color="#000000">AltTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is to respond to, it will respond to whatever the </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> it's contained in responds to, provided that its </font><font face="Courier New" size="2" color="#000000">isActive</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property is </font><font face="Courier New" size="2" color="#000000">true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. If its </font><font face="Courier New" size="2" color="#000000">isActive</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property is </font><font face="Courier New" size="2" color="#000000">true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> then it will be used in preference to the </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in which it is contained. In this case we want the </font><font face="Courier New" size="2" color="#000000">AltTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to be used instead of its main </font><font face="Courier New" size="2" color="#000000">AskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> if (and only if) Heidi has actually found the ring, which we achieve with the line </font><font face="Courier New" size="2" color="#000000">isActive&nbsp;=&nbsp;(gPlayerChar.hasSeen(ring)).</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> Incidentally, this is why we made the topic an </font><font face="Courier New" size="2" color="#000000">AskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> instead of simply an </font><font face="Courier New" size="2" color="#000000">AskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; once Heidi has found the ring the player is just as likely to <b>tell burner about ring</b> as <b>ask burner about ring</b>.
+<br>
+
+<br>
+If you now compile and run the game, you should soon encounter the second problem. If Heidi has found the ring when she asks or tells Joe about it, everything should work as expected, but if she hasn't, then asking (or telling) the charcoal burner about the ring works just like asking or telling him about a topic we haven't defined. This makes sense before Heidi has got Joe to tell his sorry tale, since she doesn't know there's a ring to ask about (which is why the library handles it this way), but once Joe has mentioned his ring she ought to be able to ask about it.
+<br>
+
+<br>
+The TADS library keeps track of which things an actor knows about through objects' </font><font face="Courier New" size="2" color="#000000">isKnown</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, which should be tested through actors' </font><font face="Courier New" size="2" color="#000000">actor.knowsAbout(obj)&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method. Actually, the standard library only keeps track of what the Player Character knows about by this means, but provides the </font><font face="Courier New" size="2" color="#000000">actors</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> parameter in case  some brave soul wants to expand the system to a tracking NPCs' knowledge as well. By default </font><font face="Courier New" size="2" color="#000000">actor.knowsAbout(obj)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is true either if </font><font face="Courier New" size="2" color="#000000">obj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> has been seen by the Player Character or if </font><font face="Courier New" size="2" color="#000000">obj.isKnown&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">has been set to </font><font face="Courier New" size="2" color="#000000">true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The correct way of achieving the latter is by calling </font><font face="Courier New" size="2" color="#000000">gPlayerChar.setKnowsAbout(obj)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This seems rather long-winded for what is likely to be a quite commonly needed operation, so the library offers an abbreviated form (a macro) </font><font face="Courier New" size="2" color="#000000">gSetKnown(obj)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. This macro definition is a preprocessor directive that means roughly 'whenever you see </font><font face="Courier New" size="2" color="#000000">gSetKnown(obj)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the source code, replace it with </font><font face="Courier New" size="2" color="#000000">gPlayerChar.setKnowsAbout(obj)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> before presenting it to the compiler, where </font><font face="Courier New" size="2" color="#000000">obj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> can be any object name we care to use'. In other words, all we have to do to fix things is to add </font><font face="Courier New" size="2" color="#000000">&lt;&lt;gSetKnown(ring)&gt;&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to the end of the output string of the appropriate SpecialTopic, thus:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;SpecialTopic&nbsp;'ask&nbsp;why'&nbsp;['ask','why']
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Why&nbsp;will&nbsp;your&nbsp;name&nbsp;be&nbsp;mud?&lt;/q&gt;&nbsp;you&nbsp;want&nbsp;to&nbsp;know.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;He&nbsp;shakes&nbsp;his&nbsp;head,&nbsp;lets&nbsp;out&nbsp;an&nbsp;enormous&nbsp;sigh,&nbsp;and&nbsp;replies,
+<br>
+&nbsp;&nbsp;&lt;q&gt;I&nbsp;was&nbsp;going&nbsp;to&nbsp;give&nbsp;her&nbsp;the&nbsp;ring&nbsp;tonight&nbsp;--&nbsp;her&nbsp;engagement&nbsp;ring&nbsp;--
+<br>
+&nbsp;&nbsp;only&nbsp;I've&nbsp;gone&nbsp;and&nbsp;lost&nbsp;it.&nbsp;Cost&nbsp;me&nbsp;two&nbsp;months'&nbsp;wages&nbsp;it&nbsp;did.&nbsp;And
+<br>
+&nbsp;&nbsp;now&nbsp;she'll&nbsp;never&nbsp;speak&nbsp;to&nbsp;me&nbsp;again,&lt;/q&gt;&nbsp;he&nbsp;concludes,&nbsp;with&nbsp;another
+<br>
+&nbsp;&nbsp;mournful&nbsp;shake&nbsp;of&nbsp;the&nbsp;head,&nbsp;&lt;q&gt;never.&lt;/q&gt;&lt;&lt;gSetKnown(ring)&gt;&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Now, once Joe has mentioned the ring, Heidi will be able to ask about it and get a sensible response, even is she hasn't found the ring yet. If you recompile and play the game with these changes, you should find it all works properly.
+<br>
+
+<br>
+Well, not quite all, perhaps. Although the charcoal burner has told Heidi that his name is 'Joe Black', he continues to be described as 'the charcoal burner'. Not only that, but the parser refuses to recognize him if we try to refer to <b>joe</b>, <b>black</b> or <b>joe black</b>. We'll fix these problems in the next section.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="endingthegame.htm">[Previous] </a>&nbsp;&nbsp;<a href="whatsinaname.htm">[Next] </a></I></FONT></P>
+</body></html>

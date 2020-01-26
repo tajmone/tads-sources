@@ -1,0 +1,244 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ComplexContainer</title><meta name="keywords" content="ComplexContainer,DirectObject,remapTo,openStatus,ComplexComponent,subSurface,subContainer,subRear,subUnderside,subLocation"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ComplexContainer : <a href="thing-thebasics.htm">Thing</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="rearsurface.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="containerdoor.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">As we saw with the potential trap in trying to add a Component to a LockableContainer, an item's contents are deemed to be either in it or on it (or, by extension, under it or behind it), but only one of these at a time. So what happens if we have something like desk that we want to put things both on and in? Well, we've already seen how one solution might work, because we've been using it with <a href="underside.htm">Underside</a> and <a href="rearcontainer.htm">RearContainer</a>, namely to define a second object, say a desk drawer, to act as the container, and remap all the commands relating to looking in, opening, closing, and putting things into the desk to the drawer object instead:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">cabinDesk&nbsp;:&nbsp;Heavy,&nbsp;Surface&nbsp;'large&nbsp;solid&nbsp;oak&nbsp;desk'&nbsp;'desk'&nbsp;@greatCabin
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large,&nbsp;solid&nbsp;oak&nbsp;desk,&nbsp;with&nbsp;a&nbsp;single&nbsp;drawer.&nbsp;"
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;oak&nbsp;desk&nbsp;sits&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cabin.&nbsp;"
+<br>
+&nbsp;&nbsp;specialDescOrder&nbsp;=&nbsp;50
+<br>
+&nbsp;&nbsp;<b>dobjFor(Open)&nbsp;remapTo(Open,&nbsp;cabinDeskDrawer)
+<br>
+&nbsp;&nbsp;dobjFor(Close)&nbsp;remapTo(Close,&nbsp;cabinDeskDrawer)
+<br>
+&nbsp;&nbsp;dobjFor(LookIn)&nbsp;remapTo(LookIn,&nbsp;cabinDeskDrawer)
+<br>
+&nbsp;&nbsp;iobjFor(PutIn)&nbsp;remapTo(PutIn,&nbsp;DirectObject,&nbsp;cabinDeskDrawer)</b>
+<br>
+&nbsp;&nbsp;dobjFor(LookUnder)&nbsp;remapTo(LookUnder,&nbsp;underDesk)
+<br>
+&nbsp;&nbsp;iobjFor(PutUnder)&nbsp;remapTo(PutUnder,&nbsp;DirectObject,&nbsp;underDesk)
+<br>
+&nbsp;&nbsp;dobjFor(LookBehind)&nbsp;remapTo(LookBehind,&nbsp;deskRear)
+<br>
+&nbsp;&nbsp;iobjFor(PutBehind)&nbsp;remapTo(PutBehind,&nbsp;DirectObject,&nbsp;deskRear)
+<br>
+&nbsp;&nbsp;dobjFor(GoBehind)&nbsp;remapTo(GoBehind,&nbsp;deskRear)
+<br>
+;
+<br>
+
+<br>
++&nbsp;cabinDeskDrawer&nbsp;:&nbsp;OpenableContainer,&nbsp;Component&nbsp;'drawer'&nbsp;'drawer'
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;4
+<br>
+;
+<br>
+
+<br>
+++&nbsp;tardisKey&nbsp;:&nbsp;Key&nbsp;'small&nbsp;silver&nbsp;key'&nbsp;'small&nbsp;silver&nbsp;key';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note the use of DirectObject in the remapTo(PutIn...) macro when we are remapping a command for which the desk is the indirect object. Again, we have defined the key to be of class Key which we haven't actually introduced yet, but since the object definition is so simple it would be pointless to make it a Thing only to have to change it later. We'll see how this Key works when we come to discuss the <a href="lockablewithkey.htm">LockableWithKey</a> class.
+<br>
+
+<br>
+Note also that although the cabinDeskDrawer, being in the cabinDesk's contents, is strictly speaking notionally on its surface, this doesn't matter in practice, since as a Component it will never be listed, and since it's on the outside of the desk and not within some kind of Container there's no danger of its being inappropriately hidden from the player.
+<br>
+
+<br>
+It would be perfectly feasible to implement all objects that have contents both on them and in them in this way. There is, however, another way, or rather a way that automates some of the labour, and that is to use a ComplexContainer. We'll put an old dressing-table in anotherCave as an example:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">dressingTable&nbsp;:&nbsp;ComplexContainer,&nbsp;Heavy&nbsp;&nbsp;'battered&nbsp;old&nbsp;dressing&nbsp;table'&nbsp;'dressing&nbsp;table'
+<br>
+&nbsp;&nbsp;@anotherCave
+<br>
+&nbsp;&nbsp;"It's&nbsp;battered&nbsp;and&nbsp;scratched,&nbsp;and&nbsp;looks&nbsp;just&nbsp;about&nbsp;on&nbsp;its&nbsp;last&nbsp;legs.&nbsp;In&nbsp;place
+<br>
+&nbsp;&nbsp;&nbsp;of&nbsp;drawers,&nbsp;it&nbsp;has&nbsp;a&nbsp;pair&nbsp;of&nbsp;doors&nbsp;attached&nbsp;to&nbsp;the&nbsp;front"
+<br>
+&nbsp;&nbsp;inRoomDesc&nbsp;=&nbsp;"A&nbsp;battered&nbsp;old&nbsp;dressing&nbsp;table&nbsp;leans&nbsp;drunkenly&nbsp;against&nbsp;a&nbsp;wall&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;subSurface&nbsp;:&nbsp;ComplexComponent,&nbsp;Surface&nbsp;{&nbsp;}
+<br>
+&nbsp;&nbsp;subContainer&nbsp;:&nbsp;ComplexComponent,&nbsp;OpenableContainer&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;5&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;openStatus&nbsp;{&nbsp;if(isOpen)&nbsp;".&nbsp;It's&nbsp;open";&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;subUnderside&nbsp;:&nbsp;ComplexComponent,&nbsp;Underside&nbsp;{&nbsp;bulkCapacity&nbsp;=&nbsp;5&nbsp;}
+<br>
+&nbsp;&nbsp;subRear&nbsp;:&nbsp;ComplexComponent,&nbsp;RearContainer&nbsp;{&nbsp;bulkCapacity&nbsp;=&nbsp;5&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">The main thing to note here is the way the subSurface,  subContainer, subUnderside and subRear properties are defined. Each must contain the definition of a nested object of class ComplexComponent, together with an appropriate Surface class (for subSurface) or Container class (for subContainer) or Underside (for subUnderside) or RearContainer class (for subRear). The ComplexContainer will then direct the relevant commands (e.g. PUT ON, PUT IN, OPEN, CLOSE, LOOK IN, LOOK UNDER, LOOK BEHIND) to its subSurface, subContainer, subUnderside or subRear as appropriate. The definition of the ComplexComponent objects can be as minimal as the subSurface, or we can introduce further customization, as with the subContainer. Here we give the table a limited bulkCapacity when it acts as a Container, and override its <b>openStatus()</b> method to suppress the "It's closed. " message that would otherwise be appended to the description of the dressing table in response to an EXAMINE command (we have to cheat a little here, since even if openStatus prints nothing, a terminating full stop will be printed; so we omit the full stop from the end of the desc property and put one at the start of ". It's open"; that way the description will look right whether the table is open or closed).
+<br>
+
+<br>
+Note that <a href="specialdesc.htm">inRoomDesc</a> is <i>not</i> a property defined in the library; it was a custom property we defined some way back as a convenient way of adding the description of NonPortable objects to the room description. Here this simply avoids our having to go back and change anotherRoom.desc.
+<br>
+
+<br>
+The one thing that may not be immediately obvious is how to define the initial location of objects in or on a Complex container. This is one way:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">silverCoin&nbsp;:&nbsp;Thing&nbsp;'small&nbsp;silver&nbsp;coin'&nbsp;'small&nbsp;silver&nbsp;coin'
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;Queen&nbsp;Fanny&nbsp;the&nbsp;Futile;&nbsp;the&nbsp;reverse&nbsp;is&nbsp;stamped&nbsp;with
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;words&nbsp;THREE&nbsp;FARTHINGS.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;dressingTable.subSurface
+<br>
+;
+<br>
+
+<br>
+ring&nbsp;:&nbsp;Thing&nbsp;'platinum&nbsp;ring/band/recess'&nbsp;'platinum&nbsp;ring'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;plain&nbsp;platinum&nbsp;band,&nbsp;with&nbsp;a&nbsp;small&nbsp;empty&nbsp;recess&nbsp;on&nbsp;one&nbsp;side.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;dressingTable.subContainer
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">And this is the other:</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
++&nbsp;silverCoin&nbsp;:&nbsp;Thing&nbsp;'small&nbsp;silver&nbsp;coin'&nbsp;'small&nbsp;silver&nbsp;coin'
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;Queen&nbsp;Fanny&nbsp;the&nbsp;Futile;&nbsp;the&nbsp;reverse&nbsp;is&nbsp;stamped&nbsp;with
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;words&nbsp;THREE&nbsp;FARTHINGS.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;subLocation&nbsp;=&nbsp;&amp;subSurface&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;ring&nbsp;:&nbsp;Thing&nbsp;'platinum&nbsp;ring/band/recess'&nbsp;'platinum&nbsp;ring'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;plain&nbsp;platinum&nbsp;band,&nbsp;with&nbsp;a&nbsp;small&nbsp;empty&nbsp;recess&nbsp;on&nbsp;one&nbsp;side.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;subLocation&nbsp;=&nbsp;&amp;subContainer
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Whichever way you use, you should only use the location or subLocation property to set the <i>initial</i> location of an item. To move an item into part of a ComplexContainer you should use moveInto(), e.g. ring.moveInto(dressingTable.subRear).
+<br>
+
+<br>
+
+<br>
+<b>ComplexContainer Traps for the Unwary
+<br>
+</b>
+<br>
+Although ComplexContainers can be very useful, they can also be the source of very strange, frustrating and hard-to-trace bugs in your code. The reason is that after you've set your ComplexContainer up, it can be very easy to forget that, programmatically, it is not a single object but a linked collection of objects. Thus, for example, you might later write a routine to check the contents of all the containers held by a particular actor, and do something like:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">foreach(local&nbsp;cur&nbsp;in&nbsp;actor.contents)
+<br>
+&nbsp;&nbsp;if(cur.ofKind(Container))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;obj&nbsp;in&nbsp;cur.contents)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;do&nbsp;something&nbsp;with&nbsp;the&nbsp;contents&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The problem here is that you may, for some reason, have implemented a portable container as a ComplexContainer; perhaps it's an openable box with a handle on the lid; to make the handle a Component which doesn't disappear when the box is closed, you have to make the box a ComplexContainer. You find the above code is mysteriously excluding one of the containers, which you finally realize is because it's a ComplexContainer, so you amend the code to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">foreach(local&nbsp;cur&nbsp;in&nbsp;actor.contents)
+<br>
+&nbsp;&nbsp;if(cur.ofKind(Container)&nbsp;||&nbsp;cur.ofKind(ComplexContainer))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;obj&nbsp;in&nbsp;cur.contents)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;do&nbsp;something&nbsp;with&nbsp;the&nbsp;contents&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+But when this gets to your box, the above code won't work as expected, since the 'contents' of the ComplexContainer will be its subContainers and its Component handle, not the things inside the box, as you automatically expected. The objects actually held inside the box are actually to be found in its </font><font face="Courier New" size="2" color="#000000">subContainer.contents</font><font face="Arial" size="2" color="#000000"> property, not its </font><font face="Courier New" size="2" color="#000000">contents</font><font face="Arial" size="2" color="#000000"> property. What you actually need in the above example is something like:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">foreach(local&nbsp;cur&nbsp;in&nbsp;actor.contents)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;cont&nbsp;=&nbsp;[];
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(cur.ofKind(Container))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cont&nbsp;=&nbsp;contents;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(cur.ofKind(ComplexContainer)&nbsp;&amp;&amp;&nbsp;(cur.subContainer&nbsp;!=&nbsp;nil))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cont&nbsp;=&nbsp;cur.subContainer.contents;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;obj&nbsp;in&nbsp;cont)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;do&nbsp;something&nbsp;with&nbsp;the&nbsp;contents&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">   }
+<br>
+
+<br>
+
+<br>
+Prior to TADS 3.0.8 there was also a potential trap with opening, closing, locking and unlocking ComplexContainers, particularly a ComplexContainer that you came to think of as being primarily a container. You might, for example, test for </font><font face="Courier New" size="2" color="#000000">cupboard.isOpen&nbsp;</font><font face="Arial" size="2" color="#000000">when you needed to test for cupboard.subContainer.isOpen, or call cupboard.makeLocked(true) when you actually meant </font><font face="Courier New" size="2" color="#000000">cupboard.subContainer.makeLocked(true)</font><font face="Arial" size="2" color="#000000">.
+<br>
+
+<br>
+Fortunately TADS 3.0.8 introduced some changes that greatly alleviate this. Suppose you have a cupboard mounted on the wall, which you can put things in, on or under. The cupboard will have a subSurface, a subContainer and a subUnderside. If you open, close, lock or unlock the cupboard, you are actually opening, closing, locking or unlocking its subContainer. As of version 3.0.8 TADS has ComplexContainer recognize this by having its isOpen, isLocked, makeOpen and makeLocked properties and methods refer to the corresponding properties and methods of its subContainer, provided it has one. So, for example, if you test for </font><font face="Courier New" size="2" color="#000000">cupboard.isOpen</font><font face="Arial" size="2" color="#000000"> you will now get the value of </font><font face="Courier New" size="2" color="#000000">cupboard.subContainer.isOpen</font><font face="Arial" size="2" color="#000000">. Likewise, if you write a statement like </font><font face="Courier New" size="2" color="#000000">cupboard.makeLocked(true)</font><font face="Arial" size="2" color="#000000"> it will now automatically call </font><font face="Courier New" size="2" color="#000000">cupboard.subContainer.makeLocked(true)</font><font face="Arial" size="2" color="#000000">. Of course you can, if you wish, continue to test explicitly for </font><font face="Courier New" size="2" color="#000000">cupboard.subContainer.isOpen</font><font face="Arial" size="2" color="#000000"> and explicitly code </font><font face="Courier New" size="2" color="#000000">cupboard.subContainer.makeLocked(true);&nbsp;</font><font face="Arial" size="2" color="#000000">the point is not so much that these forms are more long-winded, but that it can be very easy to forget to do this, especially if you come to think of the cupboard as being primarily a form of lockable and openable container (which just happens to allow things to be put on top of it and underneath it as well).</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

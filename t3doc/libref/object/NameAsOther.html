@@ -1,0 +1,305 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>NameAsOther</title></head><body>
+<table class=ban><tr><td align=left><span class=title>NameAsOther</span><span class=type>class</span><td align=right><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1966">1966</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   An object that uses the same name as another object.  This maps all of   the properties involved in supplying the object's name, number, and   other usage information from this object to a given target object, so   that all messages involving this object use the same name as the   target object.  This is a mix-in class that can be used with any other   class. <p>   Note that we map only the *reported* name for the object.  We do NOT   give this object any vocabulary from the other object; in other words,   we don't enter this object into the dictionary with the other object's   vocabulary words.
+<p>
+<code>class
+<b>NameAsOther</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>NameAsOther</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>NameAsOther</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NameAsParent.html">NameAsParent</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ComplexComponent.html">ComplexComponent</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#aDisambigName">aDisambigName</a>&nbsp;
+<a href="#aName">aName</a>&nbsp;
+<a href="#aNameObj">aNameObj</a>&nbsp;
+<a href="#disambigEquivName">disambigEquivName</a>&nbsp;
+<a href="#disambigName">disambigName</a>&nbsp;
+<a href="#isHer">isHer</a>&nbsp;
+<a href="#isHim">isHim</a>&nbsp;
+<a href="#isIt">isIt</a>&nbsp;
+<a href="#isMassNoun">isMassNoun</a>&nbsp;
+<a href="#isPlural">isPlural</a>&nbsp;
+<a href="#isProperName">isProperName</a>&nbsp;
+<a href="#isQualifiedName">isQualifiedName</a>&nbsp;
+<a href="#itIs">itIs</a>&nbsp;
+<a href="#itIsContraction">itIsContraction</a>&nbsp;
+<a href="#itNom">itNom</a>&nbsp;
+<a href="#itObj">itObj</a>&nbsp;
+<a href="#itPossAdj">itPossAdj</a>&nbsp;
+<a href="#itPossNoun">itPossNoun</a>&nbsp;
+<a href="#itReflexive">itReflexive</a>&nbsp;
+<a href="#listName">listName</a>&nbsp;
+<a href="#name">name</a>&nbsp;
+<a href="#nameDoes">nameDoes</a>&nbsp;
+<a href="#nameIs">nameIs</a>&nbsp;
+<a href="#nameIsnt">nameIsnt</a>&nbsp;
+<a href="#nameSays">nameSays</a>&nbsp;
+<a href="#nameSees">nameSees</a>&nbsp;
+<a href="#pluralName">pluralName</a>&nbsp;
+<a href="#targetObj">targetObj</a>&nbsp;
+<a href="#thatIsContraction">thatIsContraction</a>&nbsp;
+<a href="#thatNom">thatNom</a>&nbsp;
+<a href="#thatObj">thatObj</a>&nbsp;
+<a href="#theDisambigName">theDisambigName</a>&nbsp;
+<a href="#theName">theName</a>&nbsp;
+<a href="#theNameObj">theNameObj</a>&nbsp;
+<a href="#theNamePossAdj">theNamePossAdj</a>&nbsp;
+<a href="#theNamePossNoun">theNamePossNoun</a>&nbsp;
+<a href="#theNameWithOwner">theNameWithOwner</a>&nbsp;
+<a href="#verbCan">verbCan</a>&nbsp;
+<a href="#verbCannot">verbCannot</a>&nbsp;
+<a href="#verbCant">verbCant</a>&nbsp;
+<a href="#verbEndingEs">verbEndingEs</a>&nbsp;
+<a href="#verbEndingIes">verbEndingIes</a>&nbsp;
+<a href="#verbEndingS">verbEndingS</a>&nbsp;
+<a href="#verbEndingSD">verbEndingSD</a>&nbsp;
+<a href="#verbEndingSEd">verbEndingSEd</a>&nbsp;
+<a href="#verbMust">verbMust</a>&nbsp;
+<a href="#verbToBe">verbToBe</a>&nbsp;
+<a href="#verbToCome">verbToCome</a>&nbsp;
+<a href="#verbToDo">verbToDo</a>&nbsp;
+<a href="#verbToGo">verbToGo</a>&nbsp;
+<a href="#verbToHave">verbToHave</a>&nbsp;
+<a href="#verbToLeave">verbToLeave</a>&nbsp;
+<a href="#verbToSay">verbToSay</a>&nbsp;
+<a href="#verbToSee">verbToSee</a>&nbsp;
+<a href="#verbWas">verbWas</a>&nbsp;
+<a href="#verbWill">verbWill</a>&nbsp;
+<a href="#verbWont">verbWont</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#aNameOwnerLoc">aNameOwnerLoc</a>&nbsp;
+<a href="#conjugateRegularVerb">conjugateRegularVerb</a>&nbsp;
+<a href="#countDisambigName">countDisambigName</a>&nbsp;
+<a href="#countName">countName</a>&nbsp;
+<a href="#countNameOwnerLoc">countNameOwnerLoc</a>&nbsp;
+<a href="#itVerb">itVerb</a>&nbsp;
+<a href="#nameVerb">nameVerb</a>&nbsp;
+<a href="#notePromptByOwnerLoc">notePromptByOwnerLoc</a>&nbsp;
+<a href="#notePromptByPossAdj">notePromptByPossAdj</a>&nbsp;
+<a href="#theNameOwnerLoc">theNameOwnerLoc</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="aDisambigName"></a>
+<table class=decl><tr><td><code>aDisambigName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1983">1983</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="aName"></a>
+<table class=decl><tr><td><code>aName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2018">2018</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="aNameObj"></a>
+<table class=decl><tr><td><code>aNameObj</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2019">2019</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="disambigEquivName"></a>
+<table class=decl><tr><td><code>disambigEquivName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1985">1985</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="disambigName"></a>
+<table class=decl><tr><td><code>disambigName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1981">1981</a>]</table><div class=desc>map the derived name properties as well, in case any are overridden<p>
+</div>
+<a name="isHer"></a>
+<table class=decl><tr><td><code>isHer</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1974">1974</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="isHim"></a>
+<table class=decl><tr><td><code>isHim</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1973">1973</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="isIt"></a>
+<table class=decl><tr><td><code>isIt</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1975">1975</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="isMassNoun"></a>
+<table class=decl><tr><td><code>isMassNoun</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1972">1972</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="isPlural"></a>
+<table class=decl><tr><td><code>isPlural</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1971">1971</a>]</table><div class=desc>map our naming and usage properties to the target object<p>
+</div>
+<a name="isProperName"></a>
+<table class=decl><tr><td><code>isProperName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1976">1976</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="isQualifiedName"></a>
+<table class=decl><tr><td><code>isQualifiedName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1977">1977</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="itIs"></a>
+<table class=decl><tr><td><code>itIs</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1998">1998</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="itIsContraction"></a>
+<table class=decl><tr><td><code>itIsContraction</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1999">1999</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="itNom"></a>
+<table class=decl><tr><td><code>itNom</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1990">1990</a>]</table><div class=desc>map the pronoun properites, in case any are overridden<p>
+</div>
+<a name="itObj"></a>
+<table class=decl><tr><td><code>itObj</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1991">1991</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="itPossAdj"></a>
+<table class=decl><tr><td><code>itPossAdj</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1992">1992</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="itPossNoun"></a>
+<table class=decl><tr><td><code>itPossNoun</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1993">1993</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="itReflexive"></a>
+<table class=decl><tr><td><code>itReflexive</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1994">1994</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="listName"></a>
+<table class=decl><tr><td><code>listName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1986">1986</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="name"></a>
+<table class=decl><tr><td><code>name</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1978">1978</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nameDoes"></a>
+<table class=decl><tr><td><code>nameDoes</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2028">2028</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nameIs"></a>
+<table class=decl><tr><td><code>nameIs</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2021">2021</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nameIsnt"></a>
+<table class=decl><tr><td><code>nameIsnt</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2022">2022</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nameSays"></a>
+<table class=decl><tr><td><code>nameSays</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2035">2035</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nameSees"></a>
+<table class=decl><tr><td><code>nameSees</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2033">2033</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="pluralName"></a>
+<table class=decl><tr><td><code>pluralName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2020">2020</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="targetObj"></a>
+<table class=decl><tr><td><code>targetObj</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1968">1968</a>]</table><div class=desc>the target object - we'll use the same name as this object<p>
+</div>
+<a name="thatIsContraction"></a>
+<table class=decl><tr><td><code>thatIsContraction</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1997">1997</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="thatNom"></a>
+<table class=decl><tr><td><code>thatNom</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1995">1995</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="thatObj"></a>
+<table class=decl><tr><td><code>thatObj</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1996">1996</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="theDisambigName"></a>
+<table class=decl><tr><td><code>theDisambigName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1982">1982</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="theName"></a>
+<table class=decl><tr><td><code>theName</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2003">2003</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="theNameObj"></a>
+<table class=decl><tr><td><code>theNameObj</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2004">2004</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="theNamePossAdj"></a>
+<table class=decl><tr><td><code>theNamePossAdj</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2005">2005</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="theNamePossNoun"></a>
+<table class=decl><tr><td><code>theNamePossNoun</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2006">2006</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="theNameWithOwner"></a>
+<table class=decl><tr><td><code>theNameWithOwner</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2007">2007</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbCan"></a>
+<table class=decl><tr><td><code>verbCan</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2037">2037</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbCannot"></a>
+<table class=decl><tr><td><code>verbCannot</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2038">2038</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbCant"></a>
+<table class=decl><tr><td><code>verbCant</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2039">2039</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbEndingEs"></a>
+<table class=decl><tr><td><code>verbEndingEs</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2046">2046</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbEndingIes"></a>
+<table class=decl><tr><td><code>verbEndingIes</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2047">2047</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbEndingS"></a>
+<table class=decl><tr><td><code>verbEndingS</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2043">2043</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbEndingSD"></a>
+<table class=decl><tr><td><code>verbEndingSD</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2044">2044</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbEndingSEd"></a>
+<table class=decl><tr><td><code>verbEndingSEd</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2045">2045</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbMust"></a>
+<table class=decl><tr><td><code>verbMust</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2036">2036</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbToBe"></a>
+<table class=decl><tr><td><code>verbToBe</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2024">2024</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbToCome"></a>
+<table class=decl><tr><td><code>verbToCome</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2030">2030</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbToDo"></a>
+<table class=decl><tr><td><code>verbToDo</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2027">2027</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbToGo"></a>
+<table class=decl><tr><td><code>verbToGo</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2029">2029</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbToHave"></a>
+<table class=decl><tr><td><code>verbToHave</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2026">2026</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbToLeave"></a>
+<table class=decl><tr><td><code>verbToLeave</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2031">2031</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbToSay"></a>
+<table class=decl><tr><td><code>verbToSay</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2034">2034</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbToSee"></a>
+<table class=decl><tr><td><code>verbToSee</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2032">2032</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbWas"></a>
+<table class=decl><tr><td><code>verbWas</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2025">2025</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbWill"></a>
+<table class=decl><tr><td><code>verbWill</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2040">2040</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="verbWont"></a>
+<table class=decl><tr><td><code>verbWont</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2041">2041</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="aNameOwnerLoc"></a>
+<table class=decl><tr><td><code>aNameOwnerLoc (ownerPri)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2008">2008</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="conjugateRegularVerb"></a>
+<table class=decl><tr><td><code>conjugateRegularVerb (verb)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2001">2001</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="countDisambigName"></a>
+<table class=decl><tr><td><code>countDisambigName (cnt)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1984">1984</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="countName"></a>
+<table class=decl><tr><td><code>countName (cnt)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#1987">1987</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="countNameOwnerLoc"></a>
+<table class=decl><tr><td><code>countNameOwnerLoc (cnt, ownerPri)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2012">2012</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="itVerb"></a>
+<table class=decl><tr><td><code>itVerb (verb)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2000">2000</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nameVerb"></a>
+<table class=decl><tr><td><code>nameVerb (verb)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2023">2023</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="notePromptByOwnerLoc"></a>
+<table class=decl><tr><td><code>notePromptByOwnerLoc (ownerPri)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2014">2014</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="notePromptByPossAdj"></a>
+<table class=decl><tr><td><code>notePromptByPossAdj ( )</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2016">2016</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="theNameOwnerLoc"></a>
+<table class=decl><tr><td><code>theNameOwnerLoc (ownerPri)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2010">2010</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

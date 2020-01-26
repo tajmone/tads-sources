@@ -1,0 +1,106 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>Lockable</title></head><body>
+<table class=ban><tr><td align=left><span class=title>Lockable</span><span class=type>class</span><td align=right><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3735">3735</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Lockable: a mix-in class that can be combined with an object's other   superclasses to make the object respond to the verbs "lock" and   "unlock."  A Lockable requires no key. <p>   Note that Lockable should usually go BEFORE a Thing-derived class in   the superclass list.
+<p>
+<code>class
+<b>Lockable</b> :  &nbsp; <a href="../object/Linkable.html">Linkable</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>Lockable</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Linkable.html">Linkable</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>Lockable</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/IndirectLockable.html">IndirectLockable</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LockableContainer.html">LockableContainer</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LockableWithKey.html">LockableWithKey</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/KeyedContainer.html">KeyedContainer</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#autoUnlockOnOpen">autoUnlockOnOpen</a>&nbsp;
+<a href="#initiallyLocked">initiallyLocked</a>&nbsp;
+<a href="#isLocked_">isLocked_</a>&nbsp;
+<a href="#lockedDesc">lockedDesc</a>&nbsp;
+<a href="#lockStatusObvious">lockStatusObvious</a>&nbsp;
+<a href="#lockStatusReportable">lockStatusReportable</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#dobjFor(Lock)">dobjFor(Lock)</a>&nbsp;
+<a href="#dobjFor(LockWith)">dobjFor(LockWith)</a>&nbsp;
+<a href="#dobjFor(Open)">dobjFor(Open)</a>&nbsp;
+<a href="#dobjFor(Unlock)">dobjFor(Unlock)</a>&nbsp;
+<a href="#dobjFor(UnlockWith)">dobjFor(UnlockWith)</a>&nbsp;
+<a href="#examineStatus">examineStatus</a>&nbsp;
+<a href="#initializeThing">initializeThing</a>&nbsp;
+<a href="#isLocked">isLocked</a>&nbsp;
+<a href="#makeLocked">makeLocked</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Linkable</code> :<br>
+<code>
+<a href="../object/Linkable.html#masterObject">masterObject</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="autoUnlockOnOpen"></a>
+<table class=decl><tr><td><code>autoUnlockOnOpen</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3914">3914</a>]</table><div class=desc>   Should we automatically unlock this door on OPEN?  By default, we   do this only if the lock status is obvious. <p>
+</div>
+<a name="initiallyLocked"></a>
+<table class=decl><tr><td><code>initiallyLocked</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3740">3740</a>]</table><div class=desc>   Our initial locked state (i.e., at the start of the game).  By   default, we start out locked. <p>
+</div>
+<a name="isLocked_"></a>
+<table class=decl><tr><td><code>isLocked_</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3839">3839</a>]</table><div class=desc>   Internal locked state.  Do not use this to set the initial state   - set initiallyLocked in the master object instead. <p>
+</div>
+<a name="lockedDesc"></a>
+<table class=decl><tr><td><code>lockedDesc</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3797">3797</a>]</table><div class=desc>   Description of the object's current locked state.  In English,   this simply returns one of 'locked' or 'unlocked'.  (Note that   this is provided as a convenience to games, for generating   messages about the object that include its state.  The library   doesn't use this message itself, so overriding this won't change   any library messages - in particular, it won't change the   examineStatus message.) <p>
+</div>
+<a name="lockStatusObvious"></a>
+<table class=decl><tr><td><code>lockStatusObvious</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3812">3812</a>]</table><div class=desc>   Is our 'locked' status obvious?  This should be set to true for an   object whose locked/unlocked status can be visually observed, nil   for an object whose status is not visuall apparent.  For example,   you can usually tell from the inside that a door is locked by   looking at the position of the lock's paddle, but on the outside   of a door there's usually no way to see the status. <p>   By default, since we can be locked and unlocked with simple LOCK   and UNLOCK commands, we assume the status is as obvious as the   mechanism must be to allow such simple commands. <p>
+</div>
+<a name="lockStatusReportable"></a>
+<table class=decl><tr><td><code>lockStatusReportable</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3833">3833</a>]</table><div class=desc>   Is our 'locked' status reportable in our current state?  This is   similar to lockStatusObvious, but serves a separate purpose: this   tells us if we wish to report the lock status for aesthetic   reasons. <p>   This property is primarily of interest to mix-ins.  To allow   mix-ins to get a say, regardless of the order of superclasses,   we'll by default defer to any inherited value if there is in fact   an inherited value.  If there's no inherited value, we'll simply   return true. <p>   We use this in the library for one case in particular: when we're   mixed with Openable, we don't want to report the lock status for   an open object because an Openable must by default be closed to be   locked.  That is, when an Openable is open, it's always unlocked,   so reporting that it's unlocked is essentially redundant   information. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="dobjFor(Lock)"></a>
+<table class=decl><tr><td><code>dobjFor(Lock)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3857">3857</a>]</table><div class=desc>"lock"<p>
+</div>
+<a name="dobjFor(LockWith)"></a>
+<table class=decl><tr><td><code>dobjFor(LockWith)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3897">3897</a>]</table><div class=desc>"lock with"<p>
+</div>
+<a name="dobjFor(Open)"></a>
+<table class=decl><tr><td><code>dobjFor(Open)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3925">3925</a>]</table><div class=desc>   A locked object can't be opened - apply a precondition and a check   for "open" that ensures that we unlock this object before we can   open it. <p>   If the lock status isn't obvious, don't try to unlock the object   as a precondition.  Instead, test to make sure it's unlocked in   the 'check' routine, and fail. <p>
+</div>
+<a name="dobjFor(Unlock)"></a>
+<table class=decl><tr><td><code>dobjFor(Unlock)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3877">3877</a>]</table><div class=desc>"unlock"<p>
+</div>
+<a name="dobjFor(UnlockWith)"></a>
+<table class=decl><tr><td><code>dobjFor(UnlockWith)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3904">3904</a>]</table><div class=desc>"unlock with"<p>
+</div>
+<a name="examineStatus"></a>
+<table class=decl><tr><td><code>examineStatus ( )</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3773">3773</a>]</table><div class=desc>show our status<p>
+</div>
+<a name="initializeThing"></a>
+<table class=decl><tr><td><code>initializeThing ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3842">3842</a>]</table><div class=desc>initialization<p>
+</div>
+<a name="isLocked"></a>
+<table class=decl><tr><td><code>isLocked ( )</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3746">3746</a>]</table><div class=desc>   Current locked state.  Use our isLocked_ status if we're the   master, otherwise defer to the master. <p>
+</div>
+<a name="makeLocked"></a>
+<table class=decl><tr><td><code>makeLocked (stat)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#3760">3760</a>]</table><div class=desc>   Make the object locked or unlocked.  Objects can override this to   apply side effects of locking or unlocking.  By default, if we're   the master, we'll simply set our isLocked_ property to the new   status, and otherwise defer to the master object. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

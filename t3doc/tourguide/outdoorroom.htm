@@ -1,0 +1,137 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>OutdoorRoom</title><meta name="keywords" content="OutdoorRoom,atmosphereList,ShuffledTextList,rand,Script,roomDaemon,anonymous functions,destName,roomName"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>OutdoorRoom : <a href="room.htm">Room</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="introduction.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="fakeconnector.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We'll start our adventure outside a cave, so we'll begin by defining our first room thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">outsideCave&nbsp;:&nbsp;OutdoorRoom&nbsp;'Parser&nbsp;Valley'&nbsp;'Parser&nbsp;Valley'
+<br>
+&nbsp;&nbsp;"To&nbsp;the&nbsp;north&nbsp;stretches&nbsp;the&nbsp;broad&nbsp;green&nbsp;Parser&nbsp;Valley&nbsp;under&nbsp;a&nbsp;clear&nbsp;blue&nbsp;sky,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;past&nbsp;a&nbsp;small&nbsp;car&nbsp;park&nbsp;lying&nbsp;just&nbsp;off&nbsp;to&nbsp;the&nbsp;east.&nbsp;The&nbsp;main&nbsp;feature&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;interest&nbsp;round&nbsp;here&nbsp;is&nbsp;the&nbsp;notorious&nbsp;Eerhtsdat&nbsp;Caves,&nbsp;the&nbsp;entrance&nbsp;to&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;lies&nbsp;just&nbsp;to&nbsp;the&nbsp;south,&nbsp;marked&nbsp;by&nbsp;a&nbsp;large&nbsp;blue&nbsp;sign&nbsp;that&nbsp;proclaims,&nbsp;predictably
+<br>
+&nbsp;&nbsp;&nbsp;enough:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&nbsp;BGCOLOR=BLUE&nbsp;COLOR=WHITE&gt;
+<br>
+&nbsp;&nbsp;&nbsp;ENTRANCE&nbsp;TO&nbsp;THE\nEERHTSDAT&nbsp;CAVES&lt;/FONT&gt;\n"
+<br>
+&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;atmosphereList&nbsp;:&nbsp;ShuffledEventList&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'\nA&nbsp;flight&nbsp;of&nbsp;birds&nbsp;disappears&nbsp;off&nbsp;to&nbsp;the&nbsp;west.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:&nbsp;"\nA&nbsp;&lt;&lt;one of&gt;&gt;small&lt;&lt;or&gt;&gt;large&lt;&lt;at random&gt;&gt;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;one of&gt;&gt;green&lt;&lt;or&gt;&gt;red&lt;&lt;or&gt;&gt;blue&lt;&lt;or&gt;&gt;black&lt;&lt;or&gt;&gt;white&lt;&lt;at random&gt;&gt;&nbsp;car
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pulls&nbsp;out&nbsp;of&nbsp;the&nbsp;car&nbsp;park&nbsp;and&nbsp;drives&nbsp;off&nbsp;to&nbsp;the&nbsp;north.&nbsp;"&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'\nAn&nbsp;aeroplane&nbsp;flies&nbsp;far&nbsp;overhead.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;]&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">We use the class OutdoorRoom for the obvious reason that it represents an outdoor location (with no walls, and with ground and sky rather than floor and ceiling). Recall that we have already set the location property of the me object to outsideCave so that the player character will begin here.
+<br>
+
+<br>
+Remember that the <a href="roomtemplate.htm">Room template</a> (which also applies to OutdoorRoom) allows this abbreviated form of definition: the template is defined as </font><font face="Courier New" size="2" color="#000000">'roomName'&nbsp;'destName'?&nbsp;'name'?&nbsp;"desc"?;&nbsp;</font><font face="Arial" size="2" color="#000000">which means that the first single-quoted string after the class name is the roomName property (the name that will be shown in the status line for the room), the second (which is optional) the destName (the name by which the room will be referred to in an exit lister) and the double-quoted string is the desc property (which will be displayed as the room description). If all these properties are used, they must be used in the order defined by the template, and before any other properties are defined for the room.
+<br>
+
+<br>
+In other words, the definition:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">outsideCave&nbsp;:&nbsp;OutdoorRoom&nbsp;'Parser&nbsp;Valley'&nbsp;'Parser&nbsp;Valley'
+<br>
+&nbsp;&nbsp;"To&nbsp;the&nbsp;north&nbsp;stretches&nbsp;the&nbsp;broad&nbsp;green&nbsp;Parser&nbsp;Valley&nbsp;under&nbsp;a&nbsp;clear&nbsp;blue&nbsp;sky,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;past&nbsp;a&nbsp;small&nbsp;car&nbsp;park&nbsp;lying&nbsp;just&nbsp;off&nbsp;to&nbsp;the&nbsp;east.&nbsp;The&nbsp;main&nbsp;feature&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;interest&nbsp;round&nbsp;here&nbsp;is&nbsp;the&nbsp;notorious&nbsp;Eerhtsdat&nbsp;Caves,&nbsp;the&nbsp;entrance&nbsp;to&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;lies&nbsp;just&nbsp;to&nbsp;the&nbsp;south,&nbsp;marked&nbsp;by&nbsp;a&nbsp;large&nbsp;blue&nbsp;sign&nbsp;that&nbsp;proclaims,&nbsp;predictably
+<br>
+&nbsp;&nbsp;&nbsp;enough:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&nbsp;BGCOLOR=BLUE&nbsp;COLOR=WHITE&gt;
+<br>
+&nbsp;&nbsp;&nbsp;ENTRANCE&nbsp;TO&nbsp;THE\nEERHTSDAT&nbsp;CAVES&lt;/FONT&gt;\n"
+<br>
+</font><font face="Arial" size="2" color="#000000">;
+<br>
+
+<br>
+is exactly equivalent to writing out in full:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">outsideCave&nbsp;:&nbsp;OutdoorRoom&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;roomName&nbsp;=&nbsp;'Parser&nbsp;Valley'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;destName&nbsp;=&nbsp;'Parser&nbsp;Valley'
+<br>
+&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;"To&nbsp;the&nbsp;north&nbsp;stretches&nbsp;the&nbsp;broad&nbsp;green&nbsp;Parser&nbsp;Valley&nbsp;under&nbsp;a&nbsp;clear&nbsp;blue&nbsp;sky,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;past&nbsp;a&nbsp;small&nbsp;car&nbsp;park&nbsp;lying&nbsp;just&nbsp;off&nbsp;to&nbsp;the&nbsp;east.&nbsp;The&nbsp;main&nbsp;feature&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;interest&nbsp;round&nbsp;here&nbsp;is&nbsp;the&nbsp;notorious&nbsp;Eerhtsdat&nbsp;Caves,&nbsp;the&nbsp;entrance&nbsp;to&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;lies&nbsp;just&nbsp;to&nbsp;the&nbsp;south,&nbsp;marked&nbsp;by&nbsp;a&nbsp;large&nbsp;blue&nbsp;sign&nbsp;that&nbsp;proclaims,&nbsp;predictably
+<br>
+&nbsp;&nbsp;&nbsp;enough:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&nbsp;BGCOLOR=BLUE&nbsp;COLOR=WHITE&gt;
+<br>
+&nbsp;&nbsp;&nbsp;ENTRANCE&nbsp;TO&nbsp;THE\nEERHTSDAT&nbsp;CAVES&lt;/FONT&gt;\n"
+<br>
+</font><font face="Arial" size="2" color="#000000">;
+<br>
+
+<br>
+At this point we should pause to consider the relation between some of these properties. The roomName is the room title displayed in the room description and the status line; typically, this will be in title case (e.g. "Hall of the Mountain King"). The destName is the title given to the room in the exit lister that appears in response to the 'exits' command, or when you try to move in direction you can't go (e.g. "north, back to the hall of the mountain king"). The plain name property is the title used by the parser to refer to the room when it features in commands (which can normally only occur if the room is given vocabWords). By default name is defined as roomName.toLower, and destName is defined as theName. Often this gives reasonable results, but you might often want to override it, as in this case where Parser Valley is a proper name we want used both for the roomName and the destName.
+<br>
+
+<br>
+We'll define one extra property for OutsideRoom at this point, namely its atmosphereList. If this is defined to hold a <a href="script.htm">Script</a> object, the roomDaemon will automatically call its doScript method each turn; in practice this means we can make it an anonymous nested object of a Script class. Here we use a <a href="shuffledeventlist.htm">ShuffledEventList</a> to display a series of strings in random order.
+<br>
+
+<br>
+In order to vary the description of cars leaving the car park, we use the &lt;&lt;one of&gt;&gt;...&lt;&lt;or&gt;&gt;...&lt;&lt;at random&gt;&gt; construction to choose both the size and the colour of the car. The embedded expression &lt;&lt;&gt;&gt; syntax can generally be used in a single-quoted string, so in certain contexts (although in this particular case we'd probably just about get away with it). A double quoted string cannot be used as an element in the eventList property of an ShuffledEventList, but an anonymous function can, and the double-quoted string can be printed within the anonymous function. When the anonymous function consists of only a single statement, as here, we can use the short form syntax shown, i.e.
+<br>
+
+<br>
+    </font><font face="Courier New" size="2" color="#000000">{:&nbsp;<i>statement</i>&nbsp;}</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+ Note that the statement should then <i>not</i> be concluded with a semicolon.</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

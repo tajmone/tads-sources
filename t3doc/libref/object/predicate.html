@@ -1,0 +1,627 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>predicate</title></head><body>
+<table class=ban><tr><td align=left><span class=title>predicate</span><span class=type>GrammarProd</span></table><p>
+<code>VerbRule(About) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(About).html">predicate(About)</a></span> :  &nbsp; <a href="../object/AboutAction.html">AboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9919">9919</a>]</code></table><div class=gramrule>    'about'<br></div>
+<code>VerbRule(Again) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Again).html">predicate(Again)</a></span> :  &nbsp; <a href="../object/AgainAction.html">AgainAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9757">9757</a>]</code></table><div class=gramrule>    'again' | 'g'<br></div>
+<code>VerbRule(AskAbout) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AskAbout).html">predicate(AskAbout)</a></span> :  &nbsp; <a href="../object/AskAboutAction.html">AskAboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9453">9453</a>]</code></table><div class=gramrule>    ('ask' | 'a') singleDobj 'about' singleTopic<br></div>
+<code>VerbRule(AskAboutImplicit) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AskAboutImplicit).html">predicate(AskAboutImplicit)</a></span> :  &nbsp; <a href="../object/AskAboutAction.html">AskAboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9461">9461</a>]</code></table><div class=gramrule>    'a' singleTopic<br></div>
+<code>VerbRule(AskAboutWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AskAboutWhat).html">predicate(AskAboutWhat)</a></span> :  &nbsp; <a href="../object/AskAboutAction.html">AskAboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9474">9474</a>]</code></table><div class=gramrule>    [badness 500] 'ask' singleDobj<br></div>
+<code>VerbRule(AskFor) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AskFor).html">predicate(AskFor)</a></span> :  &nbsp; <a href="../object/AskForAction.html">AskForAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9430">9430</a>]</code></table><div class=gramrule>    ('ask' | 'a') singleDobj 'for' singleTopic<br>    | ('ask' | 'a') 'for' singleTopic 'from' singleDobj<br></div>
+<code>VerbRule(AskVague) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AskVague).html">predicate(AskVague)</a></span> :  &nbsp; <a href="../object/AskVagueAction.html">AskVagueAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9524">9524</a>]</code></table><div class=gramrule>    [badness 500] 'ask' singleDobj singleTopic<br></div>
+<code>VerbRule(AskWhomFor) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AskWhomFor).html">predicate(AskWhomFor)</a></span> :  &nbsp; <a href="../object/AskForAction.html">AskForAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9440">9440</a>]</code></table><div class=gramrule>    ('ask' | 'a') 'for' singleTopic<br></div>
+<code>VerbRule(AttachTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AttachTo).html">predicate(AttachTo)</a></span> :  &nbsp; <a href="../object/AttachToAction.html">AttachToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10476">10476</a>]</code></table><div class=gramrule>    ('attach' | 'connect') dobjList 'to' singleIobj<br></div>
+<code>VerbRule(AttachToWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AttachToWhat).html">predicate(AttachToWhat)</a></span> :  &nbsp; <a href="../object/AttachToAction.html">AttachToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10483">10483</a>]</code></table><div class=gramrule>    [badness 500] ('attach' | 'connect') dobjList<br></div>
+<code>VerbRule(Attack) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Attack).html">predicate(Attack)</a></span> :  &nbsp; <a href="../object/AttackAction.html">AttackAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9704">9704</a>]</code></table><div class=gramrule>    ('attack' | 'kill' | 'hit' | 'kick' | 'punch') singleDobj<br></div>
+<code>VerbRule(AttackWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(AttackWith).html">predicate(AttackWith)</a></span> :  &nbsp; <a href="../object/AttackWithAction.html">AttackWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9711">9711</a>]</code></table><div class=gramrule>    ('attack' | 'kill' | 'hit' | 'kick' | 'punch' | 'strike')<br>        singleDobj<br>        'with' singleIobj<br></div>
+<code>VerbRule(Board) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Board).html">predicate(Board)</a></span> :  &nbsp; <a href="../object/BoardAction.html">BoardAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10636">10636</a>]</code></table><div class=gramrule>    ('board'<br>     | ('get' ('in' | 'into' | 'in' 'to' | 'on' | 'onto' | 'on' 'to'))<br>     | ('climb' ('in' | 'into' | 'in' 'to')))<br>    singleDobj<br></div>
+<code>VerbRule(Break) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Break).html">predicate(Break)</a></span> :  &nbsp; <a href="../object/BreakAction.html">BreakAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10359">10359</a>]</code></table><div class=gramrule>    ('break' | 'ruin' | 'destroy' | 'wreck') dobjList<br></div>
+<code>VerbRule(Burn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Burn).html">predicate(Burn)</a></span> :  &nbsp; <a href="../object/BurnAction.html">BurnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10336">10336</a>]</code></table><div class=gramrule>    ('burn' | 'ignite' | 'set' 'fire' 'to') dobjList<br></div>
+<code>VerbRule(BurnWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(BurnWith).html">predicate(BurnWith)</a></span> :  &nbsp; <a href="../object/BurnWithAction.html">BurnWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10342">10342</a>]</code></table><div class=gramrule>    ('light' | 'burn' | 'ignite' | 'set' 'fire' 'to') singleDobj<br>        'with' singleIobj<br></div>
+<code>VerbRule(Clean) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Clean).html">predicate(Clean)</a></span> :  &nbsp; <a href="../object/CleanAction.html">CleanAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10462">10462</a>]</code></table><div class=gramrule>    'clean' dobjList<br></div>
+<code>VerbRule(CleanWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(CleanWith).html">predicate(CleanWith)</a></span> :  &nbsp; <a href="../object/CleanWithAction.html">CleanWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10468">10468</a>]</code></table><div class=gramrule>    'clean' dobjList 'with' singleIobj<br></div>
+<code>VerbRule(Climb) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Climb).html">predicate(Climb)</a></span> :  &nbsp; <a href="../object/ClimbAction.html">ClimbAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10417">10417</a>]</code></table><div class=gramrule>    'climb' singleDobj<br></div>
+<code>VerbRule(ClimbDown) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ClimbDown).html">predicate(ClimbDown)</a></span> :  &nbsp; <a href="../object/ClimbDownAction.html">ClimbDownAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10443">10443</a>]</code></table><div class=gramrule>    ('climb' | 'go' | 'walk') 'down' singleDobj<br></div>
+<code>VerbRule(ClimbDownWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ClimbDownWhat).html">predicate(ClimbDownWhat)</a></span> :  &nbsp; <a href="../object/ClimbDownAction.html">ClimbDownAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10450">10450</a>]</code></table><div class=gramrule>    [badness 200] ('climb' | 'go' | 'walk') 'down'<br></div>
+<code>VerbRule(ClimbUp) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ClimbUp).html">predicate(ClimbUp)</a></span> :  &nbsp; <a href="../object/ClimbUpAction.html">ClimbUpAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10424">10424</a>]</code></table><div class=gramrule>    ('climb' | 'go' | 'walk') 'up' singleDobj<br></div>
+<code>VerbRule(ClimbUpWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ClimbUpWhat).html">predicate(ClimbUpWhat)</a></span> :  &nbsp; <a href="../object/ClimbUpAction.html">ClimbUpAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10431">10431</a>]</code></table><div class=gramrule>    [badness 200] ('climb' | 'go' | 'walk') 'up'<br></div>
+<code>VerbRule(Close) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Close).html">predicate(Close)</a></span> :  &nbsp; <a href="../object/CloseAction.html">CloseAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10514">10514</a>]</code></table><div class=gramrule>    ('close' | 'shut') dobjList<br></div>
+<code>VerbRule(Consult) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Consult).html">predicate(Consult)</a></span> :  &nbsp; <a href="../object/ConsultAction.html">ConsultAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10258">10258</a>]</code></table><div class=gramrule>    'consult' singleDobj</div>
+<code>VerbRule(ConsultAbout) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ConsultAbout).html">predicate(ConsultAbout)</a></span> :  &nbsp; <a href="../object/ConsultAboutAction.html">ConsultAboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10264">10264</a>]</code></table><div class=gramrule>    'consult' singleDobj ('on' | 'about') singleTopic<br>    | 'search' singleDobj 'for' singleTopic<br>    | (('look' | 'l') ('up' | 'for')<br>       | 'find'<br>       | 'search' 'for'<br>       | 'read' 'about')<br>         singleTopic 'in' singleDobj<br>    | ('look' | 'l') singleTopic 'up' 'in' singleDobj<br></div>
+<code>VerbRule(ConsultWhatAbout) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ConsultWhatAbout).html">predicate(ConsultWhatAbout)</a></span> :  &nbsp; <a href="../object/ConsultAboutAction.html">ConsultAboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10279">10279</a>]</code></table><div class=gramrule>    (('look' | 'l') ('up' | 'for')<br>     | 'find'<br>     | 'search' 'for'<br>     | 'read' 'about')<br>    singleTopic<br>    | ('look' | 'l') singleTopic 'up'<br></div>
+<code>VerbRule(Credits) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Credits).html">predicate(Credits)</a></span> :  &nbsp; <a href="../object/CreditsAction.html">CreditsAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9913">9913</a>]</code></table><div class=gramrule>    'credits'<br></div>
+<code>VerbRule(CutWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(CutWith).html">predicate(CutWith)</a></span> :  &nbsp; <a href="../object/CutWithAction.html">CutWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10377">10377</a>]</code></table><div class=gramrule>    'cut' singleDobj 'with' singleIobj<br></div>
+<code>VerbRule(CutWithWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(CutWithWhat).html">predicate(CutWithWhat)</a></span> :  &nbsp; <a href="../object/CutWithAction.html">CutWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10365">10365</a>]</code></table><div class=gramrule>    [badness 500] 'cut' singleDobj<br></div>
+<code>VerbRule(Detach) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Detach).html">predicate(Detach)</a></span> :  &nbsp; <a href="../object/DetachAction.html">DetachAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10502">10502</a>]</code></table><div class=gramrule>    ('detach' | 'disconnect') dobjList<br></div>
+<code>VerbRule(DetachFrom) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(DetachFrom).html">predicate(DetachFrom)</a></span> :  &nbsp; <a href="../object/DetachFromAction.html">DetachFromAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10495">10495</a>]</code></table><div class=gramrule>    ('detach' | 'disconnect') dobjList 'from' singleIobj<br></div>
+<code>VerbRule(Dig) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Dig).html">predicate(Dig)</a></span> :  &nbsp; <a href="../object/DigAction.html">DigAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10064">10064</a>]</code></table><div class=gramrule>    ('dig' | 'dig' 'in') singleDobj<br></div>
+<code>VerbRule(DigWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(DigWith).html">predicate(DigWith)</a></span> :  &nbsp; <a href="../object/DigWithAction.html">DigWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10071">10071</a>]</code></table><div class=gramrule>    ('dig' | 'dig' 'in') singleDobj 'with' singleIobj<br></div>
+<code>VerbRule(Doff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Doff).html">predicate(Doff)</a></span> :  &nbsp; <a href="../object/DoffAction.html">DoffAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9417">9417</a>]</code></table><div class=gramrule>    ('doff' | 'take' 'off') dobjList<br>    | 'take' dobjList 'off'<br></div>
+<code>VerbRule(Drink) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Drink).html">predicate(Drink)</a></span> :  &nbsp; <a href="../object/DrinkAction.html">DrinkAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10391">10391</a>]</code></table><div class=gramrule>    ('drink' | 'quaff' | 'imbibe') dobjList<br></div>
+<code>VerbRule(Drop) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Drop).html">predicate(Drop)</a></span> :  &nbsp; <a href="../object/DropAction.html">DropAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9269">9269</a>]</code></table><div class=gramrule>    ('drop' | 'put' 'down' | 'set' 'down') dobjList<br>    | ('put' | 'set') dobjList 'down'<br></div>
+<code>VerbRule(Eat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Eat).html">predicate(Eat)</a></span> :  &nbsp; <a href="../object/EatAction.html">EatAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10385">10385</a>]</code></table><div class=gramrule>    ('eat' | 'consume') dobjList<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(EmptySpecialTopic).html">predicate(EmptySpecialTopic)</a></span> :  &nbsp; <a href="../object/IAction.html">IAction</a></code>
+<td align=right><code><a href="../file/actions.t.html">actions.t</a>[<a href="../source/actions.t.html#2118">2118</a>]</code></table><div class=gramrule>    'xspcltopic'</div>
+<code>VerbRule(Enter) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Enter).html">predicate(Enter)</a></span> :  &nbsp; <a href="../object/EnterAction.html">EnterAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10049">10049</a>]</code></table><div class=gramrule>    ('enter' | 'in' | 'into' | 'in' 'to'<br>     | ('walk' | 'go') ('to' | 'in' | 'in' 'to' | 'into'))<br>    singleDobj<br></div>
+<code>VerbRule(EnterOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(EnterOn).html">predicate(EnterOn)</a></span> :  &nbsp; <a href="../object/EnterOnAction.html">EnterOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10203">10203</a>]</code></table><div class=gramrule>    'enter' singleLiteral<br>        ('on' | 'in' | 'in' 'to' | 'into' | 'with') singleDobj<br></div>
+<code>VerbRule(EnterOnWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(EnterOnWhat).html">predicate(EnterOnWhat)</a></span> :  &nbsp; <a href="../object/EnterOnAction.html">EnterOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10211">10211</a>]</code></table><div class=gramrule>    'enter' singleLiteral<br></div>
+<code>VerbRule(Examine) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Examine).html">predicate(Examine)</a></span> :  &nbsp; <a href="../object/ExamineAction.html">ExamineAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9276">9276</a>]</code></table><div class=gramrule>    ('examine' | 'inspect' | 'x'<br>     | 'look' 'at' | 'l' 'at' | 'look' | 'l') dobjList<br></div>
+<code>VerbRule(Exits) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Exits).html">predicate(Exits)</a></span> :  &nbsp; <a href="../object/ExitsAction.html">ExitsAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10788">10788</a>]</code></table><div class=gramrule>    'exits'<br></div>
+<code>VerbRule(ExitsMode) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ExitsMode).html">predicate(ExitsMode)</a></span> :  &nbsp; <a href="../object/ExitsModeAction.html">ExitsModeAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10794">10794</a>]</code></table><div class=gramrule>    'exits' ('on'-&gt;on_ | 'all'-&gt;on_<br>             | 'off'-&gt;off_ | 'none'-&gt;off_<br>             | ('status' ('line' | ) | 'statusline') 'look'-&gt;on_<br>             | 'look'-&gt;on_ ('status' ('line' | ) | 'statusline')<br>             | 'status'-&gt;stat_ ('line' | ) | 'statusline'-&gt;stat_<br>             | 'look'-&gt;look_)<br></div>
+<code>VerbRule(Extinguish) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Extinguish).html">predicate(Extinguish)</a></span> :  &nbsp; <a href="../object/ExtinguishAction.html">ExtinguishAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10352">10352</a>]</code></table><div class=gramrule>    ('extinguish' | 'douse' | 'put' 'out' | 'blow' 'out') dobjList<br>    | ('blow' | 'put') dobjList 'out'<br></div>
+<code>VerbRule(Fasten) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Fasten).html">predicate(Fasten)</a></span> :  &nbsp; <a href="../object/FastenAction.html">FastenAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10652">10652</a>]</code></table><div class=gramrule>    ('fasten' | 'buckle' | 'buckle' 'up') dobjList<br></div>
+<code>VerbRule(FastenTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(FastenTo).html">predicate(FastenTo)</a></span> :  &nbsp; <a href="../object/FastenToAction.html">FastenToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10658">10658</a>]</code></table><div class=gramrule>    ('fasten' | 'buckle') dobjList 'to' singleIobj<br></div>
+<code>VerbRule(Feel) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Feel).html">predicate(Feel)</a></span> :  &nbsp; <a href="../object/FeelAction.html">FeelAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9319">9319</a>]</code></table><div class=gramrule>    ('feel' | 'touch') dobjList<br></div>
+<code>VerbRule(Flip) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Flip).html">predicate(Flip)</a></span> :  &nbsp; <a href="../object/FlipAction.html">FlipAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10303">10303</a>]</code></table><div class=gramrule>    'flip' dobjList<br></div>
+<code>VerbRule(Follow) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Follow).html">predicate(Follow)</a></span> :  &nbsp; <a href="../object/FollowAction.html">FollowAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9697">9697</a>]</code></table><div class=gramrule>    'follow' singleDobj<br></div>
+<code>VerbRule(Footnote) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Footnote).html">predicate(Footnote)</a></span> :  &nbsp; <a href="../object/FootnoteAction.html">FootnoteAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9763">9763</a>]</code></table><div class=gramrule>    ('footnote' | 'note') singleNumber<br></div>
+<code>VerbRule(FootnotesFull) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(FootnotesFull).html">predicate(FootnotesFull)</a></span> :  &nbsp; <a href="../object/FootnotesFullAction.html">FootnotesFullAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9769">9769</a>]</code></table><div class=gramrule>    'footnotes' 'full'<br></div>
+<code>VerbRule(FootnotesMedium) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(FootnotesMedium).html">predicate(FootnotesMedium)</a></span> :  &nbsp; <a href="../object/FootnotesMediumAction.html">FootnotesMediumAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9775">9775</a>]</code></table><div class=gramrule>    'footnotes' 'medium'<br></div>
+<code>VerbRule(FootnotesOff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(FootnotesOff).html">predicate(FootnotesOff)</a></span> :  &nbsp; <a href="../object/FootnotesOffAction.html">FootnotesOffAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9781">9781</a>]</code></table><div class=gramrule>    'footnotes' 'off'<br></div>
+<code>VerbRule(FootnotesStatus) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(FootnotesStatus).html">predicate(FootnotesStatus)</a></span> :  &nbsp; <a href="../object/FootnotesStatusAction.html">FootnotesStatusAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9787">9787</a>]</code></table><div class=gramrule>    'footnotes'<br></div>
+<code>VerbRule(FullScore) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(FullScore).html">predicate(FullScore)</a></span> :  &nbsp; <a href="../object/FullScoreAction.html">FullScoreAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9829">9829</a>]</code></table><div class=gramrule>    'full' 'score' | 'fullscore' | 'full'<br></div>
+<code>VerbRule(GetOffOf) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(GetOffOf).html">predicate(GetOffOf)</a></span> :  &nbsp; <a href="../object/GetOffOfAction.html">GetOffOfAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10615">10615</a>]</code></table><div class=gramrule>    'get' ('off' | 'off' 'of' | 'down' 'from') singleDobj<br></div>
+<code>VerbRule(GetOut) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(GetOut).html">predicate(GetOut)</a></span> :  &nbsp; <a href="../object/GetOutAction.html">GetOutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10626">10626</a>]</code></table><div class=gramrule>    'get' 'out'<br>    | 'get' 'off'<br>    | 'get' 'down'<br>    | 'disembark'<br>    | 'climb' 'out'<br></div>
+<code>VerbRule(GetOutOf) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(GetOutOf).html">predicate(GetOutOf)</a></span> :  &nbsp; <a href="../object/GetOutOfAction.html">GetOutOfAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10603">10603</a>]</code></table><div class=gramrule>    ('out' 'of' | 'get' 'out' 'of' | 'climb' 'out' 'of' | 'leave' | 'exit')<br>    singleDobj<br></div>
+<code>VerbRule(GiveTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(GiveTo).html">predicate(GiveTo)</a></span> :  &nbsp; <a href="../object/GiveToAction.html">GiveToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9593">9593</a>]</code></table><div class=gramrule>    ('give' | 'offer') dobjList 'to' singleIobj<br></div>
+<code>VerbRule(GiveToType2) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(GiveToType2).html">predicate(GiveToType2)</a></span> :  &nbsp; <a href="../object/GiveToAction.html">GiveToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9600">9600</a>]</code></table><div class=gramrule>    ('give' | 'offer') singleIobj dobjList<br></div>
+<code>VerbRule(GiveToWhom) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(GiveToWhom).html">predicate(GiveToWhom)</a></span> :  &nbsp; <a href="../object/GiveToAction.html">GiveToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9610">9610</a>]</code></table><div class=gramrule>    ('give' | 'offer') dobjList<br></div>
+<code>VerbRule(GoBack) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(GoBack).html">predicate(GoBack)</a></span> :  &nbsp; <a href="../object/GoBackAction.html">GoBackAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10058">10058</a>]</code></table><div class=gramrule>    'back' | 'go' 'back' | 'return'<br></div>
+<code>VerbRule(Goodbye) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Goodbye).html">predicate(Goodbye)</a></span> :  &nbsp; <a href="../object/GoodbyeAction.html">GoodbyeAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9569">9569</a>]</code></table><div class=gramrule>    ('say' | ()) ('goodbye' | 'good-bye' | 'good' 'bye' | 'bye')<br></div>
+<code>VerbRule(GoThrough) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(GoThrough).html">predicate(GoThrough)</a></span> :  &nbsp; <a href="../object/GoThroughAction.html">GoThroughAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10041">10041</a>]</code></table><div class=gramrule>    ('walk' | 'go' ) ('through' | 'thru')<br>        singleDobj<br></div>
+<code>VerbRule(Hello) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Hello).html">predicate(Hello)</a></span> :  &nbsp; <a href="../object/HelloAction.html">HelloAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9563">9563</a>]</code></table><div class=gramrule>    ('say' | ) ('hello' | 'hallo' | 'hi')<br></div>
+<code>VerbRule(Hint) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Hint).html">predicate(Hint)</a></span> :  &nbsp; <a href="../object/HintAction.html">HintAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10811">10811</a>]</code></table><div class=gramrule>    'hint' | 'hints'<br></div>
+<code>VerbRule(HintsOff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(HintsOff).html">predicate(HintsOff)</a></span> :  &nbsp; <a href="../object/HintsOffAction.html">HintsOffAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10805">10805</a>]</code></table><div class=gramrule>    'hints' 'off'<br></div>
+<code>VerbRule(In) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(In).html">predicate(In)</a></span> :  &nbsp; <a href="../object/InAction.html">InAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10027">10027</a>]</code></table><div class=gramrule>    'enter'<br></div>
+<code>VerbRule(instructions) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(instructions).html">predicate(instructions)</a></span> :  &nbsp; <a href="../object/InstructionsAction.html">InstructionsAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/instruct.t.html">instruct.t</a>[<a href="../source/instruct.t.html#1000">1000</a>]</code></table><div class=gramrule> 'instructions'</div>
+<code>VerbRule(Inventory) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Inventory).html">predicate(Inventory)</a></span> :  &nbsp; <a href="../object/InventoryAction.html">InventoryAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9721">9721</a>]</code></table><div class=gramrule>    'i' | 'inventory' | 'take' 'inventory'<br></div>
+<code>VerbRule(InventoryTall) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(InventoryTall).html">predicate(InventoryTall)</a></span> :  &nbsp; <a href="../object/InventoryTallAction.html">InventoryTallAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9727">9727</a>]</code></table><div class=gramrule>    'i' 'tall' | 'inventory' 'tall'<br></div>
+<code>VerbRule(InventoryWide) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(InventoryWide).html">predicate(InventoryWide)</a></span> :  &nbsp; <a href="../object/InventoryWideAction.html">InventoryWideAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9733">9733</a>]</code></table><div class=gramrule>    'i' 'wide' | 'inventory' 'wide'<br></div>
+<code>VerbRule(Jump) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Jump).html">predicate(Jump)</a></span> :  &nbsp; <a href="../object/JumpAction.html">JumpAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10080">10080</a>]</code></table><div class=gramrule>    'jump'<br></div>
+<code>VerbRule(JumpOff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(JumpOff).html">predicate(JumpOff)</a></span> :  &nbsp; <a href="../object/JumpOffAction.html">JumpOffAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10092">10092</a>]</code></table><div class=gramrule>    'jump' 'off' singleDobj<br></div>
+<code>VerbRule(JumpOffI) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(JumpOffI).html">predicate(JumpOffI)</a></span> :  &nbsp; <a href="../object/JumpOffIAction.html">JumpOffIAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10086">10086</a>]</code></table><div class=gramrule>    'jump' 'off'<br></div>
+<code>VerbRule(JumpOver) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(JumpOver).html">predicate(JumpOver)</a></span> :  &nbsp; <a href="../object/JumpOverAction.html">JumpOverAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10099">10099</a>]</code></table><div class=gramrule>    ('jump' | 'jump' 'over') singleDobj<br></div>
+<code>VerbRule(Kiss) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Kiss).html">predicate(Kiss)</a></span> :  &nbsp; <a href="../object/KissAction.html">KissAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9424">9424</a>]</code></table><div class=gramrule>    'kiss' singleDobj<br></div>
+<code>VerbRule(Lie) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Lie).html">predicate(Lie)</a></span> :  &nbsp; <a href="../object/LieAction.html">LieAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10579">10579</a>]</code></table><div class=gramrule>    'lie' ( | 'down')</div>
+<code>VerbRule(LieOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(LieOn).html">predicate(LieOn)</a></span> :  &nbsp; <a href="../object/LieOnAction.html">LieOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10567">10567</a>]</code></table><div class=gramrule>    'lie' ('on' | 'in' | 'down' 'on' | 'down' 'in')<br>        singleDobj<br></div>
+<code>VerbRule(Light) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Light).html">predicate(Light)</a></span> :  &nbsp; <a href="../object/LightAction.html">LightAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10323">10323</a>]</code></table><div class=gramrule>    'light' dobjList<br></div>
+<code>VerbRule(ListenImplicit) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ListenImplicit).html">predicate(ListenImplicit)</a></span> :  &nbsp; <a href="../object/ListenImplicitAction.html">ListenImplicitAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9363">9363</a>]</code></table><div class=gramrule>    'listen' | 'hear'<br></div>
+<code>VerbRule(ListenTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ListenTo).html">predicate(ListenTo)</a></span> :  &nbsp; <a href="../object/ListenToAction.html">ListenToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9350">9350</a>]</code></table><div class=gramrule>    ('hear' | 'listen' 'to' ) dobjList<br></div>
+<code>VerbRule(Lock) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Lock).html">predicate(Lock)</a></span> :  &nbsp; <a href="../object/LockAction.html">LockAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10520">10520</a>]</code></table><div class=gramrule>    'lock' dobjList<br></div>
+<code>VerbRule(LockWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(LockWith).html">predicate(LockWith)</a></span> :  &nbsp; <a href="../object/LockWithAction.html">LockWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10532">10532</a>]</code></table><div class=gramrule>    'lock' singleDobj 'with' singleIobj<br></div>
+<code>VerbRule(Look) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Look).html">predicate(Look)</a></span> :  &nbsp; <a href="../object/LookAction.html">LookAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9745">9745</a>]</code></table><div class=gramrule>    'look' | 'look' 'around' | 'l' | 'l' 'around'<br></div>
+<code>VerbRule(LookBehind) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(LookBehind).html">predicate(LookBehind)</a></span> :  &nbsp; <a href="../object/LookBehindAction.html">LookBehindAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9313">9313</a>]</code></table><div class=gramrule>    ('look' | 'l') 'behind' dobjList<br></div>
+<code>VerbRule(LookIn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(LookIn).html">predicate(LookIn)</a></span> :  &nbsp; <a href="../object/LookInAction.html">LookInAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9289">9289</a>]</code></table><div class=gramrule>    ('look' | 'l') ('in' | 'inside') dobjList<br></div>
+<code>VerbRule(LookThrough) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(LookThrough).html">predicate(LookThrough)</a></span> :  &nbsp; <a href="../object/LookThroughAction.html">LookThroughAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9301">9301</a>]</code></table><div class=gramrule>    ('look' | 'l') ('through' | 'thru' | 'out') dobjList<br></div>
+<code>VerbRule(LookUnder) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(LookUnder).html">predicate(LookUnder)</a></span> :  &nbsp; <a href="../object/LookUnderAction.html">LookUnderAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9307">9307</a>]</code></table><div class=gramrule>    ('look' | 'l') 'under' dobjList<br></div>
+<code>VerbRule(Move) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Move).html">predicate(Move)</a></span> :  &nbsp; <a href="../object/MoveAction.html">MoveAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10118">10118</a>]</code></table><div class=gramrule>    'move' dobjList<br></div>
+<code>VerbRule(MoveTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(MoveTo).html">predicate(MoveTo)</a></span> :  &nbsp; <a href="../object/MoveToAction.html">MoveToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10124">10124</a>]</code></table><div class=gramrule>    ('push' | 'move') dobjList ('to' | 'under') singleIobj<br></div>
+<code>VerbRule(MoveWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(MoveWith).html">predicate(MoveWith)</a></span> :  &nbsp; <a href="../object/MoveWithAction.html">MoveWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10132">10132</a>]</code></table><div class=gramrule>    'move' singleDobj 'with' singleIobj<br></div>
+<code>VerbRule(No) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(No).html">predicate(No)</a></span> :  &nbsp; <a href="../object/NoAction.html">NoAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9581">9581</a>]</code></table><div class=gramrule>    'no' | 'negative' | 'say' 'no'<br></div>
+<code>VerbRule(Notify) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Notify).html">predicate(Notify)</a></span> :  &nbsp; <a href="../object/NotifyAction.html">NotifyAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9835">9835</a>]</code></table><div class=gramrule>    'notify'<br></div>
+<code>VerbRule(NotifyOff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(NotifyOff).html">predicate(NotifyOff)</a></span> :  &nbsp; <a href="../object/NotifyOffAction.html">NotifyOffAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9847">9847</a>]</code></table><div class=gramrule>    'notify' 'off'<br></div>
+<code>VerbRule(NotifyOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(NotifyOn).html">predicate(NotifyOn)</a></span> :  &nbsp; <a href="../object/NotifyOnAction.html">NotifyOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9841">9841</a>]</code></table><div class=gramrule>    'notify' 'on'<br></div>
+<code>VerbRule(Oops) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Oops).html">predicate(Oops)</a></span> :  &nbsp; <a href="../object/OopsAction.html">OopsAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10817">10817</a>]</code></table><div class=gramrule>    ('oops' | 'o') singleLiteral<br></div>
+<code>VerbRule(OopsOnly) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(OopsOnly).html">predicate(OopsOnly)</a></span> :  &nbsp; <a href="../object/OopsIAction.html">OopsIAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10823">10823</a>]</code></table><div class=gramrule>    ('oops' | 'o')<br></div>
+<code>VerbRule(Open) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Open).html">predicate(Open)</a></span> :  &nbsp; <a href="../object/OpenAction.html">OpenAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10508">10508</a>]</code></table><div class=gramrule>    'open' dobjList<br></div>
+<code>VerbRule(Out) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Out).html">predicate(Out)</a></span> :  &nbsp; <a href="../object/OutAction.html">OutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10034">10034</a>]</code></table><div class=gramrule>    'exit' | 'leave'<br></div>
+<code>VerbRule(Pause) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Pause).html">predicate(Pause)</a></span> :  &nbsp; <a href="../object/PauseAction.html">PauseAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9895">9895</a>]</code></table><div class=gramrule>    'pause'<br></div>
+<code>VerbRule(PlugIn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PlugIn).html">predicate(PlugIn)</a></span> :  &nbsp; <a href="../object/PlugInAction.html">PlugInAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10697">10697</a>]</code></table><div class=gramrule>    'plug' dobjList 'in'<br>    | 'plug' 'in' dobjList<br></div>
+<code>VerbRule(PlugInto) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PlugInto).html">predicate(PlugInto)</a></span> :  &nbsp; <a href="../object/PlugIntoAction.html">PlugIntoAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10678">10678</a>]</code></table><div class=gramrule>    'plug' dobjList ('in' | 'into' | 'in' 'to') singleIobj<br></div>
+<code>VerbRule(PlugIntoWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PlugIntoWhat).html">predicate(PlugIntoWhat)</a></span> :  &nbsp; <a href="../object/PlugIntoAction.html">PlugIntoAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10685">10685</a>]</code></table><div class=gramrule>    [badness 500] 'plug' dobjList<br></div>
+<code>VerbRule(Port) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Port).html">predicate(Port)</a></span> :  &nbsp; <a href="../object/PortAction.html">PortAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10013">10013</a>]</code></table><div class=gramrule>    'go' 'to' ('port' | 'p')<br></div>
+<code>VerbRule(Pour) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Pour).html">predicate(Pour)</a></span> :  &nbsp; <a href="../object/PourAction.html">PourAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10397">10397</a>]</code></table><div class=gramrule>    'pour' dobjList<br></div>
+<code>VerbRule(PourInto) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PourInto).html">predicate(PourInto)</a></span> :  &nbsp; <a href="../object/PourIntoAction.html">PourIntoAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10403">10403</a>]</code></table><div class=gramrule>    'pour' dobjList ('in' | 'into' | 'in' 'to') singleIobj<br></div>
+<code>VerbRule(PourOnto) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PourOnto).html">predicate(PourOnto)</a></span> :  &nbsp; <a href="../object/PourOntoAction.html">PourOntoAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10410">10410</a>]</code></table><div class=gramrule>    'pour' dobjList ('on' | 'onto' | 'on' 'to') singleIobj<br></div>
+<code>VerbRule(Pull) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Pull).html">predicate(Pull)</a></span> :  &nbsp; <a href="../object/PullAction.html">PullAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10112">10112</a>]</code></table><div class=gramrule>    'pull' dobjList<br></div>
+<code>VerbRule(Push) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Push).html">predicate(Push)</a></span> :  &nbsp; <a href="../object/PushAction.html">PushAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10106">10106</a>]</code></table><div class=gramrule>    ('push' | 'press') dobjList<br></div>
+<code>VerbRule(PushTravelClimbDown) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PushTravelClimbDown).html">predicate(PushTravelClimbDown)</a></span> :  &nbsp; <a href="../object/PushTravelClimbDownAction.html">PushTravelClimbDownAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10781">10781</a>]</code></table><div class=gramrule>    ('push' | 'pull' | 'drag' | 'move') singleDobj<br>    'down' singleIobj<br></div>
+<code>VerbRule(PushTravelClimbUp) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PushTravelClimbUp).html">predicate(PushTravelClimbUp)</a></span> :  &nbsp; <a href="../object/PushTravelClimbUpAction.html">PushTravelClimbUpAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10773">10773</a>]</code></table><div class=gramrule>    ('push' | 'pull' | 'drag' | 'move') singleDobj<br>    'up' singleIobj<br></div>
+<code>VerbRule(PushTravelDir) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PushTravelDir).html">predicate(PushTravelDir)</a></span> :  &nbsp; <a href="../object/PushTravelDirAction.html">PushTravelDirAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10745">10745</a>]</code></table><div class=gramrule>    ('push' | 'pull' | 'drag' | 'move') singleDobj singleDir<br></div>
+<code>VerbRule(PushTravelEnter) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PushTravelEnter).html">predicate(PushTravelEnter)</a></span> :  &nbsp; <a href="../object/PushTravelEnterAction.html">PushTravelEnterAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10758">10758</a>]</code></table><div class=gramrule>    ('push' | 'pull' | 'drag' | 'move') singleDobj<br>    ('in' | 'into' | 'in' 'to') singleIobj<br></div>
+<code>VerbRule(PushTravelGetOutOf) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PushTravelGetOutOf).html">predicate(PushTravelGetOutOf)</a></span> :  &nbsp; <a href="../object/PushTravelGetOutOfAction.html">PushTravelGetOutOfAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10765">10765</a>]</code></table><div class=gramrule>    ('push' | 'pull' | 'drag' | 'move') singleDobj<br>    'out' ('of' | ) singleIobj<br></div>
+<code>VerbRule(PushTravelThrough) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PushTravelThrough).html">predicate(PushTravelThrough)</a></span> :  &nbsp; <a href="../object/PushTravelThroughAction.html">PushTravelThroughAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10751">10751</a>]</code></table><div class=gramrule>    ('push' | 'pull' | 'drag' | 'move') singleDobj<br>    ('through' | 'thru') singleIobj<br></div>
+<code>VerbRule(PutBehind) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PutBehind).html">predicate(PutBehind)</a></span> :  &nbsp; <a href="../object/PutBehindAction.html">PutBehindAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9392">9392</a>]</code></table><div class=gramrule>    ('put' | 'place' | 'set') dobjList 'behind' singleIobj<br></div>
+<code>VerbRule(PutIn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PutIn).html">predicate(PutIn)</a></span> :  &nbsp; <a href="../object/PutInAction.html">PutInAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9369">9369</a>]</code></table><div class=gramrule>    ('put' | 'place' | 'set') dobjList<br>        ('in' | 'into' | 'in' 'to' | 'inside' | 'inside' 'of') singleIobj<br></div>
+<code>VerbRule(PutInWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PutInWhat).html">predicate(PutInWhat)</a></span> :  &nbsp; <a href="../object/PutInAction.html">PutInAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9398">9398</a>]</code></table><div class=gramrule>    [badness 500] ('put' | 'place') dobjList<br></div>
+<code>VerbRule(PutOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PutOn).html">predicate(PutOn)</a></span> :  &nbsp; <a href="../object/PutOnAction.html">PutOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9377">9377</a>]</code></table><div class=gramrule>    ('put' | 'place' | 'drop' | 'set') dobjList<br>        ('on' | 'onto' | 'on' 'to' | 'upon') singleIobj<br>    | 'put' dobjList 'down' 'on' singleIobj<br></div>
+<code>VerbRule(PutUnder) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(PutUnder).html">predicate(PutUnder)</a></span> :  &nbsp; <a href="../object/PutUnderAction.html">PutUnderAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9386">9386</a>]</code></table><div class=gramrule>    ('put' | 'place' | 'set') dobjList 'under' singleIobj<br></div>
+<code>VerbRule(Quit) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Quit).html">predicate(Quit)</a></span> :  &nbsp; <a href="../object/QuitAction.html">QuitAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9751">9751</a>]</code></table><div class=gramrule>    'quit' | 'q'<br></div>
+<code>VerbRule(Read) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Read).html">predicate(Read)</a></span> :  &nbsp; <a href="../object/ReadAction.html">ReadAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9283">9283</a>]</code></table><div class=gramrule>    'read' dobjList<br></div>
+<code>VerbRule(Record) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Record).html">predicate(Record)</a></span> :  &nbsp; <a href="../object/RecordAction.html">RecordAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9943">9943</a>]</code></table><div class=gramrule>    'record' | 'record' 'on'<br></div>
+<code>VerbRule(RecordEvents) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(RecordEvents).html">predicate(RecordEvents)</a></span> :  &nbsp; <a href="../object/RecordEventsAction.html">RecordEventsAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9955">9955</a>]</code></table><div class=gramrule>    'record' 'events' | 'record' 'events' 'on'<br></div>
+<code>VerbRule(RecordEventsString) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(RecordEventsString).html">predicate(RecordEventsString)</a></span> :  &nbsp; <a href="../object/RecordEventsStringAction.html">RecordEventsStringAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9961">9961</a>]</code></table><div class=gramrule>    'record' 'events' quotedStringPhrase-&gt;fname_<br></div>
+<code>VerbRule(RecordOff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(RecordOff).html">predicate(RecordOff)</a></span> :  &nbsp; <a href="../object/RecordOffAction.html">RecordOffAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9967">9967</a>]</code></table><div class=gramrule>    'record' 'off'<br></div>
+<code>VerbRule(RecordString) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(RecordString).html">predicate(RecordString)</a></span> :  &nbsp; <a href="../object/RecordStringAction.html">RecordStringAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9949">9949</a>]</code></table><div class=gramrule>    'record' quotedStringPhrase-&gt;fname_<br></div>
+<code>VerbRule(Remove) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Remove).html">predicate(Remove)</a></span> :  &nbsp; <a href="../object/RemoveAction.html">RemoveAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9263">9263</a>]</code></table><div class=gramrule>    'remove' dobjList<br></div>
+<code>VerbRule(ReplayQuiet) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ReplayQuiet).html">predicate(ReplayQuiet)</a></span> :  &nbsp; <a href="../object/ReplayStringAction.html">ReplayStringAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9983">9983</a>]</code></table><div class=gramrule>    'rq' (quotedStringPhrase-&gt;fname_ | )<br></div>
+<code>VerbRule(ReplayString) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ReplayString).html">predicate(ReplayString)</a></span> :  &nbsp; <a href="../object/ReplayStringAction.html">ReplayStringAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9973">9973</a>]</code></table><div class=gramrule>    'replay' ('quiet'-&gt;quiet_ | 'nonstop'-&gt;nonstop_ | )<br>        (quotedStringPhrase-&gt;fname_ | )<br></div>
+<code>VerbRule(Restart) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Restart).html">predicate(Restart)</a></span> :  &nbsp; <a href="../object/RestartAction.html">RestartAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9889">9889</a>]</code></table><div class=gramrule>    'restart'<br></div>
+<code>VerbRule(Restore) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Restore).html">predicate(Restore)</a></span> :  &nbsp; <a href="../object/RestoreAction.html">RestoreAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9865">9865</a>]</code></table><div class=gramrule>    'restore'<br></div>
+<code>VerbRule(RestoreDefaults) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(RestoreDefaults).html">predicate(RestoreDefaults)</a></span> :  &nbsp; <a href="../object/RestoreDefaultsAction.html">RestoreDefaultsAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9883">9883</a>]</code></table><div class=gramrule>    'restore' 'defaults'<br></div>
+<code>VerbRule(RestoreString) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(RestoreString).html">predicate(RestoreString)</a></span> :  &nbsp; <a href="../object/RestoreStringAction.html">RestoreStringAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9871">9871</a>]</code></table><div class=gramrule>    'restore' quotedStringPhrase-&gt;fname_<br></div>
+<code>VerbRule(Save) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Save).html">predicate(Save)</a></span> :  &nbsp; <a href="../object/SaveAction.html">SaveAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9853">9853</a>]</code></table><div class=gramrule>    'save'<br></div>
+<code>VerbRule(SaveDefaults) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(SaveDefaults).html">predicate(SaveDefaults)</a></span> :  &nbsp; <a href="../object/SaveDefaultsAction.html">SaveDefaultsAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9877">9877</a>]</code></table><div class=gramrule>    'save' 'defaults'<br></div>
+<code>VerbRule(SaveString) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(SaveString).html">predicate(SaveString)</a></span> :  &nbsp; <a href="../object/SaveStringAction.html">SaveStringAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9859">9859</a>]</code></table><div class=gramrule>    'save' quotedStringPhrase-&gt;fname_<br></div>
+<code>VerbRule(Score) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Score).html">predicate(Score)</a></span> :  &nbsp; <a href="../object/ScoreAction.html">ScoreAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9823">9823</a>]</code></table><div class=gramrule>    'score' | 'status'<br></div>
+<code>VerbRule(Screw) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Screw).html">predicate(Screw)</a></span> :  &nbsp; <a href="../object/ScrewAction.html">ScrewAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10717">10717</a>]</code></table><div class=gramrule>    'screw' dobjList<br></div>
+<code>VerbRule(ScrewWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ScrewWith).html">predicate(ScrewWith)</a></span> :  &nbsp; <a href="../object/ScrewWithAction.html">ScrewWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10723">10723</a>]</code></table><div class=gramrule>    'screw' dobjList 'with' singleIobj<br></div>
+<code>VerbRule(Script) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Script).html">predicate(Script)</a></span> :  &nbsp; <a href="../object/ScriptAction.html">ScriptAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9925">9925</a>]</code></table><div class=gramrule>    'script' | 'script' 'on'<br></div>
+<code>VerbRule(ScriptOff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ScriptOff).html">predicate(ScriptOff)</a></span> :  &nbsp; <a href="../object/ScriptOffAction.html">ScriptOffAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9937">9937</a>]</code></table><div class=gramrule>    'script' 'off' | 'unscript'<br></div>
+<code>VerbRule(ScriptString) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ScriptString).html">predicate(ScriptString)</a></span> :  &nbsp; <a href="../object/ScriptStringAction.html">ScriptStringAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9931">9931</a>]</code></table><div class=gramrule>    'script' quotedStringPhrase-&gt;fname_<br></div>
+<code>VerbRule(Search) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Search).html">predicate(Search)</a></span> :  &nbsp; <a href="../object/SearchAction.html">SearchAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9295">9295</a>]</code></table><div class=gramrule>    'search' dobjList<br></div>
+<code>VerbRule(Set) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Set).html">predicate(Set)</a></span> :  &nbsp; <a href="../object/SetAction.html">SetAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10164">10164</a>]</code></table><div class=gramrule>    'set' dobjList<br></div>
+<code>VerbRule(SetTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(SetTo).html">predicate(SetTo)</a></span> :  &nbsp; <a href="../object/SetToAction.html">SetToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10170">10170</a>]</code></table><div class=gramrule>    'set' singleDobj 'to' singleLiteral<br></div>
+<code>VerbRule(ShowTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ShowTo).html">predicate(ShowTo)</a></span> :  &nbsp; <a href="../object/ShowToAction.html">ShowToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9622">9622</a>]</code></table><div class=gramrule>    'show' dobjList 'to' singleIobj<br></div>
+<code>VerbRule(ShowToType2) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ShowToType2).html">predicate(ShowToType2)</a></span> :  &nbsp; <a href="../object/ShowToAction.html">ShowToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9629">9629</a>]</code></table><div class=gramrule>    'show' singleIobj dobjList<br></div>
+<code>VerbRule(ShowToWhom) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ShowToWhom).html">predicate(ShowToWhom)</a></span> :  &nbsp; <a href="../object/ShowToAction.html">ShowToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9639">9639</a>]</code></table><div class=gramrule>    'show' dobjList<br></div>
+<code>VerbRule(Sit) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Sit).html">predicate(Sit)</a></span> :  &nbsp; <a href="../object/SitAction.html">SitAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10562">10562</a>]</code></table><div class=gramrule>    'sit' ( | 'down')</div>
+<code>VerbRule(SitOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(SitOn).html">predicate(SitOn)</a></span> :  &nbsp; <a href="../object/SitOnAction.html">SitOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10550">10550</a>]</code></table><div class=gramrule>    'sit' ('on' | 'in' | 'down' 'on' | 'down' 'in')<br>        singleDobj<br></div>
+<code>VerbRule(Sleep) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Sleep).html">predicate(Sleep)</a></span> :  &nbsp; <a href="../object/SleepAction.html">SleepAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10646">10646</a>]</code></table><div class=gramrule>    'sleep'<br></div>
+<code>VerbRule(Smell) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Smell).html">predicate(Smell)</a></span> :  &nbsp; <a href="../object/SmellAction.html">SmellAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9331">9331</a>]</code></table><div class=gramrule>    ('smell' | 'sniff') dobjList<br></div>
+<code>VerbRule(SmellImplicit) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(SmellImplicit).html">predicate(SmellImplicit)</a></span> :  &nbsp; <a href="../object/SmellImplicitAction.html">SmellImplicitAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9344">9344</a>]</code></table><div class=gramrule>    'smell' | 'sniff'<br></div>
+<table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(SpecialTopic).html">predicate(SpecialTopic)</a></span> :  &nbsp; <a href="../object/SpecialTopicAction.html">SpecialTopicAction</a></code>
+<td align=right><code><a href="../file/actions.t.html">actions.t</a>[<a href="../source/actions.t.html#2106">2106</a>]</code></table><div class=gramrule>    'xspcltopic' literalPhrase-&gt;literalMatch<br></div>
+<code>VerbRule(Stand) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Stand).html">predicate(Stand)</a></span> :  &nbsp; <a href="../object/StandAction.html">StandAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10597">10597</a>]</code></table><div class=gramrule>    'stand' | 'stand' 'up' | 'get' 'up'<br></div>
+<code>VerbRule(StandOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(StandOn).html">predicate(StandOn)</a></span> :  &nbsp; <a href="../object/StandOnAction.html">StandOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10584">10584</a>]</code></table><div class=gramrule>    ('stand' ('on' | 'in' | 'onto' | 'on' 'to' | 'into' | 'in' 'to')<br>     | 'climb' ('on' | 'onto' | 'on' 'to'))<br>    singleDobj<br></div>
+<code>VerbRule(Starboard) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Starboard).html">predicate(Starboard)</a></span> :  &nbsp; <a href="../object/StarboardAction.html">StarboardAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10020">10020</a>]</code></table><div class=gramrule>    'go' 'to' ('starboard' | 'sb')<br></div>
+<code>VerbRule(Strike) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Strike).html">predicate(Strike)</a></span> :  &nbsp; <a href="../object/StrikeAction.html">StrikeAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10330">10330</a>]</code></table><div class=gramrule>    'strike' dobjList<br></div>
+<code>VerbRule(Switch) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Switch).html">predicate(Switch)</a></span> :  &nbsp; <a href="../object/SwitchAction.html">SwitchAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10297">10297</a>]</code></table><div class=gramrule>    'switch' dobjList<br></div>
+<code>VerbRule(Take) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Take).html">predicate(Take)</a></span> :  &nbsp; <a href="../object/TakeAction.html">TakeAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9248">9248</a>]</code></table><div class=gramrule>    ('take' | 'pick' 'up' | 'get') dobjList<br>    | 'pick' dobjList 'up'<br></div>
+<code>VerbRule(TakeFrom) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TakeFrom).html">predicate(TakeFrom)</a></span> :  &nbsp; <a href="../object/TakeFromAction.html">TakeFromAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9255">9255</a>]</code></table><div class=gramrule>    ('take' | 'get') dobjList<br>        ('from' | 'out' 'of' | 'off' | 'off' 'of') singleIobj<br>    | 'remove' dobjList 'from' singleIobj<br></div>
+<code>VerbRule(TalkTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TalkTo).html">predicate(TalkTo)</a></span> :  &nbsp; <a href="../object/TalkToAction.html">TalkToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9536">9536</a>]</code></table><div class=gramrule>    ('greet' | 'say' 'hello' 'to' | 'talk' 'to') singleDobj<br></div>
+<code>VerbRule(TalkToWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TalkToWhat).html">predicate(TalkToWhat)</a></span> :  &nbsp; <a href="../object/TalkToAction.html">TalkToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9543">9543</a>]</code></table><div class=gramrule>    [badness 500] 'talk'<br></div>
+<code>VerbRule(Taste) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Taste).html">predicate(Taste)</a></span> :  &nbsp; <a href="../object/TasteAction.html">TasteAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9325">9325</a>]</code></table><div class=gramrule>    'taste' dobjList<br></div>
+<code>VerbRule(TellAbout) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TellAbout).html">predicate(TellAbout)</a></span> :  &nbsp; <a href="../object/TellAboutAction.html">TellAboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9489">9489</a>]</code></table><div class=gramrule>    ('tell' | 't') singleDobj 'about' singleTopic<br></div>
+<code>VerbRule(TellAboutImplicit) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TellAboutImplicit).html">predicate(TellAboutImplicit)</a></span> :  &nbsp; <a href="../object/TellAboutAction.html">TellAboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9497">9497</a>]</code></table><div class=gramrule>    't' singleTopic<br></div>
+<code>VerbRule(TellAboutWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TellAboutWhat).html">predicate(TellAboutWhat)</a></span> :  &nbsp; <a href="../object/TellAboutAction.html">TellAboutAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9510">9510</a>]</code></table><div class=gramrule>    [badness 500] 'tell' singleDobj<br></div>
+<code>VerbRule(TellVague) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TellVague).html">predicate(TellVague)</a></span> :  &nbsp; <a href="../object/AskVagueAction.html">AskVagueAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9530">9530</a>]</code></table><div class=gramrule>    [badness 500] 'tell' singleDobj singleTopic<br></div>
+<code>VerbRule(Terse) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Terse).html">predicate(Terse)</a></span> :  &nbsp; <a href="../object/TerseAction.html">TerseAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9817">9817</a>]</code></table><div class=gramrule>    'terse' | 'brief'<br></div>
+<code>VerbRule(Throw) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Throw).html">predicate(Throw)</a></span> :  &nbsp; <a href="../object/ThrowAction.html">ThrowAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9651">9651</a>]</code></table><div class=gramrule>    ('throw' | 'toss') dobjList<br></div>
+<code>VerbRule(ThrowAt) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ThrowAt).html">predicate(ThrowAt)</a></span> :  &nbsp; <a href="../object/ThrowAtAction.html">ThrowAtAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9657">9657</a>]</code></table><div class=gramrule>    ('throw' | 'toss') dobjList 'at' singleIobj<br></div>
+<code>VerbRule(ThrowDir) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ThrowDir).html">predicate(ThrowDir)</a></span> :  &nbsp; <a href="../object/ThrowDirAction.html">ThrowDirAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9681">9681</a>]</code></table><div class=gramrule>    ('throw' | 'toss') dobjList ('to' ('the' | ) | ) singleDir<br></div>
+<code>VerbRule(ThrowDirDown) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ThrowDirDown).html">predicate(ThrowDirDown)</a></span> :  &nbsp; <a href="../object/ThrowDirAction.html">ThrowDirAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9688">9688</a>]</code></table><div class=gramrule>    'throw' ('down' | 'd') dobjList<br></div>
+<code>VerbRule(ThrowTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ThrowTo).html">predicate(ThrowTo)</a></span> :  &nbsp; <a href="../object/ThrowToAction.html">ThrowToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9664">9664</a>]</code></table><div class=gramrule>    ('throw' | 'toss') dobjList 'to' singleIobj<br></div>
+<code>VerbRule(ThrowToType2) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(ThrowToType2).html">predicate(ThrowToType2)</a></span> :  &nbsp; <a href="../object/ThrowToAction.html">ThrowToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9671">9671</a>]</code></table><div class=gramrule>    'throw' singleIobj dobjList<br></div>
+<code>VerbRule(TipsOff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TipsOff).html">predicate(TipsOff)</a></span> :  &nbsp; <a href="../object/TipModeAction.html">TipModeAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9802">9802</a>]</code></table><div class=gramrule>    ('tips' | 'tip') 'off'<br></div>
+<code>VerbRule(TipsOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TipsOn).html">predicate(TipsOn)</a></span> :  &nbsp; <a href="../object/TipModeAction.html">TipModeAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9793">9793</a>]</code></table><div class=gramrule>    ('tips' | 'tip') 'on'<br></div>
+<code>VerbRule(Topics) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Topics).html">predicate(Topics)</a></span> :  &nbsp; <a href="../object/TopicsAction.html">TopicsAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9557">9557</a>]</code></table><div class=gramrule>    'topics'<br></div>
+<code>VerbRule(Travel) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Travel).html">predicate(Travel)</a></span> :  &nbsp; <a href="../object/TravelAction.html">TravelAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9994">9994</a>]</code></table><div class=gramrule>    'go' singleDir | singleDir<br></div>
+<code>VerbRule(Turn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Turn).html">predicate(Turn)</a></span> :  &nbsp; <a href="../object/TurnAction.html">TurnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10141">10141</a>]</code></table><div class=gramrule>    ('turn' | 'twist' | 'rotate') dobjList<br></div>
+<code>VerbRule(TurnOff) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TurnOff).html">predicate(TurnOff)</a></span> :  &nbsp; <a href="../object/TurnOffAction.html">TurnOffAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10316">10316</a>]</code></table><div class=gramrule>    ('deactivate' | ('turn' | 'switch') 'off') dobjList<br>    | ('turn' | 'switch') dobjList 'off'<br></div>
+<code>VerbRule(TurnOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TurnOn).html">predicate(TurnOn)</a></span> :  &nbsp; <a href="../object/TurnOnAction.html">TurnOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10309">10309</a>]</code></table><div class=gramrule>    ('activate' | ('turn' | 'switch') 'on') dobjList<br>    | ('turn' | 'switch') dobjList 'on'<br></div>
+<code>VerbRule(TurnTo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TurnTo).html">predicate(TurnTo)</a></span> :  &nbsp; <a href="../object/TurnToAction.html">TurnToAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10155">10155</a>]</code></table><div class=gramrule>    ('turn' | 'twist' | 'rotate') singleDobj<br>        'to' singleLiteral<br></div>
+<code>VerbRule(TurnWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TurnWith).html">predicate(TurnWith)</a></span> :  &nbsp; <a href="../object/TurnWithAction.html">TurnWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10147">10147</a>]</code></table><div class=gramrule>    ('turn' | 'twist' | 'rotate') singleDobj 'with' singleIobj<br></div>
+<code>VerbRule(TypeLiteralOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TypeLiteralOn).html">predicate(TypeLiteralOn)</a></span> :  &nbsp; <a href="../object/TypeLiteralOnAction.html">TypeLiteralOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10184">10184</a>]</code></table><div class=gramrule>    'type' singleLiteral 'on' singleDobj<br></div>
+<code>VerbRule(TypeLiteralOnWhat) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TypeLiteralOnWhat).html">predicate(TypeLiteralOnWhat)</a></span> :  &nbsp; <a href="../object/TypeLiteralOnAction.html">TypeLiteralOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10191">10191</a>]</code></table><div class=gramrule>    [badness 500] 'type' singleLiteral<br></div>
+<code>VerbRule(TypeOn) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(TypeOn).html">predicate(TypeOn)</a></span> :  &nbsp; <a href="../object/TypeOnAction.html">TypeOnAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10178">10178</a>]</code></table><div class=gramrule>    'type' 'on' singleDobj<br></div>
+<code>VerbRule(Undo) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Undo).html">predicate(Undo)</a></span> :  &nbsp; <a href="../object/UndoAction.html">UndoAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9901">9901</a>]</code></table><div class=gramrule>    'undo'<br></div>
+<code>VerbRule(Unfasten) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Unfasten).html">predicate(Unfasten)</a></span> :  &nbsp; <a href="../object/UnfastenAction.html">UnfastenAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10665">10665</a>]</code></table><div class=gramrule>    ('unfasten' | 'unbuckle') dobjList<br></div>
+<code>VerbRule(UnfastenFrom) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(UnfastenFrom).html">predicate(UnfastenFrom)</a></span> :  &nbsp; <a href="../object/UnfastenFromAction.html">UnfastenFromAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10671">10671</a>]</code></table><div class=gramrule>    ('unfasten' | 'unbuckle') dobjList 'from' singleIobj<br></div>
+<code>VerbRule(Unlock) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Unlock).html">predicate(Unlock)</a></span> :  &nbsp; <a href="../object/UnlockAction.html">UnlockAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10526">10526</a>]</code></table><div class=gramrule>    'unlock' dobjList<br></div>
+<code>VerbRule(UnlockWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(UnlockWith).html">predicate(UnlockWith)</a></span> :  &nbsp; <a href="../object/UnlockWithAction.html">UnlockWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10541">10541</a>]</code></table><div class=gramrule>    'unlock' singleDobj 'with' singleIobj<br></div>
+<code>VerbRule(Unplug) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Unplug).html">predicate(Unplug)</a></span> :  &nbsp; <a href="../object/UnplugAction.html">UnplugAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10711">10711</a>]</code></table><div class=gramrule>    'unplug' dobjList<br></div>
+<code>VerbRule(UnplugFrom) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(UnplugFrom).html">predicate(UnplugFrom)</a></span> :  &nbsp; <a href="../object/UnplugFromAction.html">UnplugFromAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10704">10704</a>]</code></table><div class=gramrule>    'unplug' dobjList 'from' singleIobj<br></div>
+<code>VerbRule(Unscrew) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Unscrew).html">predicate(Unscrew)</a></span> :  &nbsp; <a href="../object/UnscrewAction.html">UnscrewAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10731">10731</a>]</code></table><div class=gramrule>    'unscrew' dobjList<br></div>
+<code>VerbRule(UnscrewWith) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(UnscrewWith).html">predicate(UnscrewWith)</a></span> :  &nbsp; <a href="../object/UnscrewWithAction.html">UnscrewWithAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#10737">10737</a>]</code></table><div class=gramrule>    'unscrew' dobjList 'with' singleIobj<br></div>
+<code>VerbRule(VagueTravel) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(VagueTravel).html">predicate(VagueTravel)</a></span> :  &nbsp; <a href="../object/VagueTravelAction.html">VagueTravelAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9990">9990</a>]</code></table><div class=gramrule> 'go' | 'walk'</div>
+<code>VerbRule(Verbose) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Verbose).html">predicate(Verbose)</a></span> :  &nbsp; <a href="../object/VerboseAction.html">VerboseAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9811">9811</a>]</code></table><div class=gramrule>    'verbose'<br></div>
+<code>VerbRule(Version) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Version).html">predicate(Version)</a></span> :  &nbsp; <a href="../object/VersionAction.html">VersionAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9907">9907</a>]</code></table><div class=gramrule>    'version'<br></div>
+<code>VerbRule(Wait) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Wait).html">predicate(Wait)</a></span> :  &nbsp; <a href="../object/WaitAction.html">WaitAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9739">9739</a>]</code></table><div class=gramrule>    'z' | 'wait'<br></div>
+<code>VerbRule(Wear) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Wear).html">predicate(Wear)</a></span> :  &nbsp; <a href="../object/WearAction.html">WearAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9410">9410</a>]</code></table><div class=gramrule>    ('wear' | 'don' | 'put' 'on') dobjList<br>    | 'put' dobjList 'on'<br></div>
+<code>VerbRule(Yell) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Yell).html">predicate(Yell)</a></span> :  &nbsp; <a href="../object/YellAction.html">YellAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9587">9587</a>]</code></table><div class=gramrule>    'yell' | 'scream' | 'shout' | 'holler'<br></div>
+<code>VerbRule(Yes) &nbsp;&nbsp;&nbsp;&nbsp; <i>// original source text</i></code><br><table class=decl><tr><td align=left><code>grammar
+<span class="classExtLink"><a href="../object/predicate(Yes).html">predicate(Yes)</a></span> :  &nbsp; <a href="../object/YesAction.html">YesAction</a> &nbsp;&nbsp;&nbsp;&nbsp; <i>// after macro expansion</i></code>
+<td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9575">9575</a>]</code></table><div class=gramrule>    'yes' | 'affirmative' | 'say' 'yes'<br></div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

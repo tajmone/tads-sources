@@ -1,0 +1,156 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Check</title><meta name="keywords" content="Check"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="verify.htm">[Previous] </a>&nbsp;&nbsp;<a href="action.htm">[Next] </a></I></FONT></P>
+<h3>Check</h3>
+
+<p>The purpose of a <TT>check()</TT> routine is to veto an action that is perfectly logical, but should not be carried out for some other reason. As with <TT>verify()</TT>, <TT>check()</TT> should not be used to change the game state.  All that a <TT>check()</TT> routine should do is either allow an action to go ahead, or else forbid it by displaying a message and using the <TT>exit </TT>macro.
+</p>
+
+<br>
+For example, suppose we gave Heidi a dress. Removing the dress would be a perfectly logical action, and so the dress would be a good choice for an ambiguous Doff action,. We don't want to make removing the dress illogical, since it may well be what the player intends. On the other hand, having Heidi remove her dress in the course of her adventures may seem rather out of character, and it would serve no useful purpose in the game, so we
+probably want to prevent it. The best place to do this would be in a <TT>check </TT>routine:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2"
+color="#000000">dobjFor(Doff)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('You&nbsp;can\'t&nbsp;wander&nbsp;around&nbsp;half&nbsp;naked!&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Note that here we have used the </font><font
+face="Courier New" size="2" color="#000000">reportFailure</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro; it's not strictly necessary to do so here: we could have used a double-quoted string to display the text, and it would have worked just as well. However, using </font><font face="Courier New" size="2" color="#000000">reportFailure</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a good habit to get into, since in other contexts (outside a </font><font face="Courier New" size="2" color="#000000">check()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine) it can be used to signal that an action failed, which can sometimes produce better implicit action reports (e.g. '(first trying to open the door)' rather than '(first opening the door)' when the attempt to open the
+door fails).
+<br>
+
+<br>
+The use of </font><font face="Courier New" size="2" color="#000000">reportFailure&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">followed by </font><font face="Courier New" size="2" color="#000000">exit&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is so common in </font><font face="Courier New" size="2" color="#000000">check()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">routines that Thing defines a </font><font face="Courier New" size="2" color="#000000">failCheck()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method that combines them both into one statement. The foregoing example could then be written:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td
+width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">dobjFor(Doff)
+<br>
+{
+<br>
+&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failCheck('You&nbsp;can\'t&nbsp;wander&nbsp;around&nbsp;half&nbsp;naked!&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial,
+Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">And our dress object (located immediately after the me object in the code) could then be defined as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica,
+Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;Wearable&nbsp;'plain&nbsp;pretty&nbsp;blue&nbsp;dress'&nbsp;'blue&nbsp;dress'
+<br>
+&nbsp;&nbsp;"It's&nbsp;quite&nbsp;plain,&nbsp;but&nbsp;you&nbsp;think&nbsp;it&nbsp;pretty&nbsp;enough.&nbsp;"
+<br>
+&nbsp;&nbsp;wornBy&nbsp;=&nbsp;me
+<br>
+&nbsp;&nbsp;dobjFor(Doff)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failCheck('You&nbsp;can\'t&nbsp;wander&nbsp;around&nbsp;half&nbsp;naked!&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Of course, there's no reason why an action should not fail in the </font><font face="Courier New" size="2" color="#000000">action()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine as well in </font><font face="Courier New" size="2" color="#000000">check()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">- the </font><font face="Courier New" size="2" color="#000000">failCheck()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> method would work perfectly well
+in </font><font face="Courier New" size="2" color="#000000">action()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, so you may wonder what real purpose </font><font face="Courier New" size="2" color="#000000">check()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> actually performs, beyond making the code look a bit neater if failure is conditional. There are in fact three main reasons for separating check() from action():</p>
+<ul>
+<li>As we have seen, a good deal of TADS 3 programming consists in overriding the library's standard verb handling. It is often convenient to override <tt>check()</tt> separately from <tt>action()</tt> if we want to change only the conditions under which the action isn't allowed to happen, or only what happens when the action does happen.</li>
+<li>In a two-object command (such as <b>put
+bag on table</b>) the <tt>action()</tt> routines are called on both the indirect object and the direct object. Ruling out the action in <tt>check()</tt> ensures that the action is stopped before either <tt>action()</tt> routine is called (otherwise we might find, for example, that the indirect object's <tt>action()</tt> method carried out the action before the direct object's <tt>action()</tt> method could stop it).</li>
+<li>From version 3.0.15.1 onwards the <tt>check()</tt> routines can be made to run before action notifications such as <tt>beforeAction()</tt>. For this to work you need to set <tt>gameMain.beforeRunsBeforeCheck</tt> to <tt>nil</tt>. We'll explore this a bit further below.
+</ul>
+<p>If an action is vetoed (either by check, verify or preCond) before it reaches the action stage, no action notifications will be sent, and so nothing that might have reacted to the action in a
+<tt>beforeAction()</tt> or <tt>afterAction()</tt> method will in fact do so. But note, <i><tt>check()</tt> only runs before <tt>beforeAction()</tt> if you have set <tt>gameMain.beforeRunsBeforeCheck</tt> to <tt>nil</tt></i>. In some future release of TADS 3 (perhaps 3.1) this may become the default, but for now you have to set this option if you want it (this ensures compatibility with games written prior to version 3.0.15.1). This is what we did when we first defined the <a href="startinganewgame.htm#gameMain">gameMain</a> object, and we suggest you always do too.</p>
+
+<br>
+For example, suppose we went on to define an NPC who reacted to Heidi undressing herself in front of him, with something like:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3"
+color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">afterAction()
+<br>
+{
+<br>
+&nbsp;&nbsp;if(gActionIs(Doff)&nbsp;&amp;&amp;&nbsp;gActor==gPlayerChar&nbsp;&amp;&amp;&nbsp;gDobj==dress)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Hey!&nbsp;What&nbsp;do&nbsp;you&nbsp;think&nbsp;you're&nbsp;doing,&nbsp;young&nbsp;lady!&lt;/q&gt;&nbsp;cries
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;charcoal&nbsp;burner.&nbsp;";
+<br>
+}
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">If we had simply displayed the message about not
+wandering around half-naked in the action() routine, we might end up with a transcript like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">&gt;<b>remove dress</b>
+<br>
+You can't wander around half naked!
+<br>
+
+<br>
+"Hey, what do you think you're doing, young lady!" cries the charcoal burner.
+<br>
+
+<br>
+By vetoing the <b>doff</b> action in the check() routine, we ensure that the charcoal burner never gets a chance to react, and so we won't get his
+inappropriate response to an action that is not, in fact, carried out.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="verify.htm">[Previous] </a>&nbsp;&nbsp;<a href="action.htm">[Next] </a></I></FONT></P>
+</body></html>
+

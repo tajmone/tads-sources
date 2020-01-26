@@ -1,0 +1,66 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Basic Actor Customization</title><meta name="keywords" content="Actor Customization,cannotKissActorMsg,uselessToAttackMsg,ShuffledList,valueList,getNextValue"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Basic Actor Customization
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="basicactors.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="actorknowledge.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">One of the most basic ways we can start to customize an actor is to override some of his/her standard message properties to customize the response the actor gives to such commands as KISS SARAH or HIT SARAH. We can do this very simply by defining appropriate message properties on the actor, such as <b>cannotKissActorMsg</b> and <b>uselessToAttackMsg</b>, and then assigning them a single-quoted string to contain the message we want displayed in response to KISS or HIT (for example).
+<br>
+
+<br>
+These message properties will also work perfectly well if they're defined as methods that return a single-quoted string. This means we could define one of these properties, cannotKissActorMsg, say, to return one of a list of messages. In this case we might like to use a <a href="shuffledeventlist.htm">ShuffledEventList</a>, but this won't quite do, since we need something that <i>returns</i> a single-quoted string, not something that displays one. Fortunately, there is a class that can do this, namely the <b>ShuffledList</b>. We can place a list of strings (or anything else we like) in a ShuffledList's <b>valueList</b> property, and then call its <b>getNextValue</b> method to return a random element from the list. The advantage of using this method over simply using the rand() function with a list of strings is the same as the advantage of using a ShuffledEventList over a RandomEventList, namely that the ShuffledList will keep working through the complete list of items in its valueList property before repeating any of them.
+<br>
+
+<br>
+Taking advantage of the message properties and a ShuffledList we could accordingly customize Sarah to cope with being hit and kissed in her own particular way:
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">sarah&nbsp;:&nbsp;Person&nbsp;'attractive&nbsp;young&nbsp;woman/brunette'&nbsp;'young&nbsp;woman'&nbsp;@lakeRoom
+<br>
+&nbsp;&nbsp;"She's&nbsp;an&nbsp;attractive&nbsp;brunette,&nbsp;somewhere&nbsp;in&nbsp;her&nbsp;mid-twenties.&nbsp;"
+<br>
+&nbsp;&nbsp;isHer&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;properName&nbsp;=&nbsp;'Sarah'
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'sarah'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;<b>uselessToAttackMsg&nbsp;=&nbsp;'&lt;q&gt;Ouch!&nbsp;What&nbsp;did&nbsp;you&nbsp;do&nbsp;that&nbsp;for?&lt;/q&gt;&nbsp;she&nbsp;complains.&nbsp;'
+<br>
+&nbsp;&nbsp;cannotKissActorMsg&nbsp;{&nbsp;return&nbsp;noKissMessages.getNextValue;&nbsp;}
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;noKissMessages&nbsp;:&nbsp;ShuffledList
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;valueList&nbsp;=&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;Hey!&nbsp;What&nbsp;do&nbsp;you&nbsp;think&nbsp;you\'re&nbsp;doing!&lt;/q&gt;&nbsp;she&nbsp;complains.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;Stop&nbsp;that!&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;Keep&nbsp;your&nbsp;hands&nbsp;off&nbsp;me!&lt;/q&gt;&nbsp;she&nbsp;demands.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;Don\'t&nbsp;&lt;i&gt;do&lt;/i&gt;&nbsp;that!&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;tells&nbsp;you.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;}
+<br>
+</b>;
+<br>
+</font></font>
+
+</body></html>

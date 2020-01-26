@@ -1,0 +1,99 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PathPassage</title><meta name="keywords" content="PathPassage,getEnteredVerbPhrase,Distinguishing command phrasings,getOrigText"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PathPassage : <a href="throughpassage.htm">ThroughPassage</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="onewayroomconnector.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="shipboardroom.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A PathPassage is intended for use as an outdoor passage such as a road or path that is not enclosed. It is basically the same as a <a href="throughpassage.htm">ThroughPassage</a> apart from the way that travel via it is described (when an actor other than the PC goes along it). Another, and perhaps more interesting, feature of the PathPassage is that the English Language extensions to the library understand the command TAKE PATH in the sense of 'walk along the path' instead of 'pick up the path'. We can try this out by adding a short path along the side of the lake:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">lakeRoom:&nbsp;Room&nbsp;'Lake&nbsp;Shore'&nbsp;'the&nbsp;lake&nbsp;shore'
+<br>
+&nbsp;&nbsp;"This&nbsp;is&nbsp;the&nbsp;northern&nbsp;shore&nbsp;of&nbsp;a&nbsp;giant&nbsp;underground&nbsp;lake.&nbsp;A&nbsp;door&nbsp;leads&nbsp;north,
+<br>
+&nbsp;&nbsp;&nbsp;<b>and&nbsp;a&nbsp;path&nbsp;runs&nbsp;a&nbsp;short&nbsp;way&nbsp;east</b>.&nbsp;"
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;lakeDoor2
+<br>
+&nbsp;&nbsp;south&nbsp;:&nbsp;NoTravelMessage&nbsp;{&nbsp;"You&nbsp;never&nbsp;learnt&nbsp;to&nbsp;walk&nbsp;on&nbsp;water.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;southeast&nbsp;asExit(south)
+<br>
+&nbsp;&nbsp;southwest&nbsp;asExit(south)
+<br>
+&nbsp;&nbsp;<b>east&nbsp;=&nbsp;lakePath</b>
+<br>
+;
+<br>
+
+<br>
++&nbsp;lakeDoor2&nbsp;:&nbsp;Door&nbsp;-&gt;lakeDoor&nbsp;'door'&nbsp;'door';
+<br>
+
+<br>
++&nbsp;lakePath&nbsp;:&nbsp;PathPassage&nbsp;'short&nbsp;eastward&nbsp;rocky&nbsp;lakeside&nbsp;path'&nbsp;'short&nbsp;lakeside&nbsp;path'
+<br>
+&nbsp;&nbsp;"The&nbsp;rocky&nbsp;path&nbsp;runs&nbsp;a short&nbsp;way&nbsp;along&nbsp;the&nbsp;side&nbsp;of&nbsp;the&nbsp;lake.&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+pathEnd&nbsp;:&nbsp;OutdoorRoom&nbsp;'End&nbsp;of&nbsp;Lakeside&nbsp;Path'&nbsp;'the&nbsp;end&nbsp;of&nbsp;the&nbsp;path'
+<br>
+&nbsp;&nbsp;"The&nbsp;path&nbsp;from&nbsp;the&nbsp;west&nbsp;comes&nbsp;to&nbsp;an&nbsp;end&nbsp;just&nbsp;here,&nbsp;on&nbsp;the&nbsp;northern
+<br>
+&nbsp;&nbsp;&nbsp;shore&nbsp;of&nbsp;the&nbsp;great&nbsp;underground&nbsp;lake.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;lakePath2
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;:&nbsp;NoTravelMessage&nbsp;{&nbsp;"The&nbsp;lake&nbsp;is&nbsp;in&nbsp;the&nbsp;way.&nbsp;"&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;lakePath2&nbsp;:&nbsp;PathPassage&nbsp;-&gt;lakePath&nbsp;'westward&nbsp;lakeside&nbsp;path'&nbsp;'westward&nbsp;path'
+<br>
+&nbsp;&nbsp;"The&nbsp;path&nbsp;leads&nbsp;off&nbsp;along&nbsp;the&nbsp;shore&nbsp;of&nbsp;the&nbsp;lake&nbsp;to&nbsp;the&nbsp;west.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If you compile and run the game, you should be able to type SOUTH, DOWN, SOUTH, SOUTH (as four separate commands) to arrive at the lakeside. From there you can type TAKE PATH to travel to pathEnd. Typing TAKE PATH a second time will return you to lakeRoom.
+<br>
+
+<br>
+Note that PathPassage uses the same <a href="passagetemplate.htm">templates as Passage</a>.
+<br>
+
+<br>
+The PathPassage class provides a convenient opportunity to introduce another library feature, albeit one that's only tangentially related. In English, the expression TAKE PATH can mean FOLLOW PATH (i.e. go down the path, travel via the path), and hence the English language part of the library defines:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;PathPassage&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;treat&nbsp;"take&nbsp;path"&nbsp;the&nbsp;same&nbsp;as&nbsp;"enter&nbsp;path"&nbsp;or&nbsp;"go&nbsp;through&nbsp;path"&nbsp;*/&nbsp;
+<br>
+&nbsp;&nbsp;dobjFor(Take)&nbsp;maybeRemapTo(
+<br>&nbsp;&nbsp;&nbsp;&nbsp;gAction.getEnteredVerbPhrase == 'take (dobj)',TravelVia,&nbsp;self)&nbsp;
+<br>
+;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note the problem this is intended to deal with: while TAKE PATH might mean FOLLOW PATH, GET PATH or PICK UP PATH do not, and yet all three forms of the command will match TakeAction. It's true that the commands GET PATH or PICK PATH UP don't make much sense, but it may still be a bit puzzling to players if they're treated as instructions to wander down the path. What we need here is a means of distinguishing between TAKE PATH on the one hand and GET PATH or PICK PATH UP on the other. In other words, we need to know what phrasing the player used in actually issuing the command in this particular case, without going to the trouble of having to create a separate GetAction which would be treated as equivalent to TakeAction in 98% of cases.
+<br>
+
+<br>
+The library provides a solution to this in the form of an action method <b>getEnteredVerbPhrase()</b>. We can call this on gAction to return a string containing the exact <i>verb</i> phrasing, but with the direct and (if present) indirect objects replaced with the placeholder tokens '(dobj)' and '(obj)'. So, for an example, if the player had typed PUT BIG RED BALL IN THE SMALL PLASTIC BUCKET, gAction.getEnteredVerbPhrase would return the string 'put (dobj) in (iobj)', which shows us the structure of the command used without worrying about the wording used to described the objects involved, and without worrying about whether the player typed the command in lower case or upper case or a mixture of the two, since getEnteredVerbPhrase returns a string converted entirely to lower case (if we actually wanted the full original phrasing of the command we could use <b>gAction.getOrigText()</b> instead).
+<br>
+
+
+</body></html>

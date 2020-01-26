@@ -1,0 +1,73 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>PushTraveler</title></head><body>
+<table class=ban><tr><td align=left><span class=title>PushTraveler</span><span class=type>class</span><td align=right><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3314">3314</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2842">2842</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A special Traveler class for travel involving pushing an object from   one room to another.  This class encapsulates the object being pushed   and the actual Traveler performing the travel. <p>   For the most part, we refer Traveler methods to the underlying   Traveler.  We override a few methods to provide special handling.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2842">2842</a>]:</i><br>
+   English-specific PushTraveler changes
+<p>
+<code>class
+<b>PushTraveler</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>PushTraveler</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#obj_">obj_</a>&nbsp;
+<a href="#traveler_">traveler_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#canTravelVia">canTravelVia</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#explainNoTravelVia">explainNoTravelVia</a>&nbsp;
+<a href="#propNotDefined">propNotDefined</a>&nbsp;
+<a href="#travelerName">travelerName</a>&nbsp;
+<a href="#travelerTravelTo">travelerTravelTo</a>&nbsp;
+<a href="#travelerTravelWithin">travelerTravelWithin</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="obj_"></a>
+<table class=decl><tr><td><code>obj_</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3323">3323</a>]</table><div class=desc>the object being pushed<p>
+</div>
+<a name="traveler_"></a>
+<table class=decl><tr><td><code>traveler_</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3329">3329</a>]</table><div class=desc>   the underlying Traveler - this is the real Traveler that will   move to a new location <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="canTravelVia"></a>
+<table class=decl><tr><td><code>canTravelVia (connector, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3400">3400</a>]</table><div class=desc>   Can we travel via the given connector?  We'll ask our underlying   traveler first, and if that succeeds, we'll ask the object we're   pushing. <p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (obj, traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3315">3315</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="explainNoTravelVia"></a>
+<table class=decl><tr><td><code>explainNoTravelVia (connector, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3412">3412</a>]</table><div class=desc>   Explain why the given travel is not possible.  If our underlying   traveler raised the objection, let it explain; otherwise, let our   pushed object explain. <p>
+</div>
+<a name="propNotDefined"></a>
+<table class=decl><tr><td><code>propNotDefined (prop, [args])</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3421">3421</a>]</table><div class=desc>by default, send everything to the underlying Traveler<p>
+</div>
+<a name="travelerName"></a>
+<table class=decl><tr><td><code>travelerName (arriving)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#2848">2848</a>]</table><div class=desc>   When an actor is pushing an object from one room to another, show   its name with an additional clause indicating the object being   moved along with us. <p>
+</div>
+<a name="travelerTravelTo"></a>
+<table class=decl><tr><td><code>travelerTravelTo (dest, connector, backConnector)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3337">3337</a>]</table><div class=desc>   Travel to a new location.  We'll run the normal travel routine   for the underlying real traveler; then, if we ended up in a new   location, we'll move the object being pushed to the traveler's   new location. <p>
+</div>
+<a name="travelerTravelWithin"></a>
+<table class=decl><tr><td><code>travelerTravelWithin (actor, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3389">3389</a>]</table><div class=desc>   Perform local travel, between nested rooms within a top-level   location.  By default, we simply don't allow pushing objects   between nested rooms. <p>   To allow pushing an object between nested rooms, override this in   parallel with travelerTravelTo().  Note that you'll have to call   travelerTravelWithin() on the underlying traveler (which will   generally be the actor), and you'll probably want to set up a new   set of notifiers parallel to beforeMovePushable() and   movePushable().  You'll probably particularly need to customize   the report in your parallel for movePushable() - the default ("you   push x into the area") isn't very good when nested rooms are   involved, and you'll probably want something more specific. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

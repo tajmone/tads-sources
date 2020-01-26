@@ -1,0 +1,130 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>actor.t</title></head><body>
+<table class=ban><tr><td align=left><span class=title>actor.t</span><span class=type>file</span><td align=right><a href="../source/actor.t.html">source file</a></table><p>
+<table class=nav><tr>
+<td><b>Classes</b><br><a href="#_ClassSummary_">Summary</a><br>&nbsp;<td><b>Objects</b><br><a href="#_ObjectSummary_">Summary</a><br>&nbsp;<td><b>Functions</b><br><a href="#_FunctionSummary_">Summary</a><br><a href="#_Functions_">Details</a></table><div class=fdesc>
+ <p>   TADS 3 Library - actors <p>   This module provides definitions related to actors, which represent   characters in the game.
+</div>
+<a name="_ClassSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Classes</span> &nbsp; </div><p>
+<code>
+<a href="../object/AccompanyingInTravelState.html">AccompanyingInTravelState</a>&nbsp;
+<a href="../object/AccompanyingState.html">AccompanyingState</a>&nbsp;
+<a href="../object/Actor.html">Actor</a>&nbsp;
+<a href="../object/ActorByeTopic.html">ActorByeTopic</a>&nbsp;
+<a href="../object/ActorHelloTopic.html">ActorHelloTopic</a>&nbsp;
+<a href="../object/ActorState.html">ActorState</a>&nbsp;
+<a href="../object/ActorTopicDatabase.html">ActorTopicDatabase</a>&nbsp;
+<a href="../object/AgendaItem.html">AgendaItem</a>&nbsp;
+<a href="../object/AltTopic.html">AltTopic</a>&nbsp;
+<a href="../object/AskAboutForTopic.html">AskAboutForTopic</a>&nbsp;
+<a href="../object/AskForTopic.html">AskForTopic</a>&nbsp;
+<a href="../object/AskTellAboutForTopic.html">AskTellAboutForTopic</a>&nbsp;
+<a href="../object/AskTellGiveShowTopic.html">AskTellGiveShowTopic</a>&nbsp;
+<a href="../object/AskTellShowTopic.html">AskTellShowTopic</a>&nbsp;
+<a href="../object/AskTellTopic.html">AskTellTopic</a>&nbsp;
+<a href="../object/AskTopic.html">AskTopic</a>&nbsp;
+<a href="../object/BoredByeTopic.html">BoredByeTopic</a>&nbsp;
+<a href="../object/BoredomAgendaItem.html">BoredomAgendaItem</a>&nbsp;
+<a href="../object/ByeTopic.html">ByeTopic</a>&nbsp;
+<a href="../object/CommandTopic.html">CommandTopic</a>&nbsp;
+<a href="../object/ConvAgendaItem.html">ConvAgendaItem</a>&nbsp;
+<a href="../object/ConversationReadyState.html">ConversationReadyState</a>&nbsp;
+<a href="../object/ConvNode.html">ConvNode</a>&nbsp;
+<a href="../object/ConvType.html">ConvType</a>&nbsp;
+<a href="../object/DefaultAnyTopic.html">DefaultAnyTopic</a>&nbsp;
+<a href="../object/DefaultAskForTopic.html">DefaultAskForTopic</a>&nbsp;
+<a href="../object/DefaultAskTellTopic.html">DefaultAskTellTopic</a>&nbsp;
+<a href="../object/DefaultAskTopic.html">DefaultAskTopic</a>&nbsp;
+<a href="../object/DefaultCommandTopic.html">DefaultCommandTopic</a>&nbsp;
+<a href="../object/DefaultGiveShowTopic.html">DefaultGiveShowTopic</a>&nbsp;
+<a href="../object/DefaultGiveTopic.html">DefaultGiveTopic</a>&nbsp;
+<a href="../object/DefaultInitiateTopic.html">DefaultInitiateTopic</a>&nbsp;
+<a href="../object/DefaultShowTopic.html">DefaultShowTopic</a>&nbsp;
+<a href="../object/DefaultTellTopic.html">DefaultTellTopic</a>&nbsp;
+<a href="../object/DefaultTopic.html">DefaultTopic</a>&nbsp;
+<a href="../object/DelayedAgendaItem.html">DelayedAgendaItem</a>&nbsp;
+<a href="../object/FollowInfo.html">FollowInfo</a>&nbsp;
+<a href="../object/GiveShowTopic.html">GiveShowTopic</a>&nbsp;
+<a href="../object/GiveTopic.html">GiveTopic</a>&nbsp;
+<a href="../object/HelloGoodbyeTopic.html">HelloGoodbyeTopic</a>&nbsp;
+<a href="../object/HelloTopic.html">HelloTopic</a>&nbsp;
+<a href="../object/HermitActorState.html">HermitActorState</a>&nbsp;
+<a href="../object/ImpByeTopic.html">ImpByeTopic</a>&nbsp;
+<a href="../object/ImpHelloTopic.html">ImpHelloTopic</a>&nbsp;
+<a href="../object/InConversationState.html">InConversationState</a>&nbsp;
+<a href="../object/InitiateTopic.html">InitiateTopic</a>&nbsp;
+<a href="../object/LeaveByeTopic.html">LeaveByeTopic</a>&nbsp;
+<a href="../object/MiscTopic.html">MiscTopic</a>&nbsp;
+<a href="../object/NoTopic.html">NoTopic</a>&nbsp;
+<a href="../object/PendingCommandAction.html">PendingCommandAction</a>&nbsp;
+<a href="../object/PendingCommandInfo.html">PendingCommandInfo</a>&nbsp;
+<a href="../object/PendingCommandMarker.html">PendingCommandMarker</a>&nbsp;
+<a href="../object/PendingCommandToks.html">PendingCommandToks</a>&nbsp;
+<a href="../object/PendingConvInfo.html">PendingConvInfo</a>&nbsp;
+<a href="../object/PendingResponseInfo.html">PendingResponseInfo</a>&nbsp;
+<a href="../object/Person.html">Person</a>&nbsp;
+<a href="../object/Posture.html">Posture</a>&nbsp;
+<a href="../object/ShowTopic.html">ShowTopic</a>&nbsp;
+<a href="../object/SpecialTopic.html">SpecialTopic</a>&nbsp;
+<a href="../object/SuggestedAskForTopic.html">SuggestedAskForTopic</a>&nbsp;
+<a href="../object/SuggestedAskTopic.html">SuggestedAskTopic</a>&nbsp;
+<a href="../object/SuggestedGiveTopic.html">SuggestedGiveTopic</a>&nbsp;
+<a href="../object/SuggestedNoTopic.html">SuggestedNoTopic</a>&nbsp;
+<a href="../object/SuggestedShowTopic.html">SuggestedShowTopic</a>&nbsp;
+<a href="../object/SuggestedTellTopic.html">SuggestedTellTopic</a>&nbsp;
+<a href="../object/SuggestedTopic.html">SuggestedTopic</a>&nbsp;
+<a href="../object/SuggestedTopicTree.html">SuggestedTopicTree</a>&nbsp;
+<a href="../object/SuggestedYesTopic.html">SuggestedYesTopic</a>&nbsp;
+<a href="../object/TellTopic.html">TellTopic</a>&nbsp;
+<a href="../object/ThingMatchTopic.html">ThingMatchTopic</a>&nbsp;
+<a href="../object/Topic.html">Topic</a>&nbsp;
+<a href="../object/TopicDatabase.html">TopicDatabase</a>&nbsp;
+<a href="../object/TopicEntry.html">TopicEntry</a>&nbsp;
+<a href="../object/TopicGroup.html">TopicGroup</a>&nbsp;
+<a href="../object/TopicMatchTopic.html">TopicMatchTopic</a>&nbsp;
+<a href="../object/TopicOrThingMatchTopic.html">TopicOrThingMatchTopic</a>&nbsp;
+<a href="../object/UntakeableActor.html">UntakeableActor</a>&nbsp;
+<a href="../object/YesNoTopic.html">YesNoTopic</a>&nbsp;
+<a href="../object/YesTopic.html">YesTopic</a>&nbsp;
+</code>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/actorByeTopicObj.html">actorByeTopicObj</a>&nbsp;
+<a href="../object/actorHelloTopicObj.html">actorHelloTopicObj</a>&nbsp;
+<a href="../object/askAboutConvType.html">askAboutConvType</a>&nbsp;
+<a href="../object/askForConvType.html">askForConvType</a>&nbsp;
+<a href="../object/boredByeTopicObj.html">boredByeTopicObj</a>&nbsp;
+<a href="../object/byeConvType.html">byeConvType</a>&nbsp;
+<a href="../object/byeTopicObj.html">byeTopicObj</a>&nbsp;
+<a href="../object/commandConvType.html">commandConvType</a>&nbsp;
+<a href="../object/consultConvType.html">consultConvType</a>&nbsp;
+<a href="../object/conversationManager.html">conversationManager</a>&nbsp;
+<a href="../object/giveConvType.html">giveConvType</a>&nbsp;
+<a href="../object/helloConvType.html">helloConvType</a>&nbsp;
+<a href="../object/helloTopicObj.html">helloTopicObj</a>&nbsp;
+<a href="../object/impHelloTopicObj.html">impHelloTopicObj</a>&nbsp;
+<a href="../object/initiateConvType.html">initiateConvType</a>&nbsp;
+<a href="../object/leaveByeTopicObj.html">leaveByeTopicObj</a>&nbsp;
+<a href="../object/lying.html">lying</a>&nbsp;
+<a href="../object/noConvType.html">noConvType</a>&nbsp;
+<a href="../object/noTopicObj.html">noTopicObj</a>&nbsp;
+<a href="../object/showConvType.html">showConvType</a>&nbsp;
+<a href="../object/sitting.html">sitting</a>&nbsp;
+<a href="../object/specialTopicHistory.html">specialTopicHistory</a>&nbsp;
+<a href="../object/specialTopicPreParser.html">specialTopicPreParser</a>&nbsp;
+<a href="../object/standing.html">standing</a>&nbsp;
+<a href="../object/tellAboutConvType.html">tellAboutConvType</a>&nbsp;
+<a href="../object/yesConvType.html">yesConvType</a>&nbsp;
+<a href="../object/yesTopicObj.html">yesTopicObj</a>&nbsp;
+</code>
+<a name="FunctionSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Functions</span> &nbsp; </div><p>
+<code>
+<a href="#setPlayer">setPlayer</a>&nbsp;
+</code><p>
+<a name="_Functions_"></a><p><div class=mjhd><span class=hdln>Global Functions</span> &nbsp; </div><p>
+<a name="setPlayer"></a>
+<table class=decl><tr><td><code>setPlayer (actor)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#10575">10575</a>]</table><div class=desc>   Set the current player character <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

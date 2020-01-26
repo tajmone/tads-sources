@@ -1,0 +1,102 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>NonPortable Introduction</title><meta name="keywords" content="NonPortable,initDesc,specialDesc,isListed,isListedInInventory,isListedInContents"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>NonPortable Introduction
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="inroomname.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="fixture.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Most of the items we have added to the game so far have been NonPortables - that is objects that cannot be picked up and moved around - but that is because they have mainly been various types of room and passage. In this section we shall take a look at the principal kinds of NonPortable object one might use as part of the contents of a Room, giving a few examples to start furnishing the rooms we have created so far.
+<br>
+
+<br>
+One common feature of NonPortable objects to be borne in mind is that, by default, they are not shown in listings of the contents of rooms or other objects. This is because they are considered to be permanent features of their location, and should therefore be mentioned in the description of their room or other container, or else given an initSpecialDesc or specialDesc (which will be listed). This behaviour can be changed by overriding the isListed, isListedInContents, and isListedInInventory properties of a NonPortable object. Note that the fact that a NonPortable is not listed does not of itself make it invisible: it can still be EXAMINEd and will respond to other commands directed towards it.
+<br>
+
+<br>
+You are not likely to declare an object to be of class NonPortable in your game code, since NonPortable serves principally as a common ancestor class to a number of different classes that are commonly used. A partial tree of NonPortable classes, some of which we have already met, is as follows:
+<br>
+<font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000"><b>NonPortable</b></font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000"><font face="Courier New" size="2" color="#0000FF"><u>&nbsp;&nbsp;&nbsp;</u></font></font><font face="Courier New" size="2" color="#000000"><a href="fixture.htm">Fixture</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="component.htm">Component</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="complexcontainer.htm">ComplexComponent</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="decoration.htm">Decoration</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="unthing.htm">Unthing</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="distant.htm">Distant</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="enterable.htm">Enterable</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="entryportal.htm">EntryPortal</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="shipboardroom.htm">Exitable</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="exitportal.htm">ExitPortal</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="nominalplatform.htm">NominalPlatform</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="introduction.htm">Passage</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="introduction.htm">Room</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="roomparts.htm">RoomPart</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="lockablecontainer.htm#secretfixture">SecretFixture</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="immovable.htm">Immovable</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="heavy.htm">Heavy</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="travelpushable.htm">TravelPushable</a>
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="3" color="#000000"><b>A Note on Notation
+<br>
+</b></font><font face="Arial" size="2" color="#000000">In what follows we shall specify the room location of objects using the @notation of the Thing template, rather than the + notation, e.g. by writing
+<br>
+
+<br>
+myThing : Thing 'my thing' 'thing' @outsideCave
+<br>
+  "A poor thing, but mine own. "
+<br>
+;
+<br>
+
+<br>
+Rather than
+<br>
+
+<br>
++ myThing : Thing 'my thing' 'thing'
+<br>
+  "A poor thing, but mine own. "
+<br>
+;
+<br>
+
+<br>
+Either method is possible in your own code; the reason for doing it this way here is to avoid the need for (and possible confusion arising from) specifying where in existing code these new objects need to be placed. There is also something to be said for specifying the objects in a different part of the code - even a different source file - from the rooms and connectors, since this leaves the basic outline of the map clearer in the room code. The downside is that it may be less immediately apparent how objects and rooms relate to each other.
+<br>
+</font><font face="Arial" size="3" color="#000000"><b>
+<br>
+</b><b>
+<br>
+</b></font><font face="Times New Roman" size="3" color="#000000">
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

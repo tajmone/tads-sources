@@ -1,0 +1,41 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Climbing the Tree</title><meta name="keywords" content="remapTo,TravelVia"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="basictravel.htm">[Previous] </a>&nbsp;&nbsp;<a href="makinglifemoreproblematic.htm">[Next] </a></I></FONT></P>
+
+<h2>Climbing the Tree - Remapping Behaviour</h2>
+
+<p>Since the player will encounter a tree in the clearing, and since examining the tree will tell the player that the tree looks climbable, the player will probably try to climb the tree. But at the moment, the command <B>climb the tree</B> will result in the game responding, "That is not something you can climb." What we need to do is to modify the tree object so that trying to climb it has the same effect as typing <B>up</B>. The simplest way to achieve this is to add the following to the definition of tree:
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">dobjFor(Climb)&nbsp;remapTo(Up)
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">I.e. replace <b>climb tree</b> with an <b>up</b> command. Both <TT>dobjFor</TT> and <TT>remapTo</TT> are macros that expand to more complex code, but that need not detain us here. What the construction means is "when the current object (in this case the tree) is the direct object of a <b>climb</b> command, replace this action with what would have happened if the player had simply typed <b>up</b>".
+<p>
+Since we've just introduced some basic but very important concepts here let's pause to take a closer look at some of them. Whenever you see <code>dobj</code> in TADS 3 it'll be an abbreviation for <b>d</b>irect <b>obj</b>ect. A direct object is the object a command principally works on: the direct object of the command <b>climb tree</b> is thus the tree. We define <code>dobjFor(Whatever)</code> on an object whenever we want to tell the game what to do when that object is the direct object of a Whatever command. Usually that'll be more complicated than the example we've given here; this example is about as simple as it gets (don't worry, we'll be coming to more complex examples soon enough). The first part of this piece of code <code>dobjFor(Climb)</code> means "we're about to define what to do in response to a climb tree command" (it means this because we're defining it on the tree); the second part, <code>remapTo(Up)</code>, goes on to say what we want to do in this case, namely execute an <b>up</b> command instead.
+This is as simple as it gets because the action we're remapping to is the simplest kind of action: a command with no objects. If we wanted to remap to another command consisting of a verb followed by a direct object we could just list the verb and the object. For example we could have used TravelVia and the name of the connector via which we want the player character to travel:
+<br><pre>
+    dobjFor(Climb) remapTo(TravelVia, topOfTree)
+</pre><br>
+
+This illustrates a couple of useful things: first, how to use <TT>remapTo </TT>in the more general case where the verb takes a direct object, and second, how to use <TT>TravelVia </TT>with a travel connector to carry out travel. It also illustrates once again that a room is a kind of travel connector leading to itself. However, having pointed all this out, we'll revert to the first version, which is what we actually want here. So if you changed your code to try out <TT>TravelVia</TT>, before going on change it back so it reads:
+<br><pre>
+    dobjFor(Climb) remapTo(Up)
+</pre><p>
+
+
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="basictravel.htm">[Previous] </a>&nbsp;&nbsp;<a href="makinglifemoreproblematic.htm">[Next] </a></I></FONT></P>
+</body></html>

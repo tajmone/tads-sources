@@ -1,0 +1,868 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>BasicLocation</title></head><body>
+<table class=ban><tr><td align=left><span class=title>BasicLocation</span><span class=type>class</span><td align=right><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3468">3468</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   A basic location - this is the base class for locations that can   contain actors.
+<p>
+<code>class
+<b>BasicLocation</b> :  &nbsp; <a href="../object/Thing.html">Thing</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>BasicLocation</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Thing.html">Thing</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/VocabObject.html">VocabObject</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>BasicLocation</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NestedRoom.html">NestedRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicChair.html">BasicChair</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicBed.html">BasicBed</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicPlatform.html">BasicPlatform</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Booth.html">Booth</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Platform.html">Platform</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NominalPlatform.html">NominalPlatform</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Bed.html">Bed</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Chair.html">Chair</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/HighNestedRoom.html">HighNestedRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Vehicle.html">Vehicle</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Room.html">Room</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DarkRoom.html">DarkRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FloorlessRoom.html">FloorlessRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/OutdoorRoom.html">OutdoorRoom</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ShipboardRoom.html">ShipboardRoom</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#cannotGoThatWayMsg">cannotGoThatWayMsg</a>&nbsp;
+<a href="#defaultPosture">defaultPosture</a>&nbsp;
+<a href="#effectiveFollowLocation">effectiveFollowLocation</a>&nbsp;
+<a href="#listWithActorInTable">listWithActorInTable</a>&nbsp;
+<a href="#mustDefaultPostureProp">mustDefaultPostureProp</a>&nbsp;
+<a href="#notTravelReadyMsg">notTravelReadyMsg</a>&nbsp;
+<a href="#roomLocation">roomLocation</a>&nbsp;
+<a href="#roomNotifyList">roomNotifyList</a>&nbsp;
+<a href="#roomTravelPreCond">roomTravelPreCond</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Thing</code> :<br>
+<code>
+<a href="../object/Thing.html#actorInAName">actorInAName</a>&nbsp;
+<a href="../object/Thing.html#actorInName">actorInName</a>&nbsp;
+<a href="../object/Thing.html#actorInPrep">actorInPrep</a>&nbsp;
+<a href="../object/Thing.html#actorIntoName">actorIntoName</a>&nbsp;
+<a href="../object/Thing.html#actorOutOfName">actorOutOfName</a>&nbsp;
+<a href="../object/Thing.html#actorOutOfPrep">actorOutOfPrep</a>&nbsp;
+<a href="../object/Thing.html#aDisambigName">aDisambigName</a>&nbsp;
+<a href="../object/Thing.html#allStates">allStates</a>&nbsp;
+<a href="../object/Thing.html#aName">aName</a>&nbsp;
+<a href="../object/Thing.html#brightness">brightness</a>&nbsp;
+<a href="../object/Thing.html#bulk">bulk</a>&nbsp;
+<a href="../object/Thing.html#canBeHeard">canBeHeard</a>&nbsp;
+<a href="../object/Thing.html#canBeSeen">canBeSeen</a>&nbsp;
+<a href="../object/Thing.html#canBeSmelled">canBeSmelled</a>&nbsp;
+<a href="../object/Thing.html#canBeTouched">canBeTouched</a>&nbsp;
+<a href="../object/Thing.html#canMatchHer">canMatchHer</a>&nbsp;
+<a href="../object/Thing.html#canMatchHim">canMatchHim</a>&nbsp;
+<a href="../object/Thing.html#canMatchIt">canMatchIt</a>&nbsp;
+<a href="../object/Thing.html#canMatchThem">canMatchThem</a>&nbsp;
+<a href="../object/Thing.html#circularlyInMessage">circularlyInMessage</a>&nbsp;
+<a href="../object/Thing.html#collectiveGroup">collectiveGroup</a>&nbsp;
+<a href="../object/Thing.html#collectiveGroups">collectiveGroups</a>&nbsp;
+<a href="../object/Thing.html#contents">contents</a>&nbsp;
+<a href="../object/Thing.html#contentsListed">contentsListed</a>&nbsp;
+<a href="../object/Thing.html#contentsListedInExamine">contentsListedInExamine</a>&nbsp;
+<a href="../object/Thing.html#contentsListedSeparately">contentsListedSeparately</a>&nbsp;
+<a href="../object/Thing.html#contentsLister">contentsLister</a>&nbsp;
+<a href="../object/Thing.html#descContentsLister">descContentsLister</a>&nbsp;
+<a href="../object/Thing.html#described">described</a>&nbsp;
+<a href="../object/Thing.html#disambigEquivName">disambigEquivName</a>&nbsp;
+<a href="../object/Thing.html#disambigName">disambigName</a>&nbsp;
+<a href="../object/Thing.html#distantDesc">distantDesc</a>&nbsp;
+<a href="../object/Thing.html#distantInitSpecialDesc">distantInitSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#distantSpecialDesc">distantSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#distinguishers">distinguishers</a>&nbsp;
+<a href="../object/Thing.html#dummyName">dummyName</a>&nbsp;
+<a href="../object/Thing.html#equivalenceKey">equivalenceKey</a>&nbsp;
+<a href="../object/Thing.html#equivalentGrouper">equivalentGrouper</a>&nbsp;
+<a href="../object/Thing.html#equivalentGrouperClass">equivalentGrouperClass</a>&nbsp;
+<a href="../object/Thing.html#equivalentGrouperTable">equivalentGrouperTable</a>&nbsp;
+<a href="../object/Thing.html#esEndingPat">esEndingPat</a>&nbsp;
+<a href="../object/Thing.html#explicitVisualSenseInfo">explicitVisualSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#getState">getState</a>&nbsp;
+<a href="../object/Thing.html#globalParamName">globalParamName</a>&nbsp;
+<a href="../object/Thing.html#holdingIndex">holdingIndex</a>&nbsp;
+<a href="../object/Thing.html#iesEndingPat">iesEndingPat</a>&nbsp;
+<a href="../object/Thing.html#initDesc">initDesc</a>&nbsp;
+<a href="../object/Thing.html#initNominalRoomPartLocation">initNominalRoomPartLocation</a>&nbsp;
+<a href="../object/Thing.html#initSpecialDesc">initSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#inlineContentsLister">inlineContentsLister</a>&nbsp;
+<a href="../object/Thing.html#isEquivalent">isEquivalent</a>&nbsp;
+<a href="../object/Thing.html#isHer">isHer</a>&nbsp;
+<a href="../object/Thing.html#isHim">isHim</a>&nbsp;
+<a href="../object/Thing.html#isInInitState">isInInitState</a>&nbsp;
+<a href="../object/Thing.html#isKnown">isKnown</a>&nbsp;
+<a href="../object/Thing.html#isLikelyCommandTarget">isLikelyCommandTarget</a>&nbsp;
+<a href="../object/Thing.html#isListedAboardVehicle">isListedAboardVehicle</a>&nbsp;
+<a href="../object/Thing.html#isMassNoun">isMassNoun</a>&nbsp;
+<a href="../object/Thing.html#isPlural">isPlural</a>&nbsp;
+<a href="../object/Thing.html#isProperName">isProperName</a>&nbsp;
+<a href="../object/Thing.html#isQualifiedName">isQualifiedName</a>&nbsp;
+<a href="../object/Thing.html#isThingConstructed">isThingConstructed</a>&nbsp;
+<a href="../object/Thing.html#isTopLevel">isTopLevel</a>&nbsp;
+<a href="../object/Thing.html#listName">listName</a>&nbsp;
+<a href="../object/Thing.html#listWith">listWith</a>&nbsp;
+<a href="../object/Thing.html#location">location</a>&nbsp;
+<a href="../object/Thing.html#lookInLister">lookInLister</a>&nbsp;
+<a href="../object/Thing.html#moved">moved</a>&nbsp;
+<a href="../object/Thing.html#name">name</a>&nbsp;
+<a href="../object/Thing.html#nameDoes">nameDoes</a>&nbsp;
+<a href="../object/Thing.html#nameSays">nameSays</a>&nbsp;
+<a href="../object/Thing.html#nameSees">nameSees</a>&nbsp;
+<a href="../object/Thing.html#objectNotifyList">objectNotifyList</a>&nbsp;
+<a href="../object/Thing.html#objInPrep">objInPrep</a>&nbsp;
+<a href="../object/Thing.html#obscuredInitSpecialDesc">obscuredInitSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#obscuredSpecialDesc">obscuredSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#owner">owner</a>&nbsp;
+<a href="../object/Thing.html#patElevenEighteen">patElevenEighteen</a>&nbsp;
+<a href="../object/Thing.html#patIsAlpha">patIsAlpha</a>&nbsp;
+<a href="../object/Thing.html#patLeadingTagOrQuote">patLeadingTagOrQuote</a>&nbsp;
+<a href="../object/Thing.html#patOfPhrase">patOfPhrase</a>&nbsp;
+<a href="../object/Thing.html#patOneLetterAnWord">patOneLetterAnWord</a>&nbsp;
+<a href="../object/Thing.html#patOneLetterWord">patOneLetterWord</a>&nbsp;
+<a href="../object/Thing.html#patSingleApostropheS">patSingleApostropheS</a>&nbsp;
+<a href="../object/Thing.html#patTagOrQuoteChar">patTagOrQuoteChar</a>&nbsp;
+<a href="../object/Thing.html#patUpperOrDigit">patUpperOrDigit</a>&nbsp;
+<a href="../object/Thing.html#patVowelY">patVowelY</a>&nbsp;
+<a href="../object/Thing.html#pluralDisambigName">pluralDisambigName</a>&nbsp;
+<a href="../object/Thing.html#pluralName">pluralName</a>&nbsp;
+<a href="../object/Thing.html#pronounSelector">pronounSelector</a>&nbsp;
+<a href="../object/Thing.html#roomDarkName">roomDarkName</a>&nbsp;
+<a href="../object/Thing.html#roomName">roomName</a>&nbsp;
+<a href="../object/Thing.html#seen">seen</a>&nbsp;
+<a href="../object/Thing.html#sightPresence">sightPresence</a>&nbsp;
+<a href="../object/Thing.html#sightSize">sightSize</a>&nbsp;
+<a href="../object/Thing.html#smellPresence">smellPresence</a>&nbsp;
+<a href="../object/Thing.html#smellSize">smellSize</a>&nbsp;
+<a href="../object/Thing.html#soundPresence">soundPresence</a>&nbsp;
+<a href="../object/Thing.html#soundSize">soundSize</a>&nbsp;
+<a href="../object/Thing.html#specialContentsLister">specialContentsLister</a>&nbsp;
+<a href="../object/Thing.html#specialDesc">specialDesc</a>&nbsp;
+<a href="../object/Thing.html#specialDescBeforeContents">specialDescBeforeContents</a>&nbsp;
+<a href="../object/Thing.html#specialDescListWith">specialDescListWith</a>&nbsp;
+<a href="../object/Thing.html#specialDescOrder">specialDescOrder</a>&nbsp;
+<a href="../object/Thing.html#specialNominalRoomPartLocation">specialNominalRoomPartLocation</a>&nbsp;
+<a href="../object/Thing.html#suppressAutoSeen">suppressAutoSeen</a>&nbsp;
+<a href="../object/Thing.html#takeFromNotInMessage">takeFromNotInMessage</a>&nbsp;
+<a href="../object/Thing.html#theDisambigName">theDisambigName</a>&nbsp;
+<a href="../object/Thing.html#theName">theName</a>&nbsp;
+<a href="../object/Thing.html#theNamePossNoun">theNamePossNoun</a>&nbsp;
+<a href="../object/Thing.html#tmpAmbient_">tmpAmbient_</a>&nbsp;
+<a href="../object/Thing.html#tmpAmbientFill_">tmpAmbientFill_</a>&nbsp;
+<a href="../object/Thing.html#tmpAmbientWithin_">tmpAmbientWithin_</a>&nbsp;
+<a href="../object/Thing.html#tmpFillMedium_">tmpFillMedium_</a>&nbsp;
+<a href="../object/Thing.html#tmpObstructor_">tmpObstructor_</a>&nbsp;
+<a href="../object/Thing.html#tmpObstructorWithin_">tmpObstructorWithin_</a>&nbsp;
+<a href="../object/Thing.html#tmpPathIsIn_">tmpPathIsIn_</a>&nbsp;
+<a href="../object/Thing.html#tmpTrans_">tmpTrans_</a>&nbsp;
+<a href="../object/Thing.html#tmpTransWithin_">tmpTransWithin_</a>&nbsp;
+<a href="../object/Thing.html#touchPresence">touchPresence</a>&nbsp;
+<a href="../object/Thing.html#touchSize">touchSize</a>&nbsp;
+<a href="../object/Thing.html#verbCan">verbCan</a>&nbsp;
+<a href="../object/Thing.html#verbCannot">verbCannot</a>&nbsp;
+<a href="../object/Thing.html#verbCant">verbCant</a>&nbsp;
+<a href="../object/Thing.html#verbEndingSD">verbEndingSD</a>&nbsp;
+<a href="../object/Thing.html#verbEndingSEd">verbEndingSEd</a>&nbsp;
+<a href="../object/Thing.html#verbEndingSMessageBuilder_">verbEndingSMessageBuilder_</a>&nbsp;
+<a href="../object/Thing.html#verbMust">verbMust</a>&nbsp;
+<a href="../object/Thing.html#verbToCome">verbToCome</a>&nbsp;
+<a href="../object/Thing.html#verbToDo">verbToDo</a>&nbsp;
+<a href="../object/Thing.html#verbToGo">verbToGo</a>&nbsp;
+<a href="../object/Thing.html#verbToLeave">verbToLeave</a>&nbsp;
+<a href="../object/Thing.html#verbToSay">verbToSay</a>&nbsp;
+<a href="../object/Thing.html#verbToSee">verbToSee</a>&nbsp;
+<a href="../object/Thing.html#verbWill">verbWill</a>&nbsp;
+<a href="../object/Thing.html#verbWont">verbWont</a>&nbsp;
+<a href="../object/Thing.html#weight">weight</a>&nbsp;
+</code><p>
+<p>Inherited from <code>VocabObject</code> :<br>
+<code>
+<a href="../object/VocabObject.html#canResolvePossessive">canResolvePossessive</a>&nbsp;
+<a href="../object/VocabObject.html#disambigPromptOrder">disambigPromptOrder</a>&nbsp;
+<a href="../object/VocabObject.html#pluralOrder">pluralOrder</a>&nbsp;
+<a href="../object/VocabObject.html#vocabLikelihood">vocabLikelihood</a>&nbsp;
+<a href="../object/VocabObject.html#vocabWords">vocabWords</a>&nbsp;
+<a href="../object/VocabObject.html#weakTokens">weakTokens</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#actorInGroupPrefix">actorInGroupPrefix</a>&nbsp;
+<a href="#actorInGroupSuffix">actorInGroupSuffix</a>&nbsp;
+<a href="#actorIsFamiliar">actorIsFamiliar</a>&nbsp;
+<a href="#actorKnowsDestination">actorKnowsDestination</a>&nbsp;
+<a href="#actorTravelingWithin">actorTravelingWithin</a>&nbsp;
+<a href="#addRoomNotifyItem">addRoomNotifyItem</a>&nbsp;
+<a href="#cannotGoShowExits">cannotGoShowExits</a>&nbsp;
+<a href="#cannotGoThatWay">cannotGoThatWay</a>&nbsp;
+<a href="#cannotGoThatWayInDark">cannotGoThatWayInDark</a>&nbsp;
+<a href="#cannotTravel">cannotTravel</a>&nbsp;
+<a href="#checkActorOutOfNested">checkActorOutOfNested</a>&nbsp;
+<a href="#checkActorReadyToEnterNestedRoom">checkActorReadyToEnterNestedRoom</a>&nbsp;
+<a href="#checkMovingActorInto">checkMovingActorInto</a>&nbsp;
+<a href="#checkStagingLocation">checkStagingLocation</a>&nbsp;
+<a href="#checkTravelerDirectlyInRoom">checkTravelerDirectlyInRoom</a>&nbsp;
+<a href="#disembarkRoom">disembarkRoom</a>&nbsp;
+<a href="#dispatchRoomDaemon">dispatchRoomDaemon</a>&nbsp;
+<a href="#enteringRoom">enteringRoom</a>&nbsp;
+<a href="#getDropDestination">getDropDestination</a>&nbsp;
+<a href="#getExtraScopeItems">getExtraScopeItems</a>&nbsp;
+<a href="#getNominalActorContainer">getNominalActorContainer</a>&nbsp;
+<a href="#getNominalDropDestination">getNominalDropDestination</a>&nbsp;
+<a href="#getRoomNotifyList">getRoomNotifyList</a>&nbsp;
+<a href="#getStatuslineExitsHeight">getStatuslineExitsHeight</a>&nbsp;
+<a href="#isActorTravelReady">isActorTravelReady</a>&nbsp;
+<a href="#leavingRoom">leavingRoom</a>&nbsp;
+<a href="#listWithActorIn">listWithActorIn</a>&nbsp;
+<a href="#makeStandingUp">makeStandingUp</a>&nbsp;
+<a href="#removeRoomNotifyItem">removeRoomNotifyItem</a>&nbsp;
+<a href="#roomActorHereDesc">roomActorHereDesc</a>&nbsp;
+<a href="#roomActorPostureDesc">roomActorPostureDesc</a>&nbsp;
+<a href="#roomActorStatus">roomActorStatus</a>&nbsp;
+<a href="#roomActorThereDesc">roomActorThereDesc</a>&nbsp;
+<a href="#roomAfterAction">roomAfterAction</a>&nbsp;
+<a href="#roomBeforeAction">roomBeforeAction</a>&nbsp;
+<a href="#roomDarkTravel">roomDarkTravel</a>&nbsp;
+<a href="#roomDesc">roomDesc</a>&nbsp;
+<a href="#roomListActorPosture">roomListActorPosture</a>&nbsp;
+<a href="#roomOkayPostureChange">roomOkayPostureChange</a>&nbsp;
+<a href="#showStatuslineExits">showStatuslineExits</a>&nbsp;
+<a href="#travelerArriving">travelerArriving</a>&nbsp;
+<a href="#travelerLeaving">travelerLeaving</a>&nbsp;
+<a href="#tryMakingDefaultPosture">tryMakingDefaultPosture</a>&nbsp;
+<a href="#tryMakingTravelReady">tryMakingTravelReady</a>&nbsp;
+<a href="#wouldBeLitFor">wouldBeLitFor</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Thing</code> :<br>
+<code>
+<a href="../object/Thing.html#acceptCommand">acceptCommand</a>&nbsp;
+<a href="../object/Thing.html#addAllContents">addAllContents</a>&nbsp;
+<a href="../object/Thing.html#addDirectConnections">addDirectConnections</a>&nbsp;
+<a href="../object/Thing.html#addObjectNotifyItem">addObjectNotifyItem</a>&nbsp;
+<a href="../object/Thing.html#addToContents">addToContents</a>&nbsp;
+<a href="../object/Thing.html#addToSenseInfoTable">addToSenseInfoTable</a>&nbsp;
+<a href="../object/Thing.html#adjustLookAroundTable">adjustLookAroundTable</a>&nbsp;
+<a href="../object/Thing.html#adjustThrowDestination">adjustThrowDestination</a>&nbsp;
+<a href="../object/Thing.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/Thing.html#afterTravel">afterTravel</a>&nbsp;
+<a href="../object/Thing.html#allContents">allContents</a>&nbsp;
+<a href="../object/Thing.html#aNameFrom">aNameFrom</a>&nbsp;
+<a href="../object/Thing.html#aNameObj">aNameObj</a>&nbsp;
+<a href="../object/Thing.html#aNameOwnerLoc">aNameOwnerLoc</a>&nbsp;
+<a href="../object/Thing.html#announceDefaultObject">announceDefaultObject</a>&nbsp;
+<a href="../object/Thing.html#appendHeldContents">appendHeldContents</a>&nbsp;
+<a href="../object/Thing.html#atmosphereList">atmosphereList</a>&nbsp;
+<a href="../object/Thing.html#baseMoveInto">baseMoveInto</a>&nbsp;
+<a href="../object/Thing.html#basicExamine">basicExamine</a>&nbsp;
+<a href="../object/Thing.html#basicExamineFeel">basicExamineFeel</a>&nbsp;
+<a href="../object/Thing.html#basicExamineListen">basicExamineListen</a>&nbsp;
+<a href="../object/Thing.html#basicExamineSmell">basicExamineSmell</a>&nbsp;
+<a href="../object/Thing.html#basicExamineTaste">basicExamineTaste</a>&nbsp;
+<a href="../object/Thing.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/Thing.html#beforeTravel">beforeTravel</a>&nbsp;
+<a href="../object/Thing.html#buildContainmentPaths">buildContainmentPaths</a>&nbsp;
+<a href="../object/Thing.html#cacheAmbientInfo">cacheAmbientInfo</a>&nbsp;
+<a href="../object/Thing.html#cacheSenseInfo">cacheSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#cacheSensePath">cacheSensePath</a>&nbsp;
+<a href="../object/Thing.html#canBeHeardBy">canBeHeardBy</a>&nbsp;
+<a href="../object/Thing.html#canBeSeenBy">canBeSeenBy</a>&nbsp;
+<a href="../object/Thing.html#canBeSensed">canBeSensed</a>&nbsp;
+<a href="../object/Thing.html#canBeSmelledBy">canBeSmelledBy</a>&nbsp;
+<a href="../object/Thing.html#canBeTouchedBy">canBeTouchedBy</a>&nbsp;
+<a href="../object/Thing.html#canDetailsBeSensed">canDetailsBeSensed</a>&nbsp;
+<a href="../object/Thing.html#canHear">canHear</a>&nbsp;
+<a href="../object/Thing.html#canMatchPronounType">canMatchPronounType</a>&nbsp;
+<a href="../object/Thing.html#canMoveViaPath">canMoveViaPath</a>&nbsp;
+<a href="../object/Thing.html#cannotReachObject">cannotReachObject</a>&nbsp;
+<a href="../object/Thing.html#cannotSeeSmellSource">cannotSeeSmellSource</a>&nbsp;
+<a href="../object/Thing.html#cannotSeeSoundSource">cannotSeeSoundSource</a>&nbsp;
+<a href="../object/Thing.html#canOwn">canOwn</a>&nbsp;
+<a href="../object/Thing.html#canSee">canSee</a>&nbsp;
+<a href="../object/Thing.html#canSmell">canSmell</a>&nbsp;
+<a href="../object/Thing.html#canThrowViaPath">canThrowViaPath</a>&nbsp;
+<a href="../object/Thing.html#canTouch">canTouch</a>&nbsp;
+<a href="../object/Thing.html#canTouchViaPath">canTouchViaPath</a>&nbsp;
+<a href="../object/Thing.html#checkBulkChange">checkBulkChange</a>&nbsp;
+<a href="../object/Thing.html#checkBulkChangeWithin">checkBulkChangeWithin</a>&nbsp;
+<a href="../object/Thing.html#checkMoveViaPath">checkMoveViaPath</a>&nbsp;
+<a href="../object/Thing.html#checkThrowViaPath">checkThrowViaPath</a>&nbsp;
+<a href="../object/Thing.html#checkTouchViaPath">checkTouchViaPath</a>&nbsp;
+<a href="../object/Thing.html#childInName">childInName</a>&nbsp;
+<a href="../object/Thing.html#childInNameGen">childInNameGen</a>&nbsp;
+<a href="../object/Thing.html#childInNameWithOwner">childInNameWithOwner</a>&nbsp;
+<a href="../object/Thing.html#childInRemoteName">childInRemoteName</a>&nbsp;
+<a href="../object/Thing.html#clearSenseInfo">clearSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#cloneForMultiInstanceContents">cloneForMultiInstanceContents</a>&nbsp;
+<a href="../object/Thing.html#cloneMultiInstanceContents">cloneMultiInstanceContents</a>&nbsp;
+<a href="../object/Thing.html#conjugateRegularVerb">conjugateRegularVerb</a>&nbsp;
+<a href="../object/Thing.html#connectionTable">connectionTable</a>&nbsp;
+<a href="../object/Thing.html#construct">construct</a>&nbsp;
+<a href="../object/Thing.html#contentsInFixedIn">contentsInFixedIn</a>&nbsp;
+<a href="../object/Thing.html#countDisambigName">countDisambigName</a>&nbsp;
+<a href="../object/Thing.html#countListName">countListName</a>&nbsp;
+<a href="../object/Thing.html#countName">countName</a>&nbsp;
+<a href="../object/Thing.html#countNameFrom">countNameFrom</a>&nbsp;
+<a href="../object/Thing.html#countNameOwnerLoc">countNameOwnerLoc</a>&nbsp;
+<a href="../object/Thing.html#darkRoomContentsLister">darkRoomContentsLister</a>&nbsp;
+<a href="../object/Thing.html#defaultDistantDesc">defaultDistantDesc</a>&nbsp;
+<a href="../object/Thing.html#defaultObscuredDesc">defaultObscuredDesc</a>&nbsp;
+<a href="../object/Thing.html#desc">desc</a>&nbsp;
+<a href="../object/Thing.html#directionForConnector">directionForConnector</a>&nbsp;
+<a href="../object/Thing.html#distantSmellDesc">distantSmellDesc</a>&nbsp;
+<a href="../object/Thing.html#distantSoundDesc">distantSoundDesc</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AskAbout)">dobjFor(AskAbout)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AskFor)">dobjFor(AskFor)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AskVague)">dobjFor(AskVague)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AttachTo)">dobjFor(AttachTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Attack)">dobjFor(Attack)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(AttackWith)">dobjFor(AttackWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Board)">dobjFor(Board)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Break)">dobjFor(Break)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Burn)">dobjFor(Burn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(BurnWith)">dobjFor(BurnWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Clean)">dobjFor(Clean)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(CleanWith)">dobjFor(CleanWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Climb)">dobjFor(Climb)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ClimbDown)">dobjFor(ClimbDown)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ClimbUp)">dobjFor(ClimbUp)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Close)">dobjFor(Close)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Consult)">dobjFor(Consult)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ConsultAbout)">dobjFor(ConsultAbout)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(CutWith)">dobjFor(CutWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Detach)">dobjFor(Detach)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(DetachFrom)">dobjFor(DetachFrom)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Dig)">dobjFor(Dig)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(DigWith)">dobjFor(DigWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Doff)">dobjFor(Doff)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Drink)">dobjFor(Drink)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Drop)">dobjFor(Drop)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Eat)">dobjFor(Eat)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Enter)">dobjFor(Enter)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(EnterOn)">dobjFor(EnterOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Examine)">dobjFor(Examine)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Extinguish)">dobjFor(Extinguish)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Fasten)">dobjFor(Fasten)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(FastenTo)">dobjFor(FastenTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Feel)">dobjFor(Feel)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Flip)">dobjFor(Flip)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Follow)">dobjFor(Follow)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(GetOffOf)">dobjFor(GetOffOf)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(GetOutOf)">dobjFor(GetOutOf)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(GiveTo)">dobjFor(GiveTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(GoThrough)">dobjFor(GoThrough)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(JumpOff)">dobjFor(JumpOff)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(JumpOver)">dobjFor(JumpOver)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Kiss)">dobjFor(Kiss)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LieOn)">dobjFor(LieOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Light)">dobjFor(Light)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ListenTo)">dobjFor(ListenTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Lock)">dobjFor(Lock)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LockWith)">dobjFor(LockWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LookBehind)">dobjFor(LookBehind)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LookIn)">dobjFor(LookIn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LookThrough)">dobjFor(LookThrough)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(LookUnder)">dobjFor(LookUnder)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Move)">dobjFor(Move)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(MoveTo)">dobjFor(MoveTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(MoveWith)">dobjFor(MoveWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Open)">dobjFor(Open)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PlugIn)">dobjFor(PlugIn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PlugInto)">dobjFor(PlugInto)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Pour)">dobjFor(Pour)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PourInto)">dobjFor(PourInto)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PourOnto)">dobjFor(PourOnto)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Pull)">dobjFor(Pull)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Push)">dobjFor(Push)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PushTravel)">dobjFor(PushTravel)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PutBehind)">dobjFor(PutBehind)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PutIn)">dobjFor(PutIn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PutOn)">dobjFor(PutOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(PutUnder)">dobjFor(PutUnder)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Read)">dobjFor(Read)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Remove)">dobjFor(Remove)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Screw)">dobjFor(Screw)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ScrewWith)">dobjFor(ScrewWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Search)">dobjFor(Search)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Set)">dobjFor(Set)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(SetTo)">dobjFor(SetTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ShowTo)">dobjFor(ShowTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(SitOn)">dobjFor(SitOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Smell)">dobjFor(Smell)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(StandOn)">dobjFor(StandOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Strike)">dobjFor(Strike)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Switch)">dobjFor(Switch)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Take)">dobjFor(Take)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TakeFrom)">dobjFor(TakeFrom)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TalkTo)">dobjFor(TalkTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Taste)">dobjFor(Taste)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TellAbout)">dobjFor(TellAbout)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TellVague)">dobjFor(TellVague)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Throw)">dobjFor(Throw)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ThrowAt)">dobjFor(ThrowAt)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ThrowDir)">dobjFor(ThrowDir)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(ThrowTo)">dobjFor(ThrowTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Turn)">dobjFor(Turn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TurnOff)">dobjFor(TurnOff)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TurnOn)">dobjFor(TurnOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TurnTo)">dobjFor(TurnTo)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TurnWith)">dobjFor(TurnWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TypeLiteralOn)">dobjFor(TypeLiteralOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(TypeOn)">dobjFor(TypeOn)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Unfasten)">dobjFor(Unfasten)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(UnfastenFrom)">dobjFor(UnfastenFrom)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Unlock)">dobjFor(Unlock)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(UnlockWith)">dobjFor(UnlockWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Unplug)">dobjFor(Unplug)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(UnplugFrom)">dobjFor(UnplugFrom)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Unscrew)">dobjFor(Unscrew)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(UnscrewWith)">dobjFor(UnscrewWith)</a>&nbsp;
+<a href="../object/Thing.html#dobjFor(Wear)">dobjFor(Wear)</a>&nbsp;
+<a href="../object/Thing.html#examineListContents">examineListContents</a>&nbsp;
+<a href="../object/Thing.html#examineListContentsWith">examineListContentsWith</a>&nbsp;
+<a href="../object/Thing.html#examineSpecialContents">examineSpecialContents</a>&nbsp;
+<a href="../object/Thing.html#examineStatus">examineStatus</a>&nbsp;
+<a href="../object/Thing.html#failCheck">failCheck</a>&nbsp;
+<a href="../object/Thing.html#feelDesc">feelDesc</a>&nbsp;
+<a href="../object/Thing.html#fillMedium">fillMedium</a>&nbsp;
+<a href="../object/Thing.html#findOpaqueObstructor">findOpaqueObstructor</a>&nbsp;
+<a href="../object/Thing.html#findTouchObstructor">findTouchObstructor</a>&nbsp;
+<a href="../object/Thing.html#forEachConnectedContainer">forEachConnectedContainer</a>&nbsp;
+<a href="../object/Thing.html#forEachContainer">forEachContainer</a>&nbsp;
+<a href="../object/Thing.html#fromPOV">fromPOV</a>&nbsp;
+<a href="../object/Thing.html#getAllForTakeFrom">getAllForTakeFrom</a>&nbsp;
+<a href="../object/Thing.html#getAllPathsTo">getAllPathsTo</a>&nbsp;
+<a href="../object/Thing.html#getAnnouncementDistinguisher">getAnnouncementDistinguisher</a>&nbsp;
+<a href="../object/Thing.html#getBagAffinities">getBagAffinities</a>&nbsp;
+<a href="../object/Thing.html#getBagsOfHolding">getBagsOfHolding</a>&nbsp;
+<a href="../object/Thing.html#getBestDistinguisher">getBestDistinguisher</a>&nbsp;
+<a href="../object/Thing.html#getBulk">getBulk</a>&nbsp;
+<a href="../object/Thing.html#getBulkWithin">getBulkWithin</a>&nbsp;
+<a href="../object/Thing.html#getCarryingActor">getCarryingActor</a>&nbsp;
+<a href="../object/Thing.html#getCommonContainer">getCommonContainer</a>&nbsp;
+<a href="../object/Thing.html#getCommonDirectContainer">getCommonDirectContainer</a>&nbsp;
+<a href="../object/Thing.html#getConnectedContainers">getConnectedContainers</a>&nbsp;
+<a href="../object/Thing.html#getConnectorTo">getConnectorTo</a>&nbsp;
+<a href="../object/Thing.html#getContentsForExamine">getContentsForExamine</a>&nbsp;
+<a href="../object/Thing.html#getDestName">getDestName</a>&nbsp;
+<a href="../object/Thing.html#getEncumberingBulk">getEncumberingBulk</a>&nbsp;
+<a href="../object/Thing.html#getEncumberingWeight">getEncumberingWeight</a>&nbsp;
+<a href="../object/Thing.html#getHitFallDestination">getHitFallDestination</a>&nbsp;
+<a href="../object/Thing.html#getIdentityObject">getIdentityObject</a>&nbsp;
+<a href="../object/Thing.html#getInScopeDistinguisher">getInScopeDistinguisher</a>&nbsp;
+<a href="../object/Thing.html#getListedContents">getListedContents</a>&nbsp;
+<a href="../object/Thing.html#getLocPushTraveler">getLocPushTraveler</a>&nbsp;
+<a href="../object/Thing.html#getLocTraveler">getLocTraveler</a>&nbsp;
+<a href="../object/Thing.html#getMovePathTo">getMovePathTo</a>&nbsp;
+<a href="../object/Thing.html#getNoise">getNoise</a>&nbsp;
+<a href="../object/Thing.html#getNominalOwner">getNominalOwner</a>&nbsp;
+<a href="../object/Thing.html#getObjectNotifyList">getObjectNotifyList</a>&nbsp;
+<a href="../object/Thing.html#getOdor">getOdor</a>&nbsp;
+<a href="../object/Thing.html#getOutermostRoom">getOutermostRoom</a>&nbsp;
+<a href="../object/Thing.html#getOutermostVisibleRoom">getOutermostVisibleRoom</a>&nbsp;
+<a href="../object/Thing.html#getRoomPartLocation">getRoomPartLocation</a>&nbsp;
+<a href="../object/Thing.html#getStateWithInfo">getStateWithInfo</a>&nbsp;
+<a href="../object/Thing.html#getThrowPathTo">getThrowPathTo</a>&nbsp;
+<a href="../object/Thing.html#getTouchPathTo">getTouchPathTo</a>&nbsp;
+<a href="../object/Thing.html#getTravelConnector">getTravelConnector</a>&nbsp;
+<a href="../object/Thing.html#getVisualSenseInfo">getVisualSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#getWeight">getWeight</a>&nbsp;
+<a href="../object/Thing.html#hasCollectiveGroup">hasCollectiveGroup</a>&nbsp;
+<a href="../object/Thing.html#hideFromAll">hideFromAll</a>&nbsp;
+<a href="../object/Thing.html#hideFromDefault">hideFromDefault</a>&nbsp;
+<a href="../object/Thing.html#initializeEquivalent">initializeEquivalent</a>&nbsp;
+<a href="../object/Thing.html#initializeLocation">initializeLocation</a>&nbsp;
+<a href="../object/Thing.html#initializeThing">initializeThing</a>&nbsp;
+<a href="../object/Thing.html#inRoomName">inRoomName</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(AttachTo)">iobjFor(AttachTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(AttackWith)">iobjFor(AttackWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(BurnWith)">iobjFor(BurnWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(CleanWith)">iobjFor(CleanWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(CutWith)">iobjFor(CutWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(DetachFrom)">iobjFor(DetachFrom)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(DigWith)">iobjFor(DigWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(FastenTo)">iobjFor(FastenTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(GiveTo)">iobjFor(GiveTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(LockWith)">iobjFor(LockWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(MoveWith)">iobjFor(MoveWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PlugInto)">iobjFor(PlugInto)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PourInto)">iobjFor(PourInto)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PourOnto)">iobjFor(PourOnto)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PutBehind)">iobjFor(PutBehind)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PutIn)">iobjFor(PutIn)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PutOn)">iobjFor(PutOn)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(PutUnder)">iobjFor(PutUnder)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(ScrewWith)">iobjFor(ScrewWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(ShowTo)">iobjFor(ShowTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(TakeFrom)">iobjFor(TakeFrom)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(ThrowAt)">iobjFor(ThrowAt)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(ThrowTo)">iobjFor(ThrowTo)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(TurnWith)">iobjFor(TurnWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(UnfastenFrom)">iobjFor(UnfastenFrom)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(UnlockWith)">iobjFor(UnlockWith)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(UnplugFrom)">iobjFor(UnplugFrom)</a>&nbsp;
+<a href="../object/Thing.html#iobjFor(UnscrewWith)">iobjFor(UnscrewWith)</a>&nbsp;
+<a href="../object/Thing.html#isComponentOf">isComponentOf</a>&nbsp;
+<a href="../object/Thing.html#isDirectlyIn">isDirectlyIn</a>&nbsp;
+<a href="../object/Thing.html#isHeldBy">isHeldBy</a>&nbsp;
+<a href="../object/Thing.html#isIn">isIn</a>&nbsp;
+<a href="../object/Thing.html#isInFixedIn">isInFixedIn</a>&nbsp;
+<a href="../object/Thing.html#isListed">isListed</a>&nbsp;
+<a href="../object/Thing.html#isListedInContents">isListedInContents</a>&nbsp;
+<a href="../object/Thing.html#isListedInInventory">isListedInInventory</a>&nbsp;
+<a href="../object/Thing.html#isListedInRoomPart">isListedInRoomPart</a>&nbsp;
+<a href="../object/Thing.html#isLookAroundCeiling">isLookAroundCeiling</a>&nbsp;
+<a href="../object/Thing.html#isNominallyIn">isNominallyIn</a>&nbsp;
+<a href="../object/Thing.html#isNominallyInRoomPart">isNominallyInRoomPart</a>&nbsp;
+<a href="../object/Thing.html#isOccludedBy">isOccludedBy</a>&nbsp;
+<a href="../object/Thing.html#isOrIsIn">isOrIsIn</a>&nbsp;
+<a href="../object/Thing.html#isOwnedBy">isOwnedBy</a>&nbsp;
+<a href="../object/Thing.html#isShipboard">isShipboard</a>&nbsp;
+<a href="../object/Thing.html#isVocabEquivalent">isVocabEquivalent</a>&nbsp;
+<a href="../object/Thing.html#itIs">itIs</a>&nbsp;
+<a href="../object/Thing.html#itNom">itNom</a>&nbsp;
+<a href="../object/Thing.html#itObj">itObj</a>&nbsp;
+<a href="../object/Thing.html#itPossAdj">itPossAdj</a>&nbsp;
+<a href="../object/Thing.html#itPossNoun">itPossNoun</a>&nbsp;
+<a href="../object/Thing.html#itVerb">itVerb</a>&nbsp;
+<a href="../object/Thing.html#listCardinality">listCardinality</a>&nbsp;
+<a href="../object/Thing.html#localDirectionLinkForConnector">localDirectionLinkForConnector</a>&nbsp;
+<a href="../object/Thing.html#lookAround">lookAround</a>&nbsp;
+<a href="../object/Thing.html#lookAroundPov">lookAroundPov</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithin">lookAroundWithin</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinContents">lookAroundWithinContents</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinDesc">lookAroundWithinDesc</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinName">lookAroundWithinName</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinSense">lookAroundWithinSense</a>&nbsp;
+<a href="../object/Thing.html#lookAroundWithinShowExits">lookAroundWithinShowExits</a>&nbsp;
+<a href="../object/Thing.html#lookInDesc">lookInDesc</a>&nbsp;
+<a href="../object/Thing.html#mainExamine">mainExamine</a>&nbsp;
+<a href="../object/Thing.html#mainMoveInto">mainMoveInto</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#mapPushTravelHandlers">mapPushTravelHandlers</a>&nbsp;
+<a href="../object/Thing.html#meetsObjHeld">meetsObjHeld</a>&nbsp;
+<a href="../object/Thing.html#mergeSenseInfo">mergeSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#mergeSenseInfoTable">mergeSenseInfoTable</a>&nbsp;
+<a href="../object/Thing.html#moveInto">moveInto</a>&nbsp;
+<a href="../object/Thing.html#moveIntoForTravel">moveIntoForTravel</a>&nbsp;
+<a href="../object/Thing.html#moveIntoNotifyPath">moveIntoNotifyPath</a>&nbsp;
+<a href="../object/Thing.html#mustMoveObjInto">mustMoveObjInto</a>&nbsp;
+<a href="../object/Thing.html#nameIs">nameIs</a>&nbsp;
+<a href="../object/Thing.html#nameIsnt">nameIsnt</a>&nbsp;
+<a href="../object/Thing.html#nameVerb">nameVerb</a>&nbsp;
+<a href="../object/Thing.html#normalizePath">normalizePath</a>&nbsp;
+<a href="../object/Thing.html#notePromptByOwnerLoc">notePromptByOwnerLoc</a>&nbsp;
+<a href="../object/Thing.html#notePromptByPossAdj">notePromptByPossAdj</a>&nbsp;
+<a href="../object/Thing.html#noteSeenBy">noteSeenBy</a>&nbsp;
+<a href="../object/Thing.html#notifyInsert">notifyInsert</a>&nbsp;
+<a href="../object/Thing.html#notifyMoveInto">notifyMoveInto</a>&nbsp;
+<a href="../object/Thing.html#notifyMoveViaPath">notifyMoveViaPath</a>&nbsp;
+<a href="../object/Thing.html#notifyRemove">notifyRemove</a>&nbsp;
+<a href="../object/Thing.html#obscuredDesc">obscuredDesc</a>&nbsp;
+<a href="../object/Thing.html#obscuredSmellDesc">obscuredSmellDesc</a>&nbsp;
+<a href="../object/Thing.html#obscuredSoundDesc">obscuredSoundDesc</a>&nbsp;
+<a href="../object/Thing.html#pluralNameFrom">pluralNameFrom</a>&nbsp;
+<a href="../object/Thing.html#processThrow">processThrow</a>&nbsp;
+<a href="../object/Thing.html#propHidesProp">propHidesProp</a>&nbsp;
+<a href="../object/Thing.html#propWithPresent">propWithPresent</a>&nbsp;
+<a href="../object/Thing.html#putInName">putInName</a>&nbsp;
+<a href="../object/Thing.html#receiveDrop">receiveDrop</a>&nbsp;
+<a href="../object/Thing.html#remoteDesc">remoteDesc</a>&nbsp;
+<a href="../object/Thing.html#remoteInitSpecialDesc">remoteInitSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#remoteRoomContentsLister">remoteRoomContentsLister</a>&nbsp;
+<a href="../object/Thing.html#remoteSpecialDesc">remoteSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#removeFromContents">removeFromContents</a>&nbsp;
+<a href="../object/Thing.html#removeObjectNotifyItem">removeObjectNotifyItem</a>&nbsp;
+<a href="../object/Thing.html#restoreLocation">restoreLocation</a>&nbsp;
+<a href="../object/Thing.html#roomContentsLister">roomContentsLister</a>&nbsp;
+<a href="../object/Thing.html#roomDaemon">roomDaemon</a>&nbsp;
+<a href="../object/Thing.html#roomDarkDesc">roomDarkDesc</a>&nbsp;
+<a href="../object/Thing.html#roomFirstDesc">roomFirstDesc</a>&nbsp;
+<a href="../object/Thing.html#roomRemoteDesc">roomRemoteDesc</a>&nbsp;
+<a href="../object/Thing.html#roomTravelPreCond">roomTravelPreCond</a>&nbsp;
+<a href="../object/Thing.html#saveLocation">saveLocation</a>&nbsp;
+<a href="../object/Thing.html#selectPathTo">selectPathTo</a>&nbsp;
+<a href="../object/Thing.html#sendNotifyInsert">sendNotifyInsert</a>&nbsp;
+<a href="../object/Thing.html#sendNotifyRemove">sendNotifyRemove</a>&nbsp;
+<a href="../object/Thing.html#senseAmbientMax">senseAmbientMax</a>&nbsp;
+<a href="../object/Thing.html#senseInfoTable">senseInfoTable</a>&nbsp;
+<a href="../object/Thing.html#senseObj">senseObj</a>&nbsp;
+<a href="../object/Thing.html#sensePathFromWithin">sensePathFromWithin</a>&nbsp;
+<a href="../object/Thing.html#sensePathFromWithout">sensePathFromWithout</a>&nbsp;
+<a href="../object/Thing.html#sensePathToContents">sensePathToContents</a>&nbsp;
+<a href="../object/Thing.html#sensePathToLoc">sensePathToLoc</a>&nbsp;
+<a href="../object/Thing.html#sensePresenceList">sensePresenceList</a>&nbsp;
+<a href="../object/Thing.html#setAllSeenBy">setAllSeenBy</a>&nbsp;
+<a href="../object/Thing.html#setContentsSeenBy">setContentsSeenBy</a>&nbsp;
+<a href="../object/Thing.html#setGlobalParamName">setGlobalParamName</a>&nbsp;
+<a href="../object/Thing.html#setVisualSenseInfo">setVisualSenseInfo</a>&nbsp;
+<a href="../object/Thing.html#shineFromWithin">shineFromWithin</a>&nbsp;
+<a href="../object/Thing.html#shineFromWithout">shineFromWithout</a>&nbsp;
+<a href="../object/Thing.html#shineOnContents">shineOnContents</a>&nbsp;
+<a href="../object/Thing.html#shineOnLoc">shineOnLoc</a>&nbsp;
+<a href="../object/Thing.html#showDistantSpecialDesc">showDistantSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#showDistantSpecialDescInContents">showDistantSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#showInventoryContents">showInventoryContents</a>&nbsp;
+<a href="../object/Thing.html#showInventoryItem">showInventoryItem</a>&nbsp;
+<a href="../object/Thing.html#showInventoryItemCounted">showInventoryItemCounted</a>&nbsp;
+<a href="../object/Thing.html#showListItem">showListItem</a>&nbsp;
+<a href="../object/Thing.html#showListItemCounted">showListItemCounted</a>&nbsp;
+<a href="../object/Thing.html#showListItemCountedGen">showListItemCountedGen</a>&nbsp;
+<a href="../object/Thing.html#showListItemGen">showListItemGen</a>&nbsp;
+<a href="../object/Thing.html#showObjectContents">showObjectContents</a>&nbsp;
+<a href="../object/Thing.html#showObscuredSpecialDesc">showObscuredSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#showObscuredSpecialDescInContents">showObscuredSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#showRemoteSpecialDesc">showRemoteSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#showRemoteSpecialDescInContents">showRemoteSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#showSpecialDesc">showSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#showSpecialDescInContents">showSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#showSpecialDescInContentsWithInfo">showSpecialDescInContentsWithInfo</a>&nbsp;
+<a href="../object/Thing.html#showSpecialDescWithInfo">showSpecialDescWithInfo</a>&nbsp;
+<a href="../object/Thing.html#showWornItem">showWornItem</a>&nbsp;
+<a href="../object/Thing.html#showWornItemCounted">showWornItemCounted</a>&nbsp;
+<a href="../object/Thing.html#smellDesc">smellDesc</a>&nbsp;
+<a href="../object/Thing.html#smellHereDesc">smellHereDesc</a>&nbsp;
+<a href="../object/Thing.html#soundDesc">soundDesc</a>&nbsp;
+<a href="../object/Thing.html#soundHereDesc">soundHereDesc</a>&nbsp;
+<a href="../object/Thing.html#specialDescList">specialDescList</a>&nbsp;
+<a href="../object/Thing.html#specialPathFrom">specialPathFrom</a>&nbsp;
+<a href="../object/Thing.html#statusName">statusName</a>&nbsp;
+<a href="../object/Thing.html#stopThrowViaPath">stopThrowViaPath</a>&nbsp;
+<a href="../object/Thing.html#superHidesSuper">superHidesSuper</a>&nbsp;
+<a href="../object/Thing.html#tasteDesc">tasteDesc</a>&nbsp;
+<a href="../object/Thing.html#thatNom">thatNom</a>&nbsp;
+<a href="../object/Thing.html#thatObj">thatObj</a>&nbsp;
+<a href="../object/Thing.html#theNameFrom">theNameFrom</a>&nbsp;
+<a href="../object/Thing.html#theNameObj">theNameObj</a>&nbsp;
+<a href="../object/Thing.html#theNameOwnerLoc">theNameOwnerLoc</a>&nbsp;
+<a href="../object/Thing.html#theNameWithOwner">theNameWithOwner</a>&nbsp;
+<a href="../object/Thing.html#throwTargetCatch">throwTargetCatch</a>&nbsp;
+<a href="../object/Thing.html#throwTargetHitWith">throwTargetHitWith</a>&nbsp;
+<a href="../object/Thing.html#throwViaPath">throwViaPath</a>&nbsp;
+<a href="../object/Thing.html#transmitAmbient">transmitAmbient</a>&nbsp;
+<a href="../object/Thing.html#transSensingIn">transSensingIn</a>&nbsp;
+<a href="../object/Thing.html#transSensingOut">transSensingOut</a>&nbsp;
+<a href="../object/Thing.html#traversePath">traversePath</a>&nbsp;
+<a href="../object/Thing.html#tryHolding">tryHolding</a>&nbsp;
+<a href="../object/Thing.html#tryImplicitRemoveObstructor">tryImplicitRemoveObstructor</a>&nbsp;
+<a href="../object/Thing.html#tryMovingObjInto">tryMovingObjInto</a>&nbsp;
+<a href="../object/Thing.html#useInitDesc">useInitDesc</a>&nbsp;
+<a href="../object/Thing.html#useInitSpecialDesc">useInitSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#useSpecialDesc">useSpecialDesc</a>&nbsp;
+<a href="../object/Thing.html#useSpecialDescInContents">useSpecialDescInContents</a>&nbsp;
+<a href="../object/Thing.html#useSpecialDescInRoom">useSpecialDescInRoom</a>&nbsp;
+<a href="../object/Thing.html#useSpecialDescInRoomPart">useSpecialDescInRoomPart</a>&nbsp;
+<a href="../object/Thing.html#verbEndingEs">verbEndingEs</a>&nbsp;
+<a href="../object/Thing.html#verbEndingIes">verbEndingIes</a>&nbsp;
+<a href="../object/Thing.html#verbEndingS">verbEndingS</a>&nbsp;
+<a href="../object/Thing.html#verbToHave">verbToHave</a>&nbsp;
+<a href="../object/Thing.html#verbWas">verbWas</a>&nbsp;
+<a href="../object/Thing.html#verifyFollowable">verifyFollowable</a>&nbsp;
+<a href="../object/Thing.html#verifyInsert">verifyInsert</a>&nbsp;
+<a href="../object/Thing.html#verifyMoveTo">verifyMoveTo</a>&nbsp;
+<a href="../object/Thing.html#verifyRemove">verifyRemove</a>&nbsp;
+<a href="../object/Thing.html#whatIf">whatIf</a>&nbsp;
+<a href="../object/Thing.html#whatIfHeldBy">whatIfHeldBy</a>&nbsp;
+<a href="../object/Thing.html#withVisualSenseInfo">withVisualSenseInfo</a>&nbsp;
+</code><p>
+<p>Inherited from <code>VocabObject</code> :<br>
+<code>
+<a href="../object/VocabObject.html#addToDictionary">addToDictionary</a>&nbsp;
+<a href="../object/VocabObject.html#expandPronounList">expandPronounList</a>&nbsp;
+<a href="../object/VocabObject.html#filterResolveList">filterResolveList</a>&nbsp;
+<a href="../object/VocabObject.html#getFacets">getFacets</a>&nbsp;
+<a href="../object/VocabObject.html#inheritVocab">inheritVocab</a>&nbsp;
+<a href="../object/VocabObject.html#initializeVocab">initializeVocab</a>&nbsp;
+<a href="../object/VocabObject.html#initializeVocabWith">initializeVocabWith</a>&nbsp;
+<a href="../object/VocabObject.html#matchName">matchName</a>&nbsp;
+<a href="../object/VocabObject.html#matchNameCommon">matchNameCommon</a>&nbsp;
+<a href="../object/VocabObject.html#matchNameDisambig">matchNameDisambig</a>&nbsp;
+<a href="../object/VocabObject.html#throwNoMatchForLocation">throwNoMatchForLocation</a>&nbsp;
+<a href="../object/VocabObject.html#throwNoMatchForPossessive">throwNoMatchForPossessive</a>&nbsp;
+<a href="../object/VocabObject.html#throwNothingInLocation">throwNothingInLocation</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="cannotGoThatWayMsg"></a>
+<table class=decl><tr><td><code>cannotGoThatWayMsg</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4232">4232</a>]</table><div class=desc>   The message to display when it's not possible to travel in a given   direction from this room; this is either a single-quoted string or   an actor action messages property (by default, it's the latter,   giving a default library message). <p>
+</div>
+<a name="defaultPosture"></a>
+<table class=decl><tr><td><code>defaultPosture</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3695">3695</a>]</table><div class=desc>   Default posture for an actor in the location.  This is the   posture assumed by an actor when moving out of a nested room   within this location. <p>
+</div>
+<a name="effectiveFollowLocation"></a>
+<table class=decl><tr><td><code>effectiveFollowLocation</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4268">4268</a>]</table><div class=desc>   Get the effective location of an actor directly within me, for   the purposes of a "follow" command.  To follow someone, we must   have the same effective follow location that the target had when   we last observed the target leaving. <p>   For most rooms, this is simply the room itself. <p>
+</div>
+<a name="listWithActorInTable"></a>
+<table class=decl><tr><td><code>listWithActorInTable</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3503">3503</a>]</table><div class=desc>   our listWithActorIn table - this gets initialized to a   LookupTable as soon as we need one (in listWithActorIn) <p>
+</div>
+<a name="mustDefaultPostureProp"></a>
+<table class=decl><tr><td><code>mustDefaultPostureProp</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3698">3698</a>]</table><div class=desc>failure report we issue when we can't return to default posture<p>
+</div>
+<a name="notTravelReadyMsg"></a>
+<table class=decl><tr><td><code>notTravelReadyMsg</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3840">3840</a>]</table><div class=desc>the message explaining what we must do to be travel-ready<p>
+</div>
+<a name="roomLocation"></a>
+<table class=decl><tr><td><code>roomLocation</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3988">3988</a>]</table><div class=desc>   Get the room location.  Since we're capable of holding actors, we   are our own room location. <p>
+</div>
+<a name="roomNotifyList"></a>
+<table class=decl><tr><td><code>roomNotifyList</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3982">3982</a>]</table><div class=desc>our list of registered notification items<p>
+</div>
+<a name="roomTravelPreCond"></a>
+<table class=decl><tr><td><code>roomTravelPreCond</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4258">4258</a>]</table><div class=desc>   Get preconditions for travel for an actor in this location.  These   preconditions should be applied by any command that will involve   travel from this location.  By default, we impose no additional   requirements. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="actorInGroupPrefix"></a>
+<table class=decl><tr><td><code>actorInGroupPrefix (pov, posture, remote, lst)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3621">3621</a>]</table><div class=desc>   Prefix and suffix messages for listing a group of actors   nominally in this location.  'posture' is the posture of the   actors.  'remote' is the outermost visible room containing the   actors, but only if that room is remote from the point-of-view   actor; if everything is local, this will be nil.  'lst' is the   list of actors being listed.  By default, we'll just show the   standard library messages. <p>
+</div>
+<a name="actorInGroupSuffix"></a>
+<table class=decl><tr><td><code>actorInGroupSuffix (pov, posture, remote, lst)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3629">3629</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="actorIsFamiliar"></a>
+<table class=decl><tr><td><code>actorIsFamiliar (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4154">4154</a>]</table><div class=desc>   Is the actor familiar with this location?  In other words, is the   actor supposed to know the location well at the start of the game? <p>   This should return true if the actor is familiar with this   location, nil if not.  By default, we return nil, since actors   are not by default familiar with any locations. <p>   The purpose of this routine is to determine if the actor is meant   to know the location well, within the context of the game, even   before the game starts.  For example, if an area in the game is   an actor's own house, the actor would naturally be familiar,   within the context of the game, with the locations making up the   house. <p>   Note that this routine doesn't need to "learn" based on the   events of the game.  The familiarity here is meant only to model   the actor's knowledge as of the start of the game. <p>
+</div>
+<a name="actorKnowsDestination"></a>
+<table class=decl><tr><td><code>actorKnowsDestination (actor, conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4122">4122</a>]</table><div class=desc>   Determine if the given actor has "intrinsic" knowledge of the   destination of the given travel connector leading away from this   location.  This knowledge is independent of any memory the actor   has of actual travel through the connector in the course of the   game, which we track separately via the TravelConnector's travel   memory mechanism. <p>   There are two main reasons an actor would have intrinsic   knowledge of a connector's destination: <p>   1. The actor is supposed to be familiar with the location and its   surroundings, within the context of the game.  For example, if   part of the game is the player character's own house, the PC   would probably know where all of the connections among rooms go. <p>   2. The destination location is plainly visible from this location   or is clearly marked (such as with a sign).  For example, if the   current location is an open field, a nearby hilltop to the east   might be visible from here, so we could see from here where we'll   end up by going east.  Alternatively, if we're in a lobby, and   the passage to the west is marked with a sign reading "electrical   room," an actor would have good reason to think an electrical   room lies to the west. <p>   We handle case (1) automatically through our actorIsFamiliar()   method: if the actor is familiar with the location, we assume by   default that the actor knows where all of the connectors from   here go.  We don't have any default handling for case (2), so   individual rooms (or subclasses) must override this method if   they want to specify intrinsic knowledge for any of their   outgoing connectors. <p>
+</div>
+<a name="actorTravelingWithin"></a>
+<table class=decl><tr><td><code>actorTravelingWithin (origin, dest)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4085">4085</a>]</table><div class=desc>   Receive notification of travel among nested rooms.  When an actor   moves between two locations related directly by containing (such   as from a chair to the room containing the chair, or vice versa),   we first call this routine on the origin of the travel, then we   move the actor, then we call this same routine on the destination   of the travel. <p>   This routine is used any time an actor is moved with   travelWithin().  This is not used when an actor travels between   locations related by a TravelConnector object rather than by   direct containment. <p>   We do nothing by default.  Locations can override this if they   wish to perform any special handling during this type of travel. <p>
+</div>
+<a name="addRoomNotifyItem"></a>
+<table class=decl><tr><td><code>addRoomNotifyItem (obj)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3970">3970</a>]</table><div class=desc>   Add an item to our registered notification list for actions in   the room. <p>   Items can be added here if they must be notified of actions   performed by within the room even when the items aren't in the   room at the time of the action.  All items connected by   containment with the actor performing an action are automatically   notified of the action; only items that must receive notification   even when not connected by containment need to be registered   here. <p>
+</div>
+<a name="cannotGoShowExits"></a>
+<table class=decl><tr><td><code>cannotGoShowExits (actor)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3642">3642</a>]</table><div class=desc>   Show a list of exits from this room as part of failed travel   ("you can't go that way"). <p>
+</div>
+<a name="cannotGoThatWay"></a>
+<table class=decl><tr><td><code>cannotGoThatWay ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4217">4217</a>]</table><div class=desc>   Show the default "you can't go that way" message for this   location.  By default, we show a generic message, but individual   rooms might want to override this to provide a more specific   description of why travel isn't allowed. <p>
+</div>
+<a name="cannotGoThatWayInDark"></a>
+<table class=decl><tr><td><code>cannotGoThatWayInDark ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4246">4246</a>]</table><div class=desc>   Show a version of the "you can't go that way" message for travel   while in the dark.  This is called when the actor is in the dark   (i.e., there's no ambient light at the actor) and attempts to   travel in a direction that doesn't allow travel.  By default, we   show a generic "you can't see where you're going in the dark"   message. <p>   This routine is essentially a replacement for the   cannotGoThatWay() routine that we use when the actor is in the   dark. <p>
+</div>
+<a name="cannotTravel"></a>
+<table class=decl><tr><td><code>cannotTravel ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4170">4170</a>]</table><div class=desc>   The default "you can't go that way" message for travel within this   location in directions that don't allow travel.  This is shown   whenever an actor tries to travel in one of the directions we have   set to point to noTravel.  A room can override this to produce a   different, customized message for unset travel directions - this   is an easy way to change the cannot-travel message for several   directions at once. <p>   The handling depends on whether or not it's dark.  If it's dark,   we don't want to reveal whether or not it's actually possible to   perform the travel, since there's no light to see where the exits   are. <p>
+</div>
+<a name="checkActorOutOfNested"></a>
+<table class=decl><tr><td><code>checkActorOutOfNested (allowImplicit)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3812">3812</a>]</table><div class=desc>   Check, using pre-condition rules, that the actor is removed from   this nested location and moved to its exit destination.  By   default, we're not a nested location, so there's nothing for us   to do. <p>
+</div>
+<a name="checkActorReadyToEnterNestedRoom"></a>
+<table class=decl><tr><td><code>checkActorReadyToEnterNestedRoom (allowImplicit)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3785">3785</a>]</table><div class=desc>   Check, using pre-condition rules, that the actor is ready to   enter this room as a nested location.  By default, we do nothing,   since we're not designed as a nested location. <p>
+</div>
+<a name="checkMovingActorInto"></a>
+<table class=decl><tr><td><code>checkMovingActorInto (allowImplicit)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3718">3718</a>]</table><div class=desc>   Try moving the actor into this location. <p>
+</div>
+<a name="checkStagingLocation"></a>
+<table class=decl><tr><td><code>checkStagingLocation (dest)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3710">3710</a>]</table><div class=desc>   Check this object as a staging location.  We're a valid location,   so we allow this. <p>
+</div>
+<a name="checkTravelerDirectlyInRoom"></a>
+<table class=decl><tr><td><code>checkTravelerDirectlyInRoom (traveler, allowImplicit)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3796">3796</a>]</table><div class=desc>   Check that the traveler is directly in the given room, using   pre-condition rules.  'nested' is the nested location immediately   within this room that contains the actor (directly or   indirectly). <p>
+</div>
+<a name="disembarkRoom"></a>
+<table class=decl><tr><td><code>disembarkRoom ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3846">3846</a>]</table><div class=desc>   An actor is attempting to disembark this location.  By default,   we'll simply turn this into an "exit" command. <p>
+</div>
+<a name="dispatchRoomDaemon"></a>
+<table class=decl><tr><td><code>dispatchRoomDaemon ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4275">4275</a>]</table><div class=desc>   Dispatch the room daemon.  This is a daemon routine invoked once   per turn; we in turn invoke roomDaemon on the current player   character's current location. <p>
+</div>
+<a name="enteringRoom"></a>
+<table class=decl><tr><td><code>enteringRoom (traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3998">3998</a>]</table><div class=desc>   Receive notification that a traveler is arriving.  This is a   convenience method that rooms can override to carry out side   effects of arrival.  This is called just before the room's   arrival message (usually the location description) is displayed,   so the method can make any adjustments to the room's status or   contents needed for the arrival.  By default, we do nothing. <p>
+</div>
+<a name="getDropDestination"></a>
+<table class=decl><tr><td><code>getDropDestination (objToDrop, path)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3862">3862</a>]</table><div class=desc>   The destination for objects explicitly dropped by an actor within   this room.  By default, we'll return self, because items dropped   should simply go in the room itself.  Some types of rooms will   want to override this; for example, a room that represents the   middle of a tightrope would probably want to set the drop   destination to the location below the tightrope.  Likewise,   objects like chairs will usually prefer to have dropped items go   into the enclosing room. <p>
+</div>
+<a name="getExtraScopeItems"></a>
+<table class=decl><tr><td><code>getExtraScopeItems (actor)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3908">3908</a>]</table><div class=desc>   Get any extra items in scope for an actor in this location.   These are items that are to be in scope even if they're not   reachable through any of the normal sense paths (so they'll be in   scope even in the dark, for example). <p>   By default, this returns nothing.  Subclasses can override as   necessary to include additional items in scope.  For example, a   chair would probably want to include itself in scope, since the   actor presumably knows he or she is sitting in a chair even if   it's too dark to see the chair. <p>
+</div>
+<a name="getNominalActorContainer"></a>
+<table class=decl><tr><td><code>getNominalActorContainer (posture)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3894">3894</a>]</table><div class=desc>   The "nominal actor container" - this is the container which we'll   say actors are in when we describe actors who are actually in   this location.  By default, this simply returns self, but it's   sometimes useful to describe actors as being in some object other   than self.  The most common case is that normal top-level rooms   usually want to describe actors as being "on the floor" or   similar. <p>
+</div>
+<a name="getNominalDropDestination"></a>
+<table class=decl><tr><td><code>getNominalDropDestination ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3883">3883</a>]</table><div class=desc>   The nominal drop destination - this is the location where objects   are *reported* to go when dropped by an actor in this location.   By default, we simply return 'self'. <p>   The difference between the actual drop location and the nominal   drop location is that the nominal drop location is used only for   reporting messages, while the actual drop location is the   location where objects are moved on 'drop' or equivalent actions.   Rooms, for example, want to report that a dropped object lands on   the floor (or the ground, or whatever), even though the room   itself is the location where the object actually ends up.  We   distinguish between the nominal and actual drop location to allow   these distinctions in reported messages. <p>
+</div>
+<a name="getRoomNotifyList"></a>
+<table class=decl><tr><td><code>getRoomNotifyList ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3943">3943</a>]</table><div class=desc>   Get my notification list - this is a list of objects on which we   must call beforeAction and afterAction when an action is   performed within this room. <p>   We'll also include any registered notification items for all of   our containing rooms up to the outermost container. <p>   The general notification mechanism always includes in the   notification list all of the objects connected by containment to   the actor, so objects that are in this room need not register for   explicit notification. <p>
+</div>
+<a name="getStatuslineExitsHeight"></a>
+<table class=decl><tr><td><code>getStatuslineExitsHeight ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3664">3664</a>]</table><div class=desc>   Get the estimated height, in lines of text, of the exits display's   contribution to the status line.  This is used to calculate the   extra height we need in the status line, if any, to display the   exit list.  If we're not configured to display exits in the status   line, this should return zero. <p>
+</div>
+<a name="isActorTravelReady"></a>
+<table class=decl><tr><td><code>isActorTravelReady (conn)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3826">3826</a>]</table><div class=desc>   Determine if the current gActor, who is directly in this location,   is "travel ready."  This means that the actor is ready, as far as   this location is concerned, to traverse the given connector.  By   default, we consider an actor to be travel-ready if the actor is   standing; this takes care of most nested room situations, such as   chairs and beds, automatically. <p>
+</div>
+<a name="leavingRoom"></a>
+<table class=decl><tr><td><code>leavingRoom (traveler)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4006">4006</a>]</table><div class=desc>   Receive notification that a traveler is leaving.  This is a   convenience method that rooms can override to carry out side   effects of departure.  This is called just after any departure   message is displayed.  By default, we do nothing. <p>
+</div>
+<a name="listWithActorIn"></a>
+<table class=decl><tr><td><code>listWithActorIn (posture)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3484">3484</a>]</table><div class=desc>   Get the nested room list grouper for an actor in the given   posture directly in this room.  This is used when we're listing   the actors within the nested room as <p>   By default, we maintain a lookup table, and store one nested   actor grouper object for each posture.  This makes it so that we   show one group per posture in this room; for example, if we   contain two sitting actors and three standing actors, we'll say   something like "bill and bob are sitting on the stage, and jill,   jane, and jack are standing on the stage."  This can be   overridden if a different arrangement of groups is desired; for   example, an override could simply return a single grouper to list   everyone in the room together, regardless of posture. <p>
+</div>
+<a name="makeStandingUp"></a>
+<table class=decl><tr><td><code>makeStandingUp ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3681">3681</a>]</table><div class=desc>   Make the actor stand up from this location.  By default, we'll   simply change the actor's posture to "standing," and show a   default success report. <p>   Subclasses might need to override this.  For example, a chair   will set the actor's location to the room containing the chair   when the actor stands up from the chair. <p>
+</div>
+<a name="removeRoomNotifyItem"></a>
+<table class=decl><tr><td><code>removeRoomNotifyItem (obj)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3976">3976</a>]</table><div class=desc>remove an item from the registered notification list<p>
+</div>
+<a name="roomActorHereDesc"></a>
+<table class=decl><tr><td><code>roomActorHereDesc (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3557">3557</a>]</table><div class=desc>as part of a room description, mention an actor in this room<p>
+</div>
+<a name="roomActorPostureDesc"></a>
+<table class=decl><tr><td><code>roomActorPostureDesc (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3598">3598</a>]</table><div class=desc>describe the actor's posture while in this location<p>
+</div>
+<a name="roomActorStatus"></a>
+<table class=decl><tr><td><code>roomActorStatus (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3595">3595</a>]</table><div class=desc>show the status addendum for an actor in this location<p>
+</div>
+<a name="roomActorThereDesc"></a>
+<table class=decl><tr><td><code>roomActorThereDesc (actor)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3566">3566</a>]</table><div class=desc>   Provide a default description for an actor in this location, as   seen from a remote location (i.e., from a separate top-level room   that's linked to our top-level room by a sense connector of some   kind).  By default, we'll describe the actor as being in this   nested room. <p>
+</div>
+<a name="roomAfterAction"></a>
+<table class=decl><tr><td><code>roomAfterAction ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3926">3926</a>]</table><div class=desc>   Receive notification that we've just finished a command within   this location.  This is called on the room immediately containing   the actor performing the command, then on the room containing   that room, and so on to the outermost room. <p>
+</div>
+<a name="roomBeforeAction"></a>
+<table class=decl><tr><td><code>roomBeforeAction ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3916">3916</a>]</table><div class=desc>   Receive notification that we're about to perform a command within   this location.  This is called on the outermost room first, then   on the nested rooms, from the outside in, until reaching the room   directly containing the actor performing the command. <p>
+</div>
+<a name="roomDarkTravel"></a>
+<table class=decl><tr><td><code>roomDarkTravel (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4199">4199</a>]</table><div class=desc>   Receive notification of travel from one dark location to another.   This is called before the actor is moved from the source   location, and can cancel the travel if desired by using 'exit' to   terminate the command. <p>   By default, we'll simply display the same handler we do when the   player attempts travel in a direction with no travel possible in   the dark (cannotGoThatWayInDark), and then use 'exit' to cancel   the command.  This default behavior provides the player with no   mapping information in the dark, since the same message is   generated whether or not travel would be possible in a given   direction were light present. <p>
+</div>
+<a name="roomDesc"></a>
+<table class=decl><tr><td><code>roomDesc ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3554">3554</a>]</table><div class=desc>   Show our room description: this is the interior description of   the room, for use when the room is viewed by an actor within the   room.  By default, we show our ordinary 'desc'. <p>
+</div>
+<a name="roomListActorPosture"></a>
+<table class=decl><tr><td><code>roomListActorPosture (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3609">3609</a>]</table><div class=desc>   describe the actor's posture as part of the EXAMINE description of   the nested room <p>
+</div>
+<a name="roomOkayPostureChange"></a>
+<table class=decl><tr><td><code>roomOkayPostureChange (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3602">3602</a>]</table><div class=desc>acknowledge a posture change while in this location<p>
+</div>
+<a name="showStatuslineExits"></a>
+<table class=decl><tr><td><code>showStatuslineExits ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3650">3650</a>]</table><div class=desc>show the exit list in the status line<p>
+</div>
+<a name="travelerArriving"></a>
+<table class=decl><tr><td><code>travelerArriving (traveler, origin, connector, backConnector)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4036">4036</a>]</table><div class=desc>   Receive notification that a traveler is arriving in the room.   'traveler' is the object actually traveling.  In most cases this   is simply the actor; but when the actor is in a vehicle, this is   the vehicle instead. <p>   By default, we set each of the "motive" actors to its default   posture, then describe the arrival. <p>
+</div>
+<a name="travelerLeaving"></a>
+<table class=decl><tr><td><code>travelerLeaving (traveler, dest, connector)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#4017">4017</a>]</table><div class=desc>   Receive notification that a traveler is about to leave the room.   'traveler' is the object actually traveling.  In most cases this   is simply the actor; but when the actor is in a vehicle, this is   the vehicle instead. <p>   By default, we describe the traveler's departure if the traveler's   destination is different from its present location. <p>
+</div>
+<a name="tryMakingDefaultPosture"></a>
+<table class=decl><tr><td><code>tryMakingDefaultPosture ( )</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3701">3701</a>]</table><div class=desc>run the appropriate implied command to achieve our default posture<p>
+</div>
+<a name="tryMakingTravelReady"></a>
+<table class=decl><tr><td><code>tryMakingTravelReady (conn)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3837">3837</a>]</table><div class=desc>   Run an implicit action, if possible, to make the current actor   "travel ready."  This will be called if the actor is directly in   this location and isActorTravelReady() returns nil.  By default,   we try to make the actor stand up.  This should always be paired   with isActorTravelReady - the condition that routine tests should   be the condition this routine tries to bring into effect.  If no   implicit action is possible, simply return nil. <p>
+</div>
+<a name="wouldBeLitFor"></a>
+<table class=decl><tr><td><code>wouldBeLitFor (actor)</code><td align=right><code><a href="../file/travel.t.html">travel.t</a>[<a href="../source/travel.t.html#3518">3518</a>]</table><div class=desc>   Check the ambient illumination level in the room for the given   actor's senses to determine if the actor would be able to see if   the actor were in this room without any additional light sources.   Returns true if the room is lit for the purposes of the actor's   visual senses, nil if not. <p>   Note that if the actor is already in this location, there's no   need to run this test, since we could get the information from   the actor directly.  The point of this test is to determine the   light level in this location without the actor having to be   present. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

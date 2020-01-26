@@ -1,0 +1,110 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>AutoClosingDoor</title><meta name="keywords" content="AutoClosingDoor,ExitOnlyPassage,StairwayUp,TravelVia,remapTo,dobjFor,reportAutoClose()"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>AutoClosingDoor : <a href="door.htm">Door</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="exitonlypassage.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="onewayroomconnector.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">So far we've provided a way of getting into the long cave, but no way of getting out. Let's suppose that the way back up is also a one-way trip, via a trapdoor in the ceiling that closes each time you go through it. This would be a good example of an AutoClosingDoor. The other (top) side of the trapdoor could be another <a href="exitonlypassage.htm">ExitOnlyPassage</a>, since we don't want to allow the trapdoor to be opened from the upper cave ( we want to force the player to use the chute we've so carefully implemented). We'll have the trapdoor open into yet another new room, a square cave to the east of mainCave:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">longCave&nbsp;:&nbsp;DarkRoom&nbsp;'Long&nbsp;Cave'&nbsp;'the&nbsp;long&nbsp;cave'
+<br>
+&nbsp;&nbsp;"This&nbsp;long&nbsp;narrow&nbsp;cave&nbsp;runs&nbsp;from&nbsp;east&nbsp;to&nbsp;west&nbsp;between&nbsp;rough&nbsp;walls&nbsp;and&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;low&nbsp;ceiling.&nbsp;There&nbsp;is&nbsp;a&nbsp;large&nbsp;square&nbsp;hole&nbsp;in&nbsp;the&nbsp;west&nbsp;wall,&nbsp;while
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;ladder&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall&nbsp;at&nbsp;the&nbsp;east&nbsp;end&nbsp;runs&nbsp;up&nbsp;to&nbsp;a&nbsp;trapdoor
+<br>
+&nbsp;&nbsp;&nbsp;set&nbsp;in&nbsp;the&nbsp;ceiling.&nbsp;Some&nbsp;words&nbsp;have&nbsp;been&nbsp;crudely&nbsp;scratched&nbsp;on&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;wall.&nbsp;"
+<br>
+&nbsp;&nbsp;west&nbsp;:&nbsp;NoTravelMessage&nbsp;{&nbsp;"You&nbsp;can't&nbsp;climb&nbsp;back&nbsp;up&nbsp;the&nbsp;chute,&nbsp;it's
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;too&nbsp;slippery.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;<b>up&nbsp;=&nbsp;longCaveLadder</b>&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;ExitOnlyPassage&nbsp;-&gt;&nbsp;squareHole&nbsp;'square&nbsp;hole/chute'&nbsp;'square&nbsp;hole'
+<br>
+&nbsp;&nbsp;"Through&nbsp;the&nbsp;square&nbsp;hole&nbsp;you&nbsp;can&nbsp;see&nbsp;the&nbsp;bottom&nbsp;end&nbsp;of&nbsp;the&nbsp;shiny&nbsp;metal
+<br>
+&nbsp;&nbsp;&nbsp;chute,&nbsp;which&nbsp;is&nbsp;too&nbsp;slippery&nbsp;to&nbsp;climb&nbsp;back&nbsp;up.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;longCaveLadder:&nbsp;StairwayUp&nbsp;'ladder'&nbsp;'ladder'
+<br>
+&nbsp;&nbsp;"The&nbsp;ladder&nbsp;fixed&nbsp;to&nbsp;the&nbsp;east&nbsp;wall&nbsp;leads&nbsp;up&nbsp;to&nbsp;a&nbsp;trapdoor&nbsp;in&nbsp;the&nbsp;ceiling.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(TravelVia)&nbsp;remapTo(TravelVia,&nbsp;trapdoor)
+<br>
+;
+<br>
+
+<br>
++&nbsp;trapdoor&nbsp;:&nbsp;AutoClosingDoor&nbsp;'trap&nbsp;trapdoor/door'&nbsp;'trapdoor';
+<br>
+
+<br>
+squareCave&nbsp;:&nbsp;DarkRoom&nbsp;'Square&nbsp;Cave'&nbsp;'the&nbsp;square&nbsp;cave'
+<br>
+&nbsp;&nbsp;&nbsp;"This&nbsp;large&nbsp;square&nbsp;cave&nbsp;boasts&nbsp;a&nbsp;solitary&nbsp;exit&nbsp;to&nbsp;the&nbsp;west.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;west&nbsp;=&nbsp;mainCave
+<br>
+;
+<br>
+
+<br>
++&nbsp;ExitOnlyPassage&nbsp;-&gt;&nbsp;trapdoor&nbsp;'trap&nbsp;trapdoor/door'&nbsp;'trapdoor'
+<br>
+&nbsp;&nbsp;"You&nbsp;can&nbsp;hardly&nbsp;see&nbsp;the&nbsp;trapdoor&nbsp;from&nbsp;this&nbsp;side,&nbsp;and&nbsp;there&nbsp;is&nbsp;no&nbsp;means&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;pull&nbsp;it&nbsp;open.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The other thing to note here is the way we've handled the ladder. We've made it a StairwayUp to allow it to be climbed, but it is actually the trapdoor rather than the ladder that must be traversed to reach the square cave above. There's no easy way to make the trapdoor the destination of the ladder and the other side of the trapdoor the destination of its underside. It's far easier to make traversing (i.e. climbing) the ladder equivalent to traversing (i.e. going through) the trapdoor. However such actions may be described by the player (CLIMB LADDER, CLIMB UP LADDER, ENTER TRAPDOOR, GO THROUGH TRAPDOOR) they'll end up being mapped to TravelVia actions internally. We can therefore simply redirect a TravelVia action on the ladder to a TravelVia action on the trapdoor, which we do using the dobjFor and remapTo macros.
+<br>
+
+<br>
+Don't forget to add </font><font face="Courier New" size="2" color="#000000">east&nbsp;=&nbsp;squareCave</font><font face="Arial" size="2" color="#000000"> to the definition of mainCave. Then you can recompile and test the game once more.
+<br>
+
+<br>
+Here the trapdoor uses the <a href="thingtemplate.htm">Thing template</a> and the ExitOnlyPassage the <a href="passagetemplate.htm">Passage template</a>.
+<br>
+
+<br>
+There's another method on AutoClosingDoor, <b>reportAutoClose()</b>, which can be customised if we want an AutoClosingDoor to report its automatic closing in anything other than the default way. Suppose, for example, that when the player character goes through the trapdoor, instead of the standard "After you go through the trapdoor, it closes behind you" we want it to say, "After you emerge through the trapdoor, it slams shut behind you". You can achieve this by redefining the trapdoor thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;trapdoor&nbsp;:&nbsp;AutoClosingDoor&nbsp;'trap&nbsp;trapdoor/door'&nbsp;'trapdoor'
+<br>
+&nbsp;&nbsp;<b>reportAutoClose&nbsp;=&nbsp;"&lt;.p&gt;After&nbsp;{you/he}&nbsp;emerge{s}&nbsp;through&nbsp;the&nbsp;trapdoor,&nbsp;it&nbsp;slams
+<br>
+&nbsp;&nbsp;&nbsp;shut&nbsp;behind&nbsp;{it&nbsp;actor/him}.&nbsp;"
+<br>
+</b>;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">If you want an AutoClosingDoor to close silently (i.e. without any report at all), you can simply override reportAutoClose() to do nothing.
+<br>
+</font></font>
+
+</body></html>

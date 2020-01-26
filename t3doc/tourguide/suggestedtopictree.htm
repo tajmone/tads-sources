@@ -1,0 +1,142 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SuggestedTopicTree</title><meta name="keywords" content="SuggestedTopicTree"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SuggestedTopicTree : <a href="suggestedtopic.htm">SuggestedTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="suggestednotopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="limitsuggestions.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">As we have seen, a <a href="suggestedtopic.htm">SuggestedTopic</a> class is included in the class list of a single <a href="topicentry.htm">TopicEntry</a> to add that TopicEntry to the topic inventory, that is the list of topics that can be suggested to players. One limitation of a SuggestedTopic is that is applies only to the TopicEntry on which it is defined. This may sounds like it's obviously the right behaviour, until one stops to consider what happens with <a href="alttopic.htm">AltTopics</a>. By default, if a TopicEntry which is also a SuggestedTopic has an active AltTopic, the suggestion will not be offered. This is because it is the AltTopic that it is now active. You can, of course, define the AltTopic to be a SuggestedTopic, and it will then be suggested. This is fine if you want the AltTopic and its parent TopicEntry to be treated as effectively separate topics for which curiosity is exhausted independently. For example, if you defined the following:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic,&nbsp;SuggestedAskTopic&nbsp;@bob
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;What&nbsp;can&nbsp;you&nbsp;tell&nbsp;me&nbsp;about&nbsp;bob?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Capital&nbsp;fellow!&lt;/q&gt;&nbsp;he&nbsp;replies."
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'Bob'&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic,&nbsp;SuggestedAskTopic
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Have&nbsp;you&nbsp;heard&nbsp;about&nbsp;Bob?&lt;/q&gt;&nbsp;you&nbsp;enquire.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Alas&nbsp;poor&nbsp;Bob,&nbsp;I&nbsp;knew&nbsp;him&nbsp;well!&lt;/q&gt;&nbsp;he&nbsp;answers&nbsp;with&nbsp;a&nbsp;sad&nbsp;shake&nbsp;of&nbsp;the&nbsp;head."
+<br>
+&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'Bob'
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;(bob.hasDied)
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then 'ask about Bob' will be offered once while Bob is still alive, and once more again when Bob passes away (assuming this causes bob.hasDied to become true). If this is what you want, then this is the way to do it. But you may instead want the TopicEntry and its AltTopics to be treated as a group that is to be suggested en bloc and exhausted en bloc. This would be the situation, for example, when the player needs only ask about the topic once, but the answer received will depend on the game state.
+<br>
+
+<br>
+For example, consider the GiveShowTopics we defined for giving or showing Sarah the ring and the diamond while they are still separated, together with the <a href="alttopic.htm">AltTopics</a> that make Sarah's response appropriate whichever order she's shown these objects in. In this case, if we wanted to make them SuggestedTopics, we'd also want to use SuggestedTopicTree:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;GiveShowTopic,&nbsp;<b>SuggestedTopicTree,&nbsp;SuggestedShowTopic</b>&nbsp;@diamond
+<br>
+&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;studies&nbsp;the&nbsp;gem&nbsp;carefully,&nbsp;&lt;q&gt;That&nbsp;certainly&nbsp;looks&nbsp;like&nbsp;it&nbsp;could
+<br>
+&nbsp;&nbsp;&nbsp;be&nbsp;the&nbsp;diamond&nbsp;from&nbsp;my&nbsp;ring,&lt;/q&gt;&nbsp;she&nbsp;decides,&nbsp;&lt;q&gt;But&nbsp;where's&nbsp;the&nbsp;ring?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;.reveal&nbsp;diamond-shown&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;<b>name&nbsp;=&nbsp;'the&nbsp;diamond'</b>
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;Yes,&nbsp;I&nbsp;think&nbsp;that's&nbsp;the&nbsp;diamond.&lt;/q&gt;&nbsp;she&nbsp;nods&nbsp;eagerly,&nbsp;&lt;q&gt;Have&nbsp;you&nbsp;tried
+<br>
+&nbsp;&nbsp;&nbsp;whether&nbsp;it&nbsp;fits&nbsp;the&nbsp;ring?&lt;/q&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;gRevealed('ring-shown')
+<br>
+;&nbsp;
+<br>
+
+<br>
+++&nbsp;GiveShowTopic<b>,&nbsp;SuggestedTopicTree,&nbsp;SuggestedShowTopic</b>&nbsp;@ring
+<br>
+&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;nods&nbsp;eagerly,&nbsp;&lt;q&gt;Yes,&nbsp;that's&nbsp;my&nbsp;ring!&lt;/q&gt;&nbsp;she&nbsp;declares,&nbsp;but&nbsp;then
+<br>
+&nbsp;&nbsp;&nbsp;her&nbsp;hand&nbsp;flies&nbsp;to&nbsp;her&nbsp;mouth,&nbsp;&lt;q&gt;But&nbsp;-&nbsp;oh&nbsp;my&nbsp;goodness&nbsp;-&nbsp;the&nbsp;diamond&nbsp;is&nbsp;missing!&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;.reveal&nbsp;ring-shown&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;<b>name&nbsp;=&nbsp;'the&nbsp;ring'</b>
+<br>
+;
+<br>
+&nbsp;
+<br>
++++&nbsp;AltTopic&nbsp;
+<br>
+&nbsp;&nbsp;"&lt;q&gt;That's&nbsp;my&nbsp;ring,&nbsp;all&nbsp;right!&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;declares,&nbsp;&lt;q&gt;But&nbsp;you&nbsp;haven't
+<br>
+&nbsp;&nbsp;&nbsp;fitted&nbsp;the&nbsp;diamond!&lt;/q&gt;"
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;gRevealed('diamond-shown')
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Since this is a bit complicated, we'll add the explanation given as a comment in the library code:
+<br>
+
+<br>
+<i>A [SuggestedTopicTree is a] suggested topic that applies to an entire AltTopic group.
+<br>
+
+<br>
+Normally, a suggestion is tied to an individual TopicEntry. This means that when a topic has several AltTopic alternatives, each AltTopic can be its own separate, independent suggestion. A particular alternative can be a suggestion or not, independently of the other alternatives for the same TopicEntry. Since each AltTopic is a separate suggestion, asking about one of the alternatives won't have any effect on the "curiosity" about the other alternatives - in other words, the other alternatives will be separately suggested when they become active.
+<br>
+
+<br>
+In many cases, it's better for an entire set of alternatives to be treated as a single suggested topic. That is, we want to suggest the topic when ANY of the alternatives is active, and asking about any one of the alternatives will satisfy the PC's curiosity for ALL of the alternatives. This sort of arrangement is usually better for cases where the conditions that trigger the different alternatives aren't things that ought to make the PC think to ask the same question again.
+<br>
+
+<br>
+Use this class by associating it with the root TopicEntry of the group of alternatives. You can do this most simply by mixing this class into the superclass list of the root TopicEntry:
+<br>
+</i></font><font face="Times New Roman" size="3" color="#000000"><i>
+<br>
+</i></font><font face="Courier New" size="2" color="#000000"><i>+&nbsp;AskTellTopic,&nbsp;SuggestedTopicTree,&nbsp;SuggestedAskTopic&nbsp;
+<br>
+&nbsp;//&nbsp;...&nbsp;*.&nbsp;;
+<br>
+++&nbsp;AltTopic&nbsp;...&nbsp;;
+<br>
+++&nbsp;AltTopic&nbsp;...&nbsp;;&nbsp;
+<br>
+</i></font><font face="Times New Roman" size="3" color="#000000"><i>
+<br>
+</i></font><font face="Arial" size="2" color="#000000"><i>This makes the entire group of AltTopics part of the same suggestion. Note that you must also include SuggestedAsk, SuggestedTellTopic, or one of the other specialized types among the superclass, to indicate which kind of suggestion this is.</i>
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

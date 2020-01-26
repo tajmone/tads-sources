@@ -1,0 +1,28 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Overview - Actors &amp; NPCs</title><meta name="keywords" content="Actor,UntakeableActor,Person"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Overview - Actors &amp; NPCs
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="randomfiringscript.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="basicactors.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Non-Player Character (NPC) is, roughly speaking, any other animate being the player/player character encounters in the game world. "Animate" may be a slightly fuzzy concept, since it might include not only other people and various animals, but also, perhaps, robots and talking computers. Ultimately it is, of course, up to game authors what they implement as NPCs; the choice will normally depend on which entities in their games exhibit sufficiently complex behaviour.
+<br>
+
+<br>
+Implementing an NPC can be a complex task, but TADS 3 breaks it down into a series of (in the main) fairly simple tasks by spreading the implementation of each NPC over (potentially) a wide range of objects. The basic NPC will be defined in an object of the Actor class, or one of its subclasses, UntakeableActor or Person. The difference between these three classes is that an Actor is portable whereas the other two are not; you would therefore normally use Actor for a small animal such as a mouse or a cat that you might want the player character to be able to pick up and carry around. Neither UntakeableActor nor Person can be picked up (they both derive from <a href="immovable.htm">Immovable</a> as well as from Actor), the only difference is the text of the messages displayed when the attempt to pick them up or otherwise push them around is made: UntakeableActor displays more generic messages suitable for large animals, while Person displays messages more suited to the attempt to cart off a fellow human being. Thus you would normally use UntakeableActor for larger animals such as tigers and elephants, and Person for human or human-like characters. In this game all the NPCs we shall be implementing will use the Person class (which is not to say that they'll all be strictly human!).
+<br>
+
+<br>
+Particularly for a complex NPC such as another human character, the Actor (or Person) object should generally contain only the very basic, constant data needed to define that actor (such as name, gender, vocabWords, basic description, and maybe weight, bulk and one or two other things). The behaviour of the NPC should be defined using a number of <a href="overview-actorstates.htm">ActorState</a>, <a href="topicentry.htm">TopicEntry</a> and perhaps <a href="agendaitem.htm">AgendaItem</a>, <a href="convnode.htm">ConvNode </a>and <a href="topicgroup.htm">TopicGroup</a> objects nested inside the principal Actor object. In particular we use TopicEntry objects to define what happens in conversation with the actor (the responses to ASK ABOUT, TELL ABOUT, and ASK FOR, and also to GIVE and SHOW commands). One of the aims of this structure is to eliminate, or at least drastically reduce, the need for a huge tangle of if, else and switch statement spaghetti to define complex behaviour, although assuming your NPCs do anything out of the library-defined ordinary, the time will come when you may need the occasional if or switch statement.
+<br>
+
+<br>
+As always, this may not mean a great deal in the abstract; hopefully it will all become clearer as we work through the implementation of a number of NPCs, feature by feature. In the meantime, if you have not already done so, you may wish to read the extensive article on <a href="../techman/t3actor.htm" target="_top">Creating Dynamic Actors in TADS 3</a> in the <i>Technical Manual</i>.
+<br>
+
+<br>
+</font>
+
+</body></html>

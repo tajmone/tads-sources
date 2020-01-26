@@ -1,0 +1,69 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>OutOfReach</title></head><body>
+<table class=ban><tr><td align=left><span class=title>OutOfReach</span><span class=type>class</span><td align=right><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2271">2271</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Out Of Reach - this is a special mix-in that can be used to create an   object that places its *contents* out of reach under customizable   conditions, and can optionally place itself out of reach as well.
+<p>
+<code>class
+<b>OutOfReach</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>OutOfReach</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#cannotReachFromInsideMsg">cannotReachFromInsideMsg</a>&nbsp;
+<a href="#cannotReachFromOutsideMsg">cannotReachFromOutsideMsg</a>&nbsp;
+<a href="#canObjReachContents">canObjReachContents</a>&nbsp;
+<a href="#canObjReachSelf">canObjReachSelf</a>&nbsp;
+<a href="#canReachFromInside">canReachFromInside</a>&nbsp;
+<a href="#canReachSelfFromInside">canReachSelfFromInside</a>&nbsp;
+<a href="#checkTouchViaPath">checkTouchViaPath</a>&nbsp;
+<a href="#tryImplicitRemoveObstructor">tryImplicitRemoveObstructor</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="cannotReachFromInsideMsg"></a>
+<table class=decl><tr><td><code>cannotReachFromInsideMsg (dest)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2328">2328</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="cannotReachFromOutsideMsg"></a>
+<table class=decl><tr><td><code>cannotReachFromOutsideMsg (dest)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2327">2327</a>]</table><div class=desc>   The message to use to indicate that we can't reach an object,   because the actor is outside me and the target is inside, or vice   versa.  Each of these can return a property ID giving an actor   action message property, or can simply return a string with the   message text. <p>
+</div>
+<a name="canObjReachContents"></a>
+<table class=decl><tr><td><code>canObjReachContents (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2341">2341</a>]</table><div class=desc>   Determine if the given object can reach my contents.  'obj' is   the object (usually an actor) attempting to reach my contents   from outside of me. <p>   By default, we'll return nil, so that nothing within me can be   reached from anyone outside.  This can be overridden to allow my   contents to become reachable from some external locations but not   others; for example, a high shelf could allow an actor standing   on a chair to reach my contents. <p>
+</div>
+<a name="canObjReachSelf"></a>
+<table class=decl><tr><td><code>canObjReachSelf (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2350">2350</a>]</table><div class=desc>   Determine if the given object can reach me.  'obj' is the object   (usually an actor) attempting to reach this object. <p>   By default, make this object subject to the same rules as its   contents. <p>
+</div>
+<a name="canReachFromInside"></a>
+<table class=decl><tr><td><code>canReachFromInside (obj, dest)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2361">2361</a>]</table><div class=desc>   Determine if the given object outside of me is reachable from   within me.  'obj' (usually an actor) is attempting to reach   'dest'. <p>   By default, we return nil, so nothing outside of me is reachable   from within me.  This can be overridden as needed.  This should   usually behave symmetrically with canObjReachContents(). <p>
+</div>
+<a name="canReachSelfFromInside"></a>
+<table class=decl><tr><td><code>canReachSelfFromInside (obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2371">2371</a>]</table><div class=desc>   Determine if we can reach this object itself from within.  This   is used when 'obj' tries to touch this object when 'obj' is   located within this object. <p>   By default, we we use the same rules as we use to reach an   external object from within. <p>
+</div>
+<a name="checkTouchViaPath"></a>
+<table class=decl><tr><td><code>checkTouchViaPath (obj, dest, op)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2272">2272</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="tryImplicitRemoveObstructor"></a>
+<table class=decl><tr><td><code>tryImplicitRemoveObstructor (sense, obj)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#2377">2377</a>]</table><div class=desc>   We cannot implicitly remove this obstruction, so simply return   nil when asked. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

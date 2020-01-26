@@ -1,0 +1,52 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Enterable</title><meta name="keywords" content="Enterable,anonymous object,+ syntax,Exitable,EntryPortal,ExitPortal,otherSide,destination,connector"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Enterable : <a href="fixture.htm">Fixture</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="asexit.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="room.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The room definition for <a href="asexit.htm">outsideCave</a> will work fine (once we have defined the <a href="room.htm">entranceCave</a> Room) if the player types IN or SOUTH or even ENTER, but since the room description mentions a cave, the player may try to ENTER CAVE or EXAMINE CAVE. To cover this possibility we should define a cave object and make it enterable:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;Enterable&nbsp;-&gt;entranceTunnel&nbsp;'eerhtsdat&nbsp;cave/entrance/caves'&nbsp;'cave'
+<br>
+&nbsp;&nbsp;"The&nbsp;entrance&nbsp;to&nbsp;the&nbsp;cave&nbsp;is&nbsp;large&nbsp;and&nbsp;welcoming;&nbsp;two&nbsp;large&nbsp;people&nbsp;could&nbsp;easily&nbsp;walk&nbsp;in
+<br>
+&nbsp;&nbsp;&nbsp;side&nbsp;by&nbsp;side&nbsp;without&nbsp;stooping.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This definition uses the <a href="enterabletemplate.htm">Enterable template</a>.
+<br>
+
+<br>
+We use the + syntax to locate this Enterable in outsideCave (so make sure its definition comes after that of outsideCave and before anything else).
+<br>
+
+<br>
+Since there is no need to refer to this object from anywhere else in our game code we can define it as an anonymous object; there is no need to give it an object name, we simply use the class name (without a preceding colon).
+<br>
+
+<br>
+</font><font face="Arial" size="3" color="#000000"><font face="Arial" size="3" color="#FF0000"><b><u>Important Note</u></b></font></font><font face="Arial" size="2" color="#000000">.
+<br>
+
+<br>
+Enterable, in common with <a href="entryportal.htm">EntryPortal</a>, <a href="shipboardroom.htm">Exitable</a> and <a href="exitportal.htm">ExitPortal</a>, superficially resembles Passage-type objects like <a href="throughpassage.htm">ThroughPassage</a> in that it represents a game object which one can go through and end up in a different location. Unlike the various Passage objects (ThroughPassage, Door) etc., Enterable, Exitable, EntryPortal and ExitPortal are <i>not</i> TravelConnectors and have none of the TravelConnector methods or properties. Also, unlike Passages and Doors, they do not descend from Linkable, which means, for example, that an EntryPortal cannot be the masterObject of an ExitPortal; these classes cannot be linked together as pairs pointing to each other.
+<br>
+
+<br>
+Passages and Doors typically refer to other destinations through their <b>otherSide</b> or <b>destination</b> properties.
+<br>
+
+<br>
+Enterable, EntryPortal, Exitable and ExitPortal refer to their destination through their <b>connector</b> property, which may simply be set to the location you want an actor to end up in when entering or exiting such an object, but may instead be set to a TravelConnector object.
+<br>
+</font></font>
+
+</body></html>

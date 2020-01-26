@@ -1,0 +1,54 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>CommandRankingCriterion</title></head><body>
+<table class=ban><tr><td align=left><span class=title>CommandRankingCriterion</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5816">5816</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Command ranking criterion.  This is used by the CommandRanking class   to represent one criterion for comparing two parse trees. <p>   Rankings are performed in two passes.  The first pass is the rough,   qualitative pass, meant to determine if one parse tree has big,   obvious differences from another.  In most cases, this means that one   tree has a particular type of problem or special advantage that the   other doesn't have at all. <p>   The second pass is the fine-grained pass.  We only reach the second   pass if we can't find any coarse differences on the first rough pass.   In most cases, the second pass compares the magnitude of problems or   advantages to determine if one tree is slightly better than the other.
+<p>
+<code>class
+<b>CommandRankingCriterion</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>CommandRankingCriterion</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>CommandRankingCriterion</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandRankingByProblem.html">CommandRankingByProblem</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CommandRankingByWeakness.html">CommandRankingByWeakness</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/rankByAmbiguity.html">rankByAmbiguity</a>&nbsp;
+<a href="../object/rankByLiteralLength.html">rankByLiteralLength</a>&nbsp;
+<a href="../object/rankByNonMatchPoss.html">rankByNonMatchPoss</a>&nbsp;
+<a href="../object/rankBySubcommands.html">rankBySubcommands</a>&nbsp;
+<a href="../object/rankByTokenCount.html">rankByTokenCount</a>&nbsp;
+<a href="../object/rankByVerbStructure.html">rankByVerbStructure</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#comparePass1">comparePass1</a>&nbsp;
+<a href="#comparePass2">comparePass2</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="comparePass1"></a>
+<table class=decl><tr><td><code>comparePass1 (a, b)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5823">5823</a>]</table><div class=desc>   Compare two CommandRanking objects on the basis of this criterion,   for the first, coarse-grained pass.  Returns a positive number if   a is better than b, 0 if they're indistinguishable, or -1 if a is   worse than b. <p>
+</div>
+<a name="comparePass2"></a>
+<table class=decl><tr><td><code>comparePass2 (a, b)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#5826">5826</a>]</table><div class=desc>compare two rankings for the second, fine-grained pass<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

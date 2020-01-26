@@ -1,0 +1,116 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ConsultTopic</title><meta name="keywords" content="ConsultTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ConsultTopic : <a href="topicentry.htm">TopicMatchTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="consultable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultconsulttopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A ConsultTopic is the class of <a href="topicentry.htm">TopicEntry</a> that is used with a <a href="consultable.htm">Consultable</a>. Just as an <a href="asktopic.htm">AskTopic</a>, for example, provides a response to commands such as ASK CURATOR ABOUT MUSEUM, so a ConsultTopic would provide a response to CONSULT HISTORY BOOK ABOUT MUSEUM or LOOK UP MUSUEM IN BOOK.
+<br>
+
+<br>
+Although ConsultTopic inherits all the methods and properties of TopicEntry, there is usually less reason to override any of them. A typical Consultable, such as a book, is a fairly static object that will always provide the same information on any given topic, regardless of the state of the game. You could, perhaps, combine a TopicEntry with an <a href="eventlist.htm">EventList</a> class to provide a series of responses, perhaps representing the player character reading further on the same topic, particularly if you want your Consultable to provide a large amount of information on the topic and it is better broken up into smaller chunks; but then you'd probably want to make it abundantly clear that there <i>was</i> more to read on a given topic rather than leaving the player to guess. Again, you could have a more complex Consultable, such a computer, where the information displayed might change with circumstances, in which case you might want to use some of the techniques we have already seen in connection with TopicEntries on actors (such as <a href="alttopic.htm">AltTopics</a> and the use of isActive).
+<br>
+
+<br>
+In the present game, however, we'll keep things at their simplest and just add a number of basic ConsultTopics to our history book:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;ConsultTopic&nbsp;[ghost,&nbsp;statue,&nbsp;tBenedict]
+<br>
+&nbsp;&nbsp;"According&nbsp;to&nbsp;the&nbsp;book,&nbsp;Benedict&nbsp;the&nbsp;Banana-Bearer&nbsp;lived&nbsp;537&nbsp;years&nbsp;ago
+<br>
+&nbsp;&nbsp;&nbsp;and&nbsp;was&nbsp;responsible&nbsp;for&nbsp;bearing&nbsp;the&nbsp;Golden&nbsp;Banana&nbsp;of&nbsp;Discord&nbsp;from
+<br>
+&nbsp;&nbsp;&nbsp;Hell&nbsp;Fire&nbsp;Cavern.&nbsp;Although&nbsp;many&nbsp;at&nbsp;the&nbsp;time&nbsp;(and&nbsp;since)&nbsp;reckoned
+<br>
+&nbsp;&nbsp;&nbsp;that&nbsp;the&nbsp;ordeal&nbsp;drove&nbsp;him&nbsp;mad,&nbsp;this&nbsp;was&nbsp;no&nbsp;obstacle&nbsp;to&nbsp;his&nbsp;becoming
+<br>
+&nbsp;&nbsp;&nbsp;king,&nbsp;for&nbsp;many&nbsp;reckoned&nbsp;his&nbsp;deed&nbsp;to&nbsp;be&nbsp;a&nbsp;feat&nbsp;of&nbsp;great&nbsp;daring.&nbsp;A&nbsp;golden
+<br>
+&nbsp;&nbsp;&nbsp;statue&nbsp;commemorating&nbsp;the&nbsp;glorious&nbsp;memory&nbsp;of&nbsp;King&nbsp;Benedict&nbsp;can&nbsp;still&nbsp;be
+<br>
+&nbsp;&nbsp;&nbsp;found&nbsp;on&nbsp;the&nbsp;western&nbsp;side&nbsp;of&nbsp;the&nbsp;lake.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;&lt;gSetKnown(goldenBanana)&gt;&gt;"&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;ConsultTopic&nbsp;@goldenBanana
+<br>
+&nbsp;&nbsp;"The&nbsp;Golden&nbsp;Banana&nbsp;of&nbsp;Discord&nbsp;is&nbsp;a&nbsp;talisman&nbsp;of&nbsp;great&nbsp;power.&nbsp;Snatched
+<br>
+&nbsp;&nbsp;&nbsp;from&nbsp;the&nbsp;demons&nbsp;of&nbsp;hell&nbsp;fire&nbsp;cavern&nbsp;some&nbsp;537&nbsp;years&nbsp;ago&nbsp;it&nbsp;enabled
+<br>
+&nbsp;&nbsp;&nbsp;mad&nbsp;Benedict&nbsp;to&nbsp;become&nbsp;king.&nbsp;No&nbsp;one&nbsp;since&nbsp;King&nbsp;Benedict&nbsp;has&nbsp;been
+<br>
+&nbsp;&nbsp;&nbsp;quite&nbsp;sure&nbsp;what&nbsp;powers&nbsp;the&nbsp;Golden&nbsp;Banana&nbsp;wields,&nbsp;but&nbsp;its&nbsp;value&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;significance&nbsp;remain&nbsp;unquestioned.&nbsp;For&nbsp;obvious&nbsp;reasons&nbsp;great&nbsp;care
+<br>
+&nbsp;&nbsp;&nbsp;has&nbsp;always&nbsp;been&nbsp;taken&nbsp;to&nbsp;ensure&nbsp;that&nbsp;this&nbsp;artifact&nbsp;does&nbsp;not&nbsp;fall&nbsp;into
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;wrong&nbsp;hands.&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;ConsultTopic&nbsp;@tHellFireCavern
+<br>
+&nbsp;&nbsp;"Deep&nbsp;in&nbsp;the&nbsp;bowels&nbsp;of&nbsp;the&nbsp;earth,&nbsp;Hell&nbsp;Fire&nbsp;Cavern&nbsp;is&nbsp;a&nbsp;name&nbsp;that&nbsp;has
+<br>
+&nbsp;&nbsp;long&nbsp;struck&nbsp;fear&nbsp;and&nbsp;dread&nbsp;into&nbsp;the&nbsp;souls&nbsp;of&nbsp;mortals.&nbsp;Inhabited&nbsp;by&nbsp;vile
+<br>
+&nbsp;&nbsp;demons,&nbsp;and&nbsp;polluted&nbsp;by&nbsp;the&nbsp;putrid&nbsp;flames&nbsp;of&nbsp;Mount&nbsp;Gloom,&nbsp;the&nbsp;cavern&nbsp;is
+<br>
+&nbsp;&nbsp;as&nbsp;near&nbsp;to&nbsp;being&nbsp;an&nbsp;authentic&nbsp;underworld&nbsp;as&nbsp;one&nbsp;could&nbsp;hope&nbsp;-&nbsp;or&nbsp;fear&nbsp;-
+<br>
+&nbsp;&nbsp;to&nbsp;encounter.&nbsp;Only&nbsp;one&nbsp;man&nbsp;-&nbsp;Benedict&nbsp;the&nbsp;Banana-Bearer&nbsp;-&nbsp;has&nbsp;been&nbsp;known
+<br>
+&nbsp;&nbsp;to&nbsp;return&nbsp;from&nbsp;the&nbsp;Hell&nbsp;Fire&nbsp;Cavern&nbsp;alive.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;ConsultTopic&nbsp;@tMuseum
+<br>
+&nbsp;&nbsp;"According&nbsp;to&nbsp;the&nbsp;book,&nbsp;the&nbsp;Museum&nbsp;of&nbsp;Curious&nbsp;Antiquities&nbsp;was&nbsp;set&nbsp;up&nbsp;from
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;benefaction&nbsp;of&nbsp;King&nbsp;Benedict&nbsp;the&nbsp;Banana-Bearer&nbsp;himself.&nbsp;Although&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;museum&nbsp;has&nbsp;always&nbsp;had&nbsp;a&nbsp;certain&nbsp;historical&nbsp;interest,&nbsp;its&nbsp;exhibits&nbsp;tend
+<br>
+&nbsp;&nbsp;&nbsp;towards&nbsp;the&nbsp;eccentric&nbsp;and&nbsp;the&nbsp;bizarre.&nbsp;Should&nbsp;you&nbsp;find&nbsp;yourself&nbsp;on&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;southern&nbsp;side&nbsp;of&nbsp;the&nbsp;lake,&nbsp;however,&nbsp;the&nbsp;museum&nbsp;is&nbsp;well&nbsp;worth&nbsp;a&nbsp;visit
+<br>
+&nbsp;&nbsp;&nbsp;if&nbsp;only&nbsp;for&nbsp;its&nbsp;curiosity&nbsp;value.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+tBenedict&nbsp;:&nbsp;Topic&nbsp;'benedict';
+<br>
+tHellFireCavern:&nbsp;Topic&nbsp;'hell&nbsp;fire&nbsp;cavern';
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note the use of the list of matchable topics in the first ConsultTopic, since the player might become aware of Benedict through either the statue or the ghost. Again, since the statue does not match the word 'benedict' and the ghost may not either, we also supply a tBenedict topic to ensure that the word 'benedict' will always match this ConsultTopic (along with such other words as 'statue' and 'ghost' that may also do so).
+<br>
+
+<br>
+Note also that there's no such thing as a SuggestedConsultTopic. With a suitable amount of ingenuity it might be possible to devise a SuggestedConsultTopic class that worked, but this would be non-trivial, since the library currently assumes that SuggestedTopics work only with  actors. If you want to suggest to the player what topics might be available in the book, it might be simpler to list them in the readDesc (e.g. ""It's too long to read from cover to cover right now, but  you could consult it on specific topics, such as Benedict, the Golden Banana of Discord, the museum and Hell Fire Cavern "), or else perhaps in the <a href="defaultconsulttopic.htm">DefaultConsultTopic</a>, (e.g. "The book doesn't seem to have anything useful to say in that, but a quick check in the index suggests you could look up...). We'll return to the second possibility shortly.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

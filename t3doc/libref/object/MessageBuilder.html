@@ -1,0 +1,134 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>MessageBuilder</title></head><body>
+<table class=ban><tr><td align=left><span class=title>MessageBuilder</span><span class=type>class</span><td align=right><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1070">1070</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   MessageBuilder - this object provides a general text substitution   mechanism.  Text to be substituted is enclosed in {curly braces}.   Within the braces, we have the substitution parameter name, which can   be in the following formats: <p>   id <br> id obj <br> id1/id2 obj <br> id1 obj/id2 <p>   The ID string gives the type of substitution to perform.  The ID's   all come from a table, which is specified by the language-specific   subclass, so the ID's can vary by language (to allow for natural   template-style parameter names for each language).  If the ID is in   two pieces (id1 and id2), we concatenate the two pieces together with   a slash between to form the name we seek in the table - so {the/he   dobj} and {the dobj/he} are equivalent, and both look up the   identifier 'the/he'.  If a two-part identifier is given, and the   identifier isn't found in the table, we'll try looking it up with the   parts reversed: if we see {he/the dobj}, we'll first try finding   'he/the', and if that fails we'll look for 'the/he'. <p>   If 'obj' is present, it specificies the target object providing the   text to be substitutued; this is a string passed to the current   Action, and is usually something like 'actor', 'dobj', or 'iobj'. <p>   One instance of this class, called langMessageBuilder, should be   created by the language-specific library.
+<p>
+<code>class
+<b>MessageBuilder</b> :  &nbsp; <a href="../object/OutputFilter.html">OutputFilter</a> &nbsp; <a href="../object/PreinitObject.html">PreinitObject</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>MessageBuilder</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/OutputFilter.html">OutputFilter</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PreinitObject.html">PreinitObject</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ModuleExecObject.html">ModuleExecObject</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/langMessageBuilder.html">langMessageBuilder</a>&nbsp;
+</code>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#lastParamObj_">lastParamObj_</a>&nbsp;
+<a href="#lastTargetObj_">lastTargetObj_</a>&nbsp;
+<a href="#nameTable_">nameTable_</a>&nbsp;
+<a href="#paramList_">paramList_</a>&nbsp;
+<a href="#paramTable_">paramTable_</a>&nbsp;
+<a href="#patAllCaps">patAllCaps</a>&nbsp;
+<a href="#patIdObj">patIdObj</a>&nbsp;
+<a href="#patIdObjSlashId">patIdObjSlashId</a>&nbsp;
+<a href="#patIdSlash">patIdSlash</a>&nbsp;
+<a href="#patUpper">patUpper</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ModuleExecObject</code> :<br>
+<code>
+<a href="../object/ModuleExecObject.html#execAfterMe">execAfterMe</a>&nbsp;
+<a href="../object/ModuleExecObject.html#execBeforeMe">execBeforeMe</a>&nbsp;
+<a href="../object/ModuleExecObject.html#hasInitialized_">hasInitialized_</a>&nbsp;
+<a href="../object/ModuleExecObject.html#isDoingExec_">isDoingExec_</a>&nbsp;
+<a href="../object/ModuleExecObject.html#isExecuted_">isExecuted_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#execute">execute</a>&nbsp;
+<a href="#filterText">filterText</a>&nbsp;
+<a href="#generateMessage">generateMessage</a>&nbsp;
+<a href="#genLiteral">genLiteral</a>&nbsp;
+<a href="#getTargetProp">getTargetProp</a>&nbsp;
+<a href="#langRewriteParam">langRewriteParam</a>&nbsp;
+<a href="#processResult">processResult</a>&nbsp;
+<a href="#quoteMessage">quoteMessage</a>&nbsp;
+</code><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<p>Inherited from <code>ModuleExecObject</code> :<br>
+<code>
+<a href="../object/ModuleExecObject.html#_execute">_execute</a>&nbsp;
+<a href="../object/ModuleExecObject.html#classExec">classExec</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="lastParamObj_"></a>
+<table class=decl><tr><td><code>lastParamObj_</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1513">1513</a>]</table><div class=desc>the parameter name of the last target object ('dobj', 'actor', etc)<p>
+</div>
+<a name="lastTargetObj_"></a>
+<table class=decl><tr><td><code>lastTargetObj_</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1510">1510</a>]</table><div class=desc>   The most recent target object.  Each time we parse a substitution   string, we'll remember the target object here; when a   substitution string doesn't imply or specify a target object,   we'll use the previous one by default. <p>
+</div>
+<a name="nameTable_"></a>
+<table class=decl><tr><td><code>nameTable_</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1519">1519</a>]</table><div class=desc>our global name table - a LookupTable we set up during preinit<p>
+</div>
+<a name="paramList_"></a>
+<table class=decl><tr><td><code>paramList_</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1581">1581</a>]</table><div class=desc>   our parameter list - this should be initialized in the   language-specific subclass to a list like this: <p>   [entry1, entry2, entry3, ...] <p>   Each entry is a list like this: <p>   [paramName, &amp;prop, impliedTargetName, &lt;extra&gt;] <p>   paramName is a string giving the substitution parameter name;   this can be one word or two ('the' or 'the obj', for example). <p>   prop is a property identifier.  This is the property invoked on   the target object to obtain the substitution text. <p>   impliedTargetName is a string giving the target object name to   use.  When this is supplied, the paramName is normally used in   message text with no object name.  This should be nil for   parameters that do not imply a particular target. <p>   &lt;extra&gt; is any number of additional parameters for the   language-specific subclass.  The generic code ignores these extra   parameters, but the langague-specific subclass can use them if it   requires additional information. <p>   Here's an example: <p>   paramList_ = [ <br>               ['you', &amp;theDesc, nil, 'actor'], <br>               ['the obj' &amp;theObjDesc, &amp;itReflexive, nil] <br> ] <p>   The first item specifies a substitution name of 'you', which is   expanded by evaluating the property theDesc on the target object,   and specifies an implied target object of 'actor'.  When this is   expanded, we'll call the current action to get the meaning of   'actor', then evaulate property theDesc on the result. <p>   The second item specifies a substitution name of 'the obj',   expanded by evaluating property theObjDesc on the target object.   This one doesn't have an implied object, so the target object is   the one explicitly given in the message source text or is the   previous target object if one isn't specified in the message   text. <p>
+</div>
+<a name="paramTable_"></a>
+<table class=decl><tr><td><code>paramTable_</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1516">1516</a>]</table><div class=desc>our parameter table - a LookupTable that we set up during preinit<p>
+</div>
+<a name="patAllCaps"></a>
+<table class=decl><tr><td><code>patAllCaps</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1073">1073</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="patIdObj"></a>
+<table class=decl><tr><td><code>patIdObj</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1076">1076</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="patIdObjSlashId"></a>
+<table class=decl><tr><td><code>patIdObjSlashId</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1074">1074</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="patIdSlash"></a>
+<table class=decl><tr><td><code>patIdSlash</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1077">1077</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="patUpper"></a>
+<table class=decl><tr><td><code>patUpper</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1072">1072</a>]</table><div class=desc>pre-compile some regular expressions we use a lot<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="execute"></a>
+<table class=decl><tr><td><code>execute ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1472">1472</a>]</table><div class=desc>   execute pre-initialization <p>
+</div>
+<a name="filterText"></a>
+<table class=decl><tr><td><code>filterText (ostr, txt)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1498">1498</a>]</table><div class=desc>   Our output filter method.  We'll run each string written to the   display through our parameter substitution method. <p>
+</div>
+<a name="generateMessage"></a>
+<table class=decl><tr><td><code>generateMessage (orig)</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1084">1084</a>]</table><div class=desc>   Given a source string with substitution parameters, generate the   expanded message with the appropriate text in place of the   parameters. <p>
+</div>
+<a name="genLiteral"></a>
+<table class=decl><tr><td><code>genLiteral (str)</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1463">1463</a>]</table><div class=desc>   Internal routine - generate the literal text for the given source   string.  We'll remove any stuttered close braces. <p>
+</div>
+<a name="getTargetProp"></a>
+<table class=decl><tr><td><code>getTargetProp (targetObj, paramObj, info)</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1410">1410</a>]</table><div class=desc>   Get the property to invoke on the target object for the given   parameter information entry.  By default, we simply return   info[2], which is the standard property to call on the target.   This can be overridden by the language-specific subclass to   provide a different property if appropriate. <p>   'targetObj' is the target object, and 'paramObj' is the parameter   name of the target object.  For example, 'paramObj' might be the   string 'dobj' to represent the direct object, in which case   'targetObj' will be the gDobj object. <p>   The English version, for example, uses this routine to supply a   reflexive instead of the default entry when the target object   matches the subject of the sentence. <p>
+</div>
+<a name="langRewriteParam"></a>
+<table class=decl><tr><td><code>langRewriteParam (paramStr)</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1529">1529</a>]</table><div class=desc>   Rewrite the parameter string for any language-specific rules.  By   default, we'll return the original parameter string unchanged;   the language-specific instance can override this to provide any   special syntax extensions to the parameter string syntax desired   by the language-specific library.  The returned string must be in   one of the formats recognized by the generic handler. <p>
+</div>
+<a name="processResult"></a>
+<table class=decl><tr><td><code>processResult (txt)</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1442">1442</a>]</table><div class=desc>   Process result text.  This takes some result text that we're   about to add and returns a processed version.  This is called for   all text as we add it to the result string. <p>   The text we pass to this method has already had all parameter   text fully expanded, so this routine does not need to worry about   { } sequences - all { } sequences will have been removed and   replaced with the corresponding expansion text before this is   called. <p>   This routine is called piecewise: the routine will be called once   for each parameter replacement text and once for each run of text   between parameters, and is called in the order in which the text   appears in the original string. <p>   By default we do nothing with the result text; we simply return   the original text unchanged.  The language-specific subclass can   override this as desired to further modify the text for special   language-specific parameterization outside of the { } mechanism.   The subclass can also use this routine to maintain internal state   that depends on sentence structure.  For example, the English   version looks for sentence-ending punctuation so that it can   reset its internal notion of the subject of the sentence when a   sentence appears to be ending. <p>
+</div>
+<a name="quoteMessage"></a>
+<table class=decl><tr><td><code>quoteMessage (str)</code><td align=right><code><a href="../file/output.t.html">output.t</a>[<a href="../source/output.t.html#1454">1454</a>]</table><div class=desc>   "Quote" a message - double each open or close brace, so that braces in   the message will be taken literally when run through the substitution   replacer.  This can be used when a message is expanded prior to being   displayed to ensure that braces in the result won't be mistaken as   substitution parameters requiring further expansion. <p>   Note that only open braces need to be quoted, since lone close braces   are ignored in the substitution process. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

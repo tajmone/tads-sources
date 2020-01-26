@@ -1,0 +1,130 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>PreinitObject</title><meta name="keywords" content="PreinitObject,preinitialization"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>PreinitObject: <a href="moduleexecobject.htm">ModuleExecObject</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="initobject.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="presaveobject.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A PreinitObject works in exactly the same way as an <a href="initobject.htm">InitObject</a> with one important difference, its execute method is executed at the preinitialization stage, not at game startup. Preinitialization is carried out by the <i>compiler</i> before the game image is written rather than by the <i>interpreter</i> when the game starts, and so is useful for any game initialization code that will always have the same results (since, having been already carried out at compilation, it doesn't need to be carried out at game startup when the player might otherwise notice a delay in the game starting).
+<br>
+
+<br>
+For example, suppose that instead of randomizing which woman each of our predatory males fancies at the start of the game, we want to define this for ourselves (so that it never changes from game to game), but that for ease of computation at some point in our game it's convenient for each of the fanciable woman to maintain a list of the men who are after them. We might define:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;FanciableWoman:&nbsp;Person
+<br>
+&nbsp;&nbsp;&nbsp;fanciedBy&nbsp;=&nbsp;[]
+<br>
+;
+<br>
+
+<br>
+class&nbsp;PredatoryMale:&nbsp;Person,&nbsp;PreinitObject
+<br>
+&nbsp;&nbsp;mainTargetOfDesire&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;execute()&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(mainTargetOfDesire&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mainTargetOfDesire.fanciedBy&nbsp;+=&nbsp;self;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Or indeed, in the interests of gender equality, we might have:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;AmorousPerson:&nbsp;Person,&nbsp;PreinitObject
+<br>
+&nbsp;&nbsp;&nbsp;fanciedBy&nbsp;=&nbsp;[]
+<br>
+&nbsp;&nbsp;&nbsp;mainTargetOfDesire&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;execute()&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(mainTargetOfDesire&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mainTargetOfDesire.fanciedBy&nbsp;+=&nbsp;self;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Which would allow us to set up whatever tangled web of relationships or would-be relationships we wish, even including:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">narcissus:&nbsp;AmorousPerson&nbsp;'narcissus'&nbsp;&nbsp;'Narcissus'
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;mainObjectOfDesire&nbsp;=&nbsp;self
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+An alternative (and not uncommon) way to use a PreinitObject to achieve roughly the same result where we want every Person in the game to be potentially involved in amorous activities and we don't want to define a new class for it would be the following:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Person
+<br>
+&nbsp;&nbsp;fanciedBy&nbsp;=&nbsp;[]
+<br>
+&nbsp;&nbsp;mainTargetOfDesire&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+
+<br>
+PreinitObject
+<br>
+&nbsp;&nbsp;execute(}
+<br>
+&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(local&nbsp;obj&nbsp;=&nbsp;firstObj(Person);&nbsp;obj&nbsp;!=&nbsp;nil;&nbsp;obj&nbsp;=&nbsp;nextObj(obj,&nbsp;Person));
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(obj.mainTargetOfDesire&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj.mainTargetOfDesire.fanciedBy&nbsp;+=&nbsp;obj;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

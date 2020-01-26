@@ -1,0 +1,71 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>asExit</title><meta name="keywords" content="asExit"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>asExit
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="roomconnector.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="enterable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The asExit() macro can be used when we want more than one direction to point to the same destination, but we only want one of the directions to appear in the list of exits (the others effectively being synonyms). In the outsideCave room the cave entrance is described as lying to the south, so that the Player might type either SOUTH or IN to enter it. Here we'll make SOUTH the explicit way in and add handling for IN as a synonym using asExit:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">outsideCave&nbsp;:&nbsp;OutdoorRoom&nbsp;'Parser&nbsp;Valley'&nbsp;'Parser&nbsp;Valley'
+<br>
+&nbsp;&nbsp;"To&nbsp;the&nbsp;north&nbsp;stretches&nbsp;the&nbsp;broad&nbsp;green&nbsp;Parser&nbsp;Valley&nbsp;under&nbsp;a&nbsp;clear&nbsp;blue&nbsp;sky,&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;past&nbsp;a&nbsp;small&nbsp;car&nbsp;park&nbsp;lying&nbsp;just&nbsp;off&nbsp;to&nbsp;the&nbsp;east.&nbsp;The&nbsp;main&nbsp;feature&nbsp;of
+<br>
+&nbsp;&nbsp;&nbsp;interest&nbsp;round&nbsp;here&nbsp;is&nbsp;the&nbsp;notorious&nbsp;Eerhtsdat&nbsp;Caves,&nbsp;the&nbsp;entrance&nbsp;to&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;lies&nbsp;just&nbsp;to&nbsp;the&nbsp;south,&nbsp;marked&nbsp;by&nbsp;a&nbsp;large&nbsp;blue&nbsp;sign&nbsp;that&nbsp;proclaims,&nbsp;predictably
+<br>
+&nbsp;&nbsp;&nbsp;enough:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&nbsp;BGCOLOR=BLUE&nbsp;COLOR=WHITE&gt;
+<br>
+&nbsp;&nbsp;&nbsp;ENTRANCE&nbsp;TO&nbsp;THE\nEERHTSDAT&nbsp;CAVES&lt;/FONT&gt;\n"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;north&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You&nbsp;start&nbsp;to&nbsp;stride&nbsp;off&nbsp;into&nbsp;the&nbsp;valley,&nbsp;but&nbsp;soon
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decide&nbsp;it's&nbsp;not&nbsp;that&nbsp;interesting,&nbsp;so&nbsp;you&nbsp;wander&nbsp;back&nbsp;towards&nbsp;the&nbsp;cave
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entrance.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;<b>south&nbsp;=&nbsp;entranceTunnel
+<br>
+&nbsp;&nbsp;&nbsp;in&nbsp;asExit(south)</b>
+<br>
+&nbsp;&nbsp;&nbsp;east&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You&nbsp;go&nbsp;and&nbsp;wander&nbsp;round&nbsp;the&nbsp;car&nbsp;park&nbsp;for&nbsp;a&nbsp;few&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minutes,&nbsp;but&nbsp;decide&nbsp;you&nbsp;don't&nbsp;want&nbsp;to&nbsp;leave&nbsp;just&nbsp;yet,&nbsp;so&nbsp;you&nbsp;return
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;cave&nbsp;entrance.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;atmosphereList&nbsp;:&nbsp;ShuffledEventList&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'A&nbsp;flight&nbsp;of&nbsp;birds&nbsp;disappears&nbsp;off&nbsp;to&nbsp;the&nbsp;west.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:&nbsp;"\nA&nbsp;&lt;&lt;one of&gt;&gt;small&lt;&lt;or&gt;&gt;large&lt;&lt;at random&gt;&gt;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;one of&gt;&gt;green&lt;&lt;or&gt;&gt;red&lt;&lt;or&gt;&gt;blue&lt;&lt;or&gt;&gt;black&lt;&lt;or&gt;&gt;white&lt;&lt;at random&gt;&gt;&nbsp;car
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pulls&nbsp;out&nbsp;of&nbsp;the&nbsp;car&nbsp;park&nbsp;and&nbsp;drives&nbsp;off&nbsp;to&nbsp;the&nbsp;north.&nbsp;"&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'An&nbsp;aeroplane&nbsp;flies&nbsp;far&nbsp;overhead.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nil
+<br>
+&nbsp;&nbsp;&nbsp;]&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Once again, the new properties to be added are shown in bold. Note that we point the south property not to another room, but to the previously defined <a href="roomconnector.htm">RoomConnector</a>, entranceTunnel.
+<br>
+</font></font>
+
+</body></html>

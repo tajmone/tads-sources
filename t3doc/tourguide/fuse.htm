@@ -1,0 +1,264 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Fuse</title><meta name="keywords" content="Fuse,new,new, Fuse,removeEvent,eventManager,removeMatchingEvents,makeLit,Dynamite"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Fuse : Event
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="anotherlock.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="daemon.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Fuse is probably the simplest kind of Event to create. It simply fires an event after a certain number of turns. To set up a fuse you use a statement of the form
+<br>
+
+<br>
+   <font face="Courier New" size="2" color="#000000">new&nbsp;Fuse(obj,&nbsp;&amp;prop,&nbsp;turns);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Which means that after </font><font face="Courier New" size="2" color="#000000"><i>turns</i></font><font face="Arial" size="2" color="#000000"> turns the method obj.prop will be executed (the prop method of the obj object), and then the fuse will be removed from the list of pending events. And that's basically it. You should note, of course, that in the argument list of the new Fuse call, the second argument is a property pointer, hence you need to use the </font><font face="Courier New" size="2" color="#000000">&amp;prop</font><font face="Arial" size="2" color="#000000"> syntax. It's also helpful to know that if turns = 0 the method will fire on the current turn, if it's 1 (one) it'll fire on the next turn and so on. And it may be worth while bearing in mind that the statement </font><font face="Courier New" size="2" color="#000000">new&nbsp;Fuse()</font><font face="Arial" size="2" color="#000000"> returns a pointer to the new fuse object created, so that if you want to refer to it subsequently, it's useful to use a statement like:
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+&nbsp;&nbsp;fuseID&nbsp;=&nbsp;new&nbsp;Fuse(obj,&nbsp;&amp;prop,&nbsp;turns);
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This makes it convenient to terminate the fuse prematurely, if for any reason you need to. To remove the fuse defined above from the list of pending events you would call:
+<br>
+
+<br>
+  </font><font face="Courier New" size="2" color="#000000">&nbsp;fuseID.removeEvent;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This would not fire obj.prop prematurely, it would simply abort the fuse. If we had not used a fuseID property to store a pointer to the fuse, we could still abort it by calling:
+<br>
+
+<br>
+   </font><font face="Courier New" size="2" color="#000000">eventManager.removeMatchingEvents(obj,&nbsp;&amp;prop);</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Where obj and &amp;prop are the object and property pointer used in creating the fuse. This method returns true if any events (Daemons or Fuses) were found matching the specification and nil if not. It is thus not absolutely essential to store a pointer to the fuse if you may want to abort it, but it is probably more convenient. It can also be useful for keeping track of whether a fuse is active or not.
+<br>
+
+<br>
+For our first example we'll return to the stick of <a href="dynamite.htm">dynamite</a> we created earlier (something which quite literally has a fuse) and implement it with a fuse. It's still worth using the Candle class to implement the stick of dynamite, since the Candle implements a lot of handling (not least of the BURN WITH and EXTINGUISH commands) that's useful to us. Indeed, much of the original definition can stand, all we need to do is to override the isLit method to set up a Fuse (instead of the SenseDaemon the standard Candle employs);  the changes are shown in bold:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">dynamite&nbsp;:&nbsp;Candle&nbsp;'stick&nbsp;dynamite/fuse'&nbsp;'stick&nbsp;of&nbsp;dynamite'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;white&nbsp;cylinder&nbsp;with&nbsp;a&nbsp;short&nbsp;fuse.&nbsp;&lt;&lt;isLit&nbsp;?
+<br>
+&nbsp;&nbsp;'The&nbsp;fuse&nbsp;is&nbsp;lit&nbsp;and&nbsp;burning&nbsp;down&nbsp;fast.&nbsp;'&nbsp;:&nbsp;nil&nbsp;&gt;&gt;"
+<br>
+&nbsp;&nbsp;fuelLevel&nbsp;=&nbsp;3
+<br>
+&nbsp;&nbsp;brightnessOn&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;sayBurnedOut()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isHeldBy(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;dynamite&nbsp;explodes&nbsp;with&nbsp;a&nbsp;mighty&nbsp;bang&nbsp;and&nbsp;blows&nbsp;your&nbsp;hand&nbsp;off.&nbsp;But
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;since&nbsp;you're&nbsp;killed&nbsp;by&nbsp;the&nbsp;blast&nbsp;you&nbsp;probably&nbsp;won't&nbsp;be&nbsp;needing&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;more.\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(canBeTouchedBy(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;dynamite&nbsp;detonates&nbsp;close&nbsp;by,&nbsp;but&nbsp;you&nbsp;are&nbsp;killed&nbsp;by&nbsp;the&nbsp;blast&nbsp;almost
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;you&nbsp;hear&nbsp;the&nbsp;bang.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isIn(boulder))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boulderFragments.moveInto(boulder.location);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boulder.moveInto(nil);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;callWithSenseContext (nil, nil, {:"You hear a muffled explosion nearby. "});
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;moveInto(nil);&nbsp;
+<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+<br>
+&nbsp;&nbsp;<b>fuseID = nil</b>
+<br>
+&nbsp;&nbsp;<b>makeLit(lit)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isLit = lit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(lit)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fuseID&nbsp;=&nbsp;new&nbsp;Fuse(self,&nbsp;&amp;sayBurnedOut,&nbsp;3);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(fuseID)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fuseID.removeEvent();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fuseID&nbsp;=&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The one slight oddity about this revised stick of dynamite is that however many times it extinguished and relit (before it actually detonates) its fuse always remains the same length - but perhaps in the context of the game that's just as well (the player always has three turns to get out of the way after lighting the fuse).
+<p>
+Defining the dynamite this way probably isn't a very good idea, however, since using a Fuse on in it this way cuts across the mechanism already provided by the Candle class. So, once you've experimented with implementing a Fuse on the dynamite, I suggest you remove it again and put the dynamite back the way it was (simply remove or comment out the code in bold in the above code fragment). If this change were retained, other changes would also be needed to make everything work properly, but we shan't be pursuing those; it's better to keep the dynamite as it was before.</p>
+<p>
+For our second example we'll create a Fuse and a Daemon on the same object, though for the moment we'll concentrate our attention on the Fuse. A solid gold tablet, such as we've placed in the plinth of the <a href="lever(2).htm">statue</a>, would be pretty heavy to carry around, and indeed it's the heaviest portable object (as defined by its weight property) that we've defined in the game. Rather than create an old-fashioned inventory puzzle by limiting the total amount of weight the player character can carry (so that, for example, the player character would have to drop everything else in order to carry the gold tablet, and arrange to distribute light sources along its path, which would all be pretty tedious) we'll limit the number of turns the player can carry the gold tablet before putting it down to take a rest. We'll use a <a href="daemon.htm">Daemon</a> to limit how long the player character can carry the gold tablet for, and a Fuse to simulate his or her recovery. We'll add a carried property to goldTablet which will hold the number of turns for which the tablet has been carried. Once this reaches 3 the player character becomes too tired and is forced to drop the tablet. At this point we set a fuse that is fired after three turns (provided the player leaves the gold tablet alone in the interim); when the fuse fires three turns later, it simply resets goldTablet.carried back to zero (which would allow the player character to pick up the gold tablet and carry it for another three turns). </p>
+
+<br>
+In order to give the context, the following code shows the full redefinition of the goldTablet, but for now we'll concentrate only on explaining that for the fuse:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;goldTablet&nbsp;:&nbsp;Tablet&nbsp;'gold&nbsp;tablet'&nbsp;'gold&nbsp;tablet'
+<br>
+&nbsp;&nbsp;inscription&nbsp;=&nbsp;"T&nbsp;F&nbsp;Q&nbsp;Z&nbsp;P\nN&nbsp;W&nbsp;O&nbsp;B&nbsp;E\nA&nbsp;U&nbsp;O&nbsp;U&nbsp;A\nF&nbsp;L&nbsp;O&nbsp;U&nbsp;R\nS&nbsp;T&nbsp;O&nbsp;P&nbsp;S"
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;32
+<br>
+&nbsp;&nbsp;feelDesc&nbsp;=&nbsp;"It&nbsp;feels&nbsp;mighty&nbsp;heavy!&nbsp;"
+<br>
+&nbsp;&nbsp;carried&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;afterAction()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(daemonID&nbsp;==&nbsp;nil&nbsp;&amp;&amp;&nbsp;isIn(gPlayerChar))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>endFuse;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;new&nbsp;Daemon(self,&nbsp;&amp;daemon,&nbsp;1);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(daemonID&nbsp;!=&nbsp;nil&nbsp;&amp;&amp;&nbsp;!isIn(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endDaemon;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>fuseID&nbsp;=&nbsp;new&nbsp;Fuse(self,&nbsp;&amp;fuse,&nbsp;3);</b>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;daemon
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;carrier&nbsp;=&nbsp;self;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(!carrier.isDirectlyIn(gPlayerChar))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;carrier&nbsp;=&nbsp;carrier.location;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gMessageParams(carrier);&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;switch(carried++)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;0:&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;1:&nbsp;"{The&nbsp;carrier/he}&nbsp;{is}&nbsp;starting&nbsp;to&nbsp;feel&nbsp;very&nbsp;heavy.&nbsp;";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;2:&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;3:&nbsp;"You&nbsp;can't&nbsp;carry&nbsp;{the&nbsp;carrier/him}&nbsp;much&nbsp;further.&nbsp;";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"You're&nbsp;forced&nbsp;to&nbsp;put&nbsp;{the&nbsp;carrier/him}&nbsp;down;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it's&nbsp;too&nbsp;heavy&nbsp;for&nbsp;you.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedAction(Drop,&nbsp;carrier);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;endDaemon
+<br>
+&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;if(daemonID&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemonID.removeEvent;
+<br>
+&nbsp;&nbsp;&nbsp;daemonID&nbsp;=&nbsp;nil;
+<br>
+&nbsp;}
+<br>
+&nbsp;<b>fuse()&nbsp;{&nbsp;carried&nbsp;=&nbsp;0;&nbsp;fuseID&nbsp;=&nbsp;nil;&nbsp;}
+<br>
+&nbsp;fuseID&nbsp;=&nbsp;nil&nbsp;
+<br>
+&nbsp;endFuse
+<br>
+&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;if(fuseID&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fuseID.removeEvent;
+<br>
+&nbsp;&nbsp;&nbsp;fuseID&nbsp;=&nbsp;nil;
+<br>
+&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's nothing magical about the names </font><font face="Courier New" size="2" color="#000000">fuse</font><font face="Arial" size="2" color="#000000">, </font><font face="Courier New" size="2" color="#000000">fuseID</font><font face="Arial" size="2" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">endFuse</font><font face="Arial" size="2" color="#000000"> we've given various methods and properties, we could have called them </font><font face="Courier New" size="2" color="#000000">tom</font><font face="Arial" size="2" color="#000000">, </font><font face="Courier New" size="2" color="#000000">dick</font><font face="Arial" size="2" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">harry</font><font face="Arial" size="2" color="#000000">, it's just that the names we've given are a lot more meaningful. The </font><font face="Courier New" size="2" color="#000000">afterAction()</font><font face="Arial" size="2" color="#000000"> method tests whether anything has happened to change whether the gold tablet is still being carried or not. For reasons we'll explain more fully when we come to the daemon, the first if statement in this method tests for the tablet being picked up, and the second for its being dropped. If it's picked up we want to abort any fuse that's running (since the player has not rested from trying to carry the tablet that turn) so we abort the fuse with the </font><font face="Courier New" size="2" color="#000000">endFuse</font><font face="Arial" size="2" color="#000000"> method. This is a method we define ourselves; it does two things: first, if fuseID is not nil (i.e. if there is a fuse in operation) we terminate the fuse by calling </font><font face="Courier New" size="2" color="#000000">fuseID.removeEvent</font><font face="Arial" size="2" color="#000000">, second we reset </font><font face="Courier New" size="2" color="#000000">fuseID</font><font face="Arial" size="2" color="#000000"> to nil to keep track of the fact that there's no longer a live fuse. The test for </font><font face="Courier New" size="2" color="#000000">fuseID</font><font face="Arial" size="2" color="#000000"> being nil makes it safe to call </font><font face="Courier New" size="2" color="#000000">endFuse</font><font face="Arial" size="2" color="#000000"> whether there's actually a fuse running or not; if </font><font face="Courier New" size="2" color="#000000">fuseID</font><font face="Arial" size="2" color="#000000"> is nil when </font><font face="Courier New" size="2" color="#000000">endFuse&nbsp;</font><font face="Arial" size="2" color="#000000">is called </font><font face="Courier New" size="2" color="#000000">endFuse</font><font face="Arial" size="2" color="#000000"> has no effect.
+<br>
+
+<br>
+Whenever the player ceases to carry the gold tablet (either by dropping the tablet itself, or by dropping something that directly or indirectly contains the tablet) we want to set a new fuse that will allow the player to recover after three turns (provide s/he doesn't try to pick the tablet up again during that time). We set the new fuse in the statement </font><font face="Courier New" size="2" color="#000000">fuseID&nbsp;=&nbsp;new&nbsp;Fuse(self,&nbsp;&amp;fuse,&nbsp;3)</font><font face="Arial" size="2" color="#000000"> which means that, unless we abort the fuse in the meanwhile, the method </font><font face="Courier New" size="2" color="#000000">self.fuse</font><font face="Arial" size="2" color="#000000"> (i.e. </font><font face="Courier New" size="2" color="#000000">goldTablet.fuse</font><font face="Arial" size="2" color="#000000">) will be executed after three turns. Finally, all the </font><font face="Courier New" size="2" color="#000000">fuse()&nbsp;</font><font face="Arial" size="2" color="#000000">method has to do is to reset carried to zero and reset </font><font face="Courier New" size="2" color="#000000">fuseID&nbsp;</font><font face="Arial" size="2" color="#000000">to nil (so we have a convenient method of telling that the fuse is no longer active).
+<br>
+
+<br>
+We'll now go on to explore how the <a href="daemon.htm">Daemon</a> works.
+<br>
+</font></font>
+
+</body></html>

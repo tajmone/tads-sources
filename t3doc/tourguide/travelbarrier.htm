@@ -1,0 +1,82 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>TravelBarrier</title><meta name="keywords" content="TravelBarrier,canTravelerPass,explainTravelBarrier,travelBarrier,checkTravelBarriers"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>TravelBarrier : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="exitportal.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="askconnector.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">In all the examples we have used so far, when we have wanted to prevent travel via a TravelConnector, we have overridden its canTravelerPass method to determined whether travel is permitted, and its explainTravelBarrier method to explain why travel is forbidden (if it is forbidden). Normally this is the simplest and most convenient way to do it - but there is another way, and that is to use TravelBarrier object.
+<br>
+
+<br>
+A TravelBarrier is simply an object that defines canTravelerPass and explainTravelBarrier methods. A single TravelBarrier, or a list of TravelBarriers, can be attached to a TravelConnector via its travelBarrier property. This can be useful in a number of cases.
+<br>
+
+<br>
+The first case is when a specialized type of TravelBarrier, such as the <a href="pushtravelbarrier.htm">PushTravelBarrier</a>, is required.
+<br>
+
+<br>
+The second case is where you want to enforce the same barrier conditions on a number of different TravelConnectors. Rather that write the same canTravelerPass and explainTravelBarrier methods on two or more TravelConnectors, you can define them once on a TravelBarrier object then attach the object to each of the TravelConnectors to which it applies. For example, suppose you want to prevent the player traveling either north or east from a particular location without the lamp, you could define:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">lampBarrier&nbsp;:&nbsp;TravelBarrier
+<br>
+&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{return&nbsp;lamp.isIn(traveler);&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;explainTravelBarrier(traveler}&nbsp;{&nbsp;"You&nbsp;forgot&nbsp;the&nbsp;lamp!&nbsp;";&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Then, on the relevant location you could define:
+<br>
+
+<br>
+    </font><font face="Courier New" size="2" color="#000000">north&nbsp;:&nbsp;OneWayRoomConnector&nbsp;{&nbsp;-&gt;&nbsp;darkPassage&nbsp;&nbsp;travelBarrier&nbsp;=&nbsp;lampBarrier&nbsp;}
+<br>
+&nbsp;&nbsp;east&nbsp;:&nbsp;OneWayRoomConnector&nbsp;{&nbsp;-&gt;&nbsp;darkCorridor&nbsp;travelBarrier&nbsp;=&nbsp;lampBarrier&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">  </font><font face="Courier New" size="2" color="#000000">&nbsp;south&nbsp;=&nbsp;lampRoom
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The third case is where you want to perform a number of separate checks, each of which would result in a different failure message. Rather than write a long switch statement or series of if statements in the explainTravelBarrier method of the TravelConnector, you could define a number of TravelBarrier objects that pair the condition with the message. For example, supposing that at another point in your journey, you want not only to enforce the condition that the player has the lamp, as above, but also that he's not wearing the stolen jacket. You might then define another TravelBarrier object:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">jacketBarrier&nbsp;:&nbsp;TravelBarrier
+<br>
+&nbsp;&nbsp;&nbsp;canTravelerPass(traveler)&nbsp;{return&nbsp;!jacket.isWornBy(traveler);&nbsp;}
+<br>
+&nbsp;&nbsp;explainTravelBarrier(traveler)&nbsp;{&nbsp;"You'll&nbsp;stand&nbsp;out&nbsp;a&nbsp;mile&nbsp;wearing&nbsp;Lord&nbsp;Ponsonby's&nbsp;jacket&nbsp;in&nbsp;there!&nbsp;";&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Then you can attach both TravelBarriers to the same connector:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;in&nbsp;:&nbsp;OneWayRoomConnector&nbsp;{&nbsp;-&gt;&nbsp;pompousClubLobby&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;travelBarrier&nbsp;=&nbsp;[lampBarrier,&nbsp;jacketBarrier&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+What happens is that among the checks carried out in the checkDobjTravelVia method of a TravelConnector is a call to checkTravelBarriers; this first checks the canTravelerPass method of the TravelConnector itself, then works through the list of TravelBarriers (if any) in the travelBarrier property, calling each of their canTravelerPass methods in turn. If any of these canTravelerPass methods returns nil, the travel is aborted and the corresponding explainTravelBarrier method is called.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

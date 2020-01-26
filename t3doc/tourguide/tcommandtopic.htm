@@ -1,0 +1,427 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>TCommandTopic</title><meta name="keywords" content="TCommandTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>TCommandTopic : <a href="commandtopic.htm">CommandTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="overridingobeycommand.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="amodifieddefaultcommandtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Having overridden <a href="overridingobeycommand.htm">ActorState.obeyCommand</a> to make it easier for CommandTopics to handle commands with a direct object, the next step is to define a CommandTopic subclass that takes advantage of these changes. We'll call it TCommandTopic, for a topic that handles a TAction.
+<br>
+
+<br>
+What we mainly want TCommandTopic  to do is to match a direct object (or a list of direct objects) as well as a specific action (or list of direct actions). While we're at it, we'll also make it store a phrase that can be used building a conversational exchange about the command between the actor issuing the command (normally the player character) and the NPC being commanded. Here's what a TCommandTopic might look like:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">TCommandTopic&nbsp;:&nbsp;CommandTopic
+<br>
+&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;The&nbsp;direct&nbsp;object,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;direct&nbsp;objects,&nbsp;that&nbsp;will&nbsp;be&nbsp;matched
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;by&nbsp;this&nbsp;topic.
+<br>
+&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;matchDobj&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;The&nbsp;first&nbsp;direct&nbsp;object&nbsp;of&nbsp;the&nbsp;command&nbsp;that&nbsp;this&nbsp;CommandTopic&nbsp;matches.
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;We&nbsp;cache&nbsp;it&nbsp;here&nbsp;so&nbsp;that&nbsp;it&nbsp;can&nbsp;easily&nbsp;be&nbsp;picked&nbsp;up&nbsp;in&nbsp;topicResponse.
+<br>
+&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;currentDobj&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;Cache&nbsp;the&nbsp;action&nbsp;that&nbsp;has&nbsp;been&nbsp;matched&nbsp;so&nbsp;that&nbsp;it&nbsp;is&nbsp;readily&nbsp;accessible
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;from&nbsp;topicResponse&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;currentAction&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;matchTopic(fromActor,&nbsp;action)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;First&nbsp;check&nbsp;whether&nbsp;we&nbsp;match&nbsp;the&nbsp;action&nbsp;of&nbsp;the&nbsp;command&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(!inherited(fromActor,&nbsp;action))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;Then&nbsp;cache&nbsp;the&nbsp;first&nbsp;direct&nbsp;object&nbsp;of&nbsp;the&nbsp;command&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;currentDobj&nbsp;=&nbsp;action.getDobj();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;If&nbsp;matchDobj&nbsp;is&nbsp;a&nbsp;list,&nbsp;check&nbsp;if&nbsp;the&nbsp;current&nbsp;direct&nbsp;object&nbsp;is&nbsp;in&nbsp;the&nbsp;list&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(matchDobj.ofKind(Collection))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(matchDobj.indexWhich({x:&nbsp;currentDobj.ofKind(x)})&nbsp;!=&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;matchScore;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;See&nbsp;if&nbsp;the&nbsp;direct&nbsp;object&nbsp;matches&nbsp;that&nbsp;specified&nbsp;in&nbsp;matchDobj&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;if&nbsp;it's&nbsp;a&nbsp;single&nbsp;object.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(currentDobj.ofKind(matchDobj))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;matchScore;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;We&nbsp;can't&nbsp;match&nbsp;the&nbsp;direct&nbsp;object&nbsp;at&nbsp;all,&nbsp;so&nbsp;return&nbsp;nil&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;return&nbsp;nil;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;handleTopic(fromActor,&nbsp;action)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;actionPhrase&nbsp;=&nbsp;action.getInfPhrase;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;currentAction&nbsp;=&nbsp;action;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;if&nbsp;the&nbsp;player&nbsp;types&nbsp;a&nbsp;command&nbsp;like&nbsp;X&nbsp;ME,&nbsp;getInfPhrase&nbsp;will
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;return&nbsp;'examine&nbsp;you'.&nbsp;In&nbsp;such&nbsp;a&nbsp;case&nbsp;we&nbsp;want&nbsp;to&nbsp;replace&nbsp;'you'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;with&nbsp;'me'.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;actionPhrase&nbsp;=&nbsp;actionPhrase.findReplace('&nbsp;you&nbsp;',&nbsp;'&nbsp;me&nbsp;',&nbsp;ReplaceAll);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(actionPhrase.endsWith('&nbsp;you'))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actionPhrase&nbsp;=&nbsp;actionPhrase.findReplace('&nbsp;you',&nbsp;'&nbsp;me',&nbsp;ReplaceOnce,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actionPhrase.length-5);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(fromActor,&nbsp;action);
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;action&nbsp;phrase&nbsp;of&nbsp;the&nbsp;command&nbsp;currently&nbsp;directed&nbsp;to&nbsp;this&nbsp;actor;
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;for&nbsp;example,&nbsp;if&nbsp;the&nbsp;player&nbsp;types&nbsp;'X&nbsp;ME'&nbsp;the&nbsp;actionPhrase&nbsp;will&nbsp;be
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;'examine&nbsp;me'.&nbsp;This&nbsp;can&nbsp;be&nbsp;used&nbsp;in&nbsp;topicResponse&nbsp;to&nbsp;construct&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;command&nbsp;given&nbsp;by&nbsp;the&nbsp;player&nbsp;character,&nbsp;e.g.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;*
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;"Sarah,&nbsp;please&nbsp;examine&nbsp;me,"&nbsp;you&nbsp;ask.
+<br>
+&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;actionPhrase&nbsp;=&nbsp;nil
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+One thing to note here is that we test for </font><font face="Courier New" size="2" color="#000000">currentDobj.ofKind(matchDobj)</font><font face="Arial" size="2" color="#000000"> instead of </font><font face="Courier New" size="2" color="#000000">matchDobj&nbsp;==&nbsp;currentDobj</font><font face="Arial" size="2" color="#000000">. This allows us to specify matchDobj as a <i>class</i>, or a list of classes, as well as an individual object or list of objects, so we could, for example, easily specify a TCommandTopic that matched when the action was a TakeAction and the direct object was of the Treasure class.
+<br>
+
+<br>
+To show a TCommandTopic in action, we can now provide Sarah with a suitably coy set of responses to the command, SARAH, KISS ME, which we'll attach directly to the actor:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;TCommandTopic,&nbsp;ShuffledEventList&nbsp;@KissAction&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Goodness,&nbsp;no!&lt;/q&gt;&nbsp;she&nbsp;declares,&nbsp;&lt;q&gt;What
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;i&gt;do&lt;/i&gt;&nbsp;you&nbsp;take&nbsp;me&nbsp;for?&lt;/q&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;You&nbsp;are&nbsp;joking,&nbsp;of&nbsp;course!&lt;/q&gt;&nbsp;she&nbsp;laughs.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Ever&nbsp;the&nbsp;optimist,&nbsp;aren\'t&nbsp;we!&lt;/q&gt;&nbsp;she&nbsp;chides&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Not&nbsp;bloody&nbsp;likely!&lt;/q&gt;&nbsp;she&nbsp;retorts.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Now,&nbsp;why&nbsp;on&nbsp;earth&nbsp;do&nbsp;you&nbsp;suppose&nbsp;I\'d&nbsp;want&nbsp;to&nbsp;do
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that?&lt;/q&gt;&nbsp;she&nbsp;cries.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Don\'t&nbsp;be&nbsp;silly.&lt;/q&gt;&nbsp;she&nbsp;admonishes&nbsp;you.&nbsp;'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;&nbsp;matchDobj&nbsp;=&nbsp;gPlayerChar&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">This hardly shows the power of what we've created however. To create a more interesting example, recall that when Sarah and the player character finally come across the Golden Banana of Discord in its display case, the player has to ASK SARAH FOR RING to prompt her to cut the case open. We can now use a TCommandTopic (located in the sarahFollowingState) to enable Sarah also to respond appropriately to the command SARAH, CUT CASE:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;TCommandTopic&nbsp;@CutWithAction
+<br>
+&nbsp;&nbsp;&nbsp;matchDobj&nbsp;=&nbsp;bananaCase
+<br>
+&nbsp;&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;\^&lt;&lt;getActor.name&gt;&gt;,&nbsp;would&nbsp;you&nbsp;&lt;&lt;actionPhrase&gt;&gt;,&nbsp;please?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;ask&nbsp;her.\b&nbsp;";&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(currentAction.iobjList_[1].obj_&nbsp;!=&nbsp;diamondRing)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;I&nbsp;don't&nbsp;think&nbsp;that\'ll&nbsp;work.&lt;/q&gt;&nbsp;she&nbsp;says&nbsp;dubiously.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Do&nbsp;you&nbsp;really&nbsp;think&nbsp;I&nbsp;should?&lt;/q&gt;&nbsp;she&nbsp;asks.&nbsp;&lt;.convnode&nbsp;banana-case&gt;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+With the aid of which we can, for example, generate the following transcript:
+<br>
+
+<br>
+<b>&gt;sarah, cut case with banana
+<br>
+</b>"Sarah, would you cut the display case with the Golden Banana of Discord, please?" you ask her.
+<br>
+
+<br>
+"I don't think that'll work." she says dubiously.
+<br>
+
+<br>
+<b>&gt;sarah, cut case</b>
+<br>
+"Sarah, would you cut the display case with the diamond ring, please?" you ask her.
+<br>
+
+<br>
+"Do you really think I should?" she asks.
+<br>
+
+<br>
+(You could say yes or no, or ask what she thinks.)
+<br>
+
+<br>
+<b>&gt;no</b>
+<br>
+"No, on second thoughts I think we'd better leave it for now." you reply.
+<br>
+
+<br>
+"Very well." she sighs.
+<br>
+
+<br>
+Although this exchange could lead to Sarah cutting open the case, we've yet to see an example of a TCommandTopic that leads directly to the NPC performing an action. But it is, in fact, perfectly easy to make any action occur in response to a command using a TCommandTopic. For example, we can easily provide a TCommandTopic that translates SARAH, TAKE THE RING into GIVE RING TO SARAH, which might be relevant while Sarah's still in the sarahTalkingState (i.e., before she starts following the player character around):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;TCommandTopic&nbsp;@TakeAction
+<br>
+&nbsp;&nbsp;&nbsp;matchDobj&nbsp;=&nbsp;diamondRing
+<br>
+&nbsp;&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Here,&nbsp;take&nbsp;this,&lt;/q&gt;&nbsp;you&nbsp;say,&nbsp;offering&nbsp;her&nbsp;the&nbsp;ring.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedAction(GiveTo,&nbsp;diamondRing,&nbsp;sarah);
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We can also, of course, simply have the actor perform the precise command ordered; but note a possible trap here. We might be tempted to define something like this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;TCommandTopic&nbsp;&nbsp;@TakeAction
+<br>
+&nbsp;&nbsp;&nbsp;matchDobj&nbsp;=&nbsp;[goldenBanana,&nbsp;hexCrystal]
+<br>
+&nbsp;&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedActorAction(sarah,&nbsp;Take,&nbsp;currentDobj);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;takes&nbsp;&lt;&lt;currentDobj.theName&gt;&gt;&nbsp;and&nbsp;turns&nbsp;it&nbsp;over&nbsp;in
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;her&nbsp;hands.&nbsp;&lt;q&gt;That's&nbsp;interesting!&lt;/q&gt;&nbsp;she&nbsp;says.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This may appear to work - unless the nestedActorAction fails for one of a number of reasons (such as either the player character or Sarah holding the golden banana when the command is issued). Then we could end up with a transcript like this:
+<br>
+
+<br>
+<b>&gt;sarah, take banana
+<br>
+</b>You won't let Sarah have that. Sarah takes the Golden Banana of Discord and turns it over in her hands. "That's interesting!" she says.
+<br>
+
+<br>
+<b>&gt;i</b>
+<br>
+You are carrying the Golden Banana of Discord.
+<br>
+
+<br>
+<b>&gt;drop it
+<br>
+</b>Dropped.
+<br>
+
+<br>
+<b>&gt;woman, take banana
+<br>
+</b>Sarah takes the Golden Banana of Discord and turns it over in her hands. "That's interesting!" she says.
+<br>
+
+<br>
+<b>&gt;woman, take banana</b>
+<br>
+Sarah is already carrying the Golden Banana of Discord. Sarah takes the Golden Banana of Discord and turns it over in her hands. "That's interesting!" she says.
+<br>
+
+<br>
+There are basically two ways to get round this. One is to have the special message display in the actionDobjTake handler of the objects concerned, but that could quickly get tedious to code if there were several of them. The other, and, probably easier, is to have the TCommandTopic check that the nestedActorAction has succeeded before displaying a message that assumes that it has. The trick is to work out what condition best achieves that. In this case, it's probably most effective to test that the object has changed locations as a result of the nested TakeAction; if it has, then the nested action must have worked. So we should instead code our TCommandTopic thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;TCommandTopic&nbsp;&nbsp;@TakeAction
+<br>
+&nbsp;&nbsp;&nbsp;matchDobj&nbsp;=&nbsp;[goldenBanana,&nbsp;hexCrystal]
+<br>
+&nbsp;&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;oldLoc&nbsp;=&nbsp;currentDobj.location;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedActorAction(sarah,&nbsp;Take,&nbsp;currentDobj);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;test&nbsp;that&nbsp;the&nbsp;object&nbsp;has&nbsp;actually&nbsp;moved&nbsp;before&nbsp;reporting&nbsp;that&nbsp;it&nbsp;has&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(currentDobj.location&nbsp;!=&nbsp;oldLoc)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;takes&nbsp;&lt;&lt;currentDobj.theName&gt;&gt;&nbsp;and&nbsp;turns&nbsp;it&nbsp;over&nbsp;in
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;her&nbsp;hands.&nbsp;&lt;q&gt;That's&nbsp;interesting!&lt;/q&gt;&nbsp;she&nbsp;says.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This will then work correctly. But once you've verified that it does you should comment it out or remove it altogether, since we don't actually want it in the game.
+<br>
+
+<br>
+You could go on to define an analogous TICommandTopic to cope with commands with two objects, a direct and an indirect, but it is probably not worth the bother. To deal with such a command it is probably easier simply to match the action and the direct object, and then let topicResponse handle the matching of the indirect object. The reason for this is that if you're going to have an NPC accept a command involving a particular action and direct object, but only a certain range of indirect objects, it's probably more helpful to the player to have the NPC make some kind of response directly related to the combination of action, direct object and indirect object specified, rather than a generic refusal. For example, if the player types:
+<br>
+
+<br>
+&gt;<b>sarah, put the torch in the volcano
+<br>
+</b>
+<br>
+It's probably more helpful to have a response like:
+<br>
+
+<br>
+"I don't think I should put it there," she replies dubiously.
+<br>
+
+<br>
+than a more generic one like:
+<br>
+
+<br>
+Sarah refuses your request.
+<br>
+
+<br>
+The former response clues the player that Sarah might be prepared to put the torch somewhere, but just not there.
+<br>
+
+<br>
+Note that if you think something like TCommandTopic might be useful in your own game, you can download  the (rather more complete) TCommand library extension that comes in the ../lib/extensions folder of the standard TADS 3 distribution..
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

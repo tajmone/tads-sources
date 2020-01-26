@@ -1,0 +1,40 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ImpByeTopic</title></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ImpByeTopic : <a href="misctopic.htm">MiscTopic</a>
+<br>
+
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="byetopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="leavebyetopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">An ImpByeTopic is yet another kind of <a href="topicentry.htm">TopicEntry</a> used in <a href="greetingprotocols.htm">greeting protocols</a>. Like <a href="byetopic.htm">ByeTopic</a>, it is used at the end of a conversation, and would normally be placed in a <a href="conversationreadystate.htm">ConversationReadyState</a>. Unlike ByeTopic, it handles only implicit conversation endings, which occur either when the player character simply leaves the area in mid-conversation, or else fails to address a conversational command to the NPC for enough turns to exhaust the NPC's attention span.
+<br>
+
+<br>
+For example, we might define the following ImpByeTopic for the curator, which should be located in his curatorWatching  ConversationReadyState:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+++&nbsp;ImpByeTopic
+<br>
+&nbsp;&nbsp;"{The&nbsp;curator/he}&nbsp;turns&nbsp;away&nbsp;and&nbsp;goes&nbsp;back&nbsp;to&nbsp;what
+<br>
+&nbsp;&nbsp;&nbsp;passes&nbsp;for&nbsp;his&nbsp;work.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that this doesn't distinguish between the cases where the conversation ends because the PC walks away from the curator and where it ends because the curator becomes bored waiting for us to speak. If we want to make that distinction, we can use <a href="leavebyetopic.htm">LeaveByeTopic</a> and <a href="boredbyetopic.htm">BoredByeTopic</a>.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

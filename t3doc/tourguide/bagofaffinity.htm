@@ -1,0 +1,66 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>BagOfHolding</title><meta name="keywords" content="BagOfHolding,affinityFor"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>BagOfHolding: object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="singlecontainer.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="locks+keys-introduction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">BagOfHolding is a mix-in class that can be used for an object to which an actor (usually the player character) automatically moves objects when his or her hands become full, provided the BagOfHolding object is in the player's inventory. This provides a measure of realism (there's a limit to how many objects an actor could really hold in his or her hand) without making inventory management too burdensome to the player.
+<br>
+
+<br>
+All that's necessary to make an object a BagOfHolding is to add BagOfHolding to the start of its class list; a good candidate for a BagOfHolding in the <i>Quest of the Golden Banana</i> might be the sack we defined earlier:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">sack&nbsp;:&nbsp;<b>BagOfHolding</b>,&nbsp;StretchyContainer&nbsp;'coarse&nbsp;brown&nbsp;sack'&nbsp;'coarse&nbsp;brown&nbsp;sack'&nbsp;@squareCave
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;coarse&nbsp;brown&nbsp;sack&nbsp;lies&nbsp;crumpled&nbsp;in&nbsp;the&nbsp;corner.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;<b>3000</b>
+<br>
+&nbsp;&nbsp;minBulk&nbsp;=&nbsp;1
+<br>
+
+<br>
+&nbsp;&nbsp;<b>affinityFor(obj)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;obj.ofKind(Tablet)&nbsp;?&nbsp;200&nbsp;:&nbsp;inherited(obj);
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">If it's to be much use as a BagOfHolding the sack will need a bulkCapacity much larger than the one we initially gave it, so here we increase its bulkCapacity to 3000.
+<br>
+
+<br>
+Although there's no particular reason for doing it in this case, we define the sack's </font><font face="Courier New" size="2" color="#000000">affinityFor()</font><font face="Arial" size="2" color="#000000"> method just to illustrate its use. This should return a number between 0 (meaning that the BagOfHolding will refuse to hold the object) to 200 (meaning that the bag is particular keen to hold the object), with 100 being the default. In this case we'll make the sack particularly suitable for carrying the various tablets in (there's no really <i>logical </i>reason for this beyond player convenience - the tablets are relatively bulky objects that the player needs to collect a number of but not to use very often).
+<br>
+
+<br>
+Note that we won't see the BagOfHolding doing much unless we also reduce the bulk capacity of the player character. You could try reducing it to 100; add the following to the definition of the me object:
+<br>
+
+<br>
+   </font><font face="Courier New" size="2" color="#000000">bulkCapacity&nbsp;=&nbsp;100
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,284 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>specialDesc</title><meta name="keywords" content="specialDesc,useSpecialDesc,roomDesc,inRoomDesc,useInitDesc"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>specialDesc
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="globalparamname.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="described.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">There may be cases where we want something other than the plain-vanilla "You see an xxx here" to appear in room description lists even after an object has moved. For this purpose an object may be given a specialDesc property as well as an initSpecialDesc property. If an object has a specialDesc property it is used <i>either</i> if the object has moved (i.e. its moved property is true) <i>or</i> if there is not also an initSpecialDesc property. This works even for objects that would not normally be listed, because they are NonPortable. For example, if we wanted the desk in the greatCabin to appear in the list of the cabin's contents we could give it a specialDesc:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">cabinDesk&nbsp;:&nbsp;Heavy&nbsp;'large&nbsp;solid&nbsp;oak&nbsp;desk'&nbsp;'desk'&nbsp;@greatCabin
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large,&nbsp;solid&nbsp;oak&nbsp;desk.&nbsp;A&nbsp;button&nbsp;is&nbsp;fixed&nbsp;underneath&nbsp;it.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>specialDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;oak&nbsp;desks&nbsp;sits&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cabin.&nbsp;"</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In this case this may a bit redundant, since we have already mentioned the desk in the description of the cabin, and we would normally want one or the other but not both. But at least the specialDesc property allows us the option of which way we do it (although since cabinDesk is never moved it would work equally well to use its initSpecialDesc property). Incidentally, the library does not provide a mechanism for incorporating a specialDesc within the text of a room description (like an Inform describe routine), but it's fairly easy to achieve this effect if you want it, by defining a custom property (say inRoomDesc) on the object you want so described, and a custom method on the room in question, e.g.:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">greatCabin&nbsp;:&nbsp;Cabin&nbsp;'Great&nbsp;Cabin'&nbsp;'the&nbsp;great&nbsp;cabin'
+<br>
+&nbsp;&nbsp;"The&nbsp;great&nbsp;cabin&nbsp;occupies&nbsp;the&nbsp;entire&nbsp;width&nbsp;of&nbsp;the&nbsp;ship&nbsp;at&nbsp;the&nbsp;stern.&nbsp;The&nbsp;stern
+<br>
+&nbsp;&nbsp;&nbsp;windows&nbsp;aft&nbsp;look&nbsp;out&nbsp;over&nbsp;the&nbsp;water,&nbsp;<b>while&nbsp;there&nbsp;is&nbsp;a&nbsp;solid&nbsp;wooden&nbsp;bulkhead
+<br>
+&nbsp;&nbsp;&nbsp;foreward&nbsp;and&nbsp;a&nbsp;flight&nbsp;of&nbsp;steps&nbsp;leads&nbsp;up&nbsp;to&nbsp;the&nbsp;deck&nbsp;above.&nbsp;&lt;&lt;extras&gt;&gt;</b>"
+<br>
+&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;cabinSteps
+<br>
+&nbsp;&nbsp;&nbsp;fore&nbsp;=&nbsp;bulkheadDoor
+<br>
+&nbsp;&nbsp;&nbsp;roomParts&nbsp;=&nbsp;static&nbsp;inherited&nbsp;-&nbsp;defaultAftBulkhead&nbsp;-&nbsp;defaultForeBulkhead
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;greatCabinAftBulkhead&nbsp;+&nbsp;greatCabinForeBulkhead
+<br>
+&nbsp;&nbsp;&nbsp;<b>extras()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;contents)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur.inRoomDesc;
+<br>
+&nbsp;&nbsp;&nbsp;}</b>&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
+cabinDesk&nbsp;:&nbsp;Heavy&nbsp;'large&nbsp;solid&nbsp;oak&nbsp;desk'&nbsp;'desk'&nbsp;@greatCabin
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;large,&nbsp;solid&nbsp;oak&nbsp;desk.&nbsp;A&nbsp;button&nbsp;is&nbsp;fixed&nbsp;underneath&nbsp;it.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>inRoomDesc&nbsp;=&nbsp;"A&nbsp;large&nbsp;oak&nbsp;desks&nbsp;sits&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;cabin.&nbsp;"</b>
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">There is nothing to stop you defining this extras() method on the Room class if you want to make it more general, but you then have to remember to include &lt;&lt;extras&gt;&gt; at the appropriate point of your room descriptions, or else override the library code in some such way as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Room
+<br>
+&nbsp;roomDesc()&nbsp;{&nbsp;inherited;&nbsp;extras;&nbsp;}
+<br>
+&nbsp;extras()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;contents)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur.inRoomDesc;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This may be more convenient, since it will now work in every room without your needing to add &lt;&lt;extras&gt;&gt; to the desc property, provided you're happy for the inRoomDescs always to be listed at the end of the room description. We'll give a more sophisticated version of this modification below.
+<br>
+
+<br>
+But to return to specialDesc, we could also use this property to give the coin a more specialized description in a room listing whenever it's dropped on back on the floor, e.g.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">specialDesc&nbsp;=&nbsp;"{A&nbsp;coin/he}&nbsp;lies&nbsp;on&nbsp;the&nbsp;floor.&nbsp;"</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Which will give an appropriate description whether the coin has been examined or not. The problem with this is that we want this specialDescription only to be used if the coin is in fact lying on the floor somewhere, and not, for example, if it's placed on some other surface or in some other container. The easiest way to achieve this is to override useSpecialDesc, so that the brassCoin object becomes:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">brassCoin&nbsp;:&nbsp;Thing&nbsp;'(small)&nbsp;brassy&nbsp;object'&nbsp;'small&nbsp;brassy&nbsp;object'&nbsp;@longCave
+<br>
+&nbsp;&nbsp;"On&nbsp;the&nbsp;obverse&nbsp;is&nbsp;the&nbsp;head&nbsp;of&nbsp;King&nbsp;Freddie&nbsp;the&nbsp;Fat,&nbsp;and&nbsp;on&nbsp;the&nbsp;reverse
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;stamped&nbsp;ONE&nbsp;GROAT.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"{A&nbsp;coin/he}&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground&nbsp;in&nbsp;a&nbsp;dim&nbsp;corner&nbsp;of&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;initDesc&nbsp;=&nbsp;"It&nbsp;looks&nbsp;like&nbsp;it&nbsp;might&nbsp;be&nbsp;a&nbsp;coin&nbsp;of&nbsp;some&nbsp;sort.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'coin'
+<br>
+&nbsp;&nbsp;&nbsp;<b>specialDesc&nbsp;=&nbsp;"{A&nbsp;coin/he}&nbsp;lies&nbsp;on&nbsp;the&nbsp;floor.&nbsp;"&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;useSpecialDesc&nbsp;{&nbsp;return&nbsp;location.ofKind(Room)&nbsp;||&nbsp;useInitSpecialDesc();&nbsp;}
+<br>
+</b>&nbsp;&nbsp;&nbsp;dobjFor(Examine)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;changeName();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;changeName()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'small&nbsp;brass&nbsp;coin';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmdDict.removeWord(self,&nbsp;'object',&nbsp;&amp;noun);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initializeVocabWith('brass&nbsp;coin/groat*coins');
+<br>
+&nbsp;&nbsp;&nbsp;}&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You need to be careful about one thing in particular when overriding useSpecialDesc, however, namely that useSpecialDesc <i>also</i> determines if the initSpecialDesc is displayed; if useSpecialDesc returns nil when the initSpecialDesc would otherwise be displayed, the initSpecialDesc won't be used. The safest way not to fall foul of this problem is to add </font><font face="Courier New" size="2" color="#000000">||&nbsp;useInitSpecialDesc()</font><font face="Arial" size="2" color="#000000"> to whatever condition you're using to determine whether the specialDesc should be used, as in the example above (where it is not, in this particular instance, strictly necessary).
+<br>
+
+<br>
+<a name="roomdesc">To return to our inRoomDesc customization, it would be nice if we could choose the order in which objects using our custom inRoomDesc property were mentioned in the description of the room that contains them, perhaps by the addition of an inRoomDescOrder property. To achieve this, we need to make our customization a bit more complicated:
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Room
+<br>
+&nbsp;roomDesc()&nbsp;{&nbsp;inherited;&nbsp;extras;&nbsp;finalDesc;}
+<br>
+&nbsp;extras()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(contents.length==0)&nbsp;return;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;cur;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;vec&nbsp;=&nbsp;new&nbsp;Vector(10);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(cur&nbsp;in&nbsp;contents)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cur.propType(&amp;inRoomDesc)&nbsp;is&nbsp;in&nbsp;(TypeDString,&nbsp;TypeCode))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vec.append(cur);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(vec.length==0)&nbsp;return;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vec&nbsp;=&nbsp;vec.sort(nil,&nbsp;{a,&nbsp;b:&nbsp;a.inRoomDescOrder&nbsp;-&nbsp;b.inRoomDescOrder&nbsp;});
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(cur&nbsp;in&nbsp;vec)&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gPlayerChar.canSee(cur))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur.inRoomDesc;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;finalDesc&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+
+<br>
+modify&nbsp;Thing
+<br>
+&nbsp;&nbsp;/*&nbsp;Text&nbsp;to&nbsp;add&nbsp;to&nbsp;the&nbsp;description&nbsp;of&nbsp;the&nbsp;room&nbsp;I'm&nbsp;immediately&nbsp;in.
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;If&nbsp;inRoomDesc&nbsp;is&nbsp;a&nbsp;double-quoted&nbsp;string&nbsp;or&nbsp;a&nbsp;method&nbsp;that&nbsp;displays
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;a&nbsp;string,&nbsp;this&nbsp;is&nbsp;added&nbsp;to&nbsp;the&nbsp;description&nbsp;of&nbsp;the&nbsp;enclosing&nbsp;room.
+<br>
+&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;inRoomDesc&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;/*&nbsp;If&nbsp;several&nbsp;objects&nbsp;in&nbsp;the&nbsp;same&nbsp;room&nbsp;have&nbsp;an&nbsp;inRoomDesc,&nbsp;the&nbsp;inRoomDesc
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;property&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;define&nbsp;the&nbsp;order&nbsp;in&nbsp;which&nbsp;they&nbsp;are&nbsp;described.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;To&nbsp;have&nbsp;objects&nbsp;included&nbsp;in&nbsp;the&nbsp;room&nbsp;description&nbsp;in&nbsp;the&nbsp;order&nbsp;in&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;they&nbsp;are&nbsp;defined&nbsp;in&nbsp;the&nbsp;source&nbsp;file,&nbsp;define&nbsp;inRoomDescOrder&nbsp;=&nbsp;(sourceTextOrder)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;inRoomDescOrder&nbsp;=&nbsp;100&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In the event that you wanted to mix in room description text with object description text in some way other than having all the objects described last, you use the finalDesc property, e.g.:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">boringRoom&nbsp;:&nbsp;Room&nbsp;'Boring&nbsp;Room'
+<br>
+&nbsp;&nbsp;"There's&nbsp;not&nbsp;much&nbsp;here&nbsp;really,&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;finalDesc&nbsp;=&nbsp;"The&nbsp;only&nbsp;way&nbsp;out&nbsp;is&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;Decoration&nbsp;'carvings'&nbsp;'carvings'
+<br>
+&nbsp;&nbsp;"They're&nbsp;rather&nbsp;amateurish.&nbsp;"
+<br>
+&nbsp;&nbsp;inRoomDesc&nbsp;=&nbsp;"apart&nbsp;from&nbsp;some&nbsp;carvings&nbsp;on&nbsp;one&nbsp;wall.&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This will produce the room description: "There's not much here really, apart from some carvings on the wall. The only way out is to the north. " This would probably be more useful if the description of the carvings might change, e.g.:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;Decoration&nbsp;'carvings'&nbsp;'carvings'
+<br>
+&nbsp;&nbsp;"They're&nbsp;rather&nbsp;amateurish.&nbsp;"
+<br>
+&nbsp;&nbsp;inRoomDesc&nbsp;=&nbsp;"apart&nbsp;from&nbsp;some&nbsp;&lt;&lt;epithet&gt;&gt;&nbsp;carvings&nbsp;on&nbsp;one&nbsp;wall.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;epithet&nbsp;=&nbsp;(described&nbsp;?&nbsp;'amateurish'&nbsp;:&nbsp;'intriguing')
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+For a more complex sandwich, you could include SecretFixture objects whose only function was to provide parts of the room description in the sequence determined by their inRoomDescOrder.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

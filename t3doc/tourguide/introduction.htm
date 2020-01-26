@@ -1,0 +1,111 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Introduction</title><meta name="keywords" content="Rooms and Connectors"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Rooms and  Connectors - Overview
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="startupcodegamemain.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="outdoorroom.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">In the sections that follow we shall endeavour to make use of all the main types of room and travel connector in the TADS 3 library.
+<br>
+
+<br>
+Rooms are locations in which actors and other objects may exist, and between which actors may travel. Since travel is possible directly from one Room  to another, Rooms are also Travel Connectors. TravelConnectors allow travel between Rooms: their class hierarchy is
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000"><b>TravelConnector</b>
+<br>
+&nbsp;&nbsp;&nbsp;Passage
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stairway
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="stairwaydown.htm">StairwayDown</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="stairwayup.htm">StairwayUp</a>
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="throughpassage.htm">ThroughPassage</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="basicdoor.htm">BasicDoor</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="door.htm">Door</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="autoclosingdoor.htm">AutoClosingDoor</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="secretdoor.htm">SecretDoor</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="hiddendoor.htm">HiddenDoor</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="exitonlypassage.htm">ExitOnlyPassage</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="pathpassage.htm">PathPassage</a>
+<br>
+
+&nbsp;&nbsp;&nbsp;<a href="roomconnector.htm">RoomConnector</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="onewayroomconnector.htm">OneWayRoomConnector</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="roomautoconnector.htm">RoomAutoConnector</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="room.htm">Room</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="darkroom.htm">DarkRoom</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="floorlessroom.htm">FloorlessRoom</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="outdoorroom.htm">OutdoorRoom</a>
+<br>
+&nbsp;&nbsp;&nbsp;<a href="travelmessage.htm">TravelMessage</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="deadendconnector.htm">DeadEndConnector</a>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="notravelmessage.htm">NoTravelMessage</a>
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="42"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="fakeconnector.htm">FakeConnector</a>
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="42"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="42"></td><td><font face="Courier New" size="2" color="#000000">&nbsp;</font><font face="Times New Roman" size="3" color="#000000"><a href="askconnector.htm">AskConnector</a>
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="42"></td><td><font face="Times New Roman" size="3" color="#000000"></font></td></tr></table><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that Passage also descends from Fixture, so that Passage and all its subclasses represent physical game objects as well as connectors. This is not the case with RoomConnector and its descendants or TravelMessage and its.
+<br>
+
+<br>
+Note that TravelMessage also descends from <a href="travelwithmessage.htm">TravelWithMessage</a>.
+<br>
+
+<br>
+There is also a <a href="shipboardroom.htm">ShipBoardRoom</a> class that can be used as a mix-in class for other kinds of room.
+<br>
+
+<br>
+Room and its subclasses have a number of methods and properties that it is sometimes useful to override, these include:
+<br>
+
+<br>
+<a href="outdoorroom.htm">atmosphereList</a>
+<br>
+<a href="secretdoor.htm">brightness</a>
+<br>
+<a href="outdoorroom.htm">destName</a>
+<br>
+<a href="travelerarriving.htm">enteringRoom</a>
+<br>
+<a href="roomxxxxaction.htm">roomAfterAction</a>
+<br>
+<a href="roomxxxxaction.htm">roomBeforeAction</a>
+<br>
+<a href="roomparts.htm">roomParts</a>
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

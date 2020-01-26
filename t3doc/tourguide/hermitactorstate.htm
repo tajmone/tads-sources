@@ -1,0 +1,48 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>HermitActorState</title><meta name="keywords" content="HermitActorState,noResponse"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>HermitActorState : <a href="overview-actorstates.htm">ActorState</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="overview-actorstates.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="accompanyingstate.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The HermitActorState is used for when an actor is too preoccupied, or is otherwise unable or unwilling to response to conversational approaches from the PC (such as TALK TO, ASK ABOUT, or SHOW TO). When the PC addresses any such commands to an Actor in a HermitActorState, the message defined in the HermitActorState's <b>noResponse</b> property is displayed.
+<br>
+
+<br>
+None of the actors we have defined so far have any cause to enter a HermitActor state in any situation we have provided so far, but to show the principle we'll add a (somewhat tongue-in-cheek) permanently unresponsive actor:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">skeleton&nbsp;:&nbsp;Actor,&nbsp;Heavy&nbsp;'bleached&nbsp;skeleton'&nbsp;'skeleton'&nbsp;@redRavine
+<br>
+&nbsp;&nbsp;"The&nbsp;bones&nbsp;have&nbsp;long&nbsp;since&nbsp;been&nbsp;bleached&nbsp;white,&nbsp;but&nbsp;it's&nbsp;undoubtedly
+<br>
+&nbsp;&nbsp;&nbsp;a&nbsp;human&nbsp;skeleton,&nbsp;of&nbsp;a&nbsp;person&nbsp;who&nbsp;was&nbsp;once&nbsp;about&nbsp;5'9\"&nbsp;tall.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;HermitActorState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"A&nbsp;bleached&nbsp;skeleton&nbsp;lies&nbsp;on&nbsp;the&nbsp;ground,&nbsp;one&nbsp;arm&nbsp;outstretched
+<br>
+&nbsp;&nbsp;&nbsp;towards&nbsp;the&nbsp;south.&nbsp;"
+<br>
+&nbsp;&nbsp;noResponse&nbsp;=&nbsp;"The&nbsp;skeleton&nbsp;is&nbsp;a&nbsp;bit&nbsp;too&nbsp;dead&nbsp;to&nbsp;attend&nbsp;to&nbsp;you&nbsp;right&nbsp;now.&nbsp;"
+<br>
+&nbsp;&nbsp;isInitState&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If you wanted something really macabre, you could add more actor states to the skeleton object so that at some point it comes to life - but one ghost in a game is probably enough. Instead, we'll give another example of a temporary HermitActorState in the next section.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

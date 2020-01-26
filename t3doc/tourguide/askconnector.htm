@@ -1,0 +1,80 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>AskConnector</title><meta name="keywords" content="AskConnector,promptMessage,travelAction,travelObjs,travelObjsPhrase"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>AskConnector : TravelConnector, ResolveAsker
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="travelbarrier.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="travelconnector.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The normal IF convention assumes that there is only one exit in any given compass direction. But what happens if you want to model a situation where there are two, or three, or half a dozen, such as a north wall in which there are several doors? You could, of course, simply attach a FakeConnector to the north property of such a location and have it display a message telling the player to select a door to go through instead, but a better solution would be to use an AskConnector. This is an "ask which" travel connector. Rather than just traversing the connector, we ask for a direct object for a specified travel verb; if the player supplies the missing indirect object (or if the parser can automatically choose a default), we'll perform the travel verb using that direct object.<font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+AskConnector defines the following properties:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></b></font></td><td><font face="Arial" size="2" color="#000000"><b>promptMessage</b>  - An extra prompt message to show before the normal parser prompt for a missing or ambiguous object. We'll show this just before the normal parser message, if it's specified. If you want to customize the messages more completely, you can override askDisambig() or askMissingObject(). The parser will invoke these to generate the prompt, so you can customize the entire messages by overriding these.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>travelAction</b> - The specific travel action to attempt. This must be a TAction - an action that takes a direct object (and only a direct object). The default is TravelVia, but this should usually be customized in each instance to the type of travel appropriate for the possible connectors.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>travelObjs</b> - The list of possible direct objects for the travel action. If this is nil, we'll simply treat the direct object of the travelAction as completely missing, forcing the parser to either find a default or ask the player for the missing object. If the travel is limited to a specific set of objects (for example, if there are two doors leading north, and we want to ask which one to use), this should be set to the list of possible objects; the parser will then use the ambiguous noun phrase rules instead of the missing noun phrase rules to ask the player for more information.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>travelObjsPhrase</b> - The phrase to use in the disambiguation question to ask which of the travelObjs entries is to be used. The language-specific module provides a suitable default, but this should usually be overridden if travelObjs is overridden.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></td><td></td></tr></table><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Here's an example of an AskConnector when there are two doors in the south wall.
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">stoneLanding&nbsp;:&nbsp;Room&nbsp;'Landing'&nbsp;'the&nbsp;landing'
+<br>
+&nbsp;&nbsp;&nbsp;"A&nbsp;pair&nbsp;of&nbsp;doors&nbsp;lead&nbsp;south&nbsp;from&nbsp;this&nbsp;narrow&nbsp;landing,&nbsp;from&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;narrow&nbsp;flight&nbsp;of&nbsp;stone&nbsp;steps&nbsp;lead&nbsp;down&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;down&nbsp;=&nbsp;slStairsDown
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;asExit(down)&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;:&nbsp;AskConnector&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;promptMessage&nbsp;=&nbsp;"There&nbsp;are&nbsp;two&nbsp;doors&nbsp;you&nbsp;could&nbsp;go&nbsp;through&nbsp;to&nbsp;the&nbsp;south&nbsp;.&nbsp;"&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;travelAction&nbsp;=&nbsp;GoThroughAction&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;travelObjs&nbsp;=&nbsp;[leftDoor,&nbsp;rightDoor]
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;travelObjsPhrase&nbsp;=&nbsp;'of&nbsp;them'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
++&nbsp;leftDoor&nbsp;:&nbsp;Door&nbsp;'left&nbsp;hand&nbsp;door*doors'&nbsp;'left&nbsp;hand&nbsp;door'
+<br>
+;
+<br>
+
+<br>
++&nbsp;rightDoor&nbsp;:&nbsp;Door&nbsp;'right&nbsp;hand&nbsp;door*doors'&nbsp;'right&nbsp;hand&nbsp;door'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Now, if you arrive at this destination and type the command SOUTH the parser will respond with "There are two doors you could go through to the south. Which of them do you mean, the right hand door, or the left hand door?" Of course, right now there's no way of reaching this location; we'll eventually provide it when we come to look at <a href="consultable.htm">Consultable</a>.
+<br>
+</font></font>
+
+</body></html>

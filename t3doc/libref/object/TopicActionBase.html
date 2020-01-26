@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TopicActionBase</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TopicActionBase</span><span class=type>class</span><td align=right><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5517">5517</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Base class for actions that include a "topic" phrase.  This is a   mix-in class that can be used in different types of topic actions.  In   all cases, the topic phrase must be assigned to the 'topicMatch'   property in grammar rules based on this class.
+<p>
+<code>class
+<b>TopicActionBase</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TopicActionBase</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TopicActionBase</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicAction.html">TopicAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicTAction.html">TopicTAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskVagueAction.html">AskVagueAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskVague).html">predicate(AskVague)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellVague).html">predicate(TellVague)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConsultAboutAction.html">ConsultAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ConsultAbout).html">predicate(ConsultAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ConsultWhatAbout).html">predicate(ConsultWhatAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvTopicTAction.html">ConvTopicTAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskAboutAction.html">AskAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAbout).html">predicate(AskAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAboutImplicit).html">predicate(AskAboutImplicit)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAboutWhat).html">predicate(AskAboutWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskForAction.html">AskForAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskFor).html">predicate(AskFor)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskWhomFor).html">predicate(AskWhomFor)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TellAboutAction.html">TellAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAbout).html">predicate(TellAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAboutImplicit).html">predicate(TellAboutImplicit)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAboutWhat).html">predicate(TellAboutWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TellVagueAction.html">TellVagueAction</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#topicList_">topicList_</a>&nbsp;
+<a href="#topicQualResolver_">topicQualResolver_</a>&nbsp;
+<a href="#topicResolver_">topicResolver_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#createTopicResolver">createTopicResolver</a>&nbsp;
+<a href="#getMessageParam">getMessageParam</a>&nbsp;
+<a href="#getTopic">getTopic</a>&nbsp;
+<a href="#getTopicQualifierResolver">getTopicQualifierResolver</a>&nbsp;
+<a href="#getTopicResolver">getTopicResolver</a>&nbsp;
+<a href="#reparseMatchAsTopic">reparseMatchAsTopic</a>&nbsp;
+<a href="#resolveTopic">resolveTopic</a>&nbsp;
+<a href="#setResolvedTopic">setResolvedTopic</a>&nbsp;
+<a href="#setTopicMatch">setTopicMatch</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="topicList_"></a>
+<table class=decl><tr><td><code>topicList_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5708">5708</a>]</table><div class=desc>the resolved topic object list<p>
+</div>
+<a name="topicQualResolver_"></a>
+<table class=decl><tr><td><code>topicQualResolver_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5705">5705</a>]</table><div class=desc>the topic qualifier resolver<p>
+</div>
+<a name="topicResolver_"></a>
+<table class=decl><tr><td><code>topicResolver_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5711">5711</a>]</table><div class=desc>my cached topic resolver<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="createTopicResolver"></a>
+<table class=decl><tr><td><code>createTopicResolver (issuingActor, targetActor)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5645">5645</a>]</table><div class=desc>   Create the topic resolver. <p>
+</div>
+<a name="getMessageParam"></a>
+<table class=decl><tr><td><code>getMessageParam (objName)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5657">5657</a>]</table><div class=desc>   Get a message parameter by name.  We'll return the topic for the   keyword 'topic', and inherit the default handling for anything   else. <p>
+</div>
+<a name="getTopic"></a>
+<table class=decl><tr><td><code>getTopic ( )</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5672">5672</a>]</table><div class=desc>get the current topic<p>
+</div>
+<a name="getTopicQualifierResolver"></a>
+<table class=decl><tr><td><code>getTopicQualifierResolver (issuingActor, targetActor, reset)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5689">5689</a>]</table><div class=desc>   Get the resolver for qualifiers we find in the topic phrase   (qualifiers that might need resolution include things like   possessive adjectives and locational phrases). <p>
+</div>
+<a name="getTopicResolver"></a>
+<table class=decl><tr><td><code>getTopicResolver (issuingActor, targetActor, reset)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5628">5628</a>]</table><div class=desc>   get the topic resolver <p>
+</div>
+<a name="reparseMatchAsTopic"></a>
+<table class=decl><tr><td><code>reparseMatchAsTopic (topic, issuingActor, targetActor)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5588">5588</a>]</table><div class=desc>   Re-parse a match tree as a topic phrase.  Returns a TopicProd   match tree, if possible. <p>
+</div>
+<a name="resolveTopic"></a>
+<table class=decl><tr><td><code>resolveTopic (issuingActor, targetActor, results)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5523">5523</a>]</table><div class=desc>   Resolve the topic phrase.  This resolves the match tree in out   'topicMatch' property, and stores the result in topicList_.  This   is for use in resolveNouns(). <p>
+</div>
+<a name="setResolvedTopic"></a>
+<table class=decl><tr><td><code>setResolvedTopic (topic)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5539">5539</a>]</table><div class=desc>   Set the resolved topic to the given object list.  This is for use   in setResolvedObjects(). <p>
+</div>
+<a name="setTopicMatch"></a>
+<table class=decl><tr><td><code>setTopicMatch (topic)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5555">5555</a>]</table><div class=desc>   Set the topic match tree.  This is for use in setObjectMatches(). <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

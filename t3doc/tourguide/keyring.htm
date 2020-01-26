@@ -1,0 +1,58 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Keyring</title><meta name="keywords" content="Keyring,examineStatus,isMyKey"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Keyring : <a href="bagofaffinity.htm">BagOfHolding</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="lockablewithkey.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="openable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A KeyRing is a specialized BagOfHolding designed for use with keys. In practice this means that if a player character is carrying a KeyRing, every time he or she picks up a key it's automatically added to the KeyRing, and when he or she comes across a previous unencountered locked door, an attempt to unlock it will automatically cause every key on the KeyRing to be tried (until one fits).
+<br>
+
+<br>
+Since this is a convenient object for the player to have, we'll let the player find one early on. The definition can be minimal:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Keyring&nbsp;'silver&nbsp;(key)&nbsp;keyring/ring'&nbsp;'silver&nbsp;keyring'&nbsp;@firstAidKit
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+To see how it works, you might like to try going through the game so far, picking up the silver keyring at an early stage, and seeing what happens when you pick up the two keys and try opening the locked door into the Tardis and the locked trunk without specifying which key to use.
+<br>
+
+<br>
+There are not many methods or properties of Keyrings you'd generally want to override, but you might have cause to override <b>isMyKey(key)</b>.</font><font face="Times New Roman" size="3" color="#000000"> </font><font face="Arial" size="2" color="#000000">This method determines whether key is an acceptable object to be placed on the Keyring, and by default accepts anything of class Key. It may be, however, that you're developing a game with several types of key, for example the conventional metal rods with teeth that turn in cylindrical locks and flat magnetic cards that are pushed into slots, and you may feel that the same type of Keyring would hardly be suitable for both. If you defined a CardKey subclass for the second type of key you might want to define Keyrings for the two types of key thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">conventionalKeyring:&nbsp;Keyring&nbsp;'brass&nbsp;keyring'&nbsp;&nbsp;'brass&nbsp;keyring'
+<br>
+&nbsp;&nbsp;&nbsp;isMyKey(key)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;key.ofKind(Key)&nbsp;&amp;&amp;&nbsp;!key.ofKind(CardKey);
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+cardHolder:&nbsp;Keyring&nbsp;'plastic&nbsp;cardholder'&nbsp;'plastic&nbsp;cardholder'
+<br>
+&nbsp;&nbsp;isMyKey(key)&nbsp;&nbsp;{&nbsp;return&nbsp;key.ofKind(CardKey);&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We'll be doing something like this presently, when we come to implement a <a href="anotherlock.htm">card key</a>.
+<br>
+</font></font>
+
+</body></html>

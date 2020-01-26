@@ -1,0 +1,164 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Starting a New Game</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="makingtheitemsdosomething.htm">[Previous] </a>&nbsp;&nbsp;<a href="definingourfirstroom.htm">[Next] </a></I></FONT></P>
+<h1>Chapter 3 - Starting Out Again</h1>
+<h2>Starting a New Game</h2>
+
+<font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">In the previous chapter we saw how to create a very simple TADS 3 game. In this chapter we shall start creating a somewhat more complex game, which will occupy us for the remainder of this guide. Although in the initial stages there will be some overlap with what has
+gone before, it is important to ensure that the foundations of understanding are securely laid, and in any case we shall shortly be introducing new ways of accomplishing seemingly familiar tasks.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The basis for the game we shall be developing is once again the so-called 'advanced' starter game starta3.t, which should be located in the samples subdirectory of your TADS 3 directory. If you are using the TADS 3 Workbench,
+select New Project, choose the 'advanced' rather than the 'beginner' option, call the new file you are about to create 'heidi.t' and locate it in whichever directory you want to work (it's probably a good idea to create a new directory called Heidi for the purpose). Otherwise, if you are not using Workbench, copy starta3.t to your new Heidi directory and rename it heidi.t.
+<br>
+
+<br>
+Now open the file in your text editor of choice (either through Workbench or through the editor) and remove the definition of startroom, i.e. the lines that read:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica,
+Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">startRoom:&nbsp;Room&nbsp;'Start&nbsp;Room'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"This&nbsp;is&nbsp;the&nbsp;starting&nbsp;room.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Next, change the line </font><font face="Courier New" size="2" color="#000000">location&nbsp;=&nbsp;startRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (after the comment </font><font face="Courier New" size="2" color="#000000">/*&nbsp;the&nbsp;initial&nbsp;location&nbsp;*/</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) so that it reads </font><font face="Courier New" size="2"
+color="#000000">location&nbsp;=&nbsp;outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. You might also like to fill in the other fields with something a bit more meaningful, so that the edited file looks something like:
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+</font><font face="Courier New" size="2" color="#000000">#charset&nbsp;"us-ascii"
+<br>
+#include&nbsp;&lt;adv3.h&gt;
+<br>
+#include&nbsp;&lt;en_us.h&gt;
+<br>
+
+<br>
+versionInfo:&nbsp;GameID
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">       </font><font face="Courier New" size="2"
+color="#000000">IFID&nbsp;=&nbsp;'573a8b18-1008-ca66-9580-9a156f82eefa'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'The&nbsp;Further&nbsp;Adventures&nbsp;of&nbsp;Heidi'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;byline&nbsp;=&nbsp;'by&nbsp;An&nbsp;Author'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;htmlByline&nbsp;=&nbsp;'by&nbsp;&lt;a&nbsp;href="mailto:whatever@nospam.org"&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ERIC&nbsp;EVE&lt;/a&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;=&nbsp;'1.0'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;authorEmail&nbsp;=&nbsp;'ERIC&nbsp;EVE&nbsp;&lt;whatever@nospam.org&gt;'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;=&nbsp;'This&nbsp;is&nbsp;an&nbsp;unexciting&nbsp;tutorial&nbsp;game&nbsp;based&nbsp;loosely&nbsp;on
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Adventures&nbsp;of&nbsp;Heidi&nbsp;by&nbsp;Roger&nbsp;
+Firth&nbsp;and&nbsp;Sonja&nbsp;Kesserich.'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;htmlDesc&nbsp;=&nbsp;'This&nbsp;is&nbsp;an&nbsp;unexciting&nbsp;tutorial&nbsp;game&nbsp;based&nbsp;loosely&nbsp;on
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;i&gt;The&nbsp;Adventures&nbsp;of&nbsp;Heidi&lt;/i&gt;&nbsp;by&nbsp;Roger&nbsp;Firth&nbsp;and&nbsp;Sonja&nbsp;Kesserich.'
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;showCredit()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;show&nbsp;our&nbsp;credits&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;TADS&nbsp;3&nbsp;language&nbsp;and&nbsp;library&nbsp;were&nbsp;created&nbsp;by&nbsp;Michael&nbsp;J.&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2"
+color="#000000">Roberts.&lt;.p&gt;
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="102"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;original&nbsp;&lt;i&gt;Adventures&nbsp;of&nbsp;Heidi&lt;/i&gt;&nbsp;was&nbsp;a&nbsp;simple&nbsp;tutorial&nbsp;game&nbsp;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">for&nbsp;the&nbsp;Inform&nbsp;language&nbsp;written&nbsp;by&nbsp;Roger&nbsp;Firth&nbsp;and&nbsp;Sonja&nbsp;Kesserich.";
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New"
+size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;showAbout()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;i&gt;The&nbsp;Further&nbsp;Adventures&nbsp;of&nbsp;Heidi&lt;/i&gt;&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;Tutorial&nbsp;Game&nbsp;for&nbsp;TADS&nbsp;3";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+me:&nbsp;Actor
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;the&nbsp;initial&nbsp;location&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;=&nbsp;outsideCottage
+<br>
+;
+<br>
+
+<br><A
+name=gameMain>
+gameMain</a>:&nbsp;GameMainDef
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialPlayerChar&nbsp;=&nbsp;me
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showIntro()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Welcome&nbsp;to&nbsp;the&nbsp;Further&nbsp;Adventures&nbsp;of&nbsp;Heidi!\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showGoodbye()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;.p&gt;Thanks&nbsp;for&nbsp;playing!\b";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxScore&nbsp;=&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeRunsBeforeCheck&nbsp;=&nbsp;nil&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT
+SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="makingtheitemsdosomething.htm">[Previous] </a>&nbsp;&nbsp;<a href="definingourfirstroom.htm">[Next] </a></I></FONT></P>
+</body></html>
+

@@ -1,0 +1,148 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>notifyInsert &amp; notifyRemove</title><meta name="keywords" content="notifyInsert,notifyRemove,afterAction,asIobjFor,isPlural,getWeight,weight,min,function,OpenableContainer,putInName"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>notifyInsert &amp; notifyRemove
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="openablecontainer.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="lockablecontainer.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">We are now in a position to implement the scales we can use for weighing the various objects in the game (and so ultimately solve the altar problem that is yet to come). Scales obviously register a new reading each time something is put on them or removed from them, and the best way to test for such occurrences in the TADS 3 library is by using the <b>notifyInsert(obj, newCont)</b> and <b>notifyRemove(obj)</b> methods. These have the advantage that they'll also respond to things being inserted into or removed from contents of contents and so forth. In the case of the scales, this means that if I place a box on the scales and then put things in the box or take them out again, the scales' notifyInsert and notifyRemove methods will still be called, so a change in the total weight on the scales will still be registered, which is what we want.
+<br>
+
+<br>
+To get at the total weight on the scales we can simply use the <b>getWeight</b> method. This returns the total weight of an object and all its contents, so we need to subtract the scales own weight to get the total weight of all the objects placed on it. Since the description of the scales states that the maximum weight it can register is 100 pounds, we need to ensure that it never registers more, however much is placed on the scales. To get at the reading shown by the scales we should thus define:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">reading&nbsp;=&nbsp;min((getWeight&nbsp;-&nbsp;weight),&nbsp;100)</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+There is one major complication, however, and that is that notifyInsert and notifyRemove are called <i>before</i> the insert or remove action is completed, so that at the time they are called, the reading property will register the weight on the scales <i>before</i> the change, not <i>after</i> it as we want. There are probably several ways round this, but the one we have adopted here is to use the <b>afterAction()</b> method. This is called on all objects (but not rooms) in scope after an action is completed. To achieve the result we want here, we get afterAction to test whether the weight on the scales has changed, and only if it has to display the new weight (and record it as the current weight).
+<br>
+
+<br>
+The (somewhat complicated) definition of our set of scales is thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">scales&nbsp;:&nbsp;Surface&nbsp;'large&nbsp;weighing&nbsp;scales/pan/dial/needle'&nbsp;'scales'&nbsp;@entranceCave
+<br>
+&nbsp;&nbsp;"These&nbsp;scales&nbsp;comprise&nbsp;a&nbsp;large&nbsp;weighing&nbsp;pan&nbsp;fixed&nbsp;over&nbsp;a&nbsp;square&nbsp;body,&nbsp;on&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;large&nbsp;dial&nbsp;with&nbsp;a&nbsp;needle&nbsp;that&nbsp;is&nbsp;currently&nbsp;pointing&nbsp;to&nbsp;&lt;&lt;reading&gt;&gt;.&nbsp;The
+<br>
+&nbsp;&nbsp;&nbsp;numbers&nbsp;round&nbsp;the&nbsp;dial&nbsp;range&nbsp;from&nbsp;0&nbsp;to&nbsp;100,&nbsp;and&nbsp;according&nbsp;to&nbsp;the&nbsp;inscription
+<br>
+&nbsp;&nbsp;&nbsp;on&nbsp;the&nbsp;dials&nbsp;the&nbsp;unit&nbsp;of&nbsp;measure&nbsp;is&nbsp;pounds.&nbsp;"
+<br>
+&nbsp;&nbsp;reading&nbsp;=&nbsp;min((getWeight&nbsp;-&nbsp;weight),&nbsp;100)
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;6
+<br>
+&nbsp;&nbsp;isPlural&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;10
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;50&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;iobjFor(PutIn)&nbsp;asIobjFor(PutOn)
+<br>
+&nbsp;&nbsp;notifyRemove&nbsp;(obj)&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;weighMsg&nbsp;=&nbsp;'As&nbsp;you&nbsp;remove&nbsp;'+&nbsp;obj.theName;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;notifyInsert&nbsp;(obj,&nbsp;newCont)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(obj,&nbsp;newCont);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;weighMsg&nbsp;=&nbsp;'As&nbsp;you&nbsp;put&nbsp;'&nbsp;+&nbsp;obj.theName&nbsp;+&nbsp;'&nbsp;'&nbsp;+&nbsp;newCont.putInName();&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;showWeight()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;&lt;weighMsg&gt;&gt;&nbsp;the&nbsp;needle&nbsp;on&nbsp;the&nbsp;dial&nbsp;swings&nbsp;round&nbsp;to&nbsp;&lt;&lt;reading&gt;&gt;.&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;afterAction()&nbsp;
+<br>
+&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(reading&nbsp;!=&nbsp;oldWeight)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showWeight();
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oldWeight&nbsp;=&nbsp;reading;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;oldWeight&nbsp;=&nbsp;0&nbsp;
+<br>
+&nbsp;&nbsp;weighMsg&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+&nbsp;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">There are a number of other points to note here. The first is the use of the <b>isPlural</b> property. Although the set of scales is in fact a single object, its name property is 'scales', which is grammatically plural; we therefore set isPlural to true to ensure that in any message the parser generates about this object the verb will agree in number with its grammatical subject (e.g. to ensure we don't get "The scales does not appear to be edible" when what we want is "The scales do not appear to be edible"). The second is that in this case we can reasonably make the bulkCapacity bigger than the bulk; there's no reason why a object placed on the scales should not be bigger than the scales. The third is that since the scales are defined as having a pan the player might reasonably PUT X IN PAN as well as PUT X ON SCALES; to handle that we use iobjFor(PutIn) asIobjFor(PutOn) to translate a PUT IN command to a PUT ON command. The notifyInsert() method is already defined on BulkLimiter; it already contains code (which, among other things, checks that the object can be inserted and aborts the action if, for example, it is too bulky), so we must call the inherited method. We use the two notifyXXX methods simply to start constructing a string that will be displayed if the weight on the scales changes. The notifyInsert method also makes use of the <b>putInName</b> property which returns something like 'in the container' or 'on the surface' as appropriate. Finally, we ensure that the afterAction() method only does anything if the weight on the scales has actually changed. Note again that afterAction is called after <i>any</i> action performed while the object is in scope - this ensures that only actions that change the weight on the scales are acted upon here.
+<br>
+
+<br>
+At this point it will be worthwhile to recompile and run the game to test the scales out. Try putting the first-aid box on the scales, then open the first aid box and take the bandage; then try PUT SYRINGE ON SCALES; finally, obtain the brass tablet and try putting it first in the first-aid box and then in the pan. Hopefully, everything should work as expected.
+<br>
+
+<br>
+One small task remains, and that is to put the scales in a plausible locations; we'll place them in a cupboard in a galley aboard the ship, which means we first need to create the galley and the cupboard:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">galley&nbsp;:&nbsp;DarkCabin&nbsp;'Galley'&nbsp;'the&nbsp;galley'
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;like&nbsp;the&nbsp;galley&nbsp;has&nbsp;been&nbsp;more&nbsp;or&nbsp;less&nbsp;stripped&nbsp;bare.&nbsp;There's&nbsp;a&nbsp;work
+<br>
+&nbsp;&nbsp;&nbsp;surface&nbsp;with&nbsp;a&nbsp;cupboard&nbsp;underneath&nbsp;it,&nbsp;and&nbsp;not&nbsp;much&nbsp;else.&nbsp;"
+<br>
+&nbsp;&nbsp;aft&nbsp;=&nbsp;crewQuarters&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;Surface,&nbsp;Fixture&nbsp;'work&nbsp;surface'&nbsp;'work&nbsp;surface';
+<br>
+
+<br>
++&nbsp;galleyCupboard&nbsp;:&nbsp;OpenableContainer,&nbsp;Fixture&nbsp;'(galley)&nbsp;cupboard'&nbsp;'cupboard';
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Then change the first line of the definition of the scales to read:</font><font face="Courier New" size="2" color="#000000">
+<br>
+
+<br>
+scales&nbsp;:&nbsp;Surface&nbsp;'large&nbsp;weighing&nbsp;scales/pan/dial/needle'&nbsp;'scales'&nbsp;<b>@galleyCupboard</b>
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Clearly, the definition of crewQuarters needs to be changed to reflect this new state of affairs, but we'll attend to that in the next section.
+<br>
+</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

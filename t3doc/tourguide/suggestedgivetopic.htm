@@ -1,0 +1,50 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SuggestedGiveTopic</title><meta name="keywords" content="SuggestedGiveTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SuggestedGiveTopic : <a href="suggestedtopic.htm">SuggestedTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="suggestedtelltopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="suggestedshowtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A SuggestedAskTopic is the particular type of <a href="suggestedtopic.htm">SuggestedTopic</a> that suggests to the player that s/he could Give such-and-such to so-and-so.
+<br>
+
+<br>
+For example, if we want to suggest to the player that he might give the carbuncle to the curator, we could add the following to the appropriate GiveTopic (previously defined):
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;GiveTopic,&nbsp;<b>SuggestedGiveTopic</b>&nbsp;@carbuncle
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;"{The&nbsp;curator/he}&nbsp;takes&nbsp;the&nbsp;carbuncle&nbsp;and&nbsp;examines&nbsp;it&nbsp;carefully,&nbsp;then&nbsp;declares,
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Wunderbar!&nbsp;Ausgezeichnet!&nbsp;This&nbsp;is&nbsp;the&nbsp;famous&nbsp;purple&nbsp;carbuncle&nbsp;of&nbsp;King&nbsp;Solomon,
+<br>
+&nbsp;&nbsp;&nbsp;nicht&nbsp;wahr?&nbsp;And&nbsp;you&nbsp;are&nbsp;giving&nbsp;it&nbsp;to&nbsp;the&nbsp;museum?&nbsp;How&nbsp;kind,&nbsp;how&nbsp;very&nbsp;kind!&lt;/q&gt;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;Pausing&nbsp;just&nbsp;to&nbsp;wipe&nbsp;the&nbsp;tears&nbsp;of&nbsp;excitement&nbsp;and&nbsp;gratitude&nbsp;out&nbsp;of&nbsp;his&nbsp;eyes,&nbsp;he
+<br>
+&nbsp;&nbsp;&nbsp;continues,&nbsp;&lt;q&gt;I&nbsp;shall&nbsp;enroll&nbsp;you&nbsp;on&nbsp;our&nbsp;roll&nbsp;of&nbsp;honoured&nbsp;benefactors&nbsp;&lt;i&gt;at&nbsp;once&lt;/i&gt;!
+<br>
+&nbsp;&nbsp;&nbsp;Please,&nbsp;please,&nbsp;do&nbsp;feel&nbsp;free&nbsp;to&nbsp;inspect&nbsp;the&nbsp;special&nbsp;treasures&nbsp;in&nbsp;our&nbsp;benefactors'
+<br>
+&nbsp;&nbsp;&nbsp;exhibition&nbsp;room&nbsp;any&nbsp;time&nbsp;you&nbsp;please!&lt;/q&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;carbuncle.moveInto(getActor);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;<b>name&nbsp;=&nbsp;'the&nbsp;carbuncle'</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

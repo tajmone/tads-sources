@@ -1,0 +1,57 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>BigNumber</title></head><body>
+<table class=ban><tr><td align=left><span class=title>BigNumber</span><span class=type>class</span><td align=right><a href="../file/bignum.h.html">bignum.h</a>[<a href="../source/bignum.h.html#39">39</a>], <a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#356">356</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   The BigNumber intrinsic class lets you perform floating-point and   integer arithmetic with (almost) any desired precision.  BigNumber uses   a decimal representation, which means that decimal values can be   represented exactly (i.e., with no rounding errors, as can happen with   IEEE 'double' and 'float' values that languages like C typically   support).  BigNumber combines a varying-length mantissa with an   exponent; the length of the mantissa determines how many digits of   precision a given BigNumber can store, and the exponent lets you   represent very large or very small values with minimal storage.  You can   specify the desired precision when you create a BigNumber explicitly;   when BigNumber values are created implicitly by computations, the system   chooses a precision based on the inputs to the calculations, typically   equal to the largest of the precisions of the input values. <p>   The maximum precision for a BigNumber is about 64,000 digits, and the   exponent can range from -32768 to +32767.  Since this is a decimal   exponent, this implies an absolute value range from 1.0e-32768 to   1.0e+32767.  The more digits of precision stored in a given BigNumber   value, the more memory the object consumes, and the more time it takes   to perform calculations using the value.
+<p><i>Modified in <a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#356">356</a>]:</i><br>
+   If desired, modify the BigNumber intrinsic class to provide a   to-symbol mapping.  We only include this modification if the program   is compiled with REFLECT_BIGNUM defined.
+<p>
+<code>intrinsic class
+<b>BigNumber</b> :  &nbsp; <a href="../object/Object1.html">Object</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>BigNumber</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Object1.html">Object</a></code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#valToSymbol">valToSymbol</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Object</code> :<br>
+<code>
+<a href="../object/Object1.html#getPropList">getPropList</a>&nbsp;
+<a href="../object/Object1.html#getPropParams">getPropParams</a>&nbsp;
+<a href="../object/Object1.html#getSuperclassList">getSuperclassList</a>&nbsp;
+<a href="../object/Object1.html#isClass">isClass</a>&nbsp;
+<a href="../object/Object1.html#isTransient">isTransient</a>&nbsp;
+<a href="../object/Object1.html#ofKind">ofKind</a>&nbsp;
+<a href="../object/Object1.html#propDefined">propDefined</a>&nbsp;
+<a href="../object/Object1.html#propInherited">propInherited</a>&nbsp;
+<a href="../object/Object1.html#propType">propType</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="valToSymbol"></a>
+<table class=decl><tr><td><code>valToSymbol ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/reflect.t.html">reflect.t</a>[<a href="../source/reflect.t.html#357">357</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 9/13/2007 from TADS version 3.0.15.2</div>
+</body>
+</html>

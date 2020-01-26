@@ -1,0 +1,75 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>ExceptResults</title></head><body>
+<table class=ban><tr><td align=left><span class=title>ExceptResults</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6867">6867</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Except list results object
+<p>
+<code>class
+<b>ExceptResults</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>ExceptResults</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#origResults">origResults</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#ambiguousNounPhrase">ambiguousNounPhrase</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#noMatch">noMatch</a>&nbsp;
+<a href="#noMatchForLocation">noMatchForLocation</a>&nbsp;
+<a href="#noMatchForPossessive">noMatchForPossessive</a>&nbsp;
+<a href="#noMatchPoss">noMatchPoss</a>&nbsp;
+<a href="#nothingInLocation">nothingInLocation</a>&nbsp;
+<a href="#noVocabMatch">noVocabMatch</a>&nbsp;
+<a href="#propNotDefined">propNotDefined</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="origResults"></a>
+<table class=decl><tr><td><code>origResults</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6913">6913</a>]</table><div class=desc>my original underlying results object<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="ambiguousNounPhrase"></a>
+<table class=decl><tr><td><code>ambiguousNounPhrase (keeper, asker, txt, matchList, fullMatchList, scopeList, requiredNum, resolver)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6898">6898</a>]</table><div class=desc>   in case of ambiguity, simply keep everything and treat it as   unambiguous - if they say "take coin except copper", we simply   want to treat "copper" as unambiguously excluding every copper   coin in the original list <p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6868">6868</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="noMatch"></a>
+<table class=decl><tr><td><code>noMatch (action, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6879">6879</a>]</table><div class=desc>   ignore failed matches in the exception list - if they try to   exclude something that's not in the original list, the object is   excluded to begin with <p>
+</div>
+<a name="noMatchForLocation"></a>
+<table class=decl><tr><td><code>noMatchForLocation (loc, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6887">6887</a>]</table><div class=desc>ignore failed matches for location in the exception list<p>
+</div>
+<a name="noMatchForPossessive"></a>
+<table class=decl><tr><td><code>noMatchForPossessive (owner, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6884">6884</a>]</table><div class=desc>ignore failed matches for possessives in the exception list<p>
+</div>
+<a name="noMatchPoss"></a>
+<table class=decl><tr><td><code>noMatchPoss (action, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6880">6880</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="nothingInLocation"></a>
+<table class=decl><tr><td><code>nothingInLocation (loc)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6890">6890</a>]</table><div class=desc>ignore failed matches for location in the exception list<p>
+</div>
+<a name="noVocabMatch"></a>
+<table class=decl><tr><td><code>noVocabMatch (action, txt)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6881">6881</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="propNotDefined"></a>
+<table class=decl><tr><td><code>propNotDefined (prop, [args])</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#6907">6907</a>]</table><div class=desc>proxy anything we don't override to the underlying results object<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

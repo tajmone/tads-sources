@@ -1,0 +1,432 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SensoryEvent</title><meta name="keywords" content="SensoryEvent,SoundEvent,SoundObserver,sense,notifyProp,triggerEvent,notifySoundEvent,callWithSenseContext"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SensoryEvent : object
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="senseconnector.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="attachables-overview.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">So far we have added a means of passing sound from the bomb to neighbouring occasions, but we've yet to create a sound to pass. Unlike the ticking of the bomb, which is continuous (until the bomb detonates), its explosion is one-off (and dramatic). We can represent it with a SensoryEvent, or more specifically, a SoundEvent (one of the subclasses of SensoryEvent along with SightEvent and SmellEvent). The definition of the SoundEvent could hardly be simpler:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">explosionEvent&nbsp;:&nbsp;SoundEvent;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+There <i>are</i> a couple of properties you can play with on this class if you really want to: the <b>sense</b> property contains the sense in which the event is observable, but it's fairly obvious that for a SoundEvent this can only be sound (as the library indeed defines it); to define an event as a SoundEvent and change its sense property to smell would be perverse, confusing, and, well, pretty senseless. You might have occasion to define something different here if you wanted an event making use of a different kind of sense you had defined yourself, such as a burst of microwaves to be picked up by a radar receiver. The other property of interest is <b>notifyProp</b>, which contains a pointer to the property to be notified (i.e. the method to be called) on all objects in range of the event. For a SoundEvent this is defined as &amp;notifySoundEvent. Again there is no real need to change it; if you had a large number of SoundEvents which might affect the same group of objects you <i>might</i> want to give them all a different notifyProp so that they'd call different methods, but there's no need to do this, since (as we shall see shortly) the notifySoundEvent method (or the corresponding methods for SmellEvents and SightEvents) can tell from their parameters what event has triggered them, so its probably best to leave this property alone unless you're creating handling for a new kind of SensoryEvent (such as a custom RadiationEvent).
+<br>
+
+<br>
+In order to make a SensoryEvent do anything, we simply need to call its <b>triggerEvent(source)</b> method, where <i>source</i> is the object that's notionally the source of the sound, light or smell that the event represents. In the case of our bomb, we simply need to put the appropriate call in the bomb's explode method:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;bomb&nbsp;:&nbsp;Hidden,&nbsp;Immovable&nbsp;'unexploded&nbsp;bomb/cylinder'&nbsp;'bomb'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;fat,&nbsp;round-nosed&nbsp;cylinder&nbsp;with&nbsp;tail&nbsp;fins,&nbsp;on&nbsp;a&nbsp;couple&nbsp;of&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;painted&nbsp;tiny&nbsp;swastikas.&nbsp;"
+<br>
+&nbsp;&nbsp;discover()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;SenseFuse(self,&nbsp;&amp;explode,&nbsp;3,&nbsp;self,&nbsp;sight);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;explode()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;bomb&nbsp;explodes,&nbsp;the&nbsp;blast&nbsp;sending&nbsp;chunks&nbsp;of&nbsp;masonry&nbsp;flying&nbsp;in&nbsp;all
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directions,&nbsp;one&nbsp;piece&nbsp;of&nbsp;strikes&nbsp;you&nbsp;square&nbsp;on&nbsp;the&nbsp;head.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gPlayerChar.isIn(location))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endGame(ftDeath);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;respiratorBox.moveInto(location);&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;respiratorBox.moved&nbsp;=&nbsp;nil;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>explosionEvent.triggerEvent(self);</b>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveInto(nil);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'You&nbsp;must&nbsp;be&nbsp;joking!&nbsp;'
+<br>
+&nbsp;&nbsp;cannotPushMsg&nbsp;=&nbsp;'That&nbsp;might&nbsp;set&nbsp;it&nbsp;off.&nbsp;'
+<br>
+&nbsp;&nbsp;cannotMoveMsg&nbsp;=&nbsp;'It\'s&nbsp;probably&nbsp;safest&nbsp;to&nbsp;leave&nbsp;it&nbsp;just&nbsp;where&nbsp;it&nbsp;is.&nbsp;'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This is all very well, but in order for this to have any effect, we need to have something that responds to the event when it's triggered. Such a something is called a <i>SoundObserver</i> (or SightObserver for a SightEvent, or SmellObserver for a SmellEvent). This is defined as a mix-in class, so we could, for example, mix it in with a SecretFixture in each of the locations where we want the explosion to be reported (i.e. all those joined to londonStreet by the SenseConnector). When the triggerEvent method is called, it should in turn call the <b>notifySoundEvent(event, source, info)</b> method of every SoundObserver object within hearing range. The <i>event</i> parameter is the SoundEvent that's just been triggered, while the <i>source</i> is the object that's the notional source of the sound (i.e. the source specified as the parameter in the explosionEvent.triggerEvent(source) call).
+<br>
+
+<br>
+ As a first (but erroneous) attempt, we might try something like this in streetJunction:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;SoundObserver&nbsp;:&nbsp;SecretFixture
+<br>
+&nbsp;&nbsp;notifySoundEvent&nbsp;(event,&nbsp;source,&nbsp;info)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(source&nbsp;==&nbsp;bomb)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"\nThere&nbsp;is&nbsp;a&nbsp;loud&nbsp;explosion&nbsp;and&nbsp;a&nbsp;cloud&nbsp;of&nbsp;dust&nbsp;from&nbsp;the&nbsp;street&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;south&nbsp;as&nbsp;the&nbsp;bomb&nbsp;explodes&nbsp;amongst&nbsp;the&nbsp;rubble.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The test for source being <i>bomb</i> is not strictly necessary here, since there's only one SoundEvent that's going to be fired round here, but it's a good idea to include it, not only to show how one might apply such a  test, but also in case at some later stage you wanted to add more SoundEvents, and needed to be sure that the right one was going to be responded to on any occasion.
+<br>
+
+<br>
+But there are two things wrong with the definition we have given above (though you'll only encounter one of them if you try it). The first is that the message will never be displayed (this is the problem you'll encounter), and the second is that, if it were displayed, this wouldn't necessarily be what we wanted, since what we actually want is to see a message appropriate to the location in which the player character is located at the time, not every message from every SoundObserver that defines a response to this SoundEvent no matter where the player character is located. Fortunately, we can quite readily fix both problems at once.
+<br>
+
+<br>
+The reason no message is displayed may seem quite mysterious, and very hard to track down if, for example, you try to trace what's happening through the debugger. It is, in fact, that explosionEvent.triggerEvent is called by a SenseFuse, and the SenseFuse makes sure that no messages are displayed unless the object associated with the fuse is in scope for the player character. The whole chain of events from exploding the bomb to triggering explosionEvent.triggerEvent to calling notifySoundEvent takes place in the context of the SenseFuse, and so the message displayed in notifySoundEvent will not be displayed. The solution is to have notifySoundEvent use callWithSenseContext to set up the visual sensory context of the location where we've placed the SoundEvent. This also ensures that the player sees only the message relevant to the location of the player character. Since we shall be deploying several of these receptors it's worth putting this extra bit of complication into a class which we can reuse as needed:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;BangObserver&nbsp;:&nbsp;SecretFixture
+<br>
+&nbsp;&nbsp;notifySoundEvent&nbsp;(event,&nbsp;source,&nbsp;info)&nbsp;
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(source==bomb)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callWithSenseContext(self,&nbsp;sight,&nbsp;{:&nbsp;bang});&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;bang&nbsp;=&nbsp;"Bang!&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that BangObserver does <i>not</i> inherit from SoundObserver. There's no reason why it shouldn't, but also no reason why it needs to, since all SoundObserver does is define an empty notifySoundEvent method (which we're redefining here anyway).
+<br>
+
+<br>
+Now all we need to do is to add a BangObserver in streetJunction:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">streetJunction&nbsp;:&nbsp;OutdoorRoom&nbsp;'Street&nbsp;Junction'&nbsp;'the&nbsp;junction'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;street&nbsp;from&nbsp;the&nbsp;south&nbsp;meets&nbsp;another&nbsp;running&nbsp;east-west.&nbsp;A&nbsp;short&nbsp;way&nbsp;down
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;street&nbsp;to&nbsp;the&nbsp;east&nbsp;a&nbsp;fire&nbsp;crew&nbsp;is&nbsp;fighting&nbsp;a&nbsp;blazing&nbsp;fire.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;=&nbsp;londonStreet
+<br>
+&nbsp;&nbsp;&nbsp;east&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"After&nbsp;taking&nbsp;a&nbsp;few&nbsp;steps&nbsp;east&nbsp;you&nbsp;recall&nbsp;that&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;discretion&nbsp;is&nbsp;the&nbsp;better&nbsp;part&nbsp;of&nbsp;valour&nbsp;and&nbsp;decide&nbsp;to&nbsp;keep&nbsp;out&nbsp;of&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;way&nbsp;of&nbsp;the&nbsp;fire&nbsp;crew.&nbsp;"}
+<br>
+&nbsp;&nbsp;&nbsp;<b>west&nbsp;=&nbsp;road</b>
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+;
+<br>
+
+<br>
+
+<br>
++&nbsp;BangObserver&nbsp;
+<br>
+&nbsp;&nbsp;bang&nbsp;=&nbsp;"\nThere&nbsp;is&nbsp;a&nbsp;loud&nbsp;explosion&nbsp;and&nbsp;a&nbsp;cloud&nbsp;of&nbsp;dust&nbsp;from&nbsp;the&nbsp;street&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;south&nbsp;as&nbsp;the&nbsp;bomb&nbsp;explodes&nbsp;amongst&nbsp;the&nbsp;rubble.&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At the same time we add a new connexion to the west, so we need to define the appropriate location:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">road&nbsp;:&nbsp;OutdoorRoom&nbsp;'Road'&nbsp;'the&nbsp;road'
+<br>
+&nbsp;&nbsp;"The&nbsp;road&nbsp;runs&nbsp;west&nbsp;from&nbsp;the&nbsp;junction&nbsp;passed&nbsp;a&nbsp;row&nbsp;of&nbsp;terraced&nbsp;houses&nbsp;and&nbsp;shops.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;It&nbsp;seems&nbsp;strangely&nbsp;deserted,&nbsp;perhaps&nbsp;because&nbsp;the&nbsp;air-raid&nbsp;has&nbsp;sent&nbsp;everyone
+<br>
+&nbsp;&nbsp;&nbsp;scuttling&nbsp;into&nbsp;shelters.&nbsp;A&nbsp;shop&nbsp;suffering&nbsp;bomb-damage&nbsp;stands&nbsp;open&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;east&nbsp;=&nbsp;streetJunction
+<br>
+&nbsp;&nbsp;west&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"After&nbsp;a&nbsp;few&nbsp;steps&nbsp;down&nbsp;the&nbsp;street&nbsp;you&nbsp;decide&nbsp;that
+<br>
+&nbsp;&nbsp;&nbsp;wandering&nbsp;too&nbsp;far&nbsp;round&nbsp;the&nbsp;city&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;an&nbsp;air-raid&nbsp;might&nbsp;be
+<br>
+&nbsp;&nbsp;&nbsp;bad&nbsp;for&nbsp;your&nbsp;health.&nbsp;"}
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;shop&nbsp;
+<br>
+&nbsp;&nbsp;in&nbsp;asExit(north)
+<br>
+;
+<br>
+
+<br>
++&nbsp;BangObserver&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;bang&nbsp;=&nbsp;"\nThere&nbsp;is&nbsp;a&nbsp;muffled&nbsp;explosion&nbsp;from&nbsp;the&nbsp;southeast.&nbsp;"&nbsp;&nbsp;
+<br>
+;
+<br>
+
+<br>
++&nbsp;Enterable&nbsp;-&gt;shop&nbsp;'shop'&nbsp;'shop'
+<br>
+&nbsp;&nbsp;"The&nbsp;damage&nbsp;to&nbsp;the&nbsp;shop,&nbsp;probably&nbsp;a&nbsp;grocer,&nbsp;looks&nbsp;substantial;&nbsp;not&nbsp;only&nbsp;have&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;windows&nbsp;been&nbsp;blown&nbsp;in&nbsp;but&nbsp;much&nbsp;of&nbsp;the&nbsp;surrounding&nbsp;brickwork&nbsp;with&nbsp;it.&nbsp;From&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;outside,&nbsp;at&nbsp;least,&nbsp;the&nbsp;shop&nbsp;looks&nbsp;abandoned.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And then, in turn, the interior of the shop:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">shop&nbsp;:&nbsp;Room&nbsp;'Grocery&nbsp;Shop'&nbsp;'the&nbsp;grocery&nbsp;shop'
+<br>
+&nbsp;&nbsp;"The&nbsp;interior&nbsp;of&nbsp;the&nbsp;shop&nbsp;confirms&nbsp;the&nbsp;impression&nbsp;conveyed&nbsp;by&nbsp;the&nbsp;exterior:&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;bomb&nbsp;damage&nbsp;here&nbsp;is&nbsp;substantial;&nbsp;broken&nbsp;glass,&nbsp;shattered&nbsp;masonry&nbsp;and&nbsp;dust
+<br>
+&nbsp;&nbsp;&nbsp;cover&nbsp;the&nbsp;floor,&nbsp;and&nbsp;the&nbsp;stock&nbsp;has&nbsp;all&nbsp;been&nbsp;removed,&nbsp;leaving&nbsp;nothing&nbsp;but&nbsp;a&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;bare&nbsp;counter.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;=&nbsp;road
+<br>
+&nbsp;&nbsp;&nbsp;south&nbsp;asExit(out)
+<br>
+;
+<br>
+
+<br>
++&nbsp;BangObserver
+<br>
+&nbsp;&nbsp;bang&nbsp;=&nbsp;"There's&nbsp;a&nbsp;sudden&nbsp;explosion&nbsp;from&nbsp;somewhere&nbsp;nearby&nbsp;outside,&nbsp;bringing
+<br>
+&nbsp;&nbsp;&nbsp;more&nbsp;dust&nbsp;cascading&nbsp;from&nbsp;the&nbsp;ceiling.&nbsp;"
+<br>
+;
+<br>
+
+<br>
++&nbsp;Decoration&nbsp;'broken&nbsp;shattered&nbsp;glass/masonry/dust/debris'&nbsp;'debris'
+<br>
+&nbsp;&nbsp;"Shards&nbsp;of&nbsp;glass&nbsp;mingle&nbsp;with&nbsp;bits&nbsp;of&nbsp;brickwork&nbsp;all&nbsp;over&nbsp;the&nbsp;floor,&nbsp;and&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;patina&nbsp;of&nbsp;coarse&nbsp;white&nbsp;dust&nbsp;covers&nbsp;everything.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The usefulness of the SoundEvent/SoundObserver implementation now becomes apparent, since one can keep adding suitable BangObserver objects within each location that might be affected.
+<br>
+
+<br>
+The purpose of this trip to London in the Blitz is to collect not one but two gas masks; two will be needed because our intrepid player character will eventually be given a travelling companion (Sarah) who'll also need a gas mask if she is to venture into Hell Fire Cavern with him (let's assume it's a him from now on, for ease of reference). The two gas masks will be functionally identical, and there's no reason to suppose that two gas masks picked up in wartime London will look very different from each other, so rather than impose any artificial distinctions, we'll create a GasMask class and make two interchangeable instances of it:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;GasMask&nbsp;:&nbsp;Wearable,&nbsp;Hidden&nbsp;'gas&nbsp;mask/respirator/gas-mask/gasmask
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*masks*gasmasks*respirators'&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;'gas&nbsp;mask'
+<br>
+&nbsp;&nbsp;"It's&nbsp;an&nbsp;ungainly-looking&nbsp;thing&nbsp;with&nbsp;round&nbsp;glass&nbsp;circles&nbsp;for&nbsp;seeing&nbsp;through
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;a&nbsp;kind&nbsp;of&nbsp;cylindrical&nbsp;snout&nbsp;to&nbsp;fit&nbsp;over&nbsp;nose&nbsp;and&nbsp;mouth,&nbsp;all&nbsp;held&nbsp;together
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;a&nbsp;black&nbsp;rubber&nbsp;face-mask.&nbsp;"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;isEquivalent&nbsp;=&nbsp;true&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;dobjFor(Wear)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;verify()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gActor.isMasked)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogicalNow('{You/he}&nbsp;{is}&nbsp;already&nbsp;wearing&nbsp;a&nbsp;gas&nbsp;mask.&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We set the <b>isEquivalent</b> property to true to indicate that all members of the class are interchangeable (like the <a href="candle.htm">candles</a> and <a href="matchstick+matchbook.htm">matchsticks</a> we implemented earlier), and override the verifyDobjWear method to allow only one gas mask to be worn by any one Actor at a time. The definition of the gas mask found in the respiratorBag then becomes simply:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">respiratorBox&nbsp;:&nbsp;OpenableContainer&nbsp;'small&nbsp;(respirator)&nbsp;khaki&nbsp;bag/box'&nbsp;'khaki&nbsp;bag'
+<br>
+&nbsp;&nbsp;"The&nbsp;square&nbsp;bag&nbsp;is&nbsp;made&nbsp;of&nbsp;coarse&nbsp;khaki&nbsp;fabric&nbsp;and&nbsp;has&nbsp;a&nbsp;pair&nbsp;of&nbsp;carrying&nbsp;straps.&nbsp;"
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;small&nbsp;khaki&nbsp;bag&nbsp;lies&nbsp;in&nbsp;the&nbsp;street,&nbsp;perhaps&nbsp;dislodged&nbsp;from&nbsp;the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rubble&nbsp;by&nbsp;the&nbsp;recent&nbsp;explosion.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+<b>+&nbsp;gasMask1&nbsp;:&nbsp;GasMask&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;discovered&nbsp;=&nbsp;true
+<br>
+;
+<br>
+</b></font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we have renamed it gasMask1 to distinguish it from the second gas mask we'll now add (continuing the definition of the shop):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;RearContainer,&nbsp;Fixture&nbsp;'long&nbsp;wooden&nbsp;counter'&nbsp;'counter'
+<br>
+&nbsp;&nbsp;"Like&nbsp;everything&nbsp;else&nbsp;round&nbsp;here,&nbsp;the&nbsp;long&nbsp;wooden&nbsp;counter&nbsp;is&nbsp;bare&nbsp;apart&nbsp;from&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;thick&nbsp;covering&nbsp;of&nbsp;dust.&nbsp;"
+<br>
+;&nbsp;&nbsp;
+<br>
+
+<br>
+++&nbsp;gasMask2&nbsp;:&nbsp;GasMask
+<br>
+&nbsp;&nbsp;initSpecialDesc&nbsp;=&nbsp;"A&nbsp;gas&nbsp;mask&nbsp;lies&nbsp;abandoned&nbsp;on&nbsp;the&nbsp;floor&nbsp;behind&nbsp;the&nbsp;counter.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+It may seem strange to derive GasMask from the Hidden class as well as from the Wearable class when we actually want only one of the gas masks to be hidden. But this is the only way we can make both gas masks exactly equivalent, and it only involves us in adding a single line of code (discovered = true) to the definition of gasMask1.
+<br>
+
+<br>
+This now leaves us with another task: changing the definition of Actor.isMasked (aren't you glad now we defined it so we'd only have to change it one place) to allow any gas mask to do the job:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;Actor
+<br>
+&nbsp;&nbsp;canSmell(obj)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isMasked)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;inherited(obj);
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;<b>/*&nbsp;if&nbsp;the&nbsp;first&nbsp;parameter&nbsp;is&nbsp;nil&nbsp;or&nbsp;not&nbsp;supplied,&nbsp;return&nbsp;the&nbsp;first&nbsp;gas&nbsp;mask
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;among&nbsp;the&nbsp;actor's&nbsp;possessions.&nbsp;If&nbsp;the&nbsp;first&nbsp;parameter&nbsp;is&nbsp;true,
+<br>
+&nbsp;&nbsp;&nbsp;*&nbsp;return&nbsp;the&nbsp;gas&nbsp;mask&nbsp;(if&nbsp;any)&nbsp;that&nbsp;is&nbsp;being&nbsp;worn&nbsp;by&nbsp;the&nbsp;actor.
+<br>
+&nbsp;&nbsp;&nbsp;*/&nbsp;
+<br>
+&nbsp;&nbsp;maskObj([params])
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;worn&nbsp;=&nbsp;nil;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(params.length&gt;0)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;worn&nbsp;=&nbsp;params[1];
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;contents)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cur.ofKind(GasMask)&nbsp;&amp;&amp;&nbsp;(worn==nil&nbsp;||&nbsp;cur.isWornBy(self)))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;cur;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nil;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;isMasked
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;maskObj(true)&nbsp;!=&nbsp;nil;
+<br>
+&nbsp;&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We could have used a slightly simpler definition such as </font><font face="Courier New" size="2" color="#000000">isMasked&nbsp;=&nbsp;(gasMask1.isWornBy(self)&nbsp;||&nbsp;gasMask2.isWornBy(self))</font><font face="Arial" size="2" color="#000000">, but this approach would soon become tedious if we decided to add any more gas masks, so we have used a more general approach that checks whether there's any GasMask object among the actor's possessions that's currently being worn by the actor. This would allow us to add more gas masks into the game if we wanted them without having to worry about doctoring the definition any further. We have defined maskObj() as a separate method rather than incorporating it directly into isMasked(), since we'll be needing maskObj() later.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

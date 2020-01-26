@@ -1,0 +1,194 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Doors and Windows</title>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="whatsinaname.htm">[Previous] </a>&nbsp;&nbsp;<a href="crossingthestream.htm">[Next] </a></I></FONT></P>
+<H1>Chapter 6 - Expanding the Horizons</H1>
+
+<h2>Doors and Windows</h2>
+
+<p>If you've managed to follow this <i>Guide</i> so far, you should have grasped most of the basics of programming in TADS 3. In the present chapter we'll look at more features of the library, but we'll move on a bit more briskly, on the assumption that much of the code should start to be self-explanatory.
+</p>
+
+<br>
+In order to make Heidi's life more difficult, we'll make it harder for her to get hold of the chair she needs to climb the tree. To do that, we simply need to supply the cottage with a locked front door and hide the key in some out-of-the-way place.
+<br>
+
+<br>
+The first thing to realize is that doors in TADS 3 are normally two-sided. That is, they are generally represented not by <i>one</i> object, but by <i>two</i>, the two objects being the two sides of the door. At first sight this may seem something of an unnecessary complication, and it does require a little more work, but not as much more work as you might think. Provided the two sides of the door are properly set up, the library will take care of keeping them in sync (i.e. ensuring that one side is open or closed or locked or unlocked when the other is). It will also take care of making travel through one side of the door result in the traveler arriving in the location of the other side. One reason for doing it this way (i.e. with each side of the door represented by a separate object) is that it allows more flexibility; the two sides of a door often aren't identical: they may, for example, be painted different colours, or they may use different locking mechanisms, say with one side requiring a key and the other using a paddle.
+<br>
+
+<br>
+We'll start by adding the outside of the front door (which should be contained in <font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">):
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;cottageDoor&nbsp;:&nbsp;LockableWithKey,&nbsp;Door&nbsp;'door'&nbsp;'door'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;neat&nbsp;little&nbsp;door,&nbsp;painted&nbsp;green&nbsp;to&nbsp;match&nbsp;the&nbsp;window&nbsp;frame.&nbsp;"
+<br>
+&nbsp;&nbsp;keyList&nbsp;=&nbsp;[cottageKey]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">To make the door work, we also need to change the </font><font face="Courier New" size="2" color="#000000">in</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to read </font><font face="Courier New" size="2" color="#000000">cottageDoor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> instead of </font><font face="Courier New" size="2" color="#000000">insideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. As noted above, we also need to define the other side of the door:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;cottageDoorInside&nbsp;:&nbsp;Lockable,&nbsp;Door&nbsp;-&gt;&nbsp;cottageDoor&nbsp;'door'&nbsp;'door';
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This needs to be located in </font><font face="Courier New" size="2" color="#000000">insideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and we need to change the </font><font face="Courier New" size="2" color="#000000">out</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of </font><font face="Courier New" size="2" color="#000000">insideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to </font><font face="Courier New" size="2" color="#000000">cottageDoorInside</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The </font><font face="Courier New" size="2" color="#000000">-&gt;cottageDoor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a template shortcut for assigning </font><font face="Courier New" size="2" color="#000000">cottageDoor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to the </font><font face="Courier New" size="2" color="#000000">masterObject</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, which (a) keeps both sides of the door in sync (both open/closed and locked/unlocked) together, and (b) tells each door what its other side is (through code executed in the preinitialization routine, which we don't need to worry about).
+<br>
+
+<br>
+Note that we have defined the outside of the door as a </font><font face="Courier New" size="2" color="#000000">LockableWithKey</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and the inside as simply </font><font face="Courier New" size="2" color="#000000">Lockable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; this reflects the way many house doors in fact behave (we don't need a key to lock or unlock the front door from the inside). Note also that the <i>order</i> of the classes here is important: </font><font face="Courier New" size="2" color="#000000">Lockable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">LockableWithKey</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">IndirectLockable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> must come <i>before</i> Door in this kind of declaration, or else the lock won't work. The short explanation for this is that </font><font face="Courier New" size="2" color="#000000">Lockable</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">LockableWithKey&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and </font><font face="Courier New" size="2" color="#000000">IndirectLockable&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">are examples of <i>mix-in</i> classes (not derived from Thing) which must come before the any Thing-derived class with which they are combined.
+<br>
+
+<br>
+Before this door will work, we have to define the key object. As a temporary measure (we'll move it elsewhere later), we'll do this with simply:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cottageKey&nbsp;:&nbsp;Key&nbsp;'small&nbsp;brass&nbsp;key'&nbsp;'small&nbsp;brass&nbsp;key'&nbsp;@outsideCottage;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Since Heidi's now locked out of the cottage (or would be if the key was not so readily in reach), an obvious thing for her to try is looking through the window to see what's inside. It's probably a good thing to allow this, since if she can see that the chair is there it will make it all the more obvious that it's worth going to look for the key.
+<br>
+
+<br>
+The question is, how should this be implemented? We could just write a LookThrough routine that displayed a pre-programmed message, but that's less than ideal, since the contents of the cottage could change as the player moves objects around. Writing a LookThrough routine that does the job properly is quite tricky, so for now we'll attempt something a little less ambitious: a window through which whatever is on the other side is visible. We'll return to a more sophisticated LookThrough later.
+<br>
+
+<br>
+To create a window through which the contents of another location are visible, we need to use a </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and locate it in the two rooms joined by the window:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">cottageWindow&nbsp;:&nbsp;SenseConnector,&nbsp;Fixture&nbsp;'window'&nbsp;'window'
+<br>
+&nbsp;&nbsp;"The&nbsp;cottage&nbsp;window&nbsp;has&nbsp;a&nbsp;freshly&nbsp;painted&nbsp;green&nbsp;frame.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;glass&nbsp;has&nbsp;been&nbsp;freshly&nbsp;cleaned.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;connectorMaterial&nbsp;=&nbsp;glass
+<br>
+&nbsp;&nbsp;locationList&nbsp;=&nbsp;[outsideCottage,&nbsp;insideCottage]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Since </font><font face="Courier New" size="2" color="#000000">SenseConnector</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a </font><font face="Courier New" size="2" color="#000000">MultiLoc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (an object that exists in more than one location) we do not define its </font><font face="Courier New" size="2" color="#000000">location</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property; instead  we define its </font><font face="Courier New" size="2" color="#000000">locationList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to contain a list of the locations that contain the window, in this case the inside and outside of the cottage. The other important property to define here is </font><font face="Courier New" size="2" color="#000000">connectorMaterial</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">;  the TADS 3 library defines a number of different materials that transmit the various senses in different ways. Glass is defined to be transparent to sight, but opaque to sound, smell and touch (the fact that real world glass may allow sound to pass need not concern us here, since in this case sight is the only sense we're worried about). This means that from outside the cottage the player character will be able to see anything located inside, and from inside, the player character will be able to see anything left directly outside, but that Heidi will not be able to smell, hear or touch anything through the window.
+<br>
+
+<br>
+If you compile and test the game now, you'll find that this works, but that objects visible through the window are listed in a less than ideal fashion. There are several steps we can take to improve that. You'll recall that we defined an </font><font face="Courier New" size="2" color="#000000">initSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on the chair. The first problem is that we'll now see that </font><font face="Courier New" size="2" color="#000000">initSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> when Heidi is standing just outside the cottage:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"><b>In front of a cottage</b>
+<br>
+You stand just outside a cottage; the forest stretches east. A short path leads round the cottage to the northwest.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">A plain wooden chair sits in the corner.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This description is plainly inappropriate when the chair is being viewed through the window from outside. What we want is a different type of </font><font face="Courier New" size="2" color="#000000">initSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> that's shown when the chair is viewed from a room other than the one in which it's actually located; for that we use </font><font face="Courier New" size="2" color="#000000">remoteInitSpecialDesc</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Add the following to the definition of the chair object:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">remoteInitSpecialDesc(actor)&nbsp;{&nbsp;"Through&nbsp;the&nbsp;cottage&nbsp;window&nbsp;you&nbsp;can
+<br>
+&nbsp;&nbsp;&nbsp;see&nbsp;a&nbsp;plain&nbsp;wooden&nbsp;chair&nbsp;sitting&nbsp;in&nbsp;the&nbsp;corner&nbsp;of&nbsp;the&nbsp;front&nbsp;room.&nbsp;";&nbsp;}
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">actor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> parameter refers to the actor doing the looking, normally the player character. The parameter can be used to test where the chair is being viewed from; for example, if there were a second window looking into the room from the cottageGarden (we'll be this garden adding later, though not the second window), your </font><font face="Courier New" size="2" color="#000000">remoteInitSpecialDesc(actor)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> routine could test for </font><font face="Courier New" size="2" color="#000000">actor.isIn(cottageGarden)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">actor.isIn(outsideCottage)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and provide different descriptions for the two cases. In this case this is unnecessary, however, since </font><font face="Courier New" size="2" color="#000000">outsideRoom</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the only remote location from which the chair can ever be viewed.
+<br>
+
+<br>
+If you test the game now, you'll find the window works okay with the chair, but is not so good with portable objects. For example, if you drop the key outside the cottage and then go inside, you'll see the key listed as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">&nbsp;&nbsp;&nbsp;In the in front of a cottage, you see a small brass key.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Similarly if you leave the key inside the cottage and then go back outside, you'll find the key listed as:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">In the inside cottage, you see a small brass key.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The library provides two ways to fix this: (1) you can give a room an </font><font face="Courier New" size="2" color="#000000">inRoomName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which is the name to be used when an item is listed as being in that room when viewed from another location; or (2) you can define a custom </font><font face="Courier New" size="2" color="#000000">remoteRoomContentsLister</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> which defines how portable items will be listed when viewed in a remote location. If you use method (1) you define </font><font face="Courier New" size="2" color="#000000">inRoomName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on the room that's being viewed remotely; if you use method (2) you define the </font><font face="Courier New" size="2" color="#000000">remoteRoomContentsLister</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on the room from which the remote viewing is taking place. In order to illustrate both methods we'll use method (1) for looking in through the window from the outside, and method (2) for looking out through the window from the inside. This means that both methods need to be implemented on </font><font face="Courier New" size="2" color="#000000">insideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">insideCottage&nbsp;:&nbsp;Room&nbsp;'Inside&nbsp;Cottage'
+<br>
+&nbsp;&nbsp;"The&nbsp;front&nbsp;parlour&nbsp;of&nbsp;the&nbsp;little&nbsp;cottage&nbsp;looks&nbsp;impeccably&nbsp;neat.&nbsp;
+<br>
+&nbsp;&nbsp;The&nbsp;door&nbsp;out&nbsp;is&nbsp;to&nbsp;the&nbsp;east.&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;out&nbsp;=&nbsp;cottageDoorInside
+<br>
+&nbsp;&nbsp;east&nbsp;asExit(out)
+<br>
+&nbsp;&nbsp;inRoomName(pov)&nbsp;{&nbsp;return&nbsp;'inside&nbsp;the&nbsp;cottage';&nbsp;}
+<br>
+&nbsp;&nbsp;remoteRoomContentsLister(other)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;CustomRoomLister('Through&nbsp;the&nbsp;window,&nbsp;{you/he}&nbsp;see{s}',&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&nbsp;lying&nbsp;on&nbsp;the&nbsp;ground.');
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">pov</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> parameter (in </font><font face="Courier New" size="2" color="#000000">inRoomName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) represents the point of view, and could be used to give a room different names depending on where it was being viewed from (e.g. on a long stretch of road you might want a particular stretch of road named as 'on the road to the south' when the pov is north of it and 'on the road to the north' when the pov is to the south of it). The </font><font face="Courier New" size="2" color="#000000">other</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> parameter of </font><font face="Courier New" size="2" color="#000000">remoteRoomContentsLister</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the other location that's being viewed from here, which would allow you to vary the lister according to which room's contents was being described; in this case the only other location visible from </font><font face="Courier New" size="2" color="#000000">insideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is </font><font face="Courier New" size="2" color="#000000">outsideCottage</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, so it's not necessary to make use of this parameter. The two parameters supplied to new </font><font face="Courier New" size="2" color="#000000">CustomRoomLister</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> are the prefix and suffix strings. This will result in message like:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">Through the window, you see a small brass key lying on the ground.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+Similarly, if the key is left inside the cottage, then from the outside you'd see:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">Inside the cottage, you see a small brass key.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000"></font><font face="Courier New" size="2" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Both of these messages are substantial improvements over what we had before. We have still not implemented a response to explicitly looking through the window, but since this is rather trickier, we'll leave it till later.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="whatsinaname.htm">[Previous] </a>&nbsp;&nbsp;<a href="crossingthestream.htm">[Next] </a></I></FONT></P>
+</body></html>

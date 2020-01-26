@@ -1,0 +1,56 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Fixture</title><meta name="keywords" content="Fixture,cannotTakeMsg"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Fixture : <a href="nonportableintroduction.htm">NonPortable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="nonportableintroduction.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="customfixture.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The Fixture class is for items that are quite evidently fixed in place within their locations. Unless a Fixture is given an initSpecialDesc or specialDesc property, it is not normally listed as part of the contents of a room, since it is assumed that some reference will have been made to it in the description of the room. Some such Fixtures have already been implemented as Passage objects; now we'll add a few others.
+<br>
+
+<br>
+For example, the description of mainCave refers to a torch fixed to the wall, so we might implement it as a Fixture (although later we shall also need to make it a FireSource):
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Fixture&nbsp;'torch'&nbsp;'torch'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"The&nbsp;torch,&nbsp;which&nbsp;is&nbsp;fixed&nbsp;firmly&nbsp;to&nbsp;wall&nbsp;by&nbsp;a&nbsp;steel&nbsp;bracket,&nbsp;is&nbsp;blazing&nbsp;merrily,
+<br>
+&nbsp;&nbsp;&nbsp;its&nbsp;flames&nbsp;casting&nbsp;a&nbsp;bright&nbsp;but&nbsp;flickering&nbsp;light&nbsp;over&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'It\'s&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall.&nbsp;'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we have overridden cannotTakeMsg to give a slightly more meaningful response than the default when the player attempts to take the torch. It would also be possible to override the cannotMoveMsg and cannotPutMsg in a similar way. If any of these properties is overridden it should be with a <i>single</i>-quoted string (or a property pointer) and never with a double-quoted string.
+<br>
+
+<br>
+The description of the Quarterdeck likewise refers to a deck rail, which we can implement thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">Fixture&nbsp;'wooden&nbsp;(deck)&nbsp;rail'&nbsp;'deck&nbsp;rail'&nbsp;@quarterDeck
+<br>
+&nbsp;&nbsp;"The&nbsp;wooden&nbsp;deck&nbsp;rail&nbsp;runs&nbsp;along&nbsp;the&nbsp;forward&nbsp;edge&nbsp;of&nbsp;the&nbsp;Quarterdeck,
+<br>
+&nbsp;&nbsp;separating&nbsp;it&nbsp;from&nbsp;the&nbsp;main&nbsp;deck,&nbsp;although&nbsp;it&nbsp;is&nbsp;possible&nbsp;to&nbsp;get&nbsp;round
+<br>
+&nbsp;&nbsp;the&nbsp;rail&nbsp;either&nbsp;to&nbsp;starboard&nbsp;or&nbsp;port&nbsp;to&nbsp;go&nbsp;foreward.&nbsp;A&nbsp;large&nbsp;wooden
+<br>
+&nbsp;&nbsp;panel&nbsp;is&nbsp;fixed&nbsp;to&nbsp;the&nbsp;centre&nbsp;of&nbsp;the&nbsp;rail.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">In neither case is it necessary to give names to these objects, since they will not be referred to elsewhere in code (though this may not always be the case with Fixtures). Note the use of the 'weak tokens' syntax in the vocabulary for the rail; this allows players to refer to it as a 'wooden deck rail' without its answering to 'deck' alone.</font><font face="Courier New" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

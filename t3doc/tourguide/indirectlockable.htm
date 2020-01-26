@@ -1,0 +1,110 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>IndirectLockable</title><meta name="keywords" content="IndirectLockable,RestrictedContainer,validContents,notifyInsert,makeLocked,cannotUnlockMsg,initiallyLocked"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>IndirectLockable : <a href="lockable.htm">Lockable</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="lockable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="keyedcontainer.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">IndirectLockable is another mix-in class for use with objects such as doors that cannot be unlocked with a simple UNLOCK command, but do not use a key; that is something that must be unlocked by some other mechanism such as a lever or switch. To make things more interesting we'll change the door into the lakeRoom into an indirectLockable, which is unlocked by inserting the brass coin into a slot:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;lakeDoor&nbsp;:&nbsp;<b>IndirectLockable</b>,&nbsp;Door&nbsp;'smart&nbsp;new&nbsp;door'&nbsp;'smart&nbsp;new&nbsp;door'
+<br>
+&nbsp;&nbsp;&nbsp;<b>"The&nbsp;door&nbsp;is&nbsp;completely&nbsp;plain&nbsp;apart&nbsp;from&nbsp;a&nbsp;small&nbsp;vertical&nbsp;slot.&nbsp;"</b>
+<br>
+&nbsp;&nbsp;&nbsp;cannotUnlockMsg&nbsp;=&nbsp;'The&nbsp;door&nbsp;does&nbsp;not&nbsp;appear&nbsp;to&nbsp;have&nbsp;a&nbsp;conventional&nbsp;lock.&nbsp;'
+<br>
+;
+<br>
+
+<br>
+++&nbsp;RestrictedContainer,&nbsp;Component&nbsp;'small&nbsp;vertical&nbsp;slot'&nbsp;'slot'
+<br>
+&nbsp;&nbsp;&nbsp;"It's&nbsp;about&nbsp;half&nbsp;an&nbsp;inch&nbsp;long;&nbsp;next&nbsp;to&nbsp;it&nbsp;is&nbsp;some&nbsp;faded&nbsp;writing&nbsp;that
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;just&nbsp;about&nbsp;still&nbsp;says\nENTRANCE&nbsp;TO&nbsp;LAKE\nONE&nbsp;GROAT.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;validContents&nbsp;=&nbsp;[silverCoin,&nbsp;brassCoin]
+<br>
+&nbsp;&nbsp;&nbsp;notifyInsert(obj,&nbsp;newCont)
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(obj==brassCoin)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"As&nbsp;the&nbsp;brass&nbsp;coin&nbsp;disappears&nbsp;into&nbsp;the&nbsp;slot&nbsp;you&nbsp;hear&nbsp;a&nbsp;click&nbsp;from&nbsp;the&nbsp;door.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj.moveInto(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lakeDoor.makeLocked(nil);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Despite&nbsp;initial&nbsp;appearances&nbsp;&lt;&lt;obj.theName&gt;&gt;&nbsp;doesn't&nbsp;seem&nbsp;to&nbsp;be&nbsp;quite
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;for&nbsp;the&nbsp;slot.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We make use of a RestrictedContainer to accept the coin, but since we have left a silver coin in plain sight next to the door the player is almost bound to try it, so we include it in the list of validContents so that we can display a custom message for it. We handle the insertion of either coin in the notifyInsert method. If the coin is the brass one, we display a suitable message, move the coin into nil (since it presumably disappears into some repository) and unlock the lakeDoor by calling is <b>makeLocked</b> method: makeLocked(nil) unlocks the door, whereas makeLocked(true) would lock it again (which is not something we want to do here). Whichever coin was inserted we end notifyInsert with an exit statement since we do not in fact want the rest of the default command handling, which would move the coin into the slot.
+<br>
+
+<br>
+Note also the use of the <b>cannotUnlockMsg</b> property to provide a customized response to attempts to unlock the door other than by inserting the coin.
+<br>
+
+<br>
+The <b>initiallyLocked</b> property of an IndirectLockable controls whether it starts life locked (if this property is true) or unlocked (if its nil). By default, initiallyLocked is true.
+<br>
+
+<br>
+Like Lockable, IndirectLockable is a mix-in class that <i>must</i> precede any Thing-derived class it is mixed in with, as in:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;lakeDoor&nbsp;:&nbsp;<b>IndirectLockable</b>,&nbsp;Door&nbsp;'smart&nbsp;new&nbsp;door'&nbsp;'smart&nbsp;new&nbsp;door'
+<br>
+&nbsp;&nbsp;&nbsp;<b>"The&nbsp;door&nbsp;is&nbsp;completely&nbsp;plain&nbsp;apart&nbsp;from&nbsp;a&nbsp;small&nbsp;vertical&nbsp;slot.&nbsp;"</b>
+<br>
+&nbsp;&nbsp;&nbsp;cannotUnlockMsg&nbsp;=&nbsp;'The&nbsp;door&nbsp;does&nbsp;not&nbsp;appear&nbsp;to&nbsp;have&nbsp;a&nbsp;conventional&nbsp;lock.&nbsp;'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The following would have been wrong (since the door would not have started out locked):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;lakeDoor&nbsp;:&nbsp;Door,&nbsp;<b>IndirectLockable</b>&nbsp;'smart&nbsp;new&nbsp;door'&nbsp;'smart&nbsp;new&nbsp;door'
+<br>
+&nbsp;&nbsp;&nbsp;<b>"The&nbsp;door&nbsp;is&nbsp;completely&nbsp;plain&nbsp;apart&nbsp;from&nbsp;a&nbsp;small&nbsp;vertical&nbsp;slot.&nbsp;"</b>
+<br>
+&nbsp;&nbsp;&nbsp;cannotUnlockMsg&nbsp;=&nbsp;'The&nbsp;door&nbsp;does&nbsp;not&nbsp;appear&nbsp;to&nbsp;have&nbsp;a&nbsp;conventional&nbsp;lock.&nbsp;'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+</font></font>
+
+</body></html>

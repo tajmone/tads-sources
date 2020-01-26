@@ -1,0 +1,47 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>sense.t</title></head><body>
+<table class=ban><tr><td align=left><span class=title>sense.t</span><span class=type>file</span><td align=right><a href="../source/sense.t.html">source file</a></table><p>
+<table class=nav><tr>
+<td><b>Classes</b><br><a href="#_ClassSummary_">Summary</a><br>&nbsp;<td><b>Objects</b><br><a href="#_ObjectSummary_">Summary</a><br>&nbsp;<td><b>Functions</b><br><a href="#_FunctionSummary_">Summary</a><br><a href="#_Functions_">Details</a></table><div class=fdesc>
+ <p>   TADS 3 Library - senses <p>   This module defines objects and functions related to senses.  This   file is language-independent.
+</div>
+<a name="_ClassSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Classes</span> &nbsp; </div><p>
+<code>
+<a href="../object/DistanceConnector.html">DistanceConnector</a>&nbsp;
+<a href="../object/DropTypeShortThrow.html">DropTypeShortThrow</a>&nbsp;
+<a href="../object/Material.html">Material</a>&nbsp;
+<a href="../object/Occluder.html">Occluder</a>&nbsp;
+<a href="../object/Sense.html">Sense</a>&nbsp;
+<a href="../object/SenseConnector.html">SenseConnector</a>&nbsp;
+</code>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/adventium.html">adventium</a>&nbsp;
+<a href="../object/coarseMesh.html">coarseMesh</a>&nbsp;
+<a href="../object/fineMesh.html">fineMesh</a>&nbsp;
+<a href="../object/glass.html">glass</a>&nbsp;
+<a href="../object/paper.html">paper</a>&nbsp;
+<a href="../object/sight.html">sight</a>&nbsp;
+<a href="../object/smell.html">smell</a>&nbsp;
+<a href="../object/sound.html">sound</a>&nbsp;
+<a href="../object/touch.html">touch</a>&nbsp;
+</code>
+<a name="FunctionSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Functions</span> &nbsp; </div><p>
+<code>
+<a href="#adjustBrightness">adjustBrightness</a>&nbsp;
+<a href="#transparencyAdd">transparencyAdd</a>&nbsp;
+<a href="#transparencyCompare">transparencyCompare</a>&nbsp;
+</code><p>
+<a name="_Functions_"></a><p><div class=mjhd><span class=hdln>Global Functions</span> &nbsp; </div><p>
+<a name="adjustBrightness"></a>
+<table class=decl><tr><td><code>adjustBrightness (br, trans)</code><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#383">383</a>]</table><div class=desc>   Given a brightness level and a transparency level, compute the   brightness as modified by the transparency level. <p>
+</div>
+<a name="transparencyAdd"></a>
+<table class=decl><tr><td><code>transparencyAdd (a, b)</code><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#299">299</a>]</table><div class=desc>   "Add" two transparency levels, yielding a new transparency level.   This function can be used to determine the result of passing a sense   through multiple layers of material. <p>
+</div>
+<a name="transparencyCompare"></a>
+<table class=decl><tr><td><code>transparencyCompare (a, b)</code><td align=right><code><a href="../file/sense.t.html">sense.t</a>[<a href="../source/sense.t.html#328">328</a>]</table><div class=desc>   Compare two transparency levels to determine which one is more   transparent.  Returns 0 if the two levels are equally transparent, 1   if the first one is more transparent, and -1 if the second one is   more transparent.  The comparison follows this rule: <p>   transparent &gt; attenuated &gt; distant == obscured &gt; opaque <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

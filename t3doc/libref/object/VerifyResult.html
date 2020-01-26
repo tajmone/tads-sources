@@ -1,0 +1,84 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>VerifyResult</title></head><body>
+<table class=ban><tr><td align=left><span class=title>VerifyResult</span><span class=type>class</span><td align=right><a href="../file/verify.t.html">verify.t</a>[<a href="../source/verify.t.html#55">55</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Verification result class.  Verification routines return a   verification result describing whether or not an action is allowed,   and how much sense the command seems to make.  When a verification   fails, it must include a message describing why the command isn't   allowed. <p>   It is important to understand that the purpose of verification   results is to guess what's in the player's mind, not to reflect the   full internal state of the game.  We use verification results to   figure out what a player means with a command, so if we were to rely   on information the player doesn't have, we would not correctly guess   the player's intentions.  So, in choosing a verification result, only   information that ought to be obvious to the player should be   consdidered. <p>   For example, suppose we have a closed door; suppose further that the   door happens to be locked, but that there's no way for the player to   see that just by looking at the door.  Now, if the player types   "close door," we should return "currently illogical" - common sense   tells the player that the door is something that can be opened and   closed, so we wouldn't return "always illogical," but the player can   plainly see that the door is already closed and thus would know that   it makes no sense to close it again.  In other words, the player   would conclude looking at the door that closing it is currently   illogical, so that's the result we should generate. <p>   What if the player types "open door," though?  In this case, should   we return "currently illogical" as well, because the door is locked?   The answer is no.  We know that the command won't succeed because we   know from looking at the internal game state that the door is locked,   but that doesn't matter - it's what the *player* knows that's   important, not what the internal game state tells us.  So, what   should we return here?  It might seem strange, but the correct result   is "logical" - as far as the player is concerned, the door is   something that can be opened and closed, and it is currently closed,   so it makes perfect sense to open it.
+<p>
+<code>class
+<b>VerifyResult</b> :  &nbsp; <a href="../object/MessageResult.html">MessageResult</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>VerifyResult</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MessageResult.html">MessageResult</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>VerifyResult</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DangerousVerifyResult.html">DangerousVerifyResult</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/IllogicalNowVerifyResult.html">IllogicalNowVerifyResult</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/IllogicalAlreadyVerifyResult.html">IllogicalAlreadyVerifyResult</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/IllogicalVerifyResult.html">IllogicalVerifyResult</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/IllogicalSelfVerifyResult.html">IllogicalSelfVerifyResult</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/InaccessibleVerifyResult.html">InaccessibleVerifyResult</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LogicalVerifyResult.html">LogicalVerifyResult</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NonObviousVerifyResult.html">NonObviousVerifyResult</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#allowAction">allowAction</a>&nbsp;
+<a href="#excludePluralMatches">excludePluralMatches</a>&nbsp;
+<a href="#resultRank">resultRank</a>&nbsp;
+</code><p>
+<p>Inherited from <code>MessageResult</code> :<br>
+<code>
+<a href="../object/MessageResult.html#messageProp_">messageProp_</a>&nbsp;
+<a href="../object/MessageResult.html#messageText_">messageText_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#compareTo">compareTo</a>&nbsp;
+<a href="#identicalTo">identicalTo</a>&nbsp;
+<a href="#isWorseThan">isWorseThan</a>&nbsp;
+<a href="#shouldInsertBefore">shouldInsertBefore</a>&nbsp;
+</code><p>
+<p>Inherited from <code>MessageResult</code> :<br>
+<code>
+<a href="../object/MessageResult.html#construct">construct</a>&nbsp;
+<a href="../object/MessageResult.html#resolveMessageText">resolveMessageText</a>&nbsp;
+<a href="../object/MessageResult.html#setMessage">setMessage</a>&nbsp;
+<a href="../object/MessageResult.html#showMessage">showMessage</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="allowAction"></a>
+<table class=decl><tr><td><code>allowAction</code><td align=right><code><a href="../file/verify.t.html">verify.t</a>[<a href="../source/verify.t.html#60">60</a>]</table><div class=desc>   Is the action allowed?  This returns true if the command can be   allowed to proceed on the basis of the verification, nil if not. <p>
+</div>
+<a name="excludePluralMatches"></a>
+<table class=decl><tr><td><code>excludePluralMatches</code><td align=right><code><a href="../file/verify.t.html">verify.t</a>[<a href="../source/verify.t.html#152">152</a>]</table><div class=desc>   Should we exclude plurals from being matched, when this type of   result is present?  By default, we don't; some illogical types   might want to exclude plurals because the result types indicate   such obvious illogicalities. <p>
+</div>
+<a name="resultRank"></a>
+<table class=decl><tr><td><code>resultRank</code><td align=right><code><a href="../file/verify.t.html">verify.t</a>[<a href="../source/verify.t.html#144">144</a>]</table><div class=desc>   Our result ranking relative to other results.  Each result class   defines a ranking level so that we can determine whether one   result is better (more approving) or worse (more disapproving)   than another. <p>   To allow easy insertion of new library extension result types or   game-specific result types, we assign widely spaced rankings to   the pre-defined results.  This is arbitrary; the only thing that   matters in comparing two results is the order of the rank values. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="compareTo"></a>
+<table class=decl><tr><td><code>compareTo (other)</code><td align=right><code><a href="../file/verify.t.html">verify.t</a>[<a href="../source/verify.t.html#96">96</a>]</table><div class=desc>   compare to another: negative if I'm worse than the other, zero if   we're the same, positive if I'm better <p>
+</div>
+<a name="identicalTo"></a>
+<table class=decl><tr><td><code>identicalTo (other)</code><td align=right><code><a href="../file/verify.t.html">verify.t</a>[<a href="../source/verify.t.html#127">127</a>]</table><div class=desc>   Determine if I'm identical to another result.  Note that it's   possible for two items to compare the same but not be identical -   compareTo() is concerned only with logicalness ranking, but   identicalTo() determines if the two items are exactly the same.   Some subclasses (such as LogicalVerifyResult) distinguish among   items that compare the same but have different reasons for their   rankings. <p>
+</div>
+<a name="isWorseThan"></a>
+<table class=decl><tr><td><code>isWorseThan (other)</code><td align=right><code><a href="../file/verify.t.html">verify.t</a>[<a href="../source/verify.t.html#86">86</a>]</table><div class=desc>   Am I worse than another result?  Returns true if this result is   more disapproving than the other. <p>
+</div>
+<a name="shouldInsertBefore"></a>
+<table class=decl><tr><td><code>shouldInsertBefore (other)</code><td align=right><code><a href="../file/verify.t.html">verify.t</a>[<a href="../source/verify.t.html#108">108</a>]</table><div class=desc>   Determine if I should appear in a result list before the given   result object.  By default, this is true if I'm worse than the   given result, but some types of results use special sorting   orders. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

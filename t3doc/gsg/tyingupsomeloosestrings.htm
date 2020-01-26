@@ -1,0 +1,178 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Tying Up Some Loose Strings</title><meta name="keywords" content="strings,strings, single-quoted,strings, double-quoted,single-quoted strings,double-quoted strings,say,newline"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="addinganobjecttotheroom.htm">[Previous] </a>&nbsp;&nbsp;<a href="basictravel.htm">[Next] </a></I></FONT></P>
+<H2>Tying Up Some Loose Strings</H2>
+
+<P>The two objects we have defined so far have included both double-quoted and single-quoted strings in their property definitions. To the seasoned TADS 2 programmer the distinction will need little further explanation. An author coming from Inform will be partly prepared and partly misled by the way in which single and double-quoted strings work in that language. Other readers may be totally mystified. At least a brief attempt at explanation is due at this point, since the distinction is fairly basic to TADS programming.
+</P>
+
+<p>
+As a first approximation, a single-quoted string is simply a string constant, whereas a double-quoted string is a shorthand form of a statement that displays the string. That is to say the statement
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">"To&nbsp;err&nbsp;is&nbsp;human;&nbsp;to&nbsp;make&nbsp;a&nbsp;total&nbsp;mess-up&nbsp;requires&nbsp;a&nbsp;computer.&nbsp;";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is equivalent to the statement:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">say('To&nbsp;err&nbsp;is&nbsp;human;&nbsp;to&nbsp;make&nbsp;a&nbsp;total&nbsp;mess-up&nbsp;requires&nbsp;a&nbsp;computer.&nbsp;');
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">It follows, as a first approximation, that a single-quoted string can be used wherever it makes sense to use a string constant, while a double-quoted string can be used wherever it's legal to write a statement. Thus a single-quoted string can be passed as an argument to a function, used in an assignment statement, or manipulated with the various string functions, but a double-quoted string cannot.
+<br>
+
+<br>
+The main confusion comes about because a definition such as
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">widget&nbsp;:&nbsp;Thing&nbsp;'widget'&nbsp;'brass&nbsp;widget'
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"It's&nbsp;a&nbsp;brass&nbsp;widget"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">might erroneously lead you to suppose that you could subsequently change the desc property of the widget by a statement such as
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">desc&nbsp;=&nbsp;"It's&nbsp;a&nbsp;silver&nbsp;widget";
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">But this code would generate a compiler error. The desc property should be regarded, not as holding a string constant, but a routine that prints a string constant, so that the definition is effectively equivalent to:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">widget&nbsp;:&nbsp;Thing&nbsp;'widget'&nbsp;'brass&nbsp;widget'
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">desc&nbsp;&nbsp;{&nbsp;say('It\'s&nbsp;a&nbsp;brass&nbsp;widget');&nbsp;}
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000">;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">It is thus almost as if a property holding a double-quoted string were in reality a method that displays a string, despite its syntactic appearance (by the way, note that when we define a <i>method</i> in TADS 3 we do not include the = sign).
+<br>
+
+<br>
+The difference in the way the two kinds of string are employed in object definitions is that single-quoted strings are generally used for single words or short phrases that will generally be displayed as part of a longer message (such as the name property), whereas a double-quoted string is generally used for properties that are expected to hold possibly quite lengthy text, usually one or more complete sentences, that will always be displayed just as they are (such as the full description of an object or room). One further key difference between single-quoted and double-quoted strings, and maybe the most important selection criterion in the library itself, is that the value of a single-quoted string can be inspected and manipulated, whereas a double-quoted string can really only be displayed.  So, for example, if it's going to be necessary to look inside a string to see if it starts with a vowel, then we'll definitely want the single-quoted version.
+<br>
+
+<br>
+As of TADS 3.1.0 both single and double-quoted strings may contain embedded expressions enclosed in double (&lt;&lt; &gt;&gt;). Such embedded expressions may evaluate to a number, a double-quoted string or a single-quoted string (or nothing at all, i.e. nil). This means that the statement
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">"The&nbsp;rain&nbsp;in&nbsp;Spain&nbsp;stays&nbsp;&lt;&lt;someExpression&gt;&gt;&nbsp;in&nbsp;the&nbsp;plain.";
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is equivalent to
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">say('The&nbsp;rain&nbsp;in&nbsp;Spain&nbsp;stays&nbsp;'&nbsp;+&nbsp;someExpression&nbsp;+&nbsp;'&nbsp;in&nbsp;the&nbsp;plain.');
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Where </font><font face="Courier New" size="2" color="#000000">someExpression</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> could, for example, be a function call or another method or property on the same or a different object. Not only does this allow a double-quoted string to print variable text, it allows it to call a method that may have all sorts of other useful side-effects such as changing the game state, a trick we shall be using more than once in what follows.
+
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></td></tr></table><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">One can have a single-quoted string by itself as a statement, at least the compiler won't complain about it, but it will do absolutely nothing when the program is run.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">A final example may help to make this all a bit clearer. Here's the definition for a widget that changes from brass to silver when it is picked up:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">widget&nbsp;:&nbsp;Thing&nbsp;'widget'&nbsp;'brass&nbsp;widget'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;&lt;&lt;metal&gt;&gt;&nbsp;widget.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Take)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'silver&nbsp;widget';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metal&nbsp;=&nbsp;'silver';
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;metal&nbsp;=&nbsp;'brass'
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">With such an object defined, one could obtain the following transcript:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You see a brass widget here.
+<br>
+
+<br>
+&gt;<b>x widget</b>
+<br>
+It's a brass widget.
+<br>
+
+<br>
+&gt;<b>take widget</b>
+<br>
+Taken.
+<br>
+
+<br>
+&gt;<b>x it</b>
+<br>
+It's a silver widget.
+<br>
+
+<br>
+&gt;<b>i</b>
+<br>
+You are carrying a silver widget.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">One final point about strings: in TADS a string that will be used to display a complete message (as opposed to an isolated word or phrase) should always end with a space (or newline) just before the closing quote, to allow for the possibility that something may be displayed directly after it. For a newline, insert </font><font face="Courier New" size="2" color="#000000">\n</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in your string. For a newline followed by a blank line use </font><font face="Courier New" size="2" color="#000000">\b&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">or </font><font face="Courier New" size="2" color="#000000">&lt;.p&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; the latter form ensures that only one blank line will appear (even if several </font><font face="Courier New" size="2" color="#000000">&lt;.p&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> tags occur in succession), whereas the former, </font><font face="Courier New" size="2" color="#000000">\b</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, may result in several blank lines, depending on what is printed next. If you <i>want</i> several blank lines, then you need to use </font><font face="Courier New" size="2" color="#000000">\b.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+<br>
+And one final point overall. You may have noticed that the above example used something called </font><font face="Courier New" size="2" color="#000000">dobjFor(Take)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> followed by a method called </font><font face="Courier New" size="2" color="#000000">action()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> enclosed within outer braces. If you followed the goldskull example in the previous chapter, you might have expected to see a method called </font><font face="Courier New" size="2" color="#000000">actionDobjTake()&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">here. In fact, the two ways of doing it are exactly equivalent. Technically, </font><font face="Courier New" size="2" color="#000000">dobjFor(Take)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is a <i>macro</i>, which the <i>preprocessor</i> expands into the code the compiler actually sees. The effect in this case is that what the compiler actually sees here is a method called </font><font face="Courier New" size="2" color="#000000">actionDobjTake,</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> exactly as before. Although a macro is usually meant to be a kind of shortcut, while in this case it actually makes the code a little more verbose, the use of the </font><font face="Courier New" size="2" color="#000000">dobjFor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">iobjFor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macros in TADS 3 programming is so common that this is the style we shall follow from now on.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="addinganobjecttotheroom.htm">[Previous] </a>&nbsp;&nbsp;<a href="basictravel.htm">[Next] </a></I></FONT></P>
+</body></html>

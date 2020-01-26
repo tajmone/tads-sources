@@ -1,0 +1,36 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SenseDaemon</title><meta name="keywords" content="SenseDaemon,new,new, SenseDaemon"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SenseDaemon : <a href="daemon.htm">Daemon</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="sensefuse.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="promptdaemon.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A SenseDaemon, like a <a href="sensefuse.htm">SenseFuse</a>, is for use when you want players to see its output only when a certain object can be sensed.
+<br>
+
+<br>
+The way to set up a SenseDaemon is very like that of setting up an ordinary Daemon, or a SenseFuse, namely:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">new&nbsp;SenseDaemon(obj,&nbsp;&amp;prop,&nbsp;interval,&nbsp;source,&nbsp;sense);</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+As with the standard Daemon, this sets up a daemon that will call the method </font><font face="Courier New" size="2" color="#000000">obj.prop</font><font face="Arial" size="2" color="#000000"> every <i>interval</i> turns, where <i>interval</i> must be at least 1 (one). If interval is 1, </font><font face="Courier New" size="2" color="#000000">obj.prop</font><font face="Arial" size="2" color="#000000"> will execute each turn, starting with the current turn. If </font><font face="Courier New" size="2" color="#000000">interval</font><font face="Arial" size="2" color="#000000"> is 2, </font><font face="Courier New" size="2" color="#000000">obj.prop</font><font face="Arial" size="2" color="#000000"> will execute every other turn, starting with the next turn. In general, if </font><font face="Courier New" size="2" color="#000000">interval</font><font face="Arial" size="2" color="#000000"> is <i>n</i>, </font><font face="Courier New" size="2" color="#000000">obj.prop</font><font face="Arial" size="2" color="#000000"> will execute every <i>n</i> turns, starting in <i>n-1</i> turns time. Note once again that the second argument to the new Daemon call must be a property (or method) <i>pointer</i>, hence the &amp;prop syntax. The difference is that the player will only see any messages displayed by obj.prop if, at that point in time, the player character can sense the <i>source</i> object (which in practice may often be the same as the obj object, but need not be) using the sense <i>sense</i> (which could be sight, sound, smell or touch - most likely one of the first two).
+<br>
+
+<br>
+We'll create an example of a SenseDaemon when we come to <a href="cycliceventlist.htm">CyclicEventList</a>.
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

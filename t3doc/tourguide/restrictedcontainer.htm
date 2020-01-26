@@ -1,0 +1,290 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>RestrictedContainer</title><meta name="keywords" content="RestrictedContainer,validContents,canPutIn,playerActionMessages,iobjMsg,dobjMsg,failCheck,reportFailure"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>RestrictedContainer : RestrictedHolder
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="lockablecontainer.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="dispenser.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A Restricted Container is a container that will accept only a limited set of items, defined by the game author.
+<br>
+
+<br>
+You may recall that we defined a hexagonal hole in the panel fixed to the quarterdeck rail. This is an obvious candidate for a restricted container, since, as you may by now have guessed, it is designed solely for the hexagonal crystal (for some reason known only in IF Heaven, the ship will only sail when the crystal is in its slot). The definition of the hole needs to be put directly after that of the panel, which we therefore repeat for convenience:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;Component&nbsp;'large&nbsp;wooden&nbsp;panel'&nbsp;'panel'
+<br>
+&nbsp;&nbsp;"The&nbsp;panel&nbsp;seems&nbsp;to&nbsp;have&nbsp;something&nbsp;to&nbsp;do&nbsp;with&nbsp;sailing&nbsp;the&nbsp;ship.&nbsp;A&nbsp;wheel&nbsp;and&nbsp;a&nbsp;lever
+<br>
+&nbsp;&nbsp;&nbsp;are&nbsp;mounted&nbsp;on&nbsp;it,&nbsp;and&nbsp;between&nbsp;them&nbsp;is&nbsp;a&nbsp;hexagonal&nbsp;aperture.&nbsp;"&nbsp;&nbsp;
+<br>
+;&nbsp;&nbsp;&nbsp;
+<br>
+
+<br>
+++&nbsp;hexHole&nbsp;:&nbsp;RestrictedContainer,&nbsp;Component&nbsp;'hexagonal&nbsp;hole/aperture'&nbsp;'hexagonal&nbsp;hole'
+<br>
+&nbsp;&nbsp;&nbsp;validContents&nbsp;=&nbsp;[hexCrystal]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we specify what can be put in the hole using its <b>validContents </b>property, which contains a list (here containing only a single item) of everything that can be validly inserted. In some cases it might be more convenient to override a RestrictedContainer's <b>canPutIn(obj)</b> method. For example if we had defined a Widget class and were now defining a widgetBox that could only take Widgets, we might define its canPutIn method as
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">canPutIn(obj)&nbsp;{&nbsp;return&nbsp;obj.ofKind(Widget);&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+<a name="openjar">The only difficulty we have right now is that the hexagonal crystal is trapped inside a glass jar, so we can't try inserting it in the hole. Let's assume that one way of getting it out is by cutting the jar open with something suitably hard. First, we'll define a couple of potential cutters (which will also figure later in the game for other purposes):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">diamond&nbsp;:&nbsp;Thing&nbsp;'sparkling&nbsp;diamond'&nbsp;'diamond'&nbsp;@pathEnd
+<br>
+&nbsp;&nbsp;"It&nbsp;looks&nbsp;like&nbsp;the&nbsp;genuine&nbsp;article.&nbsp;"
+<br>
+&nbsp;&nbsp;iobjFor(CutWith)&nbsp;{&nbsp;verify()&nbsp;{&nbsp;}&nbsp;}
+<br>
+;
+<br>
+
+<br>
+diamondRing&nbsp;:&nbsp;Wearable&nbsp;'diamond&nbsp;ring'&nbsp;'diamond&nbsp;ring'
+<br>
+&nbsp;&nbsp;"It's&nbsp;a&nbsp;fine&nbsp;platinum&nbsp;band&nbsp;with&nbsp;a&nbsp;sparkling&nbsp;solitaire&nbsp;diamond.&nbsp;"
+<br>
+&nbsp;&nbsp;iobjFor(CutWith)&nbsp;{&nbsp;verify()&nbsp;{&nbsp;}&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Don't worry that we haven't given any location to the diamondRing, the reason will become apparent in due course. Now we can amend our definition of the class jar to allow it to be cut open:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">glassJar&nbsp;:&nbsp;Container&nbsp;'glass&nbsp;jar'&nbsp;'glass&nbsp;jar'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;<b>"It&nbsp;&lt;&lt;if isOpen&gt;&gt;has&nbsp;been&nbsp;cut&nbsp;open&lt;&lt;else&gt;&gt;seems&nbsp;to&nbsp;be&nbsp;sealed&nbsp;fast&lt;&lt;end&gt;&gt;.&nbsp;"</b>
+<br>
+&nbsp;&nbsp;isOpen&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;bulkCapacity&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;material&nbsp;=&nbsp;glass
+<br>
+&nbsp;&nbsp;<b>canBeCutBy&nbsp;=&nbsp;[diamond,&nbsp;diamondRing]
+<br>
+&nbsp;&nbsp;cannotOpenMsg&nbsp;=&nbsp;(isOpen&nbsp;?&nbsp;'It\'s&nbsp;already&nbsp;been&nbsp;cut&nbsp;open'&nbsp;:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'{You/he}&nbsp;can\'t&nbsp;see&nbsp;any&nbsp;way&nbsp;to&nbsp;open&nbsp;it.&nbsp;')
+<br>
+&nbsp;&nbsp;notAContainerMsg&nbsp;=&nbsp;iobjMsg(isOpen&nbsp;?&nbsp;'Now&nbsp;that&nbsp;it\'s&nbsp;been&nbsp;cut&nbsp;open,&nbsp;it
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;won\'t&nbsp;hold&nbsp;anything.&nbsp;'&nbsp;:&nbsp;'There\'s&nbsp;no&nbsp;way&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{you/he}&nbsp;can&nbsp;put&nbsp;anything&nbsp;inside&nbsp;the&nbsp;sealed&nbsp;jar.&nbsp;')
+<br>
+&nbsp;&nbsp;dobjFor(CutWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(isOpen)&nbsp;illogicalNow('The&nbsp;glass&nbsp;jar&nbsp;has&nbsp;already&nbsp;been&nbsp;cut&nbsp;open.'&nbsp;);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(canBeCutBy.indexOf(gIobj)&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failCheck('{You/he}&nbsp;can\'t&nbsp;cut&nbsp;it&nbsp;with&nbsp;{that&nbsp;iobj/him}.&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{You/he}&nbsp;cut{s}&nbsp;open&nbsp;the&nbsp;glass&nbsp;jar.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isOpen&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+;
+<br>
+
+<br>
+</font><font face="Arial" size="2" color="#000000">Note that canBeCutBy is not a library property, it is one we have defined ourselves. It makes it easy to add to the list of items that can be used to cut open the glass jar, should we think of any others at later stage. The</font><font face="Courier New" size="2" color="#000000">&nbsp;failCheck()</font><font face="Arial" size="2" color="#000000"> method (a method of Thing) was introduced in version 3.0.9. Check methods often contain code like this:
+<br>
+
+<br>
+ </font><font face="Courier New" size="2" color="#000000">&nbsp;check()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(someCondition)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('There\'s&nbsp;some&nbsp;reason&nbsp;why&nbsp;that&nbsp;won\'t&nbsp;work.&nbsp;');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Where the </font><font face="Courier New" size="2" color="#000000">reportFailure</font><font face="Arial" size="2" color="#000000"> macro tells the parser that the proposed action has failed for some reason (though in practice you could use a double-quoted string) and the </font><font face="Courier New" size="2" color="#000000">exit</font><font face="Arial" size="2" color="#000000"> macro terminates processing of the command on this object (and so prevents the action routine from being run). Since this coding pattern is so common, in TADS 3.0.9 it can now be shortened to:
+<br>
+
+<br>
+   </font><font face="Courier New" size="2" color="#000000">check()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(someCondition)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failCheck('There\'s&nbsp;some&nbsp;reason&nbsp;why&nbsp;that&nbsp;won\'t&nbsp;work.&nbsp;');
+<br>
+&nbsp;&nbsp;}</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Which does exactly the same thing. So the check routine on glassJar is exactly equivalent to:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000"><b>&nbsp;&nbsp;</b>check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(canBeCutBy.indexOf(gIobj)&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reportFailure('{You/he}&nbsp;can\'t&nbsp;cut&nbsp;it&nbsp;with&nbsp;{that&nbsp;iobj/him}.&nbsp;');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<b>
+<br>
+</b></font><font face="Arial" size="2" color="#000000">
+<br>
+It's just that using the failCheck() method enables you to code this a little more concisely.
+<br>
+
+<br>
+Note also that we have made use of the ability introduced in TADS 3.0.6n to override library messages with our own versions (in this case cannotOpenMsg and notAContainerMsg) to display something more meaningful in this particular case.  Note also that in the case of notAContainerMsg we have used the </font><font face="Courier New" size="2" color="#000000">iobjMsg()</font><font face="Arial" size="2" color="#000000"> macro (new in version 3.0.9), because we only want the customized response to be used when the glass jar is used as the <i>indirect</i> object of a command. If we didn't do that we'd see something like:
+<br>
+
+<br>
+&gt;PUT COIN IN GLASS JAR
+<br>
+There's no way you can put anything inside the glass jar.
+<br>
+
+<br>
+&gt;PUT GLASS JAR IN COIN
+<br>
+There's no way you can put anything inside the glass jar.
+<br>
+
+<br>
+This is because unless we specify otherwise, our overridden message will be used whenever the object on which it is overridden is involved in the corresponding command (in this case, a PUT IN command), whether as the direct object or the indirect object. To avoid that we could write:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">notAContainerMsg&nbsp;=&nbsp;(gIobj&nbsp;==&nbsp;self&nbsp;?&nbsp;'My&nbsp;custom&nbsp;message'&nbsp;:&nbsp;nil)
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If a message property returns </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Arial" size="2" color="#000000"> this is taken as meaning "use the standard library message". The </font><font face="Courier New" size="2" color="#000000">iobjMsg</font><font face="Arial" size="2" color="#000000"> macro simply makes this a bit easier; allowing us to write the above line as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">notAContainerMsg&nbsp;=&nbsp;iobjMsg('My&nbsp;custom&nbsp;message')
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Which compiles to exactly the same code. If we wanted our custom message to work only when the object its defined on is the <i>direct</i> object of a command, we'd use the </font><font face="Courier New" size="2" color="#000000">dobjFor</font><font face="Arial" size="2" color="#000000"> macro instead; the following two lines are exactly equivalent:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">notAContainerMsg&nbsp;=&nbsp;dobjMsg('My&nbsp;custom&nbsp;message')
+<br>
+notAContainerMsg&nbsp;=&nbsp;(gDobj&nbsp;==&nbsp;self&nbsp;?&nbsp;'My&nbsp;custom&nbsp;message'&nbsp;:&nbsp;nil)
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that there is no need to use this for a message property for a verb that only takes a direct object; e.g., if we define a custom cannotOpenMsg property there's no need to use the </font><font face="Courier New" size="2" color="#000000">dobjMsg</font><font face="Arial" size="2" color="#000000"> macro since an object can never be the indirect object of an OPEN command.
+<br>
+
+<br>
+You may wonder how we know what names to use for these properties: one answer is to look in the library source code to see what message properties are used in the verify(), check() or action() methods of the verbs for which you want to customize the responses.
+<br>
+For example, if we look at the definition of Thing in the library code, we find the following handling for when a Thing is the indirect object of a PutIn command:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">iobjFor(PutIn)&nbsp;
+<br>
+{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;preCond&nbsp;=&nbsp;[touchObj]&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify()&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;by&nbsp;default,&nbsp;objects&nbsp;cannot&nbsp;be&nbsp;put&nbsp;in&nbsp;this&nbsp;object&nbsp;*/&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illogical(&amp;notAContainerMsg);&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+}
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">This means that, left to its own devices, a Thing will respond to an attempt to put anything inside it with the message defined in the notAContainerMsg of the playerActionMessages object. If, however, as here, we define our own version of notAContainerMsg on either the direct or indirect object involved in the action, our own version will be used in preference (subject to our use of the iobjMsg and dobjMsg macros or their long-winded equivalents).
+<br>
+
+<br>
+You may, however, find it easier to use the TADS 3 Action Messages quick-reference chart, which you can download either from <a href="http://www.tads.org/howto/ActionMessages.zip">www.tads.org/howto/ActionMessages.zip</a> or from <a href="http://users.ox.ac.uk/~manc0049/TADSGuide/QRefs.zip">users.ox.ac.uk/~manc0049/TADSGuide/QRefs.zip</a>.
+<br>
+
+<br>
+Note that there are also RestrictedSurface, RestrictedUnderside, RestrictedRearSurface and RestrictedRearContainer classes which work analogously to RestrictedContainer except that they relate respectively to <a href="surface.htm">Surface</a>, <a href="underside.htm">Underside</a>, <a href="rearsurface.htm">RearSurface</a> and <a href="rearcontainer.htm">RearContainer</a>. All these RestrictedWhatever classes derive from the common RestrictedHolder base class which define validContents and canPutIn(obj) as described for RestrictedContainer above.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

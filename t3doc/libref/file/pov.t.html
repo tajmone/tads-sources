@@ -1,0 +1,64 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>pov.t</title></head><body>
+<table class=ban><tr><td align=left><span class=title>pov.t</span><span class=type>file</span><td align=right><a href="../source/pov.t.html">source file</a></table><p>
+<table class=nav><tr>
+<td><b>Classes</b><br><a href="#_ClassSummary_">Summary</a><br>&nbsp;<td><b>Objects</b><br><a href="#_ObjectSummary_">Summary</a><br>&nbsp;<td><b>Functions</b><br><a href="#_FunctionSummary_">Summary</a><br><a href="#_Functions_">Details</a></table><div class=fdesc>
+ <p>   TADS 3 Library - point of view <p>   This module provides definitions related to point of view and sensory   context.  When we generate output, we do so with respect to a   particular point of view; different points of view can result in   different output, because of the viewer's distance from an object, for   example, or because of the presence of obscuring materials between the   viewer and the viewed object.  We also generate output in a particular   sensory context, which controls whether or not a message that   describes an object with respect to a particular sense should be   generated at all; for example, if the viewer can't see an object   because of darkness or an obscuring layer of material, messages about   the object's visual appearance should not be generated.
+</div>
+<a name="_ClassSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Classes</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Objects</span> &nbsp; </div><p>
+<code>
+<a href="../object/senseContext.html">senseContext</a>&nbsp;
+</code>
+<a name="FunctionSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Global Functions</span> &nbsp; </div><p>
+<code>
+<a href="#callFromPOV">callFromPOV</a>&nbsp;
+<a href="#callWithSenseContext">callWithSenseContext</a>&nbsp;
+<a href="#clearPOV">clearPOV</a>&nbsp;
+<a href="#getPOV">getPOV</a>&nbsp;
+<a href="#getPOVActor">getPOVActor</a>&nbsp;
+<a href="#getPOVActorDefault">getPOVActorDefault</a>&nbsp;
+<a href="#getPOVDefault">getPOVDefault</a>&nbsp;
+<a href="#popPOV">popPOV</a>&nbsp;
+<a href="#pushPOV">pushPOV</a>&nbsp;
+<a href="#setPOV">setPOV</a>&nbsp;
+<a href="#setRootPOV">setRootPOV</a>&nbsp;
+</code><p>
+<a name="_Functions_"></a><p><div class=mjhd><span class=hdln>Global Functions</span> &nbsp; </div><p>
+<a name="callFromPOV"></a>
+<table class=decl><tr><td><code>callFromPOV (actor, pov, funcToCall, [args])</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#328">328</a>]</table><div class=desc>   Call a function from a point of view.  We'll set the new point of   view, call the function with the given arguments, then restore the   original point of view. <p>
+</div>
+<a name="callWithSenseContext"></a>
+<table class=decl><tr><td><code>callWithSenseContext (source, sense, func)</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#56">56</a>]</table><div class=desc>   Call a function with a given sensory context. <p>   The sensory context specifies the source of any messages generated in   the course of the routine we invoke and the sense which those   messages use to convey information.  If the player character cannot   sense the source object in the given sense, then we block all   messages generated while calling this function. <p>   If the source object is nil, this establishes a neutral sense context   in which all messages are visible. <p>   This can be used for processing events that are not directly   initiated by the player character, such as non-player character   activities or scheduled events (fuses and daemons).  The idea is that   anything described in the course of calling our routine is physically   associated with the source object and relates to the given sense, so   if the player character cannot sense the source object, then the   player should not be aware of these happenings and thus should not   see the messages. <p>   Sense contexts are not nested in their effects - we will show or hide   the messages that our callback routine generates regardless of   whether or not messages are hidden by an enclosing sensory context.   So, this routine effectively switches to the new sense context for   the duration of the callback, eliminating the effect of any enclosing   context.  However, we do restore the enclosing sense context before   returning, so there is no lasting net effect on the global sense   context. <p>
+</div>
+<a name="clearPOV"></a>
+<table class=decl><tr><td><code>clearPOV ( )</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#310">310</a>]</table><div class=desc>   Clear the point of view and all stacked elements <p>
+</div>
+<a name="getPOV"></a>
+<table class=decl><tr><td><code>getPOV ( )</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#205">205</a>]</table><div class=desc>   Get the current point of view.  In *most* cases, this is the same as   the point-of-view actor: the actor is looking around with its own   eyes, so it's the point of view.  However, this can differ from the   actor when the actor is viewing the location being described through   an intermediary of some kind.  For example, if an actor is observing a   remote room through a closed-circuit TV system, the point of view   would be the camera in the remote room (not the TV - the point of view   is intended to be the object that's physically absorbing the light   rays or other sensory equivalents). <p>
+</div>
+<a name="getPOVActor"></a>
+<table class=decl><tr><td><code>getPOVActor ( )</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#189">189</a>]</table><div class=desc>   Get the current point-of-view actor - this is the actor who's   performing the action (LOOK AROUND, EXAMINE, SMELL, etc) that's   generating the current description. <p>
+</div>
+<a name="getPOVActorDefault"></a>
+<table class=decl><tr><td><code>getPOVActorDefault (dflt)</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#211">211</a>]</table><div class=desc>get the POV actor, returning the given default if there isn't one set<p>
+</div>
+<a name="getPOVDefault"></a>
+<table class=decl><tr><td><code>getPOVDefault (dflt)</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#221">221</a>]</table><div class=desc>get the POV, returning the given default if there isn't one set<p>
+</div>
+<a name="popPOV"></a>
+<table class=decl><tr><td><code>popPOV ( )</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#283">283</a>]</table><div class=desc>   Pop the most recent point of view pushed <p>
+</div>
+<a name="pushPOV"></a>
+<table class=decl><tr><td><code>pushPOV (actor, pov)</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#270">270</a>]</table><div class=desc>   Push the current point of view <p>
+</div>
+<a name="setPOV"></a>
+<table class=decl><tr><td><code>setPOV (actor, pov)</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#233">233</a>]</table><div class=desc>   Change the point of view without altering the point-of-view stack <p>
+</div>
+<a name="setRootPOV"></a>
+<table class=decl><tr><td><code>setRootPOV (actor, pov)</code><td align=right><code><a href="../file/pov.t.html">pov.t</a>[<a href="../source/pov.t.html#245">245</a>]</table><div class=desc>   Set the root point of view.  This doesn't affect the current point of   view unless there is no current point of view; this merely sets the   outermost default point of view. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

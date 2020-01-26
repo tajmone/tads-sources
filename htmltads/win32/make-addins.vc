@@ -1,0 +1,152 @@
+# Makefile for TADS 3 editor add-in for TADS Workbench
+#
+
+# output here, if the output directory isn't defined on the NMAKE command line
+!ifndef EXEDIR
+EXEDIR = .
+!endif
+!ifndef OBJDIR
+OBJDIR = .
+!endif
+!ifndef RESDIR
+RESDIR = .
+!endif
+
+# we need to know where Scintilla is
+!ifndef SCINTILLA_DIR
+SCINTILLA_DIR=scintilla
+!endif
+
+
+# set some extra options that vary by MSVC version:
+#  - run-time debugging checks changed in MSVC 9 (MSVS 2008)
+#  - string.h deprecations were added in MSVC 9 (MSVS 2008)
+!if $(MSVCPP_VER) >= 9
+CFLAGS_RTCHECKS = -RTCsu
+CFLAGS_CRT_DEPRECATIONS = -D_CRT_SECURE_NO_WARNINGS=1 -wd4996
+!else
+CFLAGS_RTCHECKS = -GZ
+CFLAGS_CRT_DEPRECATIONS =
+!endif
+
+
+# debug/release configuration
+!ifdef COMPILE_FOR_DEBUG
+CFLAGS_DBG = $(CFLAGS_RTCHECKS) -Zi
+CFLAGS_OPT =
+LDFLAGS_DBG = /debug
+!else
+CFLAGS_DBG =
+!if $(MSVCPP_VER) >= 7
+CFLAGS_OPT = -Ox -GL
+LDFLAGS_OPT = /LTCG
+!else
+CFLAGS_OPT = -O2
+LDFLAGS_OPT =
+!endif
+!endif
+
+
+# treat warnings as errors, and turn on some extra warnings in VC7 and above
+!if $(MSVCPP_VER) >= 7
+CFLAGS_WARN = -W3 -WX \
+	-we4062 -we4242 -we4245 -we4263 -we4265 -we4389 -we4702
+!else
+CFLAGS_WARN = -W3 -WX
+!endif
+
+# tool configuration
+CC = cl
+CFLAGS_BASE = \
+	-MT -I. -DMSDOS -DT_WIN32 \
+	-nologo $(CFLAGS_DBG) $(CFLAGS_OPT) -DSTRICT \
+	$(CFLAGS_CRT_DEPRECATIONS)
+CFLAGS = \
+	$(CFLAGS_BASE) $(CFLAGS_WARN) \
+	-I$(SCINTILLADIR)\include -I$(SCINTILLADIR)\src
+LD = link
+LDFLAGS = \
+	/subsystem:windows /nologo \
+	/fixed:no $(LDFLAGS_DBG) $(LDFLAGS_OPT)
+RC = rc
+RCFLAGS =
+
+# main targets
+all: \
+	$(EXEDIR)\tads3.twbAddIn \
+	$(EXEDIR)\html.twbAddIn \
+	$(EXEDIR)\script.twbAddIn
+
+# cleanup
+clean:
+	del $(OBJDIR)\tads3addin.obj
+	del $(EXEDIR)\tads3.twbAddIn
+	del $(EXEDIR)\html.twbAddIn
+	del $(EXEDIR)\script.twbAddIn
+
+# the TADS 3 add-in DLL
+$(EXEDIR)\tads3.twbAddIn: \
+	$(OBJDIR)\tads3addin.obj \
+	$(OBJDIR)\itadsworkbenchiid.obj \
+	$(RESDIR)\tads3addin.res
+	$(LD) $(LDFLAGS) /DLL /OUT:$@ \
+	$** \
+	user32.lib \
+	ole32.lib \
+	oleaut32.lib
+
+# the HTML/XML add-in DLL
+$(EXEDIR)\html.twbAddIn: \
+	$(OBJDIR)\htmladdin.obj \
+	$(OBJDIR)\itadsworkbenchiid.obj \
+	$(RESDIR)\htmladdin.res
+	$(LD) $(LDFLAGS) /DLL /OUT:$@ \
+	$** \
+	user32.lib \
+	ole32.lib \
+	oleaut32.lib
+
+# the command script add-in DLL
+$(EXEDIR)\script.twbAddIn: \
+	$(OBJDIR)\scriptaddin.obj \
+	$(OBJDIR)\itadsworkbenchiid.obj \
+	$(RESDIR)\scriptaddin.res
+	$(LD) $(LDFLAGS) /DLL /OUT:$@ \
+	$** \
+	user32.lib \
+	ole32.lib \
+	oleaut32.lib
+
+# object file rules
+$(OBJDIR)\tads3addin.obj: tads3addin.cpp tads3addin.h \
+	itadsworkbench.h wb_addin.h
+$(OBJDIR)\htmladdin.obj: htmladdin.cpp htmladdin.h \
+	itadsworkbench.h wb_addin.h
+$(OBJDIR)\scriptaddin.obj: scriptaddin.cpp scriptaddin.h \
+	itadsworkbench.h wb_addin.h
+$(OBJDIR)\itadsworkbenchiid.obj: itadsworkbenchiid.cpp itadsworkbench.h
+
+# resource file rules
+$(RESDIR)\tads3addin.res: tads3addin.rc tads3addin.h
+$(RESDIR)\htmladdin.res: htmladdin.rc htmladdin.h
+$(RESDIR)\scriptaddin.res: scriptaddin.rc scriptaddin.h
+
+
+# ----------------------------------------------------------------------------
+#
+# implicit rules for deriving targets by extension
+#
+.SUFFIXES : .c .obj .cpp .rc .res
+
+.c{$(OBJDIR)}.obj:
+	$(CC) -c $(CFLAGS) -Fo$@ $<
+
+.cpp{$(OBJDIR)}.obj:
+	$(CC) -c $(CFLAGS) -Fo$@ $<
+
+{$(SCINTILLADIR)\src}.cxx{$(OBJDIR)}.obj:
+	$(CC) -c $(CFLAGS) -Fo$@ $<
+
+.rc{$(RESDIR)}.res:
+	$(RC) $(RCFLAGS) -r -fo$@ $<
+

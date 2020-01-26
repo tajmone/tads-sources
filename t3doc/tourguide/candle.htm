@@ -1,0 +1,202 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Candle &amp; FireSource</title><meta name="keywords" content="Candle,FireSource,isLit,modify,modify, modify VerbRule,VerbRule,VerbRule, modify,fuelLevel,sayBurnedOut,isEquivalent"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Candle &amp; FireSource
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="flashlight.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="oillamp.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Candle is the other specialization of LightSource provided in the library (strictly speaking, it inherits from FueledLightSource, which in turn inherits from <a href="lightsource.htm">LightSource</a>). It can, of course, be used to implement candles (as we'll do in just a minute), but it is useful for implementing any light source with a limited fuel supply or burn life (as we shall go on to explore).
+<br>
+
+<br>
+We have already defined some candles in our game (back when we implemented a <a href="dispenser.htm">Dispenser</a>). You may recall we in fact defined our own RedCandle class. As yet, however, we have provided no means of lighting them. What we need for the task is a FireSource. One is available in the shape of the flaming torch attached to the wall, but we need to make some changes to it so it will act as a FireSource.
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000"><b>FireSource,&nbsp;</b>Fixture&nbsp;'<b>flaming&nbsp;torch&nbsp;torch/flame/flames</b>'&nbsp;'torch'&nbsp;@mainCave
+<br>
+&nbsp;&nbsp;"The&nbsp;torch,&nbsp;which&nbsp;is&nbsp;fixed&nbsp;firmly&nbsp;to&nbsp;wall&nbsp;by&nbsp;a&nbsp;steel&nbsp;bracket,&nbsp;is&nbsp;blazing&nbsp;merrily,
+<br>
+&nbsp;&nbsp;&nbsp;its&nbsp;flames&nbsp;casting&nbsp;a&nbsp;bright&nbsp;but&nbsp;flickering&nbsp;light&nbsp;over&nbsp;the&nbsp;cave.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;cannotTakeMsg&nbsp;=&nbsp;'It\'s&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;<b>preCondIobjBurnWith&nbsp;=&nbsp;static&nbsp;inherited&nbsp;-&nbsp;objHeld
+<br>
+&nbsp;&nbsp;&nbsp;isLit&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;&nbsp;disambigName&nbsp;=&nbsp;'flaming&nbsp;torch'
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There's a few things to note here. Firstly, the default handling for a FireSource requires that the actor is holding it before it can be used to light anything else; this is not appropriate, or not even possible, for a flaming torch fixed to the wall, so we need to removed the objHeld precondition. This is what we do with </font><font face="Courier New" size="2" color="#000000">preCondIobjBurnWith&nbsp;=&nbsp;static&nbsp;inherited&nbsp;-&nbsp;objHeld,</font><font face="Arial" size="2" color="#000000"> which, so far as the compiler is concerned, is precisely the same as if we had written:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">iobjFor(BurnWith)
+<br>
+{
+<br>
+&nbsp;&nbsp;preCond&nbsp;=&nbsp;static&nbsp;inherited&nbsp;-&nbsp;objHeld
+<br>
+}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Which might have been clearer, but is also a bit more long-winded. This shorter syntax is worth considering when overriding only a single method of a dobjFor or iobjFor set, but probably not worth the loss of clarity if overriding two or more such methods. (To construct the appropriate method or property name, begin with 'verify', 'check', 'action' or 'preCond', then add either 'Dobj' or 'Iobj' and conclude with the action specifier, e.g. 'Take', 'Drop' , or, as here, 'BurnWith' ).
+<br>
+
+<br>
+We need to set isLit = true, otherwise the FireSource will be regarded as unlit and thus not capable of lighting anything else (until lit itself). Finally, we add a disambigName in case there's ever a name clash with the torch (flashlight) we defined in the last section.
+<br>
+
+<br>
+A further customization that might be worth making is to the vocabulary for the BurnWith command. That defined in the library allows you to BURN, LIGHT, IGNITE or SET FIRE something WITH something. In the case of the candle and the torch, however, it would be perfectly natural for the player to type, for example, LIGHT CANDLE FROM TORCH. To allow this, we can simply override the vocabulary defined in the library, leaving everything else as it is:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">modify&nbsp;VerbRule(BurnWith)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;('light'&nbsp;|&nbsp;'burn'&nbsp;|&nbsp;'ignite'&nbsp;|&nbsp;'set'&nbsp;'fire'&nbsp;'to')&nbsp;singleDobj
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;('with'&nbsp;|&nbsp;'from')&nbsp;singleIobj
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Although we have already defined a RedCandle class, we need to tweak it a bit. Firstly, once a candle is lit, there's no reason why it shouldn't be used to light other candles  (or anything else that's ignitable), so we should add FireSource to its class list. Secondly, a candle is not a very efficient light source (we shall assume), so we'll reduce its brightnessOn to 2 (this may not make much practical difference here, but one could devise situations in which it could be made to). Thirdly, a Candle continues to burn until its <b>fuelLevel</b> reaches zero, its fuelLevel being decremented by 1 each turn. By default a Candle starts with a fuelLevel of 20, but we'll be less generous with our Candles, making them a temporary expedient until the player finds a more efficient light source. Finally, once a candle has burned down, there's nothing left but a stub, and this should be reflected in its description. It's this last requirement that will add most of the complication.
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;RedCandle&nbsp;:&nbsp;<b>FireSource,</b>&nbsp;Dispensable,&nbsp;Candle&nbsp;'red&nbsp;candle*candles'&nbsp;'red&nbsp;candle'
+<br>
+&nbsp;&nbsp;<b>desc()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;switch(fuelLevel)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;0:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;just&nbsp;the&nbsp;stub&nbsp;of&nbsp;a&nbsp;red&nbsp;candle.&nbsp;";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;1:&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There's&nbsp;not&nbsp;much&nbsp;of&nbsp;it&nbsp;left.&nbsp;";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;2:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;little&nbsp;more&nbsp;than&nbsp;a&nbsp;stub.&nbsp;";&nbsp;break;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;3:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;short&nbsp;red&nbsp;candle.&nbsp;";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;4:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;reasonably&nbsp;long.&nbsp;";&nbsp;break;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;a&nbsp;long&nbsp;red&nbsp;candle.&nbsp;";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isLit)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"It's&nbsp;alight";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(fuelLevel&nbsp;&lt;&nbsp;3)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",&nbsp;but&nbsp;its&nbsp;flame&nbsp;is&nbsp;starting&nbsp;to&nbsp;flicker";&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;";&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}</b>
+<br>
+&nbsp;&nbsp;isEquivalent&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;isListedInContents&nbsp;=&nbsp;(!isIn(myDispenser))
+<br>
+&nbsp;&nbsp;myDispenser&nbsp;=&nbsp;candleBox
+<br>
+&nbsp;&nbsp;<b>fuelLevel&nbsp;=&nbsp;7
+<br>
+&nbsp;&nbsp;brightnessOn&nbsp;=&nbsp;2
+<br>
+&nbsp;&nbsp;sayBurnedOut()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;cur&nbsp;=&nbsp;new&nbsp;RedCandleStub;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cur.moveInto(location);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;moveInto(nil);&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+
+<br>
+&nbsp;&nbsp;dobjFor(BurnWith)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(fuelLevel&nbsp;&lt;&nbsp;1)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sayBurnedOut;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+
+<br>
+</b>;
+<br>
+
+<br>
+class&nbsp;RedCandleStub:&nbsp;Thing&nbsp;'red&nbsp;candle&nbsp;stub*stubs*candles'&nbsp;'red&nbsp;candle&nbsp;stub'
+<br>
+&nbsp;&nbsp;"It's&nbsp;just&nbsp;the&nbsp;stub&nbsp;of&nbsp;a&nbsp;red&nbsp;candle.&nbsp;"
+<br>
+&nbsp;&nbsp;isEquivalent&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;weight&nbsp;=&nbsp;0
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;0
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The desc() method provides a suitable description of the candle at various fuel levels, adding a suitable second sentence if it's lit. When the candle runs out of fuel its <b>sayBurnedOut() </b>method is called, which makes this a good place to add any other special handling for this eventuality. What we want here is for the original candle to be replaced by a worthless candlestub object, so we create a new RedCandleStub, move it into the location of the candle that's just burned down to nothing, then move the burned-out candle to nil to dispose of it. We can't just tinker with the name and vocabWords properties of the burned out candle object, since the <b>isEquivalent</b> property being set to true means that all members of the RedCandle class must be effectively identical. The checkDobjBurnWith() handles the case when the player douses the candle just before it goes out and then tries to light it again; the standard library behaviour would prevent the candle being lit, and so it would never be replaced with a stub.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

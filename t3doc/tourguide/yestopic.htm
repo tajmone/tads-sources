@@ -1,0 +1,36 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>YesTopic</title><meta name="keywords" content="YesTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>YesTopic : <a href="misctopic.htm">MiscTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="convnode.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="notopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A YesTopic simply responds to a YES command typed by the player. It is most useful when placed in a <a href="convnode.htm">ConvNode</a>. For now we'll give a single example of a YesTopic we'll use to handle the player's replying YES to the question Sarah's just asked (about cutting open the glass display case). We'll also make it a <a href="suggestedyestopic.htm">SuggestedYesTopic</a> so that it includes saying yes among the things suggested to the player at this point (for reasons that will shortly become apparent). Obviously, this YesTopic should be placed in the ConvNode we've just defined:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;YesTopic,&nbsp;SuggestedYesTopic
+<br>
+&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Yes,&nbsp;do&nbsp;you&nbsp;think&nbsp;you&nbsp;can&nbsp;manage&nbsp;it?&lt;/q&gt;&nbsp;you&nbsp;ask.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Watch&nbsp;me!&lt;/q&gt;&nbsp;she&nbsp;replies.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedActorAction(sarah,&nbsp;CutWith,&nbsp;bananaCase,&nbsp;diamondRing);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;There&nbsp;you&nbsp;are!&lt;/q&gt;&nbsp;she&nbsp;declares,&nbsp;&lt;q&gt;Easy!&lt;/q&gt;&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

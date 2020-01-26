@@ -1,0 +1,62 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>StairwayDown</title><meta name="keywords" content="StairwayDown,masterObject"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>StairwayDown : Stairway
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="room.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="stairwayup.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The description of entranceCave refers to a sturdy steel ladder leading down through a hole in the floor. This ladder is best implemented as a stairwayDown, which is both a physical game object that can be examined and a TravelConnector that can be traversed, by CLIMB and CLIMB DOWN commands. The ladder can simply be defined as:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;downLadder&nbsp;:&nbsp;StairwayDown&nbsp;'sturdy&nbsp;steel&nbsp;ladder'&nbsp;'sturdy&nbsp;steel&nbsp;ladder'
+<br>
+&nbsp;&nbsp;"The&nbsp;ladder&nbsp;leads&nbsp;down&nbsp;through&nbsp;a&nbsp;large&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Here we are simply using the standard <a href="thingtemplate.htm">Thing template</a>, although since StairwayDown inherits (indirectly) from Passage, it can also use the <a href="passagetemplate.htm">Passage template</a>.
+<br>
+
+<br>
+We can then add a down property to the room definition to point to this connector:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">entranceCave&nbsp;:&nbsp;Room&nbsp;'Entrance&nbsp;Cave'&nbsp;'the&nbsp;entrance&nbsp;cave'
+<br>
+&nbsp;&nbsp;"Compared&nbsp;with&nbsp;the&nbsp;narrow&nbsp;tunnel&nbsp;leading&nbsp;out&nbsp;to&nbsp;the&nbsp;north,&nbsp;this&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;rough-walled&nbsp;cave&nbsp;seems&nbsp;positively&nbsp;spacious.&nbsp;A&nbsp;red&nbsp;sign&nbsp;fixed&nbsp;to&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;one&nbsp;wall&nbsp;suggests&nbsp;that&nbsp;the&nbsp;narrow&nbsp;tunnel&nbsp;is&nbsp;the&nbsp;only&nbsp;way&nbsp;back&nbsp;out&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;valley,&nbsp;while&nbsp;a&nbsp;blue&nbsp;sign&nbsp;next&nbsp;to&nbsp;it&nbsp;welcomes&nbsp;you&nbsp;to&nbsp;the&nbsp;cave.
+<br>
+&nbsp;&nbsp;&nbsp;Directly&nbsp;under&nbsp;the&nbsp;signs&nbsp;a&nbsp;narrow&nbsp;ledge&nbsp;has&nbsp;been&nbsp;carved&nbsp;into&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;wall.&nbsp;There&nbsp;appear&nbsp;to&nbsp;be&nbsp;no&nbsp;other&nbsp;caves&nbsp;at&nbsp;this&nbsp;level,&nbsp;but&nbsp;a&nbsp;sturdy&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;steel&nbsp;ladder&nbsp;leads&nbsp;down&nbsp;through&nbsp;a&nbsp;large&nbsp;round&nbsp;hole&nbsp;in&nbsp;the&nbsp;floor.&nbsp;"
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;entranceTunnel&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;out&nbsp;asExit(north)
+<br>
+&nbsp;&nbsp;&nbsp;<b>down&nbsp;=&nbsp;downLadder</b>
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that as yet nothing defines where we end up when we go down the ladder. This is because there will be a corresponding <a href="stairwayup.htm">StairwayUp</a> in the cave below, and the StairwayUp will point to downLadder as its <b>masterObject</b>. The game will automatically link the StairwayUp to its masterObject and <i>vice versa</i>, so that when we traverse the StairwayDown it will know that its destination is in the corresponding StairwayUp's location. (We could equally well do this the other way round and make the StairwayUp the masterObject of the StairwayDown).
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,110 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>AltTopic</title></head><body>
+<table class=ban><tr><td align=left><span class=title>AltTopic</span><span class=type>class</span><td align=right><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2668">2668</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   An alternative topic entry.  This makes it easy to define different   responses to a topic according to the game state; for example, we   might want to provide a different response for a topic after some   event has occurred, so that we can reflect knowledge of the event in   the response. <p>   A set of alternative topics is sort of like an inverted if-then-else.   You start by defining a normal TopicEntry (an AskTopic, or an   AskTellTopic, or whatever) for the basic response.  Then, you add a   nested AltTopic located within the base topic; you can add another   AltTopic nested within the base topic, and another after that, and so   on.  When we need to choose one of the topics, we'll choose the last   one that indicates it's active.  So, the order of appearance is   essentially an override order: the first AltTopic overrides its parent   TopicEntry, and each subsequent AltTopic overrides its previous   AltTopic. <p>   + AskTellTopic @lighthouse "It's very tall."; <br> ++ AltTopic "Not really..." isActive=(...); <br> ++ AltTopic "Well, maybe..." isActive=(...); <br> ++ AltTopic "One more thing..." isActive=(...); <p>   In this example, the response we'll show for ASK ABOUT LIGHTHOUSE will   always be the LAST entry of the group that's active.  For example, if   all of the responses are active except for the very last one, then   we'll show the "Well, maybe" response, because it's the last active   response.  If the main AskTellTopic is active, but none of the   AltTopics are active, we'll show the "It's very tall" main response,   because it's the last element of the group that's active. <p>   Note that an AltTopic takes its matching information from its parent,   so you don't need to specify a matchObj or any other matching   information in an AltTopic.  You merely need to provide the response   text and the isActive test.
+<p>
+<code>class
+<b>AltTopic</b> :  &nbsp; <a href="../object/TopicEntry.html">TopicEntry</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>AltTopic</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicEntry.html">TopicEntry</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#altTalkCount">altTalkCount</a>&nbsp;
+<a href="#altTopicOrder">altTopicOrder</a>&nbsp;
+<a href="#impliesGreeting">impliesGreeting</a>&nbsp;
+<a href="#includeInList">includeInList</a>&nbsp;
+<a href="#isConversational">isConversational</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicEntry</code> :<br>
+<code>
+<a href="../object/TopicEntry.html#altTopicList">altTopicList</a>&nbsp;
+<a href="../object/TopicEntry.html#isActive">isActive</a>&nbsp;
+<a href="../object/TopicEntry.html#matchObj">matchObj</a>&nbsp;
+<a href="../object/TopicEntry.html#matchScore">matchScore</a>&nbsp;
+<a href="../object/TopicEntry.html#talkCount">talkCount</a>&nbsp;
+<a href="../object/TopicEntry.html#topicGroupActive">topicGroupActive</a>&nbsp;
+<a href="../object/TopicEntry.html#topicGroupScoreAdjustment">topicGroupScoreAdjustment</a>&nbsp;
+<a href="../object/TopicEntry.html#topicResponse">topicResponse</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#checkIsActive">checkIsActive</a>&nbsp;
+<a href="#initializeAltTopic">initializeAltTopic</a>&nbsp;
+<a href="#isMatchPossible">isMatchPossible</a>&nbsp;
+<a href="#matchPreParse">matchPreParse</a>&nbsp;
+<a href="#matchTopic">matchTopic</a>&nbsp;
+<a href="#noteInvocation">noteInvocation</a>&nbsp;
+<a href="#setTopicPronouns">setTopicPronouns</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicEntry</code> :<br>
+<code>
+<a href="../object/TopicEntry.html#addAltTopic">addAltTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#addSuggestedTopic">addSuggestedTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#addTopic">addTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#adjustScore">adjustScore</a>&nbsp;
+<a href="../object/TopicEntry.html#anyAltIsActive">anyAltIsActive</a>&nbsp;
+<a href="../object/TopicEntry.html#breakTopicTie">breakTopicTie</a>&nbsp;
+<a href="../object/TopicEntry.html#deferToEntry">deferToEntry</a>&nbsp;
+<a href="../object/TopicEntry.html#getActor">getActor</a>&nbsp;
+<a href="../object/TopicEntry.html#getTopicOwner">getTopicOwner</a>&nbsp;
+<a href="../object/TopicEntry.html#handleTopic">handleTopic</a>&nbsp;
+<a href="../object/TopicEntry.html#initializeTopicEntry">initializeTopicEntry</a>&nbsp;
+<a href="../object/TopicEntry.html#noteAltInvocation">noteAltInvocation</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="altTalkCount"></a>
+<table class=decl><tr><td><code>altTalkCount</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2756">2756</a>]</table><div class=desc>our AltTopic counter is the AltTopic counter for the enclosing topic<p>
+</div>
+<a name="altTopicOrder"></a>
+<table class=decl><tr><td><code>altTopicOrder</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2742">2742</a>]</table><div class=desc>   Our relative order within our parent's list of alternatives.  By   default, we simply return the source file ordering, which ensures   that static AltTopic objects (i.e., those defined directly in   source files, not dynamically created with 'new') will be ordered   just as they're laid out in the source file. <p>
+</div>
+<a name="impliesGreeting"></a>
+<table class=decl><tr><td><code>impliesGreeting</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2730">2730</a>]</table><div class=desc>take our implied-greeting status from our parent<p>
+</div>
+<a name="includeInList"></a>
+<table class=decl><tr><td><code>includeInList</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2685">2685</a>]</table><div class=desc>include in the same lists as our parent<p>
+</div>
+<a name="isConversational"></a>
+<table class=decl><tr><td><code>isConversational</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2733">2733</a>]</table><div class=desc>take our conversational status from our parent<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="checkIsActive"></a>
+<table class=decl><tr><td><code>checkIsActive ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2700">2700</a>]</table><div class=desc>   Determine if this topic is active.  An AltTopic is active if its   own isActive indicates true, AND none of its subsequent siblings   are active. <p>
+</div>
+<a name="initializeAltTopic"></a>
+<table class=decl><tr><td><code>initializeAltTopic ( )</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2688">2688</a>]</table><div class=desc>AltTopic initialization<p>
+</div>
+<a name="isMatchPossible"></a>
+<table class=decl><tr><td><code>isMatchPossible (actor, scopeList)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2674">2674</a>]</table><div class=desc>we can match if our parent can match<p>
+</div>
+<a name="matchPreParse"></a>
+<table class=decl><tr><td><code>matchPreParse (str, pstr)</code><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2678">2678</a>]</table><div class=desc>we can match a pre-parse string if our parent can<p>
+</div>
+<a name="matchTopic"></a>
+<table class=decl><tr><td><code>matchTopic (fromActor, topic)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2670">2670</a>]</table><div class=desc>we match if our parent matches, and with the same score<p>
+</div>
+<a name="noteInvocation"></a>
+<table class=decl><tr><td><code>noteInvocation (fromActor)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2745">2745</a>]</table><div class=desc>note invocation<p>
+</div>
+<a name="setTopicPronouns"></a>
+<table class=decl><tr><td><code>setTopicPronouns (fromActor, topic)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/actor.t.html">actor.t</a>[<a href="../source/actor.t.html#2681">2681</a>]</table><div class=desc>set pronouns for the topic<p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

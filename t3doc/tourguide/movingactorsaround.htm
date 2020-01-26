@@ -1,0 +1,26 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Moving Actors Around</title><meta name="keywords" content="Moving Actors Around,moveIntoForTravel,scriptedTravelTo,travelTo"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Moving Actors Around
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="actorknowledge.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="overview-actorstates.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Since Actors are meant to model living beings, there's no reason to assume they'll always stay in the same place. That means that we need some means of moving them around the game world.
+<br>
+
+<br>
+The basic rule when moving actors around in code is <i>never</i> use moveInto(dest). Use <b>moveIntoForTravel(dest)</b> instead, or travelTo(destination, connector, backConnector) or scriptedTravelTo(dest); or else nestedActorAction(bob,North) or nestedActorAction(TravelVia, redDoor).
+<br>
+
+<br>
+For a fuller discussion, see Mike Roberts's technical article on <a href=" http://www.tads.org/howto/t3npcTravel.htm " TARGET="_top">NPC Travel in TADS 3</A>.
+<br>
+
+<br>
+It's also possible to have one actor automatically follow another (normally, but not necessarily, the player character) by putting it in an <a href="accompanyingstate.htm">AccompanyingState</a>. This is one of the ActorState classes, which is what we'll be looking at next.
+<br>
+</font>
+
+</body></html>

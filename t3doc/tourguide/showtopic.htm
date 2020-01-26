@@ -1,0 +1,224 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ShowTopic</title><meta name="keywords" content="ShowTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ShowTopic : <a href="showtopic.htm">GiveShowTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="givetopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="giveshowtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A ShowTopic is very similar to a GiveTopic, except that it handles the SHOW TO command rather than the GIVE TO command. We might, for example, use it to display a different response if the player character merely shows Sarah her lost diamond ring rather than returning it to her:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">++&nbsp;ShowTopic&nbsp;@diamondRing
+<br>
+&nbsp;&nbsp;&nbsp;"{The&nbsp;sarah/she}&nbsp;inspects&nbsp;the&nbsp;ring&nbsp;then&nbsp;looks&nbsp;up&nbsp;at&nbsp;you,&nbsp;&lt;q&gt;Yes,&nbsp;that's&nbsp;my&nbsp;ring!&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;she&nbsp;declares,&nbsp;&lt;q&gt;May&nbsp;I&nbsp;have&nbsp;it,&nbsp;please?&lt;/q&gt;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that in this case, the topicResponse is simply a double-quoted string, which the TopicEntry template can cope with, so we don't need to write out topicEntry as an explicit method. However, in this case the response is a bit too simplistic, since Sarah will keep repeating the response each time she's shown the ring. It would be better if we used, say, a StopEventList to show a sequence of responses if the player character keeps showing Sarah the ring without giving it to her:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;ShowTopic,&nbsp;StopEventList&nbsp;@diamondRing
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;inspects&nbsp;the&nbsp;ring&nbsp;then&nbsp;looks&nbsp;up&nbsp;at&nbsp;you,&nbsp;&lt;q&gt;Yes,&nbsp;that\'s&nbsp;my&nbsp;ring!&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;she&nbsp;declares,&nbsp;&lt;q&gt;May&nbsp;I&nbsp;have&nbsp;it,&nbsp;please?&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;think&nbsp;we\'ve&nbsp;already&nbsp;established&nbsp;that\'s&nbsp;my&nbsp;ring.&lt;/q&gt;&nbsp;she&nbsp;points&nbsp;out,&nbsp;&lt;q&gt;I\'d
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like&nbsp;it&nbsp;back&nbsp;now,&nbsp;please.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;holds&nbsp;out&nbsp;her&nbsp;hand&nbsp;to&nbsp;you&nbsp;with&nbsp;a&nbsp;look&nbsp;of&nbsp;one&nbsp;doing&nbsp;her&nbsp;best&nbsp;to
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bear&nbsp;patiently&nbsp;with&nbsp;someone&nbsp;unusually&nbsp;slow&nbsp;of&nbsp;understanding.&nbsp;'
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+On the other hand, perhaps we can get away with one response should the player show the carbuncle to the curator:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;ShowTopic&nbsp;@carbuncle
+<br>
+&nbsp;&nbsp;"{The&nbsp;curator/he}&nbsp;stares&nbsp;at&nbsp;the&nbsp;carbuncle&nbsp;in&nbsp;your&nbsp;hand,&nbsp;&lt;q&gt;Is&nbsp;that&nbsp;what&nbsp;I&nbsp;think
+<br>
+&nbsp;&nbsp;&nbsp;it&nbsp;is?&lt;/q&gt;&nbsp;he&nbsp;wonders,&nbsp;&lt;q&gt;May&nbsp;I&nbsp;have&nbsp;a&nbsp;closer&nbsp;look?&lt;/q&gt;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+You may recall a little way back we left the path down into Hellfire Cavern blocked by a nasty bunch of demons. The Baaras root Solomon is busily studying is meant to be good for disposing of demons (or so Josephus tells us), so perhaps showing it to the demons will do the trick:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;GiveShowTopic&nbsp;@baarasRoot
+<br>
+&nbsp;&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"As&nbsp;you&nbsp;produce&nbsp;the&nbsp;baaras&nbsp;root&nbsp;and&nbsp;hold&nbsp;it&nbsp;up&nbsp;before&nbsp;their&nbsp;demonic&nbsp;little
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eyes,&nbsp;it&nbsp;starts&nbsp;to&nbsp;glow&nbsp;an&nbsp;eerie&nbsp;pink&nbsp;colour.&nbsp;&lt;q&gt;Begone&nbsp;foul&nbsp;fiends!&lt;/q&gt;&nbsp;you
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cry,&nbsp;&lt;q&gt;By&nbsp;the&nbsp;power&nbsp;of&nbsp;Solomon's&nbsp;Baaras&nbsp;Root,&nbsp;and&nbsp;with&nbsp;the&nbsp;incantation&nbsp;he
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forgot&nbsp;to&nbsp;teach&nbsp;me&nbsp;-&nbsp;er&nbsp;-&nbsp;I&nbsp;banish&nbsp;all&nbsp;evil&nbsp;spirits,&nbsp;all&nbsp;demons&nbsp;and&nbsp;creatures&nbsp;unclean,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;the&nbsp;Almighty&nbsp;Garbage&nbsp;Collection&nbsp;routine&nbsp;whence&nbsp;no&nbsp;Dangling&nbsp;Reference&nbsp;shall&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ever&nbsp;return!&lt;/q&gt;\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Ah&nbsp;no!&nbsp;Mandragora&nbsp;Maxima!&lt;/q&gt;&nbsp;cries&nbsp;one&nbsp;of&nbsp;the&nbsp;demons.\n
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Eek&nbsp;no!&nbsp;The&nbsp;forgotten&nbsp;incantation!&lt;/q&gt;&nbsp;shrieks&nbsp;another.\n
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Fie&nbsp;and&nbsp;double&nbsp;discombobulation,&nbsp;the&nbsp;Almighty&nbsp;Garbage&nbsp;Collector!&lt;/q&gt;&nbsp;squeals
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;another.\n
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;RunDaemon,&nbsp;RunDaemon!&lt;/q&gt;&nbsp;yells&nbsp;a&nbsp;fourth.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;the&nbsp;demons&nbsp;turn&nbsp;in&nbsp;terror&nbsp;and&nbsp;try&nbsp;to&nbsp;flee,&nbsp;the&nbsp;Baaras&nbsp;root
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grows&nbsp;ever&nbsp;brighter&nbsp;in&nbsp;your&nbsp;hand,&nbsp;shedding&nbsp;its&nbsp;piercing&nbsp;pink&nbsp;rays&nbsp;over&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;demonic&nbsp;horde,&nbsp;so&nbsp;that&nbsp;even&nbsp;as&nbsp;they&nbsp;start&nbsp;to&nbsp;clamber&nbsp;down&nbsp;the&nbsp;slope&nbsp;they&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shimmer&nbsp;and&nbsp;dissolve,&nbsp;turning&nbsp;into&nbsp;plumes&nbsp;of&nbsp;oily&nbsp;black&nbsp;smoke&nbsp;which
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vanishes&nbsp;like&nbsp;a&nbsp;mist.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;demons.moveInto(nil);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+On the other hand, showing them the banana will get them worked up for other reasons:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">++&nbsp;ShowTopic&nbsp;@goldenBanana
+<br>
+&nbsp;&nbsp;"As&nbsp;you&nbsp;hold&nbsp;up&nbsp;the&nbsp;Golden&nbsp;Banana&nbsp;of&nbsp;Discord&nbsp;for&nbsp;the&nbsp;demons&nbsp;to&nbsp;see&nbsp;they&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;become&nbsp;very&nbsp;excited&nbsp;indeed.&nbsp;&lt;q&gt;Give&nbsp;us&nbsp;our&nbsp;Banana&nbsp;back!&lt;/q&gt;&nbsp;they&nbsp;cry,
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes,&nbsp;we&nbsp;have&nbsp;no&nbsp;banana,&nbsp;we&nbsp;want&nbsp;our&nbsp;banana&nbsp;today!&lt;/q&gt;&nbsp;they&nbsp;sing,
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Gimme!&nbsp;Gimme!&nbsp;Gimme!&lt;/q&gt;&nbsp;they&nbsp;insist.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Pretty&nbsp;please?&lt;/q&gt;&nbsp;one&nbsp;of&nbsp;them&nbsp;adds&nbsp;plaintively.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Since showing the Baaras root to the demons clears them out of the way, we ought to code the locations the player character will then be able to reach:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">basaltPlain&nbsp;:&nbsp;OutdoorRoom&nbsp;'Basalt&nbsp;Plain'&nbsp;'the&nbsp;basalt&nbsp;plain'
+<br>
+&nbsp;&nbsp;"To&nbsp;the&nbsp;north&nbsp;this&nbsp;rough,&nbsp;grey&nbsp;basalt&nbsp;plain&nbsp;is&nbsp;bordered&nbsp;by&nbsp;the&nbsp;fiery&nbsp;volcano;
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;south&nbsp;it&nbsp;comes&nbsp;to&nbsp;the&nbsp;end&nbsp;at&nbsp;a&nbsp;steep&nbsp;rocky&nbsp;slope,&nbsp;which&nbsp;can&nbsp;be&nbsp;ascended
+<br>
+&nbsp;&nbsp;&nbsp;by&nbsp;means&nbsp;of&nbsp;steep&nbsp;stone&nbsp;steps.&nbsp;Progress&nbsp;across&nbsp;the&nbsp;bleak&nbsp;plain&nbsp;looks&nbsp;difficult,
+<br>
+&nbsp;&nbsp;&nbsp;since&nbsp;the&nbsp;ground&nbsp;is&nbsp;broken,&nbsp;pitted&nbsp;and&nbsp;uneven.&nbsp;"
+<br>
+&nbsp;&nbsp;south&nbsp;asExit(up)
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;baseOfVolcano
+<br>
+&nbsp;&nbsp;east&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You&nbsp;struggle&nbsp;a&nbsp;few&nbsp;dozen&nbsp;yards&nbsp;to&nbsp;the&nbsp;east,&nbsp;but&nbsp;the&nbsp;effort
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seems&nbsp;so&nbsp;unrewarding&nbsp;that&nbsp;you&nbsp;quickly&nbsp;turn&nbsp;back.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;west&nbsp;:&nbsp;FakeConnector&nbsp;{&nbsp;"You&nbsp;stumble&nbsp;over&nbsp;the&nbsp;broken&nbsp;ground&nbsp;to&nbsp;the&nbsp;west,&nbsp;but&nbsp;there
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;doesn't&nbsp;appear&nbsp;to&nbsp;be&nbsp;anything&nbsp;interesting&nbsp;in&nbsp;that&nbsp;direction&nbsp;so&nbsp;you&nbsp;quickly
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;abandon&nbsp;the&nbsp;attempt&nbsp;as&nbsp;futile.&nbsp;"&nbsp;}
+<br>
+&nbsp;&nbsp;up&nbsp;=&nbsp;basaltPathUp
+<br>
+;
+<br>
+
+<br>
++&nbsp;basaltPathUp&nbsp;:&nbsp;StairwayUp&nbsp;-&gt;&nbsp;hellPathDown&nbsp;'stone&nbsp;upward&nbsp;up&nbsp;steps'&nbsp;'steep&nbsp;stone&nbsp;steps'
+<br>
+&nbsp;isPlural&nbsp;=&nbsp;true
+<br>
+;
+<br>
+
+<br>
+baseOfVolcano&nbsp;:&nbsp;OutdoorRoom&nbsp;'Base&nbsp;of&nbsp;Volcano'&nbsp;'the&nbsp;base&nbsp;of&nbsp;the&nbsp;volcano'
+<br>
+&nbsp;&nbsp;"The&nbsp;harsh&nbsp;basalt&nbsp;plain&nbsp;to&nbsp;the&nbsp;south&nbsp;comes&nbsp;to&nbsp;the&nbsp;end&nbsp;at&nbsp;the&nbsp;base&nbsp;of&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;volcanic&nbsp;mountain&nbsp;that's&nbsp;busily&nbsp;belching&nbsp;flames&nbsp;and&nbsp;smoke.&nbsp;A&nbsp;narrow&nbsp;path
+<br>
+&nbsp;&nbsp;&nbsp;leads&nbsp;uninvitingly&nbsp;up&nbsp;the&nbsp;side&nbsp;of&nbsp;the&nbsp;volcano.&nbsp;"
+<br>
+&nbsp;&nbsp;south&nbsp;=&nbsp;basaltPlain
+<br>
+&nbsp;&nbsp;north&nbsp;asExit(up)
+<br>
+&nbsp;&nbsp;up&nbsp;=&nbsp;volcanoPath
+<br>
+;
+<br>
+
+<br>
++&nbsp;volcanoPath&nbsp;:&nbsp;StairwayUp&nbsp;-&gt;volcanoPathDown&nbsp;'narrow&nbsp;up&nbsp;path'&nbsp;'narrow&nbsp;path&nbsp;up'
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At this point you might want to add these two new rooms to the Distant volcano object's locatiobList:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">MultiLoc,&nbsp;Distant&nbsp;'mount&nbsp;volcano/gloom'&nbsp;'volcano'
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;volcano&nbsp;rises&nbsp;up&nbsp;from&nbsp;the&nbsp;basalt&nbsp;plain&nbsp;like&nbsp;an&nbsp;angry&nbsp;sore,&nbsp;belching&nbsp;fumes,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;smoke&nbsp;and&nbsp;occasional&nbsp;balls&nbsp;of&nbsp;lava,&nbsp;which&nbsp;spit&nbsp;from&nbsp;the&nbsp;summit&nbsp;and&nbsp;ooze
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pus-like&nbsp;down&nbsp;its&nbsp;rugged&nbsp;slopes.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;locationList&nbsp;=&nbsp;[hellFireCavern,&nbsp;hellPath,&nbsp;<b>basaltPlain,&nbsp;baseOfVolcano</b>]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note at this point we have finally connected up the full path to the lava pool where the Golden Banana of Discord is to be destroyed.
+<br>
+
+<br>
+</font></font>
+
+</body></html>

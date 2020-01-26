@@ -1,0 +1,47 @@
+/* $Header: d:/cvsroot/tads/html/win32/html_tads_strs.rc,v 1.1 1999/07/11 00:46:46 MJRoberts Exp $ */
+
+/* Copyright (c) 1997, 1999 by Michael J. Roberts.  All Rights Reserved. */
+/*
+Name
+  html_tads_strs.rc - TADS resource strings
+Function
+  Defines resource strings that TADS uses.  Refer to res.h in the TADS
+  sources for information.
+
+  We store our string resources in the range 61000-61999.  TADS resource
+  ID's are related to our actual Windows resource ID's by adding 61000 to
+  the TADS resource ID.
+
+  Note that the Windows resource compiler has a weird limitation: it
+  ignores #pragma code_page() in included .rc files.  Since this file
+  is always included from a parent file, this means that we can't
+  change code pages here.  So, any language definitions that don't
+  use our default code page (1252 - Windows "Western") will have to
+  go in separate files, so that the *top level* .rc file can set the
+  proper code page before including them.  It sucks for modularity,
+  but that's the way they mis-designed the compiler so we just have
+  to live with it.
+Notes
+
+Modified
+  10/26/97 MJRoberts  - Creation
+*/
+
+STRINGTABLE DISCARDABLE
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+BEGIN
+
+    /* OK and Cancel buttons */
+    61001       "OK"                /* RESID_BTN_OK = 1 */
+    61002       "Cancel"            /* RESID_BTN_CANCEL = 2 */
+
+    /* Yes and No buttons */
+    61003       "&Yes"              /* RESID_BTN_YES = 3 */
+    61004       "&No"               /* RESID_BTN_NO = 4 */
+
+    /* yorn() Yes and No reply patterns */
+    61005       "[Yy].*"            /* RESID_YORN_YES = 5 */
+    61006       "[Nn].*"            /* RESID_YORN_NO = 6 */
+END
+

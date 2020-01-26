@@ -1,0 +1,90 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>OneWayRoomConnector</title><meta name="keywords" content="OneWayRoomConnector,canTravelerPass,explainTravelBarrier"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>OneWayRoomConnector : <a href="roomconnector.htm">RoomConnector</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="autoclosingdoor.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="pathpassage.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Probably the most common use for a OneWayRoomConnector is to impose some kind of condition on traveling from one room to a second (but not the other way, or at least not symmetrically, which would call for a <a href="roomconnector.htm">RoomConnector</a>). In this situation a OneWayRoomConnector can be used as a nested anonymous object on one of the first room's direction properties, its canTravelerPass method overridden to define the conditions under which travel is possible, and its explainTravelBarrier method overridden to explain why travel isn't possible, if canTravelerPass disallows it. Travel via the OneWayRoomConnector is allowed if canTravelerPass returns true and prevented if it returns nil. Only in the latter case is canTravelerPass invoked to display the reason why travel has been blocked.
+<br>
+
+<br>
+For example, the description of mainCave refers to a huge boulder blocking the exit to the west. Later, we'll implement a way of removing this obstacle by blowing it up with a stick of dynamite - so this isn't an obstacle that can readily be implemented as a <a href="secretdoor.htm">SecretDoor</a>, like the rock to the north. Instead, we could add a OneWayRoomConnector to check whether the boulder is present, and simply disallow travel west if it is:
+<br>
+
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">mainCave:&nbsp;Room&nbsp;'Large&nbsp;Cave'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"The&nbsp;flickering&nbsp;orange&nbsp;light&nbsp;from&nbsp;the&nbsp;blazing&nbsp;torch&nbsp;fixed&nbsp;to&nbsp;the&nbsp;wall&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accentuates&nbsp;the&nbsp;naturally&nbsp;ruddy&nbsp;hues&nbsp;of&nbsp;this&nbsp;large,&nbsp;irregular&nbsp;cave,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;seems&nbsp;to&nbsp;be&nbsp;something&nbsp;of&nbsp;a&nbsp;major&nbsp;hub&nbsp;in&nbsp;the&nbsp;cave&nbsp;system.&nbsp;A
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;large&nbsp;rock&nbsp;rests&nbsp;against&nbsp;the&nbsp;wall&nbsp;to&nbsp;the&nbsp;north,&nbsp;other&nbsp;caves&nbsp;lie
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>through&nbsp;an&nbsp;archway&nbsp;to&nbsp;the&nbsp;east&nbsp;and&nbsp;an&nbsp;opening&nbsp;to&nbsp;the&nbsp;south</b>,&nbsp;while
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>&lt;&lt;boulder.moved&nbsp;?&nbsp;'a&nbsp;passage&nbsp;has&nbsp;been&nbsp;opened&nbsp;up&nbsp;to&nbsp;the&nbsp;west'&nbsp;:&nbsp;'the&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;way&nbsp;west&nbsp;is&nbsp;blocked&nbsp;by&nbsp;a&nbsp;huge&nbsp;boulder'&gt;&gt;</b>.&nbsp;A&nbsp;sturdy&nbsp;steel&nbsp;ladder&nbsp;leads&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;through&nbsp;a&nbsp;hole&nbsp;in&nbsp;the&nbsp;roof.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;north&nbsp;=&nbsp;rock
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;south&nbsp;=&nbsp;anotherCave
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>west&nbsp;:&nbsp;OneWayRoomConnector
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;roundCave
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canTravelerPass&nbsp;(traveler)&nbsp;{&nbsp;return&nbsp;boulder.moved;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explainTravelBarrier&nbsp;(traveler)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"The&nbsp;huge&nbsp;boulder&nbsp;is&nbsp;in&nbsp;the&nbsp;way.&nbsp;";&nbsp;}
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;east&nbsp;=&nbsp;squareCave
+<br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;=&nbsp;upLadder
+<br>
+;
+<br>
+
+<br>
++&nbsp;boulder&nbsp;:&nbsp;Thing&nbsp;'boulder'&nbsp;'boulder'&nbsp;
+<br>
+&nbsp;&nbsp;initDesc&nbsp;=&nbsp;"The&nbsp;huge&nbsp;boulder&nbsp;is&nbsp;blocking&nbsp;the&nbsp;exit&nbsp;to&nbsp;the&nbsp;west.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In this case the <a href="onewayroomconnectortemplate.htm">OneWayRoomConnector template</a> simply defines the -&gt; property as the destination property, so -&gt;roundCave means that roundCave is where we end up when travel is allowed via this connector. Since the only way into the roundCave is by going west from mainCave, we do not need to impose a similar check on travel the other way round; although the boulder would prevent egress from roundCave to mainCave, while the boulder is in place the player character cannot get into roundCave so the situation will never arise.
+<br>
+
+<br>
+We have temporarily given a minimal definition of boulder simply as a Thing so that it can readily be removed to allow access to the roundCave. We shall change this when we come to implement the means of blowing it up. Note the use of initDesc to give an appropriate description of the boulder before it is moved, and the alteration to the room description so that it changes when the boulder is removed.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

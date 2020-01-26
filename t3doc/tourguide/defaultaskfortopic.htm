@@ -1,0 +1,239 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>DefaultAskForTopic</title><meta name="keywords" content="DefaultAskForTopic,getTopicText"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>DefaultAskForTopic : <a href="defaulttopics-overview.htm">DefaultTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="defaultgiveshowtopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="defaultanytopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A DefaultAskTopic responds to any ASK X FOR Y command when no specific response (AskForTopic or AskAboutForTopic) has been provided for Y.
+<br>
+
+<br>
+A satisfactory DefaultAskForTopic is actually quite tricky to write, since there are so many possibilities. The player might ask for a game object, or a topic that's been defined, or for something not defined at all in the game world, and all would match. A satisfactory response to asking for a game object depends where the object is - held by the player character, or held by the NPC, or held by neither but in sight, or out of sight altogether. Any of these responses would need to be different from asking for something abstract like ADVICE, HELP or DIRECTIONS.
+<br>
+
+<br>
+One approach might be to modify the DefaultAskForTopic class to handle the most obvious situations by overriding its handleTopic method. We can start by determining whether what the player has asked for is a game object, a topic, or something not defined in the game at all. If it's either a topic or something not defined we'll leave the DefaultAskForTopic to handle it in the normal way (either through topicResponse or an EventList), with the option to provide different handling if it's a defined topic. If, on the other hand, the player has asked for an object we'll try to provide default intelligent handling according to the location of the object, but we'll allow all the messages to be easily changed on individual DefaultAskForTopics:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">modify&nbsp;DefaultAskForTopic
+<br>
+&nbsp;&nbsp;handleTopic(fromActor,&nbsp;topic)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;note&nbsp;the&nbsp;invocation&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noteInvocation(fromActor);
+<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;set&nbsp;pronoun&nbsp;antecedents&nbsp;if&nbsp;possible&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setTopicPronouns(fromActor,&nbsp;topic);
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;obj&nbsp;=&nbsp;topic.getBestMatch;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(obj&nbsp;==&nbsp;nil)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited(fromActor,&nbsp;topic);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(obj.ofKind(Thing))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handleThing(fromActor);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(obj.ofKind(Topic))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topicMsg;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;object&nbsp;(if&nbsp;any)&nbsp;matched&nbsp;by&nbsp;this&nbsp;topic&nbsp;*/
+<br>
+&nbsp;&nbsp;obj&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;handleThing(fromActor)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(obj.isIn(fromActor))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alreadyHaveMsg;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(obj.isIn(getActor))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;refuseMsg;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(obj&nbsp;==&nbsp;getActor)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;askForOtherMsg;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(obj&nbsp;==&nbsp;fromActor)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;askForSelfMsg;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if(getActor.canSee(obj))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointOutMsg;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dontHaveMsg;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;message&nbsp;to&nbsp;display&nbsp;if&nbsp;the&nbsp;player&nbsp;character&nbsp;asks&nbsp;for&nbsp;something&nbsp;he&nbsp;already&nbsp;has.&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;player&nbsp;character&nbsp;is&nbsp;carrying&nbsp;the&nbsp;asked-for&nbsp;object&nbsp;in&nbsp;another&nbsp;container,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;NPC&nbsp;points&nbsp;this&nbsp;out.&nbsp;*/
+<br>
+&nbsp;&nbsp;alreadyHaveMsg&nbsp;=&nbsp;"&lt;q&gt;You&nbsp;already&nbsp;have&nbsp;&lt;&lt;obj.theName&gt;&gt;,&lt;/q&gt;&nbsp;&lt;&lt;getActor.theName&gt;&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;out&lt;&lt;obj.isDirectlyIn(gActor)&nbsp;?&nbsp;'.'&nbsp;:&nbsp;',&nbsp;&lt;q&gt;'+&nbsp;obj.itIsContraction&nbsp;+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&nbsp;in&nbsp;that&nbsp;'&nbsp;+&nbsp;obj.location.name&nbsp;+&nbsp;'&nbsp;you\'re&nbsp;carrying.&lt;/q&gt;'&gt;&gt;&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;message&nbsp;to&nbsp;display&nbsp;if&nbsp;the&nbsp;requested&nbsp;actor&nbsp;has&nbsp;the&nbsp;object&nbsp;asks&nbsp;for&nbsp;but&nbsp;declines
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;hand&nbsp;it&nbsp;over&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;refuseMsg&nbsp;=&nbsp;"&lt;q&gt;No,&nbsp;I&nbsp;need&nbsp;&lt;&lt;obj.itObj&gt;&gt;&nbsp;myself.&lt;/q&gt;&nbsp;&lt;&lt;getActor.itNom&gt;&gt;&nbsp;replies.&nbsp;"
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;message&nbsp;to&nbsp;display&nbsp;if&nbsp;neither&nbsp;the&nbsp;asker&nbsp;nor&nbsp;the&nbsp;askee&nbsp;has&nbsp;the&nbsp;object&nbsp;but
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;askee&nbsp;can&nbsp;see&nbsp;where&nbsp;it&nbsp;is&nbsp;*/
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;pointOutMsg&nbsp;=&nbsp;"&lt;q&gt;\^&lt;&lt;obj.itIsContraction&gt;&gt;&nbsp;just&nbsp;over&nbsp;there.&lt;/q&gt;&nbsp;&lt;&lt;getActor.itNom&gt;&gt;
+<br>
+&nbsp;&nbsp;&nbsp;observes,&nbsp;pointing&nbsp;at&nbsp;&lt;&lt;obj.location.ofKind(Room)&nbsp;?&nbsp;'the&nbsp;ground'&nbsp;:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;obj.location.theName&gt;&gt;.&nbsp;"
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;message&nbsp;to&nbsp;display&nbsp;if&nbsp;neither&nbsp;the&nbsp;asker&nbsp;nor&nbsp;the&nbsp;askee&nbsp;has&nbsp;the&nbsp;object&nbsp;and&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;askee&nbsp;can't&nbsp;see&nbsp;it&nbsp;*/
+<br>
+&nbsp;&nbsp;dontHaveMsg&nbsp;=&nbsp;"&lt;q&gt;I'm&nbsp;afraid&nbsp;I&nbsp;don't&nbsp;have&nbsp;&lt;&lt;obj.itObj&gt;&gt;,&lt;/q&gt;&nbsp;&lt;&lt;getActor.itNom&gt;&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tells&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;message&nbsp;to&nbsp;display&nbsp;if&nbsp;the&nbsp;player&nbsp;asks&nbsp;for&nbsp;the&nbsp;NPC&nbsp;*/
+<br>
+&nbsp;&nbsp;askForOtherMsg&nbsp;=&nbsp;"&lt;q&gt;That's&nbsp;me&nbsp;-&nbsp;here&nbsp;I&nbsp;am.&lt;/q&gt;&nbsp;&lt;&lt;getActor.itNom&gt;&gt;&nbsp;tells&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;The&nbsp;message&nbsp;to&nbsp;display&nbsp;if&nbsp;the&nbsp;player&nbsp;asks&nbsp;for&nbsp;himself/herself&nbsp;*/
+<br>
+&nbsp;&nbsp;askForSelfMsg&nbsp;=&nbsp;"&lt;q&gt;You're&nbsp;right&nbsp;there.&lt;/q&gt;&nbsp;&lt;&lt;getActor.itNom&gt;&gt;&nbsp;points&nbsp;out.&nbsp;"
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;/*&nbsp;By&nbsp;default&nbsp;we&nbsp;use&nbsp;the&nbsp;standard&nbsp;handling&nbsp;for&nbsp;a&nbsp;defined&nbsp;topic,&nbsp;but&nbsp;this
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;can&nbsp;be&nbsp;overridden&nbsp;if&nbsp;desired.&nbsp;*/
+<br>
+&nbsp;&nbsp;topicMsg()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(ofKind(Script))&nbsp;doScript;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;topicResponse;
+<br>
+&nbsp;&nbsp;}&nbsp;
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+Then, for Sarah, we could define an eventList for dealing with non-Thing objects, and override dontHaveMsg to provide a list of responses when she's asked for game objects she doesn't have:
+<br>
+
+<br>
+<pre><font size="3">
++ DefaultAskForTopic, ShuffledEventList
+  [
+    '&lt;q&gt;What do you need &lt;&lt;gTopicText&gt;&gt; for?&lt;/q&gt; she wonders. ',
+    '{The sarah/she} shakes her head. &lt;q&gt;Sorry, I can\'t help you there,&lt;/q&gt;
+      she says. ',
+    '&lt;q&gt;You must be joking!&lt;/q&gt; she laughs. ',
+    '&lt;q&gt;No, I think not,&lt;/q&gt; she refuses with a firm shake of the head. '
+
+  ]
+  dontHaveList : ShuffledEventList
+  {
+   [
+     '&lt;q&gt;I haven\'t got &lt;&lt;lobj.aName&gt;&gt;,&lt;/q&gt; she protests. ',
+     '&lt;q&gt;I\'m afraid I don\'t have &lt;&lt;lobj.itObj&gt;&gt;,&lt;/q&gt; she tells you. ',
+     '&lt;q&gt;What &lt;&lt;gTopicText&gt;&gt;?&lt;/q&gt; she asks. ',
+     '&lt;q&gt;What makes you think I\'ve got &lt;&lt;lobj.itObj&gt;&gt;?&lt;/q&gt; she demands. '
+   ]
+   lobj = (lexicalParent.obj)
+  }
+  dontHaveMsg { dontHaveList.doScript; }
+;
+</font></pre>
+
+<font face="Arial" size="2" color="#000000">In the above definition we use gTopicText to get at whatever the player typed after ASK FOR. We define lobj = (lexicalParent.obj) on dontHaveList simply as a convenience (to avoid having to type lexicalParent.obj in all the strings we list).
+<br>
+
+<br>
+We can now go ahead and provide DefaultAskForTopics for some of other NPCs. We'll start with Solomon, putting this one in the solomonTalking state:
+
+
+<br><pre><font size="3">
+++ DefaultAskForTopic, ShuffledEventList
+  [
+    '&lt;q&gt;I\'m afraid I can\'t oblige you there,&lt;/q&gt; he replies. ',
+    '&lt;q&gt;I\'m renowned for my wisdom, not for &lt;&lt;gTopicText&gt;&gt;,&lt;/q&gt; he points out. ',
+    '&lt;q&gt;You\'ll have to go elsewhere for that,&lt;/q&gt; he tells you. ',
+    '&lt;q&gt;That\'s not in my power to give - I suggest you pray to the LORD our
+     God, and see if he may graciously grant your request,&lt;/q&gt; {the solomon/he}
+     tells you. '
+  ]
+  dontHaveMsg = "&lt;q&gt;Do I look as if I have such a thing about my person?&lt;/q&gt;
+   he demands. "
+;
+</font></pre>
+Similarly, we can put a DefaultAskForTopic in the curatorTalking state:
+<br><pre><font size="3">
+
+++ DefaultAskForTopic, ShuffledEventList
+   [
+     '&lt;q&gt;I never give &lt;&lt;gTopicText&gt;&gt; when I\'m on duty,&lt;/q&gt; he informs
+      you pompously. ',
+     '&lt;q&gt;It isn\'t my job to dispense &lt;&lt;gTopicText&gt;&gt;,&lt;/q&gt; he tells you. ',
+     '{The curator/he} mutters something inaudible under his breath. ',
+     '&lt;q&gt;I should go elsewhere for that,&lt;/q&gt; he advises you. '
+   ]
+   refuseMsg = "&lt;;q&gt;Now that I've got it, I intend to hang on to it,&lt;/q&gt; he tells you. "
+   dontHaveMsg = "&lt;q&gt;It\'s not mine to give,&lt;/q&gt; he tells you flatly. "
+;
+</font></pre>
+<br><br>
+</body></html>

@@ -1,0 +1,119 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>HighNestedRoom</title><meta name="keywords" content="HighNestedRoom,stagingLocations"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>HighNestedRoom : <a href="nestedroom.htm">NestedRoom</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="chair.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="outofreach.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A HighNestedPlatform is a NestedRoom that represents a part of the room that's too high to get into, unless we provide some means of reaching it. An example might be the upper of two bunk beds. The obvious place to put pair of bunk beds might be in the crew quarters of our ship. In order to reach the top bunk the player must be standing on the chair we conveniently left in the main cabin aft; to achieve this we modify the <b>stagingLocations()</b> property of the HighNestedRoom to return the chair, but only when the actor's standing on it:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">Bed,&nbsp;Fixture&nbsp;'bottom&nbsp;bunk&nbsp;bed*bunks*beds'&nbsp;'bottom&nbsp;bunk'&nbsp;@crewQuarters
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;bottom&nbsp;bunk&nbsp;is&nbsp;mounted&nbsp;low&nbsp;on&nbsp;the&nbsp;port&nbsp;side,&nbsp;under&nbsp;the&nbsp;top&nbsp;bunk.&nbsp;"
+<br>
+;
+<br>
+
+<br>
+HighNestedRoom,&nbsp;Bed,&nbsp;Fixture&nbsp;'top&nbsp;bunk&nbsp;bed*beds*bunks'&nbsp;'top&nbsp;bunk'&nbsp;@crewQuarters
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;top&nbsp;bunk&nbsp;is&nbsp;mounted&nbsp;high&nbsp;on&nbsp;the&nbsp;port&nbsp;side,&nbsp;above&nbsp;the&nbsp;bottom&nbsp;bunk.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;stagingLocations()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;new&nbsp;Vector(5);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gActor.posture==standing)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst.append(cabinChair);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;lst.toList;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
++&nbsp;Thing&nbsp;'pillow'&nbsp;'pillow'
+<br>
+&nbsp;&nbsp;"It's&nbsp;just&nbsp;a&nbsp;plain&nbsp;white&nbsp;pillow.&nbsp;"
+<br>
+;&nbsp;&nbsp;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+At the same time we need to change the description of the crewQuarters room to reflect the addition of some new furniture:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">crewQuarters&nbsp;:&nbsp;DarkCabin&nbsp;'Crew&nbsp;Quarters'&nbsp;'the&nbsp;crew&nbsp;quarters'
+<br>
+&nbsp;&nbsp;"The&nbsp;crew&nbsp;quarters&nbsp;seem&nbsp;largely&nbsp;deserted,&nbsp;apart&nbsp;from&nbsp;a&nbsp;single&nbsp;locker
+<br>
+&nbsp;&nbsp;&nbsp;fixed&nbsp;to&nbsp;the&nbsp;bulkhead<b>,&nbsp;and&nbsp;a&nbsp;pair&nbsp;of&nbsp;bunk&nbsp;beds&nbsp;nestling&nbsp;against&nbsp;against
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;port&nbsp;side.</b>&nbsp;There's&nbsp;an&nbsp;exit&nbsp;back&nbsp;aft&nbsp;and&nbsp;a&nbsp;ladder&nbsp;leading&nbsp;down&nbsp;into&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;the&nbsp;hold.&nbsp;Another&nbsp;exit&nbsp;leads&nbsp;foreward.&nbsp;"
+<br>
+&nbsp;&nbsp;...
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+If you compile and run this, you'll find that you can only get onto the top bunk if you're standing on the chair, but the code is less than ideal. In particular, if the chair is present but you're not standing on it the game tries to <i>sit</i> you on the chair and then tells you that the bunk is too high. The best solution is probably to modify stagingLocations so that it only returns the chair if the actor is actually standing on it. At the same time we'll take advantage of the revision to make it easier to add further things the player could stand on to reach the top bunk:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">HighNestedRoom,&nbsp;Bed,&nbsp;Fixture&nbsp;'top&nbsp;bunk&nbsp;bed*beds*bunks'&nbsp;'top&nbsp;bunk'&nbsp;@crewQuarters
+<br>
+&nbsp;&nbsp;&nbsp;"The&nbsp;top&nbsp;bunk&nbsp;is&nbsp;mounted&nbsp;high&nbsp;on&nbsp;the&nbsp;port&nbsp;side,&nbsp;above&nbsp;the&nbsp;bottom&nbsp;bunk.&nbsp;"
+<br>
+&nbsp;&nbsp;&nbsp;stagingLocations()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;lst&nbsp;=&nbsp;new&nbsp;Vector(5);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;stagingPlatforms)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if((gActor.posture==standing&nbsp;&amp;&amp;&nbsp;gActor.isIn(cur))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; || (gActor.isIn(self) &amp;&amp; cur.isIn(location)))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lst.append(cur);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;lst.toList;
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;stagingPlatforms&nbsp;=&nbsp;[cabinChair]
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Note that we need to make sure the player can get off the bunk as well as on it. By default the exitDestination of a NestedRoom is its defaultStagingLocation, which in turn is the first available stagingLocation; so we need to make sure stagingLocations returns a suitable value when the player is on the bunk as well as when he's standing on the chair. A simpler (or addtional) solution might be to add <code>exitDestination = location</code> to the definition of the bunk; if you try it, you might also find it neater; the effect is to allow the player to get off the bunk directly to the floor, instead of having to exit via the chair.
+
+<br><br>
+One other thing you may have noticed is that although we can only get onto the top bunk with the aid of the chair, there is nothing to stop us taking the pillow while we're standing on the floor. There's nothing unrealistic about this; indeed it could well be that we could quite easily reach up and take the pillow without being able to get ourselves onto the top bunk, it just doesn't happen to be the behaviour we want here. To prevent the pillow being reached except from the top bunk we need to go a stage further and make the latter an <a href="outofreach.htm">OutOfReach</a>.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

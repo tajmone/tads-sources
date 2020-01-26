@@ -1,0 +1,70 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>SimpleAchievement</title><meta name="keywords" content="SimpleAchievement,construct,perInstance,addToScoreOnce"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>SimpleAchievement : <a href="achievement.htm">Achievement</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="achievement.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="awardpoints.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">SimpleAchievement is a subclass of Achievement with a construct method added. This allows you to pass a string in a new SimpleAchievement statement to be used as the description of the achievement for which points are being awarded. This could be useful, for example, if we wanted to award a point for finding each of the tablets. Instead of coding this separately on each tablet object, we can write the code once on the Tablet class. We'll award the points once when each tablet is taken; to do this we override the actionDobjTake method to add a call to addToScoreOnce(). But we want this called on a separate Achievement (or rather, SimpleAchievement) object for each separate tablet. We can't use the anonymous nested object syntax for that; if we wrote:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">class&nbsp;Tablet&nbsp;:&nbsp;Readable&nbsp;
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"\^&lt;&lt;theName&gt;&gt;&nbsp;is&nbsp;about&nbsp;eight&nbsp;inches&nbsp;square&nbsp;and&nbsp;an&nbsp;inch&nbsp;thick.
+<br>
+&nbsp;&nbsp;&nbsp;&lt;&lt;readDesc&gt;&gt;"&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;readDesc&nbsp;=&nbsp;"On&nbsp;it&nbsp;is&nbsp;inscribed:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&gt;&lt;&lt;inscription&gt;&gt;&lt;/FONT&gt;\b"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;<b>achievement:&nbsp;Achievement&nbsp;{&nbsp;desc&nbsp;=&nbsp;"finding&nbsp;&lt;&lt;theName&gt;&gt;"&nbsp;}&nbsp;//&nbsp;this&nbsp;won't&nbsp;work</b>
+<br>
+</font><font face="Arial" size="2" color="#000000">;
+<br>
+
+<br>
+We should end up with only one Achievement object for the whole class, which wouldn't work at all the way we want it to. Instead we need to use the <b>perInstance</b> macro to create a new instance of an Achievement object for each instance of a Tablet object. But then we need to find a way to make each Achievement object describe itself appropriately; using the SimpleAchievement class, which allows us to pass a description string in its constructor (i.e. as a parameter in a </font><font face="Courier New" size="2" color="#000000">new&nbsp;SimpleAchievement</font><font face="Arial" size="2" color="#000000"> statement) provides just the solution we need:
+<br>
+
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;Tablet&nbsp;:&nbsp;Readable&nbsp;
+<br>
+&nbsp;&nbsp;desc&nbsp;=&nbsp;"\^&lt;&lt;theName&gt;&gt;&nbsp;is&nbsp;about&nbsp;eight&nbsp;inches&nbsp;square&nbsp;and&nbsp;an&nbsp;inch&nbsp;thick.
+<br>
+&nbsp;&nbsp;&nbsp;&lt;&lt;readDesc&gt;&gt;"&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;readDesc&nbsp;=&nbsp;"On&nbsp;it&nbsp;is&nbsp;inscribed:\b&lt;FONT&nbsp;FACE='TADS-Typewriter'&gt;&lt;&lt;inscription&gt;&gt;&lt;/FONT&gt;\b"&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;bulk&nbsp;=&nbsp;4
+<br>
+&nbsp;&nbsp;<b>achievement&nbsp;=&nbsp;perInstance(new&nbsp;SimpleAchievement('finding&nbsp;'&nbsp;+&nbsp;theName))&nbsp;//&nbsp;this&nbsp;works&nbsp;just&nbsp;fine</b>
+<br>
+&nbsp;&nbsp;<b>dobjFor(Take)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;achievement.addToScoreOnce(1);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+</font></font>
+
+</body></html>

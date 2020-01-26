@@ -1,0 +1,20 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Past Tense</title><meta name="keywords" content="Past Tense,tense, past,usePastTense"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Past Tense
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="mainoutputstream.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="achievementtemplate.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Since version 3.0.9 TADS 3 has incorporated Michel Nizette's past tense extension, which allows an IF work to be narrated in the past tense instead of the more present tense, either for the complete work, or for certain sections of it (such as flashbacks). To switch a game from present tense to past tense narration (e.g. "On the table was a banana" instead of "On the table is a banana"), you simply need to set gameMain.usePastTense = true. To experiment with the effect you could try setting gameMain.usePastTense = true on <i>The Quest of the Golden Banana</i>; but if you do, you'll probably find that it only half works.
+<br>
+
+<br>
+Setting gameMain.usePastTense to true will ensure that all the default library messages come out in the past tense rather than the present, but you will also be writing a large amount of text of your own, including room and object descriptions, custom messages, responses to actions and the like. If your whole game is in the past tense, this is no problem, because you can simply write all your custom text in the past tense. If you want your game to switch tenses part-way through, however, you need to write messages that switch between present and past tense depending on the setting of gameMain.usePastTense. The comments in en_us.t give some details of how to do that, but for more reader-friendly documentation take a look at the section on <a href="../techman/t3past.htm" target="_top">Writing a Game in the Past Tense</a> in the <i>Technical Manual.</i>
+<br>
+
+<br>
+</font>
+
+</body></html>

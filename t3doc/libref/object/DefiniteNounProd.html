@@ -1,0 +1,106 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>DefiniteNounProd</title></head><body>
+<table class=ban><tr><td align=left><span class=title>DefiniteNounProd</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1996">1996</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Base class for noun phrase productions with definite articles.
+<p>
+<code>class
+<b>DefiniteNounProd</b> :  &nbsp; <a href="../object/NounPhraseProd.html">NounPhraseProd</a> &nbsp; <a href="../object/AmbigResponseKeeper.html">AmbigResponseKeeper</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>DefiniteNounProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NounPhraseProd.html">NounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AmbigResponseKeeper.html">AmbigResponseKeeper</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>DefiniteNounProd</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicPossessiveProd.html">BasicPossessiveProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ButPossessiveProd.html">ButPossessiveProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/exceptNounPhrase(singlePossessive).html">exceptNounPhrase(singlePossessive)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DisambigPossessiveProd.html">DisambigPossessiveProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/disambigListItem(possessive).html">disambigListItem(possessive)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PossessiveNounProd.html">PossessiveNounProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/qualifiedSingularNounPhrase(possessive).html">qualifiedSingularNounPhrase(possessive)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PossessivePluralProd.html">PossessivePluralProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/explicitDetPluralNounPhrase(possessive).html">explicitDetPluralNounPhrase(possessive)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/explicitDetPluralOnlyNounPhrase(possessive).html">explicitDetPluralOnlyNounPhrase(possessive)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ContainerNounPhraseProd.html">ContainerNounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/indetPluralNounPhrase(locational).html">indetPluralNounPhrase(locational)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/indetPluralOnlyNounPhrase(locational).html">indetPluralOnlyNounPhrase(locational)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/indetSingularNounPhrase(locational).html">indetSingularNounPhrase(locational)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PreResolvedAmbigProd.html">PreResolvedAmbigProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/qualifiedSingularNounPhrase(definite).html">qualifiedSingularNounPhrase(definite)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/VagueContainerNounPhraseProd.html">VagueContainerNounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AllInContainerNounPhraseProd.html">AllInContainerNounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/qualifiedPluralNounPhrase(theOnesIn).html">qualifiedPluralNounPhrase(theOnesIn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/VagueContainerDefiniteNounPhraseProd.html">VagueContainerDefiniteNounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/qualifiedSingularNounPhrase(theOneIn).html">qualifiedSingularNounPhrase(theOneIn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/VagueContainerIndefiniteNounPhraseProd.html">VagueContainerIndefiniteNounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/qualifiedSingularNounPhrase(anyOneIn).html">qualifiedSingularNounPhrase(anyOneIn)</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<p>Inherited from <code>NounPhraseProd</code> :<br>
+<code>
+<a href="../object/NounPhraseProd.html#filterForCollectives">filterForCollectives</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<p>Inherited from <code>AmbigResponseKeeper</code> :<br>
+<code>
+<a href="../object/AmbigResponseKeeper.html#ambigResponses_">ambigResponses_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#reduceDefinite">reduceDefinite</a>&nbsp;
+<a href="#resolveDefinite">resolveDefinite</a>&nbsp;
+<a href="#resolveNouns">resolveNouns</a>&nbsp;
+</code><p>
+<p>Inherited from <code>NounPhraseProd</code> :<br>
+<code>
+<a href="../object/NounPhraseProd.html#filterTruncations">filterTruncations</a>&nbsp;
+<a href="../object/NounPhraseProd.html#getVerifyKeepers">getVerifyKeepers</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<p>Inherited from <code>AmbigResponseKeeper</code> :<br>
+<code>
+<a href="../object/AmbigResponseKeeper.html#addAmbigResponse">addAmbigResponse</a>&nbsp;
+<a href="../object/AmbigResponseKeeper.html#getAmbigResponses">getAmbigResponses</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="reduceDefinite"></a>
+<table class=decl><tr><td><code>reduceDefinite (lst, resolver, results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#2086">2086</a>]</table><div class=desc>   Do any additional subclass-specific filtering to further reduce   the list before we decide whether or not we have sufficient   specificity.  We call this just before deciding whether or not to   prompt for more information ("which book do you mean...?").  By   default, this simply returns the same list unchanged; subclasses   that have some further way of narrowing down the options can use   this opportunity to apply that extra narrowing. <p>
+</div>
+<a name="resolveDefinite"></a>
+<table class=decl><tr><td><code>resolveDefinite (asker, origText, lst, responseKeeper, resolver, results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#2008">2008</a>]</table><div class=desc>   Resolve an underlying phrase using definite noun phrase rules. <p>
+</div>
+<a name="resolveNouns"></a>
+<table class=decl><tr><td><code>resolveNouns (resolver, results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#1997">1997</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

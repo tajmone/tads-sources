@@ -1,0 +1,167 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>What's in a Name?</title><meta name="keywords" content="Tokenizer,cmdDict,addWord,Topic,reveal,gRevealed,isActive"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="theartofconversation.htm">[Previous] </a>&nbsp;&nbsp;<a href="doorsandwindows.htm">[Next] </a></I></FONT></P>
+
+<h2>What's in a Name?</h2>
+
+<p>Once the charcoal burner has revealed his name, we want three things to happen. First, we want his short name (the one that's displayed in room descriptions) to change from 'the charcoal burner' to 'Joe Black'; second we want the program to treat the name as a proper name, so we don't get messages like 'The Joe Black is holding a spade' or 'You see a Joe Black here'; and third, we want the parser to recognize <b>joe</b>, <b>joe black</b> or <b>black</b> as referring to Joe. The first two steps are straightforward. The third is a little more complicated.
+<br>
+
+<br>
+To carry out the first two steps we simply need to execute:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">isProperName&nbsp;=&nbsp;true;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000">name&nbsp;=&nbsp;properName;
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">You might think that you could achieve the third by adding 'Joe Black' to the burner's </font><font face="Courier New" size="2" color="#000000">vocabWords&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">property somehow, but it's not quite that easy. What we actually need to do is to add them to the game's dictionary. To add a word to the dictionary we need to call </font><font face="Courier New" size="2" color="#000000">cmdDict.addWord(obj,&nbsp;word,&nbsp;&amp;wordtype)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> where </font><font face="Courier New" size="2" color="#000000">obj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the object we want this word to apply to, and </font><font face="Courier New" size="2" color="#000000">wordtype</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is the type of word it is (adjective or noun). Moreover, we can't simply add the contents of the </font><font face="Courier New" size="2" color="#000000">properName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property into the dictionary - it must be added word by word (token by token), not as a complete phrase. Fortunately the library provides a means of extracting the individual tokens from a string; we need to use </font><font face="Courier New" size="2" color="#000000">Tokenizer.tokenize(properName),</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> which returns a list of tokens. Assuming we assign this list to a local variable </font><font face="Courier New" size="2" color="#000000">tokList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, we can get at the parsed token at position i (in a form suitable for adding to the dictionary) by calling </font><font face="Courier New" size="2" color="#000000">getTokVal(tokList[i])</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. But just when you thought it was getting far too complicated to follow, there's another complication. Logically, all proper names are nouns, so we should add them to the dictionary as nouns. But if we add them all to the dictionary as nouns the parser will recognize <b>joe</b> or <b>black</b> as referring to Joe, but not <b>joe black</b>, since it firmly believes that a noun phrase should only contain one noun. It will thus accept <b>joe</b> and <b>black</b> as alternatives, but not both together. There is an extremely fiendish way of getting round this by defining another Grammar Production, but that's way beyond the scope of this Getting Started guide, so we'll settle for a hack instead, and that is to add every name but the last  into the library as an adjective as well as a noun (which means that the parser will quite happily recognize <b>joe black</b> even though it does so on the erroneous basis of believing that <b>joe</b> is an adjective qualifying <b>black</b> - if one can talk about the beliefs of a parser).
+<br>
+
+<br>
+Since finding out an actor's name some way through a game is a situation that could arise quite often, it makes sense to make all this happen as a modification of the </font><font face="Courier New" size="2" color="#000000">Actor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class (which will then work for everything of class </font><font face="Courier New" size="2" color="#000000">Actor&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">or one of is subclasses) rather than something specific to the burner object. The appropriate code then looks like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">modify&nbsp;Actor
+<br>
+&nbsp;&nbsp;makeProper
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(isProperName&nbsp;==&nbsp;nil&nbsp;&amp;&amp;&nbsp;properName&nbsp;!=&nbsp;nil)&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isProperName&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;properName;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local&nbsp;tokList&nbsp;=&nbsp;Tokenizer.tokenize(properName);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(local&nbsp;i&nbsp;=&nbsp;1,&nbsp;local&nbsp;cnt&nbsp;=&nbsp;tokList.length()&nbsp;;&nbsp;i&nbsp;&lt;=&nbsp;cnt&nbsp;;&nbsp;++i)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(i&nbsp;&lt;&nbsp;cnt)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmdDict.addWord(self,&nbsp;getTokVal(tokList[i]),&nbsp;&amp;adjective);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmdDict.addWord(self,&nbsp;getTokVal(tokList[i]),&nbsp;&amp;noun);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The purpose of the check </font><font face="Courier New" size="2" color="#000000">if(isProperName&nbsp;==&nbsp;nil&nbsp;&amp;&amp;&nbsp;properName&nbsp;!=&nbsp;nil)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is to stop the </font><font face="Courier New" size="2" color="#000000">makeProper&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">method doing anything either if the actor has already been defined as having a proper name (perhaps through a previous call to </font><font face="Courier New" size="2" color="#000000">makeProper</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">) or if the actor has no </font><font face="Courier New" size="2" color="#000000">properName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property defined.
+<br>
+
+<br>
+Apart from </font><font face="Courier New" size="2" color="#000000">cmdDict.addWord()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, the only thing that might be really unfamiliar here is the </font><font face="Courier New" size="2" color="#000000">for</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> loop towards the end of the makeProper method. If you didn't read about it in chapter 1 (or you did but you've now forgotten exactly how it works), now might be a good time to refer back to p. 26 to see how it works.
+<br>
+
+<br>
+You should copy the above code into your source file (perhaps near the top after the definition of the </font><font face="Courier New" size="2" color="#000000">endGame</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> function) and check that it works. And then I'll confess that all along there was a somewhat simpler way we could have achieved almost the same effect without either that complicated for loop or <code>cmdDict.addWord</code>. Instead we could have replaced all the code after </font><font face="Courier New" size="2" color="#000000">name&nbsp;=&nbsp;properName;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (apart from the necessary closing braces) with </font><font face="Courier New" size="2" color="#000000">initializeVocabWith(properName);</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, and it would have worked just as well. The only difference is that 'joe' would have been entered into the dictionary only as an adjective, and not also as a noun, but in practice that almost certainly doesn't matter. You may want to test this out.
+<br>
+
+<br>
+But you can't test it out just yet: for either method to actually do anything in our program we need to call it somewhere. We can do this by simply adding </font><font face="Courier New" size="2" color="#000000">&lt;&lt;burner.makeProper&gt;&gt;&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> in the response string of </font><font face="Courier New" size="2" color="#000000">AskTopic&nbsp;@burner</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, perhaps just after </font><font face="Courier New" size="2" color="#000000">&lt;.convnode&nbsp;burner-mud&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+There's just one more job we need to do before we can leave Joe Black. As things stand at the moment, if the player asks Joe about himself a second time, he'll still introduce himself the same way, which we obviously don't want. We could fix this by using a </font><font face="Courier New" size="2" color="#000000">EventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, since although </font><font face="Courier New" size="2" color="#000000">&lt;&lt;burner.makeProper&gt;&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> won't work inside a single-quoted string, we can get round this by using a function within the </font><font face="Courier New" size="2" color="#000000">EventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">; but rather than introduce that complication right now, we'll simply use another </font><font face="Courier New" size="2" color="#000000">AltTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. Since the burner's </font><font face="Courier New" size="2" color="#000000">isProperName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property is </font><font face="Courier New" size="2" color="#000000">nil</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> before he introduces himself and true afterwards (thanks to </font><font face="Courier New" size="2" color="#000000">&lt;&lt;burner.makeProper&gt;&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), we can use </font><font face="Courier New" size="2" color="#000000">burner.isProperName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as the test in the </font><font face="Courier New" size="2" color="#000000">isActive</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of the </font><font face="Courier New" size="2" color="#000000">AltTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The </font><font face="Courier New" size="2" color="#000000">AskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">AltTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> then look like this:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">++&nbsp;AskTopic&nbsp;@burner
+<br>
+&nbsp;&nbsp;&nbsp;"&lt;q&gt;My&nbsp;name's&nbsp;Heidi.&lt;/q&gt;&nbsp;you&nbsp;announce.&nbsp;&lt;q&gt;What's&nbsp;yours?&lt;/q&gt;&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;&lt;&lt;burner.properName&gt;&gt;,&lt;/q&gt;&nbsp;he&nbsp;replies,&nbsp;&lt;q&gt;Mind&nbsp;you,&nbsp;it'll&nbsp;soon&nbsp;be&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mud.&lt;/q&gt;&nbsp;&lt;.convnode&nbsp;burner-mud&gt;&lt;&lt;burner.makeProper&gt;&gt;"
+<br>
+;
+<br>
+
+<br>
++++&nbsp;AltTopic,&nbsp;StopEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;Have&nbsp;you&nbsp;been&nbsp;a&nbsp;charcoal&nbsp;burner&nbsp;long?&lt;/q&gt;&nbsp;you&nbsp;ask.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;About&nbsp;ten&nbsp;years.&lt;/q&gt;&nbsp;he&nbsp;replies.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;Do&nbsp;you&nbsp;like&nbsp;being&nbsp;a&nbsp;charcoal&nbsp;burner?&lt;/q&gt;&nbsp;you&nbsp;wonder,&nbsp;&lt;q&gt;It&nbsp;seems
+<br>
+&nbsp;&nbsp;&nbsp;rather&nbsp;messy!&lt;/q&gt;&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;It\'s&nbsp;better&nbsp;than&nbsp;being&nbsp;cooped&nbsp;up&nbsp;in&nbsp;some&nbsp;office&nbsp;or&nbsp;factory&nbsp;all&nbsp;day,
+<br>
+&nbsp;&nbsp;&nbsp;at&nbsp;any&nbsp;rate.&lt;/q&gt;&nbsp;he&nbsp;tells&nbsp;you.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;What&nbsp;do&nbsp;you&nbsp;do&nbsp;when&nbsp;you\'re&nbsp;not&nbsp;burning&nbsp;charcoal?&lt;/q&gt;&nbsp;you&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enquire.&lt;.p&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;Oh&nbsp;--&nbsp;this&nbsp;and&nbsp;that.&lt;/q&gt;&nbsp;he&nbsp;shrugs.&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;isActive&nbsp;=&nbsp;(burner.isProperName)
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">One further refinement you could add, which I'll leave as an optional exercise for the reader, is to add </font><font face="Courier New" size="2" color="#000000">SuggestedAskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to the class list of each of the main topic entries in the </font><font face="Courier New" size="2" color="#000000">burnerTalking</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> state. If you do that you'll need to add a name property to each of the </font><font face="Courier New" size="2" color="#000000">AskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> definitions, perhaps </font><font face="Courier New" size="2" color="#000000">name&nbsp;=&nbsp;'the&nbsp;smoke'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">name&nbsp;=&nbsp;'the&nbsp;fire</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">', </font><font face="Courier New" size="2" color="#000000">name&nbsp;=&nbsp;'the&nbsp;ring'</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">name&nbsp;=&nbsp;'himself'&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">as appropriate. The player can then use the <b>topics</b> command to see what topics Joe is likely to respond to.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Another optional exercise you might like to try is expanding the range of topics to which Joe will respond meaningfully. You can do this with a mix of </font><font face="Courier New" size="2" color="#000000">AskTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">TellTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">AskTellTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">GiveTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">ShowTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">GiveShowTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> as the mood takes you. You might also want to replace the </font><font face="Courier New" size="2" color="#000000">DefaultAskTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> with a separate </font><font face="Courier New" size="2" color="#000000">DefaultAskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">DefaultTellTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. You're not restricted to having Joe talk about objects defined in the game. If, for example, you think he should have an opinion on Oxford Blue (a type of cheese), you could define an Oxford Blue topic using the Topic class:
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">tOxfordBlue:&nbsp;Topic&nbsp;'oxford&nbsp;blue/cheese';
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">The </font><font face="Courier New" size="2" color="#000000">Topic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class can be used for any concrete or abstract topic not otherwise represented in the game. Unlike game objects (i.e. those derived from </font><font face="Courier New" size="2" color="#000000">Thing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which </font><font face="Courier New" size="2" color="#000000">Topic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> isn't), all </font><font face="Courier New" size="2" color="#000000">Topics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> start out known to the player character unless you define otherwise, which means that Heidi doesn't actually have to have encountered any Oxford Blue cheese in the game in order to ask Joe about it. Incidentally, there's nothing magic about the </font><font face="Courier New" size="2" color="#000000">t</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> at the start of the object name here (</font><font face="Courier New" size="2" color="#000000">tOxfordBlue</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">), it's just a convention I use to distinguish </font><font face="Courier New" size="2" color="#000000">Topics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> from other types of object.
+<br>
+
+<br>
+One further feature you may want to try out is the </font><font face="Courier New" size="2" color="#000000">&lt;.reveal&gt;&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">tag, which you can use to keep track of what's already been said. This works by keeping track of a list of arbitrary strings (or 'keys') that have been revealed, either through the </font><font face="Courier New" size="2" color="#000000">gReveal()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> macro, for example </font><font face="Courier New" size="2" color="#000000">gReveal('foo'),</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or through a </font><font face="Courier New" size="2" color="#000000">&lt;.reveal&nbsp;foo&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> tag inserted into a string (either single-quoted or double-quoted). You can then test whether the key has been revealed using </font><font face="Courier New" size="2" color="#000000">gRevealed()</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, e.g. in a declaration like </font><font face="Courier New" size="2" color="#000000">isActive&nbsp;=&nbsp;gRevealed('foo')</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> on an </font><font face="Courier New" size="2" color="#000000">AskTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. For example, at the end of Joe's reply to Heidi's question on Oxford Blue cheese, you might append a </font><font face="Courier New" size="2" color="#000000">&lt;.reveal&nbsp;oxford-blue&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> tag so that other </font><font face="Courier New" size="2" color="#000000">AskTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or </font><font face="Courier New" size="2" color="#000000">AltTopics&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">can test whether this part of the conversation has taken place.
+<br>
+
+<br>
+At this point you might like to experiment with increasing Joe's conversational range before moving on to the next chapter. If you want to be particularly adventurous, after trying out a few </font><font face="Courier New" size="2" color="#000000">AskTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">TellTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, you could try adding some </font><font face="Courier New" size="2" color="#000000">AltTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and maybe even the odd extra </font><font face="Courier New" size="2" color="#000000">ConvNode</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> or two, complete with some more </font><font face="Courier New" size="2" color="#000000">SpecialTopics</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Our game has now reached a point at which, barring full testing, adding in more decoration objects and the like, it could be regarded as complete. It can be played through from start to finish, our NPC provides a reasonably good explanation of the plot (well, the bit about the magpie may be a bit far-fetched, but if Rossini can get away with it I don't see why we shouldn't), and there's a reasonable closure when the Heidi hands the ring over to poor old Joe. As a tutorial game, we could simply leave it there, even though it's never going to win any prizes in IF competitions. In the following chapters, however, we'll complicate things for Heidi by putting more obstacles between her and the ring, not because this will transform the game into a marvellous one (that would require a miracle), but because it will provide a convenient vehicle for introducing some further features of TADS 3.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="theartofconversation.htm">[Previous] </a>&nbsp;&nbsp;<a href="doorsandwindows.htm">[Next] </a></I></FONT></P>
+</body></html>

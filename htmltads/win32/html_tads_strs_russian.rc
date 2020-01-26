@@ -1,0 +1,30 @@
+/* Copyright (c) 1997, 2008 by Michael J. Roberts.  All Rights Reserved. */
+/*
+Name
+  html_tads_strs_russian.rc - TADS resource strings - Russian version
+Function
+  See html_tads_str.rc - this is the Russian version of the strings.
+Notes
+
+Modified
+  10/26/97 MJRoberts  - Creation
+*/
+
+STRINGTABLE DISCARDABLE
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+/* this #pragma actually has no effect - see html_tads_str.h for details */
+#pragma code_page(1251)
+BEGIN
+
+    /* OK and Cancel buttons */
+    61001       "ÎÊ"              /* RESID_BTN_OK = 1 */
+    61002       "Îòìåíà"          /* RESID_BTN_CANCEL = 2 */
+
+    /* Yes and No buttons */
+    61003       "&Äà"             /* RESID_BTN_YES = 3 */
+    61004       "&Íåò"            /* RESID_BTN_NO = 4 */
+
+    /* yorn() Yes and No reply patterns */
+    61005       "[YyÄä].*"        /* RESID_YORN_YES = 5 */
+    61006       "[NnÍí].*"        /* RESID_YORN_NO = 6 */
+END

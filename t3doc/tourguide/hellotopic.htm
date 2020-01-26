@@ -1,0 +1,86 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>HelloTopic</title><meta name="keywords" content="HelloTopic,curScriptState,impliesGreeting"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>HelloTopic : <a href="misctopic.htm">MiscTopic</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="yesno+specialtopics.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="imphellotopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">A HelloTopic is normally used in connection with <a href="greetingprotocols.htm">greeting protocols</a>. Its main purpose is to respond to a HELLO command or equivalent (such as TALK TO X). The normal place to put a HelloTopic would be in a <a href="conversationreadystate.htm">ConversationReadyState</a>, where it will respond to any conversational command addressed to the NPC just before the NPC is switched into the corresponding <a href="inconversationstate.htm">InConversationState</a>. If you want to differentiate between the case in which a conversation starts with an explicit HELLO, or TALK TO command, and when it starts with some other conversational command such as ASK ABOUT, you can use an <a href="imphellotopic.htm">ImpHelloTopic</a> for the latter.
+<br>
+
+<br>
+Since King Solomon initiates the conversation the first time the player character walks in on him (we'll code that later), there's no need to provide a HelloTopic for that initial conversation, but you might want one for subsequent encounters, such as:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+++&nbsp;HelloTopic
+<br>
+&nbsp;&nbsp;"&lt;q&gt;I&nbsp;have&nbsp;returned,&nbsp;your&nbsp;majesty.&lt;/q&gt;&nbsp;you&nbsp;announce.\b
+<br>
+&nbsp;&nbsp;&nbsp;&lt;q&gt;So&nbsp;I&nbsp;observe.&lt;/q&gt;&nbsp;the&nbsp;king&nbsp;replies,&nbsp;looking&nbsp;up&nbsp;at&nbsp;you.&nbsp;"
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+The trouble with the above HelloTopic, however, is that it assumes that the player character has been away and returned between conversations, which is not necessarily the case. What we need is a version of the HelloTopic that displays the above message if the player character has been away, but a different message otherwise. So instead of the above, we could define (locating this in solomonExamining):
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+++&nbsp;solomonHelloTopic&nbsp;:&nbsp;HelloTopic,&nbsp;StopEventList&nbsp;
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;have&nbsp;returned,&nbsp;your&nbsp;majesty.&lt;/q&gt;&nbsp;you&nbsp;announce.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;So&nbsp;I&nbsp;observe.&lt;/q&gt;&nbsp;the&nbsp;king&nbsp;replies.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;'&lt;q&gt;Your&nbsp;majesty,&lt;/q&gt;&nbsp;you&nbsp;begin.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes?&lt;/q&gt;&nbsp;the&nbsp;king&nbsp;replies,&nbsp;turning&nbsp;in&nbsp;his&nbsp;chair&nbsp;and&nbsp;looking
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up&nbsp;at&nbsp;you.&nbsp;'&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;curScriptState&nbsp;=&nbsp;2
+<br>
+;</font><font face="Arial" size="2" color="#000000">
+<br>
+
+<br>
+We set curScriptState to 2 initially, to cater for the possibility that the player strikes up a second conversation with the king before ever leaving his study. We next need to reset curScriptState to 1 each time the player character does leave the king's presence. We can do this by adding the following method to the solomon object itself:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">solomon&nbsp;:&nbsp;Person&nbsp;'middle-aged&nbsp;middle&nbsp;aged&nbsp;man'&nbsp;'middle-aged&nbsp;man'&nbsp;@solomonChair
+<br>
+&nbsp;&nbsp;...
+<br>
+&nbsp;&nbsp;beforeTravel(traveler,&nbsp;connector)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(connector&nbsp;==&nbsp;solBedroomDoorOutside)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;solomonHelloTopic.curScriptState&nbsp;=&nbsp;1;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inherited(traveler,&nbsp;connector);&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}</font><font face="Arial" size="2" color="#000000">
+<br>
+ ;
+<br>
+
+<br>
+There's one more thing you should know about HelloTopic (and this applies to ImpHelloTopic too). As we've already noted, a HelloTopic is triggered by an explicit greeting <i>or</i> by any other conversational command. Internally this means that if any other kind of TopicEntry is triggered when an actor is in a ConversationReadyState, a HelloTopic is triggered. Potentially, this could mean that a HelloTopic tries to trigger itself, which would then have it try to trigger itself, and so on <i>ad infinitum</i> (or, in practice, till you got a stack overflow error). The way HelloTopic (and ImpHelloTopic) prevent this is by defining <b>impliesGreeting</b> = nil.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

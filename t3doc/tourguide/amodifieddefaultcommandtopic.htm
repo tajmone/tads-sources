@@ -1,0 +1,122 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>A Modified DefaultCommandTopic</title><meta name="keywords" content="DefaultCommandTopic"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>A Modified DefaultCommandTopic
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="tcommandtopic.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="consultable.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Some way back, we promised to give a modified form of the <a href="defaultcommandtopic.htm">DefaultCommandTopic</a> that would generate a more satisfactory transcript when a command is issued to Sarah before she's in her InConversationState (so that the greeting protocols intervene between the issuing of the command and Sarah's response to it). In the light of the changes made up to this point, we should now modify DefaultCommandTopic thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">modify&nbsp;DefaultCommandTopic
+<br>
+handleTopic(fromActor,&nbsp;action)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;actionPhrase&nbsp;=&nbsp;action.getInfPhrase;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;if&nbsp;the&nbsp;player&nbsp;types&nbsp;a&nbsp;command&nbsp;like&nbsp;X&nbsp;ME,&nbsp;getInfPhrase&nbsp;will
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;return&nbsp;'examine&nbsp;you'.&nbsp;In&nbsp;such&nbsp;a&nbsp;case&nbsp;we&nbsp;want&nbsp;to&nbsp;replace&nbsp;'you'
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;with&nbsp;'me'.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;actionPhrase&nbsp;=&nbsp;actionPhrase.findReplace('&nbsp;you&nbsp;',&nbsp;'&nbsp;me&nbsp;',&nbsp;ReplaceAll);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(actionPhrase.endsWith('&nbsp;you'))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actionPhrase&nbsp;=&nbsp;actionPhrase.findReplace('&nbsp;you',&nbsp;'&nbsp;me',&nbsp;ReplaceOnce,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actionPhrase.length-5);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;currentAction&nbsp;=&nbsp;action;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited(fromActor,&nbsp;action);
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;actionPhrase&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;currentAction&nbsp;=&nbsp;nil
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+We can then redefine Sarah's DefaultCommandTopic thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;DefaultCommandTopic
+<br>
+&nbsp;&nbsp;topicResponse()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;\^&lt;&lt;getActor.name&gt;&gt;,&nbsp;&nbsp;please&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;actionPhrase&gt;&gt;,&lt;/q&gt;&nbsp;you&nbsp;request.&lt;.p&gt;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;responseList.doScript();
+<br>
+&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;responseList&nbsp;:&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;No,&nbsp;I\'d&nbsp;really&nbsp;rather&nbsp;not!&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I&nbsp;don\'t&nbsp;think&nbsp;so.&lt;/q&gt;&nbsp;she&nbsp;declines.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Since&nbsp;when&nbsp;did&nbsp;you&nbsp;have&nbsp;the&nbsp;right&nbsp;to&nbsp;boss&nbsp;me&nbsp;around?&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;she&nbsp;demands.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;sarah/she}&nbsp;merely&nbsp;shakes&nbsp;her&nbsp;head.&lt;.p&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;Do&nbsp;it&nbsp;yourself!&lt;/q&gt;&nbsp;she&nbsp;tells&nbsp;you.&lt;.p&gt;'&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;]
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+And we now can indeed get transcripts like the following:
+<br>
+
+<br>
+&gt;<b>woman, x ship</b>
+<br>
+"Hello there," you say.
+<br>
+
+<br>
+"Hello." she smiles at you, slightly quizzically.
+<br>
+
+<br>
+"Young woman, please examine the ship," you request.
+<br>
+
+<br>
+"Do it yourself!" she tells you.
+<br>
+</font></font>
+
+</body></html>

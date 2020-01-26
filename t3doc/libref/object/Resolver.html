@@ -1,0 +1,465 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>Resolver</title></head><body>
+<table class=ban><tr><td align=left><span class=title>Resolver</span><span class=type>class</span><td align=right><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#31">31</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#3296">3296</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Basic object resolver.  An Action object creates an object resolver   to mediate the process of resolving noun phrases to objects. <p>   A resolver encapsulates a set of object resolution rules.  In most   cases, an action that takes only a direct object can be its own   resolver, because it needs only one set of resolution rules; for this   reason, this basic Resolver implementation is designed to work with   the direct object.  Actions with multiple objects will need separate   resolvers for each object, since they might want to use different   rules for the different objects.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#3296">3296</a>]:</i><br>
+   Custom base resolver
+<p>
+<code>class
+<b>Resolver</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>Resolver</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>Resolver</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ActorResolver.html">ActorResolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/IobjResolver.html">IobjResolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TAction.html">TAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AttackAction.html">AttackAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Attack).html">predicate(Attack)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BoardAction.html">BoardAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Board).html">predicate(Board)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BreakAction.html">BreakAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Break).html">predicate(Break)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BurnAction.html">BurnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Burn).html">predicate(Burn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CleanAction.html">CleanAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Clean).html">predicate(Clean)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ClimbAction.html">ClimbAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Climb).html">predicate(Climb)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ClimbDownAction.html">ClimbDownAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ClimbDown).html">predicate(ClimbDown)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ClimbDownWhat).html">predicate(ClimbDownWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ClimbUpAction.html">ClimbUpAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ClimbUp).html">predicate(ClimbUp)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ClimbUpWhat).html">predicate(ClimbUpWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CloseAction.html">CloseAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Close).html">predicate(Close)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConsultAction.html">ConsultAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Consult).html">predicate(Consult)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CutAction.html">CutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DetachAction.html">DetachAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Detach).html">predicate(Detach)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DigAction.html">DigAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Dig).html">predicate(Dig)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DoffAction.html">DoffAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Doff).html">predicate(Doff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DrinkAction.html">DrinkAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Drink).html">predicate(Drink)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DropAction.html">DropAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Drop).html">predicate(Drop)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/EatAction.html">EatAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Eat).html">predicate(Eat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/EnterAction.html">EnterAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Enter).html">predicate(Enter)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ExamineAction.html">ExamineAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Examine).html">predicate(Examine)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ExtinguishAction.html">ExtinguishAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Extinguish).html">predicate(Extinguish)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FastenAction.html">FastenAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Fasten).html">predicate(Fasten)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FeelAction.html">FeelAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Feel).html">predicate(Feel)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FlipAction.html">FlipAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Flip).html">predicate(Flip)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FollowAction.html">FollowAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Follow).html">predicate(Follow)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GetOffOfAction.html">GetOffOfAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GetOffOf).html">predicate(GetOffOf)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GetOutOfAction.html">GetOutOfAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GetOutOf).html">predicate(GetOutOf)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GoThroughAction.html">GoThroughAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GoThrough).html">predicate(GoThrough)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/JumpOffAction.html">JumpOffAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(JumpOff).html">predicate(JumpOff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/JumpOverAction.html">JumpOverAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(JumpOver).html">predicate(JumpOver)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/KissAction.html">KissAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Kiss).html">predicate(Kiss)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LieOnAction.html">LieOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(LieOn).html">predicate(LieOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LightAction.html">LightAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Light).html">predicate(Light)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ListenToAction.html">ListenToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ListenTo).html">predicate(ListenTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LiteralTAction.html">LiteralTAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/EnterOnAction.html">EnterOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(EnterOn).html">predicate(EnterOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(EnterOnWhat).html">predicate(EnterOnWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SetToAction.html">SetToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(SetTo).html">predicate(SetTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TurnToAction.html">TurnToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TurnTo).html">predicate(TurnTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TypeLiteralOnAction.html">TypeLiteralOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TypeLiteralOn).html">predicate(TypeLiteralOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TypeLiteralOnWhat).html">predicate(TypeLiteralOnWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LockAction.html">LockAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Lock).html">predicate(Lock)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LookBehindAction.html">LookBehindAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(LookBehind).html">predicate(LookBehind)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LookInAction.html">LookInAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(LookIn).html">predicate(LookIn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LookThroughAction.html">LookThroughAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(LookThrough).html">predicate(LookThrough)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LookUnderAction.html">LookUnderAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(LookUnder).html">predicate(LookUnder)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MoveAction.html">MoveAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Move).html">predicate(Move)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/OpenAction.html">OpenAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Open).html">predicate(Open)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PlugInAction.html">PlugInAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PlugIn).html">predicate(PlugIn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PourAction.html">PourAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Pour).html">predicate(Pour)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PullAction.html">PullAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Pull).html">predicate(Pull)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushAction.html">PushAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Push).html">predicate(Push)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelAction.html">PushTravelAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelDirAction.html">PushTravelDirAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelDir).html">predicate(PushTravelDir)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushAftAction.html">PushAftAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushDownAction.html">PushDownAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushEastAction.html">PushEastAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushForeAction.html">PushForeAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushInAction.html">PushInAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushNorthAction.html">PushNorthAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushNortheastAction.html">PushNortheastAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushNorthwestAction.html">PushNorthwestAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushOutAction.html">PushOutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushPortAction.html">PushPortAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushSouthAction.html">PushSouthAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushSoutheastAction.html">PushSoutheastAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushSouthwestAction.html">PushSouthwestAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushStarboardAction.html">PushStarboardAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushUpAction.html">PushUpAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushWestAction.html">PushWestAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelViaIobjAction.html">PushTravelViaIobjAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelClimbDownAction.html">PushTravelClimbDownAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelClimbDown).html">predicate(PushTravelClimbDown)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelClimbUpAction.html">PushTravelClimbUpAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelClimbUp).html">predicate(PushTravelClimbUp)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelEnterAction.html">PushTravelEnterAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelEnter).html">predicate(PushTravelEnter)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelGetOutOfAction.html">PushTravelGetOutOfAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelGetOutOf).html">predicate(PushTravelGetOutOf)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelThroughAction.html">PushTravelThroughAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelThrough).html">predicate(PushTravelThrough)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ReadAction.html">ReadAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Read).html">predicate(Read)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/RemoveAction.html">RemoveAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Remove).html">predicate(Remove)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ScrewAction.html">ScrewAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Screw).html">predicate(Screw)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SearchAction.html">SearchAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Search).html">predicate(Search)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SetAction.html">SetAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Set).html">predicate(Set)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SitOnAction.html">SitOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(SitOn).html">predicate(SitOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SmellAction.html">SmellAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Smell).html">predicate(Smell)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/StandOnAction.html">StandOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(StandOn).html">predicate(StandOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/StrikeAction.html">StrikeAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Strike).html">predicate(Strike)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SwitchAction.html">SwitchAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Switch).html">predicate(Switch)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TakeAction.html">TakeAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Take).html">predicate(Take)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TalkToAction.html">TalkToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TalkTo).html">predicate(TalkTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TalkToWhat).html">predicate(TalkToWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TasteAction.html">TasteAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Taste).html">predicate(Taste)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThrowAction.html">ThrowAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Throw).html">predicate(Throw)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThrowDirAction.html">ThrowDirAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ThrowDir).html">predicate(ThrowDir)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ThrowDirDown).html">predicate(ThrowDirDown)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TIAction.html">TIAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AttachToAction.html">AttachToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AttachTo).html">predicate(AttachTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AttachToWhat).html">predicate(AttachToWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AttackWithAction.html">AttackWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AttackWith).html">predicate(AttackWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BurnWithAction.html">BurnWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(BurnWith).html">predicate(BurnWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CleanWithAction.html">CleanWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(CleanWith).html">predicate(CleanWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/CutWithAction.html">CutWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(CutWith).html">predicate(CutWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(CutWithWhat).html">predicate(CutWithWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DetachFromAction.html">DetachFromAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(DetachFrom).html">predicate(DetachFrom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/DigWithAction.html">DigWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(DigWith).html">predicate(DigWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/FastenToAction.html">FastenToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(FastenTo).html">predicate(FastenTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/GiveToAction.html">GiveToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GiveTo).html">predicate(GiveTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GiveToType2).html">predicate(GiveToType2)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(GiveToWhom).html">predicate(GiveToWhom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/LockWithAction.html">LockWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(LockWith).html">predicate(LockWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MoveToAction.html">MoveToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(MoveTo).html">predicate(MoveTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/MoveWithAction.html">MoveWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(MoveWith).html">predicate(MoveWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PlugIntoAction.html">PlugIntoAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PlugInto).html">predicate(PlugInto)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PlugIntoWhat).html">predicate(PlugIntoWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PourIntoAction.html">PourIntoAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PourInto).html">predicate(PourInto)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PourOntoAction.html">PourOntoAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PourOnto).html">predicate(PourOnto)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelViaIobjAction.html">PushTravelViaIobjAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelClimbDownAction.html">PushTravelClimbDownAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelClimbDown).html">predicate(PushTravelClimbDown)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelClimbUpAction.html">PushTravelClimbUpAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelClimbUp).html">predicate(PushTravelClimbUp)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelEnterAction.html">PushTravelEnterAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelEnter).html">predicate(PushTravelEnter)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelGetOutOfAction.html">PushTravelGetOutOfAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelGetOutOf).html">predicate(PushTravelGetOutOf)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PushTravelThroughAction.html">PushTravelThroughAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PushTravelThrough).html">predicate(PushTravelThrough)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PutBehindAction.html">PutBehindAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutBehind).html">predicate(PutBehind)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PutInAction.html">PutInAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutIn).html">predicate(PutIn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutInWhat).html">predicate(PutInWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PutOnAction.html">PutOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutOn).html">predicate(PutOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/PutUnderAction.html">PutUnderAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(PutUnder).html">predicate(PutUnder)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ScrewWithAction.html">ScrewWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ScrewWith).html">predicate(ScrewWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ShowToAction.html">ShowToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ShowTo).html">predicate(ShowTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ShowToType2).html">predicate(ShowToType2)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ShowToWhom).html">predicate(ShowToWhom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TakeFromAction.html">TakeFromAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TakeFrom).html">predicate(TakeFrom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThrowAtAction.html">ThrowAtAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ThrowAt).html">predicate(ThrowAt)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ThrowToAction.html">ThrowToAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ThrowTo).html">predicate(ThrowTo)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ThrowToType2).html">predicate(ThrowToType2)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TurnWithAction.html">TurnWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TurnWith).html">predicate(TurnWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnfastenFromAction.html">UnfastenFromAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(UnfastenFrom).html">predicate(UnfastenFrom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnlockWithAction.html">UnlockWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(UnlockWith).html">predicate(UnlockWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnplugFromAction.html">UnplugFromAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(UnplugFrom).html">predicate(UnplugFrom)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnscrewWithAction.html">UnscrewWithAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(UnscrewWith).html">predicate(UnscrewWith)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicTAction.html">TopicTAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskVagueAction.html">AskVagueAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskVague).html">predicate(AskVague)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellVague).html">predicate(TellVague)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConsultAboutAction.html">ConsultAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ConsultAbout).html">predicate(ConsultAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ConsultWhatAbout).html">predicate(ConsultWhatAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvTopicTAction.html">ConvTopicTAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskAboutAction.html">AskAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAbout).html">predicate(AskAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAboutImplicit).html">predicate(AskAboutImplicit)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAboutWhat).html">predicate(AskAboutWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskForAction.html">AskForAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskFor).html">predicate(AskFor)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskWhomFor).html">predicate(AskWhomFor)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TellAboutAction.html">TellAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAbout).html">predicate(TellAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAboutImplicit).html">predicate(TellAboutImplicit)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAboutWhat).html">predicate(TellAboutWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TellVagueAction.html">TellVagueAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TravelViaAction.html">TravelViaAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/EnTravelVia.html">EnTravelVia</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TurnAction.html">TurnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Turn).html">predicate(Turn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TurnOffAction.html">TurnOffAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TurnOff).html">predicate(TurnOff)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TurnOnAction.html">TurnOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TurnOn).html">predicate(TurnOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TypeOnAction.html">TypeOnAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TypeOn).html">predicate(TypeOn)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnfastenAction.html">UnfastenAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Unfasten).html">predicate(Unfasten)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnlockAction.html">UnlockAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Unlock).html">predicate(Unlock)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnplugAction.html">UnplugAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Unplug).html">predicate(Unplug)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/UnscrewAction.html">UnscrewAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Unscrew).html">predicate(Unscrew)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/WearAction.html">WearAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(Wear).html">predicate(Wear)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicQualifierResolver.html">TopicQualifierResolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicResolver.html">TopicResolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvTopicResolver.html">ConvTopicResolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TActionTopicResolver.html">TActionTopicResolver</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#action_">action_</a>&nbsp;
+<a href="#actor_">actor_</a>&nbsp;
+<a href="#equivs_">equivs_</a>&nbsp;
+<a href="#isGlobalScope">isGlobalScope</a>&nbsp;
+<a href="#isSubResolver">isSubResolver</a>&nbsp;
+<a href="#issuer_">issuer_</a>&nbsp;
+<a href="#scope_">scope_</a>&nbsp;
+<a href="#whichMessageObject">whichMessageObject</a>&nbsp;
+<a href="#whichObject">whichObject</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#allowAll">allowAll</a>&nbsp;
+<a href="#cacheScopeList">cacheScopeList</a>&nbsp;
+<a href="#construct">construct</a>&nbsp;
+<a href="#filterAll">filterAll</a>&nbsp;
+<a href="#filterAmbiguousEquivalents">filterAmbiguousEquivalents</a>&nbsp;
+<a href="#filterAmbiguousNounPhrase">filterAmbiguousNounPhrase</a>&nbsp;
+<a href="#filterPluralPhrase">filterPluralPhrase</a>&nbsp;
+<a href="#filterPossRank">filterPossRank</a>&nbsp;
+<a href="#getAction">getAction</a>&nbsp;
+<a href="#getAll">getAll</a>&nbsp;
+<a href="#getAllDefaults">getAllDefaults</a>&nbsp;
+<a href="#getDefaultObject">getDefaultObject</a>&nbsp;
+<a href="#getPossessiveResolver">getPossessiveResolver</a>&nbsp;
+<a href="#getPronounDefault">getPronounDefault</a>&nbsp;
+<a href="#getQualifierResolver">getQualifierResolver</a>&nbsp;
+<a href="#getRawPronounAntecedent">getRawPronounAntecedent</a>&nbsp;
+<a href="#getReflexiveBinding">getReflexiveBinding</a>&nbsp;
+<a href="#getScopeList">getScopeList</a>&nbsp;
+<a href="#getTargetActor">getTargetActor</a>&nbsp;
+<a href="#matchName">matchName</a>&nbsp;
+<a href="#objInScope">objInScope</a>&nbsp;
+<a href="#resetResolver">resetResolver</a>&nbsp;
+<a href="#resolvePronounAntecedent">resolvePronounAntecedent</a>&nbsp;
+<a href="#resolveUnknownNounPhrase">resolveUnknownNounPhrase</a>&nbsp;
+<a href="#selectIndefinite">selectIndefinite</a>&nbsp;
+<a href="#withGlobals">withGlobals</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="action_"></a>
+<table class=decl><tr><td><code>action_</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#740">740</a>]</table><div class=desc>my action<p>
+</div>
+<a name="actor_"></a>
+<table class=decl><tr><td><code>actor_</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#746">746</a>]</table><div class=desc>the target actor object<p>
+</div>
+<a name="equivs_"></a>
+<table class=decl><tr><td><code>equivs_</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#753">753</a>]</table><div class=desc>   List of equivalent objects we've resolved so far.  We use this to   try to return different equivalent objects when multiple noun   phrases refer to the same set of equivalents. <p>
+</div>
+<a name="isGlobalScope"></a>
+<table class=decl><tr><td><code>isGlobalScope</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#186">186</a>]</table><div class=desc>   Is this a "global" scope?  By default, the scope is local: it's   limited to what the actor can see, hear, etc.  In some cases, the   scope is broader, and extends beyond the senses; we call those   cases global scope. <p>   This is an advisory status only.  The caller musn't take this to   mean that everything is in scope; objInScope() and getScopeList()   must still be used to make the exact determination of what objects   are in scope.  However, some noun phrase productions might wish to   know generally whether we're in a local or global sort of scope,   so that they can adjust their zeal at reducing ambiguity.  In   cases of global scope, we generally want to be more inclusive of   possible matches than in local scopes, because we have much less   of a basis to guess about what the player might mean. <p>
+</div>
+<a name="isSubResolver"></a>
+<table class=decl><tr><td><code>isSubResolver</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#47">47</a>]</table><div class=desc>   Are we a sub-phrase resolver?  This should return true if we're   being used to resolve a sub-phrase of the main phrase. <p>
+</div>
+<a name="issuer_"></a>
+<table class=decl><tr><td><code>issuer_</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#743">743</a>]</table><div class=desc>the issuing actor<p>
+</div>
+<a name="scope_"></a>
+<table class=decl><tr><td><code>scope_</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#737">737</a>]</table><div class=desc>   The cached scope list, if we have one.  Note that this is an   internal implementation detail of the base class; subclasses can   dispense with the cached scope list if they define their own   objInScope() and getScopeList() overrides. <p>   Note that any subclasses (including Actions) that make changes to   this list MUST ensure that the result only contains unique   entries.  The library assumes in several places that there are no   duplicate entries in the list; subtle problems can occur if the   list contains any duplicates. <p>
+</div>
+<a name="whichMessageObject"></a>
+<table class=decl><tr><td><code>whichMessageObject</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#723">723</a>]</table><div class=desc>   Get an indication of which object we're resolving, for message   generation purposes.  By default, we'll indicate direct object;   this should be overridden for resolvers of indirect and other   types of objects. <p>
+</div>
+<a name="whichObject"></a>
+<table class=decl><tr><td><code>whichObject</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#715">715</a>]</table><div class=desc>the role played by this object, if any<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="allowAll"></a>
+<table class=decl><tr><td><code>allowAll ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#397">397</a>]</table><div class=desc>   Determine if "all" is allowed for the noun phrase we're resolving.   By default, we'll just ask the action. <p>
+</div>
+<a name="cacheScopeList"></a>
+<table class=decl><tr><td><code>cacheScopeList ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#108">108</a>]</table><div class=desc>   Cache the scope list for this object.  By default, we cache the   standard physical scope list for our target actor. <p>   Note that if a subclass uses completely different rules for   determining scope, it need not store a scope_ list at all.  The   scope_ list is purely an implementation detail of the base   Resolver class.  A subclass can use whatever internal   implementation it wants, as long as it overrides objInScope() and   getScopeList() to return consistent results. <p>
+</div>
+<a name="construct"></a>
+<table class=decl><tr><td><code>construct (action, issuingActor, targetActor)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#32">32</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="filterAll"></a>
+<table class=decl><tr><td><code>filterAll (lst, whichObj, np)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#427">427</a>]</table><div class=desc>   Filter an 'all' list to remove things that don't belong.  We   always remove the actor executing the command, as well as any   objects explicitly marked as hidden from 'all' lists. <p>   Returns a ResolveInfo list, with each entry marked with the   MatchedAll flag. <p>
+</div>
+<a name="filterAmbiguousEquivalents"></a>
+<table class=decl><tr><td><code>filterAmbiguousEquivalents (lst, np)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#545">545</a>]</table><div class=desc>   Filter a list of ambiguous matches ('lst') for a noun phrase, to   reduce each set of equivalent items to a single such item, if   desired.  If no equivalent reduction is desired for this type of   resolver, this can simply return the original list. <p>   'np' is the noun phrase production that we're resolving.  This is   usually a subclass of NounPhraseProd. <p>
+</div>
+<a name="filterAmbiguousNounPhrase"></a>
+<table class=decl><tr><td><code>filterAmbiguousNounPhrase (lst, requiredNum, np)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#505">505</a>]</table><div class=desc>   Filter an ambiguous list of objects ('lst') resolving to a noun   phrase.  If the objects in the list vary in the degree of   suitability for the command, returns a list consisting only of the   most suitable objects.  If the objects are all equally suitable -   or equally unsuitable - the whole list should be returned   unchanged. <p>   'requiredNum' is the number of objects required in the final list   by the caller; if the result list is larger than this, the caller   will consider the results ambiguous. <p>   'np' is the noun phrase production that we're resolving.  This is   usually a subclass of NounPhraseProd. <p>   This routine does NOT perform any interactive disambiguation, but   is merely a first attempt at reducing the number of matching   objects by removing the obviously unsuitable ones. <p>   For example, for an "open" command, if the list consists of one   object that's open and one object that's currently closed, the   result list should include only the closed one, since it is   obvious that the one that's already open does not need to be   opened again.  On the other hand, if the list consists only of   open objects, they should all be returned, since they're all   equally unsuitable. <p>   It is not necessary to reduce the list to a single entry; it is   adequate merely to reduce the ambiguity by removing any items that   are clearly less suitable than the survivors. <p>
+</div>
+<a name="filterPluralPhrase"></a>
+<table class=decl><tr><td><code>filterPluralPhrase (lst, np)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#634">634</a>]</table><div class=desc>   Filter a plural phrase to reduce the set to the logical subset, if   possible.  If there is no logical subset, simply return the   original set. <p>   'np' is the noun phrase we're resolving; this is usually a   subclass of PluralProd. <p>
+</div>
+<a name="filterPossRank"></a>
+<table class=decl><tr><td><code>filterPossRank (lst, num)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#517">517</a>]</table><div class=desc>   Filter an ambiguous noun phrase list using the strength of   possessive qualification, if any.  If we have subsets at   different possessive strengths, choose the strongest subset that   has at least the required number of objects. <p>
+</div>
+<a name="getAction"></a>
+<table class=decl><tr><td><code>getAction ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#60">60</a>]</table><div class=desc>get the action we're resolving<p>
+</div>
+<a name="getAll"></a>
+<table class=decl><tr><td><code>getAll (np)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#409">409</a>]</table><div class=desc>   Get the "all" list - this is the list of objects that we should   use when the object of the command is the special word "all".   We'll ask the action to resolve 'all' for the direct object,   since we are by default a direct object resolver. <p>
+</div>
+<a name="getAllDefaults"></a>
+<table class=decl><tr><td><code>getAllDefaults ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#465">465</a>]</table><div class=desc>   Get the list of potential default objects.  This is simply the   basic 'all' list, not filtered for exclusion with hideFromAll. <p>
+</div>
+<a name="getDefaultObject"></a>
+<table class=decl><tr><td><code>getDefaultObject (np)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#671">671</a>]</table><div class=desc>   Get the default object or objects for this phrase.  Returns a list   of ResolveInfo objects if a default is available, or nil if no   default is available.  This routine does not interact with the   user; it should merely determine if the command implies a default   strongly enough to assume it without asking the user. <p>   By default, we ask the action for a default direct object.   Resolver subclasses should override this as appropriate for the   specific objects they're used to resolve. <p>
+</div>
+<a name="getPossessiveResolver"></a>
+<table class=decl><tr><td><code>getPossessiveResolver ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#95">95</a>]</table><div class=desc>   Get the resolver for possessive phrases.  By default, we return a   standard possessive resolver.  This can be overridden in contexts   wher ethe possesive resolution context is special. <p>
+</div>
+<a name="getPronounDefault"></a>
+<table class=decl><tr><td><code>getPronounDefault (typ, np)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#3304">3304</a>]</table><div class=desc>   Get the default in-scope object list for a given pronoun.  We'll   look for a unique object in scope that matches the desired   pronoun, and return a ResolveInfo list if we find one.  If there   aren't any objects in scope that match the pronoun, or multiple   objects are in scope, there's no default. <p>
+</div>
+<a name="getQualifierResolver"></a>
+<table class=decl><tr><td><code>getQualifierResolver ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#88">88</a>]</table><div class=desc>   Get the resolver for qualifier phrases.  By default, this simply   returns myself, since the resolver for qualifiers is in most   contexts the same as the main resolver. <p>   This can be overridden in contexts where the qualifier resolver   is different from the main resolver.  In general, when a   sub-resolver narrows the scope for resolving a phrase, such as an   exclusion list or a disambiguation response, we will want to   resolve qualifiers in the context of the main resolution scope   rather than the narrowed scope. <p>
+</div>
+<a name="getRawPronounAntecedent"></a>
+<table class=decl><tr><td><code>getRawPronounAntecedent (typ)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#301">301</a>]</table><div class=desc>   Get the "raw" pronoun antecedent list for a given pronoun   selector.  This returns a list of objects matching the pronoun.   The list is raw in that it is given as a list of game objects   (not ResolveInfo objects), and it isn't filtered for scope. <p>
+</div>
+<a name="getReflexiveBinding"></a>
+<table class=decl><tr><td><code>getReflexiveBinding (typ)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#196">196</a>]</table><div class=desc>   Get the binding for a reflexive third-person pronoun (himself,   herself, itself, themselves).  By default, the reflexive binding   is the anaphoric binding from the action - that is, it refers   back to the preceding noun phrase in a verb phrase with multiple   noun slots (as in ASK BOB ABOUT HIMSELF: 'himself' refers back to   'bob', the previous noun phrase). <p>
+</div>
+<a name="getScopeList"></a>
+<table class=decl><tr><td><code>getScopeList ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#168">168</a>]</table><div class=desc>   Get the full list of objects in scope.  By default, this simply   returns our cached scope list. <p>   For every object in the list that getScopeList() returns,   objInScope() must return true.  However, getScopeList() need not   return *all* objects that are in scope as far as objInScope() is   concerned - it can, but a subset of in-scope objects is   sufficient. <p>   The default implementation returns the complete set of in-scope   objects by simply returning the cached scope list.  This is the   same scope list that the default objInScope() checks, which   ensures that the two methods produce consistent results. <p>   The reason that it's okay for this method to return a subset of   in-scope objects is that the result is only used to resolve   "wildcard" phrases in input, and such phrases don't have to expand   to every possible object.  Examples of wildcard phrases include   ALL, missing phrases that need default objects, and locational   phrases ("the vase on the table" - which isn't superficially a   wildcard, but implicitly contains one in the form of "considering   only everything on the table").  It's perfectly reasonable for the   parser to expand a wildcard based on what's actually in sight, in   mind, or whatever's appropriate.  So, in cases where you define an   especially expansive objInScope() - for example, a universal scope   like the one TopicResolver uses - it's usually fine to use the   default definition of getScopeList(), which returns only the   objects that are in the smaller physical scope. <p>
+</div>
+<a name="getTargetActor"></a>
+<table class=decl><tr><td><code>getTargetActor ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#63">63</a>]</table><div class=desc>get the target actor<p>
+</div>
+<a name="matchName"></a>
+<table class=decl><tr><td><code>matchName (obj, origTokens, adjustedTokens)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#71">71</a>]</table><div class=desc>   Match an object's name.  By default, we'll call the object's own   matchName method with the given original and adjusted token   lists.  Subclasses can override this to call different match   methods (such as matchNameDisambig). <p>
+</div>
+<a name="objInScope"></a>
+<table class=decl><tr><td><code>objInScope (obj)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#136">136</a>]</table><div class=desc>   Determine if an object is in scope for the purposes of object   resolution.  By default, we'll return true if the object is in our   cached scope list - this ensures that we produce results that are   consistent with getScopeList(). <p>   Some subclasses might want to override this method to decide on   scope without reference to a cached scope list, for efficiency   reasons.  For example, if a command's scope is the set of all   objects, caching the full list would take a lot of memory; to save   the memory, you could override cacheScopeList() to do nothing at   all, and then override objInScope() to return true - this will   report that every object is in scope without bothering to store a   list of every object. <p>   Be aware that if you override objInScope(), you should ensure that   getScopeList() yields consistent results.  In particular,   objInScope() should return true for every object in the list   returned by getScopeList() (although getScopeList() doesn't   necessarily have to return every object for which objInScope() is   true). <p>
+</div>
+<a name="resetResolver"></a>
+<table class=decl><tr><td><code>resetResolver ( )</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#53">53</a>]</table><div class=desc>   Reset the resolver - this can be called if we are to re-use the   same resolver to resolve a list of noun phrases again. <p>
+</div>
+<a name="resolvePronounAntecedent"></a>
+<table class=decl><tr><td><code>resolvePronounAntecedent (typ, np, results, poss)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#205">205</a>]</table><div class=desc>   Resolve a pronoun antecedent, given a pronoun selector.  This   returns a list of ResolveInfo objects, for use in object   resolution.  'poss' is true if this is a possessive pronoun (his,   her, its, etc), nil if it's an ordinary, non-possessive pronoun   (him, her, it, etc). <p>
+</div>
+<a name="resolveUnknownNounPhrase"></a>
+<table class=decl><tr><td><code>resolveUnknownNounPhrase (tokList)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#696">696</a>]</table><div class=desc>   Resolve a noun phrase involving unknown words, if possible.  If   it is not possible to resolve such a phrase, return nil;   otherwise, return a list of resolved objects.  This routine does   not interact with the user - "oops" prompting is handled   separately. <p>   'tokList' is the token list for the phrase, in the canonical   format as returned from the tokenizer.  Each element of 'tokList'   is a sublist representing one token. <p>   Note that this routine allows for specialized unknown word   resolution separately from the more general matchName mechanism.   The purpose of this method is to allow the specific type of   resolver to deal with unknown words specially, rather than using   the matchName mechanism.  This routine is called as a last   resort, only after the matchName mechanism fails to find any   matches. <p>
+</div>
+<a name="selectIndefinite"></a>
+<table class=decl><tr><td><code>selectIndefinite (results, lst, requiredNumber)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#651">651</a>]</table><div class=desc>   Select a resolution for an indefinite noun phrase ("a coin"),   given a list of possible matches.  The matches will be given to   us sorted from most likely to least likely, as done by   filterAmbiguousNounPhrase(). <p>   By default, we simply select the first 'n' items from the list   (which are the most likely matches), because in most contexts, an   indefinite noun phrase means that we should arbitrarily select   any matching object.  This can be overridden for contexts in   which indefinite noun phrases must be handled differently. <p>
+</div>
+<a name="withGlobals"></a>
+<table class=decl><tr><td><code>withGlobals (func)</code><td align=right><code><a href="../file/resolver.t.html">resolver.t</a>[<a href="../source/resolver.t.html#708">708</a>]</table><div class=desc>   Execute a callback function in the global context of our actor   and action - we'll set gActor and gAction to our own stored actor   and action values, then call the callback, then restore the old   globals. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

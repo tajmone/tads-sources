@@ -1,0 +1,40 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>TravelMessage</title><meta name="keywords" content="TravelMessage"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>TravelMessage :<a href="travelwithmessage.htm">TravelWithMessage</a>, <a href="travelconnector.htm">TravelConnector</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="darkroom.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="roomautoconnector.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">Up to this point, you can get into the small cave but not out of it again. This time we won't explicitly mention the tunnel in the room description or implement it as an object, but we might want to mention the walk down the tunnel when the PC travels south. The simplest way to do that is with a TravelMessage. We do not need to define this as a separate object, it can simply be an anonymous nested object attached to the south property of smallCave:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">smallCave&nbsp;:&nbsp;DarkRoom&nbsp;'Small&nbsp;Cave'&nbsp;'the&nbsp;small&nbsp;cave'
+<br>
+&nbsp;&nbsp;"The&nbsp;long&nbsp;narrow&nbsp;tunnel&nbsp;from&nbsp;the&nbsp;south&nbsp;comes&nbsp;to&nbsp;an&nbsp;end&nbsp;in&nbsp;this&nbsp;cramped,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sandy-floored&nbsp;cave,&nbsp;whose&nbsp;rough&nbsp;rocky&nbsp;walls&nbsp;press&nbsp;in&nbsp;claustrophobically
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;every&nbsp;side.&nbsp;Anyone&nbsp;much&nbsp;taller&nbsp;than&nbsp;average&nbsp;would&nbsp;have&nbsp;to&nbsp;stoop&nbsp;here.&nbsp;"
+<br>
+&nbsp;&nbsp;<b>south&nbsp;:&nbsp;TravelMessage&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;secretPassage
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"You&nbsp;walk&nbsp;south&nbsp;for&nbsp;quite&nbsp;some&nbsp;way&nbsp;down&nbsp;a&nbsp;long&nbsp;tunnel.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+</b>;&nbsp;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+This time, we have used the <a href="travelmessagetemplate.htm">TravelMessage template</a> to simplify the definition here. The first template property here, -&gt; secretPassage, is in fact the <b>destination</b> property of the TravelMessage, while the second, the double-quoted string, is its <b>travelDesc</b> property (defined on TravelWithMessage, from which TravelMessage inherits).
+<br>
+</font></font>
+
+</body></html>

@@ -1,0 +1,56 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>RoomConnector</title><meta name="keywords" content="RoomConnector,canTravelerPass"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>RoomConnector : <a href="travelconnector.htm">TravelConnector</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="deadendconnector.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="asexit.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">So far we can't actually leave the starting location. We could simply define the next location and simply point to it from the starting room, but in this case we want to make the tunnel into the cave subject to a rockfall that may block it (in either direction). Once the player starts exploring the cave system, he or she will then have to find another way out.
+<br>
+
+<br>
+An efficient way to perform this task is with a RoomConnector, since we can conditionally block passage through it. We can define the appropriate RoomConnector thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">entranceTunnel&nbsp;:&nbsp;RoomConnector
+<br>
+&nbsp;&nbsp;room1&nbsp;=&nbsp;entranceCave
+<br>
+&nbsp;&nbsp;room2&nbsp;=&nbsp;outsideCave
+<br>
+&nbsp;&nbsp;blocked&nbsp;=&nbsp;nil
+<br>
+&nbsp;&nbsp;canTravelerPass&nbsp;(traveler)&nbsp;{&nbsp;return&nbsp;!blocked;&nbsp;}
+<br>
+&nbsp;&nbsp;explainTravelBarrier&nbsp;(traveler)
+<br>
+&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"After&nbsp;a&nbsp;few&nbsp;paces&nbsp;down&nbsp;the&nbsp;tunnel&nbsp;it&nbsp;becomes&nbsp;all&nbsp;too&nbsp;clear
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;it&nbsp;has&nbsp;been&nbsp;blocked&nbsp;by&nbsp;a&nbsp;recent&nbsp;rockfall,&nbsp;so&nbsp;there&nbsp;is
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nothing&nbsp;for&nbsp;it&nbsp;but&nbsp;to&nbsp;turn&nbsp;round&nbsp;and&nbsp;go&nbsp;back.&nbsp;";
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The properties room1 and room2 define the two rooms that will be linked by this connector (note that we haven't defined <a href="room.htm">entranceCave</a> as yet, so the game won't compile till we do). We define a custom </font><font face="Courier New" size="2" color="#000000">blocked</font><font face="Arial" size="2" color="#000000"> property to determine whether or not the tunnel has been blocked by the rockfall. The <b>canTravelerPass</b> method (defined on all TravelConnectors) determines whether a traveler can traverse this connector. In this case we want to allow travelers to pass if the connector is not blocked, but not otherwise, so we simply returned </font><font face="Courier New" size="2" color="#000000">!blocked</font><font face="Arial" size="2" color="#000000"> (i.e. not blocked). If travel is forbidden the <b>explainTravelBarrier</b> method is invoked, so we define it to display an appropriate message in the event that the tunnel is blocked.
+<br>
+
+<br>
+Note that the tunnel is not represented as a physical object in the game (although it could have been): the RoomConnector is an <i>abstract</i> object linking the two rooms (although in a sense it does duty for a representation of a tunnel that can be blocked).
+<br>
+
+<br>
+Note also that it will be necessary to make the appropriate direction properties of both <a href="roomconnector.htm">outsideCave</a> and <a href="room.htm">entranceCave</a> point to this RoomConnector. We'll do that next.
+<br>
+</font></font>
+
+</body></html>

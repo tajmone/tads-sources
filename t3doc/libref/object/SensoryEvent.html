@@ -1,0 +1,50 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>SensoryEvent</title></head><body>
+<table class=ban><tr><td align=left><span class=title>SensoryEvent</span><span class=type>class</span><td align=right><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#758">758</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Sensory Event.  This is an object representing a transient event,   such as a sound, visual display, or odor, to which some objects   observing the event might react. <p>   A sensory event differs from a sensory emanation in that an emanation   is ongoing and passive, while an event is isolated in time and   actively notifies observers.
+<p>
+<code>class
+<b>SensoryEvent</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>SensoryEvent</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>SensoryEvent</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SightEvent.html">SightEvent</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SmellEvent.html">SmellEvent</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/SoundEvent.html">SoundEvent</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#notifyProp">notifyProp</a>&nbsp;
+<a href="#sense">sense</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#triggerEvent">triggerEvent</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="notifyProp"></a>
+<table class=decl><tr><td><code>notifyProp</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#830">830</a>]</table><div class=desc>   the notification property - this is the property we'll invoke on   each observer to notify it of the event <p>
+</div>
+<a name="sense"></a>
+<table class=decl><tr><td><code>sense</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#824">824</a>]</table><div class=desc>the sense in which the event is observable<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="triggerEvent"></a>
+<table class=decl><tr><td><code>triggerEvent (source)</code><td align=right><code><a href="../file/objects.t.html">objects.t</a>[<a href="../source/objects.t.html#773">773</a>]</table><div class=desc>   Trigger the event.  This routine must be called at the time when   the event is to occur.  We'll notify every interested observer   capable of sensing the event that the event is occurring, so   observers can take appropriate action in response to the event. <p>   'source' is the source object - this is the physical object in   the simulation that is causing the event.  For example, if the   event is the sound of a phone ringing, the phone would probably   be the source object.  The source is used to determine which   observers are capable of detecting the event: an observer must be   able to sense the source object in the appropriate sense to be   notified of the event. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

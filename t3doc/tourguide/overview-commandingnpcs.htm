@@ -1,0 +1,138 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Overview - Commanding NPCs</title><meta name="keywords" content="obeyCommand"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Overview - Commanding NPCs
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="moreagendaitemexamples.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="commandtopic.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">From time to time the player may try giving orders to an NPC, in the form SARAH, TAKE THE TORCH or SARAH, CUT THE DISPLAY CASE WITH THE DIAMOND RING. By default the library has NPCs refuse all such commands, but it is possible to override this behaviour.
+<br>
+
+<br>
+An NPC's response to a command is, in the first instance, defined in the <b>obeyCommand(fromActor, action)</b> method of its current <a href="overview-actorstates.htm">ActorState</a>. If this returns nil, then the actor will refuse the command; if it returns true then the actor will obey the command. For example, if you wanted an actor in a particular ActorState always to obey the commands TAKE, ATTACK and JUMP (but no other commands), you could override obeyCommand on the appropriate ActorState thus:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">obeyCommand(fromActor,&nbsp;action)
+<br>
+{
+<br>
+&nbsp;&nbsp;if(action.baseActionClass&nbsp;is&nbsp;in&nbsp;(TakeAction,&nbsp;AttackAction,&nbsp;JumpAction))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;true;
+<br>
+&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;inherited(fromActor,&nbsp;action);&nbsp;&nbsp;
+<br>
+}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+With a bit more effort, you could also use this method to have the NPC obey the commands, TAKE CARBUBNCLE and TAKE BAARAS ROOT but no other command. The trick is knowing how to get at the objects involved in the command. At this point the direct object of the command hasn't been fully allocated to the command, but a list of direct objects is available in the property:
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;action.dobjList_[n].obj_
+<br>
+
+<br>
+Where <i>n</i> is the position in the list (alternatively, you can use action.getResolvedDobjList[n]). For a command with a single direct object (e.g. SOLOMON, TAKE THE CARBUNCLE), n will be 1. So, if  we can assume that the player may type SOLOMON, TAKE THE CARBUNCLE or SOLOMON, TAKE THE BANANA but never SOLOMON, TAKE THE CARBUNCLE AND THE BANANA, we could make Solomon accept the commands, and only the commands, TAKE THE BANANA and TAKE THE CARBUNCLE only by modifying his InConversationState thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;solomonTalking&nbsp;:&nbsp;InConversationState
+<br>
+&nbsp;&nbsp;specialDesc&nbsp;=&nbsp;"{The&nbsp;solomon/he}&nbsp;is&nbsp;looking&nbsp;up&nbsp;at&nbsp;you&nbsp;with&nbsp;a&nbsp;thoughtful&nbsp;expression
+<br>
+&nbsp;&nbsp;&nbsp;on&nbsp;his&nbsp;face.&nbsp;"
+<br>
+&nbsp;&nbsp;stateDesc&nbsp;=&nbsp;"He's&nbsp;looking&nbsp;up&nbsp;at&nbsp;you.&nbsp;"
+<br>
+&nbsp;&nbsp;attentionSpan&nbsp;=&nbsp;20
+<br>
+&nbsp;&nbsp;<b>obeyCommand(fromActor,&nbsp;action)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(action.ofKind(TakeAction)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;action.dobjList_[1].obj_&nbsp;is&nbsp;in&nbsp;(baarasRoot,&nbsp;carbuncle))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;inherited(fromActor,&nbsp;action);
+<br>
+&nbsp;&nbsp;}
+<br>
+</b>;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+Actually, if you want to try this (though we don't want it as a permanent part of the game), there's one more change you need to make, otherwise Solomon will stop himself from taking these objects. You'll need to change the start of solomon.beforeAction thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">beforeAction()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inherited;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(gActionIs(Take)&nbsp;||&nbsp;gActionIs(TakeFrom))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(gDobj&nbsp;is&nbsp;in&nbsp;(baarasRoot,&nbsp;carbuncle)&nbsp;&amp;&amp;&nbsp;!gDobj.gifted&nbsp;&amp;&amp;&nbsp;<b>gActor&nbsp;!=&nbsp;self</b>)
+<br>
+&nbsp;&nbsp;&nbsp;...
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+There are, however, a number of problems with this approach. The first is that for anything much more complicated, the obeyCommand method will soon start to resemble tangled spaghetti. The second is that there is no very good way to handle the case where the player issues a command like SOLOMON, TAKE THE CARBUNCLE AND THE BANANA, which will result in both objects being taken. The best we could do is something like this:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">obeyCommand(fromActor,&nbsp;action)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(action.ofKind(TakeAction))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(local&nbsp;cur&nbsp;in&nbsp;action.dobjList_)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(cur.obj_&nbsp;not&nbsp;in&nbsp;(baarasRoot,&nbsp;carbuncle))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;inherited(fromActor,&nbsp;action);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;true;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;inherited(fromActor,&nbsp;action);
+<br>
+&nbsp;&nbsp;}
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+But it's far from ideal.
+<br>
+
+<br>
+By now you're maybe wondering if there's anything like the TopicEntry mechanism that could come to the rescue here. Well, luckily, there is, for the library defines a <a href="commandtopic.htm">CommandTopic</a> and a <a href="defaultcommandtopic.htm">DefaultCommandTopic</a>, which, with a bit of judicious tweaking, can both make it easier to program NPCs' responses to commands, and provide a far more powerful mechanism for handling them. But first, we'll start with fairly simple uses of these classes.
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

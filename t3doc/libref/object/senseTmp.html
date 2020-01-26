@@ -1,0 +1,38 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>senseTmp</title></head><body>
+<table class=ban><tr><td align=left><span class=title>senseTmp</span><span class=type>object</span><td align=right><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#159">159</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Sense calculation scratch-pad globals.  Many of the sense   calculations involve recursive descents of portions of the   containment tree.  In the course of these calculations, it's   sometimes useful to have information about the entire operation in   one of the recursive calls.  We could pass the information around as   extra parameters, but that adds overhead, and performance is critical   in the sense routines (because they tend to get invoked a *lot*).  To   reduce the overhead, particularly for information that's not needed   very often, we stuff some information into this global object rather   than passing it around through parameters. <p>   Note that this object is transient because this information is useful   only during the course of a single tree traversal, and so doesn't   need to be saved or undone.
+<p>
+<code>transient <b>senseTmp</b> :  &nbsp; object</code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>senseTmp</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#notifyList">notifyList</a>&nbsp;
+<a href="#pointOfView">pointOfView</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+</code><p>
+<i>(none)</i>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="notifyList"></a>
+<table class=decl><tr><td><code>notifyList</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#168">168</a>]</table><div class=desc>post-calculation notification list<p>
+</div>
+<a name="pointOfView"></a>
+<table class=decl><tr><td><code>pointOfView</code><td align=right><code><a href="../file/thing.t.html">thing.t</a>[<a href="../source/thing.t.html#165">165</a>]</table><div class=desc>   The point of view of the sense calculation.  This is the starting   point of a sense traversal; it's the object that's viewing the   other objects. <p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<i>(none)</i>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

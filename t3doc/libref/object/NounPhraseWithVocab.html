@@ -1,0 +1,140 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>NounPhraseWithVocab</title></head><body>
+<table class=ban><tr><td align=left><span class=title>NounPhraseWithVocab</span><span class=type>class</span><td align=right><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3578">3578</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   Noun phrase with vocabulary resolution.  This is a base class for the   various noun phrases that match adjective, noun, and plural tokens.   This class provides dictionary resolution of a vocabulary word into a   list of objects. <p>   In non-declined languages such as English, the parts of speech of our   words are usually simply 'adjective' and 'noun'.  A language   "declines" its noun phrases if the words in a noun phrase have   different forms that depend on the function of the noun phrase in a   sentence; for example, in German, adjectives take suffixes that   depend upon the gender of the noun being modified and the function of   the noun phrase in the sentence (subject, direct object, etc).  In a   declined language, it might be desirable to use separate parts of   speech for separate declined adjective and noun forms.
+<p>
+<code>class
+<b>NounPhraseWithVocab</b> :  &nbsp; <a href="../object/NounPhraseProd.html">NounPhraseProd</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>NounPhraseWithVocab</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NounPhraseProd.html">NounPhraseProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>NounPhraseWithVocab</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/adjPhrase(adjAdj).html">adjPhrase(adjAdj)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AdjPhraseWithVocab.html">AdjPhraseWithVocab</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/adjPhrase(adj).html">adjPhrase(adj)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/adjWord(adj).html">adjWord(adj)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/adjWord(adjAbbr).html">adjWord(adjAbbr)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/adjWord(adjApostS).html">adjWord(adjApostS)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/literalAdjPhrase(literalAdj).html">literalAdjPhrase(literalAdj)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/literalAdjPhrase(number).html">literalAdjPhrase(number)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/literalAdjPhrase(string).html">literalAdjPhrase(string)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/compoundNounPhrase(of).html">compoundNounPhrase(of)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/compoundNounPhrase(simple).html">compoundNounPhrase(simple)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/compoundPluralPhrase(of).html">compoundPluralPhrase(of)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/compoundPluralPhrase(simple).html">compoundPluralPhrase(simple)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/miscWordList(list).html">miscWordList(list)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/miscWordList(wordOrNumber).html">miscWordList(wordOrNumber)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/NounWordProd.html">NounWordProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/nounWord(noun).html">nounWord(noun)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/nounWord(nounAbbr).html">nounWord(nounAbbr)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(adj).html">simpleNounPhrase(adj)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(adjAndOne).html">simpleNounPhrase(adjAndOne)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(adjNP).html">simpleNounPhrase(adjNP)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(empty).html">simpleNounPhrase(empty)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(misc).html">simpleNounPhrase(misc)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(noun).html">simpleNounPhrase(noun)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(nounAndNumber).html">simpleNounPhrase(nounAndNumber)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(number).html">simpleNounPhrase(number)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simpleNounPhrase(numberAndNoun).html">simpleNounPhrase(numberAndNoun)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simplePluralPhrase(adjAndOnes).html">simplePluralPhrase(adjAndOnes)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simplePluralPhrase(empty).html">simplePluralPhrase(empty)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simplePluralPhrase(misc).html">simplePluralPhrase(misc)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simplePluralPhrase(plural).html">simplePluralPhrase(plural)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/simplePluralPhrase(poundNum).html">simplePluralPhrase(poundNum)</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+</code><p>
+<p>Inherited from <code>NounPhraseProd</code> :<br>
+<code>
+<a href="../object/NounPhraseProd.html#filterForCollectives">filterForCollectives</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#combineWordMatches">combineWordMatches</a>&nbsp;
+<a href="#combineWordMatchItems">combineWordMatchItems</a>&nbsp;
+<a href="#dictMatchIsExact">dictMatchIsExact</a>&nbsp;
+<a href="#dictMatchIsStronger">dictMatchIsStronger</a>&nbsp;
+<a href="#filterDictMatches">filterDictMatches</a>&nbsp;
+<a href="#getAdjustedTokens">getAdjustedTokens</a>&nbsp;
+<a href="#getVocabMatchList">getVocabMatchList</a>&nbsp;
+<a href="#getWordMatches">getWordMatches</a>&nbsp;
+<a href="#inScopeMatches">inScopeMatches</a>&nbsp;
+<a href="#intersectWordMatches">intersectWordMatches</a>&nbsp;
+<a href="#resolveNouns">resolveNouns</a>&nbsp;
+<a href="#resolveNounsMatchName">resolveNounsMatchName</a>&nbsp;
+</code><p>
+<p>Inherited from <code>NounPhraseProd</code> :<br>
+<code>
+<a href="../object/NounPhraseProd.html#filterTruncations">filterTruncations</a>&nbsp;
+<a href="../object/NounPhraseProd.html#getVerifyKeepers">getVerifyKeepers</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="combineWordMatches"></a>
+<table class=decl><tr><td><code>combineWordMatches (aLst, bLst)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3607">3607</a>]</table><div class=desc>   Combine two word match lists.  This simply adds each entry from   the second list that doesn't already have a corresponding entry   in the first list, returning the combined list. <p>
+</div>
+<a name="combineWordMatchItems"></a>
+<table class=decl><tr><td><code>combineWordMatchItems (a, b)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3656">3656</a>]</table><div class=desc>   Combine the given word match entries.  We'll merge the flags of   the two entries to produce a single merged entry in 'a'. <p>
+</div>
+<a name="dictMatchIsExact"></a>
+<table class=decl><tr><td><code>dictMatchIsExact (flags)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3769">3769</a>]</table><div class=desc>   Check a dictionary match's string comparator flags to see if the   match is "exact."  The exact meaning of "exact" is dependent on   the language's lexical rules; this generic base version considers   a match to be exact if it doesn't have any string comparator flags   other than the base "matched" flag and the case-fold flag.  This   should be suitable for most languages, as (1) case folding usually   doesn't improve match strength, and (2) any additional comparator   flags usually indicate some kind of inexact match status. <p>   A language that depends on upper/lower case as a marker of match   strength will need to override this to consider the case-fold flag   as significant in determining match exactness.  In addition, a   language that uses additional string comparator flags to indicate   better (rather than worse) matches will have to override this to   require the presence of those flags. <p>
+</div>
+<a name="dictMatchIsStronger"></a>
+<table class=decl><tr><td><code>dictMatchIsStronger (flags1, flags2)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3795">3795</a>]</table><div class=desc>   Compare two dictionary matches for the same object and determine   if the first one is stronger than the second.  Both are for the   same object; the only difference is the string comparator flags. <p>   Language modules might need to override this to supplement the   filtering with their own rules.  This generic base version   considers truncation: an untruncated match is stronger than a   truncated match.  Non-English languages might want to consider   other lexical factors in the match strength, such as whether we   matched the exact accented characters or approximated with   unaccented equivalents - this information will, of course, need to   be coordinated with the dictionary's string comparator, and   reflected in the comparator match flags.  It's the comparator   match flags that we're looking at here. <p>
+</div>
+<a name="filterDictMatches"></a>
+<table class=decl><tr><td><code>filterDictMatches (lst)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3702">3702</a>]</table><div class=desc>   Filter a dictionary match list.  This is called to clean up the   raw match list returned from looking up a vocabulary word in the   dictionary. <p>   The main purpose of this routine is to eliminate unwanted   redundancy from the dictionary matches; in particular, the   dictionary might have multiple matches for a given word at a given   object, due to truncation, upper/lower folding, accent removal,   and so on.  In general, we want to keep only the single strongest   match from the dictionary for a given word matching a given   object. <p>   The meaning of "stronger" and "exact" matches is   language-dependent, so we abstract these with the separate methods   dictMatchIsExact() and dictMatchIsStronger(). <p>   Keep in mind that the raw dictionary match list has alternating   entries: object, comparator flags, object, comparator flags, etc.   The return list should be in the same format. <p>
+</div>
+<a name="getAdjustedTokens"></a>
+<table class=decl><tr><td><code>getAdjustedTokens ( )</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#4005">4005</a>]</table><div class=desc>   Each subclass must override getAdjustedTokens() to provide the   appropriate set of tokens used to match the object.  This is   usually simply the original set of tokens, but in some cases it   may differ; for example, spelled-out numbers normally adjust to   the numeral form of the number. <p>   For each adjusted token, the list must have two entries: the   first is a string giving the token text, and the second is the   property giving the part of speech for the token. <p>
+</div>
+<a name="getVocabMatchList"></a>
+<table class=decl><tr><td><code>getVocabMatchList (resolver, results, extraFlags)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#4014">4014</a>]</table><div class=desc>   Get the vocabulary match list.  This is simply the set of objects   that match all of the words in the noun phrase.  Each rule   subclass must override this to return an appropriate list.  Note   that subclasses should use getWordMatches() and   intersectWordMatches() to build the list. <p>
+</div>
+<a name="getWordMatches"></a>
+<table class=decl><tr><td><code>getWordMatches (tok, partOfSpeech, resolver, flags, truncFlags)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3585">3585</a>]</table><div class=desc>   Get a list of the matches in the main dictionary for the given   token as the given part of speech (&amp;noun, &amp;adjective, &amp;plural, or   others as appropriate for the local language) that are in scope   according to the resolver. <p>
+</div>
+<a name="inScopeMatches"></a>
+<table class=decl><tr><td><code>inScopeMatches (dictionaryMatches, flags, truncFlags, resolver)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3832">3832</a>]</table><div class=desc>   Given a list of dictionary matches to a given word, construct a   list of ResolveInfo objects for the matches that are in scope.   For regular resolution, "in scope" means the resolver thinks the   object is in scope. <p>
+</div>
+<a name="intersectWordMatches"></a>
+<table class=decl><tr><td><code>intersectWordMatches (tok, partOfSpeech, resolver, flags, truncFlags, lst)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3811">3811</a>]</table><div class=desc>   Get a list of the matches in the main dictionary for the given   token, intersecting the resulting list with the given list. <p>
+</div>
+<a name="resolveNouns"></a>
+<table class=decl><tr><td><code>resolveNouns (resolver, results)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3882">3882</a>]</table><div class=desc>   Resolve the objects. <p>
+</div>
+<a name="resolveNounsMatchName"></a>
+<table class=decl><tr><td><code>resolveNounsMatchName (results, resolver, matchList)</code><td align=right><code><a href="../file/parser.t.html">parser.t</a>[<a href="../source/parser.t.html#3912">3912</a>]</table><div class=desc>   Run a set of resolved objects through matchName() or a similar   routine.  Returns the filtered results. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

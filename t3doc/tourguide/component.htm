@@ -1,0 +1,66 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Component</title><meta name="keywords" content="Component"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>Component : <a href="fixture.htm">Fixture</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="heavy.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="thing-introduction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">As its name suggests, a Component is something that is part of something else. It need not be fixed within a particular room location, since it  could be part of a portable object, a button on a mobile device, for example, but it cannot be detached from its immediate parent, and wherever its parent goes, it goes with it. A button on a stationery device equally qualifies, however, so we can now move the button that was defined in greatCabin to a more appropriate location (just after the <a href="heavy.htm">desk</a> defined above), and change it from a Fixture to a Component:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">+&nbsp;Button,&nbsp;<b>Component</b>&nbsp;'small&nbsp;brown&nbsp;button'&nbsp;'small&nbsp;brown&nbsp;button'
+<br>
+&nbsp;&nbsp;"The&nbsp;small&nbsp;brown&nbsp;button&nbsp;is&nbsp;fixed&nbsp;to&nbsp;the&nbsp;underside&nbsp;of&nbsp;the&nbsp;desk.&nbsp;"
+<br>
+&nbsp;&nbsp;dobjFor(Push)
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;action()
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There's&nbsp;a&nbsp;sharp&nbsp;&lt;i&gt;click&lt;/i&gt;,&nbsp;and&nbsp;a&nbsp;section&nbsp;of&nbsp;the&nbsp;foreward&nbsp;bulkhead&nbsp;slides
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;bulkheadDoor.isOpen&nbsp;?&nbsp;'closed'&nbsp;:&nbsp;'open'&gt;&gt;.&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bulkheadDoor.makeOpen(!bulkheadDoor.isOpen);
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+As yet we have not implemented any portable objects to which a component might be attached, but we have referred to a panel mounted on the deck rail, so we can follow the definition of the deck rail object immediately with:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;Component&nbsp;'large&nbsp;wooden&nbsp;panel'&nbsp;'panel'
+<br>
+&nbsp;&nbsp;"The&nbsp;panel&nbsp;seems&nbsp;to&nbsp;have&nbsp;something&nbsp;to&nbsp;do&nbsp;with&nbsp;sailing&nbsp;the&nbsp;ship.&nbsp;A&nbsp;wheel&nbsp;and&nbsp;a&nbsp;lever
+<br>
+&nbsp;&nbsp;&nbsp;are&nbsp;mounted&nbsp;on&nbsp;it,&nbsp;and&nbsp;between&nbsp;them&nbsp;is&nbsp;a&nbsp;hexagonal&nbsp;aperture.&nbsp;"
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+The panel refers to a wheel, a lever and a hexagonal aperture, all of which will be its components; but we are not in a position to implement any of these just yet.
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

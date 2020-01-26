@@ -1,0 +1,394 @@
+<html>
+<head><link rel=stylesheet type="text/css" href="../libref.css"><title>TopicTAction</title></head><body>
+<table class=ban><tr><td align=left><span class=title>TopicTAction</span><span class=type>class</span><td align=right><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5786">5786</a>], <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9151">9151</a>]</table><p>
+<table class=nav><tr>
+<td><a href="#_SuperClassTree_">Superclass<br>Tree</a>
+<td><a href="#_SubClassTree_">Subclass<br>Tree</a>
+<td><a href="#_ObjectSummary_">Global<br>Objects</a>
+<td><a href="#_PropSummary_">Property<br>Summary</a>
+<td><a href="#_MethodSummary_">Method<br>Summary</a>
+<td><a href="#_Properties_">Property<br>Details</a>
+<td><a href="#_Methods_">Method<br>Details</a>
+</table><div class=fdesc>
+   An Action with a direct object and a topic, such as "ask &lt;actor&gt; about   &lt;topic&gt;".  Topics differ from ordinary noun phrases in scope: rather   than resolving to simulation objects based on location, we resolve   these based on the actor's knowledge. <p>   The grammar rules that produce these actions must set dobjMatch to the   resolvable object of the command (the &lt;actor&gt; in "ask &lt;actor&gt; about   &lt;topic&gt;"), and must set topicMatch to the topic match tree object,   which must be a TopicProd object.  Note that, in some cases, the   phrasing might make the dobjMatch the indirect object, grammatically   speaking: "type &lt;topic&gt; on &lt;object&gt;"; even in such cases, use   dobjMatch for the resolvable object. <p>   When we resolve the topic, we will always resolve it to a single   object of class ResolvedTopic.  This contains the literal tokens of   the original command plus a list of simulation objects matching the   topic name, ordered from best to worst.  This is different from the   way most commands work, since we do not resolve the topic to a simple   game world object.  We keep all of this extra information because we   don't want to perform disambiguation in the normal fashion, but   instead resolve as much as we can with what we're given, and then give   the specialized action code as much information as we can to let the   action code figure out how to respond to the topic.
+<p><i>Modified in <a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9151">9151</a>]:</i><br>
+   English-specific additions for verbs with topic phrases.
+<p>
+<code>class
+<b>TopicTAction</b> :  &nbsp; <a href="../object/TopicActionBase.html">TopicActionBase</a> &nbsp; <a href="../object/TAction.html">TAction</a></code>
+</div>
+<a name="_SuperClassTree_"></a><p><div class=mjhd><span class=hdln>Superclass Tree</span> &nbsp; (in declaration order)</div><p>
+<code><b>TopicTAction</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TopicActionBase.html">TopicActionBase</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TAction.html">TAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Action.html">Action</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/BasicProd.html">BasicProd</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/Resolver.html">Resolver</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; object</code><br>
+<a name="_SubClassTree_"></a><p><div class=mjhd><span class=hdln>Subclass Tree</span> &nbsp; </div><p>
+<code><b>TopicTAction</b></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskVagueAction.html">AskVagueAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskVague).html">predicate(AskVague)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellVague).html">predicate(TellVague)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConsultAboutAction.html">ConsultAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ConsultAbout).html">predicate(ConsultAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(ConsultWhatAbout).html">predicate(ConsultWhatAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/ConvTopicTAction.html">ConvTopicTAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskAboutAction.html">AskAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAbout).html">predicate(AskAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAboutImplicit).html">predicate(AskAboutImplicit)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskAboutWhat).html">predicate(AskAboutWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/AskForAction.html">AskForAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskFor).html">predicate(AskFor)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(AskWhomFor).html">predicate(AskWhomFor)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TellAboutAction.html">TellAboutAction</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAbout).html">predicate(TellAbout)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAboutImplicit).html">predicate(TellAboutImplicit)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/predicate(TellAboutWhat).html">predicate(TellAboutWhat)</a></code><br>
+<code> &nbsp; &nbsp; &nbsp; &nbsp; <a href="../object/TellVagueAction.html">TellVagueAction</a></code><br>
+<a name="_ObjectSummary_"></a><p><div class=mjhd><span class=hdln>Global Objects</span> &nbsp; </div><p>
+<i>(none)</i>
+<a name="_PropSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Properties</span> &nbsp; </div><p>
+<code>
+<a href="#needAnaphoricBinding_">needAnaphoricBinding_</a>&nbsp;
+<a href="#predicateNounPhrases">predicateNounPhrases</a>&nbsp;
+<a href="#topicList_">topicList_</a>&nbsp;
+<a href="#topicResolver_">topicResolver_</a>&nbsp;
+<a href="#whichMessageObject">whichMessageObject</a>&nbsp;
+<a href="#whichMessageTopic">whichMessageTopic</a>&nbsp;
+<a href="#whichObject">whichObject</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicActionBase</code> :<br>
+<code>
+<a href="../object/TopicActionBase.html#topicQualResolver_">topicQualResolver_</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TAction</code> :<br>
+<code>
+<a href="../object/TAction.html#actionAllowsAll">actionAllowsAll</a>&nbsp;
+<a href="../object/TAction.html#actionDobjProp">actionDobjProp</a>&nbsp;
+<a href="../object/TAction.html#actor_">actor_</a>&nbsp;
+<a href="../object/TAction.html#askDobjResponseProd">askDobjResponseProd</a>&nbsp;
+<a href="../object/TAction.html#checkDobjProp">checkDobjProp</a>&nbsp;
+<a href="../object/TAction.html#dobjCur_">dobjCur_</a>&nbsp;
+<a href="../object/TAction.html#dobjInfoCur_">dobjInfoCur_</a>&nbsp;
+<a href="../object/TAction.html#dobjList_">dobjList_</a>&nbsp;
+<a href="../object/TAction.html#dobjMatch">dobjMatch</a>&nbsp;
+<a href="../object/TAction.html#dobjResolver_">dobjResolver_</a>&nbsp;
+<a href="../object/TAction.html#issuer_">issuer_</a>&nbsp;
+<a href="../object/TAction.html#preCondDobjProp">preCondDobjProp</a>&nbsp;
+<a href="../object/TAction.html#remapDobjProp">remapDobjProp</a>&nbsp;
+<a href="../object/TAction.html#verDobjProp">verDobjProp</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Action</code> :<br>
+<code>
+<a href="../object/Action.html#actionTime">actionTime</a>&nbsp;
+<a href="../object/Action.html#afterActionMainList">afterActionMainList</a>&nbsp;
+<a href="../object/Action.html#beforeAfterObjs">beforeAfterObjs</a>&nbsp;
+<a href="../object/Action.html#defaultForRecursion">defaultForRecursion</a>&nbsp;
+<a href="../object/Action.html#extraMessageParams">extraMessageParams</a>&nbsp;
+<a href="../object/Action.html#implicitMsg">implicitMsg</a>&nbsp;
+<a href="../object/Action.html#includeInUndo">includeInUndo</a>&nbsp;
+<a href="../object/Action.html#isImplicit">isImplicit</a>&nbsp;
+<a href="../object/Action.html#isRepeatable">isRepeatable</a>&nbsp;
+<a href="../object/Action.html#iterationCanceled">iterationCanceled</a>&nbsp;
+<a href="../object/Action.html#originalAction">originalAction</a>&nbsp;
+<a href="../object/Action.html#parentAction">parentAction</a>&nbsp;
+<a href="../object/Action.html#preCond">preCond</a>&nbsp;
+<a href="../object/Action.html#pronounOverride">pronounOverride</a>&nbsp;
+<a href="../object/Action.html#remappedFrom">remappedFrom</a>&nbsp;
+<a href="../object/Action.html#showDefaultReports">showDefaultReports</a>&nbsp;
+<a href="../object/Action.html#synthParamID">synthParamID</a>&nbsp;
+<a href="../object/Action.html#verbFlags">verbFlags</a>&nbsp;
+<a href="../object/Action.html#verifiedOkay">verifiedOkay</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#firstTokenIndex">firstTokenIndex</a>&nbsp;
+<a href="../object/BasicProd.html#isSpecialResponseMatch">isSpecialResponseMatch</a>&nbsp;
+<a href="../object/BasicProd.html#lastTokenIndex">lastTokenIndex</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#action_">action_</a>&nbsp;
+<a href="../object/Resolver.html#equivs_">equivs_</a>&nbsp;
+<a href="../object/Resolver.html#isGlobalScope">isGlobalScope</a>&nbsp;
+<a href="../object/Resolver.html#isSubResolver">isSubResolver</a>&nbsp;
+<a href="../object/Resolver.html#scope_">scope_</a>&nbsp;
+</code><p>
+<a name="_MethodSummary_"></a><p><div class=mjhd><span class=hdln>Summary of Methods</span> &nbsp; </div><p>
+<code>
+<a href="#announceDefaultObject">announceDefaultObject</a>&nbsp;
+<a href="#createTopicResolver">createTopicResolver</a>&nbsp;
+<a href="#filterTopic">filterTopic</a>&nbsp;
+<a href="#getAnaphoricBinding">getAnaphoricBinding</a>&nbsp;
+<a href="#getCurrentObjects">getCurrentObjects</a>&nbsp;
+<a href="#getMatchForRole">getMatchForRole</a>&nbsp;
+<a href="#getObjectForRole">getObjectForRole</a>&nbsp;
+<a href="#getOtherMessageObjectPronoun">getOtherMessageObjectPronoun</a>&nbsp;
+<a href="#getOtherObjectRole">getOtherObjectRole</a>&nbsp;
+<a href="#getQuestionInf">getQuestionInf</a>&nbsp;
+<a href="#getRoleFromIndex">getRoleFromIndex</a>&nbsp;
+<a href="#getVerbPhrase">getVerbPhrase</a>&nbsp;
+<a href="#initForMissingDobj">initForMissingDobj</a>&nbsp;
+<a href="#initForMissingTopic">initForMissingTopic</a>&nbsp;
+<a href="#resetAction">resetAction</a>&nbsp;
+<a href="#resolveNouns">resolveNouns</a>&nbsp;
+<a href="#retryWithMissingTopic">retryWithMissingTopic</a>&nbsp;
+<a href="#setCurrentObjects">setCurrentObjects</a>&nbsp;
+<a href="#setObjectMatches">setObjectMatches</a>&nbsp;
+<a href="#setResolvedObjects">setResolvedObjects</a>&nbsp;
+<a href="#whatObj">whatObj</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TopicActionBase</code> :<br>
+<code>
+<a href="../object/TopicActionBase.html#getMessageParam">getMessageParam</a>&nbsp;
+<a href="../object/TopicActionBase.html#getTopic">getTopic</a>&nbsp;
+<a href="../object/TopicActionBase.html#getTopicQualifierResolver">getTopicQualifierResolver</a>&nbsp;
+<a href="../object/TopicActionBase.html#getTopicResolver">getTopicResolver</a>&nbsp;
+<a href="../object/TopicActionBase.html#reparseMatchAsTopic">reparseMatchAsTopic</a>&nbsp;
+<a href="../object/TopicActionBase.html#resolveTopic">resolveTopic</a>&nbsp;
+<a href="../object/TopicActionBase.html#setResolvedTopic">setResolvedTopic</a>&nbsp;
+<a href="../object/TopicActionBase.html#setTopicMatch">setTopicMatch</a>&nbsp;
+</code><p>
+<p>Inherited from <code>TAction</code> :<br>
+<code>
+<a href="../object/TAction.html#adjustDefaultObjectPrep">adjustDefaultObjectPrep</a>&nbsp;
+<a href="../object/TAction.html#announceAllDefaultObjects">announceAllDefaultObjects</a>&nbsp;
+<a href="../object/TAction.html#canDobjResolveTo">canDobjResolveTo</a>&nbsp;
+<a href="../object/TAction.html#checkAction">checkAction</a>&nbsp;
+<a href="../object/TAction.html#checkRemapping">checkRemapping</a>&nbsp;
+<a href="../object/TAction.html#construct">construct</a>&nbsp;
+<a href="../object/TAction.html#createDobjResolver">createDobjResolver</a>&nbsp;
+<a href="../object/TAction.html#createForMissingDobj">createForMissingDobj</a>&nbsp;
+<a href="../object/TAction.html#createForRetry">createForRetry</a>&nbsp;
+<a href="../object/TAction.html#doActionMain">doActionMain</a>&nbsp;
+<a href="../object/TAction.html#execAction">execAction</a>&nbsp;
+<a href="../object/TAction.html#filterAmbiguousDobj">filterAmbiguousDobj</a>&nbsp;
+<a href="../object/TAction.html#filterPluralDobj">filterPluralDobj</a>&nbsp;
+<a href="../object/TAction.html#getAllDobj">getAllDobj</a>&nbsp;
+<a href="../object/TAction.html#getDefaultDobj">getDefaultDobj</a>&nbsp;
+<a href="../object/TAction.html#getDobj">getDobj</a>&nbsp;
+<a href="../object/TAction.html#getDobjCount">getDobjCount</a>&nbsp;
+<a href="../object/TAction.html#getDobjFlags">getDobjFlags</a>&nbsp;
+<a href="../object/TAction.html#getDobjInfo">getDobjInfo</a>&nbsp;
+<a href="../object/TAction.html#getDobjResolver">getDobjResolver</a>&nbsp;
+<a href="../object/TAction.html#getDobjTokens">getDobjTokens</a>&nbsp;
+<a href="../object/TAction.html#getDobjWords">getDobjWords</a>&nbsp;
+<a href="../object/TAction.html#getObjResponseProd">getObjResponseProd</a>&nbsp;
+<a href="../object/TAction.html#getPreCondDescList">getPreCondDescList</a>&nbsp;
+<a href="../object/TAction.html#getPreCondPropForRole">getPreCondPropForRole</a>&nbsp;
+<a href="../object/TAction.html#getRemapPropForRole">getRemapPropForRole</a>&nbsp;
+<a href="../object/TAction.html#getResolvedDobjList">getResolvedDobjList</a>&nbsp;
+<a href="../object/TAction.html#getResolvedObjList">getResolvedObjList</a>&nbsp;
+<a href="../object/TAction.html#getResolveInfo">getResolveInfo</a>&nbsp;
+<a href="../object/TAction.html#getVerbPhrase1">getVerbPhrase1</a>&nbsp;
+<a href="../object/TAction.html#getVerifyPropForRole">getVerifyPropForRole</a>&nbsp;
+<a href="../object/TAction.html#initResolver">initResolver</a>&nbsp;
+<a href="../object/TAction.html#initTentative">initTentative</a>&nbsp;
+<a href="../object/TAction.html#resolvedObjectsInScope">resolvedObjectsInScope</a>&nbsp;
+<a href="../object/TAction.html#retryWithAmbiguousDobj">retryWithAmbiguousDobj</a>&nbsp;
+<a href="../object/TAction.html#retryWithMissingDobj">retryWithMissingDobj</a>&nbsp;
+<a href="../object/TAction.html#setResolvedDobj">setResolvedDobj</a>&nbsp;
+<a href="../object/TAction.html#testRetryDefaultDobj">testRetryDefaultDobj</a>&nbsp;
+<a href="../object/TAction.html#verifyAction">verifyAction</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Action</code> :<br>
+<code>
+<a href="../object/Action.html#actionOfKind">actionOfKind</a>&nbsp;
+<a href="../object/Action.html#addBeforeAfterObj">addBeforeAfterObj</a>&nbsp;
+<a href="../object/Action.html#afterAction">afterAction</a>&nbsp;
+<a href="../object/Action.html#afterActionMain">afterActionMain</a>&nbsp;
+<a href="../object/Action.html#announceActionObject">announceActionObject</a>&nbsp;
+<a href="../object/Action.html#beforeAction">beforeAction</a>&nbsp;
+<a href="../object/Action.html#beforeActionMain">beforeActionMain</a>&nbsp;
+<a href="../object/Action.html#cacheMultiObjectAnnouncements">cacheMultiObjectAnnouncements</a>&nbsp;
+<a href="../object/Action.html#callAfterActionMain">callAfterActionMain</a>&nbsp;
+<a href="../object/Action.html#callCatchAllProp">callCatchAllProp</a>&nbsp;
+<a href="../object/Action.html#callPreConditions">callPreConditions</a>&nbsp;
+<a href="../object/Action.html#callVerifyPreCond">callVerifyPreCond</a>&nbsp;
+<a href="../object/Action.html#callVerifyProp">callVerifyProp</a>&nbsp;
+<a href="../object/Action.html#cancelIteration">cancelIteration</a>&nbsp;
+<a href="../object/Action.html#checkPreConditions">checkPreConditions</a>&nbsp;
+<a href="../object/Action.html#combineRemappedVerifyResults">combineRemappedVerifyResults</a>&nbsp;
+<a href="../object/Action.html#createActionFrom">createActionFrom</a>&nbsp;
+<a href="../object/Action.html#createActionInstance">createActionInstance</a>&nbsp;
+<a href="../object/Action.html#createTopicQualifierResolver">createTopicQualifierResolver</a>&nbsp;
+<a href="../object/Action.html#doAction">doAction</a>&nbsp;
+<a href="../object/Action.html#doActionOnce">doActionOnce</a>&nbsp;
+<a href="../object/Action.html#filterAmbiguousWithVerify">filterAmbiguousWithVerify</a>&nbsp;
+<a href="../object/Action.html#filterFacets">filterFacets</a>&nbsp;
+<a href="../object/Action.html#filterPluralWithVerify">filterPluralWithVerify</a>&nbsp;
+<a href="../object/Action.html#finishResolveList">finishResolveList</a>&nbsp;
+<a href="../object/Action.html#getDefaultWithVerify">getDefaultWithVerify</a>&nbsp;
+<a href="../object/Action.html#getEnteredVerbPhrase">getEnteredVerbPhrase</a>&nbsp;
+<a href="../object/Action.html#getImplicitPhrase">getImplicitPhrase</a>&nbsp;
+<a href="../object/Action.html#getInfPhrase">getInfPhrase</a>&nbsp;
+<a href="../object/Action.html#getNotifyTable">getNotifyTable</a>&nbsp;
+<a href="../object/Action.html#getObjPreCondDescList">getObjPreCondDescList</a>&nbsp;
+<a href="../object/Action.html#getObjPreConditions">getObjPreConditions</a>&nbsp;
+<a href="../object/Action.html#getOriginalAction">getOriginalAction</a>&nbsp;
+<a href="../object/Action.html#getOrigTokenList">getOrigTokenList</a>&nbsp;
+<a href="../object/Action.html#getParticiplePhrase">getParticiplePhrase</a>&nbsp;
+<a href="../object/Action.html#getPredicate">getPredicate</a>&nbsp;
+<a href="../object/Action.html#getPronounOverride">getPronounOverride</a>&nbsp;
+<a href="../object/Action.html#getRemappedFrom">getRemappedFrom</a>&nbsp;
+<a href="../object/Action.html#getSimpleSynonymRemap">getSimpleSynonymRemap</a>&nbsp;
+<a href="../object/Action.html#getSortedVerifyResults">getSortedVerifyResults</a>&nbsp;
+<a href="../object/Action.html#isConversational">isConversational</a>&nbsp;
+<a href="../object/Action.html#isNestedIn">isNestedIn</a>&nbsp;
+<a href="../object/Action.html#isPartOf">isPartOf</a>&nbsp;
+<a href="../object/Action.html#isRemapped">isRemapped</a>&nbsp;
+<a href="../object/Action.html#makeResolveInfo">makeResolveInfo</a>&nbsp;
+<a href="../object/Action.html#makeResolveInfoList">makeResolveInfoList</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceDefaultObject">maybeAnnounceDefaultObject</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceImplicit">maybeAnnounceImplicit</a>&nbsp;
+<a href="../object/Action.html#maybeAnnounceMultiObject">maybeAnnounceMultiObject</a>&nbsp;
+<a href="../object/Action.html#noMatch">noMatch</a>&nbsp;
+<a href="../object/Action.html#notifyBeforeAfter">notifyBeforeAfter</a>&nbsp;
+<a href="../object/Action.html#objListPronoun">objListPronoun</a>&nbsp;
+<a href="../object/Action.html#preAnnounceActionObject">preAnnounceActionObject</a>&nbsp;
+<a href="../object/Action.html#recalcSenseContext">recalcSenseContext</a>&nbsp;
+<a href="../object/Action.html#repeatAction">repeatAction</a>&nbsp;
+<a href="../object/Action.html#resolveAction">resolveAction</a>&nbsp;
+<a href="../object/Action.html#runBeforeNotifiers">runBeforeNotifiers</a>&nbsp;
+<a href="../object/Action.html#saveActionForAgain">saveActionForAgain</a>&nbsp;
+<a href="../object/Action.html#setImplicit">setImplicit</a>&nbsp;
+<a href="../object/Action.html#setMessageParam">setMessageParam</a>&nbsp;
+<a href="../object/Action.html#setMessageParams">setMessageParams</a>&nbsp;
+<a href="../object/Action.html#setNested">setNested</a>&nbsp;
+<a href="../object/Action.html#setOriginalAction">setOriginalAction</a>&nbsp;
+<a href="../object/Action.html#setPronounOverride">setPronounOverride</a>&nbsp;
+<a href="../object/Action.html#setRemapped">setRemapped</a>&nbsp;
+<a href="../object/Action.html#spPrefix">spPrefix</a>&nbsp;
+<a href="../object/Action.html#spSuffix">spSuffix</a>&nbsp;
+<a href="../object/Action.html#synthMessageParam">synthMessageParam</a>&nbsp;
+<a href="../object/Action.html#verifyHandlersExist">verifyHandlersExist</a>&nbsp;
+<a href="../object/Action.html#whatTranslate">whatTranslate</a>&nbsp;
+<a href="../object/Action.html#withVerifyResults">withVerifyResults</a>&nbsp;
+<a href="../object/Action.html#zeroActionTime">zeroActionTime</a>&nbsp;
+</code><p>
+<p>Inherited from <code>BasicProd</code> :<br>
+<code>
+<a href="../object/BasicProd.html#canResolveTo">canResolveTo</a>&nbsp;
+<a href="../object/BasicProd.html#getOrigText">getOrigText</a>&nbsp;
+<a href="../object/BasicProd.html#setOrigTokenList">setOrigTokenList</a>&nbsp;
+</code><p>
+<p>Inherited from <code>Resolver</code> :<br>
+<code>
+<a href="../object/Resolver.html#allowAll">allowAll</a>&nbsp;
+<a href="../object/Resolver.html#cacheScopeList">cacheScopeList</a>&nbsp;
+<a href="../object/Resolver.html#filterAll">filterAll</a>&nbsp;
+<a href="../object/Resolver.html#filterAmbiguousEquivalents">filterAmbiguousEquivalents</a>&nbsp;
+<a href="../object/Resolver.html#filterAmbiguousNounPhrase">filterAmbiguousNounPhrase</a>&nbsp;
+<a href="../object/Resolver.html#filterPluralPhrase">filterPluralPhrase</a>&nbsp;
+<a href="../object/Resolver.html#filterPossRank">filterPossRank</a>&nbsp;
+<a href="../object/Resolver.html#getAction">getAction</a>&nbsp;
+<a href="../object/Resolver.html#getAll">getAll</a>&nbsp;
+<a href="../object/Resolver.html#getAllDefaults">getAllDefaults</a>&nbsp;
+<a href="../object/Resolver.html#getDefaultObject">getDefaultObject</a>&nbsp;
+<a href="../object/Resolver.html#getPossessiveResolver">getPossessiveResolver</a>&nbsp;
+<a href="../object/Resolver.html#getPronounDefault">getPronounDefault</a>&nbsp;
+<a href="../object/Resolver.html#getQualifierResolver">getQualifierResolver</a>&nbsp;
+<a href="../object/Resolver.html#getRawPronounAntecedent">getRawPronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#getReflexiveBinding">getReflexiveBinding</a>&nbsp;
+<a href="../object/Resolver.html#getScopeList">getScopeList</a>&nbsp;
+<a href="../object/Resolver.html#getTargetActor">getTargetActor</a>&nbsp;
+<a href="../object/Resolver.html#matchName">matchName</a>&nbsp;
+<a href="../object/Resolver.html#objInScope">objInScope</a>&nbsp;
+<a href="../object/Resolver.html#resetResolver">resetResolver</a>&nbsp;
+<a href="../object/Resolver.html#resolvePronounAntecedent">resolvePronounAntecedent</a>&nbsp;
+<a href="../object/Resolver.html#resolveUnknownNounPhrase">resolveUnknownNounPhrase</a>&nbsp;
+<a href="../object/Resolver.html#selectIndefinite">selectIndefinite</a>&nbsp;
+<a href="../object/Resolver.html#withGlobals">withGlobals</a>&nbsp;
+</code><p>
+<a name="_Properties_"></a><p><div class=mjhd><span class=hdln>Properties</span> &nbsp; </div><p>
+<a name="needAnaphoricBinding_"></a>
+<table class=decl><tr><td><code>needAnaphoricBinding_</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5944">5944</a>]</table><div class=desc>   Flag: we have been asked for an anaphoric binding, but we don't   have a binding available.  We'll check this after resolving the   first-resolved noun phrase so that we can go back and re-resolve   it again after resolving the other noun phrase. <p>
+</div>
+<a name="predicateNounPhrases"></a>
+<table class=decl><tr><td><code>predicateNounPhrases</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5947">5947</a>]</table><div class=desc>we have a direct object and a topic phrase<p>
+</div>
+<a name="topicList_"></a>
+<table class=decl><tr><td><code>topicList_</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6026">6026</a>]</table><div class=desc>the resolved topic object list<p>
+</div>
+<a name="topicResolver_"></a>
+<table class=decl><tr><td><code>topicResolver_</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6029">6029</a>]</table><div class=desc>my cached topic resolver<p>
+</div>
+<a name="whichMessageObject"></a>
+<table class=decl><tr><td><code>whichMessageObject</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6054">6054</a>]</table><div class=desc>   What we call our direct object might actually be playing the   grammatical role of the indirect object - in order to inherit   easily from TAction, we call our resolved object our direct   object, regardless of which grammatical role it actually plays.   For the most part it doesn't matter which is which; but for the   purposes of our resolver, we actually do care about its real role.   So, override the resolver method whichMessageObject so that it   returns whichever role is NOT served by the topic object. <p>
+</div>
+<a name="whichMessageTopic"></a>
+<table class=decl><tr><td><code>whichMessageTopic</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6032">6032</a>]</table><div class=desc>grammatical role played by topic phrase in generated messages<p>
+</div>
+<a name="whichObject"></a>
+<table class=decl><tr><td><code>whichObject</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6042">6042</a>]</table><div class=desc>the true role of the resolved object is always as the direct object<p>
+</div>
+<a name="_Methods_"></a><p><div class=mjhd><span class=hdln>Methods</span> &nbsp; </div><p>
+<a name="announceDefaultObject"></a>
+<table class=decl><tr><td><code>announceDefaultObject (obj, whichObj, resolvedAllObjects)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9152">9152</a>]</table><div class=desc><i>no description available</i><p>
+</div>
+<a name="createTopicResolver"></a>
+<table class=decl><tr><td><code>createTopicResolver (issuingActor, targetActor)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5908">5908</a>]</table><div class=desc>create our TAction topic resolver<p>
+</div>
+<a name="filterTopic"></a>
+<table class=decl><tr><td><code>filterTopic (lst, np, resolver)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5848">5848</a>]</table><div class=desc>   Filter the resolved topic.  This is called by our   TActionTopicResolver, which refers the resolution back to us. <p>
+</div>
+<a name="getAnaphoricBinding"></a>
+<table class=decl><tr><td><code>getAnaphoricBinding (typ)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5922">5922</a>]</table><div class=desc>   In the topic phrase, we can use an anaphoric pronoun to refer   back to the direct object.  Since we resolve the direct object   phrase first, we can simply return the direct object list as the   binding.  If the direct object isn't resolved yet, make a note to   come back and re-bind the anaphor. <p>
+</div>
+<a name="getCurrentObjects"></a>
+<table class=decl><tr><td><code>getCurrentObjects ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6013">6013</a>]</table><div class=desc>   Get the list of active objects.  We return only our direct   object, since our topic isn't actually a simulation object. <p>
+</div>
+<a name="getMatchForRole"></a>
+<table class=decl><tr><td><code>getMatchForRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5977">5977</a>]</table><div class=desc>get the match tree for the given role<p>
+</div>
+<a name="getObjectForRole"></a>
+<table class=decl><tr><td><code>getObjectForRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5967">5967</a>]</table><div class=desc>get the resolved object in a given role<p>
+</div>
+<a name="getOtherMessageObjectPronoun"></a>
+<table class=decl><tr><td><code>getOtherMessageObjectPronoun (which)</code><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9177">9177</a>]</table><div class=desc>use the same handling as for a regular two-object action<p>
+</div>
+<a name="getOtherObjectRole"></a>
+<table class=decl><tr><td><code>getOtherObjectRole (role)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5960">5960</a>]</table><div class=desc>get the OtherObject role for the given role<p>
+</div>
+<a name="getQuestionInf"></a>
+<table class=decl><tr><td><code>getQuestionInf (which)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9171">9171</a>]</table><div class=desc>use the same handling we use for a regular two-object action<p>
+</div>
+<a name="getRoleFromIndex"></a>
+<table class=decl><tr><td><code>getRoleFromIndex (idx)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5950">5950</a>]</table><div class=desc>get an object role<p>
+</div>
+<a name="getVerbPhrase"></a>
+<table class=decl><tr><td><code>getVerbPhrase (inf, ctx)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9201">9201</a>]</table><div class=desc>return a generic pronoun for the topic<p>
+</div>
+<a name="initForMissingDobj"></a>
+<table class=decl><tr><td><code>initForMissingDobj (orig)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5881">5881</a>]</table><div class=desc>initialize a new action we're retrying for a missing direct object<p>
+</div>
+<a name="initForMissingTopic"></a>
+<table class=decl><tr><td><code>initForMissingTopic (orig)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5893">5893</a>]</table><div class=desc>initialize for retrying with a missing topic phrase<p>
+</div>
+<a name="resetAction"></a>
+<table class=decl><tr><td><code>resetAction ( )</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5790">5790</a>]</table><div class=desc>   reset the action <p>
+</div>
+<a name="resolveNouns"></a>
+<table class=decl><tr><td><code>resolveNouns (issuingActor, targetActor, results)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5802">5802</a>]</table><div class=desc>   resolve our noun phrases to objects <p>
+</div>
+<a name="retryWithMissingTopic"></a>
+<table class=decl><tr><td><code>retryWithMissingTopic (orig)</code><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5863">5863</a>]</table><div class=desc>   Retry a single-object action as an action taking both an object   and a topic phrase.  We'll treat the original action's direct   object list as our direct object list, and we'll obtain a topic   phrase interactively. <p>   This routine terminates with 'exit' if it doesn't throw some other   error. <p>
+</div>
+<a name="setCurrentObjects"></a>
+<table class=decl><tr><td><code>setCurrentObjects (lst)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6019">6019</a>]</table><div class=desc>set the current objects<p>
+</div>
+<a name="setObjectMatches"></a>
+<table class=decl><tr><td><code>setObjectMatches (dobj, topic)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#6000">6000</a>]</table><div class=desc>manually set the pre-resolved match trees<p>
+</div>
+<a name="setResolvedObjects"></a>
+<table class=decl><tr><td><code>setResolvedObjects (dobj, topic)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/action.t.html">action.t</a>[<a href="../source/action.t.html#5990">5990</a>]</table><div class=desc>   Manually set the resolved objects.  We'll set our direct and   indirect objects. <p>
+</div>
+<a name="whatObj"></a>
+<table class=decl><tr><td><code>whatObj (which)</code><span class=rem>OVERRIDDEN</span><td align=right><code><a href="../file/en_us.t.html">en_us.t</a>[<a href="../source/en_us.t.html#9165">9165</a>]</table><div class=desc>   Use the same handling as for a regular two-object action.  We   can only default the actual object in this kind of verb; the   actual object always fills the DirectObject slot, but in   message generation it might use a different slot, so use the   message generation slot here. <p>
+</div>
+<div class=ftr>TADS 3 Library Manual<br>Generated on 5/16/2013 from TADS version 3.1.3</div>
+</body>
+</html>

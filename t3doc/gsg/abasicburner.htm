@@ -1,0 +1,122 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>A Basic Burner</title><meta name="keywords" content="Person,NPC,TopicEntry,globalParamName,GiveShowTopic,GiveTopic,ShowTopic,ActorStates,TopicGroups,ShuffledEventList"></meta>
+
+<link rel="stylesheet" href="main.css" type="text/css"></link></head>
+<body>
+<div class="topbar"><a href="index.html"><img src="topbar.jpg" border=0></a></div>
+
+<div class="main">
+<P><FONT SIZE=-1><a href="index.html">[Main]</a><BR>
+<I><a href="settingthescene.htm">[Previous] </a>&nbsp;&nbsp;<a href="endingthegame.htm">[Next] </a></I></FONT></P>
+<h2>A Basic Burner</h2>
+
+<p>Now that we have set the scene, we can introduce our NPC, a charcoal burner who will be tending the fire. We may start by defining him thus:
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">burner&nbsp;:&nbsp;Person&nbsp;'charcoal&nbsp;burner'&nbsp;'charcoal&nbsp;burner'
+<br>
+&nbsp;&nbsp;@fireClearing
+<br>
+&nbsp;&nbsp;"It's&nbsp;rather&nbsp;difficult&nbsp;to&nbsp;make&nbsp;out&nbsp;his&nbsp;features&nbsp;under&nbsp;all&nbsp;the&nbsp;grime&nbsp;and
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;soot.&nbsp;"
+<br>
+&nbsp;&nbsp;properName&nbsp;=&nbsp;'Joe&nbsp;Black'&nbsp;
+<br>
+&nbsp;&nbsp;globalParamName&nbsp;=&nbsp;'burner'
+<br>
+&nbsp;&nbsp;isHim&nbsp;=&nbsp;true
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This may seem very simple code for such a potentially complicated object, and it certainly doesn't look like the charcoal burner will do very much. The main reason for the simplicity of this object definition is that most of the complexity of NPCs will be handled through </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> objects, which we'll be encountering shortly. Strictly speaking, the TADS 3 library doesn't <i>force</i> you to use ActorStates and TopicEntries; you are free if you wish to code your NPC with </font><font face="Courier New" size="2" color="#000000">dobjFor(This)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">iobjFor(That)&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">and a host of </font><font face="Courier New" size="2" color="#000000">switch</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">if</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> statements, but unless your NPC is fairly simple, this is likely to result in tangled spaghetti code that becomes harder and harder to maintain. Since we're not trying to create Burner Bolognese we'll stick to the means provided by the library, which allows highly sophisticated NPC behaviour with code that's both much cleaner and easier to understand and maintain. The secret is that we go about coding our NPC using a largely <i>declarative </i>rather than a largely <i>procedural</i> approach; in other words we define the NPC's behaviour through a series of object definitions rather than through a mass of code controlled by state variables, switch statements and the like.
+<br>
+
+<br>
+But before moving on to see how this declarative approach works, let's stop and look at our basic burner object. The first thing to note is that he's of class </font><font face="Courier New" size="2" color="#000000">Person</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which seems pretty reasonable. </font><font face="Courier New" size="2" color="#000000">Person</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is (indirectly) a subclass of the more generic </font><font face="Courier New" size="2" color="#000000">Actor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> class; we use </font><font face="Courier New" size="2" color="#000000">Person</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather that </font><font face="Courier New" size="2" color="#000000">Actor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> since an </font><font face="Courier New" size="2" color="#000000">Actor</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> could be a small furry animal you could pick up and carry around with you, which our charcoal burner certainly isn't.
+<br>
+
+<br>
+Secondly, we have defined the initial location of our burner object using </font><font face="Courier New" size="2" color="#000000">@fireClearing</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> rather than the + syntax (which would have worked perfectly well). There are two reasons for doing it this way: (a) ActorStates and TopicEntries are all objects that will be located in their Actor (either directly, or more deeply nested to several levels); had we put a + before the definition of our actor that would be one more + we'd have to put before each and every </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> object - not that much more typing, perhaps, but something that would make our code that much less readable and more error-prone, especially if we end up having to nest to ++++ or +++++; (b) in a more complex game we might want to move our NPC definition (together with all its associated objects) to a different place in our code, or even into a different source file; if we had defined the NPC's starting location with the + syntax we'd then not only have to remove the + from in front of the NPC, but remove one + from each and every </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> we'd nested inside it.
+<br>
+
+<br>
+Thirdly, the </font><font face="Courier New" size="2" color="#000000">properName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property is not part of the TADS 3 library at all; it's a property we've defined on the object for our own use. At the moment this simply illustrates that this is something we can do. What this new property is for hardly needs explaining; how we are going to use it is something we shall reveal shortly.
+<br>
+
+<br>
+Fourthly, the </font><font face="Courier New" size="2" color="#000000">globalParamName</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is just a convenience feature that we shall use shortly. What it allows us to do is to use parameter substitution strings like </font><font face="Courier New" size="2" color="#000000">{the&nbsp;burner/he}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> when we want to display the current name of the burner (which will change from "the charcoal burner" to "Joe Black" once he's introduced himself). Finally, defining </font><font face="Courier New" size="2" color="#000000">isHim&nbsp;=&nbsp;true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> means that the charcoal burner can be referred to as 'him'. For a female NPC you'd define </font><font face="Courier New" size="2" color="#000000">isHer&nbsp;=&nbsp;true</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+
+<br>
+Both </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">ActorState</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> are generic classes with several subclasses that tend to be the classes one uses in practice. At some point you should look at the more detailed explanation of their use in the "<a href="../techman/t3actor.htm" target="_top">Creating Dynamic Characters</a>" articles in the <i>Technical Manual</i>, but for now you can just follow the discussion here.
+<br>
+
+<br>
+Since the main objective of the game is to return the diamond ring to the charcoal burner (for reasons that will become apparent later), we may as well start by making our burner respond when Heidi gives him the ring. In the bad old days we should have had to do that by writing </font><font face="Courier New" size="2" color="#000000">dobjFor(Give)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> methods on the ring and </font><font face="Courier New" size="2" color="#000000">iobjFor(Give)</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> methods on the burner (and likewise for Show, if we wanted the burner to respond to being shown the ring). Fortunately, this can now all be handled by TopicEntries, more specifically, by the subclasses of </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> called </font><font face="Courier New" size="2" color="#000000">GiveTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, </font><font face="Courier New" size="2" color="#000000">ShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. As their names suggests, a </font><font face="Courier New" size="2" color="#000000">GiveTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> defines its actor's response to a Give command, a </font><font face="Courier New" size="2" color="#000000">ShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to a Show command, and a </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> to either a Give or a Show command. For our purposes, we may as well use a </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">.
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;GiveShowTopic&nbsp;@ring
+<br>
+&nbsp;&nbsp;"As&nbsp;you&nbsp;hand&nbsp;the&nbsp;ring&nbsp;over&nbsp;to&nbsp;{the&nbsp;burner/him},&nbsp;his&nbsp;eyes&nbsp;light&nbsp;up&nbsp;in&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;delight&nbsp;and&nbsp;his&nbsp;jaws&nbsp;drop&nbsp;in&nbsp;amazement.&nbsp;&lt;q&gt;You&nbsp;found&nbsp;it!&lt;/q&gt;&nbsp;he&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;declares,&nbsp;&lt;q&gt;God&nbsp;bless&nbsp;you,&nbsp;you&nbsp;really&nbsp;found&nbsp;it!&nbsp;Now&nbsp;I&nbsp;can&nbsp;go&nbsp;and&nbsp;call&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;my&nbsp;sweetheart&nbsp;after&nbsp;all!&nbsp;Thank&nbsp;you,&nbsp;my&nbsp;dear,&nbsp;that's&nbsp;absolutely&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;wonderful!&lt;/q&gt;"
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">Once again, using a template makes defining this object very simple. The object following the @ symbol is not the location but in fact the value of the </font><font face="Courier New" size="2" color="#000000">GiveShowTopic's</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">matchObj</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, which means the object that is the direct object of the Give or Show command matched by this TopicEntry. In other words, this </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> will be invoked in response to the commands <b>give ring to burner</b> or <b>show ring to burner</b>. The double quoted string is the value of the </font><font face="Courier New" size="2" color="#000000">GiveShowTopic's</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> </font><font face="Courier New" size="2" color="#000000">topicResponse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property, which is displayed when the </font><font face="Courier New" size="2" color="#000000">GiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> is invoked. We precede the object definition with a + sign because a </font><font face="Courier New" size="2" color="#000000">TopicEntry</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> has to be contained within its Actor (or one of its Actor's ActorStates or TopicGroups). The </font><font face="Courier New" size="2" color="#000000">&lt;q&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and </font><font face="Courier New" size="2" color="#000000">&lt;/q&gt;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> sequences within the </font><font face="Courier New" size="2" color="#000000">topicResponse</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> string are codes for opening and closing smart quotes: when the game is run they should be displayed thus: "You found it!" he declares, "God bless you&#133;" Likewise </font><font face="Courier New" size="2" color="#000000">{the&nbsp;burner/him}&nbsp;</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">is a parameter string that should display as either 'the charcoal burner' or 'Joe Black' depending on whether we know his name at that point (how we learn his name is something we'll be seeing later).
+<br>
+
+<br>
+That will work if Heidi hands Joe his ring, but what happens if she tries to give or show him anything else? For now, the only thing he's interested in receiving from Heidi is his ring, so if she tries to give him anything else, he should refuse. But if he always refuses in precisely the same way he'll begin to look a bit wooden. The best way to handle this, then, is through a combination of a </font><font face="Courier New" size="2" color="#000000">DefaultGiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (which defines the response to Joe's being shown or given anything not otherwise specifically defined) and a </font><font face="Courier New" size="2" color="#000000">ShuffledEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">, which picks a random response from a list (more on which shortly).
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font><font face="Courier New" size="2" color="#000000">+&nbsp;DefaultGiveShowTopic,&nbsp;ShuffledEventList
+<br>
+&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'{The&nbsp;burner/he}&nbsp;shakes&nbsp;his&nbsp;head.&nbsp;&lt;q&gt;No&nbsp;thanks,&nbsp;love.&lt;/q&gt;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'He&nbsp;looks&nbsp;at&nbsp;it&nbsp;and&nbsp;grins.&nbsp;&lt;q&gt;That\'s&nbsp;nice,&nbsp;my&nbsp;dear,&lt;/q&gt;&nbsp;he&nbsp;remarks,
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handing&nbsp;it&nbsp;back.&nbsp;',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;I\'d&nbsp;hang&nbsp;on&nbsp;to&nbsp;that&nbsp;if&nbsp;I&nbsp;were&nbsp;you,&lt;/q&gt;&nbsp;he&nbsp;advises.&nbsp;'
+<br>
+&nbsp;&nbsp;]
+<br>
+;
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Courier New" size="2" color="#000000"></font></font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="TOP"><td width="51"></td><td><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"></font></td></tr></table><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">This definition means that the object is both a </font><font face="Courier New" size="2" color="#000000">DefaultGiveShowTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> and a </font><font face="Courier New" size="2" color="#000000">ShuffledEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000">. The list of single-quoted strings between the square brackets is the </font><font face="Courier New" size="2" color="#000000">eventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> property of the </font><font face="Courier New" size="2" color="#000000">ShuffledEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> (via the </font><font face="Courier New" size="2" color="#000000">DefaultTopic</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> template). Notice that these strings must be separated by commas, and they must be single-quoted, not double-quoted, strings. This, incidentally, is another reason why the </font><font face="Courier New" size="2" color="#000000">{The&nbsp;burner/he}</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> syntax is valuable, it can be used in both types of string, whereas the alternative way of achieving the same effect, </font><font face="Courier New" size="2" color="#000000">&lt;&lt;burner.theName&gt;&gt;,</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> can only be used in double-quoted strings. Since the strings are single-quoted we have to use the backslash character (\) before any apostrophes we want to use inside them (hence "That\'s nice" for "That's nice").
+<br>
+
+<br>
+The </font><font face="Courier New" size="2" color="#000000">ShuffledEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> uses the strings from its list in random order, but does not repeat any one string until it has used all of them; it is thus like shuffling a pack of cards, turning each card over in turn, then repeating the process (as often as desired). This is better for the purpose than a </font><font face="Courier New" size="2" color="#000000">RandomEventList</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="3" color="#000000"> which could in principle print the same string two (or more) times in succession.
+<br>
+
+<br>
+You can now try recompiling the game and playing it through to the point where you hand the ring to the burner (you can try handing him other objects first to see what happens). Everything should work fine apart from one thing - returning the ring to the charcoal burner is meant to be the object of the game, but apart from the burner's effusive thanks, nothing much happens when the ring is handed over. The game just carries on and the player isn't even awarded any extra points. In order to fix this, we'll take a brief detour through a special function for ending games.
+<br>
+</font><font face="Verdana, Arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+</font></font>
+
+<HR>
+<P><FONT SIZE=-1><I>Getting Started in TADS 3</I><BR>
+<a href="index.html">[Main]</a><BR>
+<I><a href="settingthescene.htm">[Previous] </a>&nbsp;&nbsp;<a href="endingthegame.htm">[Next] </a></I></FONT></P>
+</body></html>

@@ -1,0 +1,24 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>BasicOpenable</title><meta name="keywords" content="BasicOpenable,initiallyOpen,isOpen,openDesc,makeOpen"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>BasicOpenable: Linkable
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="openable.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="lightandfire-introduction.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">BasicOpenable is the base class for openable items. It defines the basic behaviour for objects that can be opened and closed, but no special handling for commands (such as OPEN and CLOSE) that might commonly be used for openable objects. It is much more likely that you will use subclasses of BasicOpenable (such as <a href="openable.htm">Openable</a>, <a href="basicdoor.htm">BasicDoor</a> and their subclasses) than BasicOpenable in game code. It is conceivable that you might want to subclass a custom kind of openable object from BasicOpenable, as it is conceivable that you might want to implement a BasicOpenable object in a game for an object that can be open and closed but not does respond to normal opening and closing commands (e.g. because it can only be opened and closed by pushing a button or pulling a lever), but these are left as exercises for the interested reader. The chief importance of BasicOpenable is that if defines the behaviour common to all its descendants. The important properties and methods to know about are:
+<br>
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>initiallyOpen</b>: set this to true if you want the object to start out open. The default is nil.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>isOpen()</b>: use this method to determine whether the object is open (true) or closed (nil), but do not overwrite this property in game code to make an object open or closed; call makeOpen instead.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>makeOpen(stat)</b>: call this method to open or close the object programmatically, by calling makeOpen(true) or makeOpen(nil). You can also override this method to bring about additional side-effects of opening or closing the object, but if you do so be sure to remember to call inherited(stat) somewhere in your overridden makeOpen(stat).
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td width="14"><font face="Arial" size="2" color="#000000"><b></b><font face="Symbol" size="2" color="#000000">&#183;</font><b></b></font></td><td><font face="Arial" size="2" color="#000000"><b>openDesc()</b>: the method/property that provides an additional description to say whether the object is open or closed; the English library defaults are "open" and "closed", which are good enough for most purposes.
+&nbsp;<br>
+</font></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><font face="Arial" size="2" color="#000000"></font></font></td></tr></table>
+
+</body></html>

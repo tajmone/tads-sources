@@ -1,0 +1,35 @@
+/* $Header$ */
+
+/* Copyright (c) 1999 by Michael J. Roberts.  All Rights Reserved. */
+/*
+Name
+  htmlt2.rc - HTML T2 Stand-alone Interpreter resource file
+Function
+
+Notes
+
+Modified
+  10/08/99 MJRoberts  - Creation
+*/
+
+/* our resources are all in code page 1252 by default */
+#pragma code_page(1252)
+
+/* use tads 2 settings */
+#define HTMLTADS_T2_RESOURCES
+
+/* include the common HTML TADS resource definitions */
+#include "htmlcmn.rc"
+
+/* license text */
+IDX_LICENSE_TEXT        TEXTFILE "..\\notes\\license.txt"
+
+
+/*
+ *   include any language resources requiring non-1252 code pages - we have
+ *   to do this from the top-level .rc file (rather than #include'd file)
+ *   because the MS resource compiler ignores #pragma code_page() in included
+ *   files
+ */
+#pragma code_page(1251)
+#include "html_tads_strs_russian.rc"

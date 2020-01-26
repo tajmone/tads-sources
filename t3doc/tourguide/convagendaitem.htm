@@ -1,0 +1,192 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>ConvAgendaItem</title><meta name="keywords" content="ConvAgendaItem,isReady"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="Arial" size="3" color="#000000"><b>ConvAgendaItem : <a href="agendaitem.htm">AgendaItem</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Arial" size="2"><a href="agendaitem.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="delayedagendaitem.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="Arial" size="2" color="#000000">The comments in the library code describe the ConvAgendaItem thus:
+<br>
+
+<br>
+<i>A "conversational" agenda item. This type of item is ready to execute only when the actor hasn't engaged in conversation during the same turn. This type of item is ideal for situations where we want the actor to pursue a conversational topic, because we won't initiate the action until we get a turn where the player didn't directly talk to us.
+<br>
+</i><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">The main thing to note about a ConvAgendaItem is that the only way it differs from a standard AgendaItem is by overriding the isReady property</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">to achieve the desired effect, namely by defining it as:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">class&nbsp;ConvAgendaItem:&nbsp;AgendaItem
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isReady&nbsp;=&nbsp;(!getActor().conversedThisTurn()&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;getActor().canTalkTo(otherActor)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;inherited())&nbsp;
+<br>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;otherActor&nbsp;=&nbsp;(gPlayerChar)
+<br>
+;&nbsp;
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">This means that if you want to use your own isReady condition on a ConvAgendaItem you must be careful to include the inherited condition as well:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">myChatAgenda:&nbsp;ConvAgendaItem
+<br>
+&nbsp;&nbsp;&nbsp;isReady&nbsp;=&nbsp;inherited&nbsp;&amp;&amp;&nbsp;myCustomCondition
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;invokeItem()
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*your&nbsp;code&nbsp;here&nbsp;*/
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+For our first example of a ConvAgendaItem, we'll simply add the ConvAgendaItem to the actor's agendaList and leave the isReady condition alone. Suppose we want Sarah to react to the news that the main cave exit is blocked; we might define a ConvAgendaItem for her thus:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;sarahWantsOut&nbsp;:&nbsp;ConvAgendaItem
+<br>
+&nbsp;&nbsp;invokeItem()
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;What&nbsp;I&nbsp;want&nbsp;to&nbsp;know,&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;remarks,&nbsp;&lt;q&gt;is&nbsp;how&nbsp;we're
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;going&nbsp;to&nbsp;get&nbsp;out&nbsp;of&nbsp;here&nbsp;now&nbsp;that&nbsp;the&nbsp;main&nbsp;exit's&nbsp;blocked.&lt;/q&gt;&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isDone&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;}
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+In order for this to be added to her agenda at the right point in the game, we need to make a small change to the TellTopic in which she's told about the rockfall:
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;TellTopic,&nbsp;SuggestedTellTopic,&nbsp;StopEventList&nbsp;@tRockfall
+<br>
+&nbsp;&nbsp;&nbsp;[
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:&nbsp;"&lt;q&gt;We&nbsp;won't&nbsp;get&nbsp;out&nbsp;the&nbsp;way&nbsp;we&nbsp;came&nbsp;it,&lt;/q&gt;&nbsp;you&nbsp;warn&nbsp;her,&nbsp;&lt;q&gt;I'm
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;afraid&nbsp;there's&nbsp;just&nbsp;been&nbsp;a&nbsp;rockfall,&nbsp;blocking&nbsp;the&nbsp;way&nbsp;back&nbsp;out
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;outside&nbsp;world!&lt;/q&gt;&nbsp;&lt;&lt;sarah.setKnowsAbout(tRockfall)&gt;&gt;\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Oh&nbsp;wonderful!&lt;/q&gt;&nbsp;{the&nbsp;sarah/she}&nbsp;declares,&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;your
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fault.&nbsp;<b>&lt;&lt;sarah.addToAgenda(sarahWantsOut)&gt;&gt;</b>"&nbsp;},
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;q&gt;The&nbsp;way&nbsp;out&nbsp;back&nbsp;through&nbsp;the&nbsp;caves&nbsp;is&nbsp;blocked&nbsp;by&nbsp;a&nbsp;rockfall.&lt;/q&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;say.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Yes,&nbsp;you&nbsp;already&nbsp;told&nbsp;me.&lt;/q&gt;&nbsp;she&nbsp;reminds&nbsp;you.&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;timesToSuggest&nbsp;=&nbsp;1
+<br>
+&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'the&nbsp;rockfall'
+<br>
+&nbsp;&nbsp;&nbsp;isActive&nbsp;=&nbsp;entranceTunnel.blocked
+<br>
+;
+<br>
+</font><font face="Arial" size="2" color="#000000">
+<br>
+For our second example, we'll turn curatorSurprise into a ConvAgendaItem. While we're at it we'll do the job properly by making it initiate a Conversation Node. Note also how we change the isReady condition from what we had before:</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+
+<br>
+</font><font face="Courier New" size="2" color="#000000">+&nbsp;curatorSurprise&nbsp;:&nbsp;ConvAgendaItem
+<br>
+&nbsp;&nbsp;initiallyActive&nbsp;=&nbsp;true
+<br>
+&nbsp;&nbsp;isReady&nbsp;=&nbsp;(getActor.canSee(carbuncle)&nbsp;&amp;&amp;&nbsp;carbuncle.isIn(gPlayerChar)&nbsp;&amp;&amp;&nbsp;inherited)
+<br>
+&nbsp;&nbsp;invokeItem
+<br>
+&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getActor.initiateConversation(curatorTalking,&nbsp;'curator-carbuncle');
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isDone&nbsp;=&nbsp;true;
+<br>
+&nbsp;&nbsp;}&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;agendaOrder&nbsp;=&nbsp;150
+<br>
+;
+<br>
+
+<br>
++&nbsp;ConvNode&nbsp;'curator-carbuncle'
+<br>
+&nbsp;&nbsp;npcGreetingMsg&nbsp;=&nbsp;"&lt;q&gt;What's&nbsp;that&nbsp;you're&nbsp;carrying?&lt;/q&gt;&nbsp;{the&nbsp;curator/he}
+<br>
+&nbsp;&nbsp;&nbsp;inquires,&nbsp;his&nbsp;eyes&nbsp;lighting&nbsp;up&nbsp;in&nbsp;amazed&nbsp;excitement&nbsp;at&nbsp;the&nbsp;sight&nbsp;of&nbsp;the
+<br>
+&nbsp;&nbsp;&nbsp;carbuncle,&nbsp;&lt;q&gt;May&nbsp;I&nbsp;take&nbsp;a&nbsp;closer&nbsp;look?&lt;/q&gt;&nbsp;";
+<br>
+;
+<br>
+
+<br>
+++&nbsp;YesTopic
+<br>
+&nbsp;&nbsp;&nbsp;topicResponse
+<br>
+&nbsp;&nbsp;&nbsp;{
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;Yes,&nbsp;sure.&lt;/q&gt;&nbsp;you&nbsp;agree.\b&nbsp;";
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nestedAction(GiveTo,&nbsp;carbuncle,&nbsp;getActor());
+<br>
+&nbsp;&nbsp;&nbsp;}
+<br>
+;
+<br>
+
+<br>
+++&nbsp;NoTopic
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;q&gt;No&nbsp;-&nbsp;it's&nbsp;not&nbsp;for&nbsp;you.&lt;/q&gt;&nbsp;you&nbsp;reply&nbsp;sternly.\b
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;q&gt;Oh&nbsp;please,&nbsp;do&nbsp;show&nbsp;it&nbsp;to&nbsp;me!&lt;/q&gt;&nbsp;he&nbsp;begs.&nbsp;"
+<br>
+;&nbsp;&nbsp;&nbsp;
+<br>
+</font><font face="Times New Roman" size="3" color="#000000">
+<br>
+</font><font face="Arial" size="2" color="#000000">One way to try this out if you've included Nikos Chantziaras's ncDebugActions in your project is to SNARF the carbuncle and the cap, PUT the carbuncle in the cap, WEAR the cap, then POW to the large sign. Go WEST from there, engage the curator in conversation, and remove the cap while talking to him.
+<br>
+
+<br>
+
+<br>
+
+<br>
+</font></font>
+
+</body></html>

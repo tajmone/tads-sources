@@ -1,0 +1,56 @@
+<html><head><meta name="generator" content="Help & Manual 2.7.0"><title>Door</title><meta name="keywords" content="Door,masterObject"></meta></head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="#C0C0C0"><tr><td align="left">
+<font face="verdana, arial, Helvetica, Sans-Serif" size="3" color="#000000"><b>Door : <a href="basicdoor.htm">BasicDoor</a>
+<br>
+</b></font>
+
+</td><td align="right"><font face="Helvetica, Sans-Serif" size="2"><a href="roomautoconnector.htm">[Previous]</a> <a href="generalintroduction.htm">[Main]</a> <a href="basicdoor.htm">[Next]</a></font></td></tr></table><br>
+
+<font face="verdana, arial, Helvetica, Sans-Serif" size="2" color="#000000">A basic door is easy to implement; here we'll illustrate a simple double-sided door by placing one between anotherCave and a room to the south that we'll call lakeShore. We point the south property of anotherCave to one side of the door (lakeDoor), the north property of lakeShore to the other side of the door (lakeDoor2) and make sure that one side of the door (lakeDoor2) points to the other side (lakeDoor) as its masterObject. Door inherits from Passage and hence from Thing; we use the <a href="thingtemplate.htm">Thing template</a> for lakeDoor and the <a href="passagetemplate.htm">Passage template</a> for lakeDoor2:
+<br>
+
+<br>
+<font face="Courier New" size="2" color="#000000">anotherCave:&nbsp;Room&nbsp;'Another&nbsp;Cave'
+<br>
+&nbsp;&nbsp;"There's&nbsp;something&nbsp;artificial&nbsp;about&nbsp;this&nbsp;cave.&nbsp;It's&nbsp;almost&nbsp;as&nbsp;if&nbsp;it's&nbsp;trying
+<br>
+&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;a&nbsp;room.&nbsp;The&nbsp;floor&nbsp;is&nbsp;suspiciously&nbsp;level,&nbsp;the&nbsp;walls&nbsp;are&nbsp;almost
+<br>
+&nbsp;&nbsp;&nbsp;smooth,&nbsp;and&nbsp;there's&nbsp;a&nbsp;smart&nbsp;new&nbsp;door&nbsp;set&nbsp;into&nbsp;the&nbsp;south&nbsp;wall,&nbsp;with&nbsp;a
+<br>
+&nbsp;&nbsp;&nbsp;bright&nbsp;electric&nbsp;light&nbsp;mounted&nbsp;above&nbsp;it.&nbsp;The&nbsp;rougher,&nbsp;larger&nbsp;central
+<br>
+&nbsp;&nbsp;&nbsp;cave&nbsp;lies&nbsp;to&nbsp;the&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;mainCave
+<br>
+&nbsp;&nbsp;<b>south&nbsp;=&nbsp;lakeDoor
+<br>
+</b>;
+<br>
+
+<br>
++&nbsp;lakeDoor&nbsp;:&nbsp;Door&nbsp;'smart&nbsp;new&nbsp;door'&nbsp;'smart&nbsp;new&nbsp;door';
+<br>
+
+<br>
+lakeRoom:&nbsp;Room&nbsp;'Lake&nbsp;Shore'
+<br>
+&nbsp;&nbsp;"This&nbsp;is&nbsp;the&nbsp;northern&nbsp;shore&nbsp;of&nbsp;a&nbsp;giant&nbsp;underground&nbsp;lake.&nbsp;A&nbsp;door&nbsp;leads&nbsp;north.&nbsp;"
+<br>
+&nbsp;&nbsp;north&nbsp;=&nbsp;lakeDoor2
+<br>
+;
+<br>
+
+<br>
++&nbsp;lakeDoor2&nbsp;:&nbsp;Door&nbsp;-&gt;lakeDoor&nbsp;'door'&nbsp;'door';
+<br>
+</font><font face="verdana, arial, Helvetica, Sans-Serif" size="2" color="#000000">
+<br>
+Later, we'll make this more interesting by adding a special kind of lock to the door.
+<br>
+</font></font>
+
+</body></html>
