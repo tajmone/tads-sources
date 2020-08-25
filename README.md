@@ -1,6 +1,9 @@
 # TADS Sources ![build status][travis badge]
 
-Complete source files of TADS (_Text Adventure Development System_, by Michael J. Roberts) versions 2 and 3:
+
+__TADS 2__, __TADS 3__ and __HTML TADS__ source files.
+
+TADS (_Text Adventure Development System_) was created by Michael J. Roberts:
 
 - [www.tads.org]
 
@@ -15,6 +18,7 @@ Repository created and maintained by [Tristano Ajmone], January 2020:
 <!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3" -->
 
 - [Project Structure](#project-structure)
+- [Project Documentation](#project-documentation)
 - [About](#about)
     - [Disclaimer](#disclaimer)
     - [Project Goals](#project-goals)
@@ -55,16 +59,50 @@ Repository settings:
 - [`.travis.yml`](./.travis.yml) — [Travis CI] settings for code styles validation.
 - [`validate.sh`](./validate.sh) — code styles validation script.
 
+# Project Documentation
 
+Quick links to the documentation files of this repository.
+
+To display documents in HTML format on GitHub, click on their ([Live HTML](#project-documentation "Live HTML Preview Link example")) link; if you're reading this document locally, just click on their file path.
+
+
+<!-- MarkdownTOC:excluded -->
+## HTML TADS
+
+- [`htmltads/notes/changes.htm`][htmT/changes] — HTML TADS Changelog. ([Live HTML][htmT/changes Live])
+- [`htmltads/notes/compat.htm`][htmT/compat] — System Compatibility Notes. ([Live HTML][htmT/compat Live])
+- [`htmltads/notes/porting.htm`][htmT/porting] — Notes on porting HTML TADS. ([Live HTML][htmT/porting Live])
+
+<!-- MarkdownTOC:excluded -->
+## TADS 2
+
+- [`tads2/README.md`][T2/README] — TADS 2 README.
+- [`tads2/msdos/dosver.htm`][T2/MSDOS] — MS-DOS/Windows TADS 2 Changelog. ([Live HTML][T2/MSDOS Live])
+- [`tads2/tadsver.htm`][T2/tadsver] — TADS 2 Changelog. ([Live HTML][T2/tadsver Live])
+- [`tads2/unix/README.md`][T2/unix] — TADS 2 Unix Sources info.
+
+<!-- MarkdownTOC:excluded -->
+## TADS 3
+
+- [`tads3/README.md`][T3/README] — TADS 3 README.
+- [`t3doc/t3changes.htm`][T3/changes] — TADS 3 Changelog. ([Live HTML][T3/changes Live])
+- [`tads3/charmap/README.md`][T3/charmap] — TADS Character Mapping Files.
+- [`tads3/lib/adv3/changes.htm`][T3/adv3 changes] — TADS 3 Library Changelog. ([Live HTML][T3/adv3 changes Live])
+- [`tads3/lib/extensions/TCommand/doc/tcommand.htm`][T3/TCommand] — __TCommand__ module documentation. ([Live HTML][T3/TCommand Live])
+- [`tads3/portnote.htm`][T3/portnote] — Porting TADS 3. ([Live HTML][T3/portnote Live])
+- [`tads3/test/README.md`][T3/test] — TADS 3 Test Suite.
+- [`tads3/tz/db/README.md`][T3/tz/db] — IANA Time Zone Database.
+- [`tads3/unix/README.md`][T3/unix] — TADS 3 Unix Sources info.
+- [`tads3/unix/test/README.md`][T3/unix/test] — TADS 3 Unix Test Suite.
 
 # About
 
-This repository was created by [Tristano Ajmone] in January 2020 with the intention of gathering into a single repository all the TADS sources available from TADS website.
+This repository was created by [Tristano Ajmone] in January 2020.
 
 ## Disclaimer
 
 This is my personal project and _it's not_ part of the official TADS project.
-Although I've contacted via email TADS' author Michael J. Roberts before publishing this project (as requested in the TADS license terms) in order to enquire about its permissibility, and received his approval, this does not imply any official endorsement by TADS' author.
+Although I've contacted via email TADS' author Michael J. Roberts before publishing this project (as requested in the TADS license terms) in order to inquire about its permissibility, and received his approval, this does not imply any official endorsement by TADS' author.
 
 Furthermore, any accidental mistakes, inaccuracies or damages that might have occurred to the original sources and assets in this repository are my sole responsibility.
 
@@ -72,13 +110,19 @@ This repository _is not_ intended as a replacement of the official TADS sources 
 
 ## Project Goals
 
-The main goal of this repository is to provide all the required TADS sources under a single umbrella project, adopting strict code styles conventions in order to simplify working on them on GitHub.
+The main goals of this repository are:
+
+- Gathering into a single repository all the TADS sources available from TADS website (and elsewhere).
+- Enforce code styles consistency across source files to improve collaborative editing via Git.
+- Port to [GitHub Flavored Markdown] all the documentation for better interoperability with GitHub.
 
 All source code files and non-binary assets have been normalized to comply to strict code styles conventions (via [EditorConfig]).
 These minor aesthetic tweaks ensure code style consistency across source files of the same type (indentation style, EOL, lack of trailing whitespace, etc.) without affecting code contents or any other meaningful aspect of the source assets.
 Code consistency greatly improves the collaborative experience on version controlled projects, enforcing standards across different OSs and editors, thus ensuring a clean commit history, free of spurious contents changes relating to whitespace.
 
 My motivation behind this work is to provide a Git compliant codebase of TADS sources that developers on GitHub can fork as a starting point to work efficiently with Git, GitHub and continuous integration services like [Travis CI] and others.
+
+Hopefully this will serve not only archival purposes but also provide a solid code base for anyone wishing to maintain future TADS updates using Git and GitHub — the tools of choice for collaborative code editing those days.
 
 ## Surviving the Death of 32-bit OSs
 
@@ -424,8 +468,9 @@ Michael J. Roberts and Andreas Sewe.
                                REFERENCE LINKS
 ------------------------------------------------------------------------------>
 
-[natively or via a plug-in/package]: https://editorconfig.org/#download
+[GitHub Flavored Markdown]: https://github.github.com/gfm/#what-is-github-flavored-markdown- "Learn more about GitHub Flavored Markdown"
 [IF Archive]: https://www.ifarchive.org/ "Visit the IF Archive website"
+[natively or via a plug-in/package]: https://editorconfig.org/#download
 
 <!-- TADS -->
 
@@ -475,6 +520,45 @@ Michael J. Roberts and Andreas Sewe.
 
 [Issues]: https://github.com/tajmone/tads-sources/issues "View the project's Issues"
 [project Wiki]: https://github.com/tajmone/tads-sources/wiki "Visit the Wiki of this repository"
+
+<!-- markdown documentation files -->
+
+[T2/README]: ./tads2/README.md
+[T2/unix]: ./tads2/unix/README.md
+[T3/README]: ./tads3/README.md
+[T3/charmap]: ./tads3/charmap/README.md
+[T3/test]: ./tads3/test/README.md
+[T3/tz/db]: ./tads3/tz/db/README.md
+[T3/unix]: ./tads3/unix/README.md
+[T3/unix/test]: ./tads3/unix/test/README.md
+
+<!-- HTML documentation files -->
+
+[htmT/changes]: ./htmltads/notes/changes.htm
+[htmT/compat]: ./htmltads/notes/compat.htm
+[htmT/porting]: ./htmltads/notes/porting.htm
+
+[T2/MSDOS]: ./tads2/msdos/dosver.htm
+[T2/tadsver]: ./tads2/tadsver.htm
+
+[T3/changes]: ./t3doc/t3changes.htm
+[T3/adv3 changes]: ./tads3/lib/adv3/changes.htm
+[T3/TCommand]: ./tads3/lib/extensions/TCommand/doc/tcommand.htm
+[T3/portnote]: ./tads3/portnote.htm
+
+<!-- HTML documentation Live HTML links -->
+
+[htmT/changes Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/htmltads/notes/changes.htm "Live HTML Preview link"
+[htmT/compat Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/htmltads/notes/compat.htm "Live HTML Preview link"
+[htmT/porting Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/htmltads/notes/porting.htm "Live HTML Preview link"
+
+[T2/MSDOS Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/tads2/msdos/dosver.htm "Live HTML Preview link"
+[T2/tadsver Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/tads2/tadsver.htm "Live HTML Preview link"
+
+[T3/changes Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/t3doc/t3changes.htm "Live HTML Preview link"
+[T3/adv3 changes Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/tads3/lib/adv3/changes.htm "Live HTML Preview link"
+[T3/TCommand Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/tads3/lib/extensions/TCommand/doc/tcommand.htm "Live HTML Preview link"
+[T3/portnote Live]: https://htmlpreview.github.io/?https://github.com/tajmone/tads-sources/blob/master/tads3/portnote.htm "Live HTML Preview link"
 
 <!-- badges -->
 
