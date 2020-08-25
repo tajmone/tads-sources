@@ -1,7 +1,7 @@
 # TADS 2 Unix Sources
 
 The TADS 2 Unix source distribution was separated from the generic sources distribution.
-Although the original [README] file mentions that the TADS 2 Unix sources can be downloaded from TADS website, they currently seem to be available only from the [IF Archive]:
+Although the original [`README`][README] file mentions that the TADS 2 Unix sources can be downloaded from TADS website, they currently seem to be available only from the [IF Archive]:
 
 - https://www.ifarchive.org/indexes/if-archive/programming/tads2/source/
 
